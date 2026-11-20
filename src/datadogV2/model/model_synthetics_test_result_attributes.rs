@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a Synthetic test result.
 #[non_exhaustive]
@@ -39,7 +39,7 @@ pub struct SyntheticsTestResultAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultAttributes {
@@ -57,58 +57,53 @@ impl SyntheticsTestResultAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn batch(mut self, value: crate::datadogV2::model::SyntheticsTestResultBatch) -> Self {
         self.batch = Some(value);
         self
     }
-
+    
     pub fn ci(mut self, value: crate::datadogV2::model::SyntheticsTestResultCI) -> Self {
         self.ci = Some(value);
         self
     }
-
+    
     pub fn device(mut self, value: crate::datadogV2::model::SyntheticsTestResultDevice) -> Self {
         self.device = Some(value);
         self
     }
-
+    
     pub fn git(mut self, value: crate::datadogV2::model::SyntheticsTestResultGit) -> Self {
         self.git = Some(value);
         self
     }
-
-    pub fn location(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultLocation,
-    ) -> Self {
+    
+    pub fn location(mut self, value: crate::datadogV2::model::SyntheticsTestResultLocation) -> Self {
         self.location = Some(value);
         self
     }
-
+    
     pub fn result(mut self, value: crate::datadogV2::model::SyntheticsTestResultDetail) -> Self {
         self.result = Some(value);
         self
     }
-
+    
     pub fn test_sub_type(mut self, value: crate::datadogV2::model::SyntheticsTestSubType) -> Self {
         self.test_sub_type = Some(value);
         self
     }
-
+    
     pub fn test_type(mut self, value: crate::datadogV2::model::SyntheticsTestType) -> Self {
         self.test_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultAttributes {
     fn default() -> Self {
@@ -137,16 +132,11 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAttributes {
                 let mut ci: Option<crate::datadogV2::model::SyntheticsTestResultCI> = None;
                 let mut device: Option<crate::datadogV2::model::SyntheticsTestResultDevice> = None;
                 let mut git: Option<crate::datadogV2::model::SyntheticsTestResultGit> = None;
-                let mut location: Option<crate::datadogV2::model::SyntheticsTestResultLocation> =
-                    None;
+                let mut location: Option<crate::datadogV2::model::SyntheticsTestResultLocation> = None;
                 let mut result: Option<crate::datadogV2::model::SyntheticsTestResultDetail> = None;
-                let mut test_sub_type: Option<crate::datadogV2::model::SyntheticsTestSubType> =
-                    None;
+                let mut test_sub_type: Option<crate::datadogV2::model::SyntheticsTestSubType> = None;
                 let mut test_type: Option<crate::datadogV2::model::SyntheticsTestType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -156,43 +146,42 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAttributes {
                                 continue;
                             }
                             batch = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ci" => {
                             if v.is_null() {
                                 continue;
                             }
                             ci = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "device" => {
                             if v.is_null() {
                                 continue;
                             }
                             device = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "git" => {
                             if v.is_null() {
                                 continue;
                             }
                             git = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "location" => {
                             if v.is_null() {
                                 continue;
                             }
                             location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "result" => {
                             if v.is_null() {
                                 continue;
                             }
                             result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "test_sub_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            test_sub_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            test_sub_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _test_sub_type) = test_sub_type {
                                 match _test_sub_type {
                                     crate::datadogV2::model::SyntheticsTestSubType::UnparsedObject(_test_sub_type) => {
@@ -201,7 +190,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "test_type" => {
                             if v.is_null() {
                                 continue;
@@ -209,20 +198,18 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultAttributes {
                             test_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _test_type) = test_type {
                                 match _test_type {
-                                    crate::datadogV2::model::SyntheticsTestType::UnparsedObject(
-                                        _test_type,
-                                    ) => {
+                                    crate::datadogV2::model::SyntheticsTestType::UnparsedObject(_test_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

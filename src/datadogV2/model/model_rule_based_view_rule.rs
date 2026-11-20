@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A compliance rule along with its evaluation statistics and framework mappings.
 #[non_exhaustive]
@@ -48,23 +48,11 @@ pub struct RuleBasedViewRule {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RuleBasedViewRule {
-    pub fn new(
-        compliance_frameworks: Vec<crate::datadogV2::model::RuleBasedViewComplianceFramework>,
-        enabled: bool,
-        id: String,
-        name: String,
-        resource_attributes: Vec<String>,
-        resource_category: String,
-        resource_type: String,
-        stats: crate::datadogV2::model::RuleBasedViewRuleStats,
-        status: String,
-        tags: Vec<String>,
-        type_: crate::datadogV2::model::RuleBasedViewRuleCategory,
-    ) -> RuleBasedViewRule {
+    pub fn new(compliance_frameworks: Vec<crate::datadogV2::model::RuleBasedViewComplianceFramework>, enabled: bool, id: String, name: String, resource_attributes: Vec<String>, resource_category: String, resource_type: String, stats: crate::datadogV2::model::RuleBasedViewRuleStats, status: String, tags: Vec<String>, type_: crate::datadogV2::model::RuleBasedViewRuleCategory) -> RuleBasedViewRule {
         RuleBasedViewRule {
             compliance_frameworks,
             enabled,
@@ -81,15 +69,14 @@ impl RuleBasedViewRule {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RuleBasedViewRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -108,9 +95,7 @@ impl<'de> Deserialize<'de> for RuleBasedViewRule {
             where
                 M: MapAccess<'a>,
             {
-                let mut compliance_frameworks: Option<
-                    Vec<crate::datadogV2::model::RuleBasedViewComplianceFramework>,
-                > = None;
+                let mut compliance_frameworks: Option<Vec<crate::datadogV2::model::RuleBasedViewComplianceFramework>> = None;
                 let mut enabled: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut name: Option<String> = None;
@@ -121,48 +106,41 @@ impl<'de> Deserialize<'de> for RuleBasedViewRule {
                 let mut status: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV2::model::RuleBasedViewRuleCategory> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "compliance_frameworks" => {
-                            compliance_frameworks =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compliance_frameworks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resourceAttributes" => {
-                            resource_attributes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resourceCategory" => {
-                            resource_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resourceType" => {
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "stats" => {
                             stats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -173,25 +151,21 @@ impl<'de> Deserialize<'de> for RuleBasedViewRule {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let compliance_frameworks = compliance_frameworks
-                    .ok_or_else(|| M::Error::missing_field("compliance_frameworks"))?;
+                let compliance_frameworks = compliance_frameworks.ok_or_else(|| M::Error::missing_field("compliance_frameworks"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let resource_attributes = resource_attributes
-                    .ok_or_else(|| M::Error::missing_field("resource_attributes"))?;
-                let resource_category = resource_category
-                    .ok_or_else(|| M::Error::missing_field("resource_category"))?;
-                let resource_type =
-                    resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
+                let resource_attributes = resource_attributes.ok_or_else(|| M::Error::missing_field("resource_attributes"))?;
+                let resource_category = resource_category.ok_or_else(|| M::Error::missing_field("resource_category"))?;
+                let resource_type = resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let stats = stats.ok_or_else(|| M::Error::missing_field("stats"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;

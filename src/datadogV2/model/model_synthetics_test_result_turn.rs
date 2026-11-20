@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A turn in a goal-based browser test, grouping steps and reasoning.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct SyntheticsTestResultTurn {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultTurn {
@@ -53,56 +53,48 @@ impl SyntheticsTestResultTurn {
             _unparsed: false,
         }
     }
-
-    pub fn bucket_keys(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultBucketKeys,
-    ) -> Self {
+    
+    pub fn bucket_keys(mut self, value: crate::datadogV2::model::SyntheticsTestResultBucketKeys) -> Self {
         self.bucket_keys = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn reasoning(mut self, value: String) -> Self {
         self.reasoning = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn steps(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultTurnStep>,
-    ) -> Self {
+    
+    pub fn steps(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultTurnStep>) -> Self {
         self.steps = Some(value);
         self
     }
-
+    
     pub fn turn_finished_at(mut self, value: i64) -> Self {
         self.turn_finished_at = Some(value);
         self
     }
-
+    
     pub fn turn_started_at(mut self, value: i64) -> Self {
         self.turn_started_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultTurn {
     fn default() -> Self {
@@ -127,20 +119,14 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultTurn {
             where
                 M: MapAccess<'a>,
             {
-                let mut bucket_keys: Option<
-                    crate::datadogV2::model::SyntheticsTestResultBucketKeys,
-                > = None;
+                let mut bucket_keys: Option<crate::datadogV2::model::SyntheticsTestResultBucketKeys> = None;
                 let mut name: Option<String> = None;
                 let mut reasoning: Option<String> = None;
                 let mut status: Option<String> = None;
-                let mut steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultTurnStep>> =
-                    None;
+                let mut steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultTurnStep>> = None;
                 let mut turn_finished_at: Option<i64> = None;
                 let mut turn_started_at: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -149,52 +135,49 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultTurn {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_keys =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "reasoning" => {
                             if v.is_null() {
                                 continue;
                             }
                             reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "steps" => {
                             if v.is_null() {
                                 continue;
                             }
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "turn_finished_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            turn_finished_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            turn_finished_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "turn_started_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            turn_started_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            turn_started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

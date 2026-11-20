@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsTestProcessStatus {
-    NOT_SCHEDULED,
-    SCHEDULED,
-    FINISHED,
-    FINISHED_WITH_ERROR,
+	NOT_SCHEDULED,
+	SCHEDULED,
+	FINISHED,
+	FINISHED_WITH_ERROR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestProcessStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "not_scheduled" => Self::NOT_SCHEDULED,
-            "scheduled" => Self::SCHEDULED,
-            "finished" => Self::FINISHED,
-            "finished_with_error" => Self::FINISHED_WITH_ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"not_scheduled" => Self::NOT_SCHEDULED,"scheduled" => Self::SCHEDULED,"finished" => Self::FINISHED,"finished_with_error" => Self::FINISHED_WITH_ERROR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Certificate details returned in an OCSP response.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct SyntheticsTestResultOCSPCertificate {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultOCSPCertificate {
@@ -37,30 +37,28 @@ impl SyntheticsTestResultOCSPCertificate {
             _unparsed: false,
         }
     }
-
+    
     pub fn revocation_reason(mut self, value: String) -> Self {
         self.revocation_reason = Some(value);
         self
     }
-
+    
     pub fn revocation_time(mut self, value: i64) -> Self {
         self.revocation_time = Some(value);
         self
     }
-
+    
     pub fn serial_number(mut self, value: String) -> Self {
         self.serial_number = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultOCSPCertificate {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultOCSPCertificate {
                 let mut revocation_reason: Option<String> = None;
                 let mut revocation_time: Option<i64> = None;
                 let mut serial_number: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,28 +95,25 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultOCSPCertificate {
                             if v.is_null() {
                                 continue;
                             }
-                            revocation_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            revocation_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "revocation_time" => {
                             if v.is_null() {
                                 continue;
                             }
-                            revocation_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            revocation_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serial_number" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serial_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serial_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

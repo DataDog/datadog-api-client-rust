@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration for the disabled Flaky Tests Management policy.
 #[non_exhaustive]
@@ -41,44 +41,33 @@ impl TestOptimizationFlakyTestsManagementPoliciesDisabled {
             _unparsed: false,
         }
     }
-
-    pub fn auto_disable_rule(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAutoDisableRule,
-    ) -> Self {
+    
+    pub fn auto_disable_rule(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAutoDisableRule) -> Self {
         self.auto_disable_rule = Some(value);
         self
     }
-
-    pub fn branch_rule(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesBranchRule,
-    ) -> Self {
+    
+    pub fn branch_rule(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesBranchRule) -> Self {
         self.branch_rule = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn failure_rate_rule(
-        mut self,
-        value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule,
-    ) -> Self {
+    
+    pub fn failure_rate_rule(mut self, value: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule) -> Self {
         self.failure_rate_rule = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TestOptimizationFlakyTestsManagementPoliciesDisabled {
     fn default() -> Self {
@@ -104,15 +93,10 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
                 M: MapAccess<'a>,
             {
                 let mut auto_disable_rule: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesAutoDisableRule> = None;
-                let mut branch_rule: Option<
-                    crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesBranchRule,
-                > = None;
+                let mut branch_rule: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesBranchRule> = None;
                 let mut enabled: Option<bool> = None;
                 let mut failure_rate_rule: Option<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesDisabledFailureRateRule> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,34 +105,31 @@ impl<'de> Deserialize<'de> for TestOptimizationFlakyTestsManagementPoliciesDisab
                             if v.is_null() {
                                 continue;
                             }
-                            auto_disable_rule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auto_disable_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "branch_rule" => {
                             if v.is_null() {
                                 continue;
                             }
-                            branch_rule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            branch_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "failure_rate_rule" => {
                             if v.is_null() {
                                 continue;
                             }
-                            failure_rate_rule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            failure_rate_rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

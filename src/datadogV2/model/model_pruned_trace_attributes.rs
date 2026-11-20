@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a pruned trace returned by the Get pruned trace by ID endpoint.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PrunedTraceAttributes {
     /// Indicates whether the underlying trace was truncated because its size
-    /// exceeded the maximum that can be retrieved from storage.
+/// exceeded the maximum that can be retrieved from storage.
     #[serde(rename = "is_truncated")]
     pub is_truncated: bool,
     /// The size, in bytes, of the original (non-pruned) trace before summarization.
@@ -25,15 +25,11 @@ pub struct PrunedTraceAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PrunedTraceAttributes {
-    pub fn new(
-        is_truncated: bool,
-        size_bytes: i32,
-        summarized_trace: crate::datadogV2::model::SummarizedTrace,
-    ) -> PrunedTraceAttributes {
+    pub fn new(is_truncated: bool, size_bytes: i32, summarized_trace: crate::datadogV2::model::SummarizedTrace) -> PrunedTraceAttributes {
         PrunedTraceAttributes {
             is_truncated,
             size_bytes,
@@ -42,15 +38,14 @@ impl PrunedTraceAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for PrunedTraceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -72,37 +67,30 @@ impl<'de> Deserialize<'de> for PrunedTraceAttributes {
                 let mut is_truncated: Option<bool> = None;
                 let mut size_bytes: Option<i32> = None;
                 let mut summarized_trace: Option<crate::datadogV2::model::SummarizedTrace> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "is_truncated" => {
-                            is_truncated =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_truncated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "size_bytes" => {
                             size_bytes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "summarized_trace" => {
-                            summarized_trace =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            summarized_trace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let is_truncated =
-                    is_truncated.ok_or_else(|| M::Error::missing_field("is_truncated"))?;
+                let is_truncated = is_truncated.ok_or_else(|| M::Error::missing_field("is_truncated"))?;
                 let size_bytes = size_bytes.ok_or_else(|| M::Error::missing_field("size_bytes"))?;
-                let summarized_trace =
-                    summarized_trace.ok_or_else(|| M::Error::missing_field("summarized_trace"))?;
+                let summarized_trace = summarized_trace.ok_or_else(|| M::Error::missing_field("summarized_trace"))?;
 
                 let content = PrunedTraceAttributes {
                     is_truncated,

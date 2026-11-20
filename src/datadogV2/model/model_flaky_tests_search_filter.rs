@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Search filter settings.
 #[non_exhaustive]
@@ -12,31 +12,31 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FlakyTestsSearchFilter {
     /// Whether to include the status change history for each flaky test in the response.
-    /// When set to true, each test will include a `history` array with chronological status changes.
-    /// Defaults to false.
+/// When set to true, each test will include a `history` array with chronological status changes.
+/// Defaults to false.
     #[serde(rename = "include_history")]
     pub include_history: Option<bool>,
     /// Search query following log syntax used to filter flaky tests, same as on Flaky Tests Management UI. The supported search keys are:
-    /// - `flaky_test_state`
-    /// - `flaky_test_category`
-    /// - `@test.name`
-    /// - `@test.suite`
-    /// - `@test.module`
-    /// - `@test.service`
-    /// - `@git.repository.id_v2`
-    /// - `@git.branch`
-    /// - `@test.codeowners`
-    /// - `env`
-    /// - `fingerprint_fqn`
-    ///
-    /// Use `fingerprint_fqn` to filter by a test's stable Fingerprint FQN (the same value as the test's `id`).
+/// - `flaky_test_state`
+/// - `flaky_test_category`
+/// - `@test.name`
+/// - `@test.suite`
+/// - `@test.module`
+/// - `@test.service`
+/// - `@git.repository.id_v2`
+/// - `@git.branch`
+/// - `@test.codeowners`
+/// - `env`
+/// - `fingerprint_fqn`
+///
+/// Use `fingerprint_fqn` to filter by a test's stable Fingerprint FQN (the same value as the test's `id`).
     #[serde(rename = "query")]
     pub query: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FlakyTestsSearchFilter {
@@ -48,25 +48,23 @@ impl FlakyTestsSearchFilter {
             _unparsed: false,
         }
     }
-
+    
     pub fn include_history(mut self, value: bool) -> Self {
         self.include_history = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FlakyTestsSearchFilter {
     fn default() -> Self {
@@ -93,10 +91,7 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
             {
                 let mut include_history: Option<bool> = None;
                 let mut query: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,20 +100,19 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchFilter {
                             if v.is_null() {
                                 continue;
                             }
-                            include_history =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            include_history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

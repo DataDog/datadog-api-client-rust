@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumMetricEventType {
-    SESSION,
-    VIEW,
-    ACTION,
-    ERROR,
-    RESOURCE,
-    LONG_TASK,
-    VITAL,
+	SESSION,
+	VIEW,
+	ACTION,
+	ERROR,
+	RESOURCE,
+	LONG_TASK,
+	VITAL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for RumMetricEventType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "session" => Self::SESSION,
-            "view" => Self::VIEW,
-            "action" => Self::ACTION,
-            "error" => Self::ERROR,
-            "resource" => Self::RESOURCE,
-            "long_task" => Self::LONG_TASK,
-            "vital" => Self::VITAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"session" => Self::SESSION,"view" => Self::VIEW,"action" => Self::ACTION,"error" => Self::ERROR,"resource" => Self::RESOURCE,"long_task" => Self::LONG_TASK,"vital" => Self::VITAL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

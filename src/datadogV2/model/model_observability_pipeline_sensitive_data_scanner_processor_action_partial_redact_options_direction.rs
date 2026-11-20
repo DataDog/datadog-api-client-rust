@@ -2,19 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection {
-    FIRST,
-    LAST,
+	FIRST,
+	LAST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString
-    for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection
-{
+impl ToString for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection {
     fn to_string(&self) -> String {
         match self {
             Self::FIRST => String::from("first"),
@@ -24,9 +23,7 @@ impl ToString
     }
 }
 
-impl Serialize
-    for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection
-{
+impl Serialize for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,20 +35,14 @@ impl Serialize
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection
-{
+impl<'de> Deserialize<'de> for ObservabilityPipelineSensitiveDataScannerProcessorActionPartialRedactOptionsDirection {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "first" => Self::FIRST,
-            "last" => Self::LAST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"first" => Self::FIRST,"last" => Self::LAST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

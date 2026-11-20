@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a change request decision in a response.
 #[non_exhaustive]
@@ -33,18 +33,11 @@ pub struct ChangeRequestDecisionResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChangeRequestDecisionResponseAttributes {
-    pub fn new(
-        change_request_status: crate::datadogV2::model::ChangeRequestDecisionStatusType,
-        decided_at: chrono::DateTime<chrono::Utc>,
-        decision_reason: String,
-        deleted_at: chrono::DateTime<chrono::Utc>,
-        request_reason: String,
-        requested_at: chrono::DateTime<chrono::Utc>,
-    ) -> ChangeRequestDecisionResponseAttributes {
+    pub fn new(change_request_status: crate::datadogV2::model::ChangeRequestDecisionStatusType, decided_at: chrono::DateTime<chrono::Utc>, decision_reason: String, deleted_at: chrono::DateTime<chrono::Utc>, request_reason: String, requested_at: chrono::DateTime<chrono::Utc>) -> ChangeRequestDecisionResponseAttributes {
         ChangeRequestDecisionResponseAttributes {
             change_request_status,
             decided_at,
@@ -56,15 +49,14 @@ impl ChangeRequestDecisionResponseAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ChangeRequestDecisionResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -83,25 +75,19 @@ impl<'de> Deserialize<'de> for ChangeRequestDecisionResponseAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut change_request_status: Option<
-                    crate::datadogV2::model::ChangeRequestDecisionStatusType,
-                > = None;
+                let mut change_request_status: Option<crate::datadogV2::model::ChangeRequestDecisionStatusType> = None;
                 let mut decided_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut decision_reason: Option<String> = None;
                 let mut deleted_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut request_reason: Option<String> = None;
                 let mut requested_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "change_request_status" => {
-                            change_request_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            change_request_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _change_request_status) = change_request_status {
                                 match _change_request_status {
                                     crate::datadogV2::model::ChangeRequestDecisionStatusType::UnparsedObject(_change_request_status) => {
@@ -110,42 +96,35 @@ impl<'de> Deserialize<'de> for ChangeRequestDecisionResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "decided_at" => {
                             decided_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "decision_reason" => {
-                            decision_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            decision_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "deleted_at" => {
                             deleted_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "request_reason" => {
-                            request_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            request_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requested_at" => {
-                            requested_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            requested_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let change_request_status = change_request_status
-                    .ok_or_else(|| M::Error::missing_field("change_request_status"))?;
+                let change_request_status = change_request_status.ok_or_else(|| M::Error::missing_field("change_request_status"))?;
                 let decided_at = decided_at.ok_or_else(|| M::Error::missing_field("decided_at"))?;
-                let decision_reason =
-                    decision_reason.ok_or_else(|| M::Error::missing_field("decision_reason"))?;
+                let decision_reason = decision_reason.ok_or_else(|| M::Error::missing_field("decision_reason"))?;
                 let deleted_at = deleted_at.ok_or_else(|| M::Error::missing_field("deleted_at"))?;
-                let request_reason =
-                    request_reason.ok_or_else(|| M::Error::missing_field("request_reason"))?;
-                let requested_at =
-                    requested_at.ok_or_else(|| M::Error::missing_field("requested_at"))?;
+                let request_reason = request_reason.ok_or_else(|| M::Error::missing_field("request_reason"))?;
+                let requested_at = requested_at.ok_or_else(|| M::Error::missing_field("requested_at"))?;
 
                 let content = ChangeRequestDecisionResponseAttributes {
                     change_request_status,

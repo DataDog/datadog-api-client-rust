@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a deployment in the response.
 #[non_exhaustive]
@@ -21,12 +21,12 @@ pub struct FleetDeploymentAttributes {
     #[serde(rename = "filter_query")]
     pub filter_query: Option<String>,
     /// Current high-level status of the deployment (for example, "pending", "running",
-    /// "completed", "failed").
+/// "completed", "failed").
     #[serde(rename = "high_level_status")]
     pub high_level_status: Option<String>,
     /// Paginated list of hosts in this deployment with their individual statuses. Only included
-    /// when fetching a single deployment by ID. Use the `limit` and `page` query parameters to
-    /// navigate through pages. Pagination metadata is included in the response `meta.hosts` field.
+/// when fetching a single deployment by ID. Use the `limit` and `page` query parameters to
+/// navigate through pages. Pagination metadata is included in the response `meta.hosts` field.
     #[serde(rename = "hosts")]
     pub hosts: Option<Vec<crate::datadogV2::model::FleetDeploymentHost>>,
     /// List of packages to deploy to target hosts. Present only for package upgrade deployments.
@@ -39,7 +39,7 @@ pub struct FleetDeploymentAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FleetDeploymentAttributes {
@@ -56,53 +56,48 @@ impl FleetDeploymentAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn config_operations(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetDeploymentOperation>,
-    ) -> Self {
+    
+    pub fn config_operations(mut self, value: Vec<crate::datadogV2::model::FleetDeploymentOperation>) -> Self {
         self.config_operations = Some(value);
         self
     }
-
+    
     pub fn estimated_end_time_unix(mut self, value: i64) -> Self {
         self.estimated_end_time_unix = Some(value);
         self
     }
-
+    
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
-
+    
     pub fn high_level_status(mut self, value: String) -> Self {
         self.high_level_status = Some(value);
         self
     }
-
+    
     pub fn hosts(mut self, value: Vec<crate::datadogV2::model::FleetDeploymentHost>) -> Self {
         self.hosts = Some(value);
         self
     }
-
+    
     pub fn packages(mut self, value: Vec<crate::datadogV2::model::FleetDeploymentPackage>) -> Self {
         self.packages = Some(value);
         self
     }
-
+    
     pub fn total_hosts(mut self, value: i64) -> Self {
         self.total_hosts = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FleetDeploymentAttributes {
     fn default() -> Self {
@@ -127,20 +122,14 @@ impl<'de> Deserialize<'de> for FleetDeploymentAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut config_operations: Option<
-                    Vec<crate::datadogV2::model::FleetDeploymentOperation>,
-                > = None;
+                let mut config_operations: Option<Vec<crate::datadogV2::model::FleetDeploymentOperation>> = None;
                 let mut estimated_end_time_unix: Option<i64> = None;
                 let mut filter_query: Option<String> = None;
                 let mut high_level_status: Option<String> = None;
                 let mut hosts: Option<Vec<crate::datadogV2::model::FleetDeploymentHost>> = None;
-                let mut packages: Option<Vec<crate::datadogV2::model::FleetDeploymentPackage>> =
-                    None;
+                let mut packages: Option<Vec<crate::datadogV2::model::FleetDeploymentPackage>> = None;
                 let mut total_hosts: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -149,54 +138,49 @@ impl<'de> Deserialize<'de> for FleetDeploymentAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            config_operations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_operations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_end_time_unix" => {
                             if v.is_null() {
                                 continue;
                             }
-                            estimated_end_time_unix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_end_time_unix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "filter_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            filter_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            filter_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "high_level_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            high_level_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            high_level_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hosts" => {
                             if v.is_null() {
                                 continue;
                             }
                             hosts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "packages" => {
                             if v.is_null() {
                                 continue;
                             }
                             packages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_hosts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_hosts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_hosts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Create a new signal correlation rule.
 #[non_exhaustive]
@@ -45,18 +45,11 @@ pub struct SecurityMonitoringSignalRuleCreatePayload {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringSignalRuleCreatePayload {
-    pub fn new(
-        cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
-        is_enabled: bool,
-        message: String,
-        name: String,
-        options: crate::datadogV2::model::SecurityMonitoringRuleOptions,
-        queries: Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleQuery>,
-    ) -> SecurityMonitoringSignalRuleCreatePayload {
+    pub fn new(cases: Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>, is_enabled: bool, message: String, name: String, options: crate::datadogV2::model::SecurityMonitoringRuleOptions, queries: Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleQuery>) -> SecurityMonitoringSignalRuleCreatePayload {
         SecurityMonitoringSignalRuleCreatePayload {
             cases,
             filters: None,
@@ -72,41 +65,34 @@ impl SecurityMonitoringSignalRuleCreatePayload {
             _unparsed: false,
         }
     }
-
-    pub fn filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>,
-    ) -> Self {
+    
+    pub fn filters(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringFilter>) -> Self {
         self.filters = Some(value);
         self
     }
-
+    
     pub fn has_extended_title(mut self, value: bool) -> Self {
         self.has_extended_title = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSignalRuleType,
-    ) -> Self {
+    
+    pub fn type_(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalRuleType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleCreatePayload {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -125,68 +111,57 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleCreatePayload {
             where
                 M: MapAccess<'a>,
             {
-                let mut cases: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>,
-                > = None;
-                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
-                    None;
+                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringRuleCaseCreate>> = None;
+                let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> = None;
                 let mut has_extended_title: Option<bool> = None;
                 let mut is_enabled: Option<bool> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
-                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> =
-                    None;
-                let mut queries: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleQuery>,
-                > = None;
+                let mut options: Option<crate::datadogV2::model::SecurityMonitoringRuleOptions> = None;
+                let mut queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringSignalRuleQuery>> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cases" => {
                             cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "filters" => {
                             if v.is_null() {
                                 continue;
                             }
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hasExtendedTitle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_extended_title =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_extended_title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "isEnabled" => {
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "queries" => {
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -200,12 +175,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleCreatePayload {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let cases = cases.ok_or_else(|| M::Error::missing_field("cases"))?;

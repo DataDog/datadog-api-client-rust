@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The Sankey diagram visualizes the flow of data between categories, stages or sets of values.
 #[non_exhaustive]
@@ -37,14 +37,11 @@ pub struct SankeyWidgetDefinition {
     pub type_: crate::datadogV1::model::SankeyWidgetDefinitionType,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SankeyWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::SankeyWidgetRequest>,
-        type_: crate::datadogV1::model::SankeyWidgetDefinitionType,
-    ) -> SankeyWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::SankeyWidgetRequest>, type_: crate::datadogV1::model::SankeyWidgetDefinitionType) -> SankeyWidgetDefinition {
         SankeyWidgetDefinition {
             requests,
             show_other_links: None,
@@ -57,37 +54,40 @@ impl SankeyWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn show_other_links(mut self, value: bool) -> Self {
         self.show_other_links = Some(value);
         self
     }
-
+    
     pub fn sort_nodes(mut self, value: bool) -> Self {
         self.sort_nodes = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for SankeyWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -120,20 +120,19 @@ impl<'de> Deserialize<'de> for SankeyWidgetDefinition {
                     match k.as_str() {
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_other_links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_other_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_other_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort_nodes" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort_nodes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -143,40 +142,37 @@ impl<'de> Deserialize<'de> for SankeyWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -187,12 +183,10 @@ impl<'de> Deserialize<'de> for SankeyWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

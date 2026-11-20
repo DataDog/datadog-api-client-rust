@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleTypeCreate {
-    API_SECURITY,
-    APPLICATION_SECURITY,
-    LOG_DETECTION,
-    WORKLOAD_ACTIVITY,
-    WORKLOAD_SECURITY,
+	API_SECURITY,
+	APPLICATION_SECURITY,
+	LOG_DETECTION,
+	WORKLOAD_ACTIVITY,
+	WORKLOAD_SECURITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleTypeCreate {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "api_security" => Self::API_SECURITY,
-            "application_security" => Self::APPLICATION_SECURITY,
-            "log_detection" => Self::LOG_DETECTION,
-            "workload_activity" => Self::WORKLOAD_ACTIVITY,
-            "workload_security" => Self::WORKLOAD_SECURITY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"api_security" => Self::API_SECURITY,"application_security" => Self::APPLICATION_SECURITY,"log_detection" => Self::LOG_DETECTION,"workload_activity" => Self::WORKLOAD_ACTIVITY,"workload_security" => Self::WORKLOAD_SECURITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

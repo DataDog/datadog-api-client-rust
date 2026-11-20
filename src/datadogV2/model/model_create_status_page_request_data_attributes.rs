@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The supported attributes for creating a status page.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct CreateStatusPageRequestDataAttributes {
     pub company_logo: Option<String>,
     /// The components displayed on the status page.
     #[serde(rename = "components")]
-    pub components:
-        Option<Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>>,
+    pub components: Option<Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>>,
     /// The subdomain of the status page URL. Public pages use `<https://{domain_prefix}.statuspage.datadoghq.com`,> while private pages use `<https://{domain_prefix}.private.statuspage.datadoghq.com`.> Globally unique across Datadog Status Pages.
     #[serde(rename = "domain_prefix")]
     pub domain_prefix: String,
@@ -53,26 +52,19 @@ pub struct CreateStatusPageRequestDataAttributes {
     pub type_: crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
     /// The layout of components on the status page. Defaults to `list`. `grid` requires `visualization_type` to be `component_name_only`; changing `visualization_type` to any other value resets the layout to `list`.
     #[serde(rename = "visualization_layout")]
-    pub visualization_layout:
-        Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout>,
+    pub visualization_layout: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout>,
     /// The visualization type of the status page.
     #[serde(rename = "visualization_type")]
-    pub visualization_type:
-        crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
+    pub visualization_type: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateStatusPageRequestDataAttributes {
-    pub fn new(
-        domain_prefix: String,
-        name: String,
-        type_: crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
-        visualization_type: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
-    ) -> CreateStatusPageRequestDataAttributes {
+    pub fn new(domain_prefix: String, name: String, type_: crate::datadogV2::model::CreateStatusPageRequestDataAttributesType, visualization_type: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType) -> CreateStatusPageRequestDataAttributes {
         CreateStatusPageRequestDataAttributes {
             company_logo: None,
             components: None,
@@ -93,76 +85,69 @@ impl CreateStatusPageRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn company_logo(mut self, value: String) -> Self {
         self.company_logo = Some(value);
         self
     }
-
-    pub fn components(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>,
-    ) -> Self {
+    
+    pub fn components(mut self, value: Vec<crate::datadogV2::model::CreateStatusPageRequestDataAttributesComponentsItems>) -> Self {
         self.components = Some(value);
         self
     }
-
+    
     pub fn email_header_image(mut self, value: String) -> Self {
         self.email_header_image = Some(value);
         self
     }
-
+    
     pub fn email_notifications_enabled(mut self, value: bool) -> Self {
         self.email_notifications_enabled = Some(value);
         self
     }
-
+    
     pub fn favicon(mut self, value: String) -> Self {
         self.favicon = Some(value);
         self
     }
-
+    
     pub fn ms_teams_subscriptions_enabled(mut self, value: bool) -> Self {
         self.ms_teams_subscriptions_enabled = Some(value);
         self
     }
-
+    
     pub fn rss_feed_enabled(mut self, value: bool) -> Self {
         self.rss_feed_enabled = Some(value);
         self
     }
-
+    
     pub fn slack_app_icon(mut self, value: String) -> Self {
         self.slack_app_icon = Some(value);
         self
     }
-
+    
     pub fn slack_subscriptions_enabled(mut self, value: bool) -> Self {
         self.slack_subscriptions_enabled = Some(value);
         self
     }
-
+    
     pub fn subscriptions_enabled(mut self, value: bool) -> Self {
         self.subscriptions_enabled = Some(value);
         self
     }
-
-    pub fn visualization_layout(
-        mut self,
-        value: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout,
-    ) -> Self {
+    
+    pub fn visualization_layout(mut self, value: crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout) -> Self {
         self.visualization_layout = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -193,17 +178,10 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                 let mut slack_app_icon: Option<String> = None;
                 let mut slack_subscriptions_enabled: Option<bool> = None;
                 let mut subscriptions_enabled: Option<bool> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::CreateStatusPageRequestDataAttributesType,
-                > = None;
+                let mut type_: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesType> = None;
                 let mut visualization_layout: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout> = None;
-                let mut visualization_type: Option<
-                    crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut visualization_type: Option<crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -212,77 +190,68 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            company_logo =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            company_logo = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "components" => {
                             if v.is_null() {
                                 continue;
                             }
                             components = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "domain_prefix" => {
-                            domain_prefix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            domain_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "email_header_image" => {
                             if v.is_null() {
                                 continue;
                             }
-                            email_header_image =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            email_header_image = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "email_notifications_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            email_notifications_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            email_notifications_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "favicon" => {
                             if v.is_null() {
                                 continue;
                             }
                             favicon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ms_teams_subscriptions_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ms_teams_subscriptions_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ms_teams_subscriptions_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rss_feed_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rss_feed_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rss_feed_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "slack_app_icon" => {
                             if v.is_null() {
                                 continue;
                             }
-                            slack_app_icon =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            slack_app_icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "slack_subscriptions_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            slack_subscriptions_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            slack_subscriptions_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subscriptions_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subscriptions_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subscriptions_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -293,13 +262,12 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "visualization_layout" => {
                             if v.is_null() {
                                 continue;
                             }
-                            visualization_layout =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            visualization_layout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _visualization_layout) = visualization_layout {
                                 match _visualization_layout {
                                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationLayout::UnparsedObject(_visualization_layout) => {
@@ -308,10 +276,9 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "visualization_type" => {
-                            visualization_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            visualization_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _visualization_type) = visualization_type {
                                 match _visualization_type {
                                     crate::datadogV2::model::CreateStatusPageRequestDataAttributesVisualizationType::UnparsedObject(_visualization_type) => {
@@ -320,20 +287,18 @@ impl<'de> Deserialize<'de> for CreateStatusPageRequestDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let domain_prefix =
-                    domain_prefix.ok_or_else(|| M::Error::missing_field("domain_prefix"))?;
+                let domain_prefix = domain_prefix.ok_or_else(|| M::Error::missing_field("domain_prefix"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
-                let visualization_type = visualization_type
-                    .ok_or_else(|| M::Error::missing_field("visualization_type"))?;
+                let visualization_type = visualization_type.ok_or_else(|| M::Error::missing_field("visualization_type"))?;
 
                 let content = CreateStatusPageRequestDataAttributes {
                     company_logo,

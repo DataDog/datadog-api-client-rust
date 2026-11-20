@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Private Action Runner authentication. The runner holds the Databricks credentials, so this method carries no secrets. Only the fields provided are changed.
 #[non_exhaustive]
@@ -18,24 +18,18 @@ pub struct DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
     #[serde(rename = "connection_id")]
     pub connection_id: Option<uuid::Uuid>,
     /// Path of the credential inside the secret backend configured on the runner. Omit it to keep the stored path, send `null` or an empty string to remove it, or send a value to replace it.
-    #[serde(
-        rename = "secret_path",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "secret_path", default, with = "::serde_with::rust::double_option")]
     pub secret_path: Option<Option<String>>,
     /// Unique identifier of the user the Private Action Runner connection belongs to.
     #[serde(rename = "user_uuid")]
     pub user_uuid: Option<uuid::Uuid>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
-    pub fn new(
-        auth_type: crate::datadogV2::model::DatabricksIntegrationAccountPrivateActionRunnerAuthType,
-    ) -> DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
+    pub fn new(auth_type: crate::datadogV2::model::DatabricksIntegrationAccountPrivateActionRunnerAuthType) -> DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
         DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
             auth_type,
             connection_id: None,
@@ -44,22 +38,25 @@ impl DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
             _unparsed: false,
         }
     }
-
+    
     pub fn connection_id(mut self, value: uuid::Uuid) -> Self {
         self.connection_id = Some(value);
         self
     }
-
+    
     pub fn secret_path(mut self, value: Option<String>) -> Self {
         self.secret_path = Some(value);
         self
     }
-
+    
     pub fn user_uuid(mut self, value: uuid::Uuid) -> Self {
         self.user_uuid = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for DatabricksIntegrationAccountPrivateActionRunnerAuthUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,29 +93,25 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountPrivateActionRunnerAu
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "connection_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            connection_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            connection_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "secret_path" => {
-                            secret_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            secret_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user_uuid" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
@@ -135,7 +128,6 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountPrivateActionRunnerAu
             }
         }
 
-        deserializer
-            .deserialize_any(DatabricksIntegrationAccountPrivateActionRunnerAuthUpdateVisitor)
+        deserializer.deserialize_any(DatabricksIntegrationAccountPrivateActionRunnerAuthUpdateVisitor)
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An object defining the recurrence of the downtime.
 #[non_exhaustive]
@@ -15,22 +15,22 @@ pub struct DowntimeScheduleRecurrenceCreateUpdateRequest {
     #[serde(rename = "duration")]
     pub duration: String,
     /// The `RRULE` standard for defining recurring events.
-    /// For example, to have a recurring event on the first day of each month, set the type to `rrule` and set the `FREQ` to `MONTHLY` and `BYMONTHDAY` to `1`.
-    /// Most common `rrule` options from the [iCalendar Spec](<https://tools.ietf.org/html/rfc5545>) are supported.
-    ///
-    /// **Note**: Attributes specifying the duration in `RRULE` are not supported (for example, `DTSTART`, `DTEND`, `DURATION`).
-    /// More examples available in this [downtime guide](<https://docs.datadoghq.com/monitors/guide/suppress-alert-with-downtimes/?tab=api>).
+/// For example, to have a recurring event on the first day of each month, set the type to `rrule` and set the `FREQ` to `MONTHLY` and `BYMONTHDAY` to `1`.
+/// Most common `rrule` options from the [iCalendar Spec](<https://tools.ietf.org/html/rfc5545>) are supported.
+///
+/// **Note**: Attributes specifying the duration in `RRULE` are not supported (for example, `DTSTART`, `DTEND`, `DURATION`).
+/// More examples available in this [downtime guide](<https://docs.datadoghq.com/monitors/guide/suppress-alert-with-downtimes/?tab=api>).
     #[serde(rename = "rrule")]
     pub rrule: String,
     /// ISO-8601 Datetime to start the downtime. Must not include a UTC offset. If not provided, the
-    /// downtime starts the moment it is created.
+/// downtime starts the moment it is created.
     #[serde(rename = "start", default, with = "::serde_with::rust::double_option")]
     pub start: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DowntimeScheduleRecurrenceCreateUpdateRequest {
@@ -43,20 +43,19 @@ impl DowntimeScheduleRecurrenceCreateUpdateRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn start(mut self, value: Option<String>) -> Self {
         self.start = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DowntimeScheduleRecurrenceCreateUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,28 +77,25 @@ impl<'de> Deserialize<'de> for DowntimeScheduleRecurrenceCreateUpdateRequest {
                 let mut duration: Option<String> = None;
                 let mut rrule: Option<String> = None;
                 let mut start: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "duration" => {
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rrule" => {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let duration = duration.ok_or_else(|| M::Error::missing_field("duration"))?;

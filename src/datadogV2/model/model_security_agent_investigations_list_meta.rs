@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Metadata of a page of investigations.
 #[non_exhaustive]
@@ -12,26 +12,26 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SecurityAgentInvestigationsListMeta {
     /// Why `filter[signal_id]` returned no investigation. Set only on the first page of an empty result. The reason is
-    /// based on the organization's current settings. Poll again only on `investigation_not_started`, after the number
-    /// of seconds in the `Retry-After` header; treat the others as final for this signal.
-    /// - `investigation_not_started`: no investigation has started yet, but one may still start.
-    /// - `not_investigated`: no investigation started within an hour of the signal, so none is expected. The signal
-    ///   was skipped for a reason this API doesn't report, such as its severity or a rate limit.
-    /// - `rule_not_enabled`: the signal's detection rule doesn't have Bits Security Analyst enabled, so no
-    ///   investigation starts automatically.
-    /// - `signal_not_found`: the ID isn't a signal ID, or no signal with this ID exists in the organization.
-    /// - `org_not_activated`: the organization hasn't activated Bits Security Analyst.
+/// based on the organization's current settings. Poll again only on `investigation_not_started`, after the number
+/// of seconds in the `Retry-After` header; treat the others as final for this signal.
+/// - `investigation_not_started`: no investigation has started yet, but one may still start.
+/// - `not_investigated`: no investigation started within an hour of the signal, so none is expected. The signal
+///   was skipped for a reason this API doesn't report, such as its severity or a rate limit.
+/// - `rule_not_enabled`: the signal's detection rule doesn't have Bits Security Analyst enabled, so no
+///   investigation starts automatically.
+/// - `signal_not_found`: the ID isn't a signal ID, or no signal with this ID exists in the organization.
+/// - `org_not_activated`: the organization hasn't activated Bits Security Analyst.
     #[serde(rename = "reason")]
     pub reason: Option<crate::datadogV2::model::SecurityAgentInvestigationNoRunReason>,
     /// Without `filter[signal_id]`, the number of signals that match the filters. With `filter[signal_id]`, the
-    /// number of investigations of that signal. Pages past the last page return 0.
+/// number of investigations of that signal. Pages past the last page return 0.
     #[serde(rename = "total_count")]
     pub total_count: i64,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityAgentInvestigationsListMeta {
@@ -43,23 +43,19 @@ impl SecurityAgentInvestigationsListMeta {
             _unparsed: false,
         }
     }
-
-    pub fn reason(
-        mut self,
-        value: crate::datadogV2::model::SecurityAgentInvestigationNoRunReason,
-    ) -> Self {
+    
+    pub fn reason(mut self, value: crate::datadogV2::model::SecurityAgentInvestigationNoRunReason) -> Self {
         self.reason = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SecurityAgentInvestigationsListMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,14 +74,9 @@ impl<'de> Deserialize<'de> for SecurityAgentInvestigationsListMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut reason: Option<
-                    crate::datadogV2::model::SecurityAgentInvestigationNoRunReason,
-                > = None;
+                let mut reason: Option<crate::datadogV2::model::SecurityAgentInvestigationNoRunReason> = None;
                 let mut total_count: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -103,20 +94,18 @@ impl<'de> Deserialize<'de> for SecurityAgentInvestigationsListMeta {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "total_count" => {
-                            total_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let total_count =
-                    total_count.ok_or_else(|| M::Error::missing_field("total_count"))?;
+                let total_count = total_count.ok_or_else(|| M::Error::missing_field("total_count"))?;
 
                 let content = SecurityAgentInvestigationsListMeta {
                     reason,

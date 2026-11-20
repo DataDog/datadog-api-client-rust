@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OnCallPageLiveCallOutcome {
-    SUCCESS_CALL_ANSWERED,
-    FAILURE_NO_RESPONDER,
-    FAILURE_CALLER_ABANDONED,
-    FAILURE_OUTSIDE_SUPPORT_HOURS,
-    FAILURE_INTERNAL_ERROR,
+	SUCCESS_CALL_ANSWERED,
+	FAILURE_NO_RESPONDER,
+	FAILURE_CALLER_ABANDONED,
+	FAILURE_OUTSIDE_SUPPORT_HOURS,
+	FAILURE_INTERNAL_ERROR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for OnCallPageLiveCallOutcome {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "success_call_answered" => Self::SUCCESS_CALL_ANSWERED,
-            "failure_no_responder" => Self::FAILURE_NO_RESPONDER,
-            "failure_caller_abandoned" => Self::FAILURE_CALLER_ABANDONED,
-            "failure_outside_support_hours" => Self::FAILURE_OUTSIDE_SUPPORT_HOURS,
-            "failure_internal_error" => Self::FAILURE_INTERNAL_ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"success_call_answered" => Self::SUCCESS_CALL_ANSWERED,"failure_no_responder" => Self::FAILURE_NO_RESPONDER,"failure_caller_abandoned" => Self::FAILURE_CALLER_ABANDONED,"failure_outside_support_hours" => Self::FAILURE_OUTSIDE_SUPPORT_HOURS,"failure_internal_error" => Self::FAILURE_INTERNAL_ERROR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

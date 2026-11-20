@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating an Agent Observability annotation queue. All fields are optional.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct LLMObsAnnotationQueueUpdateDataAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsAnnotationQueueUpdateDataAttributesRequest {
@@ -49,48 +49,43 @@ impl LLMObsAnnotationQueueUpdateDataAttributesRequest {
             _unparsed: false,
         }
     }
-
-    pub fn annotation_schema(
-        mut self,
-        value: crate::datadogV2::model::LLMObsAnnotationSchema,
-    ) -> Self {
+    
+    pub fn annotation_schema(mut self, value: crate::datadogV2::model::LLMObsAnnotationSchema) -> Self {
         self.annotation_schema = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn restrict_to_assignees(mut self, value: bool) -> Self {
         self.restrict_to_assignees = Some(value);
         self
     }
-
+    
     pub fn restrict_to_reviewers(mut self, value: bool) -> Self {
         self.restrict_to_reviewers = Some(value);
         self
     }
-
+    
     pub fn reviewer_emails(mut self, value: Vec<String>) -> Self {
         self.reviewer_emails = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LLMObsAnnotationQueueUpdateDataAttributesRequest {
     fn default() -> Self {
@@ -115,17 +110,13 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueUpdateDataAttributesRequest 
             where
                 M: MapAccess<'a>,
             {
-                let mut annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema> =
-                    None;
+                let mut annotation_schema: Option<crate::datadogV2::model::LLMObsAnnotationSchema> = None;
                 let mut description: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut restrict_to_assignees: Option<bool> = None;
                 let mut restrict_to_reviewers: Option<bool> = None;
                 let mut reviewer_emails: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,48 +125,43 @@ impl<'de> Deserialize<'de> for LLMObsAnnotationQueueUpdateDataAttributesRequest 
                             if v.is_null() {
                                 continue;
                             }
-                            annotation_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            annotation_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "restrict_to_assignees" => {
                             if v.is_null() {
                                 continue;
                             }
-                            restrict_to_assignees =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            restrict_to_assignees = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "restrict_to_reviewers" => {
                             if v.is_null() {
                                 continue;
                             }
-                            restrict_to_reviewers =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            restrict_to_reviewers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reviewer_emails" => {
                             if v.is_null() {
                                 continue;
                             }
-                            reviewer_emails =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            reviewer_emails = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

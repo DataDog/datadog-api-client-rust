@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The most recently started refresh. `null` until one starts.
 #[non_exhaustive]
@@ -15,14 +15,14 @@ pub struct ExperimentsBanditRefreshV2 {
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// When the refresh finished. `null` while it runs.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "ended_at")]
     pub ended_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The refresh ID.
     #[serde(rename = "id")]
     pub id: uuid::Uuid,
     /// When the refresh started running. `null` while it is pending.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "started_at")]
     pub started_at: Option<chrono::DateTime<chrono::Utc>>,
     /// The status of the refresh.
@@ -32,17 +32,11 @@ pub struct ExperimentsBanditRefreshV2 {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsBanditRefreshV2 {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        ended_at: Option<chrono::DateTime<chrono::Utc>>,
-        id: uuid::Uuid,
-        started_at: Option<chrono::DateTime<chrono::Utc>>,
-        status: crate::datadogV2::model::ExperimentsBanditRefreshStatus,
-    ) -> ExperimentsBanditRefreshV2 {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, ended_at: Option<chrono::DateTime<chrono::Utc>>, id: uuid::Uuid, started_at: Option<chrono::DateTime<chrono::Utc>>, status: crate::datadogV2::model::ExperimentsBanditRefreshStatus) -> ExperimentsBanditRefreshV2 {
         ExperimentsBanditRefreshV2 {
             created_at,
             ended_at,
@@ -53,15 +47,14 @@ impl ExperimentsBanditRefreshV2 {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsBanditRefreshV2 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -84,28 +77,24 @@ impl<'de> Deserialize<'de> for ExperimentsBanditRefreshV2 {
                 let mut ended_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
                 let mut id: Option<uuid::Uuid> = None;
                 let mut started_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut status: Option<crate::datadogV2::model::ExperimentsBanditRefreshStatus> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut status: Option<crate::datadogV2::model::ExperimentsBanditRefreshStatus> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ended_at" => {
                             ended_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "started_at" => {
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -116,12 +105,12 @@ impl<'de> Deserialize<'de> for ExperimentsBanditRefreshV2 {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Change event attributes.
 #[non_exhaustive]
@@ -28,8 +28,7 @@ pub struct ChangeEventAttributes {
     pub evt: Option<crate::datadogV2::model::EventSystemAttributes>,
     /// A list of resources impacted by this change.
     #[serde(rename = "impacted_resources")]
-    pub impacted_resources:
-        Option<Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>>,
+    pub impacted_resources: Option<Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>>,
     /// The new state of the changed resource.
     #[serde(rename = "new_value")]
     pub new_value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -49,7 +48,7 @@ pub struct ChangeEventAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChangeEventAttributes {
@@ -70,85 +69,68 @@ impl ChangeEventAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn aggregation_key(mut self, value: String) -> Self {
         self.aggregation_key = Some(value);
         self
     }
-
+    
     pub fn author(mut self, value: crate::datadogV2::model::ChangeEventAttributesAuthor) -> Self {
         self.author = Some(value);
         self
     }
-
-    pub fn change_metadata(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn change_metadata(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.change_metadata = Some(value);
         self
     }
-
-    pub fn changed_resource(
-        mut self,
-        value: crate::datadogV2::model::ChangeEventAttributesChangedResource,
-    ) -> Self {
+    
+    pub fn changed_resource(mut self, value: crate::datadogV2::model::ChangeEventAttributesChangedResource) -> Self {
         self.changed_resource = Some(value);
         self
     }
-
+    
     pub fn evt(mut self, value: crate::datadogV2::model::EventSystemAttributes) -> Self {
         self.evt = Some(value);
         self
     }
-
-    pub fn impacted_resources(
-        mut self,
-        value: Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>,
-    ) -> Self {
+    
+    pub fn impacted_resources(mut self, value: Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>) -> Self {
         self.impacted_resources = Some(value);
         self
     }
-
-    pub fn new_value(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn new_value(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.new_value = Some(value);
         self
     }
-
-    pub fn prev_value(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn prev_value(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.prev_value = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn timestamp(mut self, value: i64) -> Self {
         self.timestamp = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ChangeEventAttributes {
     fn default() -> Self {
@@ -175,27 +157,16 @@ impl<'de> Deserialize<'de> for ChangeEventAttributes {
             {
                 let mut aggregation_key: Option<String> = None;
                 let mut author: Option<crate::datadogV2::model::ChangeEventAttributesAuthor> = None;
-                let mut change_metadata: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
-                let mut changed_resource: Option<
-                    crate::datadogV2::model::ChangeEventAttributesChangedResource,
-                > = None;
+                let mut change_metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut changed_resource: Option<crate::datadogV2::model::ChangeEventAttributesChangedResource> = None;
                 let mut evt: Option<crate::datadogV2::model::EventSystemAttributes> = None;
-                let mut impacted_resources: Option<
-                    Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>,
-                > = None;
-                let mut new_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut impacted_resources: Option<Vec<crate::datadogV2::model::ChangeEventAttributesImpactedResourcesItem>> = None;
+                let mut new_value: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut prev_value: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut service: Option<String> = None;
                 let mut timestamp: Option<i64> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -204,77 +175,73 @@ impl<'de> Deserialize<'de> for ChangeEventAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aggregation_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "author" => {
                             if v.is_null() {
                                 continue;
                             }
                             author = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "change_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            change_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            change_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "changed_resource" => {
                             if v.is_null() {
                                 continue;
                             }
-                            changed_resource =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            changed_resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evt" => {
                             if v.is_null() {
                                 continue;
                             }
                             evt = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "impacted_resources" => {
                             if v.is_null() {
                                 continue;
                             }
-                            impacted_resources =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            impacted_resources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "new_value" => {
                             if v.is_null() {
                                 continue;
                             }
                             new_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prev_value" => {
                             if v.is_null() {
                                 continue;
                             }
                             prev_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp" => {
                             if v.is_null() {
                                 continue;
                             }
                             timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

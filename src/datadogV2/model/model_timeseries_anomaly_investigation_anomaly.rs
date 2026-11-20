@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// One of the most significant anomalies detected in the request.
 #[non_exhaustive]
@@ -39,20 +39,11 @@ pub struct TimeseriesAnomalyInvestigationAnomaly {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TimeseriesAnomalyInvestigationAnomaly {
-    pub fn new(
-        anomaly_detection: crate::datadogV2::model::TimeseriesAnomalyInvestigationDetection,
-        detected_interval: crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval,
-        display_interval: crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval,
-        findings: Vec<crate::datadogV2::model::TimeseriesAnomalyInvestigationFinding>,
-        maximum_deviation: crate::datadogV2::model::TimeseriesAnomalyInvestigationMaximumDeviation,
-        series: crate::datadogV2::model::TimeseriesAnomalyInvestigationSeries,
-        tag_analysis: crate::datadogV2::model::TimeseriesAnomalyInvestigationTagAnalysis,
-        type_: crate::datadogV2::model::TimeseriesAnomalyInvestigationAnomalyType,
-    ) -> TimeseriesAnomalyInvestigationAnomaly {
+    pub fn new(anomaly_detection: crate::datadogV2::model::TimeseriesAnomalyInvestigationDetection, detected_interval: crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval, display_interval: crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval, findings: Vec<crate::datadogV2::model::TimeseriesAnomalyInvestigationFinding>, maximum_deviation: crate::datadogV2::model::TimeseriesAnomalyInvestigationMaximumDeviation, series: crate::datadogV2::model::TimeseriesAnomalyInvestigationSeries, tag_analysis: crate::datadogV2::model::TimeseriesAnomalyInvestigationTagAnalysis, type_: crate::datadogV2::model::TimeseriesAnomalyInvestigationAnomalyType) -> TimeseriesAnomalyInvestigationAnomaly {
         TimeseriesAnomalyInvestigationAnomaly {
             anomaly_detection,
             detected_interval,
@@ -66,15 +57,14 @@ impl TimeseriesAnomalyInvestigationAnomaly {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TimeseriesAnomalyInvestigationAnomaly {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -93,64 +83,40 @@ impl<'de> Deserialize<'de> for TimeseriesAnomalyInvestigationAnomaly {
             where
                 M: MapAccess<'a>,
             {
-                let mut anomaly_detection: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationDetection,
-                > = None;
-                let mut detected_interval: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval,
-                > = None;
-                let mut display_interval: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval,
-                > = None;
-                let mut findings: Option<
-                    Vec<crate::datadogV2::model::TimeseriesAnomalyInvestigationFinding>,
-                > = None;
-                let mut maximum_deviation: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationMaximumDeviation,
-                > = None;
-                let mut series: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationSeries,
-                > = None;
-                let mut tag_analysis: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationTagAnalysis,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::TimeseriesAnomalyInvestigationAnomalyType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut anomaly_detection: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationDetection> = None;
+                let mut detected_interval: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval> = None;
+                let mut display_interval: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationInterval> = None;
+                let mut findings: Option<Vec<crate::datadogV2::model::TimeseriesAnomalyInvestigationFinding>> = None;
+                let mut maximum_deviation: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationMaximumDeviation> = None;
+                let mut series: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationSeries> = None;
+                let mut tag_analysis: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationTagAnalysis> = None;
+                let mut type_: Option<crate::datadogV2::model::TimeseriesAnomalyInvestigationAnomalyType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "anomaly_detection" => {
-                            anomaly_detection =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            anomaly_detection = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "detected_interval" => {
-                            detected_interval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            detected_interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_interval" => {
-                            display_interval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "findings" => {
                             findings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "maximum_deviation" => {
-                            maximum_deviation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            maximum_deviation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "series" => {
                             series = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_analysis" => {
-                            tag_analysis =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_analysis = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -161,26 +127,21 @@ impl<'de> Deserialize<'de> for TimeseriesAnomalyInvestigationAnomaly {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let anomaly_detection = anomaly_detection
-                    .ok_or_else(|| M::Error::missing_field("anomaly_detection"))?;
-                let detected_interval = detected_interval
-                    .ok_or_else(|| M::Error::missing_field("detected_interval"))?;
-                let display_interval =
-                    display_interval.ok_or_else(|| M::Error::missing_field("display_interval"))?;
+                let anomaly_detection = anomaly_detection.ok_or_else(|| M::Error::missing_field("anomaly_detection"))?;
+                let detected_interval = detected_interval.ok_or_else(|| M::Error::missing_field("detected_interval"))?;
+                let display_interval = display_interval.ok_or_else(|| M::Error::missing_field("display_interval"))?;
                 let findings = findings.ok_or_else(|| M::Error::missing_field("findings"))?;
-                let maximum_deviation = maximum_deviation
-                    .ok_or_else(|| M::Error::missing_field("maximum_deviation"))?;
+                let maximum_deviation = maximum_deviation.ok_or_else(|| M::Error::missing_field("maximum_deviation"))?;
                 let series = series.ok_or_else(|| M::Error::missing_field("series"))?;
-                let tag_analysis =
-                    tag_analysis.ok_or_else(|| M::Error::missing_field("tag_analysis"))?;
+                let tag_analysis = tag_analysis.ok_or_else(|| M::Error::missing_field("tag_analysis"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = TimeseriesAnomalyInvestigationAnomaly {

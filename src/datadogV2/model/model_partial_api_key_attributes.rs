@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a partial API key.
 #[non_exhaustive]
@@ -18,11 +18,7 @@ pub struct PartialAPIKeyAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<String>,
     /// Date the API Key was last used.
-    #[serde(
-        rename = "date_last_used",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "date_last_used", default, with = "::serde_with::rust::double_option")]
     pub date_last_used: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// The last four characters of the API key.
     #[serde(rename = "last4")]
@@ -43,7 +39,7 @@ pub struct PartialAPIKeyAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PartialAPIKeyAttributes {
@@ -61,55 +57,53 @@ impl PartialAPIKeyAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn category(mut self, value: String) -> Self {
         self.category = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn date_last_used(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.date_last_used = Some(value);
         self
     }
-
+    
     pub fn last4(mut self, value: String) -> Self {
         self.last4 = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: String) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn private_action_runner_enroll_enabled(mut self, value: bool) -> Self {
         self.private_action_runner_enroll_enabled = Some(value);
         self
     }
-
+    
     pub fn remote_config_read_enabled(mut self, value: bool) -> Self {
         self.remote_config_read_enabled = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for PartialAPIKeyAttributes {
     fn default() -> Self {
@@ -142,10 +136,7 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                 let mut name: Option<String> = None;
                 let mut private_action_runner_enroll_enabled: Option<bool> = None;
                 let mut remote_config_read_enabled: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,55 +146,51 @@ impl<'de> Deserialize<'de> for PartialAPIKeyAttributes {
                                 continue;
                             }
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "date_last_used" => {
-                            date_last_used =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            date_last_used = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last4" => {
                             if v.is_null() {
                                 continue;
                             }
                             last4 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "private_action_runner_enroll_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_action_runner_enroll_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_action_runner_enroll_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "remote_config_read_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            remote_config_read_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            remote_config_read_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

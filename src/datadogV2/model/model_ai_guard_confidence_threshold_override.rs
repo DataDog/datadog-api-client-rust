@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Request-only confidence threshold override. A number sets the threshold
 /// for every threat category; an object supplies a global threshold and
@@ -11,9 +11,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum AIGuardConfidenceThresholdOverride {
-    AIGuardGlobalConfidenceThreshold(f64),
-    AIGuardConfidenceThreshold(Box<crate::datadogV2::model::AIGuardConfidenceThreshold>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	AIGuardGlobalConfidenceThreshold(f64),
+	AIGuardConfidenceThreshold(Box<crate::datadogV2::model::AIGuardConfidenceThreshold>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for AIGuardConfidenceThresholdOverride {
@@ -22,20 +22,15 @@ impl<'de> Deserialize<'de> for AIGuardConfidenceThresholdOverride {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<f64>(value.clone()) {
-            return Ok(AIGuardConfidenceThresholdOverride::AIGuardGlobalConfidenceThreshold(_v));
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::AIGuardConfidenceThreshold>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<f64>(value.clone()) {
+			return Ok(AIGuardConfidenceThresholdOverride::AIGuardGlobalConfidenceThreshold(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::AIGuardConfidenceThreshold>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(AIGuardConfidenceThresholdOverride::AIGuardConfidenceThreshold(_v));
             }
         }
-
-        return Ok(AIGuardConfidenceThresholdOverride::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(AIGuardConfidenceThresholdOverride::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

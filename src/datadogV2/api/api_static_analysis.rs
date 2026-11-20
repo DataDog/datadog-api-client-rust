@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListAiCustomRuleRevisionsOptionalParams is a struct for passing parameters to the method [`StaticAnalysisAPI::list_ai_custom_rule_revisions`]
 #[non_exhaustive]
@@ -82,6 +79,9 @@ impl ListCustomRuleRevisionsOptionalParams {
     }
 }
 
+
+
+
 /// CreateAiCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::create_ai_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -90,6 +90,7 @@ pub enum CreateAiCustomRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAiCustomRuleRevisionError is a struct for typed errors of method [`StaticAnalysisAPI::create_ai_custom_rule_revision`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -100,6 +101,7 @@ pub enum CreateAiCustomRuleRevisionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateAiCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::create_ai_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -108,6 +110,7 @@ pub enum CreateAiCustomRulesetError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAiMemoryViolationResultError is a struct for typed errors of method [`StaticAnalysisAPI::create_ai_memory_violation_result`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -118,6 +121,7 @@ pub enum CreateAiMemoryViolationResultError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::create_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -126,6 +130,7 @@ pub enum CreateCustomRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateCustomRuleRevisionError is a struct for typed errors of method [`StaticAnalysisAPI::create_custom_rule_revision`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -136,6 +141,7 @@ pub enum CreateCustomRuleRevisionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::create_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -145,6 +151,7 @@ pub enum CreateCustomRulesetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateSCAResolveVulnerableSymbolsError is a struct for typed errors of method [`StaticAnalysisAPI::create_sca_resolve_vulnerable_symbols`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -153,6 +160,7 @@ pub enum CreateSCAResolveVulnerableSymbolsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateSCAResultError is a struct for typed errors of method [`StaticAnalysisAPI::create_sca_result`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -160,6 +168,7 @@ pub enum CreateSCAResultError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateSCAScanError is a struct for typed errors of method [`StaticAnalysisAPI::create_sca_scan`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -170,6 +179,7 @@ pub enum CreateSCAScanError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAiCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::delete_ai_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -178,6 +188,7 @@ pub enum DeleteAiCustomRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAiCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::delete_ai_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -188,6 +199,7 @@ pub enum DeleteAiCustomRulesetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAiMemoryViolationResultError is a struct for typed errors of method [`StaticAnalysisAPI::delete_ai_memory_violation_result`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -196,6 +208,7 @@ pub enum DeleteAiMemoryViolationResultError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::delete_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -206,6 +219,7 @@ pub enum DeleteCustomRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::delete_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -214,6 +228,7 @@ pub enum DeleteCustomRulesetError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAiCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::get_ai_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -224,6 +239,7 @@ pub enum GetAiCustomRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAiCustomRuleRevisionError is a struct for typed errors of method [`StaticAnalysisAPI::get_ai_custom_rule_revision`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -232,6 +248,7 @@ pub enum GetAiCustomRuleRevisionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAiCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::get_ai_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -242,6 +259,7 @@ pub enum GetAiCustomRulesetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCustomRuleError is a struct for typed errors of method [`StaticAnalysisAPI::get_custom_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -250,6 +268,7 @@ pub enum GetCustomRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCustomRuleRevisionError is a struct for typed errors of method [`StaticAnalysisAPI::get_custom_rule_revision`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -260,6 +279,7 @@ pub enum GetCustomRuleRevisionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::get_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -268,6 +288,7 @@ pub enum GetCustomRulesetError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetSCAScanError is a struct for typed errors of method [`StaticAnalysisAPI::get_sca_scan`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -278,6 +299,7 @@ pub enum GetSCAScanError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAiCustomRuleRevisionsError is a struct for typed errors of method [`StaticAnalysisAPI::list_ai_custom_rule_revisions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -286,6 +308,7 @@ pub enum ListAiCustomRuleRevisionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAiCustomRulesetsError is a struct for typed errors of method [`StaticAnalysisAPI::list_ai_custom_rulesets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -296,6 +319,7 @@ pub enum ListAiCustomRulesetsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAiMemoryViolationResultsError is a struct for typed errors of method [`StaticAnalysisAPI::list_ai_memory_violation_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -304,6 +328,7 @@ pub enum ListAiMemoryViolationResultsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAiPromptsError is a struct for typed errors of method [`StaticAnalysisAPI::list_ai_prompts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -314,6 +339,7 @@ pub enum ListAiPromptsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCustomRuleRevisionsError is a struct for typed errors of method [`StaticAnalysisAPI::list_custom_rule_revisions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -321,6 +347,7 @@ pub enum ListCustomRuleRevisionsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCustomRulesetsError is a struct for typed errors of method [`StaticAnalysisAPI::list_custom_rulesets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -331,6 +358,7 @@ pub enum ListCustomRulesetsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListSCALicensesError is a struct for typed errors of method [`StaticAnalysisAPI::list_sca_licenses`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -338,6 +366,7 @@ pub enum ListSCALicensesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RevertCustomRuleRevisionError is a struct for typed errors of method [`StaticAnalysisAPI::revert_custom_rule_revision`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -348,6 +377,7 @@ pub enum RevertCustomRuleRevisionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateAiCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::update_ai_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -357,6 +387,7 @@ pub enum UpdateAiCustomRulesetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCustomRulesetError is a struct for typed errors of method [`StaticAnalysisAPI::update_custom_ruleset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -365,6 +396,7 @@ pub enum UpdateCustomRulesetError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// API for static analysis
 #[derive(Debug, Clone)]
@@ -388,7 +420,8 @@ impl StaticAnalysisAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -433,48 +466,29 @@ impl StaticAnalysisAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new AI custom rule within a ruleset.
-    pub async fn create_ai_custom_rule(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::AiCustomRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRuleResponse,
-        datadog::Error<CreateAiCustomRuleError>,
-    > {
-        match self
-            .create_ai_custom_rule_with_http_info(ruleset_name, body)
-            .await
-        {
+    pub async fn create_ai_custom_rule(&self, ruleset_name: String, body: crate::datadogV2::model::AiCustomRuleRequest) -> Result<crate::datadogV2::model::AiCustomRuleResponse, datadog::Error<CreateAiCustomRuleError>> {
+        match self.create_ai_custom_rule_with_http_info(ruleset_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new AI custom rule within a ruleset.
-    pub async fn create_ai_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::AiCustomRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleResponse>,
-        datadog::Error<CreateAiCustomRuleError>,
-    > {
+    pub async fn create_ai_custom_rule_with_http_info(&self, ruleset_name: String, body: crate::datadogV2::model::AiCustomRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleResponse>, datadog::Error<CreateAiCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_ai_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -486,20 +500,25 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -512,23 +531,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -536,7 +548,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -546,7 +561,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -568,7 +586,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -585,53 +603,32 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAiCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAiCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new revision for an AI custom rule.
-    pub async fn create_ai_custom_rule_revision(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::AiCustomRuleRevisionRequest,
-    ) -> Result<(), datadog::Error<CreateAiCustomRuleRevisionError>> {
-        match self
-            .create_ai_custom_rule_revision_with_http_info(ruleset_name, rule_name, body)
-            .await
-        {
+    pub async fn create_ai_custom_rule_revision(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::AiCustomRuleRevisionRequest) -> Result<(), datadog::Error<CreateAiCustomRuleRevisionError>> {
+        match self.create_ai_custom_rule_revision_with_http_info(ruleset_name, rule_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new revision for an AI custom rule.
-    pub async fn create_ai_custom_rule_revision_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::AiCustomRuleRevisionRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiCustomRuleRevisionError>> {
+    pub async fn create_ai_custom_rule_revision_with_http_info(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::AiCustomRuleRevisionRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiCustomRuleRevisionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_ai_custom_rule_revision";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -643,21 +640,27 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -670,23 +673,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -694,7 +690,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -704,7 +703,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -726,7 +728,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -749,47 +751,29 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateAiCustomRuleRevisionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAiCustomRuleRevisionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new AI custom ruleset for the authenticated organization.
-    pub async fn create_ai_custom_ruleset(
-        &self,
-        body: crate::datadogV2::model::AiCustomRulesetRequest,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRulesetResponse,
-        datadog::Error<CreateAiCustomRulesetError>,
-    > {
+    pub async fn create_ai_custom_ruleset(&self, body: crate::datadogV2::model::AiCustomRulesetRequest) -> Result<crate::datadogV2::model::AiCustomRulesetResponse, datadog::Error<CreateAiCustomRulesetError>> {
         match self.create_ai_custom_ruleset_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new AI custom ruleset for the authenticated organization.
-    pub async fn create_ai_custom_ruleset_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AiCustomRulesetRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetResponse>,
-        datadog::Error<CreateAiCustomRulesetError>,
-    > {
+    pub async fn create_ai_custom_ruleset_with_http_info(&self, body: crate::datadogV2::model::AiCustomRulesetRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetResponse>, datadog::Error<CreateAiCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_ai_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -801,19 +785,23 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -826,23 +814,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -850,7 +831,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -860,7 +844,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -882,7 +869,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -899,50 +886,32 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAiCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAiCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a new AI memory violation result for the authenticated organization.
-    pub async fn create_ai_memory_violation_result(
-        &self,
-        body: crate::datadogV2::model::AiMemoryViolationResultRequest,
-    ) -> Result<(), datadog::Error<CreateAiMemoryViolationResultError>> {
-        match self
-            .create_ai_memory_violation_result_with_http_info(body)
-            .await
-        {
+    pub async fn create_ai_memory_violation_result(&self, body: crate::datadogV2::model::AiMemoryViolationResultRequest) -> Result<(), datadog::Error<CreateAiMemoryViolationResultError>> {
+        match self.create_ai_memory_violation_result_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a new AI memory violation result for the authenticated organization.
-    pub async fn create_ai_memory_violation_result_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AiMemoryViolationResultRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiMemoryViolationResultError>>
-    {
+    pub async fn create_ai_memory_violation_result_with_http_info(&self, body: crate::datadogV2::model::AiMemoryViolationResultRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateAiMemoryViolationResultError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_ai_memory_violation_result";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -954,19 +923,23 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -979,23 +952,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1003,7 +969,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1013,7 +982,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1035,7 +1007,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1058,50 +1030,29 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateAiMemoryViolationResultError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAiMemoryViolationResultError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new custom rule within a ruleset
-    pub async fn create_custom_rule(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::CustomRuleRequest,
-    ) -> Result<crate::datadogV2::model::CustomRuleResponse, datadog::Error<CreateCustomRuleError>>
-    {
-        match self
-            .create_custom_rule_with_http_info(ruleset_name, body)
-            .await
-        {
+    pub async fn create_custom_rule(&self, ruleset_name: String, body: crate::datadogV2::model::CustomRuleRequest) -> Result<crate::datadogV2::model::CustomRuleResponse, datadog::Error<CreateCustomRuleError>> {
+        match self.create_custom_rule_with_http_info(ruleset_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new custom rule within a ruleset
-    pub async fn create_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::CustomRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRuleResponse>,
-        datadog::Error<CreateCustomRuleError>,
-    > {
+    pub async fn create_custom_rule_with_http_info(&self, ruleset_name: String, body: crate::datadogV2::model::CustomRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRuleResponse>, datadog::Error<CreateCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1113,20 +1064,25 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1139,23 +1095,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1163,7 +1112,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1173,7 +1125,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1195,7 +1150,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1212,53 +1167,32 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new revision for a custom rule
-    pub async fn create_custom_rule_revision(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::CustomRuleRevisionRequest,
-    ) -> Result<(), datadog::Error<CreateCustomRuleRevisionError>> {
-        match self
-            .create_custom_rule_revision_with_http_info(ruleset_name, rule_name, body)
-            .await
-        {
+    pub async fn create_custom_rule_revision(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::CustomRuleRevisionRequest) -> Result<(), datadog::Error<CreateCustomRuleRevisionError>> {
+        match self.create_custom_rule_revision_with_http_info(ruleset_name, rule_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new revision for a custom rule
-    pub async fn create_custom_rule_revision_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::CustomRuleRevisionRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCustomRuleRevisionError>> {
+    pub async fn create_custom_rule_revision_with_http_info(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::CustomRuleRevisionRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateCustomRuleRevisionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_custom_rule_revision";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1270,21 +1204,27 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1297,23 +1237,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1321,7 +1254,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1331,7 +1267,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1353,7 +1292,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1376,47 +1315,29 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateCustomRuleRevisionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCustomRuleRevisionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new custom ruleset for the authenticated organization.
-    pub async fn create_custom_ruleset(
-        &self,
-        body: crate::datadogV2::model::CustomRulesetRequest,
-    ) -> Result<
-        crate::datadogV2::model::CustomRulesetResponse,
-        datadog::Error<CreateCustomRulesetError>,
-    > {
+    pub async fn create_custom_ruleset(&self, body: crate::datadogV2::model::CustomRulesetRequest) -> Result<crate::datadogV2::model::CustomRulesetResponse, datadog::Error<CreateCustomRulesetError>> {
         match self.create_custom_ruleset_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new custom ruleset for the authenticated organization.
-    pub async fn create_custom_ruleset_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CustomRulesetRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>,
-        datadog::Error<CreateCustomRulesetError>,
-    > {
+    pub async fn create_custom_ruleset_with_http_info(&self, body: crate::datadogV2::model::CustomRulesetRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>, datadog::Error<CreateCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1428,19 +1349,23 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1453,23 +1378,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1477,7 +1395,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1487,7 +1408,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1509,7 +1433,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1526,86 +1450,64 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn create_sca_resolve_vulnerable_symbols(
-        &self,
-        body: crate::datadogV2::model::ResolveVulnerableSymbolsRequest,
-    ) -> Result<
-        crate::datadogV2::model::ResolveVulnerableSymbolsResponse,
-        datadog::Error<CreateSCAResolveVulnerableSymbolsError>,
-    > {
-        match self
-            .create_sca_resolve_vulnerable_symbols_with_http_info(body)
-            .await
-        {
+    
+    pub async fn create_sca_resolve_vulnerable_symbols(&self, body: crate::datadogV2::model::ResolveVulnerableSymbolsRequest) -> Result<crate::datadogV2::model::ResolveVulnerableSymbolsResponse, datadog::Error<CreateSCAResolveVulnerableSymbolsError>> {
+        match self.create_sca_resolve_vulnerable_symbols_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn create_sca_resolve_vulnerable_symbols_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ResolveVulnerableSymbolsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ResolveVulnerableSymbolsResponse>,
-        datadog::Error<CreateSCAResolveVulnerableSymbolsError>,
-    > {
+    
+    pub async fn create_sca_resolve_vulnerable_symbols_with_http_info(&self, body: crate::datadogV2::model::ResolveVulnerableSymbolsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ResolveVulnerableSymbolsResponse>, datadog::Error<CreateSCAResolveVulnerableSymbolsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_sca_resolve_vulnerable_symbols";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_sca_resolve_vulnerable_symbols' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_sca_resolve_vulnerable_symbols' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/vulnerabilities/resolve-vulnerable-symbols",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1618,23 +1520,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1642,7 +1537,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1652,7 +1550,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1674,7 +1575,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1691,44 +1592,30 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ResolveVulnerableSymbolsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ResolveVulnerableSymbolsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateSCAResolveVulnerableSymbolsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateSCAResolveVulnerableSymbolsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn create_sca_result(
-        &self,
-        body: crate::datadogV2::model::ScaRequest,
-    ) -> Result<(), datadog::Error<CreateSCAResultError>> {
+    
+    pub async fn create_sca_result(&self, body: crate::datadogV2::model::ScaRequest) -> Result<(), datadog::Error<CreateSCAResultError>> {
         match self.create_sca_result_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
-    pub async fn create_sca_result_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ScaRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateSCAResultError>> {
+    
+    pub async fn create_sca_result_with_http_info(&self, body: crate::datadogV2::model::ScaRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateSCAResultError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_sca_result";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1740,19 +1627,23 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1765,23 +1656,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1789,7 +1673,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1799,7 +1686,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1821,7 +1711,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1844,43 +1734,27 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateSCAResultError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateSCAResultError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn create_sca_scan(
-        &self,
-        body: crate::datadogV2::model::McpScanRequest,
-    ) -> Result<crate::datadogV2::model::McpScanRequestResponse, datadog::Error<CreateSCAScanError>>
-    {
+    
+    pub async fn create_sca_scan(&self, body: crate::datadogV2::model::McpScanRequest) -> Result<crate::datadogV2::model::McpScanRequestResponse, datadog::Error<CreateSCAScanError>> {
         match self.create_sca_scan_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn create_sca_scan_with_http_info(
-        &self,
-        body: crate::datadogV2::model::McpScanRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::McpScanRequestResponse>,
-        datadog::Error<CreateSCAScanError>,
-    > {
+    
+    pub async fn create_sca_scan_with_http_info(&self, body: crate::datadogV2::model::McpScanRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::McpScanRequestResponse>, datadog::Error<CreateSCAScanError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_sca_scan";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1892,19 +1766,23 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies/scan",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1917,23 +1795,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1941,7 +1812,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1951,7 +1825,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1973,7 +1850,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1990,51 +1867,32 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::McpScanRequestResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::McpScanRequestResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateSCAScanError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateSCAScanError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AI custom rule by name within a ruleset.
-    pub async fn delete_ai_custom_rule(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<(), datadog::Error<DeleteAiCustomRuleError>> {
-        match self
-            .delete_ai_custom_rule_with_http_info(ruleset_name, rule_name)
-            .await
-        {
+    pub async fn delete_ai_custom_rule(&self, ruleset_name: String, rule_name: String) -> Result<(), datadog::Error<DeleteAiCustomRuleError>> {
+        match self.delete_ai_custom_rule_with_http_info(ruleset_name, rule_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AI custom rule by name within a ruleset.
-    pub async fn delete_ai_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRuleError>> {
+    pub async fn delete_ai_custom_rule_with_http_info(&self, ruleset_name: String, rule_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_ai_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2046,20 +1904,26 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2072,22 +1936,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2105,36 +1963,23 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAiCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAiCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AI custom ruleset by name.
-    pub async fn delete_ai_custom_ruleset(
-        &self,
-        ruleset_name: String,
-    ) -> Result<(), datadog::Error<DeleteAiCustomRulesetError>> {
-        match self
-            .delete_ai_custom_ruleset_with_http_info(ruleset_name)
-            .await
-        {
+    pub async fn delete_ai_custom_ruleset(&self, ruleset_name: String) -> Result<(), datadog::Error<DeleteAiCustomRulesetError>> {
+        match self.delete_ai_custom_ruleset_with_http_info(ruleset_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AI custom ruleset by name.
-    pub async fn delete_ai_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRulesetError>> {
+    pub async fn delete_ai_custom_ruleset_with_http_info(&self, ruleset_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_ai_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2146,19 +1991,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2171,22 +2021,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2204,37 +2048,23 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAiCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAiCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AI memory violation result by its numeric identifier.
-    pub async fn delete_ai_memory_violation_result(
-        &self,
-        id: String,
-    ) -> Result<(), datadog::Error<DeleteAiMemoryViolationResultError>> {
-        match self
-            .delete_ai_memory_violation_result_with_http_info(id)
-            .await
-        {
+    pub async fn delete_ai_memory_violation_result(&self, id: String) -> Result<(), datadog::Error<DeleteAiMemoryViolationResultError>> {
+        match self.delete_ai_memory_violation_result_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AI memory violation result by its numeric identifier.
-    pub async fn delete_ai_memory_violation_result_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiMemoryViolationResultError>>
-    {
+    pub async fn delete_ai_memory_violation_result_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAiMemoryViolationResultError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_ai_memory_violation_result";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2246,19 +2076,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2271,22 +2106,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2304,38 +2133,23 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAiMemoryViolationResultError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAiMemoryViolationResultError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a custom rule
-    pub async fn delete_custom_rule(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<(), datadog::Error<DeleteCustomRuleError>> {
-        match self
-            .delete_custom_rule_with_http_info(ruleset_name, rule_name)
-            .await
-        {
+    pub async fn delete_custom_rule(&self, ruleset_name: String, rule_name: String) -> Result<(), datadog::Error<DeleteCustomRuleError>> {
+        match self.delete_custom_rule_with_http_info(ruleset_name, rule_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a custom rule
-    pub async fn delete_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRuleError>> {
+    pub async fn delete_custom_rule_with_http_info(&self, ruleset_name: String, rule_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2347,20 +2161,26 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2373,22 +2193,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2406,36 +2220,23 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a custom ruleset
-    pub async fn delete_custom_ruleset(
-        &self,
-        ruleset_name: String,
-    ) -> Result<(), datadog::Error<DeleteCustomRulesetError>> {
-        match self
-            .delete_custom_ruleset_with_http_info(ruleset_name)
-            .await
-        {
+    pub async fn delete_custom_ruleset(&self, ruleset_name: String) -> Result<(), datadog::Error<DeleteCustomRulesetError>> {
+        match self.delete_custom_ruleset_with_http_info(ruleset_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a custom ruleset
-    pub async fn delete_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRulesetError>> {
+    pub async fn delete_custom_ruleset_with_http_info(&self, ruleset_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2447,19 +2248,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2472,22 +2278,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2505,50 +2305,29 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an AI custom rule by name within a ruleset.
-    pub async fn get_ai_custom_rule(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<crate::datadogV2::model::AiCustomRuleResponse, datadog::Error<GetAiCustomRuleError>>
-    {
-        match self
-            .get_ai_custom_rule_with_http_info(ruleset_name, rule_name)
-            .await
-        {
+    pub async fn get_ai_custom_rule(&self, ruleset_name: String, rule_name: String) -> Result<crate::datadogV2::model::AiCustomRuleResponse, datadog::Error<GetAiCustomRuleError>> {
+        match self.get_ai_custom_rule_with_http_info(ruleset_name, rule_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an AI custom rule by name within a ruleset.
-    pub async fn get_ai_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleResponse>,
-        datadog::Error<GetAiCustomRuleError>,
-    > {
+    pub async fn get_ai_custom_rule_with_http_info(&self, ruleset_name: String, rule_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleResponse>, datadog::Error<GetAiCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_ai_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2560,20 +2339,26 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2586,22 +2371,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2613,67 +2392,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAiCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAiCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific revision of an AI custom rule.
-    pub async fn get_ai_custom_rule_revision(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        id: String,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRuleRevisionResponse,
-        datadog::Error<GetAiCustomRuleRevisionError>,
-    > {
-        match self
-            .get_ai_custom_rule_revision_with_http_info(ruleset_name, rule_name, id)
-            .await
-        {
+    pub async fn get_ai_custom_rule_revision(&self, ruleset_name: String, rule_name: String, id: String) -> Result<crate::datadogV2::model::AiCustomRuleRevisionResponse, datadog::Error<GetAiCustomRuleRevisionError>> {
+        match self.get_ai_custom_rule_revision_with_http_info(ruleset_name, rule_name, id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific revision of an AI custom rule.
-    pub async fn get_ai_custom_rule_revision_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleRevisionResponse>,
-        datadog::Error<GetAiCustomRuleRevisionError>,
-    > {
+    pub async fn get_ai_custom_rule_revision_with_http_info(&self, ruleset_name: String, rule_name: String, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleRevisionResponse>, datadog::Error<GetAiCustomRuleRevisionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_ai_custom_rule_revision";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2685,21 +2435,28 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            , id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2712,22 +2469,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2739,63 +2490,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleRevisionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleRevisionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAiCustomRuleRevisionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAiCustomRuleRevisionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an AI custom ruleset by name.
-    pub async fn get_ai_custom_ruleset(
-        &self,
-        ruleset_name: String,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRulesetResponse,
-        datadog::Error<GetAiCustomRulesetError>,
-    > {
-        match self
-            .get_ai_custom_ruleset_with_http_info(ruleset_name)
-            .await
-        {
+    pub async fn get_ai_custom_ruleset(&self, ruleset_name: String) -> Result<crate::datadogV2::model::AiCustomRulesetResponse, datadog::Error<GetAiCustomRulesetError>> {
+        match self.get_ai_custom_ruleset_with_http_info(ruleset_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an AI custom ruleset by name.
-    pub async fn get_ai_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetResponse>,
-        datadog::Error<GetAiCustomRulesetError>,
-    > {
+    pub async fn get_ai_custom_ruleset_with_http_info(&self, ruleset_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetResponse>, datadog::Error<GetAiCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_ai_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2807,19 +2533,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2832,22 +2563,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2859,63 +2584,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAiCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAiCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a custom rule by name
-    pub async fn get_custom_rule(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<crate::datadogV2::model::CustomRuleResponse, datadog::Error<GetCustomRuleError>>
-    {
-        match self
-            .get_custom_rule_with_http_info(ruleset_name, rule_name)
-            .await
-        {
+    pub async fn get_custom_rule(&self, ruleset_name: String, rule_name: String) -> Result<crate::datadogV2::model::CustomRuleResponse, datadog::Error<GetCustomRuleError>> {
+        match self.get_custom_rule_with_http_info(ruleset_name, rule_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a custom rule by name
-    pub async fn get_custom_rule_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRuleResponse>,
-        datadog::Error<GetCustomRuleError>,
-    > {
+    pub async fn get_custom_rule_with_http_info(&self, ruleset_name: String, rule_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRuleResponse>, datadog::Error<GetCustomRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_custom_rule";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2927,20 +2627,26 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2953,22 +2659,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2980,67 +2680,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCustomRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCustomRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific revision of a custom rule
-    pub async fn get_custom_rule_revision(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        id: String,
-    ) -> Result<
-        crate::datadogV2::model::CustomRuleRevisionResponse,
-        datadog::Error<GetCustomRuleRevisionError>,
-    > {
-        match self
-            .get_custom_rule_revision_with_http_info(ruleset_name, rule_name, id)
-            .await
-        {
+    pub async fn get_custom_rule_revision(&self, ruleset_name: String, rule_name: String, id: String) -> Result<crate::datadogV2::model::CustomRuleRevisionResponse, datadog::Error<GetCustomRuleRevisionError>> {
+        match self.get_custom_rule_revision_with_http_info(ruleset_name, rule_name, id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific revision of a custom rule
-    pub async fn get_custom_rule_revision_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRuleRevisionResponse>,
-        datadog::Error<GetCustomRuleRevisionError>,
-    > {
+    pub async fn get_custom_rule_revision_with_http_info(&self, ruleset_name: String, rule_name: String, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRuleRevisionResponse>, datadog::Error<GetCustomRuleRevisionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_custom_rule_revision";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3051,6 +2722,8 @@ impl StaticAnalysisAPI {
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
@@ -3063,12 +2736,15 @@ impl StaticAnalysisAPI {
             , id=
             datadog::urlencode(id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3081,22 +2757,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3108,58 +2778,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRuleRevisionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRuleRevisionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCustomRuleRevisionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCustomRuleRevisionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a custom ruleset by name
-    pub async fn get_custom_ruleset(
-        &self,
-        ruleset_name: String,
-    ) -> Result<crate::datadogV2::model::CustomRulesetResponse, datadog::Error<GetCustomRulesetError>>
-    {
+    pub async fn get_custom_ruleset(&self, ruleset_name: String) -> Result<crate::datadogV2::model::CustomRulesetResponse, datadog::Error<GetCustomRulesetError>> {
         match self.get_custom_ruleset_with_http_info(ruleset_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a custom ruleset by name
-    pub async fn get_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>,
-        datadog::Error<GetCustomRulesetError>,
-    > {
+    pub async fn get_custom_ruleset_with_http_info(&self, ruleset_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>, datadog::Error<GetCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3171,19 +2821,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3196,22 +2851,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3223,55 +2872,36 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn get_sca_scan(
-        &self,
-        job_id: String,
-    ) -> Result<crate::datadogV2::model::ScanResultResponse, datadog::Error<GetSCAScanError>> {
+    
+    pub async fn get_sca_scan(&self, job_id: String) -> Result<crate::datadogV2::model::ScanResultResponse, datadog::Error<GetSCAScanError>> {
         match self.get_sca_scan_with_http_info(job_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn get_sca_scan_with_http_info(
-        &self,
-        job_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ScanResultResponse>,
-        datadog::Error<GetSCAScanError>,
-    > {
+    
+    pub async fn get_sca_scan_with_http_info(&self, job_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ScanResultResponse>, datadog::Error<GetSCAScanError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_sca_scan";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3283,19 +2913,24 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/dependencies/scan/{job_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            job_id = datadog::urlencode(job_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), job_id=
+            datadog::urlencode(job_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3308,22 +2943,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3335,67 +2964,39 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ScanResultResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ScanResultResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetSCAScanError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all revisions for an AI custom rule.
-    pub async fn list_ai_custom_rule_revisions(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        params: ListAiCustomRuleRevisionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRuleRevisionsResponse,
-        datadog::Error<ListAiCustomRuleRevisionsError>,
-    > {
-        match self
-            .list_ai_custom_rule_revisions_with_http_info(ruleset_name, rule_name, params)
-            .await
-        {
+    pub async fn list_ai_custom_rule_revisions(&self, ruleset_name: String, rule_name: String, params: ListAiCustomRuleRevisionsOptionalParams) -> Result<crate::datadogV2::model::AiCustomRuleRevisionsResponse, datadog::Error<ListAiCustomRuleRevisionsError>> {
+        match self.list_ai_custom_rule_revisions_with_http_info(ruleset_name, rule_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_ai_custom_rule_revisions_with_pagination(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        mut params: ListAiCustomRuleRevisionsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::AiCustomRuleRevisionResponseData,
-            datadog::Error<ListAiCustomRuleRevisionsError>,
-        >,
-    > + '_ {
+        &self,  ruleset_name: String,  rule_name: String, mut params: ListAiCustomRuleRevisionsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::AiCustomRuleRevisionResponseData, datadog::Error<ListAiCustomRuleRevisionsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_limit.is_none() {
@@ -3423,16 +3024,9 @@ impl StaticAnalysisAPI {
         }
     }
 
+    
     /// Get all revisions for an AI custom rule.
-    pub async fn list_ai_custom_rule_revisions_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        params: ListAiCustomRuleRevisionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleRevisionsResponse>,
-        datadog::Error<ListAiCustomRuleRevisionsError>,
-    > {
+    pub async fn list_ai_custom_rule_revisions_with_http_info(&self, ruleset_name: String, rule_name: String, params: ListAiCustomRuleRevisionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRuleRevisionsResponse>, datadog::Error<ListAiCustomRuleRevisionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_ai_custom_rule_revisions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3444,6 +3038,7 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -3452,25 +3047,26 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3483,22 +3079,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3510,60 +3100,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleRevisionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRuleRevisionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAiCustomRuleRevisionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAiCustomRuleRevisionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all AI custom rulesets for the authenticated organization.
-    pub async fn list_ai_custom_rulesets(
-        &self,
-        params: ListAiCustomRulesetsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::AiCustomRulesetsResponse,
-        datadog::Error<ListAiCustomRulesetsError>,
-    > {
-        match self.list_ai_custom_rulesets_with_http_info(params).await {
+    pub async fn list_ai_custom_rulesets(&self, params: ListAiCustomRulesetsOptionalParams) -> Result<crate::datadogV2::model::AiCustomRulesetsResponse, datadog::Error<ListAiCustomRulesetsError>> {
+        match self.list_ai_custom_rulesets_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all AI custom rulesets for the authenticated organization.
-    pub async fn list_ai_custom_rulesets_with_http_info(
-        &self,
-        params: ListAiCustomRulesetsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetsResponse>,
-        datadog::Error<ListAiCustomRulesetsError>,
-    > {
+    pub async fn list_ai_custom_rulesets_with_http_info(&self, params: ListAiCustomRulesetsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiCustomRulesetsResponse>, datadog::Error<ListAiCustomRulesetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_ai_custom_rulesets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3575,6 +3143,7 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -3583,23 +3152,22 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3612,22 +3180,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3639,58 +3201,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiCustomRulesetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAiCustomRulesetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAiCustomRulesetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all AI memory violation results for the authenticated organization.
-    pub async fn list_ai_memory_violation_results(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AiMemoryViolationResultsResponse,
-        datadog::Error<ListAiMemoryViolationResultsError>,
-    > {
+    pub async fn list_ai_memory_violation_results(&self) -> Result<crate::datadogV2::model::AiMemoryViolationResultsResponse, datadog::Error<ListAiMemoryViolationResultsError>> {
         match self.list_ai_memory_violation_results_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all AI memory violation results for the authenticated organization.
-    pub async fn list_ai_memory_violation_results_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiMemoryViolationResultsResponse>,
-        datadog::Error<ListAiMemoryViolationResultsError>,
-    > {
+    pub async fn list_ai_memory_violation_results_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiMemoryViolationResultsResponse>, datadog::Error<ListAiMemoryViolationResultsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_ai_memory_violation_results";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3702,18 +3244,22 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/memory",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3726,22 +3272,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3753,56 +3293,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiMemoryViolationResultsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiMemoryViolationResultsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAiMemoryViolationResultsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAiMemoryViolationResultsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all AI prompts, including default prompts and custom AI rule prompts for the authenticated organization.
-    pub async fn list_ai_prompts(
-        &self,
-    ) -> Result<crate::datadogV2::model::AiPromptsResponse, datadog::Error<ListAiPromptsError>>
-    {
+    pub async fn list_ai_prompts(&self) -> Result<crate::datadogV2::model::AiPromptsResponse, datadog::Error<ListAiPromptsError>> {
         match self.list_ai_prompts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all AI prompts, including default prompts and custom AI rule prompts for the authenticated organization.
-    pub async fn list_ai_prompts_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AiPromptsResponse>,
-        datadog::Error<ListAiPromptsError>,
-    > {
+    pub async fn list_ai_prompts_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AiPromptsResponse>, datadog::Error<ListAiPromptsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_ai_prompts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3814,18 +3336,22 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/prompts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3838,22 +3364,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3865,67 +3385,39 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AiPromptsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AiPromptsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAiPromptsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAiPromptsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all revisions for a custom rule
-    pub async fn list_custom_rule_revisions(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        params: ListCustomRuleRevisionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CustomRuleRevisionsResponse,
-        datadog::Error<ListCustomRuleRevisionsError>,
-    > {
-        match self
-            .list_custom_rule_revisions_with_http_info(ruleset_name, rule_name, params)
-            .await
-        {
+    pub async fn list_custom_rule_revisions(&self, ruleset_name: String, rule_name: String, params: ListCustomRuleRevisionsOptionalParams) -> Result<crate::datadogV2::model::CustomRuleRevisionsResponse, datadog::Error<ListCustomRuleRevisionsError>> {
+        match self.list_custom_rule_revisions_with_http_info(ruleset_name, rule_name,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_custom_rule_revisions_with_pagination(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        mut params: ListCustomRuleRevisionsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::CustomRuleRevision,
-            datadog::Error<ListCustomRuleRevisionsError>,
-        >,
-    > + '_ {
+        &self,  ruleset_name: String,  rule_name: String, mut params: ListCustomRuleRevisionsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::CustomRuleRevision, datadog::Error<ListCustomRuleRevisionsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_limit.is_none() {
@@ -3954,16 +3446,9 @@ impl StaticAnalysisAPI {
         }
     }
 
+    
     /// Get all revisions for a custom rule
-    pub async fn list_custom_rule_revisions_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        params: ListCustomRuleRevisionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRuleRevisionsResponse>,
-        datadog::Error<ListCustomRuleRevisionsError>,
-    > {
+    pub async fn list_custom_rule_revisions_with_http_info(&self, ruleset_name: String, rule_name: String, params: ListCustomRuleRevisionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRuleRevisionsResponse>, datadog::Error<ListCustomRuleRevisionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_custom_rule_revisions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3975,6 +3460,7 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -3983,25 +3469,26 @@ impl StaticAnalysisAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}/rules/{rule_name}/revisions",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name),
-            rule_name = datadog::urlencode(rule_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            , rule_name=
+            datadog::urlencode(rule_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4014,22 +3501,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4041,58 +3522,38 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRuleRevisionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRuleRevisionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCustomRuleRevisionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCustomRuleRevisionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all custom rulesets for the authenticated organization.
-    pub async fn list_custom_rulesets(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::CustomRulesetListResponse,
-        datadog::Error<ListCustomRulesetsError>,
-    > {
+    pub async fn list_custom_rulesets(&self) -> Result<crate::datadogV2::model::CustomRulesetListResponse, datadog::Error<ListCustomRulesetsError>> {
         match self.list_custom_rulesets_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all custom rulesets for the authenticated organization.
-    pub async fn list_custom_rulesets_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRulesetListResponse>,
-        datadog::Error<ListCustomRulesetsError>,
-    > {
+    pub async fn list_custom_rulesets_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRulesetListResponse>, datadog::Error<ListCustomRulesetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_custom_rulesets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4104,18 +3565,22 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4128,22 +3593,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4155,54 +3614,36 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCustomRulesetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCustomRulesetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn list_sca_licenses(
-        &self,
-    ) -> Result<crate::datadogV2::model::LicensesListResponse, datadog::Error<ListSCALicensesError>>
-    {
+    
+    pub async fn list_sca_licenses(&self) -> Result<crate::datadogV2::model::LicensesListResponse, datadog::Error<ListSCALicensesError>> {
         match self.list_sca_licenses_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn list_sca_licenses_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LicensesListResponse>,
-        datadog::Error<ListSCALicensesError>,
-    > {
+    
+    pub async fn list_sca_licenses_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::LicensesListResponse>, datadog::Error<ListSCALicensesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_sca_licenses";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4214,18 +3655,22 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis-sca/licenses/list",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4238,22 +3683,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4265,53 +3704,32 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LicensesListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LicensesListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListSCALicensesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListSCALicensesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Revert a custom rule to a previous revision
-    pub async fn revert_custom_rule_revision(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::RevertCustomRuleRevisionRequest,
-    ) -> Result<(), datadog::Error<RevertCustomRuleRevisionError>> {
-        match self
-            .revert_custom_rule_revision_with_http_info(ruleset_name, rule_name, body)
-            .await
-        {
+    pub async fn revert_custom_rule_revision(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::RevertCustomRuleRevisionRequest) -> Result<(), datadog::Error<RevertCustomRuleRevisionError>> {
+        match self.revert_custom_rule_revision_with_http_info(ruleset_name, rule_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Revert a custom rule to a previous revision
-    pub async fn revert_custom_rule_revision_with_http_info(
-        &self,
-        ruleset_name: String,
-        rule_name: String,
-        body: crate::datadogV2::model::RevertCustomRuleRevisionRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevertCustomRuleRevisionError>> {
+    pub async fn revert_custom_rule_revision_with_http_info(&self, ruleset_name: String, rule_name: String, body: crate::datadogV2::model::RevertCustomRuleRevisionRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<RevertCustomRuleRevisionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.revert_custom_rule_revision";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4323,6 +3741,8 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
@@ -4332,13 +3752,16 @@ impl StaticAnalysisAPI {
             , rule_name=
             datadog::urlencode(rule_name)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4351,23 +3774,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4375,7 +3791,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4385,7 +3804,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4407,7 +3829,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4430,38 +3852,23 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RevertCustomRuleRevisionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RevertCustomRuleRevisionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the description of an existing AI custom ruleset.
-    pub async fn update_ai_custom_ruleset(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::AiCustomRulesetUpdateRequest,
-    ) -> Result<(), datadog::Error<UpdateAiCustomRulesetError>> {
-        match self
-            .update_ai_custom_ruleset_with_http_info(ruleset_name, body)
-            .await
-        {
+    pub async fn update_ai_custom_ruleset(&self, ruleset_name: String, body: crate::datadogV2::model::AiCustomRulesetUpdateRequest) -> Result<(), datadog::Error<UpdateAiCustomRulesetError>> {
+        match self.update_ai_custom_ruleset_with_http_info(ruleset_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the description of an existing AI custom ruleset.
-    pub async fn update_ai_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::AiCustomRulesetUpdateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAiCustomRulesetError>> {
+    pub async fn update_ai_custom_ruleset_with_http_info(&self, ruleset_name: String, body: crate::datadogV2::model::AiCustomRulesetUpdateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAiCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_ai_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4473,20 +3880,25 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/ai/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4499,23 +3911,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4523,7 +3928,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4533,7 +3941,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4555,7 +3966,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4578,52 +3989,29 @@ impl StaticAnalysisAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateAiCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAiCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing custom ruleset
-    pub async fn update_custom_ruleset(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::CustomRulesetRequest,
-    ) -> Result<
-        crate::datadogV2::model::CustomRulesetResponse,
-        datadog::Error<UpdateCustomRulesetError>,
-    > {
-        match self
-            .update_custom_ruleset_with_http_info(ruleset_name, body)
-            .await
-        {
+    pub async fn update_custom_ruleset(&self, ruleset_name: String, body: crate::datadogV2::model::CustomRulesetRequest) -> Result<crate::datadogV2::model::CustomRulesetResponse, datadog::Error<UpdateCustomRulesetError>> {
+        match self.update_custom_ruleset_with_http_info(ruleset_name, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing custom ruleset
-    pub async fn update_custom_ruleset_with_http_info(
-        &self,
-        ruleset_name: String,
-        body: crate::datadogV2::model::CustomRulesetRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>,
-        datadog::Error<UpdateCustomRulesetError>,
-    > {
+    pub async fn update_custom_ruleset_with_http_info(&self, ruleset_name: String, body: crate::datadogV2::model::CustomRulesetRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomRulesetResponse>, datadog::Error<UpdateCustomRulesetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_custom_ruleset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4635,20 +4023,25 @@ impl StaticAnalysisAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/static-analysis/custom/rulesets/{ruleset_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            ruleset_name = datadog::urlencode(ruleset_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), ruleset_name=
+            datadog::urlencode(ruleset_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4661,23 +4054,16 @@ impl StaticAnalysisAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4685,7 +4071,10 @@ impl StaticAnalysisAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4695,7 +4084,10 @@ impl StaticAnalysisAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4717,7 +4109,7 @@ impl StaticAnalysisAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4734,26 +4126,17 @@ impl StaticAnalysisAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomRulesetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCustomRulesetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCustomRulesetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

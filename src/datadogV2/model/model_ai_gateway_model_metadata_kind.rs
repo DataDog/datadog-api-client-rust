@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayModelMetadataKind {
-    LANGUAGE,
-    EMBEDDING,
-    IMAGE,
-    AUDIO,
-    DECISION,
-    RERANKING,
+	LANGUAGE,
+	EMBEDDING,
+	IMAGE,
+	AUDIO,
+	DECISION,
+	RERANKING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for AiGatewayModelMetadataKind {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "language" => Self::LANGUAGE,
-            "embedding" => Self::EMBEDDING,
-            "image" => Self::IMAGE,
-            "audio" => Self::AUDIO,
-            "decision" => Self::DECISION,
-            "reranking" => Self::RERANKING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"language" => Self::LANGUAGE,"embedding" => Self::EMBEDDING,"image" => Self::IMAGE,"audio" => Self::AUDIO,"decision" => Self::DECISION,"reranking" => Self::RERANKING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

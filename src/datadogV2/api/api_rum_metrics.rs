@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateRumMetricError is a struct for typed errors of method [`RumMetricsAPI::create_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateRumMetricError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteRumMetricError is a struct for typed errors of method [`RumMetricsAPI::delete_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum DeleteRumMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRumMetricError is a struct for typed errors of method [`RumMetricsAPI::get_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum GetRumMetricError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRumMetricsError is a struct for typed errors of method [`RumMetricsAPI::list_rum_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -42,6 +45,7 @@ pub enum ListRumMetricsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateRumMetricError is a struct for typed errors of method [`RumMetricsAPI::update_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -49,6 +53,7 @@ pub enum UpdateRumMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage configuration of [RUM-based metrics](<https://app.datadoghq.com/rum/generate-metrics>) for your organization.
 #[derive(Debug, Clone)]
@@ -72,7 +77,8 @@ impl RumMetricsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -117,69 +123,61 @@ impl RumMetricsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a metric based on your organization's RUM data.
-    /// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
-    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
-    /// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
-    /// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
-    /// Returns the created RUM-based metric when the request is successful.
-    /// The request returns a `409 Conflict` error if a metric with the same name already exists.
-    pub async fn create_rum_metric(
-        &self,
-        body: crate::datadogV2::model::RumMetricCreateRequest,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<CreateRumMetricError>>
-    {
+/// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
+/// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
+/// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
+/// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
+/// Returns the created RUM-based metric when the request is successful.
+/// The request returns a `409 Conflict` error if a metric with the same name already exists.
+    pub async fn create_rum_metric(&self, body: crate::datadogV2::model::RumMetricCreateRequest) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<CreateRumMetricError>> {
         match self.create_rum_metric_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a metric based on your organization's RUM data.
-    /// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
-    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
-    /// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
-    /// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
-    /// Returns the created RUM-based metric when the request is successful.
-    /// The request returns a `409 Conflict` error if a metric with the same name already exists.
-    pub async fn create_rum_metric_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RumMetricCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<CreateRumMetricError>,
-    > {
+/// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
+/// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
+/// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
+/// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
+/// Returns the created RUM-based metric when the request is successful.
+/// The request returns a `409 Conflict` error if a metric with the same name already exists.
+    pub async fn create_rum_metric_with_http_info(&self, body: crate::datadogV2::model::RumMetricCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>, datadog::Error<CreateRumMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -192,23 +190,16 @@ impl RumMetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -216,7 +207,10 @@ impl RumMetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -226,7 +220,10 @@ impl RumMetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -248,7 +245,7 @@ impl RumMetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -265,63 +262,55 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateRumMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a specific RUM-based metric from your organization.
-    /// Metric data that was already generated is not deleted. Deleting a metric cannot be undone.
-    pub async fn delete_rum_metric(
-        &self,
-        metric_id: String,
-    ) -> Result<(), datadog::Error<DeleteRumMetricError>> {
+/// Metric data that was already generated is not deleted. Deleting a metric cannot be undone.
+    pub async fn delete_rum_metric(&self, metric_id: String) -> Result<(), datadog::Error<DeleteRumMetricError>> {
         match self.delete_rum_metric_with_http_info(metric_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a specific RUM-based metric from your organization.
-    /// Metric data that was already generated is not deleted. Deleting a metric cannot be undone.
-    pub async fn delete_rum_metric_with_http_info(
-        &self,
-        metric_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumMetricError>> {
+/// Metric data that was already generated is not deleted. Deleting a metric cannot be undone.
+    pub async fn delete_rum_metric_with_http_info(&self, metric_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -334,22 +323,16 @@ impl RumMetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -367,62 +350,52 @@ impl RumMetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRumMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific RUM-based metric from your organization.
-    /// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
-    pub async fn get_rum_metric(
-        &self,
-        metric_id: String,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<GetRumMetricError>> {
+/// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
+    pub async fn get_rum_metric(&self, metric_id: String) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<GetRumMetricError>> {
         match self.get_rum_metric_with_http_info(metric_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific RUM-based metric from your organization.
-    /// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
-    pub async fn get_rum_metric_with_http_info(
-        &self,
-        metric_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<GetRumMetricError>,
-    > {
+/// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
+    pub async fn get_rum_metric_with_http_info(&self, metric_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>, datadog::Error<GetRumMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -435,22 +408,16 @@ impl RumMetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -462,75 +429,63 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetRumMetricError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of all RUM-based metrics configured for your organization, with their definitions.
-    /// The list is not paginated.
-    /// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
-    /// To retrieve a single metric, use `GetRumMetric`.
-    pub async fn list_rum_metrics(
-        &self,
-    ) -> Result<crate::datadogV2::model::RumMetricsResponse, datadog::Error<ListRumMetricsError>>
-    {
+/// The list is not paginated.
+/// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
+/// To retrieve a single metric, use `GetRumMetric`.
+    pub async fn list_rum_metrics(&self) -> Result<crate::datadogV2::model::RumMetricsResponse, datadog::Error<ListRumMetricsError>> {
         match self.list_rum_metrics_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of all RUM-based metrics configured for your organization, with their definitions.
-    /// The list is not paginated.
-    /// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
-    /// To retrieve a single metric, use `GetRumMetric`.
-    pub async fn list_rum_metrics_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricsResponse>,
-        datadog::Error<ListRumMetricsError>,
-    > {
+/// The list is not paginated.
+/// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
+/// To retrieve a single metric, use `GetRumMetric`.
+    pub async fn list_rum_metrics_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumMetricsResponse>, datadog::Error<ListRumMetricsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_metrics";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -543,22 +498,16 @@ impl RumMetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -570,88 +519,71 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumMetricsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumMetricsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRumMetricsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a specific RUM-based metric from your organization.
-    /// Only `filter`, `group_by`, and `compute.include_percentiles` can be updated. `event_type`, `uniqueness`, `compute.aggregation_type`, `compute.path`, and the metric name are immutable. To change them, delete the metric and create a new one.
-    /// Omitted attributes keep their current value. When provided, `filter.query` replaces the whole filter query (an empty query is ignored) and `group_by` replaces the whole list of group by rules.
-    /// `data.id` is required and must match the `metric_id` path parameter, otherwise the request returns a `409 Conflict` error.
-    /// The request also returns a `409 Conflict` error when `compute.include_percentiles` is set on a metric whose `aggregation_type` is not `distribution`.
-    /// Returns the updated RUM-based metric when the request is successful.
-    pub async fn update_rum_metric(
-        &self,
-        metric_id: String,
-        body: crate::datadogV2::model::RumMetricUpdateRequest,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<UpdateRumMetricError>>
-    {
+/// Only `filter`, `group_by`, and `compute.include_percentiles` can be updated. `event_type`, `uniqueness`, `compute.aggregation_type`, `compute.path`, and the metric name are immutable. To change them, delete the metric and create a new one.
+/// Omitted attributes keep their current value. When provided, `filter.query` replaces the whole filter query (an empty query is ignored) and `group_by` replaces the whole list of group by rules.
+/// `data.id` is required and must match the `metric_id` path parameter, otherwise the request returns a `409 Conflict` error.
+/// The request also returns a `409 Conflict` error when `compute.include_percentiles` is set on a metric whose `aggregation_type` is not `distribution`.
+/// Returns the updated RUM-based metric when the request is successful.
+    pub async fn update_rum_metric(&self, metric_id: String, body: crate::datadogV2::model::RumMetricUpdateRequest) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<UpdateRumMetricError>> {
         match self.update_rum_metric_with_http_info(metric_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a specific RUM-based metric from your organization.
-    /// Only `filter`, `group_by`, and `compute.include_percentiles` can be updated. `event_type`, `uniqueness`, `compute.aggregation_type`, `compute.path`, and the metric name are immutable. To change them, delete the metric and create a new one.
-    /// Omitted attributes keep their current value. When provided, `filter.query` replaces the whole filter query (an empty query is ignored) and `group_by` replaces the whole list of group by rules.
-    /// `data.id` is required and must match the `metric_id` path parameter, otherwise the request returns a `409 Conflict` error.
-    /// The request also returns a `409 Conflict` error when `compute.include_percentiles` is set on a metric whose `aggregation_type` is not `distribution`.
-    /// Returns the updated RUM-based metric when the request is successful.
-    pub async fn update_rum_metric_with_http_info(
-        &self,
-        metric_id: String,
-        body: crate::datadogV2::model::RumMetricUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<UpdateRumMetricError>,
-    > {
+/// Only `filter`, `group_by`, and `compute.include_percentiles` can be updated. `event_type`, `uniqueness`, `compute.aggregation_type`, `compute.path`, and the metric name are immutable. To change them, delete the metric and create a new one.
+/// Omitted attributes keep their current value. When provided, `filter.query` replaces the whole filter query (an empty query is ignored) and `group_by` replaces the whole list of group by rules.
+/// `data.id` is required and must match the `metric_id` path parameter, otherwise the request returns a `409 Conflict` error.
+/// The request also returns a `409 Conflict` error when `compute.include_percentiles` is set on a metric whose `aggregation_type` is not `distribution`.
+/// Returns the updated RUM-based metric when the request is successful.
+    pub async fn update_rum_metric_with_http_info(&self, metric_id: String, body: crate::datadogV2::model::RumMetricUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>, datadog::Error<UpdateRumMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -663,23 +595,16 @@ impl RumMetricsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -687,7 +612,10 @@ impl RumMetricsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -697,7 +625,10 @@ impl RumMetricsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -719,7 +650,7 @@ impl RumMetricsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -736,25 +667,17 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRumMetricError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateRumMetricError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

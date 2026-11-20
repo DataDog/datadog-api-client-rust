@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Criteria used to assess the pass/fail result of a custom evaluator.
 #[non_exhaustive]
@@ -12,38 +12,22 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LLMObsCustomEvalConfigAssessmentCriteria {
     /// Maximum numeric threshold for a passing result.
-    #[serde(
-        rename = "max_threshold",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "max_threshold", default, with = "::serde_with::rust::double_option")]
     pub max_threshold: Option<Option<f64>>,
     /// Minimum numeric threshold for a passing result.
-    #[serde(
-        rename = "min_threshold",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "min_threshold", default, with = "::serde_with::rust::double_option")]
     pub min_threshold: Option<Option<f64>>,
     /// Specific output values considered as a passing result.
-    #[serde(
-        rename = "pass_values",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "pass_values", default, with = "::serde_with::rust::double_option")]
     pub pass_values: Option<Option<Vec<String>>>,
     /// When true, a boolean output of true is treated as passing.
-    #[serde(
-        rename = "pass_when",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "pass_when", default, with = "::serde_with::rust::double_option")]
     pub pass_when: Option<Option<bool>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCustomEvalConfigAssessmentCriteria {
@@ -57,35 +41,33 @@ impl LLMObsCustomEvalConfigAssessmentCriteria {
             _unparsed: false,
         }
     }
-
+    
     pub fn max_threshold(mut self, value: Option<f64>) -> Self {
         self.max_threshold = Some(value);
         self
     }
-
+    
     pub fn min_threshold(mut self, value: Option<f64>) -> Self {
         self.min_threshold = Some(value);
         self
     }
-
+    
     pub fn pass_values(mut self, value: Option<Vec<String>>) -> Self {
         self.pass_values = Some(value);
         self
     }
-
+    
     pub fn pass_when(mut self, value: Option<bool>) -> Self {
         self.pass_when = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LLMObsCustomEvalConfigAssessmentCriteria {
     fn default() -> Self {
@@ -114,10 +96,7 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigAssessmentCriteria {
                 let mut min_threshold: Option<Option<f64>> = None;
                 let mut pass_values: Option<Option<Vec<String>>> = None;
                 let mut pass_when: Option<Option<bool>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -126,28 +105,25 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigAssessmentCriteria {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            max_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "min_threshold" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            min_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            min_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pass_values" => {
-                            pass_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pass_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pass_when" => {
                             pass_when = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

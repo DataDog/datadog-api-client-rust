@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Powerpack template variables.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct PowerpackTemplateVariable {
     /// The list of values that the template variable drop-down is limited to.
-    #[serde(
-        rename = "available_values",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "available_values", default, with = "::serde_with::rust::double_option")]
     pub available_values: Option<Option<Vec<String>>>,
     /// One or many template variable default values within the saved view, which are unioned together using `OR` if more than one is specified.
     #[serde(rename = "defaults")]
@@ -31,7 +27,7 @@ pub struct PowerpackTemplateVariable {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl PowerpackTemplateVariable {
@@ -45,30 +41,29 @@ impl PowerpackTemplateVariable {
             _unparsed: false,
         }
     }
-
+    
     pub fn available_values(mut self, value: Option<Vec<String>>) -> Self {
         self.available_values = Some(value);
         self
     }
-
+    
     pub fn defaults(mut self, value: Vec<String>) -> Self {
         self.defaults = Some(value);
         self
     }
-
+    
     pub fn prefix(mut self, value: Option<String>) -> Self {
         self.prefix = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -91,35 +86,31 @@ impl<'de> Deserialize<'de> for PowerpackTemplateVariable {
                 let mut defaults: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut prefix: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "available_values" => {
-                            available_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            available_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "defaults" => {
                             if v.is_null() {
                                 continue;
                             }
                             defaults = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prefix" => {
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

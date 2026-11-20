@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Username and password authentication. Only the fields provided are changed; omit `password` to keep the stored one.
 #[non_exhaustive]
@@ -22,13 +22,11 @@ pub struct ElasticCloudIntegrationAccountBasicAuthUpdate {
     pub username: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ElasticCloudIntegrationAccountBasicAuthUpdate {
-    pub fn new(
-        auth_type: crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType,
-    ) -> ElasticCloudIntegrationAccountBasicAuthUpdate {
+    pub fn new(auth_type: crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType) -> ElasticCloudIntegrationAccountBasicAuthUpdate {
         ElasticCloudIntegrationAccountBasicAuthUpdate {
             auth_type,
             password: None,
@@ -36,17 +34,20 @@ impl ElasticCloudIntegrationAccountBasicAuthUpdate {
             _unparsed: false,
         }
     }
-
+    
     pub fn password(mut self, value: String) -> Self {
         self.password = Some(value);
         self
     }
-
+    
     pub fn username(mut self, value: String) -> Self {
         self.username = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountBasicAuthUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -65,9 +66,7 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountBasicAuthUpdate {
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_type: Option<
-                    crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType,
-                > = None;
+                let mut auth_type: Option<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthType> = None;
                 let mut password: Option<String> = None;
                 let mut username: Option<String> = None;
                 let mut _unparsed = false;
@@ -84,24 +83,22 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountBasicAuthUpdate {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "password" => {
                             if v.is_null() {
                                 continue;
                             }
                             password = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "username" => {
                             if v.is_null() {
                                 continue;
                             }
                             username = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;

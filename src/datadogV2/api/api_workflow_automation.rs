@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListWorkflowInstancesOptionalParams is a struct for passing parameters to the method [`WorkflowAutomationAPI::list_workflow_instances`]
 #[non_exhaustive]
@@ -93,6 +90,9 @@ impl ListWorkflowsOptionalParams {
     }
 }
 
+
+
+
 /// CancelWorkflowInstanceError is a struct for typed errors of method [`WorkflowAutomationAPI::cancel_workflow_instance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -100,6 +100,7 @@ pub enum CancelWorkflowInstanceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateWorkflowError is a struct for typed errors of method [`WorkflowAutomationAPI::create_workflow`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,6 +110,7 @@ pub enum CreateWorkflowError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateWorkflowInstanceError is a struct for typed errors of method [`WorkflowAutomationAPI::create_workflow_instance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -116,6 +118,7 @@ pub enum CreateWorkflowInstanceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteWorkflowError is a struct for typed errors of method [`WorkflowAutomationAPI::delete_workflow`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -125,6 +128,7 @@ pub enum DeleteWorkflowError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetWorkflowError is a struct for typed errors of method [`WorkflowAutomationAPI::get_workflow`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -132,6 +136,7 @@ pub enum GetWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetWorkflowInstanceError is a struct for typed errors of method [`WorkflowAutomationAPI::get_workflow_instance`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -141,6 +146,7 @@ pub enum GetWorkflowInstanceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListWorkflowInstancesError is a struct for typed errors of method [`WorkflowAutomationAPI::list_workflow_instances`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -148,6 +154,7 @@ pub enum ListWorkflowInstancesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListWorkflowsError is a struct for typed errors of method [`WorkflowAutomationAPI::list_workflows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -157,6 +164,7 @@ pub enum ListWorkflowsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateWorkflowError is a struct for typed errors of method [`WorkflowAutomationAPI::update_workflow`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -164,6 +172,7 @@ pub enum UpdateWorkflowError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Datadog Workflow Automation allows you to automate your end-to-end processes by connecting Datadog with the rest of your tech stack. Build workflows to auto-remediate your alerts, streamline your incident and security processes, and reduce manual toil. Workflow Automation supports over 1,000+ OOTB actions, including AWS, JIRA, ServiceNow, GitHub, and OpenAI. Learn more in our Workflow Automation docs [here](<https://docs.datadoghq.com/service_management/workflows/>).
 #[derive(Debug, Clone)]
@@ -187,7 +196,8 @@ impl WorkflowAutomationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -232,65 +242,52 @@ impl WorkflowAutomationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn cancel_workflow_instance(
-        &self,
-        workflow_id: String,
-        instance_id: String,
-    ) -> Result<
-        crate::datadogV2::model::WorklflowCancelInstanceResponse,
-        datadog::Error<CancelWorkflowInstanceError>,
-    > {
-        match self
-            .cancel_workflow_instance_with_http_info(workflow_id, instance_id)
-            .await
-        {
+    pub async fn cancel_workflow_instance(&self, workflow_id: String, instance_id: String) -> Result<crate::datadogV2::model::WorklflowCancelInstanceResponse, datadog::Error<CancelWorkflowInstanceError>> {
+        match self.cancel_workflow_instance_with_http_info(workflow_id, instance_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Cancels a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn cancel_workflow_instance_with_http_info(
-        &self,
-        workflow_id: String,
-        instance_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::WorklflowCancelInstanceResponse>,
-        datadog::Error<CancelWorkflowInstanceError>,
-    > {
+    pub async fn cancel_workflow_instance_with_http_info(&self, workflow_id: String, instance_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::WorklflowCancelInstanceResponse>, datadog::Error<CancelWorkflowInstanceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.cancel_workflow_instance";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances/{instance_id}/cancel",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id),
-            instance_id = datadog::urlencode(instance_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            , instance_id=
+            datadog::urlencode(instance_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -303,22 +300,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -330,74 +321,58 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::WorklflowCancelInstanceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::WorklflowCancelInstanceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CancelWorkflowInstanceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CancelWorkflowInstanceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn create_workflow(
-        &self,
-        body: crate::datadogV2::model::CreateWorkflowRequest,
-    ) -> Result<crate::datadogV2::model::CreateWorkflowResponse, datadog::Error<CreateWorkflowError>>
-    {
+    pub async fn create_workflow(&self, body: crate::datadogV2::model::CreateWorkflowRequest) -> Result<crate::datadogV2::model::CreateWorkflowResponse, datadog::Error<CreateWorkflowError>> {
         match self.create_workflow_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new workflow, returning the workflow ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn create_workflow_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateWorkflowRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CreateWorkflowResponse>,
-        datadog::Error<CreateWorkflowError>,
-    > {
+    pub async fn create_workflow_with_http_info(&self, body: crate::datadogV2::model::CreateWorkflowRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CreateWorkflowResponse>, datadog::Error<CreateWorkflowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_workflow";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -410,23 +385,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -434,7 +402,10 @@ impl WorkflowAutomationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -444,7 +415,10 @@ impl WorkflowAutomationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -466,7 +440,7 @@ impl WorkflowAutomationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -483,82 +457,60 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CreateWorkflowResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CreateWorkflowResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateWorkflowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateWorkflowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn create_workflow_instance(
-        &self,
-        workflow_id: String,
-        body: crate::datadogV2::model::WorkflowInstanceCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::WorkflowInstanceCreateResponse,
-        datadog::Error<CreateWorkflowInstanceError>,
-    > {
-        match self
-            .create_workflow_instance_with_http_info(workflow_id, body)
-            .await
-        {
+    pub async fn create_workflow_instance(&self, workflow_id: String, body: crate::datadogV2::model::WorkflowInstanceCreateRequest) -> Result<crate::datadogV2::model::WorkflowInstanceCreateResponse, datadog::Error<CreateWorkflowInstanceError>> {
+        match self.create_workflow_instance_with_http_info(workflow_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Execute the given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn create_workflow_instance_with_http_info(
-        &self,
-        workflow_id: String,
-        body: crate::datadogV2::model::WorkflowInstanceCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::WorkflowInstanceCreateResponse>,
-        datadog::Error<CreateWorkflowInstanceError>,
-    > {
+    pub async fn create_workflow_instance_with_http_info(&self, workflow_id: String, body: crate::datadogV2::model::WorkflowInstanceCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::WorkflowInstanceCreateResponse>, datadog::Error<CreateWorkflowInstanceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_workflow_instance";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -571,23 +523,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -595,7 +540,10 @@ impl WorkflowAutomationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -605,7 +553,10 @@ impl WorkflowAutomationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -627,7 +578,7 @@ impl WorkflowAutomationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -644,62 +595,53 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::WorkflowInstanceCreateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::WorkflowInstanceCreateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateWorkflowInstanceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateWorkflowInstanceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn delete_workflow(
-        &self,
-        workflow_id: String,
-    ) -> Result<(), datadog::Error<DeleteWorkflowError>> {
+    pub async fn delete_workflow(&self, workflow_id: String) -> Result<(), datadog::Error<DeleteWorkflowError>> {
         match self.delete_workflow_with_http_info(workflow_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn delete_workflow_with_http_info(
-        &self,
-        workflow_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWorkflowError>> {
+    pub async fn delete_workflow_with_http_info(&self, workflow_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteWorkflowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_workflow";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -712,22 +654,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -745,61 +681,50 @@ impl WorkflowAutomationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteWorkflowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteWorkflowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn get_workflow(
-        &self,
-        workflow_id: String,
-    ) -> Result<crate::datadogV2::model::GetWorkflowResponse, datadog::Error<GetWorkflowError>>
-    {
+    pub async fn get_workflow(&self, workflow_id: String) -> Result<crate::datadogV2::model::GetWorkflowResponse, datadog::Error<GetWorkflowError>> {
         match self.get_workflow_with_http_info(workflow_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn get_workflow_with_http_info(
-        &self,
-        workflow_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GetWorkflowResponse>,
-        datadog::Error<GetWorkflowError>,
-    > {
+    pub async fn get_workflow_with_http_info(&self, workflow_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GetWorkflowResponse>, datadog::Error<GetWorkflowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_workflow";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -812,22 +737,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -839,81 +758,61 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GetWorkflowResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GetWorkflowResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetWorkflowError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn get_workflow_instance(
-        &self,
-        workflow_id: String,
-        instance_id: String,
-    ) -> Result<
-        crate::datadogV2::model::WorklflowGetInstanceResponse,
-        datadog::Error<GetWorkflowInstanceError>,
-    > {
-        match self
-            .get_workflow_instance_with_http_info(workflow_id, instance_id)
-            .await
-        {
+    pub async fn get_workflow_instance(&self, workflow_id: String, instance_id: String) -> Result<crate::datadogV2::model::WorklflowGetInstanceResponse, datadog::Error<GetWorkflowInstanceError>> {
+        match self.get_workflow_instance_with_http_info(workflow_id, instance_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific execution of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn get_workflow_instance_with_http_info(
-        &self,
-        workflow_id: String,
-        instance_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::WorklflowGetInstanceResponse>,
-        datadog::Error<GetWorkflowInstanceError>,
-    > {
+    pub async fn get_workflow_instance_with_http_info(&self, workflow_id: String, instance_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::WorklflowGetInstanceResponse>, datadog::Error<GetWorkflowInstanceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_workflow_instance";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances/{instance_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id),
-            instance_id = datadog::urlencode(instance_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            , instance_id=
+            datadog::urlencode(instance_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -926,22 +825,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -953,68 +846,42 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::WorklflowGetInstanceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::WorklflowGetInstanceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetWorkflowInstanceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetWorkflowInstanceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn list_workflow_instances(
-        &self,
-        workflow_id: String,
-        params: ListWorkflowInstancesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::WorkflowListInstancesResponse,
-        datadog::Error<ListWorkflowInstancesError>,
-    > {
-        match self
-            .list_workflow_instances_with_http_info(workflow_id, params)
-            .await
-        {
+    pub async fn list_workflow_instances(&self, workflow_id: String, params: ListWorkflowInstancesOptionalParams) -> Result<crate::datadogV2::model::WorkflowListInstancesResponse, datadog::Error<ListWorkflowInstancesError>> {
+        match self.list_workflow_instances_with_http_info(workflow_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all instances of a given workflow. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn list_workflow_instances_with_http_info(
-        &self,
-        workflow_id: String,
-        params: ListWorkflowInstancesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::WorkflowListInstancesResponse>,
-        datadog::Error<ListWorkflowInstancesError>,
-    > {
+    pub async fn list_workflow_instances_with_http_info(&self, workflow_id: String, params: ListWorkflowInstancesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::WorkflowListInstancesResponse>, datadog::Error<ListWorkflowInstancesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_workflow_instances";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -1023,24 +890,24 @@ impl WorkflowAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}/instances",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1053,22 +920,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1080,59 +941,39 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::WorkflowListInstancesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::WorkflowListInstancesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListWorkflowInstancesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListWorkflowInstancesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all workflows in your organization. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn list_workflows(
-        &self,
-        params: ListWorkflowsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListWorkflowsResponse, datadog::Error<ListWorkflowsError>>
-    {
-        match self.list_workflows_with_http_info(params).await {
+    pub async fn list_workflows(&self, params: ListWorkflowsOptionalParams) -> Result<crate::datadogV2::model::ListWorkflowsResponse, datadog::Error<ListWorkflowsError>> {
+        match self.list_workflows_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_workflows_with_pagination(
-        &self,
-        mut params: ListWorkflowsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::WorkflowListItem,
-            datadog::Error<ListWorkflowsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListWorkflowsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::WorkflowListItem, datadog::Error<ListWorkflowsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 50;
             if params.limit.is_none() {
@@ -1160,17 +1001,13 @@ impl WorkflowAutomationAPI {
         }
     }
 
+    
     /// List all workflows in your organization. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn list_workflows_with_http_info(
-        &self,
-        params: ListWorkflowsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListWorkflowsResponse>,
-        datadog::Error<ListWorkflowsError>,
-    > {
+    pub async fn list_workflows_with_http_info(&self, params: ListWorkflowsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListWorkflowsResponse>, datadog::Error<ListWorkflowsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_workflows";
 
+        
         // unbox and build optional parameters
         let limit = params.limit;
         let page = params.page;
@@ -1184,45 +1021,38 @@ impl WorkflowAutomationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/workflows",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page {
-            local_req_builder =
-                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_trigger_ids {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[triggerIds]", &param.to_string())]);
+        if let Some(ref local) = filter_trigger_ids {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[triggerIds]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_include_unpublished {
-            local_req_builder = local_req_builder
-                .query(&[("filter[includeUnpublished]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[includeUnpublished]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_specs {
-            local_req_builder = local_req_builder
-                .query(&[("filter[includeSpecs]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[includeSpecs]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1235,22 +1065,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1262,77 +1086,60 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListWorkflowsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListWorkflowsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListWorkflowsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListWorkflowsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn update_workflow(
-        &self,
-        workflow_id: String,
-        body: crate::datadogV2::model::UpdateWorkflowRequest,
-    ) -> Result<crate::datadogV2::model::UpdateWorkflowResponse, datadog::Error<UpdateWorkflowError>>
-    {
+    pub async fn update_workflow(&self, workflow_id: String, body: crate::datadogV2::model::UpdateWorkflowRequest) -> Result<crate::datadogV2::model::UpdateWorkflowResponse, datadog::Error<UpdateWorkflowError>> {
         match self.update_workflow_with_http_info(workflow_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a workflow by ID. This API requires a [registered application key](<https://docs.datadoghq.com/api/latest/action-connection/#register-a-new-app-key>). Alternatively, you can configure these permissions [in the UI](<https://docs.datadoghq.com/account_management/api-app-keys/#actions-api-access>).
-    pub async fn update_workflow_with_http_info(
-        &self,
-        workflow_id: String,
-        body: crate::datadogV2::model::UpdateWorkflowRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpdateWorkflowResponse>,
-        datadog::Error<UpdateWorkflowError>,
-    > {
+    pub async fn update_workflow_with_http_info(&self, workflow_id: String, body: crate::datadogV2::model::UpdateWorkflowRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpdateWorkflowResponse>, datadog::Error<UpdateWorkflowError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_workflow";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/workflows/{workflow_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            workflow_id = datadog::urlencode(workflow_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), workflow_id=
+            datadog::urlencode(workflow_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1345,23 +1152,16 @@ impl WorkflowAutomationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1369,7 +1169,10 @@ impl WorkflowAutomationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1379,7 +1182,10 @@ impl WorkflowAutomationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1401,7 +1207,7 @@ impl WorkflowAutomationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1418,26 +1224,17 @@ impl WorkflowAutomationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpdateWorkflowResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpdateWorkflowResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateWorkflowError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateWorkflowError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

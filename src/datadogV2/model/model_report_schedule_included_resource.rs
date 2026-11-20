@@ -1,16 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A related resource included with a report schedule.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ReportScheduleIncludedResource {
-    ReportScheduleAuthor(Box<crate::datadogV2::model::ReportScheduleAuthor>),
-    ReportScheduleResource(Box<crate::datadogV2::model::ReportScheduleResource>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ReportScheduleAuthor(Box<crate::datadogV2::model::ReportScheduleAuthor>),
+	ReportScheduleResource(Box<crate::datadogV2::model::ReportScheduleResource>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ReportScheduleIncludedResource {
@@ -19,23 +19,17 @@ impl<'de> Deserialize<'de> for ReportScheduleIncludedResource {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ReportScheduleAuthor>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ReportScheduleAuthor>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ReportScheduleIncludedResource::ReportScheduleAuthor(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ReportScheduleResource>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ReportScheduleResource>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ReportScheduleIncludedResource::ReportScheduleResource(_v));
             }
         }
-
-        return Ok(ReportScheduleIncludedResource::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(ReportScheduleIncludedResource::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

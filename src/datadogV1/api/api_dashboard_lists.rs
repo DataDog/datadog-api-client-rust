@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateDashboardListError is a struct for typed errors of method [`DashboardListsAPI::create_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteDashboardListError is a struct for typed errors of method [`DashboardListsAPI::delete_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum DeleteDashboardListError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetDashboardListError is a struct for typed errors of method [`DashboardListsAPI::get_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum GetDashboardListError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDashboardListsError is a struct for typed errors of method [`DashboardListsAPI::list_dashboard_lists`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -42,6 +45,7 @@ pub enum ListDashboardListsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateDashboardListError is a struct for typed errors of method [`DashboardListsAPI::update_dashboard_list`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -49,6 +53,7 @@ pub enum UpdateDashboardListError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Interact with your dashboard lists through the API to
 /// organize, find, and share all of your dashboards with your team and
@@ -74,7 +79,8 @@ impl DashboardListsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -119,57 +125,49 @@ impl DashboardListsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create an empty dashboard list.
-    pub async fn create_dashboard_list(
-        &self,
-        body: crate::datadogV1::model::DashboardList,
-    ) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<CreateDashboardListError>>
-    {
+    pub async fn create_dashboard_list(&self, body: crate::datadogV1::model::DashboardList) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<CreateDashboardListError>> {
         match self.create_dashboard_list_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an empty dashboard list.
-    pub async fn create_dashboard_list_with_http_info(
-        &self,
-        body: crate::datadogV1::model::DashboardList,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::DashboardList>,
-        datadog::Error<CreateDashboardListError>,
-    > {
+    pub async fn create_dashboard_list_with_http_info(&self, body: crate::datadogV1::model::DashboardList) -> Result<datadog::ResponseContent<crate::datadogV1::model::DashboardList>, datadog::Error<CreateDashboardListError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_dashboard_list";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -182,23 +180,16 @@ impl DashboardListsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -206,7 +197,10 @@ impl DashboardListsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -216,7 +210,10 @@ impl DashboardListsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -238,7 +235,7 @@ impl DashboardListsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -256,73 +253,58 @@ impl DashboardListsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DashboardList>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateDashboardListError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a dashboard list.
-    pub async fn delete_dashboard_list(
-        &self,
-        list_id: i64,
-    ) -> Result<
-        crate::datadogV1::model::DashboardListDeleteResponse,
-        datadog::Error<DeleteDashboardListError>,
-    > {
+    pub async fn delete_dashboard_list(&self, list_id: i64) -> Result<crate::datadogV1::model::DashboardListDeleteResponse, datadog::Error<DeleteDashboardListError>> {
         match self.delete_dashboard_list_with_http_info(list_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a dashboard list.
-    pub async fn delete_dashboard_list_with_http_info(
-        &self,
-        list_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::DashboardListDeleteResponse>,
-        datadog::Error<DeleteDashboardListError>,
-    > {
+    pub async fn delete_dashboard_list_with_http_info(&self, list_id: i64) -> Result<datadog::ResponseContent<crate::datadogV1::model::DashboardListDeleteResponse>, datadog::Error<DeleteDashboardListError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_dashboard_list";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            list_id = list_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), list_id=
+            list_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -335,22 +317,16 @@ impl DashboardListsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -362,73 +338,59 @@ impl DashboardListsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::DashboardListDeleteResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::DashboardListDeleteResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteDashboardListError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetch an existing dashboard list's definition.
-    pub async fn get_dashboard_list(
-        &self,
-        list_id: i64,
-    ) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<GetDashboardListError>> {
+    pub async fn get_dashboard_list(&self, list_id: i64) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<GetDashboardListError>> {
         match self.get_dashboard_list_with_http_info(list_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetch an existing dashboard list's definition.
-    pub async fn get_dashboard_list_with_http_info(
-        &self,
-        list_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::DashboardList>,
-        datadog::Error<GetDashboardListError>,
-    > {
+    pub async fn get_dashboard_list_with_http_info(&self, list_id: i64) -> Result<datadog::ResponseContent<crate::datadogV1::model::DashboardList>, datadog::Error<GetDashboardListError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_dashboard_list";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            list_id = list_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), list_id=
+            list_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -441,22 +403,16 @@ impl DashboardListsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -469,70 +425,56 @@ impl DashboardListsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DashboardList>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetDashboardListError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetch all of your existing dashboard list definitions.
-    pub async fn list_dashboard_lists(
-        &self,
-    ) -> Result<
-        crate::datadogV1::model::DashboardListListResponse,
-        datadog::Error<ListDashboardListsError>,
-    > {
+    pub async fn list_dashboard_lists(&self) -> Result<crate::datadogV1::model::DashboardListListResponse, datadog::Error<ListDashboardListsError>> {
         match self.list_dashboard_lists_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetch all of your existing dashboard list definitions.
-    pub async fn list_dashboard_lists_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::DashboardListListResponse>,
-        datadog::Error<ListDashboardListsError>,
-    > {
+    pub async fn list_dashboard_lists_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV1::model::DashboardListListResponse>, datadog::Error<ListDashboardListsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_dashboard_lists";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -545,22 +487,16 @@ impl DashboardListsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -572,80 +508,60 @@ impl DashboardListsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::DashboardListListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::DashboardListListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDashboardListsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDashboardListsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the name of a dashboard list.
-    pub async fn update_dashboard_list(
-        &self,
-        list_id: i64,
-        body: crate::datadogV1::model::DashboardList,
-    ) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<UpdateDashboardListError>>
-    {
-        match self
-            .update_dashboard_list_with_http_info(list_id, body)
-            .await
-        {
+    pub async fn update_dashboard_list(&self, list_id: i64, body: crate::datadogV1::model::DashboardList) -> Result<crate::datadogV1::model::DashboardList, datadog::Error<UpdateDashboardListError>> {
+        match self.update_dashboard_list_with_http_info(list_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the name of a dashboard list.
-    pub async fn update_dashboard_list_with_http_info(
-        &self,
-        list_id: i64,
-        body: crate::datadogV1::model::DashboardList,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::DashboardList>,
-        datadog::Error<UpdateDashboardListError>,
-    > {
+    pub async fn update_dashboard_list_with_http_info(&self, list_id: i64, body: crate::datadogV1::model::DashboardList) -> Result<datadog::ResponseContent<crate::datadogV1::model::DashboardList>, datadog::Error<UpdateDashboardListError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_dashboard_list";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/dashboard/lists/manual/{list_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            list_id = list_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), list_id=
+            list_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -658,23 +574,16 @@ impl DashboardListsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -682,7 +591,10 @@ impl DashboardListsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -692,7 +604,10 @@ impl DashboardListsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -714,7 +629,7 @@ impl DashboardListsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -732,23 +647,16 @@ impl DashboardListsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV1::model::DashboardList>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateDashboardListError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateDashboardListError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

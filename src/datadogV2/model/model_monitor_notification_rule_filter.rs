@@ -1,20 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Specifies the matching criteria for monitor notifications.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum MonitorNotificationRuleFilter {
-    MonitorNotificationRuleFilterTags(
-        Box<crate::datadogV2::model::MonitorNotificationRuleFilterTags>,
-    ),
-    MonitorNotificationRuleFilterScope(
-        Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	MonitorNotificationRuleFilterTags(Box<crate::datadogV2::model::MonitorNotificationRuleFilterTags>),
+	MonitorNotificationRuleFilterScope(Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MonitorNotificationRuleFilter {
@@ -23,25 +19,17 @@ impl<'de> Deserialize<'de> for MonitorNotificationRuleFilter {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::MonitorNotificationRuleFilterTags>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::MonitorNotificationRuleFilterTags>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorNotificationRuleFilter::MonitorNotificationRuleFilterTags(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::MonitorNotificationRuleFilterScope>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorNotificationRuleFilter::MonitorNotificationRuleFilterScope(_v));
             }
         }
-
-        return Ok(MonitorNotificationRuleFilter::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(MonitorNotificationRuleFilter::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

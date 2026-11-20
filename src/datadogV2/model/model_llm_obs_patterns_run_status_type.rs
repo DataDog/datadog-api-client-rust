@@ -2,12 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsPatternsRunStatusType {
-    TOPIC_DISCOVERY_RUN_STATUS,
+	TOPIC_DISCOVERY_RUN_STATUS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,11 +39,8 @@ impl<'de> Deserialize<'de> for LLMObsPatternsRunStatusType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "topic_discovery_run_status" => Self::TOPIC_DISCOVERY_RUN_STATUS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"topic_discovery_run_status" => Self::TOPIC_DISCOVERY_RUN_STATUS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

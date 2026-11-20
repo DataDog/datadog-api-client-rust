@@ -2,34 +2,35 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorType {
-    COMPOSITE,
-    EVENT_ALERT,
-    LOG_ALERT,
-    METRIC_ALERT,
-    PROCESS_ALERT,
-    QUERY_ALERT,
-    RUM_ALERT,
-    SERVICE_CHECK,
-    SYNTHETICS_ALERT,
-    TRACE_ANALYTICS_ALERT,
-    SLO_ALERT,
-    EVENT_V2_ALERT,
-    AUDIT_ALERT,
-    CI_PIPELINES_ALERT,
-    CI_TESTS_ALERT,
-    ERROR_TRACKING_ALERT,
-    DATABASE_MONITORING_ALERT,
-    NETWORK_PERFORMANCE_ALERT,
-    COST_ALERT,
-    DATA_QUALITY_ALERT,
-    NETWORK_PATH_ALERT,
-    DATA_JOBS_ALERT,
-    LLM_OBSERVABILITY_ALERT,
+	COMPOSITE,
+	EVENT_ALERT,
+	LOG_ALERT,
+	METRIC_ALERT,
+	PROCESS_ALERT,
+	QUERY_ALERT,
+	RUM_ALERT,
+	SERVICE_CHECK,
+	SYNTHETICS_ALERT,
+	TRACE_ANALYTICS_ALERT,
+	SLO_ALERT,
+	EVENT_V2_ALERT,
+	AUDIT_ALERT,
+	CI_PIPELINES_ALERT,
+	CI_TESTS_ALERT,
+	ERROR_TRACKING_ALERT,
+	DATABASE_MONITORING_ALERT,
+	NETWORK_PERFORMANCE_ALERT,
+	COST_ALERT,
+	DATA_QUALITY_ALERT,
+	NETWORK_PATH_ALERT,
+	DATA_JOBS_ALERT,
+	LLM_OBSERVABILITY_ALERT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -82,33 +83,8 @@ impl<'de> Deserialize<'de> for MonitorType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "composite" => Self::COMPOSITE,
-            "event alert" => Self::EVENT_ALERT,
-            "log alert" => Self::LOG_ALERT,
-            "metric alert" => Self::METRIC_ALERT,
-            "process alert" => Self::PROCESS_ALERT,
-            "query alert" => Self::QUERY_ALERT,
-            "rum alert" => Self::RUM_ALERT,
-            "service check" => Self::SERVICE_CHECK,
-            "synthetics alert" => Self::SYNTHETICS_ALERT,
-            "trace-analytics alert" => Self::TRACE_ANALYTICS_ALERT,
-            "slo alert" => Self::SLO_ALERT,
-            "event-v2 alert" => Self::EVENT_V2_ALERT,
-            "audit alert" => Self::AUDIT_ALERT,
-            "ci-pipelines alert" => Self::CI_PIPELINES_ALERT,
-            "ci-tests alert" => Self::CI_TESTS_ALERT,
-            "error-tracking alert" => Self::ERROR_TRACKING_ALERT,
-            "database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,
-            "network-performance alert" => Self::NETWORK_PERFORMANCE_ALERT,
-            "cost alert" => Self::COST_ALERT,
-            "data-quality alert" => Self::DATA_QUALITY_ALERT,
-            "network-path alert" => Self::NETWORK_PATH_ALERT,
-            "data-jobs alert" => Self::DATA_JOBS_ALERT,
-            "llm-observability alert" => Self::LLM_OBSERVABILITY_ALERT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"composite" => Self::COMPOSITE,"event alert" => Self::EVENT_ALERT,"log alert" => Self::LOG_ALERT,"metric alert" => Self::METRIC_ALERT,"process alert" => Self::PROCESS_ALERT,"query alert" => Self::QUERY_ALERT,"rum alert" => Self::RUM_ALERT,"service check" => Self::SERVICE_CHECK,"synthetics alert" => Self::SYNTHETICS_ALERT,"trace-analytics alert" => Self::TRACE_ANALYTICS_ALERT,"slo alert" => Self::SLO_ALERT,"event-v2 alert" => Self::EVENT_V2_ALERT,"audit alert" => Self::AUDIT_ALERT,"ci-pipelines alert" => Self::CI_PIPELINES_ALERT,"ci-tests alert" => Self::CI_TESTS_ALERT,"error-tracking alert" => Self::ERROR_TRACKING_ALERT,"database-monitoring alert" => Self::DATABASE_MONITORING_ALERT,"network-performance alert" => Self::NETWORK_PERFORMANCE_ALERT,"cost alert" => Self::COST_ALERT,"data-quality alert" => Self::DATA_QUALITY_ALERT,"network-path alert" => Self::NETWORK_PATH_ALERT,"data-jobs alert" => Self::DATA_JOBS_ALERT,"llm-observability alert" => Self::LLM_OBSERVABILITY_ALERT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

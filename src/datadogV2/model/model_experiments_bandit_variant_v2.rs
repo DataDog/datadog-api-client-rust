@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A flag variant the bandit uses.
 #[non_exhaustive]
@@ -21,28 +21,22 @@ pub struct ExperimentsBanditVariantV2 {
     #[serde(rename = "is_fallback")]
     pub is_fallback: bool,
     /// The variant's key. An arm keeps the key it had when it was added, because exposures are matched on it. `null` only for a fallback deleted from the flag.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "key")]
     pub key: Option<String>,
     /// The variant's name on the flag. `null` when it is no longer on the flag.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "name")]
     pub name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsBanditVariantV2 {
-    pub fn new(
-        feature_flag_variant_id: uuid::Uuid,
-        is_active: bool,
-        is_fallback: bool,
-        key: Option<String>,
-        name: Option<String>,
-    ) -> ExperimentsBanditVariantV2 {
+    pub fn new(feature_flag_variant_id: uuid::Uuid, is_active: bool, is_fallback: bool, key: Option<String>, name: Option<String>) -> ExperimentsBanditVariantV2 {
         ExperimentsBanditVariantV2 {
             feature_flag_variant_id,
             is_active,
@@ -53,15 +47,14 @@ impl ExperimentsBanditVariantV2 {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsBanditVariantV2 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,43 +78,36 @@ impl<'de> Deserialize<'de> for ExperimentsBanditVariantV2 {
                 let mut is_fallback: Option<bool> = None;
                 let mut key: Option<Option<String>> = None;
                 let mut name: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "feature_flag_variant_id" => {
-                            feature_flag_variant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            feature_flag_variant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_active" => {
                             is_active = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_fallback" => {
-                            is_fallback =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_fallback = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "key" => {
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let feature_flag_variant_id = feature_flag_variant_id
-                    .ok_or_else(|| M::Error::missing_field("feature_flag_variant_id"))?;
+                let feature_flag_variant_id = feature_flag_variant_id.ok_or_else(|| M::Error::missing_field("feature_flag_variant_id"))?;
                 let is_active = is_active.ok_or_else(|| M::Error::missing_field("is_active"))?;
-                let is_fallback =
-                    is_fallback.ok_or_else(|| M::Error::missing_field("is_fallback"))?;
+                let is_fallback = is_fallback.ok_or_else(|| M::Error::missing_field("is_fallback"))?;
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 

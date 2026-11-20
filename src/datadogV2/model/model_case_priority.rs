@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CasePriority {
-    NOT_DEFINED,
-    P1,
-    P2,
-    P3,
-    P4,
-    P5,
+	NOT_DEFINED,
+	P1,
+	P2,
+	P3,
+	P4,
+	P5,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for CasePriority {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "NOT_DEFINED" => Self::NOT_DEFINED,
-            "P1" => Self::P1,
-            "P2" => Self::P2,
-            "P3" => Self::P3,
-            "P4" => Self::P4,
-            "P5" => Self::P5,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"NOT_DEFINED" => Self::NOT_DEFINED,"P1" => Self::P1,"P2" => Self::P2,"P3" => Self::P3,"P4" => Self::P4,"P5" => Self::P5,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

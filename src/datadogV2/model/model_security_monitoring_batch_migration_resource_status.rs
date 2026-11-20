@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringBatchMigrationResourceStatus {
-    PENDING,
-    IN_PROGRESS,
-    COMPLETED,
-    CANCELED,
-    FAILED,
-    PUBLISHING,
-    PUBLISHED,
-    DUPLICATE,
+	PENDING,
+	IN_PROGRESS,
+	COMPLETED,
+	CANCELED,
+	FAILED,
+	PUBLISHING,
+	PUBLISHED,
+	DUPLICATE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringBatchMigrationResourceStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "pending" => Self::PENDING,
-            "in_progress" => Self::IN_PROGRESS,
-            "completed" => Self::COMPLETED,
-            "canceled" => Self::CANCELED,
-            "failed" => Self::FAILED,
-            "publishing" => Self::PUBLISHING,
-            "published" => Self::PUBLISHED,
-            "duplicate" => Self::DUPLICATE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"pending" => Self::PENDING,"in_progress" => Self::IN_PROGRESS,"completed" => Self::COMPLETED,"canceled" => Self::CANCELED,"failed" => Self::FAILED,"publishing" => Self::PUBLISHING,"published" => Self::PUBLISHED,"duplicate" => Self::DUPLICATE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

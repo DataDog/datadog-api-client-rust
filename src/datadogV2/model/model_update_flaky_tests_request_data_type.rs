@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum UpdateFlakyTestsRequestDataType {
-    UPDATE_FLAKY_TEST_STATE_REQUEST,
+	UPDATE_FLAKY_TEST_STATE_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for UpdateFlakyTestsRequestDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::UPDATE_FLAKY_TEST_STATE_REQUEST => {
-                String::from("update_flaky_test_state_request")
-            }
+            Self::UPDATE_FLAKY_TEST_STATE_REQUEST => String::from("update_flaky_test_state_request"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for UpdateFlakyTestsRequestDataType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "update_flaky_test_state_request" => Self::UPDATE_FLAKY_TEST_STATE_REQUEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"update_flaky_test_state_request" => Self::UPDATE_FLAKY_TEST_STATE_REQUEST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

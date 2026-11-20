@@ -1,17 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Authentication for creating the Elastic Cloud integration account. Exactly one method is set.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ElasticCloudIntegrationAccountAuthenticationRequest {
-    ElasticCloudIntegrationAccountBasicAuthRequest(
-        Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthRequest>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ElasticCloudIntegrationAccountBasicAuthRequest(Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthRequest>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountAuthenticationRequest {
@@ -20,19 +18,12 @@ impl<'de> Deserialize<'de> for ElasticCloudIntegrationAccountAuthenticationReque
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthRequest>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ElasticCloudIntegrationAccountBasicAuthRequest>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ElasticCloudIntegrationAccountAuthenticationRequest::ElasticCloudIntegrationAccountBasicAuthRequest(_v));
             }
         }
-
-        return Ok(
-            ElasticCloudIntegrationAccountAuthenticationRequest::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(ElasticCloudIntegrationAccountAuthenticationRequest::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

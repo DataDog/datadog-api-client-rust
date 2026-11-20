@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating a new feature flag.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateFeatureFlagAttributes {
     /// The key of the default variant.
-    #[serde(
-        rename = "default_variant_key",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "default_variant_key", default, with = "::serde_with::rust::double_option")]
     pub default_variant_key: Option<Option<String>>,
     /// The description of the feature flag.
     #[serde(rename = "description")]
@@ -25,11 +21,7 @@ pub struct CreateFeatureFlagAttributes {
     #[serde(rename = "distribution_channel")]
     pub distribution_channel: Option<crate::datadogV2::model::FeatureFlagDistributionChannel>,
     /// JSON schema for validation when value_type is JSON.
-    #[serde(
-        rename = "json_schema",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "json_schema", default, with = "::serde_with::rust::double_option")]
     pub json_schema: Option<Option<String>>,
     /// The unique key of the feature flag.
     #[serde(rename = "key")]
@@ -56,16 +48,11 @@ pub struct CreateFeatureFlagAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateFeatureFlagAttributes {
-    pub fn new(
-        key: String,
-        name: String,
-        value_type: crate::datadogV2::model::ValueType,
-        variants: Vec<crate::datadogV2::model::CreateVariant>,
-    ) -> CreateFeatureFlagAttributes {
+    pub fn new(key: String, name: String, value_type: crate::datadogV2::model::ValueType, variants: Vec<crate::datadogV2::model::CreateVariant>) -> CreateFeatureFlagAttributes {
         CreateFeatureFlagAttributes {
             default_variant_key: None,
             description: None,
@@ -82,56 +69,49 @@ impl CreateFeatureFlagAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn default_variant_key(mut self, value: Option<String>) -> Self {
         self.default_variant_key = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn distribution_channel(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagDistributionChannel,
-    ) -> Self {
+    
+    pub fn distribution_channel(mut self, value: crate::datadogV2::model::FeatureFlagDistributionChannel) -> Self {
         self.distribution_channel = Some(value);
         self
     }
-
+    
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
     }
-
+    
     pub fn require_approval(mut self, value: bool) -> Self {
         self.require_approval = Some(value);
         self
     }
-
-    pub fn staleness_status(
-        mut self,
-        value: crate::datadogV2::model::CreateFeatureFlagStalenessStatus,
-    ) -> Self {
+    
+    pub fn staleness_status(mut self, value: crate::datadogV2::model::CreateFeatureFlagStalenessStatus) -> Self {
         self.staleness_status = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -152,44 +132,34 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
             {
                 let mut default_variant_key: Option<Option<String>> = None;
                 let mut description: Option<String> = None;
-                let mut distribution_channel: Option<
-                    crate::datadogV2::model::FeatureFlagDistributionChannel,
-                > = None;
+                let mut distribution_channel: Option<crate::datadogV2::model::FeatureFlagDistributionChannel> = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut require_approval: Option<bool> = None;
-                let mut staleness_status: Option<
-                    crate::datadogV2::model::CreateFeatureFlagStalenessStatus,
-                > = None;
+                let mut staleness_status: Option<crate::datadogV2::model::CreateFeatureFlagStalenessStatus> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::CreateVariant>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "default_variant_key" => {
-                            default_variant_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_variant_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "distribution_channel" => {
                             if v.is_null() {
                                 continue;
                             }
-                            distribution_channel =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            distribution_channel = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _distribution_channel) = distribution_channel {
                                 match _distribution_channel {
                                     crate::datadogV2::model::FeatureFlagDistributionChannel::UnparsedObject(_distribution_channel) => {
@@ -198,30 +168,27 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "json_schema" => {
-                            json_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            json_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "key" => {
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "require_approval" => {
                             if v.is_null() {
                                 continue;
                             }
-                            require_approval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            require_approval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "staleness_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            staleness_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            staleness_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _staleness_status) = staleness_status {
                                 match _staleness_status {
                                     crate::datadogV2::model::CreateFeatureFlagStalenessStatus::UnparsedObject(_staleness_status) => {
@@ -230,34 +197,32 @@ impl<'de> Deserialize<'de> for CreateFeatureFlagAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value_type" => {
                             value_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _value_type) = value_type {
                                 match _value_type {
-                                    crate::datadogV2::model::ValueType::UnparsedObject(
-                                        _value_type,
-                                    ) => {
+                                    crate::datadogV2::model::ValueType::UnparsedObject(_value_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "variants" => {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;

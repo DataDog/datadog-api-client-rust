@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of the teams ownership mapping to create.
 #[non_exhaustive]
@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TeamsOwnershipMappingCreateDataAttributes {
     /// The ID of the RUM application this mapping applies to.
-    /// For browser applications, provide the real application UUID — the team is applied to the view regardless of service.
-    /// For mobile applications, omit this field (or set it to the nil UUID `00000000-0000-0000-0000-000000000000`) — the team is applied to the view and service combination across all applications.
+/// For browser applications, provide the real application UUID — the team is applied to the view regardless of service.
+/// For mobile applications, omit this field (or set it to the nil UUID `00000000-0000-0000-0000-000000000000`) — the team is applied to the view and service combination across all applications.
     #[serde(rename = "application_id")]
     pub application_id: Option<uuid::Uuid>,
     /// How the `view_name` is matched against RUM view names.
@@ -32,14 +32,11 @@ pub struct TeamsOwnershipMappingCreateDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TeamsOwnershipMappingCreateDataAttributes {
-    pub fn new(
-        team_handle: String,
-        view_name: String,
-    ) -> TeamsOwnershipMappingCreateDataAttributes {
+    pub fn new(team_handle: String, view_name: String) -> TeamsOwnershipMappingCreateDataAttributes {
         TeamsOwnershipMappingCreateDataAttributes {
             application_id: None,
             match_type: None,
@@ -50,30 +47,29 @@ impl TeamsOwnershipMappingCreateDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn application_id(mut self, value: uuid::Uuid) -> Self {
         self.application_id = Some(value);
         self
     }
-
+    
     pub fn match_type(mut self, value: crate::datadogV2::model::TeamsOwnershipMatchType) -> Self {
         self.match_type = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TeamsOwnershipMappingCreateDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -97,10 +93,7 @@ impl<'de> Deserialize<'de> for TeamsOwnershipMappingCreateDataAttributes {
                 let mut service: Option<String> = None;
                 let mut team_handle: Option<String> = None;
                 let mut view_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -109,9 +102,8 @@ impl<'de> Deserialize<'de> for TeamsOwnershipMappingCreateDataAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            application_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "match_type" => {
                             if v.is_null() {
                                 continue;
@@ -125,29 +117,27 @@ impl<'de> Deserialize<'de> for TeamsOwnershipMappingCreateDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team_handle" => {
-                            team_handle =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            team_handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "view_name" => {
                             view_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let team_handle =
-                    team_handle.ok_or_else(|| M::Error::missing_field("team_handle"))?;
+                let team_handle = team_handle.ok_or_else(|| M::Error::missing_field("team_handle"))?;
                 let view_name = view_name.ok_or_else(|| M::Error::missing_field("view_name"))?;
 
                 let content = TeamsOwnershipMappingCreateDataAttributes {

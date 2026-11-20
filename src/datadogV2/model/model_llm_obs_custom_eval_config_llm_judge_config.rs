@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// LLM judge configuration for a custom evaluator.
 #[non_exhaustive]
@@ -13,38 +13,21 @@ use std::fmt::{self, Formatter};
 pub struct LLMObsCustomEvalConfigLLMJudgeConfig {
     /// Criteria used to assess the pass/fail result of a custom evaluator.
     #[serde(rename = "assessment_criteria")]
-    pub assessment_criteria:
-        Option<crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria>,
+    pub assessment_criteria: Option<crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria>,
     /// Query used to extract additional context for the evaluation.
-    #[serde(
-        rename = "context_query",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "context_query", default, with = "::serde_with::rust::double_option")]
     pub context_query: Option<Option<String>>,
     /// LLM inference parameters for a custom evaluator.
     #[serde(rename = "inference_params")]
     pub inference_params: crate::datadogV2::model::LLMObsCustomEvalConfigInferenceParams,
     /// Name of the last library prompt template used.
-    #[serde(
-        rename = "last_used_library_prompt_template_name",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "last_used_library_prompt_template_name", default, with = "::serde_with::rust::double_option")]
     pub last_used_library_prompt_template_name: Option<Option<String>>,
     /// Whether the library prompt template was modified.
-    #[serde(
-        rename = "modified_library_prompt_template",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "modified_library_prompt_template", default, with = "::serde_with::rust::double_option")]
     pub modified_library_prompt_template: Option<Option<bool>>,
     /// JSON schema describing the expected output format of the LLM judge. Omit for a `deterministic` evaluator.
-    #[serde(
-        rename = "output_schema",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "output_schema", default, with = "::serde_with::rust::double_option")]
     pub output_schema: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Output parsing type for a custom LLM judge evaluator.
     #[serde(rename = "parsing_type")]
@@ -53,30 +36,20 @@ pub struct LLMObsCustomEvalConfigLLMJudgeConfig {
     #[serde(rename = "prompt_template")]
     pub prompt_template: Option<Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>>,
     /// Query used to extract the target value to evaluate.
-    #[serde(
-        rename = "target_query",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "target_query", default, with = "::serde_with::rust::double_option")]
     pub target_query: Option<Option<String>>,
     /// User-provided JavaScript function applied to post-process the JSON output of the LLM judge. For a `deterministic` evaluator it is the evaluator itself: it receives the evaluated span (span scope), `{spans}` (trace scope), or `{session_id, traces}` (session scope), and its return value sets the result. A boolean, number, string or object becomes a boolean, score, categorical or JSON metric; `null` skips the evaluation; and `{value, assessment, reasoning, metadata}` also sets pass or fail, reasoning, and metadata.
-    #[serde(
-        rename = "user_specified_json_post_processing_function",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "user_specified_json_post_processing_function", default, with = "::serde_with::rust::double_option")]
     pub user_specified_json_post_processing_function: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsCustomEvalConfigLLMJudgeConfig {
-    pub fn new(
-        inference_params: crate::datadogV2::model::LLMObsCustomEvalConfigInferenceParams,
-    ) -> LLMObsCustomEvalConfigLLMJudgeConfig {
+    pub fn new(inference_params: crate::datadogV2::model::LLMObsCustomEvalConfigInferenceParams) -> LLMObsCustomEvalConfigLLMJudgeConfig {
         LLMObsCustomEvalConfigLLMJudgeConfig {
             assessment_criteria: None,
             context_query: None,
@@ -92,72 +65,59 @@ impl LLMObsCustomEvalConfigLLMJudgeConfig {
             _unparsed: false,
         }
     }
-
-    pub fn assessment_criteria(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria,
-    ) -> Self {
+    
+    pub fn assessment_criteria(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria) -> Self {
         self.assessment_criteria = Some(value);
         self
     }
-
+    
     pub fn context_query(mut self, value: Option<String>) -> Self {
         self.context_query = Some(value);
         self
     }
-
+    
     pub fn last_used_library_prompt_template_name(mut self, value: Option<String>) -> Self {
         self.last_used_library_prompt_template_name = Some(value);
         self
     }
-
+    
     pub fn modified_library_prompt_template(mut self, value: Option<bool>) -> Self {
         self.modified_library_prompt_template = Some(value);
         self
     }
-
-    pub fn output_schema(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn output_schema(mut self, value: Option<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.output_schema = Some(value);
         self
     }
-
-    pub fn parsing_type(
-        mut self,
-        value: crate::datadogV2::model::LLMObsCustomEvalConfigParsingType,
-    ) -> Self {
+    
+    pub fn parsing_type(mut self, value: crate::datadogV2::model::LLMObsCustomEvalConfigParsingType) -> Self {
         self.parsing_type = Some(value);
         self
     }
-
-    pub fn prompt_template(
-        mut self,
-        value: Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>,
-    ) -> Self {
+    
+    pub fn prompt_template(mut self, value: Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>) -> Self {
         self.prompt_template = Some(value);
         self
     }
-
+    
     pub fn target_query(mut self, value: Option<String>) -> Self {
         self.target_query = Some(value);
         self
     }
-
+    
     pub fn user_specified_json_post_processing_function(mut self, value: Option<String>) -> Self {
         self.user_specified_json_post_processing_function = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMJudgeConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -176,30 +136,17 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMJudgeConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut assessment_criteria: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria,
-                > = None;
+                let mut assessment_criteria: Option<crate::datadogV2::model::LLMObsCustomEvalConfigAssessmentCriteria> = None;
                 let mut context_query: Option<Option<String>> = None;
-                let mut inference_params: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigInferenceParams,
-                > = None;
+                let mut inference_params: Option<crate::datadogV2::model::LLMObsCustomEvalConfigInferenceParams> = None;
                 let mut last_used_library_prompt_template_name: Option<Option<String>> = None;
                 let mut modified_library_prompt_template: Option<Option<bool>> = None;
-                let mut output_schema: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
-                let mut parsing_type: Option<
-                    crate::datadogV2::model::LLMObsCustomEvalConfigParsingType,
-                > = None;
-                let mut prompt_template: Option<
-                    Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>,
-                > = None;
+                let mut output_schema: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>> = None;
+                let mut parsing_type: Option<crate::datadogV2::model::LLMObsCustomEvalConfigParsingType> = None;
+                let mut prompt_template: Option<Vec<crate::datadogV2::model::LLMObsCustomEvalConfigPromptMessage>> = None;
                 let mut target_query: Option<Option<String>> = None;
                 let mut user_specified_json_post_processing_function: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -208,35 +155,28 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMJudgeConfig {
                             if v.is_null() {
                                 continue;
                             }
-                            assessment_criteria =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assessment_criteria = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "context_query" => {
-                            context_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            context_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "inference_params" => {
-                            inference_params =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            inference_params = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_used_library_prompt_template_name" => {
-                            last_used_library_prompt_template_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_used_library_prompt_template_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_library_prompt_template" => {
-                            modified_library_prompt_template =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_library_prompt_template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "output_schema" => {
-                            output_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            output_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "parsing_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            parsing_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            parsing_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _parsing_type) = parsing_type {
                                 match _parsing_type {
                                     crate::datadogV2::model::LLMObsCustomEvalConfigParsingType::UnparsedObject(_parsing_type) => {
@@ -245,31 +185,27 @@ impl<'de> Deserialize<'de> for LLMObsCustomEvalConfigLLMJudgeConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "prompt_template" => {
                             if v.is_null() {
                                 continue;
                             }
-                            prompt_template =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            prompt_template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target_query" => {
-                            target_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user_specified_json_post_processing_function" => {
-                            user_specified_json_post_processing_function =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            user_specified_json_post_processing_function = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let inference_params =
-                    inference_params.ok_or_else(|| M::Error::missing_field("inference_params"))?;
+                let inference_params = inference_params.ok_or_else(|| M::Error::missing_field("inference_params"))?;
 
                 let content = LLMObsCustomEvalConfigLLMJudgeConfig {
                     assessment_criteria,

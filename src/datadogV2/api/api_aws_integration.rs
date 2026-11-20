@@ -1,33 +1,33 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListAWSAccountsOptionalParams is a struct for passing parameters to the method [`AWSIntegrationAPI::list_aws_accounts`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAWSAccountsOptionalParams {
     /// Optional query parameter to filter accounts by AWS Account ID.
-    /// If not provided, all accounts are returned.
+/// If not provided, all accounts are returned.
     pub aws_account_id: Option<String>,
 }
 
 impl ListAWSAccountsOptionalParams {
     /// Optional query parameter to filter accounts by AWS Account ID.
-    /// If not provided, all accounts are returned.
+/// If not provided, all accounts are returned.
     pub fn aws_account_id(mut self, value: String) -> Self {
         self.aws_account_id = Some(value);
         self
     }
 }
+
+
+
 
 /// CreateAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,6 +37,7 @@ pub enum CreateAWSAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateAWSAccountCCMConfigError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_account_ccm_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -44,6 +45,7 @@ pub enum CreateAWSAccountCCMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAWSEventBridgeSourceError is a struct for typed errors of method [`AWSIntegrationAPI::create_aws_event_bridge_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -53,6 +55,7 @@ pub enum CreateAWSEventBridgeSourceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateNewAWSExternalIDError is a struct for typed errors of method [`AWSIntegrationAPI::create_new_aws_external_id`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -60,6 +63,7 @@ pub enum CreateNewAWSExternalIDError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -69,6 +73,7 @@ pub enum DeleteAWSAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAWSAccountCCMConfigError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_account_ccm_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -76,6 +81,7 @@ pub enum DeleteAWSAccountCCMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAWSEventBridgeSourceError is a struct for typed errors of method [`AWSIntegrationAPI::delete_aws_event_bridge_source`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -85,6 +91,7 @@ pub enum DeleteAWSEventBridgeSourceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -92,6 +99,7 @@ pub enum GetAWSAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAWSAccountCCMConfigError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_account_ccm_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -101,6 +109,7 @@ pub enum GetAWSAccountCCMConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAWSIntegrationIAMPermissionsError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_integration_iam_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -108,6 +117,7 @@ pub enum GetAWSIntegrationIAMPermissionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAWSIntegrationIAMPermissionsResourceCollectionError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_integration_iam_permissions_resource_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -117,6 +127,7 @@ pub enum GetAWSIntegrationIAMPermissionsResourceCollectionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAWSIntegrationIAMPermissionsStandardError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_integration_iam_permissions_standard`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -124,6 +135,7 @@ pub enum GetAWSIntegrationIAMPermissionsStandardError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAWSMetricNameFilterPreviewError is a struct for typed errors of method [`AWSIntegrationAPI::get_aws_metric_name_filter_preview`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -133,6 +145,7 @@ pub enum GetAWSMetricNameFilterPreviewError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAWSAccountsError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -140,6 +153,7 @@ pub enum ListAWSAccountsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAWSEventBridgeSourcesError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_event_bridge_sources`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -149,6 +163,7 @@ pub enum ListAWSEventBridgeSourcesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAWSNamespacesError is a struct for typed errors of method [`AWSIntegrationAPI::list_aws_namespaces`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -156,6 +171,7 @@ pub enum ListAWSNamespacesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PreviewAWSMetricNameFilterError is a struct for typed errors of method [`AWSIntegrationAPI::preview_aws_metric_name_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -166,6 +182,7 @@ pub enum PreviewAWSMetricNameFilterError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateAWSAccountError is a struct for typed errors of method [`AWSIntegrationAPI::update_aws_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -173,6 +190,7 @@ pub enum UpdateAWSAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateAWSAccountCCMConfigError is a struct for typed errors of method [`AWSIntegrationAPI::update_aws_account_ccm_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -182,6 +200,7 @@ pub enum UpdateAWSAccountCCMConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ValidateAWSCCMConfigError is a struct for typed errors of method [`AWSIntegrationAPI::validate_awsccm_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -190,6 +209,7 @@ pub enum ValidateAWSCCMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your Datadog-AWS integration directly through the Datadog API.
 /// For more information, see the [AWS integration page](<https://docs.datadoghq.com/integrations/amazon_web_services>).
@@ -214,7 +234,8 @@ impl AWSIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -259,57 +280,49 @@ impl AWSIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new AWS Account Integration Config.
-    pub async fn create_aws_account(
-        &self,
-        body: crate::datadogV2::model::AWSAccountCreateRequest,
-    ) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<CreateAWSAccountError>>
-    {
+    pub async fn create_aws_account(&self, body: crate::datadogV2::model::AWSAccountCreateRequest) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<CreateAWSAccountError>> {
         match self.create_aws_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new AWS Account Integration Config.
-    pub async fn create_aws_account_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSAccountCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>,
-        datadog::Error<CreateAWSAccountError>,
-    > {
+    pub async fn create_aws_account_with_http_info(&self, body: crate::datadogV2::model::AWSAccountCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>, datadog::Error<CreateAWSAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -322,23 +335,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -346,7 +352,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -356,7 +365,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -378,7 +390,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -395,67 +407,40 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn create_aws_account_ccm_config(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSCcmConfigRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSCcmConfigResponse,
-        datadog::Error<CreateAWSAccountCCMConfigError>,
-    > {
-        match self
-            .create_aws_account_ccm_config_with_http_info(aws_account_config_id, body)
-            .await
-        {
+/// (CUR) 2.0 by config ID.
+    pub async fn create_aws_account_ccm_config(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSCcmConfigRequest) -> Result<crate::datadogV2::model::AWSCcmConfigResponse, datadog::Error<CreateAWSAccountCCMConfigError>> {
+        match self.create_aws_account_ccm_config_with_http_info(aws_account_config_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn create_aws_account_ccm_config_with_http_info(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSCcmConfigRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>,
-        datadog::Error<CreateAWSAccountCCMConfigError>,
-    > {
+/// (CUR) 2.0 by config ID.
+    pub async fn create_aws_account_ccm_config_with_http_info(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSCcmConfigRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>, datadog::Error<CreateAWSAccountCCMConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_account_ccm_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -467,20 +452,25 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -493,23 +483,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -517,7 +500,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -527,7 +513,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -549,7 +538,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -566,79 +555,58 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSAccountCCMConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSAccountCCMConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an Amazon EventBridge source.
-    pub async fn create_aws_event_bridge_source(
-        &self,
-        body: crate::datadogV2::model::AWSEventBridgeCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSEventBridgeCreateResponse,
-        datadog::Error<CreateAWSEventBridgeSourceError>,
-    > {
-        match self
-            .create_aws_event_bridge_source_with_http_info(body)
-            .await
-        {
+    pub async fn create_aws_event_bridge_source(&self, body: crate::datadogV2::model::AWSEventBridgeCreateRequest) -> Result<crate::datadogV2::model::AWSEventBridgeCreateResponse, datadog::Error<CreateAWSEventBridgeSourceError>> {
+        match self.create_aws_event_bridge_source_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an Amazon EventBridge source.
-    pub async fn create_aws_event_bridge_source_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSEventBridgeCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeCreateResponse>,
-        datadog::Error<CreateAWSEventBridgeSourceError>,
-    > {
+    pub async fn create_aws_event_bridge_source_with_http_info(&self, body: crate::datadogV2::model::AWSEventBridgeCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeCreateResponse>, datadog::Error<CreateAWSEventBridgeSourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_event_bridge_source";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -651,23 +619,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -675,7 +636,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -685,7 +649,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -707,7 +674,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -724,73 +691,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeCreateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeCreateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSEventBridgeSourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSEventBridgeSourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Generate a new external ID for AWS role-based authentication.
-    pub async fn create_new_aws_external_id(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSNewExternalIDResponse,
-        datadog::Error<CreateNewAWSExternalIDError>,
-    > {
+    pub async fn create_new_aws_external_id(&self) -> Result<crate::datadogV2::model::AWSNewExternalIDResponse, datadog::Error<CreateNewAWSExternalIDError>> {
         match self.create_new_aws_external_id_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Generate a new external ID for AWS role-based authentication.
-    pub async fn create_new_aws_external_id_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSNewExternalIDResponse>,
-        datadog::Error<CreateNewAWSExternalIDError>,
-    > {
+    pub async fn create_new_aws_external_id_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSNewExternalIDResponse>, datadog::Error<CreateNewAWSExternalIDError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_new_aws_external_id";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/generate_new_external_id",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -803,22 +754,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -830,65 +775,53 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSNewExternalIDResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSNewExternalIDResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateNewAWSExternalIDError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateNewAWSExternalIDError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an AWS Account Integration Config by config ID.
-    pub async fn delete_aws_account(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<(), datadog::Error<DeleteAWSAccountError>> {
-        match self
-            .delete_aws_account_with_http_info(aws_account_config_id)
-            .await
-        {
+    pub async fn delete_aws_account(&self, aws_account_config_id: String) -> Result<(), datadog::Error<DeleteAWSAccountError>> {
+        match self.delete_aws_account_with_http_info(aws_account_config_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an AWS Account Integration Config by config ID.
-    pub async fn delete_aws_account_with_http_info(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountError>> {
+    pub async fn delete_aws_account_with_http_info(&self, aws_account_config_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -901,22 +834,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -934,38 +861,25 @@ impl AWSIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAWSAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn delete_aws_account_ccm_config(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<(), datadog::Error<DeleteAWSAccountCCMConfigError>> {
-        match self
-            .delete_aws_account_ccm_config_with_http_info(aws_account_config_id)
-            .await
-        {
+/// (CUR) 2.0 by config ID.
+    pub async fn delete_aws_account_ccm_config(&self, aws_account_config_id: String) -> Result<(), datadog::Error<DeleteAWSAccountCCMConfigError>> {
+        match self.delete_aws_account_ccm_config_with_http_info(aws_account_config_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn delete_aws_account_ccm_config_with_http_info(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountCCMConfigError>> {
+/// (CUR) 2.0 by config ID.
+    pub async fn delete_aws_account_ccm_config_with_http_info(&self, aws_account_config_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAWSAccountCCMConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_account_ccm_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -977,19 +891,24 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1002,22 +921,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1035,66 +948,49 @@ impl AWSIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAWSAccountCCMConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSAccountCCMConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an Amazon EventBridge source.
-    pub async fn delete_aws_event_bridge_source(
-        &self,
-        body: crate::datadogV2::model::AWSEventBridgeDeleteRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSEventBridgeDeleteResponse,
-        datadog::Error<DeleteAWSEventBridgeSourceError>,
-    > {
-        match self
-            .delete_aws_event_bridge_source_with_http_info(body)
-            .await
-        {
+    pub async fn delete_aws_event_bridge_source(&self, body: crate::datadogV2::model::AWSEventBridgeDeleteRequest) -> Result<crate::datadogV2::model::AWSEventBridgeDeleteResponse, datadog::Error<DeleteAWSEventBridgeSourceError>> {
+        match self.delete_aws_event_bridge_source_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an Amazon EventBridge source.
-    pub async fn delete_aws_event_bridge_source_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSEventBridgeDeleteRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeDeleteResponse>,
-        datadog::Error<DeleteAWSEventBridgeSourceError>,
-    > {
+    pub async fn delete_aws_event_bridge_source_with_http_info(&self, body: crate::datadogV2::model::AWSEventBridgeDeleteRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeDeleteResponse>, datadog::Error<DeleteAWSEventBridgeSourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_event_bridge_source";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1107,23 +1003,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1131,7 +1020,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1141,7 +1033,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1163,7 +1058,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1180,77 +1075,59 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeDeleteResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeDeleteResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteAWSEventBridgeSourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSEventBridgeSourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an AWS Account Integration Config by config ID.
-    pub async fn get_aws_account(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<GetAWSAccountError>>
-    {
-        match self
-            .get_aws_account_with_http_info(aws_account_config_id)
-            .await
-        {
+    pub async fn get_aws_account(&self, aws_account_config_id: String) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<GetAWSAccountError>> {
+        match self.get_aws_account_with_http_info(aws_account_config_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an AWS Account Integration Config by config ID.
-    pub async fn get_aws_account_with_http_info(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>,
-        datadog::Error<GetAWSAccountError>,
-    > {
+    pub async fn get_aws_account_with_http_info(&self, aws_account_config_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>, datadog::Error<GetAWSAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1263,22 +1140,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1290,65 +1161,40 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn get_aws_account_ccm_config(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AWSCcmConfigResponse,
-        datadog::Error<GetAWSAccountCCMConfigError>,
-    > {
-        match self
-            .get_aws_account_ccm_config_with_http_info(aws_account_config_id)
-            .await
-        {
+/// (CUR) 2.0 by config ID.
+    pub async fn get_aws_account_ccm_config(&self, aws_account_config_id: String) -> Result<crate::datadogV2::model::AWSCcmConfigResponse, datadog::Error<GetAWSAccountCCMConfigError>> {
+        match self.get_aws_account_ccm_config_with_http_info(aws_account_config_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn get_aws_account_ccm_config_with_http_info(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>,
-        datadog::Error<GetAWSAccountCCMConfigError>,
-    > {
+/// (CUR) 2.0 by config ID.
+    pub async fn get_aws_account_ccm_config_with_http_info(&self, aws_account_config_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>, datadog::Error<GetAWSAccountCCMConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_account_ccm_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1360,19 +1206,24 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1385,22 +1236,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1412,76 +1257,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSAccountCCMConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSAccountCCMConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-        datadog::Error<GetAWSIntegrationIAMPermissionsError>,
-    > {
-        match self
-            .get_aws_integration_iam_permissions_with_http_info()
-            .await
-        {
+    pub async fn get_aws_integration_iam_permissions(&self) -> Result<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse, datadog::Error<GetAWSIntegrationIAMPermissionsError>> {
+        match self.get_aws_integration_iam_permissions_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>,
-        datadog::Error<GetAWSIntegrationIAMPermissionsError>,
-    > {
+    pub async fn get_aws_integration_iam_permissions_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>, datadog::Error<GetAWSIntegrationIAMPermissionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_integration_iam_permissions";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1494,22 +1320,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1521,77 +1341,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSIntegrationIAMPermissionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSIntegrationIAMPermissionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all resource collection AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions_resource_collection(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-        datadog::Error<GetAWSIntegrationIAMPermissionsResourceCollectionError>,
-    > {
-        match self
-            .get_aws_integration_iam_permissions_resource_collection_with_http_info()
-            .await
-        {
+    pub async fn get_aws_integration_iam_permissions_resource_collection(&self) -> Result<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse, datadog::Error<GetAWSIntegrationIAMPermissionsResourceCollectionError>> {
+        match self.get_aws_integration_iam_permissions_resource_collection_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all resource collection AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions_resource_collection_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>,
-        datadog::Error<GetAWSIntegrationIAMPermissionsResourceCollectionError>,
-    > {
+    pub async fn get_aws_integration_iam_permissions_resource_collection_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>, datadog::Error<GetAWSIntegrationIAMPermissionsResourceCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_integration_iam_permissions_resource_collection";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions/resource_collection",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1604,22 +1404,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1631,77 +1425,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSIntegrationIAMPermissionsResourceCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSIntegrationIAMPermissionsResourceCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all standard AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions_standard(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-        datadog::Error<GetAWSIntegrationIAMPermissionsStandardError>,
-    > {
-        match self
-            .get_aws_integration_iam_permissions_standard_with_http_info()
-            .await
-        {
+    pub async fn get_aws_integration_iam_permissions_standard(&self) -> Result<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse, datadog::Error<GetAWSIntegrationIAMPermissionsStandardError>> {
+        match self.get_aws_integration_iam_permissions_standard_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all standard AWS IAM permissions required for the AWS integration.
-    pub async fn get_aws_integration_iam_permissions_standard_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>,
-        datadog::Error<GetAWSIntegrationIAMPermissionsStandardError>,
-    > {
+    pub async fn get_aws_integration_iam_permissions_standard_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>, datadog::Error<GetAWSIntegrationIAMPermissionsStandardError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_integration_iam_permissions_standard";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/iam_permissions/standard",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1714,22 +1488,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1741,64 +1509,38 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::AWSIntegrationIamPermissionsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSIntegrationIamPermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSIntegrationIAMPermissionsStandardError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSIntegrationIAMPermissionsStandardError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Preview which collected CloudWatch metrics would be filtered by the account's saved metric name filters.
-    pub async fn get_aws_metric_name_filter_preview(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AWSMetricNameFilterPreviewResponse,
-        datadog::Error<GetAWSMetricNameFilterPreviewError>,
-    > {
-        match self
-            .get_aws_metric_name_filter_preview_with_http_info(aws_account_config_id)
-            .await
-        {
+    pub async fn get_aws_metric_name_filter_preview(&self, aws_account_config_id: String) -> Result<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse, datadog::Error<GetAWSMetricNameFilterPreviewError>> {
+        match self.get_aws_metric_name_filter_preview_with_http_info(aws_account_config_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Preview which collected CloudWatch metrics would be filtered by the account's saved metric name filters.
-    pub async fn get_aws_metric_name_filter_preview_with_http_info(
-        &self,
-        aws_account_config_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>,
-        datadog::Error<GetAWSMetricNameFilterPreviewError>,
-    > {
+    pub async fn get_aws_metric_name_filter_preview_with_http_info(&self, aws_account_config_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>, datadog::Error<GetAWSMetricNameFilterPreviewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_metric_name_filter_preview";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1810,19 +1552,24 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/metric_name_filter_preview",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1835,22 +1582,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1862,61 +1603,42 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAWSMetricNameFilterPreviewError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAWSMetricNameFilterPreviewError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of AWS Account Integration Configs.
-    pub async fn list_aws_accounts(
-        &self,
-        params: ListAWSAccountsOptionalParams,
-    ) -> Result<crate::datadogV2::model::AWSAccountsResponse, datadog::Error<ListAWSAccountsError>>
-    {
-        match self.list_aws_accounts_with_http_info(params).await {
+    pub async fn list_aws_accounts(&self, params: ListAWSAccountsOptionalParams) -> Result<crate::datadogV2::model::AWSAccountsResponse, datadog::Error<ListAWSAccountsError>> {
+        match self.list_aws_accounts_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of AWS Account Integration Configs.
-    pub async fn list_aws_accounts_with_http_info(
-        &self,
-        params: ListAWSAccountsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSAccountsResponse>,
-        datadog::Error<ListAWSAccountsError>,
-    > {
+    pub async fn list_aws_accounts_with_http_info(&self, params: ListAWSAccountsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSAccountsResponse>, datadog::Error<ListAWSAccountsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_accounts";
 
+        
         // unbox and build optional parameters
         let aws_account_id = params.aws_account_id;
 
@@ -1924,19 +1646,19 @@ impl AWSIntegrationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = aws_account_id {
-            local_req_builder =
-                local_req_builder.query(&[("aws_account_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("aws_account_id", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1949,22 +1671,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1976,73 +1692,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSAccountsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSAccountsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSAccountsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all Amazon EventBridge sources.
-    pub async fn list_aws_event_bridge_sources(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSEventBridgeListResponse,
-        datadog::Error<ListAWSEventBridgeSourcesError>,
-    > {
+    pub async fn list_aws_event_bridge_sources(&self) -> Result<crate::datadogV2::model::AWSEventBridgeListResponse, datadog::Error<ListAWSEventBridgeSourcesError>> {
         match self.list_aws_event_bridge_sources_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all Amazon EventBridge sources.
-    pub async fn list_aws_event_bridge_sources_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeListResponse>,
-        datadog::Error<ListAWSEventBridgeSourcesError>,
-    > {
+    pub async fn list_aws_event_bridge_sources_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSEventBridgeListResponse>, datadog::Error<ListAWSEventBridgeSourcesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_event_bridge_sources";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/event_bridge",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2055,22 +1755,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2082,73 +1776,57 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSEventBridgeListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSEventBridgeSourcesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSEventBridgeSourcesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of available AWS CloudWatch namespaces that can send metrics to Datadog.
-    pub async fn list_aws_namespaces(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AWSNamespacesResponse,
-        datadog::Error<ListAWSNamespacesError>,
-    > {
+    pub async fn list_aws_namespaces(&self) -> Result<crate::datadogV2::model::AWSNamespacesResponse, datadog::Error<ListAWSNamespacesError>> {
         match self.list_aws_namespaces_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of available AWS CloudWatch namespaces that can send metrics to Datadog.
-    pub async fn list_aws_namespaces_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSNamespacesResponse>,
-        datadog::Error<ListAWSNamespacesError>,
-    > {
+    pub async fn list_aws_namespaces_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSNamespacesResponse>, datadog::Error<ListAWSNamespacesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_namespaces";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/available_namespaces",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2161,22 +1839,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2188,67 +1860,40 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSNamespacesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSNamespacesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSNamespacesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSNamespacesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Preview which collected CloudWatch metrics would be filtered by the supplied metric name filters.
-    /// The filters are not persisted.
-    pub async fn preview_aws_metric_name_filter(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSMetricNameFilterPreviewRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSMetricNameFilterPreviewResponse,
-        datadog::Error<PreviewAWSMetricNameFilterError>,
-    > {
-        match self
-            .preview_aws_metric_name_filter_with_http_info(aws_account_config_id, body)
-            .await
-        {
+/// The filters are not persisted.
+    pub async fn preview_aws_metric_name_filter(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSMetricNameFilterPreviewRequest) -> Result<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse, datadog::Error<PreviewAWSMetricNameFilterError>> {
+        match self.preview_aws_metric_name_filter_with_http_info(aws_account_config_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Preview which collected CloudWatch metrics would be filtered by the supplied metric name filters.
-    /// The filters are not persisted.
-    pub async fn preview_aws_metric_name_filter_with_http_info(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSMetricNameFilterPreviewRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>,
-        datadog::Error<PreviewAWSMetricNameFilterError>,
-    > {
+/// The filters are not persisted.
+    pub async fn preview_aws_metric_name_filter_with_http_info(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSMetricNameFilterPreviewRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>, datadog::Error<PreviewAWSMetricNameFilterError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.preview_aws_metric_name_filter";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2260,20 +1905,25 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/metric_name_filter_preview",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2286,23 +1936,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2310,7 +1953,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2320,7 +1966,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2342,7 +1991,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2359,80 +2008,60 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSMetricNameFilterPreviewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PreviewAWSMetricNameFilterError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PreviewAWSMetricNameFilterError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an AWS Account Integration Config by config ID.
-    pub async fn update_aws_account(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSAccountUpdateRequest,
-    ) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<UpdateAWSAccountError>>
-    {
-        match self
-            .update_aws_account_with_http_info(aws_account_config_id, body)
-            .await
-        {
+    pub async fn update_aws_account(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSAccountUpdateRequest) -> Result<crate::datadogV2::model::AWSAccountResponse, datadog::Error<UpdateAWSAccountError>> {
+        match self.update_aws_account_with_http_info(aws_account_config_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an AWS Account Integration Config by config ID.
-    pub async fn update_aws_account_with_http_info(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSAccountUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>,
-        datadog::Error<UpdateAWSAccountError>,
-    > {
+    pub async fn update_aws_account_with_http_info(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSAccountUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSAccountResponse>, datadog::Error<UpdateAWSAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_aws_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2445,23 +2074,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2469,7 +2091,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2479,7 +2104,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2501,7 +2129,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2518,67 +2146,40 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateAWSAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAWSAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn update_aws_account_ccm_config(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSCcmConfigRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSCcmConfigResponse,
-        datadog::Error<UpdateAWSAccountCCMConfigError>,
-    > {
-        match self
-            .update_aws_account_ccm_config_with_http_info(aws_account_config_id, body)
-            .await
-        {
+/// (CUR) 2.0 by config ID.
+    pub async fn update_aws_account_ccm_config(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSCcmConfigRequest) -> Result<crate::datadogV2::model::AWSCcmConfigResponse, datadog::Error<UpdateAWSAccountCCMConfigError>> {
+        match self.update_aws_account_ccm_config_with_http_info(aws_account_config_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the Cloud Cost Management config for an AWS Account Integration Config using Cost and Usage Report
-    /// (CUR) 2.0 by config ID.
-    pub async fn update_aws_account_ccm_config_with_http_info(
-        &self,
-        aws_account_config_id: String,
-        body: crate::datadogV2::model::AWSCcmConfigRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>,
-        datadog::Error<UpdateAWSAccountCCMConfigError>,
-    > {
+/// (CUR) 2.0 by config ID.
+    pub async fn update_aws_account_ccm_config_with_http_info(&self, aws_account_config_id: String, body: crate::datadogV2::model::AWSCcmConfigRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigResponse>, datadog::Error<UpdateAWSAccountCCMConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_aws_account_ccm_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2590,20 +2191,25 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/accounts/{aws_account_config_id}/ccm_config",
-            local_configuration.get_operation_host(local_operation_id),
-            aws_account_config_id = datadog::urlencode(aws_account_config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aws_account_config_id=
+            datadog::urlencode(aws_account_config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2616,23 +2222,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2640,7 +2239,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2650,7 +2252,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2672,7 +2277,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2689,62 +2294,40 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateAWSAccountCCMConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAWSAccountCCMConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Validate a Cloud Cost Management config for an AWS account using Cost and Usage Report
-    /// (CUR) 2.0 against Datadog's ingest requirements without persisting it.
-    pub async fn validate_awsccm_config(
-        &self,
-        body: crate::datadogV2::model::AWSCcmConfigValidationRequest,
-    ) -> Result<
-        crate::datadogV2::model::AWSCcmConfigValidationResponse,
-        datadog::Error<ValidateAWSCCMConfigError>,
-    > {
+/// (CUR) 2.0 against Datadog's ingest requirements without persisting it.
+    pub async fn validate_awsccm_config(&self, body: crate::datadogV2::model::AWSCcmConfigValidationRequest) -> Result<crate::datadogV2::model::AWSCcmConfigValidationResponse, datadog::Error<ValidateAWSCCMConfigError>> {
         match self.validate_awsccm_config_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Validate a Cloud Cost Management config for an AWS account using Cost and Usage Report
-    /// (CUR) 2.0 against Datadog's ingest requirements without persisting it.
-    pub async fn validate_awsccm_config_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AWSCcmConfigValidationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigValidationResponse>,
-        datadog::Error<ValidateAWSCCMConfigError>,
-    > {
+/// (CUR) 2.0 against Datadog's ingest requirements without persisting it.
+    pub async fn validate_awsccm_config_with_http_info(&self, body: crate::datadogV2::model::AWSCcmConfigValidationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AWSCcmConfigValidationResponse>, datadog::Error<ValidateAWSCCMConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.validate_awsccm_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2756,19 +2339,23 @@ impl AWSIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration/aws/validate_ccm_config",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2781,23 +2368,16 @@ impl AWSIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2805,7 +2385,10 @@ impl AWSIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2815,7 +2398,10 @@ impl AWSIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2837,7 +2423,7 @@ impl AWSIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2854,26 +2440,17 @@ impl AWSIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigValidationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AWSCcmConfigValidationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ValidateAWSCCMConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ValidateAWSCCMConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

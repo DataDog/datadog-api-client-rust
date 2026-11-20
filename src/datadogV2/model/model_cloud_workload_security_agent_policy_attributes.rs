@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A Cloud Workload Security Agent policy returned by the API
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     #[serde(rename = "blockingRulesCount")]
     pub blocking_rules_count: Option<i32>,
     /// Whether an update is available for the content pack. Only set for activated content packs, `null` otherwise
-    #[serde(
-        rename = "contentPackUpdateAvailable",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "contentPackUpdateAvailable", default, with = "::serde_with::rust::double_option")]
     pub content_pack_update_available: Option<Option<bool>>,
     /// Whether the policy is managed by Datadog
     #[serde(rename = "datadogManaged")]
@@ -79,7 +75,7 @@ pub struct CloudWorkloadSecurityAgentPolicyAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CloudWorkloadSecurityAgentPolicyAttributes {
@@ -109,121 +105,113 @@ impl CloudWorkloadSecurityAgentPolicyAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn blocking_rules_count(mut self, value: i32) -> Self {
         self.blocking_rules_count = Some(value);
         self
     }
-
+    
     pub fn content_pack_update_available(mut self, value: Option<bool>) -> Self {
         self.content_pack_update_available = Some(value);
         self
     }
-
+    
     pub fn datadog_managed(mut self, value: bool) -> Self {
         self.datadog_managed = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn disabled_rules_count(mut self, value: i32) -> Self {
         self.disabled_rules_count = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn host_tags(mut self, value: Vec<String>) -> Self {
         self.host_tags = Some(value);
         self
     }
-
+    
     pub fn host_tags_lists(mut self, value: Vec<Vec<String>>) -> Self {
         self.host_tags_lists = Some(value);
         self
     }
-
+    
     pub fn monitoring_rules_count(mut self, value: i32) -> Self {
         self.monitoring_rules_count = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn pinned(mut self, value: bool) -> Self {
         self.pinned = Some(value);
         self
     }
-
+    
     pub fn policy_type(mut self, value: String) -> Self {
         self.policy_type = Some(value);
         self
     }
-
+    
     pub fn policy_version(mut self, value: String) -> Self {
         self.policy_version = Some(value);
         self
     }
-
+    
     pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     pub fn rule_count(mut self, value: i32) -> Self {
         self.rule_count = Some(value);
         self
     }
-
+    
     pub fn source_default_policy_id(mut self, value: String) -> Self {
         self.source_default_policy_id = Some(value);
         self
     }
-
+    
     pub fn update_date(mut self, value: i64) -> Self {
         self.update_date = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: i64) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn updater(
-        mut self,
-        value: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes,
-    ) -> Self {
+    
+    pub fn updater(mut self, value: crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes) -> Self {
         self.updater = Some(value);
         self
     }
-
-    pub fn versions(
-        mut self,
-        value: Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>,
-    ) -> Self {
+    
+    pub fn versions(mut self, value: Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>) -> Self {
         self.versions = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CloudWorkloadSecurityAgentPolicyAttributes {
     fn default() -> Self {
@@ -266,16 +254,9 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                 let mut source_default_policy_id: Option<String> = None;
                 let mut update_date: Option<i64> = None;
                 let mut updated_at: Option<i64> = None;
-                let mut updater: Option<
-                    crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes,
-                > = None;
-                let mut versions: Option<
-                    Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut updater: Option<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyUpdaterAttributes> = None;
+                let mut versions: Option<Vec<crate::datadogV2::model::CloudWorkloadSecurityAgentPolicyVersion>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -284,135 +265,124 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentPolicyAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            blocking_rules_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            blocking_rules_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "contentPackUpdateAvailable" => {
-                            content_pack_update_available =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            content_pack_update_available = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datadogManaged" => {
                             if v.is_null() {
                                 continue;
                             }
-                            datadog_managed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            datadog_managed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "disabledRulesCount" => {
                             if v.is_null() {
                                 continue;
                             }
-                            disabled_rules_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disabled_rules_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hostTags" => {
                             if v.is_null() {
                                 continue;
                             }
                             host_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hostTagsLists" => {
                             if v.is_null() {
                                 continue;
                             }
-                            host_tags_lists =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            host_tags_lists = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitoringRulesCount" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitoring_rules_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitoring_rules_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pinned" => {
                             if v.is_null() {
                                 continue;
                             }
                             pinned = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "policyType" => {
                             if v.is_null() {
                                 continue;
                             }
-                            policy_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            policy_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "policyVersion" => {
                             if v.is_null() {
                                 continue;
                             }
-                            policy_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            policy_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ruleCount" => {
                             if v.is_null() {
                                 continue;
                             }
                             rule_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sourceDefaultPolicyId" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source_default_policy_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_default_policy_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updateDate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            update_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            update_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updatedAt" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updater" => {
                             if v.is_null() {
                                 continue;
                             }
                             updater = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "versions" => {
                             if v.is_null() {
                                 continue;
                             }
                             versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

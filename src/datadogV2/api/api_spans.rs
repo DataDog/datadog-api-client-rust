@@ -1,30 +1,27 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListSpansGetOptionalParams is a struct for passing parameters to the method [`SpansAPI::list_spans_get`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListSpansGetOptionalParams {
     /// The search query, following the
-    /// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
-    /// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
-    /// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
-    /// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
-    /// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
-    /// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
-    /// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
-    /// with `\` instead, for example `resource_name:Clients\:\:*`.
+/// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
+/// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
+/// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
+/// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
+/// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
+/// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
+/// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
+/// with `\` instead, for example `resource_name:Clients\:\:*`.
     pub filter_query: Option<String>,
     /// Minimum timestamp for requested spans. Supports date-time ISO8601, date math, and regular timestamps (milliseconds).
     pub filter_from: Option<String>,
@@ -40,14 +37,14 @@ pub struct ListSpansGetOptionalParams {
 
 impl ListSpansGetOptionalParams {
     /// The search query, following the
-    /// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
-    /// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
-    /// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
-    /// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
-    /// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
-    /// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
-    /// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
-    /// with `\` instead, for example `resource_name:Clients\:\:*`.
+/// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
+/// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
+/// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
+/// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
+/// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
+/// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
+/// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
+/// with `\` instead, for example `resource_name:Clients\:\:*`.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
@@ -79,6 +76,9 @@ impl ListSpansGetOptionalParams {
     }
 }
 
+
+
+
 /// AggregateSpansError is a struct for typed errors of method [`SpansAPI::aggregate_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -86,6 +86,7 @@ pub enum AggregateSpansError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListSpansError is a struct for typed errors of method [`SpansAPI::list_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -95,6 +96,7 @@ pub enum ListSpansError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListSpansGetError is a struct for typed errors of method [`SpansAPI::list_spans_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -102,6 +104,7 @@ pub enum ListSpansGetError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Search and aggregate your spans from your Datadog platform over HTTP.
 #[derive(Debug, Clone)]
@@ -125,7 +128,8 @@ impl SpansAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -170,69 +174,61 @@ impl SpansAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// The API endpoint to aggregate spans into buckets and compute metrics and timeseries.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// A request can generate at most 10,000 groups across all `group_by` entries, or 400,000 groups
-    /// including time buckets when a `timeseries` compute is used. Set `limit` on each `group_by` entry
-    /// to stay within these bounds. Requests over long time ranges or with many groups are more resource-intensive
-    /// and can fail. To reduce load, narrow the time range or lower the `limit` on each `group_by` entry.
-    pub async fn aggregate_spans(
-        &self,
-        body: crate::datadogV2::model::SpansAggregateRequest,
-    ) -> Result<crate::datadogV2::model::SpansAggregateResponse, datadog::Error<AggregateSpansError>>
-    {
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// A request can generate at most 10,000 groups across all `group_by` entries, or 400,000 groups
+/// including time buckets when a `timeseries` compute is used. Set `limit` on each `group_by` entry
+/// to stay within these bounds. Requests over long time ranges or with many groups are more resource-intensive
+/// and can fail. To reduce load, narrow the time range or lower the `limit` on each `group_by` entry.
+    pub async fn aggregate_spans(&self, body: crate::datadogV2::model::SpansAggregateRequest) -> Result<crate::datadogV2::model::SpansAggregateResponse, datadog::Error<AggregateSpansError>> {
         match self.aggregate_spans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// The API endpoint to aggregate spans into buckets and compute metrics and timeseries.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// A request can generate at most 10,000 groups across all `group_by` entries, or 400,000 groups
-    /// including time buckets when a `timeseries` compute is used. Set `limit` on each `group_by` entry
-    /// to stay within these bounds. Requests over long time ranges or with many groups are more resource-intensive
-    /// and can fail. To reduce load, narrow the time range or lower the `limit` on each `group_by` entry.
-    pub async fn aggregate_spans_with_http_info(
-        &self,
-        body: crate::datadogV2::model::SpansAggregateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SpansAggregateResponse>,
-        datadog::Error<AggregateSpansError>,
-    > {
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// A request can generate at most 10,000 groups across all `group_by` entries, or 400,000 groups
+/// including time buckets when a `timeseries` compute is used. Set `limit` on each `group_by` entry
+/// to stay within these bounds. Requests over long time ranges or with many groups are more resource-intensive
+/// and can fail. To reduce load, narrow the time range or lower the `limit` on each `group_by` entry.
+    pub async fn aggregate_spans_with_http_info(&self, body: crate::datadogV2::model::SpansAggregateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::SpansAggregateResponse>, datadog::Error<AggregateSpansError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.aggregate_spans";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/analytics/aggregate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -245,23 +241,16 @@ impl SpansAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -269,7 +258,10 @@ impl SpansAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -279,7 +271,10 @@ impl SpansAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -301,7 +296,7 @@ impl SpansAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -318,58 +313,43 @@ impl SpansAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SpansAggregateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SpansAggregateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AggregateSpansError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AggregateSpansError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List endpoint returns spans that match a span search query.
-    /// [Results are paginated][1].
-    ///
-    /// Use this endpoint to build complex spans filtering and search.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
-    pub async fn list_spans(
-        &self,
-        body: crate::datadogV2::model::SpansListRequest,
-    ) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansError>> {
+/// [Results are paginated][1].
+///
+/// Use this endpoint to build complex spans filtering and search.
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
+    pub async fn list_spans(&self, body: crate::datadogV2::model::SpansListRequest) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansError>> {
         match self.list_spans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_spans_with_pagination(
-        &self,
-        mut body: crate::datadogV2::model::SpansListRequest,
+        &self, mut  body: crate::datadogV2::model::SpansListRequest
     ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, datadog::Error<ListSpansError>>> + '_
     {
         try_stream! {
@@ -409,36 +389,35 @@ impl SpansAPI {
         }
     }
 
+    
     /// List endpoint returns spans that match a span search query.
-    /// [Results are paginated][1].
-    ///
-    /// Use this endpoint to build complex spans filtering and search.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
-    pub async fn list_spans_with_http_info(
-        &self,
-        body: crate::datadogV2::model::SpansListRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>,
-        datadog::Error<ListSpansError>,
-    > {
+/// [Results are paginated][1].
+///
+/// Use this endpoint to build complex spans filtering and search.
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
+    pub async fn list_spans_with_http_info(&self, body: crate::datadogV2::model::SpansListRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>, datadog::Error<ListSpansError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_spans";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -451,23 +430,16 @@ impl SpansAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -475,7 +447,10 @@ impl SpansAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -485,7 +460,10 @@ impl SpansAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -507,7 +485,7 @@ impl SpansAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -524,56 +502,43 @@ impl SpansAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSpansError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List endpoint returns spans that match a span search query.
-    /// [Results are paginated][1].
-    ///
-    /// Use this endpoint to see your latest spans.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
-    pub async fn list_spans_get(
-        &self,
-        params: ListSpansGetOptionalParams,
-    ) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansGetError>> {
-        match self.list_spans_get_with_http_info(params).await {
+/// [Results are paginated][1].
+///
+/// Use this endpoint to see your latest spans.
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
+    pub async fn list_spans_get(&self, params: ListSpansGetOptionalParams) -> Result<crate::datadogV2::model::SpansListResponse, datadog::Error<ListSpansGetError>> {
+        match self.list_spans_get_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_spans_get_with_pagination(
-        &self,
-        mut params: ListSpansGetOptionalParams,
+        &self, mut params: ListSpansGetOptionalParams
     ) -> impl Stream<Item = Result<crate::datadogV2::model::Span, datadog::Error<ListSpansGetError>>> + '_
     {
         try_stream! {
@@ -604,23 +569,19 @@ impl SpansAPI {
         }
     }
 
+    
     /// List endpoint returns spans that match a span search query.
-    /// [Results are paginated][1].
-    ///
-    /// Use this endpoint to see your latest spans.
-    /// This endpoint is rate limited to `50` requests per minute per organization.
-    ///
-    /// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
-    pub async fn list_spans_get_with_http_info(
-        &self,
-        params: ListSpansGetOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>,
-        datadog::Error<ListSpansGetError>,
-    > {
+/// [Results are paginated][1].
+///
+/// Use this endpoint to see your latest spans.
+/// This endpoint is rate limited to `50` requests per minute per organization.
+///
+/// [1]: /logs/guide/collect-multiple-logs-with-pagination?tab=v2api
+    pub async fn list_spans_get_with_http_info(&self, params: ListSpansGetOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SpansListResponse>, datadog::Error<ListSpansGetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_spans_get";
 
+        
         // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
@@ -633,39 +594,34 @@ impl SpansAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/spans/events",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -678,22 +634,16 @@ impl SpansAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -705,24 +655,17 @@ impl SpansAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SpansListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListSpansGetError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

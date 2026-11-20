@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Service logs for CoreWeave-managed components in each CoreWeave region: the CKS control plane (such as `kube-apiserver` and `etcd`), CoreWeave add-on services in the `cw-*` and `kube-system` namespaces, SUNK, and node system logs such as `kubelet` and `containerd`. Logs from your own workloads and Kubernetes audit logs are not collected. Logs are sent with `source:coreweave`, with CoreWeave log labels such as `namespace`, `app`, and `systemd_unit` added as tags.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct CoreWeaveCloudLogsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CoreWeaveCloudLogsIntegrationDataflowRequest {
@@ -26,12 +26,14 @@ impl CoreWeaveCloudLogsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for CoreWeaveCloudLogsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -66,16 +68,17 @@ impl<'de> Deserialize<'de> for CoreWeaveCloudLogsIntegrationDataflowRequest {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content = CoreWeaveCloudLogsIntegrationDataflowRequest { enabled, _unparsed };
+                let content = CoreWeaveCloudLogsIntegrationDataflowRequest {
+                    enabled,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

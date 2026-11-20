@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The supported attributes for creating a maintenance.
 #[non_exhaustive]
@@ -19,9 +19,7 @@ pub struct CreateMaintenanceRequestDataAttributes {
     pub completed_description: String,
     /// The components affected by the maintenance.
     #[serde(rename = "components_affected")]
-    pub components_affected: Option<
-        Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>,
-    >,
+    pub components_affected: Option<Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>>,
     /// The description shown while the maintenance is in progress.
     #[serde(rename = "in_progress_description")]
     pub in_progress_description: String,
@@ -38,18 +36,11 @@ pub struct CreateMaintenanceRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateMaintenanceRequestDataAttributes {
-    pub fn new(
-        completed_date: chrono::DateTime<chrono::Utc>,
-        completed_description: String,
-        in_progress_description: String,
-        scheduled_description: String,
-        start_date: chrono::DateTime<chrono::Utc>,
-        title: String,
-    ) -> CreateMaintenanceRequestDataAttributes {
+    pub fn new(completed_date: chrono::DateTime<chrono::Utc>, completed_description: String, in_progress_description: String, scheduled_description: String, start_date: chrono::DateTime<chrono::Utc>, title: String) -> CreateMaintenanceRequestDataAttributes {
         CreateMaintenanceRequestDataAttributes {
             completed_date,
             completed_description,
@@ -62,25 +53,19 @@ impl CreateMaintenanceRequestDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn components_affected(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems,
-        >,
-    ) -> Self {
+    
+    pub fn components_affected(mut self, value: Vec<crate::datadogV2::model::CreateMaintenanceRequestDataAttributesComponentsAffectedItems>) -> Self {
         self.components_affected = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -106,58 +91,46 @@ impl<'de> Deserialize<'de> for CreateMaintenanceRequestDataAttributes {
                 let mut scheduled_description: Option<String> = None;
                 let mut start_date: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut title: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "completed_date" => {
-                            completed_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            completed_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "completed_description" => {
-                            completed_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            completed_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "components_affected" => {
                             if v.is_null() {
                                 continue;
                             }
-                            components_affected =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            components_affected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "in_progress_description" => {
-                            in_progress_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            in_progress_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scheduled_description" => {
-                            scheduled_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scheduled_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start_date" => {
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let completed_date =
-                    completed_date.ok_or_else(|| M::Error::missing_field("completed_date"))?;
-                let completed_description = completed_description
-                    .ok_or_else(|| M::Error::missing_field("completed_description"))?;
-                let in_progress_description = in_progress_description
-                    .ok_or_else(|| M::Error::missing_field("in_progress_description"))?;
-                let scheduled_description = scheduled_description
-                    .ok_or_else(|| M::Error::missing_field("scheduled_description"))?;
+                let completed_date = completed_date.ok_or_else(|| M::Error::missing_field("completed_date"))?;
+                let completed_description = completed_description.ok_or_else(|| M::Error::missing_field("completed_description"))?;
+                let in_progress_description = in_progress_description.ok_or_else(|| M::Error::missing_field("in_progress_description"))?;
+                let scheduled_description = scheduled_description.ok_or_else(|| M::Error::missing_field("scheduled_description"))?;
                 let start_date = start_date.ok_or_else(|| M::Error::missing_field("start_date"))?;
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 

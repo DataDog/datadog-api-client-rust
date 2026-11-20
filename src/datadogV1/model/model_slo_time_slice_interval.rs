@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SLOTimeSliceInterval {
-    ONE_MINUTE,
-    FIVE_MINUTES,
+	ONE_MINUTE,
+	FIVE_MINUTES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,12 +32,8 @@ impl<'de> Deserialize<'de> for SLOTimeSliceInterval {
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            60 => Self::ONE_MINUTE,
-            300 => Self::FIVE_MINUTES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {60 => Self::ONE_MINUTE,300 => Self::FIVE_MINUTES,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A CI job log line.
 #[non_exhaustive]
@@ -24,31 +24,30 @@ pub struct CILogItem {
     #[serde(rename = "message")]
     pub message: String,
     /// The `resource.unique_id` of the pipeline event, which must also match the job event's
-    /// `resource.pipeline_unique_id`.
+/// `resource.pipeline_unique_id`.
     #[serde(rename = "pipeline_unique_id")]
     pub pipeline_unique_id: String,
     /// The provider name sent with the pipeline event. It defaults to `custom` when omitted and, when provided,
-    /// must be non-empty and cannot contain a comma.
+/// must be non-empty and cannot contain a comma.
     #[serde(rename = "provider_name")]
     pub provider_name: Option<String>,
     /// The provider-defined section containing this log line, used to display collapsible groups of lines in the CI
-    /// job log view.
+/// job log view.
     #[serde(rename = "section_name")]
     pub section_name: Option<String>,
     /// The status of this log line. Any string is accepted. Datadog maps non-empty values to a standard log status.
-    /// See [status mapping](<https://docs.datadoghq.com/logs/log_configuration/processors/log_status_remapper/>).
+/// See [status mapping](<https://docs.datadoghq.com/logs/log_configuration/processors/log_status_remapper/>).
     #[serde(rename = "status")]
     pub status: Option<String>,
     /// The log line time in RFC 3339 format with an explicit timezone. If omitted, the intake time is used. It can
-    /// be at most 18 hours in the past or 12 hours in the future.
+/// be at most 18 hours in the past or 12 hours in the future.
     #[serde(rename = "timestamp")]
     pub timestamp: Option<chrono::DateTime<chrono::Utc>>,
     #[serde(flatten)]
-    pub additional_properties:
-        std::collections::BTreeMap<String, crate::datadogV2::model::CILogAttributeValue>,
+    pub additional_properties: std::collections::BTreeMap<String, crate::datadogV2::model::CILogAttributeValue>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CILogItem {
@@ -67,45 +66,44 @@ impl CILogItem {
             _unparsed: false,
         }
     }
-
+    
     pub fn ddtags(mut self, value: String) -> Self {
         self.ddtags = Some(value);
         self
     }
-
+    
     pub fn line_number(mut self, value: i64) -> Self {
         self.line_number = Some(value);
         self
     }
-
+    
     pub fn provider_name(mut self, value: String) -> Self {
         self.provider_name = Some(value);
         self
     }
-
+    
     pub fn section_name(mut self, value: String) -> Self {
         self.section_name = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, crate::datadogV2::model::CILogAttributeValue>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::CILogAttributeValue>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CILogItem {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -133,10 +131,7 @@ impl<'de> Deserialize<'de> for CILogItem {
                 let mut section_name: Option<String> = None;
                 let mut status: Option<String> = None;
                 let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    crate::datadogV2::model::CILogAttributeValue,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, crate::datadogV2::model::CILogAttributeValue> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -146,61 +141,56 @@ impl<'de> Deserialize<'de> for CILogItem {
                                 continue;
                             }
                             ddtags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "job_id" => {
                             job_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "line_number" => {
                             if v.is_null() {
                                 continue;
                             }
-                            line_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            line_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pipeline_unique_id" => {
-                            pipeline_unique_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            pipeline_unique_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "provider_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            provider_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "section_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            section_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            section_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp" => {
                             if v.is_null() {
                                 continue;
                             }
                             timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let job_id = job_id.ok_or_else(|| M::Error::missing_field("job_id"))?;
                 let message = message.ok_or_else(|| M::Error::missing_field("message"))?;
-                let pipeline_unique_id = pipeline_unique_id
-                    .ok_or_else(|| M::Error::missing_field("pipeline_unique_id"))?;
+                let pipeline_unique_id = pipeline_unique_id.ok_or_else(|| M::Error::missing_field("pipeline_unique_id"))?;
 
                 let content = CILogItem {
                     ddtags,

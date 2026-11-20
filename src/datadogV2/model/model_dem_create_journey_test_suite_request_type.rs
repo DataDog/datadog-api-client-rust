@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DemCreateJourneyTestSuiteRequestType {
-    CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST,
+	CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for DemCreateJourneyTestSuiteRequestType {
     fn to_string(&self) -> String {
         match self {
-            Self::CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST => {
-                String::from("create_test_suite_for_journey_request")
-            }
+            Self::CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST => String::from("create_test_suite_for_journey_request"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for DemCreateJourneyTestSuiteRequestType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "create_test_suite_for_journey_request" => Self::CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"create_test_suite_for_journey_request" => Self::CREATE_TEST_SUITE_FOR_JOURNEY_REQUEST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

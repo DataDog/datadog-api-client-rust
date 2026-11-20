@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Restricts a retention query to part of the grid, so that results can be examined in detail.
 /// Omit it to compute the whole grid.
@@ -9,16 +9,10 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ProductAnalyticsRetentionScope {
-    ProductAnalyticsRetentionCohortScope(
-        Box<crate::datadogV2::model::ProductAnalyticsRetentionCohortScope>,
-    ),
-    ProductAnalyticsRetentionReturnPeriodScope(
-        Box<crate::datadogV2::model::ProductAnalyticsRetentionReturnPeriodScope>,
-    ),
-    ProductAnalyticsRetentionCellScope(
-        Box<crate::datadogV2::model::ProductAnalyticsRetentionCellScope>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ProductAnalyticsRetentionCohortScope(Box<crate::datadogV2::model::ProductAnalyticsRetentionCohortScope>),
+	ProductAnalyticsRetentionReturnPeriodScope(Box<crate::datadogV2::model::ProductAnalyticsRetentionReturnPeriodScope>),
+	ProductAnalyticsRetentionCellScope(Box<crate::datadogV2::model::ProductAnalyticsRetentionCellScope>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ProductAnalyticsRetentionScope {
@@ -27,37 +21,22 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionScope {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ProductAnalyticsRetentionCohortScope>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ProductAnalyticsRetentionScope::ProductAnalyticsRetentionCohortScope(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProductAnalyticsRetentionCohortScope>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ProductAnalyticsRetentionScope::ProductAnalyticsRetentionCohortScope(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ProductAnalyticsRetentionReturnPeriodScope>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ProductAnalyticsRetentionScope::ProductAnalyticsRetentionReturnPeriodScope(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProductAnalyticsRetentionReturnPeriodScope>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ProductAnalyticsRetentionScope::ProductAnalyticsRetentionReturnPeriodScope(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ProductAnalyticsRetentionCellScope>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProductAnalyticsRetentionCellScope>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ProductAnalyticsRetentionScope::ProductAnalyticsRetentionCellScope(_v));
             }
         }
-
-        return Ok(ProductAnalyticsRetentionScope::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(ProductAnalyticsRetentionScope::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

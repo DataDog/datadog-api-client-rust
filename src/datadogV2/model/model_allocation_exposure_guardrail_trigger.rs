@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Guardrail trigger details for a progressive rollout.
 #[non_exhaustive]
@@ -36,19 +36,11 @@ pub struct AllocationExposureGuardrailTrigger {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AllocationExposureGuardrailTrigger {
-    pub fn new(
-        allocation_exposure_schedule_id: uuid::Uuid,
-        created_at: chrono::DateTime<chrono::Utc>,
-        flagging_variant_id: uuid::Uuid,
-        id: uuid::Uuid,
-        metric_id: String,
-        triggered_action: String,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> AllocationExposureGuardrailTrigger {
+    pub fn new(allocation_exposure_schedule_id: uuid::Uuid, created_at: chrono::DateTime<chrono::Utc>, flagging_variant_id: uuid::Uuid, id: uuid::Uuid, metric_id: String, triggered_action: String, updated_at: chrono::DateTime<chrono::Utc>) -> AllocationExposureGuardrailTrigger {
         AllocationExposureGuardrailTrigger {
             allocation_exposure_schedule_id,
             created_at,
@@ -61,15 +53,14 @@ impl AllocationExposureGuardrailTrigger {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AllocationExposureGuardrailTrigger {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -95,54 +86,45 @@ impl<'de> Deserialize<'de> for AllocationExposureGuardrailTrigger {
                 let mut metric_id: Option<String> = None;
                 let mut triggered_action: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "allocation_exposure_schedule_id" => {
-                            allocation_exposure_schedule_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocation_exposure_schedule_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "flagging_variant_id" => {
-                            flagging_variant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flagging_variant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_id" => {
                             metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "triggered_action" => {
-                            triggered_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            triggered_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let allocation_exposure_schedule_id = allocation_exposure_schedule_id
-                    .ok_or_else(|| M::Error::missing_field("allocation_exposure_schedule_id"))?;
+                let allocation_exposure_schedule_id = allocation_exposure_schedule_id.ok_or_else(|| M::Error::missing_field("allocation_exposure_schedule_id"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let flagging_variant_id = flagging_variant_id
-                    .ok_or_else(|| M::Error::missing_field("flagging_variant_id"))?;
+                let flagging_variant_id = flagging_variant_id.ok_or_else(|| M::Error::missing_field("flagging_variant_id"))?;
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let metric_id = metric_id.ok_or_else(|| M::Error::missing_field("metric_id"))?;
-                let triggered_action =
-                    triggered_action.ok_or_else(|| M::Error::missing_field("triggered_action"))?;
+                let triggered_action = triggered_action.ok_or_else(|| M::Error::missing_field("triggered_action"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = AllocationExposureGuardrailTrigger {

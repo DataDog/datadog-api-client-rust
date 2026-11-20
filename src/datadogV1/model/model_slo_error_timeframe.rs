@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SLOErrorTimeframe {
-    SEVEN_DAYS,
-    THIRTY_DAYS,
-    NINETY_DAYS,
-    ALL,
+	SEVEN_DAYS,
+	THIRTY_DAYS,
+	NINETY_DAYS,
+	ALL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for SLOErrorTimeframe {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "7d" => Self::SEVEN_DAYS,
-            "30d" => Self::THIRTY_DAYS,
-            "90d" => Self::NINETY_DAYS,
-            "all" => Self::ALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"7d" => Self::SEVEN_DAYS,"30d" => Self::THIRTY_DAYS,"90d" => Self::NINETY_DAYS,"all" => Self::ALL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

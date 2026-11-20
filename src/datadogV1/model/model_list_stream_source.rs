@@ -2,29 +2,30 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ListStreamSource {
-    LOGS_STREAM,
-    AUDIT_STREAM,
-    CI_PIPELINE_STREAM,
-    CI_TEST_STREAM,
-    RUM_ISSUE_STREAM,
-    APM_ISSUE_STREAM,
-    TRACE_STREAM,
-    LOGS_ISSUE_STREAM,
-    LOGS_PATTERN_STREAM,
-    LOGS_TRANSACTION_STREAM,
-    EVENT_STREAM,
-    RUM_STREAM,
-    LLM_OBSERVABILITY_STREAM,
-    ISSUE_STREAM,
-    SECURITY_RUNTIME_STREAM,
-    SECURITY_SIGNALS_STREAM,
-    INCIDENTS_STREAM,
-    CASE_STREAM,
+	LOGS_STREAM,
+	AUDIT_STREAM,
+	CI_PIPELINE_STREAM,
+	CI_TEST_STREAM,
+	RUM_ISSUE_STREAM,
+	APM_ISSUE_STREAM,
+	TRACE_STREAM,
+	LOGS_ISSUE_STREAM,
+	LOGS_PATTERN_STREAM,
+	LOGS_TRANSACTION_STREAM,
+	EVENT_STREAM,
+	RUM_STREAM,
+	LLM_OBSERVABILITY_STREAM,
+	ISSUE_STREAM,
+	SECURITY_RUNTIME_STREAM,
+	SECURITY_SIGNALS_STREAM,
+	INCIDENTS_STREAM,
+	CASE_STREAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -72,28 +73,8 @@ impl<'de> Deserialize<'de> for ListStreamSource {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "logs_stream" => Self::LOGS_STREAM,
-            "audit_stream" => Self::AUDIT_STREAM,
-            "ci_pipeline_stream" => Self::CI_PIPELINE_STREAM,
-            "ci_test_stream" => Self::CI_TEST_STREAM,
-            "rum_issue_stream" => Self::RUM_ISSUE_STREAM,
-            "apm_issue_stream" => Self::APM_ISSUE_STREAM,
-            "trace_stream" => Self::TRACE_STREAM,
-            "logs_issue_stream" => Self::LOGS_ISSUE_STREAM,
-            "logs_pattern_stream" => Self::LOGS_PATTERN_STREAM,
-            "logs_transaction_stream" => Self::LOGS_TRANSACTION_STREAM,
-            "event_stream" => Self::EVENT_STREAM,
-            "rum_stream" => Self::RUM_STREAM,
-            "llm_observability_stream" => Self::LLM_OBSERVABILITY_STREAM,
-            "issue_stream" => Self::ISSUE_STREAM,
-            "security_runtime_stream" => Self::SECURITY_RUNTIME_STREAM,
-            "security_signals_stream" => Self::SECURITY_SIGNALS_STREAM,
-            "incidents_stream" => Self::INCIDENTS_STREAM,
-            "case_stream" => Self::CASE_STREAM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"logs_stream" => Self::LOGS_STREAM,"audit_stream" => Self::AUDIT_STREAM,"ci_pipeline_stream" => Self::CI_PIPELINE_STREAM,"ci_test_stream" => Self::CI_TEST_STREAM,"rum_issue_stream" => Self::RUM_ISSUE_STREAM,"apm_issue_stream" => Self::APM_ISSUE_STREAM,"trace_stream" => Self::TRACE_STREAM,"logs_issue_stream" => Self::LOGS_ISSUE_STREAM,"logs_pattern_stream" => Self::LOGS_PATTERN_STREAM,"logs_transaction_stream" => Self::LOGS_TRANSACTION_STREAM,"event_stream" => Self::EVENT_STREAM,"rum_stream" => Self::RUM_STREAM,"llm_observability_stream" => Self::LLM_OBSERVABILITY_STREAM,"issue_stream" => Self::ISSUE_STREAM,"security_runtime_stream" => Self::SECURITY_RUNTIME_STREAM,"security_signals_stream" => Self::SECURITY_SIGNALS_STREAM,"incidents_stream" => Self::INCIDENTS_STREAM,"case_stream" => Self::CASE_STREAM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

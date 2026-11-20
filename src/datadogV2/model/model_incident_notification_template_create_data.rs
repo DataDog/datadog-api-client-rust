@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Notification template data for a create request.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct IncidentNotificationTemplateCreateData {
     pub attributes: crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
     /// The definition of `NotificationTemplateCreateDataRelationships` object.
     #[serde(rename = "relationships")]
-    pub relationships:
-        Option<crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships>,
+    pub relationships: Option<crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships>,
     /// Notification templates resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::IncidentNotificationTemplateType,
@@ -25,14 +24,11 @@ pub struct IncidentNotificationTemplateCreateData {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentNotificationTemplateCreateData {
-    pub fn new(
-        attributes: crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
-        type_: crate::datadogV2::model::IncidentNotificationTemplateType,
-    ) -> IncidentNotificationTemplateCreateData {
+    pub fn new(attributes: crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes, type_: crate::datadogV2::model::IncidentNotificationTemplateType) -> IncidentNotificationTemplateCreateData {
         IncidentNotificationTemplateCreateData {
             attributes,
             relationships: None,
@@ -41,23 +37,19 @@ impl IncidentNotificationTemplateCreateData {
             _unparsed: false,
         }
     }
-
-    pub fn relationships(
-        mut self,
-        value: crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships,
-    ) -> Self {
+    
+    pub fn relationships(mut self, value: crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships) -> Self {
         self.relationships = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentNotificationTemplateCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -76,32 +68,23 @@ impl<'de> Deserialize<'de> for IncidentNotificationTemplateCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes,
-                > = None;
-                let mut relationships: Option<
-                    crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships,
-                > = None;
-                let mut type_: Option<crate::datadogV2::model::IncidentNotificationTemplateType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut attributes: Option<crate::datadogV2::model::IncidentNotificationTemplateCreateAttributes> = None;
+                let mut relationships: Option<crate::datadogV2::model::IncidentNotificationTemplateCreateDataRelationships> = None;
+                let mut type_: Option<crate::datadogV2::model::IncidentNotificationTemplateType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "relationships" => {
                             if v.is_null() {
                                 continue;
                             }
-                            relationships =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            relationships = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -112,12 +95,12 @@ impl<'de> Deserialize<'de> for IncidentNotificationTemplateCreateData {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

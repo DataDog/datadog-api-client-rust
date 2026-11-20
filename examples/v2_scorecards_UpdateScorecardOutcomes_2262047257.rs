@@ -14,7 +14,8 @@ async fn main() {
     let create_scorecard_rule_data_id = std::env::var("CREATE_SCORECARD_RULE_DATA_ID").unwrap();
     let body = UpdateOutcomesAsyncRequest::new().data(
         UpdateOutcomesAsyncRequestData::new()
-            .attributes(UpdateOutcomesAsyncAttributes::new().results(vec![
+            .attributes(
+                UpdateOutcomesAsyncAttributes::new().results(vec![
                     UpdateOutcomesAsyncRequestItem::new(
                         "service:my-service".to_string(),
                         create_scorecard_rule_data_id.clone(),
@@ -24,7 +25,8 @@ async fn main() {
                         r#"See: <a href="https://app.datadoghq.com/services">Services</a>"#
                             .to_string(),
                     ),
-                ]))
+                ]),
+            )
             .type_(UpdateOutcomesAsyncType::BATCHED_OUTCOME),
     );
     let configuration = datadog::Configuration::new();

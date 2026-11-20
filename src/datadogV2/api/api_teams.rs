@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetTeamMembershipsOptionalParams is a struct for passing parameters to the method [`TeamsAPI::get_team_memberships`]
 #[non_exhaustive]
@@ -284,6 +281,9 @@ impl ListTeamsOptionalParams {
     }
 }
 
+
+
+
 /// AddMemberTeamError is a struct for typed errors of method [`TeamsAPI::add_member_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -291,6 +291,7 @@ pub enum AddMemberTeamError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// AddTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::add_team_hierarchy_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -300,6 +301,7 @@ pub enum AddTeamHierarchyLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTeamError is a struct for typed errors of method [`TeamsAPI::create_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -307,6 +309,7 @@ pub enum CreateTeamError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateTeamConnectionsError is a struct for typed errors of method [`TeamsAPI::create_team_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -316,6 +319,7 @@ pub enum CreateTeamConnectionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTeamLinkError is a struct for typed errors of method [`TeamsAPI::create_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -323,6 +327,7 @@ pub enum CreateTeamLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateTeamMembershipError is a struct for typed errors of method [`TeamsAPI::create_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -332,6 +337,7 @@ pub enum CreateTeamMembershipError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateTeamNotificationRuleError is a struct for typed errors of method [`TeamsAPI::create_team_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -339,6 +345,7 @@ pub enum CreateTeamNotificationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTeamError is a struct for typed errors of method [`TeamsAPI::delete_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -348,6 +355,7 @@ pub enum DeleteTeamError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTeamConnectionsError is a struct for typed errors of method [`TeamsAPI::delete_team_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -355,6 +363,7 @@ pub enum DeleteTeamConnectionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTeamLinkError is a struct for typed errors of method [`TeamsAPI::delete_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -364,6 +373,7 @@ pub enum DeleteTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTeamMembershipError is a struct for typed errors of method [`TeamsAPI::delete_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -371,6 +381,7 @@ pub enum DeleteTeamMembershipError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteTeamNotificationRuleError is a struct for typed errors of method [`TeamsAPI::delete_team_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -380,6 +391,7 @@ pub enum DeleteTeamNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamError is a struct for typed errors of method [`TeamsAPI::get_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -387,6 +399,7 @@ pub enum GetTeamError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::get_team_hierarchy_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -396,6 +409,7 @@ pub enum GetTeamHierarchyLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamLinkError is a struct for typed errors of method [`TeamsAPI::get_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -403,6 +417,7 @@ pub enum GetTeamLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTeamLinksError is a struct for typed errors of method [`TeamsAPI::get_team_links`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -412,6 +427,7 @@ pub enum GetTeamLinksError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamMembershipsError is a struct for typed errors of method [`TeamsAPI::get_team_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -419,6 +435,7 @@ pub enum GetTeamMembershipsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTeamNotificationRuleError is a struct for typed errors of method [`TeamsAPI::get_team_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -428,6 +445,7 @@ pub enum GetTeamNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamNotificationRulesError is a struct for typed errors of method [`TeamsAPI::get_team_notification_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -435,6 +453,7 @@ pub enum GetTeamNotificationRulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTeamPermissionSettingsError is a struct for typed errors of method [`TeamsAPI::get_team_permission_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -444,6 +463,7 @@ pub enum GetTeamPermissionSettingsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamSyncError is a struct for typed errors of method [`TeamsAPI::get_team_sync`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -451,6 +471,7 @@ pub enum GetTeamSyncError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetUserMembershipsError is a struct for typed errors of method [`TeamsAPI::get_user_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -460,6 +481,7 @@ pub enum GetUserMembershipsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListMemberTeamsError is a struct for typed errors of method [`TeamsAPI::list_member_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -467,6 +489,7 @@ pub enum ListMemberTeamsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTeamConnectionsError is a struct for typed errors of method [`TeamsAPI::list_team_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -476,6 +499,7 @@ pub enum ListTeamConnectionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTeamHierarchyLinksError is a struct for typed errors of method [`TeamsAPI::list_team_hierarchy_links`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -483,6 +507,7 @@ pub enum ListTeamHierarchyLinksError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListTeamHierarchyMembersError is a struct for typed errors of method [`TeamsAPI::list_team_hierarchy_members`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -493,6 +518,7 @@ pub enum ListTeamHierarchyMembersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTeamsError is a struct for typed errors of method [`TeamsAPI::list_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -500,6 +526,7 @@ pub enum ListTeamsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RemoveMemberTeamError is a struct for typed errors of method [`TeamsAPI::remove_member_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -509,6 +536,7 @@ pub enum RemoveMemberTeamError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RemoveTeamHierarchyLinkError is a struct for typed errors of method [`TeamsAPI::remove_team_hierarchy_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -516,6 +544,7 @@ pub enum RemoveTeamHierarchyLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// SyncTeamsError is a struct for typed errors of method [`TeamsAPI::sync_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -525,6 +554,7 @@ pub enum SyncTeamsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTeamError is a struct for typed errors of method [`TeamsAPI::update_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -532,6 +562,7 @@ pub enum UpdateTeamError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateTeamLinkError is a struct for typed errors of method [`TeamsAPI::update_team_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -541,6 +572,7 @@ pub enum UpdateTeamLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTeamMembershipError is a struct for typed errors of method [`TeamsAPI::update_team_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -548,6 +580,7 @@ pub enum UpdateTeamMembershipError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateTeamNotificationRuleError is a struct for typed errors of method [`TeamsAPI::update_team_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -557,6 +590,7 @@ pub enum UpdateTeamNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTeamPermissionSettingError is a struct for typed errors of method [`TeamsAPI::update_team_permission_setting`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -564,6 +598,7 @@ pub enum UpdateTeamPermissionSettingError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// View and manage teams within Datadog. See the [Teams page](<https://docs.datadoghq.com/account_management/teams/>) for more information.
 #[derive(Debug, Clone)]
@@ -587,7 +622,8 @@ impl TeamsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -632,40 +668,29 @@ impl TeamsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Add a member team.
-    /// Adds the team given by the `id` in the body as a member team of the super team.
-    ///
-    /// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
-    pub async fn add_member_team(
-        &self,
-        super_team_id: String,
-        body: crate::datadogV2::model::AddMemberTeamRequest,
-    ) -> Result<(), datadog::Error<AddMemberTeamError>> {
-        match self
-            .add_member_team_with_http_info(super_team_id, body)
-            .await
-        {
+/// Adds the team given by the `id` in the body as a member team of the super team.
+///
+/// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
+    pub async fn add_member_team(&self, super_team_id: String, body: crate::datadogV2::model::AddMemberTeamRequest) -> Result<(), datadog::Error<AddMemberTeamError>> {
+        match self.add_member_team_with_http_info(super_team_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a member team.
-    /// Adds the team given by the `id` in the body as a member team of the super team.
-    ///
-    /// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
-    pub async fn add_member_team_with_http_info(
-        &self,
-        super_team_id: String,
-        body: crate::datadogV2::model::AddMemberTeamRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<AddMemberTeamError>> {
+/// Adds the team given by the `id` in the body as a member team of the super team.
+///
+/// **Note**: This API is deprecated. For creating team hierarchy links, use the team hierarchy links API: `POST /api/v2/team-hierarchy-links`.
+    pub async fn add_member_team_with_http_info(&self, super_team_id: String, body: crate::datadogV2::model::AddMemberTeamRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<AddMemberTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_member_team";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -677,20 +702,25 @@ impl TeamsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams",
-            local_configuration.get_operation_host(local_operation_id),
-            super_team_id = datadog::urlencode(super_team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), super_team_id=
+            datadog::urlencode(super_team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -703,23 +733,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -727,7 +750,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -737,7 +763,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -759,7 +788,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -782,63 +811,49 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<AddMemberTeamError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddMemberTeamError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new team hierarchy link between a parent team and a sub team.
-    pub async fn add_team_hierarchy_link(
-        &self,
-        body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TeamHierarchyLinkResponse,
-        datadog::Error<AddTeamHierarchyLinkError>,
-    > {
+    pub async fn add_team_hierarchy_link(&self, body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest) -> Result<crate::datadogV2::model::TeamHierarchyLinkResponse, datadog::Error<AddTeamHierarchyLinkError>> {
         match self.add_team_hierarchy_link_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new team hierarchy link between a parent team and a sub team.
-    pub async fn add_team_hierarchy_link_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>,
-        datadog::Error<AddTeamHierarchyLinkError>,
-    > {
+    pub async fn add_team_hierarchy_link_with_http_info(&self, body: crate::datadogV2::model::TeamHierarchyLinkCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>, datadog::Error<AddTeamHierarchyLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_team_hierarchy_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -851,23 +866,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -875,7 +883,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -885,7 +896,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -907,7 +921,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -924,75 +938,60 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AddTeamHierarchyLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddTeamHierarchyLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new team.
-    /// User IDs passed through the `users` relationship field are added to the team.
-    pub async fn create_team(
-        &self,
-        body: crate::datadogV2::model::TeamCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<CreateTeamError>> {
+/// User IDs passed through the `users` relationship field are added to the team.
+    pub async fn create_team(&self, body: crate::datadogV2::model::TeamCreateRequest) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<CreateTeamError>> {
         match self.create_team_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new team.
-    /// User IDs passed through the `users` relationship field are added to the team.
-    pub async fn create_team_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TeamCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
-        datadog::Error<CreateTeamError>,
-    > {
+/// User IDs passed through the `users` relationship field are added to the team.
+    pub async fn create_team_with_http_info(&self, body: crate::datadogV2::model::TeamCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamResponse>, datadog::Error<CreateTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_team";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1005,23 +1004,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1029,7 +1021,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1039,7 +1034,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1061,7 +1059,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1079,72 +1077,57 @@ impl TeamsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create multiple team connections.
-    pub async fn create_team_connections(
-        &self,
-        body: crate::datadogV2::model::TeamConnectionCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TeamConnectionsResponse,
-        datadog::Error<CreateTeamConnectionsError>,
-    > {
+    pub async fn create_team_connections(&self, body: crate::datadogV2::model::TeamConnectionCreateRequest) -> Result<crate::datadogV2::model::TeamConnectionsResponse, datadog::Error<CreateTeamConnectionsError>> {
         match self.create_team_connections_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create multiple team connections.
-    pub async fn create_team_connections_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TeamConnectionCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamConnectionsResponse>,
-        datadog::Error<CreateTeamConnectionsError>,
-    > {
+    pub async fn create_team_connections_with_http_info(&self, body: crate::datadogV2::model::TeamConnectionCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamConnectionsResponse>, datadog::Error<CreateTeamConnectionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_team_connections";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1157,23 +1140,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1181,7 +1157,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1191,7 +1170,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1213,7 +1195,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1230,77 +1212,60 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamConnectionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamConnectionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTeamConnectionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTeamConnectionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a new link to a team.
-    pub async fn create_team_link(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<CreateTeamLinkError>>
-    {
+    pub async fn create_team_link(&self, team_id: String, body: crate::datadogV2::model::TeamLinkCreateRequest) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<CreateTeamLinkError>> {
         match self.create_team_link_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a new link to a team.
-    pub async fn create_team_link_with_http_info(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
-        datadog::Error<CreateTeamLinkError>,
-    > {
+    pub async fn create_team_link_with_http_info(&self, team_id: String, body: crate::datadogV2::model::TeamLinkCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>, datadog::Error<CreateTeamLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_team_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1313,23 +1278,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1337,7 +1295,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1347,7 +1308,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1369,7 +1333,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1386,83 +1350,64 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTeamLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTeamLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a user to a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn create_team_membership(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::UserTeamRequest,
-    ) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<CreateTeamMembershipError>>
-    {
-        match self
-            .create_team_membership_with_http_info(team_id, body)
-            .await
-        {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn create_team_membership(&self, team_id: String, body: crate::datadogV2::model::UserTeamRequest) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<CreateTeamMembershipError>> {
+        match self.create_team_membership_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a user to a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn create_team_membership_with_http_info(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::UserTeamRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>,
-        datadog::Error<CreateTeamMembershipError>,
-    > {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn create_team_membership_with_http_info(&self, team_id: String, body: crate::datadogV2::model::UserTeamRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>, datadog::Error<CreateTeamMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_team_membership";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1475,23 +1420,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1499,7 +1437,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1509,7 +1450,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1531,7 +1475,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1548,79 +1492,58 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTeamMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTeamMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn create_team_notification_rule(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamNotificationRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::TeamNotificationRuleResponse,
-        datadog::Error<CreateTeamNotificationRuleError>,
-    > {
-        match self
-            .create_team_notification_rule_with_http_info(team_id, body)
-            .await
-        {
+    
+    pub async fn create_team_notification_rule(&self, team_id: String, body: crate::datadogV2::model::TeamNotificationRuleRequest) -> Result<crate::datadogV2::model::TeamNotificationRuleResponse, datadog::Error<CreateTeamNotificationRuleError>> {
+        match self.create_team_notification_rule_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn create_team_notification_rule_with_http_info(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamNotificationRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>,
-        datadog::Error<CreateTeamNotificationRuleError>,
-    > {
+    
+    pub async fn create_team_notification_rule_with_http_info(&self, team_id: String, body: crate::datadogV2::model::TeamNotificationRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>, datadog::Error<CreateTeamNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_team_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1633,23 +1556,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1657,7 +1573,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1667,7 +1586,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1689,7 +1611,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1706,62 +1628,53 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTeamNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTeamNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a team using the team's `id`.
-    pub async fn delete_team(
-        &self,
-        team_id: String,
-    ) -> Result<(), datadog::Error<DeleteTeamError>> {
+    pub async fn delete_team(&self, team_id: String) -> Result<(), datadog::Error<DeleteTeamError>> {
         match self.delete_team_with_http_info(team_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a team using the team's `id`.
-    pub async fn delete_team_with_http_info(
-        &self,
-        team_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamError>> {
+    pub async fn delete_team_with_http_info(&self, team_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_team";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1774,22 +1687,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1808,47 +1715,42 @@ impl TeamsAPI {
             })
         } else {
             let local_entity: Option<DeleteTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete multiple team connections.
-    pub async fn delete_team_connections(
-        &self,
-        body: crate::datadogV2::model::TeamConnectionDeleteRequest,
-    ) -> Result<(), datadog::Error<DeleteTeamConnectionsError>> {
+    pub async fn delete_team_connections(&self, body: crate::datadogV2::model::TeamConnectionDeleteRequest) -> Result<(), datadog::Error<DeleteTeamConnectionsError>> {
         match self.delete_team_connections_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete multiple team connections.
-    pub async fn delete_team_connections_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TeamConnectionDeleteRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamConnectionsError>> {
+    pub async fn delete_team_connections_with_http_info(&self, body: crate::datadogV2::model::TeamConnectionDeleteRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamConnectionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_team_connections";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1861,23 +1763,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1885,7 +1780,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1895,7 +1793,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1917,7 +1818,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1940,52 +1841,46 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTeamConnectionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTeamConnectionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a link from a team.
-    pub async fn delete_team_link(
-        &self,
-        team_id: String,
-        link_id: String,
-    ) -> Result<(), datadog::Error<DeleteTeamLinkError>> {
+    pub async fn delete_team_link(&self, team_id: String, link_id: String) -> Result<(), datadog::Error<DeleteTeamLinkError>> {
         match self.delete_team_link_with_http_info(team_id, link_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a link from a team.
-    pub async fn delete_team_link_with_http_info(
-        &self,
-        team_id: String,
-        link_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamLinkError>> {
+    pub async fn delete_team_link_with_http_info(&self, team_id: String, link_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_team_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1998,22 +1893,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2031,59 +1920,50 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTeamLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTeamLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a user from a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn delete_team_membership(
-        &self,
-        team_id: String,
-        user_id: String,
-    ) -> Result<(), datadog::Error<DeleteTeamMembershipError>> {
-        match self
-            .delete_team_membership_with_http_info(team_id, user_id)
-            .await
-        {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn delete_team_membership(&self, team_id: String, user_id: String) -> Result<(), datadog::Error<DeleteTeamMembershipError>> {
+        match self.delete_team_membership_with_http_info(team_id, user_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a user from a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn delete_team_membership_with_http_info(
-        &self,
-        team_id: String,
-        user_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamMembershipError>> {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn delete_team_membership_with_http_info(&self, team_id: String, user_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_team_membership";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2096,22 +1976,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2129,53 +2003,44 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTeamMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTeamMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn delete_team_notification_rule(
-        &self,
-        team_id: String,
-        rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteTeamNotificationRuleError>> {
-        match self
-            .delete_team_notification_rule_with_http_info(team_id, rule_id)
-            .await
-        {
+    
+    pub async fn delete_team_notification_rule(&self, team_id: String, rule_id: String) -> Result<(), datadog::Error<DeleteTeamNotificationRuleError>> {
+        match self.delete_team_notification_rule_with_http_info(team_id, rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
-    pub async fn delete_team_notification_rule_with_http_info(
-        &self,
-        team_id: String,
-        rule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamNotificationRuleError>> {
+    
+    pub async fn delete_team_notification_rule_with_http_info(&self, team_id: String, rule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTeamNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_team_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2188,22 +2053,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2221,60 +2080,50 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTeamNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTeamNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single team using the team's `id`.
-    pub async fn get_team(
-        &self,
-        team_id: String,
-    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<GetTeamError>> {
+    pub async fn get_team(&self, team_id: String) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<GetTeamError>> {
         match self.get_team_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single team using the team's `id`.
-    pub async fn get_team_with_http_info(
-        &self,
-        team_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
-        datadog::Error<GetTeamError>,
-    > {
+    pub async fn get_team_with_http_info(&self, team_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamResponse>, datadog::Error<GetTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2287,22 +2136,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2315,72 +2158,58 @@ impl TeamsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single team hierarchy link for the given link_id.
-    pub async fn get_team_hierarchy_link(
-        &self,
-        link_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TeamHierarchyLinkResponse,
-        datadog::Error<GetTeamHierarchyLinkError>,
-    > {
+    pub async fn get_team_hierarchy_link(&self, link_id: String) -> Result<crate::datadogV2::model::TeamHierarchyLinkResponse, datadog::Error<GetTeamHierarchyLinkError>> {
         match self.get_team_hierarchy_link_with_http_info(link_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single team hierarchy link for the given link_id.
-    pub async fn get_team_hierarchy_link_with_http_info(
-        &self,
-        link_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>,
-        datadog::Error<GetTeamHierarchyLinkError>,
-    > {
+    pub async fn get_team_hierarchy_link_with_http_info(&self, link_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinkResponse>, datadog::Error<GetTeamHierarchyLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_hierarchy_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2393,22 +2222,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2420,76 +2243,61 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamHierarchyLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamHierarchyLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single link for a team.
-    pub async fn get_team_link(
-        &self,
-        team_id: String,
-        link_id: String,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<GetTeamLinkError>> {
+    pub async fn get_team_link(&self, team_id: String, link_id: String) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<GetTeamLinkError>> {
         match self.get_team_link_with_http_info(team_id, link_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single link for a team.
-    pub async fn get_team_link_with_http_info(
-        &self,
-        team_id: String,
-        link_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
-        datadog::Error<GetTeamLinkError>,
-    > {
+    pub async fn get_team_link_with_http_info(&self, team_id: String, link_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>, datadog::Error<GetTeamLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2502,22 +2310,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2529,71 +2331,59 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamLinkError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all links for a given team.
-    pub async fn get_team_links(
-        &self,
-        team_id: String,
-    ) -> Result<crate::datadogV2::model::TeamLinksResponse, datadog::Error<GetTeamLinksError>> {
+    pub async fn get_team_links(&self, team_id: String) -> Result<crate::datadogV2::model::TeamLinksResponse, datadog::Error<GetTeamLinksError>> {
         match self.get_team_links_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all links for a given team.
-    pub async fn get_team_links_with_http_info(
-        &self,
-        team_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamLinksResponse>,
-        datadog::Error<GetTeamLinksError>,
-    > {
+    pub async fn get_team_links_with_http_info(&self, team_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamLinksResponse>, datadog::Error<GetTeamLinksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_links";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2606,22 +2396,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2633,59 +2417,39 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamLinksResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinksResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamLinksError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a paginated list of members for a team
-    pub async fn get_team_memberships(
-        &self,
-        team_id: String,
-        params: GetTeamMembershipsOptionalParams,
-    ) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetTeamMembershipsError>>
-    {
-        match self
-            .get_team_memberships_with_http_info(team_id, params)
-            .await
-        {
+    pub async fn get_team_memberships(&self, team_id: String, params: GetTeamMembershipsOptionalParams) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetTeamMembershipsError>> {
+        match self.get_team_memberships_with_http_info(team_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn get_team_memberships_with_pagination(
-        &self,
-        team_id: String,
-        mut params: GetTeamMembershipsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::UserTeam, datadog::Error<GetTeamMembershipsError>>,
-    > + '_ {
+        &self,  team_id: String, mut params: GetTeamMembershipsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserTeam, datadog::Error<GetTeamMembershipsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -2713,18 +2477,13 @@ impl TeamsAPI {
         }
     }
 
+    
     /// Get a paginated list of members for a team
-    pub async fn get_team_memberships_with_http_info(
-        &self,
-        team_id: String,
-        params: GetTeamMembershipsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
-        datadog::Error<GetTeamMembershipsError>,
-    > {
+    pub async fn get_team_memberships_with_http_info(&self, team_id: String, params: GetTeamMembershipsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>, datadog::Error<GetTeamMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_memberships";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -2735,32 +2494,30 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_keyword {
-            local_req_builder =
-                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2773,22 +2530,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2800,79 +2551,59 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn get_team_notification_rule(
-        &self,
-        team_id: String,
-        rule_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TeamNotificationRuleResponse,
-        datadog::Error<GetTeamNotificationRuleError>,
-    > {
-        match self
-            .get_team_notification_rule_with_http_info(team_id, rule_id)
-            .await
-        {
+    
+    pub async fn get_team_notification_rule(&self, team_id: String, rule_id: String) -> Result<crate::datadogV2::model::TeamNotificationRuleResponse, datadog::Error<GetTeamNotificationRuleError>> {
+        match self.get_team_notification_rule_with_http_info(team_id, rule_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn get_team_notification_rule_with_http_info(
-        &self,
-        team_id: String,
-        rule_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>,
-        datadog::Error<GetTeamNotificationRuleError>,
-    > {
+    
+    pub async fn get_team_notification_rule_with_http_info(&self, team_id: String, rule_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>, datadog::Error<GetTeamNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2885,22 +2616,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2912,77 +2637,57 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn get_team_notification_rules(
-        &self,
-        team_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TeamNotificationRulesResponse,
-        datadog::Error<GetTeamNotificationRulesError>,
-    > {
-        match self
-            .get_team_notification_rules_with_http_info(team_id)
-            .await
-        {
+    
+    pub async fn get_team_notification_rules(&self, team_id: String) -> Result<crate::datadogV2::model::TeamNotificationRulesResponse, datadog::Error<GetTeamNotificationRulesError>> {
+        match self.get_team_notification_rules_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn get_team_notification_rules_with_http_info(
-        &self,
-        team_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRulesResponse>,
-        datadog::Error<GetTeamNotificationRulesError>,
-    > {
+    
+    pub async fn get_team_notification_rules_with_http_info(&self, team_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRulesResponse>, datadog::Error<GetTeamNotificationRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_notification_rules";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2995,22 +2700,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3022,79 +2721,59 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamNotificationRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamNotificationRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all permission settings for a given team.
-    pub async fn get_team_permission_settings(
-        &self,
-        team_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TeamPermissionSettingsResponse,
-        datadog::Error<GetTeamPermissionSettingsError>,
-    > {
-        match self
-            .get_team_permission_settings_with_http_info(team_id)
-            .await
-        {
+    pub async fn get_team_permission_settings(&self, team_id: String) -> Result<crate::datadogV2::model::TeamPermissionSettingsResponse, datadog::Error<GetTeamPermissionSettingsError>> {
+        match self.get_team_permission_settings_with_http_info(team_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all permission settings for a given team.
-    pub async fn get_team_permission_settings_with_http_info(
-        &self,
-        team_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingsResponse>,
-        datadog::Error<GetTeamPermissionSettingsError>,
-    > {
+    pub async fn get_team_permission_settings_with_http_info(&self, team_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingsResponse>, datadog::Error<GetTeamPermissionSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_permission_settings";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3107,22 +2786,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3134,77 +2807,60 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamPermissionSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamPermissionSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all team synchronization configurations.
-    /// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub or ServiceNow.
-    pub async fn get_team_sync(
-        &self,
-        filter_source: crate::datadogV2::model::TeamSyncAttributesSource,
-    ) -> Result<crate::datadogV2::model::TeamSyncResponse, datadog::Error<GetTeamSyncError>> {
+/// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub or ServiceNow.
+    pub async fn get_team_sync(&self, filter_source: crate::datadogV2::model::TeamSyncAttributesSource) -> Result<crate::datadogV2::model::TeamSyncResponse, datadog::Error<GetTeamSyncError>> {
         match self.get_team_sync_with_http_info(filter_source).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all team synchronization configurations.
-    /// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub or ServiceNow.
-    pub async fn get_team_sync_with_http_info(
-        &self,
-        filter_source: crate::datadogV2::model::TeamSyncAttributesSource,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamSyncResponse>,
-        datadog::Error<GetTeamSyncError>,
-    > {
+/// Returns a list of configurations used for linking or provisioning teams with external sources like GitHub or ServiceNow.
+    pub async fn get_team_sync_with_http_info(&self, filter_source: crate::datadogV2::model::TeamSyncAttributesSource) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamSyncResponse>, datadog::Error<GetTeamSyncError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_sync";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/sync",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[source]", &filter_source.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[source]", &filter_source.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3217,22 +2873,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3244,72 +2894,59 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamSyncResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamSyncResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTeamSyncError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of memberships for a user
-    pub async fn get_user_memberships(
-        &self,
-        user_uuid: String,
-    ) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetUserMembershipsError>>
-    {
+    pub async fn get_user_memberships(&self, user_uuid: String) -> Result<crate::datadogV2::model::UserTeamsResponse, datadog::Error<GetUserMembershipsError>> {
         match self.get_user_memberships_with_http_info(user_uuid).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a list of memberships for a user
-    pub async fn get_user_memberships_with_http_info(
-        &self,
-        user_uuid: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>,
-        datadog::Error<GetUserMembershipsError>,
-    > {
+    pub async fn get_user_memberships_with_http_info(&self, user_uuid: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserTeamsResponse>, datadog::Error<GetUserMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_user_memberships";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/users/{user_uuid}/memberships",
-            local_configuration.get_operation_host(local_operation_id),
-            user_uuid = datadog::urlencode(user_uuid)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_uuid=
+            datadog::urlencode(user_uuid)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3322,22 +2959,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3349,62 +2980,42 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUserMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUserMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all member teams.
-    ///
-    /// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
-    /// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
-    pub async fn list_member_teams(
-        &self,
-        super_team_id: String,
-        params: ListMemberTeamsOptionalParams,
-    ) -> Result<crate::datadogV2::model::TeamsResponse, datadog::Error<ListMemberTeamsError>> {
-        match self
-            .list_member_teams_with_http_info(super_team_id, params)
-            .await
-        {
+///
+/// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
+/// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
+    pub async fn list_member_teams(&self, super_team_id: String, params: ListMemberTeamsOptionalParams) -> Result<crate::datadogV2::model::TeamsResponse, datadog::Error<ListMemberTeamsError>> {
+        match self.list_member_teams_with_http_info(super_team_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_member_teams_with_pagination(
-        &self,
-        super_team_id: String,
-        mut params: ListMemberTeamsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::Team, datadog::Error<ListMemberTeamsError>>,
-    > + '_ {
+        &self,  super_team_id: String, mut params: ListMemberTeamsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::Team, datadog::Error<ListMemberTeamsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -3432,18 +3043,12 @@ impl TeamsAPI {
         }
     }
 
+    
     /// Get all member teams.
-    ///
-    /// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
-    /// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
-    pub async fn list_member_teams_with_http_info(
-        &self,
-        super_team_id: String,
-        params: ListMemberTeamsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamsResponse>,
-        datadog::Error<ListMemberTeamsError>,
-    > {
+///
+/// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
+/// teams), use the team hierarchy links API: `GET /api/v2/team-hierarchy-links`.
+    pub async fn list_member_teams_with_http_info(&self, super_team_id: String, params: ListMemberTeamsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamsResponse>, datadog::Error<ListMemberTeamsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_member_teams";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3455,6 +3060,7 @@ impl TeamsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -3464,35 +3070,27 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams",
-            local_configuration.get_operation_host(local_operation_id),
-            super_team_id = datadog::urlencode(super_team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), super_team_id=
+            datadog::urlencode(super_team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local) = fields_team {
-            local_req_builder = local_req_builder.query(&[(
-                "fields[team]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("fields[team]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3505,22 +3103,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3533,58 +3125,38 @@ impl TeamsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamsResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMemberTeamsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMemberTeamsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all team connections.
-    pub async fn list_team_connections(
-        &self,
-        params: ListTeamConnectionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamConnectionsResponse,
-        datadog::Error<ListTeamConnectionsError>,
-    > {
-        match self.list_team_connections_with_http_info(params).await {
+    pub async fn list_team_connections(&self, params: ListTeamConnectionsOptionalParams) -> Result<crate::datadogV2::model::TeamConnectionsResponse, datadog::Error<ListTeamConnectionsError>> {
+        match self.list_team_connections_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_team_connections_with_pagination(
-        &self,
-        mut params: ListTeamConnectionsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TeamConnection,
-            datadog::Error<ListTeamConnectionsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListTeamConnectionsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TeamConnection, datadog::Error<ListTeamConnectionsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -3612,17 +3184,13 @@ impl TeamsAPI {
         }
     }
 
+    
     /// Returns all team connections.
-    pub async fn list_team_connections_with_http_info(
-        &self,
-        params: ListTeamConnectionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamConnectionsResponse>,
-        datadog::Error<ListTeamConnectionsError>,
-    > {
+    pub async fn list_team_connections_with_http_info(&self, params: ListTeamConnectionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamConnectionsResponse>, datadog::Error<ListTeamConnectionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_team_connections";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -3635,67 +3203,34 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/connections",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local) = filter_sources {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[sources]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[sources]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         if let Some(ref local) = filter_team_ids {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[team_ids]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[team_ids]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         if let Some(ref local) = filter_connected_team_ids {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[connected_team_ids]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[connected_team_ids]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
         if let Some(ref local) = filter_connection_ids {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[connection_ids]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[connection_ids]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3708,22 +3243,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3735,61 +3264,39 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamConnectionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamConnectionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTeamConnectionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTeamConnectionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all team hierarchy links that match the provided filters.
-    pub async fn list_team_hierarchy_links(
-        &self,
-        params: ListTeamHierarchyLinksOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamHierarchyLinksResponse,
-        datadog::Error<ListTeamHierarchyLinksError>,
-    > {
-        match self.list_team_hierarchy_links_with_http_info(params).await {
+    pub async fn list_team_hierarchy_links(&self, params: ListTeamHierarchyLinksOptionalParams) -> Result<crate::datadogV2::model::TeamHierarchyLinksResponse, datadog::Error<ListTeamHierarchyLinksError>> {
+        match self.list_team_hierarchy_links_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_team_hierarchy_links_with_pagination(
-        &self,
-        mut params: ListTeamHierarchyLinksOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TeamHierarchyLink,
-            datadog::Error<ListTeamHierarchyLinksError>,
-        >,
-    > + '_ {
+        &self, mut params: ListTeamHierarchyLinksOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TeamHierarchyLink, datadog::Error<ListTeamHierarchyLinksError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -3817,17 +3324,13 @@ impl TeamsAPI {
         }
     }
 
+    
     /// List all team hierarchy links that match the provided filters.
-    pub async fn list_team_hierarchy_links_with_http_info(
-        &self,
-        params: ListTeamHierarchyLinksOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinksResponse>,
-        datadog::Error<ListTeamHierarchyLinksError>,
-    > {
+    pub async fn list_team_hierarchy_links_with_http_info(&self, params: ListTeamHierarchyLinksOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyLinksResponse>, datadog::Error<ListTeamHierarchyLinksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_team_hierarchy_links";
 
+        
         // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
@@ -3838,31 +3341,28 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_parent_team {
-            local_req_builder =
-                local_req_builder.query(&[("filter[parent_team]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[parent_team]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_sub_team {
-            local_req_builder =
-                local_req_builder.query(&[("filter[sub_team]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[sub_team]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3875,22 +3375,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3902,72 +3396,45 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinksResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyLinksResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTeamHierarchyLinksError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTeamHierarchyLinksError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the direct and inherited members of a team, deduplicated by user.
-    /// Members of descendant teams are included unless `filter[is_direct_only]` is true.
-    /// Datadog support users are always excluded.
-    ///
-    /// Use `page[number]` and `page[size]` to paginate through the results.
-    /// Invalid query parameters return a JSON:API error with status 400.
-    /// Invalid or unknown team UUIDs return status 404.
-    pub async fn list_team_hierarchy_members(
-        &self,
-        team_id: String,
-        params: ListTeamHierarchyMembersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamHierarchyMembersResponse,
-        datadog::Error<ListTeamHierarchyMembersError>,
-    > {
-        match self
-            .list_team_hierarchy_members_with_http_info(team_id, params)
-            .await
-        {
+/// Members of descendant teams are included unless `filter[is_direct_only]` is true.
+/// Datadog support users are always excluded.
+///
+/// Use `page[number]` and `page[size]` to paginate through the results.
+/// Invalid query parameters return a JSON:API error with status 400.
+/// Invalid or unknown team UUIDs return status 404.
+    pub async fn list_team_hierarchy_members(&self, team_id: String, params: ListTeamHierarchyMembersOptionalParams) -> Result<crate::datadogV2::model::TeamHierarchyMembersResponse, datadog::Error<ListTeamHierarchyMembersError>> {
+        match self.list_team_hierarchy_members_with_http_info(team_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_team_hierarchy_members_with_pagination(
-        &self,
-        team_id: String,
-        mut params: ListTeamHierarchyMembersOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::TeamHierarchyMember,
-            datadog::Error<ListTeamHierarchyMembersError>,
-        >,
-    > + '_ {
+        &self,  team_id: String, mut params: ListTeamHierarchyMembersOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::TeamHierarchyMember, datadog::Error<ListTeamHierarchyMembersError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_size.is_none() {
@@ -3994,21 +3461,15 @@ impl TeamsAPI {
         }
     }
 
+    
     /// List the direct and inherited members of a team, deduplicated by user.
-    /// Members of descendant teams are included unless `filter[is_direct_only]` is true.
-    /// Datadog support users are always excluded.
-    ///
-    /// Use `page[number]` and `page[size]` to paginate through the results.
-    /// Invalid query parameters return a JSON:API error with status 400.
-    /// Invalid or unknown team UUIDs return status 404.
-    pub async fn list_team_hierarchy_members_with_http_info(
-        &self,
-        team_id: String,
-        params: ListTeamHierarchyMembersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyMembersResponse>,
-        datadog::Error<ListTeamHierarchyMembersError>,
-    > {
+/// Members of descendant teams are included unless `filter[is_direct_only]` is true.
+/// Datadog support users are always excluded.
+///
+/// Use `page[number]` and `page[size]` to paginate through the results.
+/// Invalid query parameters return a JSON:API error with status 400.
+/// Invalid or unknown team UUIDs return status 404.
+    pub async fn list_team_hierarchy_members_with_http_info(&self, team_id: String, params: ListTeamHierarchyMembersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamHierarchyMembersResponse>, datadog::Error<ListTeamHierarchyMembersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_team_hierarchy_members";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4020,6 +3481,7 @@ impl TeamsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_is_direct_only = params.filter_is_direct_only;
         let filter_include_service_accounts = params.filter_include_service_accounts;
@@ -4033,46 +3495,39 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/members",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_is_direct_only {
-            local_req_builder = local_req_builder
-                .query(&[("filter[is_direct_only]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[is_direct_only]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_include_service_accounts {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[include_service_accounts]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[include_service_accounts]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_keyword {
-            local_req_builder =
-                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4085,22 +3540,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4112,53 +3561,38 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyMembersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamHierarchyMembersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTeamHierarchyMembersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTeamHierarchyMembersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all teams.
-    /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
-    pub async fn list_teams(
-        &self,
-        params: ListTeamsOptionalParams,
-    ) -> Result<crate::datadogV2::model::TeamsResponse, datadog::Error<ListTeamsError>> {
-        match self.list_teams_with_http_info(params).await {
+/// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
+    pub async fn list_teams(&self, params: ListTeamsOptionalParams) -> Result<crate::datadogV2::model::TeamsResponse, datadog::Error<ListTeamsError>> {
+        match self.list_teams_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_teams_with_pagination(
-        &self,
-        mut params: ListTeamsOptionalParams,
+        &self, mut params: ListTeamsOptionalParams
     ) -> impl Stream<Item = Result<crate::datadogV2::model::Team, datadog::Error<ListTeamsError>>> + '_
     {
         try_stream! {
@@ -4188,18 +3622,14 @@ impl TeamsAPI {
         }
     }
 
+    
     /// Get all teams.
-    /// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
-    pub async fn list_teams_with_http_info(
-        &self,
-        params: ListTeamsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamsResponse>,
-        datadog::Error<ListTeamsError>,
-    > {
+/// Can be used to search for teams using the `filter[keyword]` and `filter[me]` query parameters.
+    pub async fn list_teams_with_http_info(&self, params: ListTeamsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamsResponse>, datadog::Error<ListTeamsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_teams";
 
+        
         // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
@@ -4213,51 +3643,38 @@ impl TeamsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/team",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = include {
-            for param in local {
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_keyword {
-            local_req_builder =
-                local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[keyword]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_me {
-            local_req_builder =
-                local_req_builder.query(&[("filter[me]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[me]", &local_query_param.to_string() )]);
         };
         if let Some(ref local) = fields_team {
-            local_req_builder = local_req_builder.query(&[(
-                "fields[team]",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("fields[team]", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4270,22 +3687,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4298,51 +3709,35 @@ impl TeamsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamsResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTeamsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a super team's member team identified by `member_team_id`.
-    ///
-    /// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
-    pub async fn remove_member_team(
-        &self,
-        super_team_id: String,
-        member_team_id: String,
-    ) -> Result<(), datadog::Error<RemoveMemberTeamError>> {
-        match self
-            .remove_member_team_with_http_info(super_team_id, member_team_id)
-            .await
-        {
+///
+/// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
+    pub async fn remove_member_team(&self, super_team_id: String, member_team_id: String) -> Result<(), datadog::Error<RemoveMemberTeamError>> {
+        match self.remove_member_team_with_http_info(super_team_id, member_team_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a super team's member team identified by `member_team_id`.
-    ///
-    /// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
-    pub async fn remove_member_team_with_http_info(
-        &self,
-        super_team_id: String,
-        member_team_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveMemberTeamError>> {
+///
+/// **Note**: This API is deprecated. For deleting team hierarchy links, use the team hierarchy links API: `DELETE /api/v2/team-hierarchy-links/{link_id}`.
+    pub async fn remove_member_team_with_http_info(&self, super_team_id: String, member_team_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveMemberTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_member_team";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4354,20 +3749,26 @@ impl TeamsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{super_team_id}/member_teams/{member_team_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            super_team_id = datadog::urlencode(super_team_id),
-            member_team_id = datadog::urlencode(member_team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), super_team_id=
+            datadog::urlencode(super_team_id)
+            , member_team_id=
+            datadog::urlencode(member_team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4380,22 +3781,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4413,52 +3808,44 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveMemberTeamError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveMemberTeamError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove a team hierarchy link by the given link_id.
-    pub async fn remove_team_hierarchy_link(
-        &self,
-        link_id: String,
-    ) -> Result<(), datadog::Error<RemoveTeamHierarchyLinkError>> {
-        match self
-            .remove_team_hierarchy_link_with_http_info(link_id)
-            .await
-        {
+    pub async fn remove_team_hierarchy_link(&self, link_id: String) -> Result<(), datadog::Error<RemoveTeamHierarchyLinkError>> {
+        match self.remove_team_hierarchy_link_with_http_info(link_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove a team hierarchy link by the given link_id.
-    pub async fn remove_team_hierarchy_link_with_http_info(
-        &self,
-        link_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveTeamHierarchyLinkError>> {
+    pub async fn remove_team_hierarchy_link_with_http_info(&self, link_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveTeamHierarchyLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_team_hierarchy_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team-hierarchy-links/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4471,22 +3858,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4504,87 +3885,81 @@ impl TeamsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveTeamHierarchyLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveTeamHierarchyLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// This endpoint configures synchronization between your existing Datadog teams and teams from
-    /// GitHub or ServiceNow by matching team names.
-    /// It evaluates all current Datadog teams and compares them against teams in the external source
-    /// connected to your Datadog account.
-    ///
-    /// This operation is read-only on the external source side, no teams will be modified or created there.
-    /// This only creates new teams in Datadog when type is set to `provision`.
-    ///
-    /// Optionally, provide `selection_state` to limit synchronization
-    /// to specific teams or organizations and their subtrees, instead
-    /// of syncing all teams.
-    ///
-    /// **GitHub**: [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
-    /// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
-    /// (lowercased and kebab-cased) using a normalized exact match; case is ignored and spaces are removed.
-    ///
-    /// **ServiceNow**: [The ServiceNow integration must be configured for your Datadog account](<https://docs.datadoghq.com/integrations/servicenow/>).
-    /// Active assignment groups from every configured ServiceNow instance are synchronized, and the ServiceNow
-    /// group hierarchy is preserved. When `sync_membership` is enabled, group members are matched to Datadog
-    /// users by email address.
-    pub async fn sync_teams(
-        &self,
-        body: crate::datadogV2::model::TeamSyncRequest,
-    ) -> Result<(), datadog::Error<SyncTeamsError>> {
+/// GitHub or ServiceNow by matching team names.
+/// It evaluates all current Datadog teams and compares them against teams in the external source
+/// connected to your Datadog account.
+///
+/// This operation is read-only on the external source side, no teams will be modified or created there.
+/// This only creates new teams in Datadog when type is set to `provision`.
+///
+/// Optionally, provide `selection_state` to limit synchronization
+/// to specific teams or organizations and their subtrees, instead
+/// of syncing all teams.
+///
+/// **GitHub**: [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
+/// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
+/// (lowercased and kebab-cased) using a normalized exact match; case is ignored and spaces are removed.
+///
+/// **ServiceNow**: [The ServiceNow integration must be configured for your Datadog account](<https://docs.datadoghq.com/integrations/servicenow/>).
+/// Active assignment groups from every configured ServiceNow instance are synchronized, and the ServiceNow
+/// group hierarchy is preserved. When `sync_membership` is enabled, group members are matched to Datadog
+/// users by email address.
+    pub async fn sync_teams(&self, body: crate::datadogV2::model::TeamSyncRequest) -> Result<(), datadog::Error<SyncTeamsError>> {
         match self.sync_teams_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint configures synchronization between your existing Datadog teams and teams from
-    /// GitHub or ServiceNow by matching team names.
-    /// It evaluates all current Datadog teams and compares them against teams in the external source
-    /// connected to your Datadog account.
-    ///
-    /// This operation is read-only on the external source side, no teams will be modified or created there.
-    /// This only creates new teams in Datadog when type is set to `provision`.
-    ///
-    /// Optionally, provide `selection_state` to limit synchronization
-    /// to specific teams or organizations and their subtrees, instead
-    /// of syncing all teams.
-    ///
-    /// **GitHub**: [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
-    /// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
-    /// (lowercased and kebab-cased) using a normalized exact match; case is ignored and spaces are removed.
-    ///
-    /// **ServiceNow**: [The ServiceNow integration must be configured for your Datadog account](<https://docs.datadoghq.com/integrations/servicenow/>).
-    /// Active assignment groups from every configured ServiceNow instance are synchronized, and the ServiceNow
-    /// group hierarchy is preserved. When `sync_membership` is enabled, group members are matched to Datadog
-    /// users by email address.
-    pub async fn sync_teams_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TeamSyncRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<SyncTeamsError>> {
+/// GitHub or ServiceNow by matching team names.
+/// It evaluates all current Datadog teams and compares them against teams in the external source
+/// connected to your Datadog account.
+///
+/// This operation is read-only on the external source side, no teams will be modified or created there.
+/// This only creates new teams in Datadog when type is set to `provision`.
+///
+/// Optionally, provide `selection_state` to limit synchronization
+/// to specific teams or organizations and their subtrees, instead
+/// of syncing all teams.
+///
+/// **GitHub**: [A GitHub organization must be connected to your Datadog account](<https://docs.datadoghq.com/integrations/github/>),
+/// and the GitHub App integrated with Datadog must have the `Members Read` permission. Matching is performed by comparing the Datadog team handle to the GitHub team slug
+/// (lowercased and kebab-cased) using a normalized exact match; case is ignored and spaces are removed.
+///
+/// **ServiceNow**: [The ServiceNow integration must be configured for your Datadog account](<https://docs.datadoghq.com/integrations/servicenow/>).
+/// Active assignment groups from every configured ServiceNow instance are synchronized, and the ServiceNow
+/// group hierarchy is preserved. When `sync_membership` is enabled, group members are matched to Datadog
+/// users by email address.
+    pub async fn sync_teams_with_http_info(&self, body: crate::datadogV2::model::TeamSyncRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<SyncTeamsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.sync_teams";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/sync",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4597,23 +3972,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4621,7 +3989,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4631,7 +4002,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4653,7 +4027,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4677,63 +4051,52 @@ impl TeamsAPI {
             })
         } else {
             let local_entity: Option<SyncTeamsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a team using the team's `id`.
-    /// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
-    pub async fn update_team(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamUpdateRequest,
-    ) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<UpdateTeamError>> {
+/// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
+    pub async fn update_team(&self, team_id: String, body: crate::datadogV2::model::TeamUpdateRequest) -> Result<crate::datadogV2::model::TeamResponse, datadog::Error<UpdateTeamError>> {
         match self.update_team_with_http_info(team_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a team using the team's `id`.
-    /// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
-    pub async fn update_team_with_http_info(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamResponse>,
-        datadog::Error<UpdateTeamError>,
-    > {
+/// If the `team_links` relationship is present, the associated links are updated to be in the order they appear in the array, and any existing team links not present are removed.
+    pub async fn update_team_with_http_info(&self, team_id: String, body: crate::datadogV2::model::TeamUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamResponse>, datadog::Error<UpdateTeamError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_team";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4746,23 +4109,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4770,7 +4126,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4780,7 +4139,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4802,7 +4164,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4820,79 +4182,61 @@ impl TeamsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TeamResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateTeamError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a team link.
-    pub async fn update_team_link(
-        &self,
-        team_id: String,
-        link_id: String,
-        body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<UpdateTeamLinkError>>
-    {
-        match self
-            .update_team_link_with_http_info(team_id, link_id, body)
-            .await
-        {
+    pub async fn update_team_link(&self, team_id: String, link_id: String, body: crate::datadogV2::model::TeamLinkCreateRequest) -> Result<crate::datadogV2::model::TeamLinkResponse, datadog::Error<UpdateTeamLinkError>> {
+        match self.update_team_link_with_http_info(team_id, link_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a team link.
-    pub async fn update_team_link_with_http_info(
-        &self,
-        team_id: String,
-        link_id: String,
-        body: crate::datadogV2::model::TeamLinkCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>,
-        datadog::Error<UpdateTeamLinkError>,
-    > {
+    pub async fn update_team_link_with_http_info(&self, team_id: String, link_id: String, body: crate::datadogV2::model::TeamLinkCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamLinkResponse>, datadog::Error<UpdateTeamLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_team_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/links/{link_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            link_id = datadog::urlencode(link_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , link_id=
+            datadog::urlencode(link_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4905,23 +4249,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4929,7 +4266,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4939,7 +4279,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4961,7 +4304,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4978,86 +4321,66 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTeamLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTeamLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a user's membership attributes on a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn update_team_membership(
-        &self,
-        team_id: String,
-        user_id: String,
-        body: crate::datadogV2::model::UserTeamUpdateRequest,
-    ) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<UpdateTeamMembershipError>>
-    {
-        match self
-            .update_team_membership_with_http_info(team_id, user_id, body)
-            .await
-        {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn update_team_membership(&self, team_id: String, user_id: String, body: crate::datadogV2::model::UserTeamUpdateRequest) -> Result<crate::datadogV2::model::UserTeamResponse, datadog::Error<UpdateTeamMembershipError>> {
+        match self.update_team_membership_with_http_info(team_id, user_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a user's membership attributes on a team.
-    ///
-    /// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
-    pub async fn update_team_membership_with_http_info(
-        &self,
-        team_id: String,
-        user_id: String,
-        body: crate::datadogV2::model::UserTeamUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>,
-        datadog::Error<UpdateTeamMembershipError>,
-    > {
+///
+/// **Note**: Each team has a setting that determines who is allowed to modify membership of the team. The `user_access_manage` permission generally grants access to modify membership of any team. To get the full picture, see [Team Membership documentation](<https://docs.datadoghq.com/account_management/teams/manage/#team-membership>).
+    pub async fn update_team_membership_with_http_info(&self, team_id: String, user_id: String, body: crate::datadogV2::model::UserTeamUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserTeamResponse>, datadog::Error<UpdateTeamMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_team_membership";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/memberships/{user_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5070,23 +4393,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5094,7 +4410,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5104,7 +4423,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5126,7 +4448,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5143,82 +4465,60 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserTeamResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTeamMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTeamMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn update_team_notification_rule(
-        &self,
-        team_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::TeamNotificationRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::TeamNotificationRuleResponse,
-        datadog::Error<UpdateTeamNotificationRuleError>,
-    > {
-        match self
-            .update_team_notification_rule_with_http_info(team_id, rule_id, body)
-            .await
-        {
+    
+    pub async fn update_team_notification_rule(&self, team_id: String, rule_id: String, body: crate::datadogV2::model::TeamNotificationRuleRequest) -> Result<crate::datadogV2::model::TeamNotificationRuleResponse, datadog::Error<UpdateTeamNotificationRuleError>> {
+        match self.update_team_notification_rule_with_http_info(team_id, rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn update_team_notification_rule_with_http_info(
-        &self,
-        team_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::TeamNotificationRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>,
-        datadog::Error<UpdateTeamNotificationRuleError>,
-    > {
+    
+    pub async fn update_team_notification_rule_with_http_info(&self, team_id: String, rule_id: String, body: crate::datadogV2::model::TeamNotificationRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamNotificationRuleResponse>, datadog::Error<UpdateTeamNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_team_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5231,23 +4531,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5255,7 +4548,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5265,7 +4561,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5287,7 +4586,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5304,85 +4603,62 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamNotificationRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTeamNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTeamNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a team permission setting for a given team.
-    pub async fn update_team_permission_setting(
-        &self,
-        team_id: String,
-        action: String,
-        body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TeamPermissionSettingResponse,
-        datadog::Error<UpdateTeamPermissionSettingError>,
-    > {
-        match self
-            .update_team_permission_setting_with_http_info(team_id, action, body)
-            .await
-        {
+    pub async fn update_team_permission_setting(&self, team_id: String, action: String, body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest) -> Result<crate::datadogV2::model::TeamPermissionSettingResponse, datadog::Error<UpdateTeamPermissionSettingError>> {
+        match self.update_team_permission_setting_with_http_info(team_id, action, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a team permission setting for a given team.
-    pub async fn update_team_permission_setting_with_http_info(
-        &self,
-        team_id: String,
-        action: String,
-        body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingResponse>,
-        datadog::Error<UpdateTeamPermissionSettingError>,
-    > {
+    pub async fn update_team_permission_setting_with_http_info(&self, team_id: String, action: String, body: crate::datadogV2::model::TeamPermissionSettingUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamPermissionSettingResponse>, datadog::Error<UpdateTeamPermissionSettingError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_team_permission_setting";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/team/{team_id}/permission-settings/{action}",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id),
-            action = datadog::urlencode(action)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            , action=
+            datadog::urlencode(action)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5395,23 +4671,16 @@ impl TeamsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -5419,7 +4688,10 @@ impl TeamsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5429,7 +4701,10 @@ impl TeamsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -5451,7 +4726,7 @@ impl TeamsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -5468,26 +4743,17 @@ impl TeamsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamPermissionSettingResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTeamPermissionSettingError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTeamPermissionSettingError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

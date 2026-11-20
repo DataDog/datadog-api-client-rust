@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Journey Paths query definition.
 #[non_exhaustive]
@@ -42,15 +42,11 @@ pub struct JourneyMapQuery {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl JourneyMapQuery {
-    pub fn new(
-        data_source: crate::datadogV1::model::ProductAnalyticsFunnelDataSource,
-        search: crate::datadogV1::model::UserJourneySearch,
-        target: crate::datadogV1::model::JourneyMapTarget,
-    ) -> JourneyMapQuery {
+    pub fn new(data_source: crate::datadogV1::model::ProductAnalyticsFunnelDataSource, search: crate::datadogV1::model::UserJourneySearch, target: crate::datadogV1::model::JourneyMapTarget) -> JourneyMapQuery {
         JourneyMapQuery {
             conversion_type: None,
             counting_method: None,
@@ -65,54 +61,44 @@ impl JourneyMapQuery {
             _unparsed: false,
         }
     }
-
-    pub fn conversion_type(
-        mut self,
-        value: crate::datadogV1::model::JourneyMapConversionType,
-    ) -> Self {
+    
+    pub fn conversion_type(mut self, value: crate::datadogV1::model::JourneyMapConversionType) -> Self {
         self.conversion_type = Some(value);
         self
     }
-
-    pub fn counting_method(
-        mut self,
-        value: crate::datadogV1::model::JourneyMapCountingMethod,
-    ) -> Self {
+    
+    pub fn counting_method(mut self, value: crate::datadogV1::model::JourneyMapCountingMethod) -> Self {
         self.counting_method = Some(value);
         self
     }
-
+    
     pub fn entries_per_step(mut self, value: i64) -> Self {
         self.entries_per_step = Some(value);
         self
     }
-
+    
     pub fn event_filter(mut self, value: String) -> Self {
         self.event_filter = Some(value);
         self
     }
-
-    pub fn expanded_prefixes(
-        mut self,
-        value: Vec<crate::datadogV1::model::JourneyMapExpandedPrefix>,
-    ) -> Self {
+    
+    pub fn expanded_prefixes(mut self, value: Vec<crate::datadogV1::model::JourneyMapExpandedPrefix>) -> Self {
         self.expanded_prefixes = Some(value);
         self
     }
-
+    
     pub fn group_by(mut self, value: Vec<crate::datadogV1::model::JourneyMapGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for JourneyMapQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -131,25 +117,16 @@ impl<'de> Deserialize<'de> for JourneyMapQuery {
             where
                 M: MapAccess<'a>,
             {
-                let mut conversion_type: Option<crate::datadogV1::model::JourneyMapConversionType> =
-                    None;
-                let mut counting_method: Option<crate::datadogV1::model::JourneyMapCountingMethod> =
-                    None;
-                let mut data_source: Option<
-                    crate::datadogV1::model::ProductAnalyticsFunnelDataSource,
-                > = None;
+                let mut conversion_type: Option<crate::datadogV1::model::JourneyMapConversionType> = None;
+                let mut counting_method: Option<crate::datadogV1::model::JourneyMapCountingMethod> = None;
+                let mut data_source: Option<crate::datadogV1::model::ProductAnalyticsFunnelDataSource> = None;
                 let mut entries_per_step: Option<i64> = None;
                 let mut event_filter: Option<String> = None;
-                let mut expanded_prefixes: Option<
-                    Vec<crate::datadogV1::model::JourneyMapExpandedPrefix>,
-                > = None;
+                let mut expanded_prefixes: Option<Vec<crate::datadogV1::model::JourneyMapExpandedPrefix>> = None;
                 let mut group_by: Option<Vec<crate::datadogV1::model::JourneyMapGroupBy>> = None;
                 let mut search: Option<crate::datadogV1::model::UserJourneySearch> = None;
                 let mut target: Option<crate::datadogV1::model::JourneyMapTarget> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -158,8 +135,7 @@ impl<'de> Deserialize<'de> for JourneyMapQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            conversion_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            conversion_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _conversion_type) = conversion_type {
                                 match _conversion_type {
                                     crate::datadogV1::model::JourneyMapConversionType::UnparsedObject(_conversion_type) => {
@@ -168,13 +144,12 @@ impl<'de> Deserialize<'de> for JourneyMapQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "counting_method" => {
                             if v.is_null() {
                                 continue;
                             }
-                            counting_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            counting_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _counting_method) = counting_method {
                                 match _counting_method {
                                     crate::datadogV1::model::JourneyMapCountingMethod::UnparsedObject(_counting_method) => {
@@ -183,10 +158,9 @@ impl<'de> Deserialize<'de> for JourneyMapQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::ProductAnalyticsFunnelDataSource::UnparsedObject(_data_source) => {
@@ -195,49 +169,45 @@ impl<'de> Deserialize<'de> for JourneyMapQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "entries_per_step" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entries_per_step =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entries_per_step = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "expanded_prefixes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            expanded_prefixes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expanded_prefixes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let search = search.ok_or_else(|| M::Error::missing_field("search"))?;
                 let target = target.ok_or_else(|| M::Error::missing_field("target"))?;
 

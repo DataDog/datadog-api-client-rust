@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The JSON:API attributes for an outcome.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct OutcomesBatchResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OutcomesBatchResponseAttributes {
@@ -45,40 +45,38 @@ impl OutcomesBatchResponseAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn remarks(mut self, value: String) -> Self {
         self.remarks = Some(value);
         self
     }
-
+    
     pub fn service_name(mut self, value: String) -> Self {
         self.service_name = Some(value);
         self
     }
-
+    
     pub fn state(mut self, value: crate::datadogV2::model::State) -> Self {
         self.state = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for OutcomesBatchResponseAttributes {
     fn default() -> Self {
@@ -108,10 +106,7 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                 let mut remarks: Option<String> = None;
                 let mut service_name: Option<String> = None;
                 let mut state: Option<crate::datadogV2::model::State> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,27 +116,25 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "remarks" => {
                             if v.is_null() {
                                 continue;
                             }
                             remarks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            service_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            service_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "state" => {
                             if v.is_null() {
                                 continue;
@@ -151,16 +144,16 @@ impl<'de> Deserialize<'de> for OutcomesBatchResponseAttributes {
                                 match _state {
                                     crate::datadogV2::model::State::UnparsedObject(_state) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

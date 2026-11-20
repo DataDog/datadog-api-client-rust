@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum APMSpanErrorFlag {
-    NO_ERROR,
-    ERROR,
+	NO_ERROR,
+	ERROR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -31,12 +32,8 @@ impl<'de> Deserialize<'de> for APMSpanErrorFlag {
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            0 => Self::NO_ERROR,
-            1 => Self::ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {0 => Self::NO_ERROR,1 => Self::ERROR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

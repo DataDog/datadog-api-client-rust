@@ -1,60 +1,58 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// [Definition of the widget](<https://docs.datadoghq.com/dashboards/widgets/>).
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum WidgetDefinition {
-    AlertGraphWidgetDefinition(Box<crate::datadogV1::model::AlertGraphWidgetDefinition>),
-    AlertValueWidgetDefinition(Box<crate::datadogV1::model::AlertValueWidgetDefinition>),
-    BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
-    ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
-    CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
-    CohortWidgetDefinition(Box<crate::datadogV1::model::CohortWidgetDefinition>),
-    DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
-    EmbeddedAppWidgetDefinition(Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>),
-    EventStreamWidgetDefinition(Box<crate::datadogV1::model::EventStreamWidgetDefinition>),
-    EventTimelineWidgetDefinition(Box<crate::datadogV1::model::EventTimelineWidgetDefinition>),
-    FreeTextWidgetDefinition(Box<crate::datadogV1::model::FreeTextWidgetDefinition>),
-    FunnelWidgetDefinition(Box<crate::datadogV1::model::FunnelWidgetDefinition>),
-    ProductAnalyticsFunnelWidgetDefinition(
-        Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>,
-    ),
-    GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
-    GroupWidgetDefinition(Box<crate::datadogV1::model::GroupWidgetDefinition>),
-    HeatgridWidgetDefinition(Box<crate::datadogV1::model::HeatgridWidgetDefinition>),
-    HeatMapWidgetDefinition(Box<crate::datadogV1::model::HeatMapWidgetDefinition>),
-    HostMapWidgetDefinition(Box<crate::datadogV1::model::HostMapWidgetDefinition>),
-    IFrameWidgetDefinition(Box<crate::datadogV1::model::IFrameWidgetDefinition>),
-    ImageWidgetDefinition(Box<crate::datadogV1::model::ImageWidgetDefinition>),
-    JourneyMapWidgetDefinition(Box<crate::datadogV1::model::JourneyMapWidgetDefinition>),
-    ListStreamWidgetDefinition(Box<crate::datadogV1::model::ListStreamWidgetDefinition>),
-    LogStreamWidgetDefinition(Box<crate::datadogV1::model::LogStreamWidgetDefinition>),
-    MonitorSummaryWidgetDefinition(Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>),
-    NoteWidgetDefinition(Box<crate::datadogV1::model::NoteWidgetDefinition>),
-    PowerpackWidgetDefinition(Box<crate::datadogV1::model::PowerpackWidgetDefinition>),
-    PointPlotWidgetDefinition(Box<crate::datadogV1::model::PointPlotWidgetDefinition>),
-    QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
-    RetentionCurveWidgetDefinition(Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>),
-    RunWorkflowWidgetDefinition(Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>),
-    SLOListWidgetDefinition(Box<crate::datadogV1::model::SLOListWidgetDefinition>),
-    SLOWidgetDefinition(Box<crate::datadogV1::model::SLOWidgetDefinition>),
-    ScatterPlotWidgetDefinition(Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>),
-    SankeyWidgetDefinition(Box<crate::datadogV1::model::SankeyWidgetDefinition>),
-    ServiceMapWidgetDefinition(Box<crate::datadogV1::model::ServiceMapWidgetDefinition>),
-    ServiceSummaryWidgetDefinition(Box<crate::datadogV1::model::ServiceSummaryWidgetDefinition>),
-    SplitGraphWidgetDefinition(Box<crate::datadogV1::model::SplitGraphWidgetDefinition>),
-    SunburstWidgetDefinition(Box<crate::datadogV1::model::SunburstWidgetDefinition>),
-    TableWidgetDefinition(Box<crate::datadogV1::model::TableWidgetDefinition>),
-    TimeseriesWidgetDefinition(Box<crate::datadogV1::model::TimeseriesWidgetDefinition>),
-    ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
-    TopologyMapWidgetDefinition(Box<crate::datadogV1::model::TopologyMapWidgetDefinition>),
-    TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
-    WildcardWidgetDefinition(Box<crate::datadogV1::model::WildcardWidgetDefinition>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	AlertGraphWidgetDefinition(Box<crate::datadogV1::model::AlertGraphWidgetDefinition>),
+	AlertValueWidgetDefinition(Box<crate::datadogV1::model::AlertValueWidgetDefinition>),
+	BarChartWidgetDefinition(Box<crate::datadogV1::model::BarChartWidgetDefinition>),
+	ChangeWidgetDefinition(Box<crate::datadogV1::model::ChangeWidgetDefinition>),
+	CheckStatusWidgetDefinition(Box<crate::datadogV1::model::CheckStatusWidgetDefinition>),
+	CohortWidgetDefinition(Box<crate::datadogV1::model::CohortWidgetDefinition>),
+	DistributionWidgetDefinition(Box<crate::datadogV1::model::DistributionWidgetDefinition>),
+	EmbeddedAppWidgetDefinition(Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>),
+	EventStreamWidgetDefinition(Box<crate::datadogV1::model::EventStreamWidgetDefinition>),
+	EventTimelineWidgetDefinition(Box<crate::datadogV1::model::EventTimelineWidgetDefinition>),
+	FreeTextWidgetDefinition(Box<crate::datadogV1::model::FreeTextWidgetDefinition>),
+	FunnelWidgetDefinition(Box<crate::datadogV1::model::FunnelWidgetDefinition>),
+	ProductAnalyticsFunnelWidgetDefinition(Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>),
+	GeomapWidgetDefinition(Box<crate::datadogV1::model::GeomapWidgetDefinition>),
+	GroupWidgetDefinition(Box<crate::datadogV1::model::GroupWidgetDefinition>),
+	HeatgridWidgetDefinition(Box<crate::datadogV1::model::HeatgridWidgetDefinition>),
+	HeatMapWidgetDefinition(Box<crate::datadogV1::model::HeatMapWidgetDefinition>),
+	HostMapWidgetDefinition(Box<crate::datadogV1::model::HostMapWidgetDefinition>),
+	IFrameWidgetDefinition(Box<crate::datadogV1::model::IFrameWidgetDefinition>),
+	ImageWidgetDefinition(Box<crate::datadogV1::model::ImageWidgetDefinition>),
+	JourneyMapWidgetDefinition(Box<crate::datadogV1::model::JourneyMapWidgetDefinition>),
+	ListStreamWidgetDefinition(Box<crate::datadogV1::model::ListStreamWidgetDefinition>),
+	LogStreamWidgetDefinition(Box<crate::datadogV1::model::LogStreamWidgetDefinition>),
+	MonitorSummaryWidgetDefinition(Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>),
+	NoteWidgetDefinition(Box<crate::datadogV1::model::NoteWidgetDefinition>),
+	PowerpackWidgetDefinition(Box<crate::datadogV1::model::PowerpackWidgetDefinition>),
+	PointPlotWidgetDefinition(Box<crate::datadogV1::model::PointPlotWidgetDefinition>),
+	QueryValueWidgetDefinition(Box<crate::datadogV1::model::QueryValueWidgetDefinition>),
+	RetentionCurveWidgetDefinition(Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>),
+	RunWorkflowWidgetDefinition(Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>),
+	SLOListWidgetDefinition(Box<crate::datadogV1::model::SLOListWidgetDefinition>),
+	SLOWidgetDefinition(Box<crate::datadogV1::model::SLOWidgetDefinition>),
+	ScatterPlotWidgetDefinition(Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>),
+	SankeyWidgetDefinition(Box<crate::datadogV1::model::SankeyWidgetDefinition>),
+	ServiceMapWidgetDefinition(Box<crate::datadogV1::model::ServiceMapWidgetDefinition>),
+	ServiceSummaryWidgetDefinition(Box<crate::datadogV1::model::ServiceSummaryWidgetDefinition>),
+	SplitGraphWidgetDefinition(Box<crate::datadogV1::model::SplitGraphWidgetDefinition>),
+	SunburstWidgetDefinition(Box<crate::datadogV1::model::SunburstWidgetDefinition>),
+	TableWidgetDefinition(Box<crate::datadogV1::model::TableWidgetDefinition>),
+	TimeseriesWidgetDefinition(Box<crate::datadogV1::model::TimeseriesWidgetDefinition>),
+	ToplistWidgetDefinition(Box<crate::datadogV1::model::ToplistWidgetDefinition>),
+	TopologyMapWidgetDefinition(Box<crate::datadogV1::model::TopologyMapWidgetDefinition>),
+	TreeMapWidgetDefinition(Box<crate::datadogV1::model::TreeMapWidgetDefinition>),
+	WildcardWidgetDefinition(Box<crate::datadogV1::model::WildcardWidgetDefinition>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for WidgetDefinition {
@@ -63,351 +61,230 @@ impl<'de> Deserialize<'de> for WidgetDefinition {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::AlertGraphWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::AlertGraphWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::AlertGraphWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::AlertValueWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::AlertValueWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::AlertValueWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::BarChartWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::BarChartWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::BarChartWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ChangeWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ChangeWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ChangeWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::CheckStatusWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::CheckStatusWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::CheckStatusWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::CohortWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::CohortWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::CohortWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::DistributionWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::DistributionWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::DistributionWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::EmbeddedAppWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::EmbeddedAppWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::EventStreamWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::EventStreamWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::EventStreamWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::EventTimelineWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::EventTimelineWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::EventTimelineWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::FreeTextWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FreeTextWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::FreeTextWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FunnelWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::FunnelWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::FunnelWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ProductAnalyticsFunnelWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ProductAnalyticsFunnelWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::GeomapWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::GeomapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::GeomapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::GroupWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::GroupWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::GroupWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::HeatgridWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::HeatgridWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::HeatgridWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::HeatMapWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::HeatMapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::HeatMapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::HostMapWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::HostMapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::HostMapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::IFrameWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::IFrameWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::IFrameWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ImageWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ImageWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ImageWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::JourneyMapWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::JourneyMapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::JourneyMapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ListStreamWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ListStreamWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ListStreamWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::LogStreamWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::LogStreamWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::LogStreamWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorSummaryWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::MonitorSummaryWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::NoteWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::NoteWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::NoteWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::PowerpackWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::PowerpackWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::PowerpackWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::PointPlotWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::PointPlotWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::PointPlotWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::QueryValueWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::QueryValueWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::QueryValueWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::RetentionCurveWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::RetentionCurveWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::RunWorkflowWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::RunWorkflowWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::SLOListWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SLOListWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::SLOListWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SLOWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SLOWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::SLOWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ScatterPlotWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ScatterPlotWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SankeyWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SankeyWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::SankeyWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ServiceMapWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ServiceMapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ServiceMapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ServiceSummaryWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ServiceSummaryWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ServiceSummaryWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::SplitGraphWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SplitGraphWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::SplitGraphWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::SunburstWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::SunburstWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::SunburstWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::TableWidgetDefinition>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::TableWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::TableWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::TimeseriesWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::TimeseriesWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::TimeseriesWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::ToplistWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::ToplistWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::ToplistWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::TopologyMapWidgetDefinition>,
-        >(value.clone())
-        {
-            match *_v {
-                crate::datadogV1::model::TopologyMapWidgetDefinition::UnparsedObject(_v) => {}
-                _ => return Ok(WidgetDefinition::TopologyMapWidgetDefinition(_v)),
-            }
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::TreeMapWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::TopologyMapWidgetDefinition>>(value.clone()) {
+			match *_v {
+				crate::datadogV1::model::TopologyMapWidgetDefinition::UnparsedObject(_v) => {},
+				_ => {
+					return Ok(WidgetDefinition::TopologyMapWidgetDefinition(_v))
+				}
+			}
+		}
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::TreeMapWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::TreeMapWidgetDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::WildcardWidgetDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::WildcardWidgetDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(WidgetDefinition::WildcardWidgetDefinition(_v));
             }
         }
-
-        return Ok(WidgetDefinition::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(WidgetDefinition::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

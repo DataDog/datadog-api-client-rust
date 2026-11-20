@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Concurrency control parameters for the form version upsert operation.
 #[non_exhaustive]
@@ -24,13 +24,11 @@ pub struct UpsertFormVersionUpsertParams {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UpsertFormVersionUpsertParams {
-    pub fn new(
-        match_policy: crate::datadogV2::model::LatestVersionMatchPolicy,
-    ) -> UpsertFormVersionUpsertParams {
+    pub fn new(match_policy: crate::datadogV2::model::LatestVersionMatchPolicy) -> UpsertFormVersionUpsertParams {
         UpsertFormVersionUpsertParams {
             etag: None,
             insert_only: None,
@@ -39,25 +37,24 @@ impl UpsertFormVersionUpsertParams {
             _unparsed: false,
         }
     }
-
+    
     pub fn etag(mut self, value: Option<String>) -> Self {
         self.etag = Some(value);
         self
     }
-
+    
     pub fn insert_only(mut self, value: bool) -> Self {
         self.insert_only = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for UpsertFormVersionUpsertParams {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -78,29 +75,23 @@ impl<'de> Deserialize<'de> for UpsertFormVersionUpsertParams {
             {
                 let mut etag: Option<Option<String>> = None;
                 let mut insert_only: Option<bool> = None;
-                let mut match_policy: Option<crate::datadogV2::model::LatestVersionMatchPolicy> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut match_policy: Option<crate::datadogV2::model::LatestVersionMatchPolicy> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "etag" => {
                             etag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "insert_only" => {
                             if v.is_null() {
                                 continue;
                             }
-                            insert_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            insert_only = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "match_policy" => {
-                            match_policy =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            match_policy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _match_policy) = match_policy {
                                 match _match_policy {
                                     crate::datadogV2::model::LatestVersionMatchPolicy::UnparsedObject(_match_policy) => {
@@ -109,16 +100,15 @@ impl<'de> Deserialize<'de> for UpsertFormVersionUpsertParams {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let match_policy =
-                    match_policy.ok_or_else(|| M::Error::missing_field("match_policy"))?;
+                let match_policy = match_policy.ok_or_else(|| M::Error::missing_field("match_policy"))?;
 
                 let content = UpsertFormVersionUpsertParams {
                     etag,

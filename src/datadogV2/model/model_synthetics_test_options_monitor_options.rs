@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the options for a Synthetic test as a monitor
 /// (for example, renotification).
@@ -17,10 +17,9 @@ pub struct SyntheticsTestOptionsMonitorOptions {
     pub escalation_message: Option<String>,
     /// The name of the preset for the notification for the monitor.
     #[serde(rename = "notification_preset_name")]
-    pub notification_preset_name:
-        Option<crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName>,
+    pub notification_preset_name: Option<crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName>,
     /// Time interval before renotifying if the test is still failing
-    /// (in minutes).
+/// (in minutes).
     #[serde(rename = "renotify_interval")]
     pub renotify_interval: Option<i64>,
     /// The number of times to renotify if the test is still failing.
@@ -30,7 +29,7 @@ pub struct SyntheticsTestOptionsMonitorOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestOptionsMonitorOptions {
@@ -44,38 +43,33 @@ impl SyntheticsTestOptionsMonitorOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn escalation_message(mut self, value: String) -> Self {
         self.escalation_message = Some(value);
         self
     }
-
-    pub fn notification_preset_name(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName,
-    ) -> Self {
+    
+    pub fn notification_preset_name(mut self, value: crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName) -> Self {
         self.notification_preset_name = Some(value);
         self
     }
-
+    
     pub fn renotify_interval(mut self, value: i64) -> Self {
         self.renotify_interval = Some(value);
         self
     }
-
+    
     pub fn renotify_occurrences(mut self, value: i64) -> Self {
         self.renotify_occurrences = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestOptionsMonitorOptions {
     fn default() -> Self {
@@ -104,10 +98,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsMonitorOptions {
                 let mut notification_preset_name: Option<crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName> = None;
                 let mut renotify_interval: Option<i64> = None;
                 let mut renotify_occurrences: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,15 +107,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsMonitorOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            escalation_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            escalation_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "notification_preset_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notification_preset_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            notification_preset_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _notification_preset_name) = notification_preset_name {
                                 match _notification_preset_name {
                                     crate::datadogV2::model::SyntheticsTestOptionsMonitorOptionsNotificationPresetName::UnparsedObject(_notification_preset_name) => {
@@ -133,26 +122,24 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptionsMonitorOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "renotify_interval" => {
                             if v.is_null() {
                                 continue;
                             }
-                            renotify_interval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            renotify_interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "renotify_occurrences" => {
                             if v.is_null() {
                                 continue;
                             }
-                            renotify_occurrences =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            renotify_occurrences = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The monitor summary widget displays a summary view of all your Datadog monitors, or a subset based on a query.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct MonitorSummaryWidgetDefinition {
     #[serde(rename = "color_preference")]
     pub color_preference: Option<crate::datadogV1::model::WidgetColorPreference>,
     /// The number of monitors to display.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "count")]
     pub count: Option<i64>,
     /// The description of the widget.
@@ -40,7 +40,7 @@ pub struct MonitorSummaryWidgetDefinition {
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetMonitorSummarySort>,
     /// The start of the list. Typically 0.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "start")]
     pub start: Option<i64>,
     /// Which summary type should be used.
@@ -62,14 +62,11 @@ pub struct MonitorSummaryWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorSummaryWidgetDefinition {
-    pub fn new(
-        query: String,
-        type_: crate::datadogV1::model::MonitorSummaryWidgetDefinitionType,
-    ) -> MonitorSummaryWidgetDefinition {
+    pub fn new(query: String, type_: crate::datadogV1::model::MonitorSummaryWidgetDefinitionType) -> MonitorSummaryWidgetDefinition {
         #[allow(deprecated)]
         MonitorSummaryWidgetDefinition {
             color_preference: None,
@@ -91,99 +88,92 @@ impl MonitorSummaryWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn color_preference(
-        mut self,
-        value: crate::datadogV1::model::WidgetColorPreference,
-    ) -> Self {
+    pub fn color_preference(mut self, value: crate::datadogV1::model::WidgetColorPreference) -> Self {
         self.color_preference = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn display_format(
-        mut self,
-        value: crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
-    ) -> Self {
+    pub fn display_format(mut self, value: crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat) -> Self {
         self.display_format = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn hide_zero_counts(mut self, value: bool) -> Self {
         self.hide_zero_counts = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn show_last_triggered(mut self, value: bool) -> Self {
         self.show_last_triggered = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn show_priority(mut self, value: bool) -> Self {
         self.show_priority = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetMonitorSummarySort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn summary_type(mut self, value: crate::datadogV1::model::WidgetSummaryType) -> Self {
         self.summary_type = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_align(mut self, value: crate::datadogV1::model::WidgetTextAlign) -> Self {
         self.title_align = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title_size(mut self, value: String) -> Self {
         self.title_size = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -202,13 +192,10 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
             where
                 M: MapAccess<'a>,
             {
-                let mut color_preference: Option<crate::datadogV1::model::WidgetColorPreference> =
-                    None;
+                let mut color_preference: Option<crate::datadogV1::model::WidgetColorPreference> = None;
                 let mut count: Option<i64> = None;
                 let mut description: Option<String> = None;
-                let mut display_format: Option<
-                    crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat,
-                > = None;
+                let mut display_format: Option<crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat> = None;
                 let mut hide_zero_counts: Option<bool> = None;
                 let mut query: Option<String> = None;
                 let mut show_last_triggered: Option<bool> = None;
@@ -219,12 +206,8 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                 let mut title: Option<String> = None;
                 let mut title_align: Option<crate::datadogV1::model::WidgetTextAlign> = None;
                 let mut title_size: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::MonitorSummaryWidgetDefinitionType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::MonitorSummaryWidgetDefinitionType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -233,8 +216,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            color_preference =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            color_preference = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _color_preference) = color_preference {
                                 match _color_preference {
                                     crate::datadogV1::model::WidgetColorPreference::UnparsedObject(_color_preference) => {
@@ -243,26 +225,24 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "count" => {
                             if v.is_null() {
                                 continue;
                             }
                             count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            display_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _display_format) = display_format {
                                 match _display_format {
                                     crate::datadogV1::model::WidgetMonitorSummaryDisplayFormat::UnparsedObject(_display_format) => {
@@ -271,31 +251,28 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "hide_zero_counts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            hide_zero_counts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            hide_zero_counts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "show_last_triggered" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_last_triggered =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_last_triggered = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "show_priority" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_priority =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            show_priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
@@ -309,59 +286,53 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "start" => {
                             if v.is_null() {
                                 continue;
                             }
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "summary_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            summary_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            summary_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _summary_type) = summary_type {
                                 match _summary_type {
-                                    crate::datadogV1::model::WidgetSummaryType::UnparsedObject(
-                                        _summary_type,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetSummaryType::UnparsedObject(_summary_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title_align" => {
                             if v.is_null() {
                                 continue;
                             }
-                            title_align =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            title_align = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _title_align) = title_align {
                                 match _title_align {
-                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(
-                                        _title_align,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetTextAlign::UnparsedObject(_title_align) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title_size" => {
                             if v.is_null() {
                                 continue;
                             }
                             title_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -372,12 +343,12 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;

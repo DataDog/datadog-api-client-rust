@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Updated top list widget.
 #[non_exhaustive]
@@ -39,7 +39,7 @@ pub struct ToplistWidgetRequest {
     #[serde(rename = "profile_metrics_query")]
     pub profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition>,
     /// Widget query. Deprecated - Use `queries` and `formulas` instead.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "q")]
     pub q: Option<String>,
     /// List of queries that can be returned directly or used in formulas.
@@ -64,7 +64,7 @@ pub struct ToplistWidgetRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ToplistWidgetRequest {
@@ -91,123 +91,109 @@ impl ToplistWidgetRequest {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn audit_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.audit_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn conditional_formats(
-        mut self,
-        value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-    ) -> Self {
+    pub fn conditional_formats(mut self, value: Vec<crate::datadogV1::model::WidgetConditionalFormat>) -> Self {
         self.conditional_formats = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn formulas(mut self, value: Vec<crate::datadogV1::model::WidgetFormula>) -> Self {
         self.formulas = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn profile_metrics_query(
-        mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> Self {
+    pub fn profile_metrics_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.profile_metrics_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn queries(
-        mut self,
-        value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
-    ) -> Self {
+    pub fn queries(mut self, value: Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>) -> Self {
         self.queries = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn response_format(
-        mut self,
-        value: crate::datadogV1::model::FormulaAndFunctionResponseFormat,
-    ) -> Self {
+    pub fn response_format(mut self, value: crate::datadogV1::model::FormulaAndFunctionResponseFormat) -> Self {
         self.response_format = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetSortBy) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn style(mut self, value: crate::datadogV1::model::WidgetRequestStyle) -> Self {
         self.style = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ToplistWidgetRequest {
     fn default() -> Self {
@@ -234,32 +220,21 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
             {
                 let mut apm_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut audit_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
-                let mut conditional_formats: Option<
-                    Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-                > = None;
+                let mut conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>> = None;
                 let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut formulas: Option<Vec<crate::datadogV1::model::WidgetFormula>> = None;
                 let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
-                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> =
-                    None;
-                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> =
-                    None;
+                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> = None;
+                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut q: Option<String> = None;
-                let mut queries: Option<
-                    Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>,
-                > = None;
-                let mut response_format: Option<
-                    crate::datadogV1::model::FormulaAndFunctionResponseFormat,
-                > = None;
+                let mut queries: Option<Vec<crate::datadogV1::model::FormulaAndFunctionQueryDefinition>> = None;
+                let mut response_format: Option<crate::datadogV1::model::FormulaAndFunctionResponseFormat> = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetSortBy> = None;
                 let mut style: Option<crate::datadogV1::model::WidgetRequestStyle> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -269,79 +244,72 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
                                 continue;
                             }
                             apm_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "audit_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            audit_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audit_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conditional_formats" => {
                             if v.is_null() {
                                 continue;
                             }
-                            conditional_formats =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            conditional_formats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "formulas" => {
                             if v.is_null() {
                                 continue;
                             }
                             formulas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "log_query" => {
                             if v.is_null() {
                                 continue;
                             }
                             log_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "network_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            network_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "process_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            process_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            process_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profile_metrics_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            profile_metrics_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profile_metrics_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "q" => {
                             if v.is_null() {
                                 continue;
                             }
                             q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "queries" => {
                             if v.is_null() {
                                 continue;
                             }
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "response_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            response_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            response_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _response_format) = response_format {
                                 match _response_format {
                                     crate::datadogV1::model::FormulaAndFunctionResponseFormat::UnparsedObject(_response_format) => {
@@ -350,37 +318,36 @@ impl<'de> Deserialize<'de> for ToplistWidgetRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "rum_query" => {
                             if v.is_null() {
                                 continue;
                             }
                             rum_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "security_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            security_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            security_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "style" => {
                             if v.is_null() {
                                 continue;
                             }
                             style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

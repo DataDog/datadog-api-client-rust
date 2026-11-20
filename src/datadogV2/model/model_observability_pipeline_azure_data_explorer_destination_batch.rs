@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Event batching settings for Azure Data Explorer ingestion.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct ObservabilityPipelineAzureDataExplorerDestinationBatch {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineAzureDataExplorerDestinationBatch {
@@ -37,30 +37,28 @@ impl ObservabilityPipelineAzureDataExplorerDestinationBatch {
             _unparsed: false,
         }
     }
-
+    
     pub fn max_bytes(mut self, value: i64) -> Self {
         self.max_bytes = Some(value);
         self
     }
-
+    
     pub fn max_events(mut self, value: i64) -> Self {
         self.max_events = Some(value);
         self
     }
-
+    
     pub fn timeout_secs(mut self, value: i64) -> Self {
         self.timeout_secs = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ObservabilityPipelineAzureDataExplorerDestinationBatch {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                 let mut max_bytes: Option<i64> = None;
                 let mut max_events: Option<i64> = None;
                 let mut timeout_secs: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,25 +96,24 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerDestination
                                 continue;
                             }
                             max_bytes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "max_events" => {
                             if v.is_null() {
                                 continue;
                             }
                             max_events = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timeout_secs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timeout_secs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timeout_secs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

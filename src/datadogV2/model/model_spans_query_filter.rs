@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The search and filter query settings.
 #[non_exhaustive]
@@ -15,14 +15,14 @@ pub struct SpansQueryFilter {
     #[serde(rename = "from")]
     pub from: Option<String>,
     /// The search query, following the
-    /// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
-    /// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
-    /// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
-    /// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
-    /// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
-    /// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
-    /// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
-    /// with `\` instead, for example `resource_name:Clients\:\:*`.
+/// [span search syntax](<https://docs.datadoghq.com/tracing/trace_explorer/query_syntax/>).
+/// Reserved fields (`service`, `env`, `version`, `resource_name`, `operation_name`, `status`, `span_id`,
+/// `trace_id`, `type`) take no `@` prefix, and neither do tags such as `host` or primary tags such as
+/// `datacenter`. Span attributes need one, for example `@span.kind:server` or `@http.status_code:500`.
+/// Wrap values that contain special characters such as `:`, `{`, `}`, `(`, `)`, or spaces in double quotes,
+/// for example `@http.route:"/api/v1/users/{id}"` or `resource_name:"GET /api/v1/users"`.
+/// Wildcards do not work inside quotes, so to combine a wildcard with special characters, escape each one
+/// with `\` instead, for example `resource_name:Clients\:\:*`.
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The maximum time for the requested spans, supports date-time ISO8601, date math, and regular timestamps (milliseconds).
@@ -32,7 +32,7 @@ pub struct SpansQueryFilter {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SpansQueryFilter {
@@ -45,30 +45,28 @@ impl SpansQueryFilter {
             _unparsed: false,
         }
     }
-
+    
     pub fn from(mut self, value: String) -> Self {
         self.from = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn to(mut self, value: String) -> Self {
         self.to = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SpansQueryFilter {
     fn default() -> Self {
@@ -96,10 +94,7 @@ impl<'de> Deserialize<'de> for SpansQueryFilter {
                 let mut from: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut to: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -109,24 +104,24 @@ impl<'de> Deserialize<'de> for SpansQueryFilter {
                                 continue;
                             }
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "to" => {
                             if v.is_null() {
                                 continue;
                             }
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

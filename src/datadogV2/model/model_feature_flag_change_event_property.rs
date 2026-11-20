@@ -2,27 +2,28 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FeatureFlagChangeEventProperty {
-    FLAG,
-    FLAG_NAME,
-    FLAG_DESCRIPTION,
-    JSON_SCHEMA,
-    DISTRIBUTION_CHANNEL,
-    REQUIRE_APPROVAL,
-    VARIANT,
-    VARIANT_NAME,
-    VARIANT_VALUE,
-    ALLOCATIONS,
-    ROLLOUT,
-    ENVIRONMENT_STATUS,
-    DEFAULT_VARIANT,
-    OVERRIDE_VARIANT,
-    STALENESS_STATUS,
-    SAVED_FILTER,
+	FLAG,
+	FLAG_NAME,
+	FLAG_DESCRIPTION,
+	JSON_SCHEMA,
+	DISTRIBUTION_CHANNEL,
+	REQUIRE_APPROVAL,
+	VARIANT,
+	VARIANT_NAME,
+	VARIANT_VALUE,
+	ALLOCATIONS,
+	ROLLOUT,
+	ENVIRONMENT_STATUS,
+	DEFAULT_VARIANT,
+	OVERRIDE_VARIANT,
+	STALENESS_STATUS,
+	SAVED_FILTER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -68,26 +69,8 @@ impl<'de> Deserialize<'de> for FeatureFlagChangeEventProperty {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "FLAG" => Self::FLAG,
-            "FLAG_NAME" => Self::FLAG_NAME,
-            "FLAG_DESCRIPTION" => Self::FLAG_DESCRIPTION,
-            "JSON_SCHEMA" => Self::JSON_SCHEMA,
-            "DISTRIBUTION_CHANNEL" => Self::DISTRIBUTION_CHANNEL,
-            "REQUIRE_APPROVAL" => Self::REQUIRE_APPROVAL,
-            "VARIANT" => Self::VARIANT,
-            "VARIANT_NAME" => Self::VARIANT_NAME,
-            "VARIANT_VALUE" => Self::VARIANT_VALUE,
-            "ALLOCATIONS" => Self::ALLOCATIONS,
-            "ROLLOUT" => Self::ROLLOUT,
-            "ENVIRONMENT_STATUS" => Self::ENVIRONMENT_STATUS,
-            "DEFAULT_VARIANT" => Self::DEFAULT_VARIANT,
-            "OVERRIDE_VARIANT" => Self::OVERRIDE_VARIANT,
-            "STALENESS_STATUS" => Self::STALENESS_STATUS,
-            "SAVED_FILTER" => Self::SAVED_FILTER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"FLAG" => Self::FLAG,"FLAG_NAME" => Self::FLAG_NAME,"FLAG_DESCRIPTION" => Self::FLAG_DESCRIPTION,"JSON_SCHEMA" => Self::JSON_SCHEMA,"DISTRIBUTION_CHANNEL" => Self::DISTRIBUTION_CHANNEL,"REQUIRE_APPROVAL" => Self::REQUIRE_APPROVAL,"VARIANT" => Self::VARIANT,"VARIANT_NAME" => Self::VARIANT_NAME,"VARIANT_VALUE" => Self::VARIANT_VALUE,"ALLOCATIONS" => Self::ALLOCATIONS,"ROLLOUT" => Self::ROLLOUT,"ENVIRONMENT_STATUS" => Self::ENVIRONMENT_STATUS,"DEFAULT_VARIANT" => Self::DEFAULT_VARIANT,"OVERRIDE_VARIANT" => Self::OVERRIDE_VARIANT,"STALENESS_STATUS" => Self::STALENESS_STATUS,"SAVED_FILTER" => Self::SAVED_FILTER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

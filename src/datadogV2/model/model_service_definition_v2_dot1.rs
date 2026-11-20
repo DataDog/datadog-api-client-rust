@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Service definition v2.1 for providing service metadata and integrations.
 #[non_exhaustive]
@@ -51,14 +51,11 @@ pub struct ServiceDefinitionV2Dot1 {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ServiceDefinitionV2Dot1 {
-    pub fn new(
-        dd_service: String,
-        schema_version: crate::datadogV2::model::ServiceDefinitionV2Dot1Version,
-    ) -> ServiceDefinitionV2Dot1 {
+    pub fn new(dd_service: String, schema_version: crate::datadogV2::model::ServiceDefinitionV2Dot1Version) -> ServiceDefinitionV2Dot1 {
         ServiceDefinitionV2Dot1 {
             application: None,
             contacts: None,
@@ -76,77 +73,64 @@ impl ServiceDefinitionV2Dot1 {
             _unparsed: false,
         }
     }
-
+    
     pub fn application(mut self, value: String) -> Self {
         self.application = Some(value);
         self
     }
-
-    pub fn contacts(
-        mut self,
-        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>,
-    ) -> Self {
+    
+    pub fn contacts(mut self, value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>) -> Self {
         self.contacts = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn extensions(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn extensions(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.extensions = Some(value);
         self
     }
-
-    pub fn integrations(
-        mut self,
-        value: crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations,
-    ) -> Self {
+    
+    pub fn integrations(mut self, value: crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations) -> Self {
         self.integrations = Some(value);
         self
     }
-
+    
     pub fn lifecycle(mut self, value: String) -> Self {
         self.lifecycle = Some(value);
         self
     }
-
-    pub fn links(
-        mut self,
-        value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>,
-    ) -> Self {
+    
+    pub fn links(mut self, value: Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>) -> Self {
         self.links = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn team(mut self, value: String) -> Self {
         self.team = Some(value);
         self
     }
-
+    
     pub fn tier(mut self, value: String) -> Self {
         self.tier = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -166,29 +150,18 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1 {
                 M: MapAccess<'a>,
             {
                 let mut application: Option<String> = None;
-                let mut contacts: Option<
-                    Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>,
-                > = None;
+                let mut contacts: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Contact>> = None;
                 let mut dd_service: Option<String> = None;
                 let mut description: Option<String> = None;
-                let mut extensions: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut integrations: Option<
-                    crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations,
-                > = None;
+                let mut extensions: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut integrations: Option<crate::datadogV2::model::ServiceDefinitionV2Dot1Integrations> = None;
                 let mut lifecycle: Option<String> = None;
-                let mut links: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>> =
-                    None;
-                let mut schema_version: Option<
-                    crate::datadogV2::model::ServiceDefinitionV2Dot1Version,
-                > = None;
+                let mut links: Option<Vec<crate::datadogV2::model::ServiceDefinitionV2Dot1Link>> = None;
+                let mut schema_version: Option<crate::datadogV2::model::ServiceDefinitionV2Dot1Version> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut team: Option<String> = None;
                 let mut tier: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -197,53 +170,49 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1 {
                             if v.is_null() {
                                 continue;
                             }
-                            application =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "contacts" => {
                             if v.is_null() {
                                 continue;
                             }
                             contacts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dd-service" => {
                             dd_service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "extensions" => {
                             if v.is_null() {
                                 continue;
                             }
                             extensions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lifecycle" => {
                             if v.is_null() {
                                 continue;
                             }
                             lifecycle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "links" => {
                             if v.is_null() {
                                 continue;
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "schema-version" => {
-                            schema_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            schema_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _schema_version) = schema_version {
                                 match _schema_version {
                                     crate::datadogV2::model::ServiceDefinitionV2Dot1Version::UnparsedObject(_schema_version) => {
@@ -252,35 +221,34 @@ impl<'de> Deserialize<'de> for ServiceDefinitionV2Dot1 {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "team" => {
                             if v.is_null() {
                                 continue;
                             }
                             team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tier" => {
                             if v.is_null() {
                                 continue;
                             }
                             tier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let dd_service = dd_service.ok_or_else(|| M::Error::missing_field("dd_service"))?;
-                let schema_version =
-                    schema_version.ok_or_else(|| M::Error::missing_field("schema_version"))?;
+                let schema_version = schema_version.ok_or_else(|| M::Error::missing_field("schema_version"))?;
 
                 let content = ServiceDefinitionV2Dot1 {
                     application,

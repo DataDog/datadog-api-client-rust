@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query configuration for Product Analytics or RUM Sankey widget.
 #[non_exhaustive]
@@ -46,15 +46,11 @@ pub struct SankeyRumQuery {
     pub target: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SankeyRumQuery {
-    pub fn new(
-        data_source: crate::datadogV1::model::SankeyRumDataSource,
-        mode: crate::datadogV1::model::SankeyRumQueryMode,
-        query_string: String,
-    ) -> SankeyRumQuery {
+    pub fn new(data_source: crate::datadogV1::model::SankeyRumDataSource, mode: crate::datadogV1::model::SankeyRumQueryMode, query_string: String) -> SankeyRumQuery {
         SankeyRumQuery {
             audience_filters: None,
             data_source,
@@ -70,53 +66,50 @@ impl SankeyRumQuery {
             _unparsed: false,
         }
     }
-
-    pub fn audience_filters(
-        mut self,
-        value: crate::datadogV1::model::ProductAnalyticsAudienceFilters,
-    ) -> Self {
+    
+    pub fn audience_filters(mut self, value: crate::datadogV1::model::ProductAnalyticsAudienceFilters) -> Self {
         self.audience_filters = Some(value);
         self
     }
-
+    
     pub fn entries_per_step(mut self, value: i64) -> Self {
         self.entries_per_step = Some(value);
         self
     }
-
+    
     pub fn join_keys(mut self, value: crate::datadogV1::model::SankeyJoinKeys) -> Self {
         self.join_keys = Some(value);
         self
     }
-
+    
     pub fn number_of_steps(mut self, value: i64) -> Self {
         self.number_of_steps = Some(value);
         self
     }
-
-    pub fn occurrences(
-        mut self,
-        value: crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter,
-    ) -> Self {
+    
+    pub fn occurrences(mut self, value: crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter) -> Self {
         self.occurrences = Some(value);
         self
     }
-
+    
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
-
+    
     pub fn subquery_id(mut self, value: String) -> Self {
         self.subquery_id = Some(value);
         self
     }
-
+    
     pub fn target(mut self, value: String) -> Self {
         self.target = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for SankeyRumQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -135,17 +128,13 @@ impl<'de> Deserialize<'de> for SankeyRumQuery {
             where
                 M: MapAccess<'a>,
             {
-                let mut audience_filters: Option<
-                    crate::datadogV1::model::ProductAnalyticsAudienceFilters,
-                > = None;
+                let mut audience_filters: Option<crate::datadogV1::model::ProductAnalyticsAudienceFilters> = None;
                 let mut data_source: Option<crate::datadogV1::model::SankeyRumDataSource> = None;
                 let mut entries_per_step: Option<i64> = None;
                 let mut join_keys: Option<crate::datadogV1::model::SankeyJoinKeys> = None;
                 let mut mode: Option<crate::datadogV1::model::SankeyRumQueryMode> = None;
                 let mut number_of_steps: Option<i64> = None;
-                let mut occurrences: Option<
-                    crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter,
-                > = None;
+                let mut occurrences: Option<crate::datadogV1::model::ProductAnalyticsAudienceOccurrenceFilter> = None;
                 let mut query_string: Option<String> = None;
                 let mut source: Option<String> = None;
                 let mut subquery_id: Option<String> = None;
@@ -158,12 +147,10 @@ impl<'de> Deserialize<'de> for SankeyRumQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            audience_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            audience_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::SankeyRumDataSource::UnparsedObject(_data_source) => {
@@ -172,82 +159,71 @@ impl<'de> Deserialize<'de> for SankeyRumQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "entries_per_step" => {
                             if v.is_null() {
                                 continue;
                             }
-                            entries_per_step =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            entries_per_step = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "join_keys" => {
                             if v.is_null() {
                                 continue;
                             }
                             join_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mode" => {
                             mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mode) = mode {
                                 match _mode {
-                                    crate::datadogV1::model::SankeyRumQueryMode::UnparsedObject(
-                                        _mode,
-                                    ) => {
+                                    crate::datadogV1::model::SankeyRumQueryMode::UnparsedObject(_mode) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "number_of_steps" => {
                             if v.is_null() {
                                 continue;
                             }
-                            number_of_steps =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            number_of_steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "occurrences" => {
                             if v.is_null() {
                                 continue;
                             }
-                            occurrences =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            occurrences = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query_string" => {
-                            query_string =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_string = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source" => {
                             if v.is_null() {
                                 continue;
                             }
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subquery_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subquery_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subquery_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
                             }
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
-                let query_string =
-                    query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
+                let query_string = query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
 
                 let content = SankeyRumQuery {
                     audience_filters,

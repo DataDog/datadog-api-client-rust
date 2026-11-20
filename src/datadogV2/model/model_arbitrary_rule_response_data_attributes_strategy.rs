@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `ArbitraryRuleResponseDataAttributesStrategy` object.
 #[non_exhaustive]
@@ -77,106 +77,74 @@ impl ArbitraryRuleResponseDataAttributesStrategy {
             _unparsed: false,
         }
     }
-
-    pub fn allocated_by(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItems,
-        >,
-    ) -> Self {
+    
+    pub fn allocated_by(mut self, value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItems>) -> Self {
         self.allocated_by = Some(value);
         self
     }
-
-    pub fn allocated_by_filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByFiltersItems>,
-    ) -> Self {
+    
+    pub fn allocated_by_filters(mut self, value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByFiltersItems>) -> Self {
         self.allocated_by_filters = Some(value);
         self
     }
-
+    
     pub fn allocated_by_tag_keys(mut self, value: Vec<String>) -> Self {
         self.allocated_by_tag_keys = Some(value);
         self
     }
-
-    pub fn based_on_costs(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyBasedOnCostsItems,
-        >,
-    ) -> Self {
+    
+    pub fn based_on_costs(mut self, value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyBasedOnCostsItems>) -> Self {
         self.based_on_costs = Some(value);
         self
     }
-
-    pub fn based_on_timeseries(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn based_on_timeseries(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.based_on_timeseries = Some(value);
         self
     }
-
-    pub fn evaluate_grouped_by_filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyEvaluateGroupedByFiltersItems>,
-    ) -> Self {
+    
+    pub fn evaluate_grouped_by_filters(mut self, value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyEvaluateGroupedByFiltersItems>) -> Self {
         self.evaluate_grouped_by_filters = Some(value);
         self
     }
-
+    
     pub fn evaluate_grouped_by_tag_keys(mut self, value: Vec<String>) -> Self {
         self.evaluate_grouped_by_tag_keys = Some(value);
         self
     }
-
+    
     pub fn granularity(mut self, value: String) -> Self {
         self.granularity = Some(value);
         self
     }
-
-    pub fn mapping_transform(
-        mut self,
-        value: crate::datadogV2::model::ArbitraryRuleMappingTransform,
-    ) -> Self {
+    
+    pub fn mapping_transform(mut self, value: crate::datadogV2::model::ArbitraryRuleMappingTransform) -> Self {
         self.mapping_transform = Some(value);
         self
     }
-
-    pub fn static_tags(
-        mut self,
-        value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>,
-    ) -> Self {
+    
+    pub fn static_tags(mut self, value: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>) -> Self {
         self.static_tags = Some(value);
         self
     }
-
-    pub fn supporting_timeseries(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn supporting_timeseries(mut self, value: Option<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.supporting_timeseries = Some(value);
         self
     }
-
-    pub fn tag_transforms(
-        mut self,
-        value: crate::datadogV2::model::ArbitraryRuleTagTransforms,
-    ) -> Self {
+    
+    pub fn tag_transforms(mut self, value: crate::datadogV2::model::ArbitraryRuleTagTransforms) -> Self {
         self.tag_transforms = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -199,27 +167,16 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
                 let mut allocated_by_filters: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByFiltersItems>> = None;
                 let mut allocated_by_tag_keys: Option<Vec<String>> = None;
                 let mut based_on_costs: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyBasedOnCostsItems>> = None;
-                let mut based_on_timeseries: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
+                let mut based_on_timeseries: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut evaluate_grouped_by_filters: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyEvaluateGroupedByFiltersItems>> = None;
                 let mut evaluate_grouped_by_tag_keys: Option<Vec<String>> = None;
                 let mut granularity: Option<String> = None;
-                let mut mapping_transform: Option<
-                    crate::datadogV2::model::ArbitraryRuleMappingTransform,
-                > = None;
+                let mut mapping_transform: Option<crate::datadogV2::model::ArbitraryRuleMappingTransform> = None;
                 let mut method: Option<String> = None;
                 let mut static_tags: Option<Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategyAllocatedByItemsAllocatedTagsItems>> = None;
-                let mut supporting_timeseries: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
-                let mut tag_transforms: Option<
-                    crate::datadogV2::model::ArbitraryRuleTagTransforms,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut supporting_timeseries: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>> = None;
+                let mut tag_transforms: Option<crate::datadogV2::model::ArbitraryRuleTagTransforms> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -228,91 +185,79 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributesStrategy {
                             if v.is_null() {
                                 continue;
                             }
-                            allocated_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "allocated_by_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            allocated_by_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocated_by_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "allocated_by_tag_keys" => {
                             if v.is_null() {
                                 continue;
                             }
-                            allocated_by_tag_keys =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allocated_by_tag_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "based_on_costs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            based_on_costs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            based_on_costs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "based_on_timeseries" => {
                             if v.is_null() {
                                 continue;
                             }
-                            based_on_timeseries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            based_on_timeseries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evaluate_grouped_by_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            evaluate_grouped_by_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evaluate_grouped_by_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evaluate_grouped_by_tag_keys" => {
                             if v.is_null() {
                                 continue;
                             }
-                            evaluate_grouped_by_tag_keys =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evaluate_grouped_by_tag_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "granularity" => {
                             if v.is_null() {
                                 continue;
                             }
-                            granularity =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            granularity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mapping_transform" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mapping_transform =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mapping_transform = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "method" => {
                             method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "static_tags" => {
                             if v.is_null() {
                                 continue;
                             }
-                            static_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            static_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "supporting_timeseries" => {
-                            supporting_timeseries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            supporting_timeseries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tag_transforms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_transforms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_transforms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let method = method.ok_or_else(|| M::Error::missing_field("method"))?;

@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GetTeamMembershipsSort {
-    MANAGER_NAME,
-    _MANAGER_NAME,
-    NAME,
-    _NAME,
-    HANDLE,
-    _HANDLE,
-    EMAIL,
-    _EMAIL,
+	MANAGER_NAME,
+	_MANAGER_NAME,
+	NAME,
+	_NAME,
+	HANDLE,
+	_HANDLE,
+	EMAIL,
+	_EMAIL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for GetTeamMembershipsSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "manager_name" => Self::MANAGER_NAME,
-            "-manager_name" => Self::_MANAGER_NAME,
-            "name" => Self::NAME,
-            "-name" => Self::_NAME,
-            "handle" => Self::HANDLE,
-            "-handle" => Self::_HANDLE,
-            "email" => Self::EMAIL,
-            "-email" => Self::_EMAIL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"manager_name" => Self::MANAGER_NAME,"-manager_name" => Self::_MANAGER_NAME,"name" => Self::NAME,"-name" => Self::_NAME,"handle" => Self::HANDLE,"-handle" => Self::_HANDLE,"email" => Self::EMAIL,"-email" => Self::_EMAIL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

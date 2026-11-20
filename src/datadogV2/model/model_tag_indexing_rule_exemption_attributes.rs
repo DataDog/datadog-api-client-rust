@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a tag indexing rule exemption.
 #[non_exhaustive]
@@ -18,34 +18,30 @@ pub struct TagIndexingRuleExemptionAttributes {
     #[serde(rename = "created_by_handle")]
     pub created_by_handle: Option<String>,
     /// Estimated change in indexed cardinality or points if the exemption is removed and the matching tag indexing
-    /// rule applies to the metric. A negative value indicates a reduction in indexed volume, a positive value
-    /// indicates an increase, and zero indicates no change. A `null` value indicates that the estimate is unavailable.
-    #[serde(
-        rename = "estimated_change_in_volume",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// rule applies to the metric. A negative value indicates a reduction in indexed volume, a positive value
+/// indicates an increase, and zero indicates no change. A `null` value indicates that the estimate is unavailable.
+    #[serde(rename = "estimated_change_in_volume", default, with = "::serde_with::rust::double_option")]
     pub estimated_change_in_volume: Option<Option<i64>>,
     /// Discriminates between an explicit exemption (`exemption`) and a pre-existing legacy tag configuration acting as an implicit exclusion (`legacy_tag_configuration`).
     #[serde(rename = "kind")]
     pub kind: Option<String>,
     /// Tag keys used to query this metric in monitors, dashboards, notebooks, and SLOs that the matching rule would
-    /// remove or not include if the exemption is removed.
+/// remove or not include if the exemption is removed.
     #[serde(rename = "missing_indexed_tags")]
     pub missing_indexed_tags: Option<Vec<String>>,
     /// The reason the metric is exempt from tag indexing rules.
     #[serde(rename = "reason")]
     pub reason: Option<String>,
     /// Indicates whether `estimated_change_in_volume` is available and, if not, why. `ok` indicates a fresh estimate.
-    /// `unindexed_tags` indicates that the matching rule uses tags that are not indexed for the metric.
-    /// `unavailable` indicates that the estimate is stale, was not computed, or could not be retrieved.
+/// `unindexed_tags` indicates that the matching rule uses tags that are not indexed for the metric.
+/// `unavailable` indicates that the estimate is stale, was not computed, or could not be retrieved.
     #[serde(rename = "volume_status")]
     pub volume_status: Option<crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TagIndexingRuleExemptionAttributes {
@@ -62,53 +58,48 @@ impl TagIndexingRuleExemptionAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by_handle(mut self, value: String) -> Self {
         self.created_by_handle = Some(value);
         self
     }
-
+    
     pub fn estimated_change_in_volume(mut self, value: Option<i64>) -> Self {
         self.estimated_change_in_volume = Some(value);
         self
     }
-
+    
     pub fn kind(mut self, value: String) -> Self {
         self.kind = Some(value);
         self
     }
-
+    
     pub fn missing_indexed_tags(mut self, value: Vec<String>) -> Self {
         self.missing_indexed_tags = Some(value);
         self
     }
-
+    
     pub fn reason(mut self, value: String) -> Self {
         self.reason = Some(value);
         self
     }
-
-    pub fn volume_status(
-        mut self,
-        value: crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus,
-    ) -> Self {
+    
+    pub fn volume_status(mut self, value: crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus) -> Self {
         self.volume_status = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TagIndexingRuleExemptionAttributes {
     fn default() -> Self {
@@ -139,13 +130,8 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
                 let mut kind: Option<String> = None;
                 let mut missing_indexed_tags: Option<Vec<String>> = None;
                 let mut reason: Option<String> = None;
-                let mut volume_status: Option<
-                    crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut volume_status: Option<crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -155,43 +141,39 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by_handle" => {
                             if v.is_null() {
                                 continue;
                             }
-                            created_by_handle =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_by_handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_change_in_volume" => {
-                            estimated_change_in_volume =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_change_in_volume = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "kind" => {
                             if v.is_null() {
                                 continue;
                             }
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "missing_indexed_tags" => {
                             if v.is_null() {
                                 continue;
                             }
-                            missing_indexed_tags =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            missing_indexed_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reason" => {
                             if v.is_null() {
                                 continue;
                             }
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "volume_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            volume_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            volume_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _volume_status) = volume_status {
                                 match _volume_status {
                                     crate::datadogV2::model::TagIndexingRuleExemptionVolumeStatus::UnparsedObject(_volume_status) => {
@@ -200,12 +182,12 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

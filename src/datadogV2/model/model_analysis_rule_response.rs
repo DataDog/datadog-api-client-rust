@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The result of applying a single static analysis rule to the analyzed source code.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct AnalysisRuleResponse {
     #[serde(rename = "errors")]
     pub errors: Vec<String>,
     /// An error message if the rule execution failed, or null if execution succeeded.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "execution_error")]
     pub execution_error: Option<String>,
     /// The time taken to execute the rule, in milliseconds.
@@ -34,18 +34,11 @@ pub struct AnalysisRuleResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AnalysisRuleResponse {
-    pub fn new(
-        errors: Vec<String>,
-        execution_error: Option<String>,
-        execution_time_ms: i64,
-        identifier: String,
-        output: String,
-        violations: Vec<crate::datadogV2::model::AnalysisViolation>,
-    ) -> AnalysisRuleResponse {
+    pub fn new(errors: Vec<String>, execution_error: Option<String>, execution_time_ms: i64, identifier: String, output: String, violations: Vec<crate::datadogV2::model::AnalysisViolation>) -> AnalysisRuleResponse {
         AnalysisRuleResponse {
             errors,
             execution_error,
@@ -57,15 +50,14 @@ impl AnalysisRuleResponse {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AnalysisRuleResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,46 +82,39 @@ impl<'de> Deserialize<'de> for AnalysisRuleResponse {
                 let mut identifier: Option<String> = None;
                 let mut output: Option<String> = None;
                 let mut violations: Option<Vec<crate::datadogV2::model::AnalysisViolation>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "errors" => {
                             errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "execution_error" => {
-                            execution_error =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            execution_error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "execution_time_ms" => {
-                            execution_time_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            execution_time_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "identifier" => {
                             identifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "output" => {
                             output = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "violations" => {
                             violations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let errors = errors.ok_or_else(|| M::Error::missing_field("errors"))?;
-                let execution_error =
-                    execution_error.ok_or_else(|| M::Error::missing_field("execution_error"))?;
-                let execution_time_ms = execution_time_ms
-                    .ok_or_else(|| M::Error::missing_field("execution_time_ms"))?;
+                let execution_error = execution_error.ok_or_else(|| M::Error::missing_field("execution_error"))?;
+                let execution_time_ms = execution_time_ms.ok_or_else(|| M::Error::missing_field("execution_time_ms"))?;
                 let identifier = identifier.ok_or_else(|| M::Error::missing_field("identifier"))?;
                 let output = output.ok_or_else(|| M::Error::missing_field("output"))?;
                 let violations = violations.ok_or_else(|| M::Error::missing_field("violations"))?;

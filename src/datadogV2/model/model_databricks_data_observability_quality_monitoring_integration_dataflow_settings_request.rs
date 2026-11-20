@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the Data Observability dataflow. Only the fields provided are changed.
 #[non_exhaustive]
@@ -19,7 +19,7 @@ pub struct DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettin
     pub sync_system_catalog: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest {
@@ -30,17 +30,19 @@ impl DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequ
             _unparsed: false,
         }
     }
-
+    
     pub fn do_crawlers_cron(mut self, value: String) -> Self {
         self.do_crawlers_cron = Some(value);
         self
     }
-
+    
     pub fn sync_system_catalog(mut self, value: bool) -> Self {
         self.sync_system_catalog = Some(value);
         self
     }
+    
 }
+
 
 impl Default for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -48,9 +50,7 @@ impl Default for DatabricksDataObservabilityQualityMonitoringIntegrationDataflow
     }
 }
 
-impl<'de> Deserialize<'de>
-    for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest
-{
+impl<'de> Deserialize<'de> for DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -101,8 +101,6 @@ impl<'de> Deserialize<'de>
             }
         }
 
-        deserializer.deserialize_any(
-            DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequestVisitor,
-        )
+        deserializer.deserialize_any(DatabricksDataObservabilityQualityMonitoringIntegrationDataflowSettingsRequestVisitor)
     }
 }

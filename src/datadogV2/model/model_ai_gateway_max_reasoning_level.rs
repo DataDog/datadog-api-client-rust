@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayMaxReasoningLevel {
-    NONE,
-    MINIMAL,
-    LOW,
-    MEDIUM,
-    HIGH,
-    XHIGH,
-    MAX,
+	NONE,
+	MINIMAL,
+	LOW,
+	MEDIUM,
+	HIGH,
+	XHIGH,
+	MAX,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for AiGatewayMaxReasoningLevel {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "none" => Self::NONE,
-            "minimal" => Self::MINIMAL,
-            "low" => Self::LOW,
-            "medium" => Self::MEDIUM,
-            "high" => Self::HIGH,
-            "xhigh" => Self::XHIGH,
-            "max" => Self::MAX,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"none" => Self::NONE,"minimal" => Self::MINIMAL,"low" => Self::LOW,"medium" => Self::MEDIUM,"high" => Self::HIGH,"xhigh" => Self::XHIGH,"max" => Self::MAX,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

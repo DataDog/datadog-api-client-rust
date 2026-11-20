@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// User journey funnel query definition.
 #[non_exhaustive]
@@ -28,14 +28,11 @@ pub struct ProductAnalyticsFunnelQuery {
     pub subquery_id: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsFunnelQuery {
-    pub fn new(
-        data_source: crate::datadogV1::model::ProductAnalyticsFunnelDataSource,
-        search: crate::datadogV1::model::UserJourneySearch,
-    ) -> ProductAnalyticsFunnelQuery {
+    pub fn new(data_source: crate::datadogV1::model::ProductAnalyticsFunnelDataSource, search: crate::datadogV1::model::UserJourneySearch) -> ProductAnalyticsFunnelQuery {
         ProductAnalyticsFunnelQuery {
             compute: None,
             data_source,
@@ -45,28 +42,25 @@ impl ProductAnalyticsFunnelQuery {
             _unparsed: false,
         }
     }
-
-    pub fn compute(
-        mut self,
-        value: crate::datadogV1::model::ProductAnalyticsFunnelCompute,
-    ) -> Self {
+    
+    pub fn compute(mut self, value: crate::datadogV1::model::ProductAnalyticsFunnelCompute) -> Self {
         self.compute = Some(value);
         self
     }
-
-    pub fn group_by(
-        mut self,
-        value: Vec<crate::datadogV1::model::ProductAnalyticsFunnelGroupBy>,
-    ) -> Self {
+    
+    pub fn group_by(mut self, value: Vec<crate::datadogV1::model::ProductAnalyticsFunnelGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn subquery_id(mut self, value: String) -> Self {
         self.subquery_id = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsFunnelQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,14 +79,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelQuery {
             where
                 M: MapAccess<'a>,
             {
-                let mut compute: Option<crate::datadogV1::model::ProductAnalyticsFunnelCompute> =
-                    None;
-                let mut data_source: Option<
-                    crate::datadogV1::model::ProductAnalyticsFunnelDataSource,
-                > = None;
-                let mut group_by: Option<
-                    Vec<crate::datadogV1::model::ProductAnalyticsFunnelGroupBy>,
-                > = None;
+                let mut compute: Option<crate::datadogV1::model::ProductAnalyticsFunnelCompute> = None;
+                let mut data_source: Option<crate::datadogV1::model::ProductAnalyticsFunnelDataSource> = None;
+                let mut group_by: Option<Vec<crate::datadogV1::model::ProductAnalyticsFunnelGroupBy>> = None;
                 let mut search: Option<crate::datadogV1::model::UserJourneySearch> = None;
                 let mut subquery_id: Option<String> = None;
                 let mut _unparsed = false;
@@ -104,10 +93,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelQuery {
                                 continue;
                             }
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::ProductAnalyticsFunnelDataSource::UnparsedObject(_data_source) => {
@@ -116,32 +104,28 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search" => {
                             search = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subquery_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subquery_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subquery_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let search = search.ok_or_else(|| M::Error::missing_field("search"))?;
 
                 let content = ProductAnalyticsFunnelQuery {

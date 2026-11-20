@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// AWS Metrics Collection config.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct AWSMetricsConfig {
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// AWS CloudWatch metric name filters. Each filter applies to a single namespace.
-    /// Exactly one of `include_only` or `exclude_only` must be set on each filter.
+/// Exactly one of `include_only` or `exclude_only` must be set on each filter.
     #[serde(rename = "metric_name_filters")]
     pub metric_name_filters: Option<Vec<crate::datadogV2::model::AWSMetricNameFilters>>,
     /// AWS Metrics namespace filters. Defaults to `exclude_only`.
@@ -37,15 +37,15 @@ pub struct AWSMetricsConfig {
     #[serde(rename = "resource_type_tag_filters")]
     pub resource_type_tag_filters: Option<Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>>,
     /// AWS Metrics collection tag filters list. Defaults to `[]`.
-    /// Deprecated in favor of `resource_type_tag_filters`. The two fields are mutually exclusive on an account.
-    #[deprecated]
+/// Deprecated in favor of `resource_type_tag_filters`. The two fields are mutually exclusive on an account.
+	#[deprecated]
     #[serde(rename = "tag_filters")]
     pub tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AWSMetricsConfig {
@@ -65,81 +65,67 @@ impl AWSMetricsConfig {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn automute_enabled(mut self, value: bool) -> Self {
         self.automute_enabled = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn collect_cloudwatch_alarms(mut self, value: bool) -> Self {
         self.collect_cloudwatch_alarms = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn collect_custom_metrics(mut self, value: bool) -> Self {
         self.collect_custom_metrics = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn collect_service_quotas(mut self, value: bool) -> Self {
         self.collect_service_quotas = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn metric_name_filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::AWSMetricNameFilters>,
-    ) -> Self {
+    pub fn metric_name_filters(mut self, value: Vec<crate::datadogV2::model::AWSMetricNameFilters>) -> Self {
         self.metric_name_filters = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn namespace_filters(
-        mut self,
-        value: crate::datadogV2::model::AWSNamespaceFilters,
-    ) -> Self {
+    pub fn namespace_filters(mut self, value: crate::datadogV2::model::AWSNamespaceFilters) -> Self {
         self.namespace_filters = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn resource_type_tag_filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>,
-    ) -> Self {
+    pub fn resource_type_tag_filters(mut self, value: Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>) -> Self {
         self.resource_type_tag_filters = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn tag_filters(
-        mut self,
-        value: Vec<crate::datadogV2::model::AWSNamespaceTagFilter>,
-    ) -> Self {
+    pub fn tag_filters(mut self, value: Vec<crate::datadogV2::model::AWSNamespaceTagFilter>) -> Self {
         self.tag_filters = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AWSMetricsConfig {
     fn default() -> Self {
@@ -169,20 +155,11 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                 let mut collect_custom_metrics: Option<bool> = None;
                 let mut collect_service_quotas: Option<bool> = None;
                 let mut enabled: Option<bool> = None;
-                let mut metric_name_filters: Option<
-                    Vec<crate::datadogV2::model::AWSMetricNameFilters>,
-                > = None;
-                let mut namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters> =
-                    None;
-                let mut resource_type_tag_filters: Option<
-                    Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>,
-                > = None;
-                let mut tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut metric_name_filters: Option<Vec<crate::datadogV2::model::AWSMetricNameFilters>> = None;
+                let mut namespace_filters: Option<crate::datadogV2::model::AWSNamespaceFilters> = None;
+                let mut resource_type_tag_filters: Option<Vec<crate::datadogV2::model::AWSResourceTypeTagFilter>> = None;
+                let mut tag_filters: Option<Vec<crate::datadogV2::model::AWSNamespaceTagFilter>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -191,49 +168,43 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                             if v.is_null() {
                                 continue;
                             }
-                            automute_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            automute_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "collect_cloudwatch_alarms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            collect_cloudwatch_alarms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            collect_cloudwatch_alarms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "collect_custom_metrics" => {
                             if v.is_null() {
                                 continue;
                             }
-                            collect_custom_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            collect_custom_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "collect_service_quotas" => {
                             if v.is_null() {
                                 continue;
                             }
-                            collect_service_quotas =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            collect_service_quotas = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_name_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_name_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_name_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "namespace_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            namespace_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            namespace_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _namespace_filters) = namespace_filters {
                                 match _namespace_filters {
                                     crate::datadogV2::model::AWSNamespaceFilters::UnparsedObject(_namespace_filters) => {
@@ -242,26 +213,24 @@ impl<'de> Deserialize<'de> for AWSMetricsConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "resource_type_tag_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_type_tag_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type_tag_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tag_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

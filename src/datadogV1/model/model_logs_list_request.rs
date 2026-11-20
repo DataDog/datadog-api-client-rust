@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object to send with the request to retrieve a list of logs from your Organization.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct LogsListRequest {
     /// The log index on which the request is performed. For multi-index organizations,
-    /// the default is all live indexes. Historical indexes of rehydrated logs must be specified.
+/// the default is all live indexes. Historical indexes of rehydrated logs must be specified.
     #[serde(rename = "index")]
     pub index: Option<String>,
     /// Number of logs return in the response.
@@ -25,10 +25,10 @@ pub struct LogsListRequest {
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::LogsSort>,
     /// Hash identifier of the first log to return in the list, available in a log `id` attribute.
-    /// This parameter is used for the pagination feature.
-    ///
-    /// **Note**: This parameter is ignored if the corresponding log
-    /// is out of the scope of the specified time window.
+/// This parameter is used for the pagination feature.
+///
+/// **Note**: This parameter is ignored if the corresponding log
+/// is out of the scope of the specified time window.
     #[serde(rename = "startAt")]
     pub start_at: Option<String>,
     /// Timeframe to retrieve the log from.
@@ -38,7 +38,7 @@ pub struct LogsListRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsListRequest {
@@ -54,40 +54,39 @@ impl LogsListRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: i32) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV1::model::LogsSort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn start_at(mut self, value: String) -> Self {
         self.start_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsListRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -112,10 +111,7 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                 let mut sort: Option<crate::datadogV1::model::LogsSort> = None;
                 let mut start_at: Option<String> = None;
                 let mut time: Option<crate::datadogV1::model::LogsListRequestTime> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -125,19 +121,19 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
@@ -147,25 +143,25 @@ impl<'de> Deserialize<'de> for LogsListRequest {
                                 match _sort {
                                     crate::datadogV1::model::LogsSort::UnparsedObject(_sort) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "startAt" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let time = time.ok_or_else(|| M::Error::missing_field("time"))?;

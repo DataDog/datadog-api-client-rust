@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DeploymentGateRuleEvaluationType {
-    MONITOR,
-    FAULTY_DEPLOYMENT_DETECTION,
+	MONITOR,
+	FAULTY_DEPLOYMENT_DETECTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,12 +41,8 @@ impl<'de> Deserialize<'de> for DeploymentGateRuleEvaluationType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "monitor" => Self::MONITOR,
-            "faulty_deployment_detection" => Self::FAULTY_DEPLOYMENT_DETECTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"monitor" => Self::MONITOR,"faulty_deployment_detection" => Self::FAULTY_DEPLOYMENT_DETECTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

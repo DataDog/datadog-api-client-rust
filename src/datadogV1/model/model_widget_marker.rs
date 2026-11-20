@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Markers allow you to add visual conditional formatting for your graphs.
 #[non_exhaustive]
@@ -12,9 +12,9 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct WidgetMarker {
     /// Combination of:
-    ///   - A severity error, warning, ok, or info
-    ///   - A line type: dashed, solid, or bold
-    /// In this case of a Distribution widget, this can be set to be `percentile`.
+///   - A severity error, warning, ok, or info
+///   - A line type: dashed, solid, or bold
+/// In this case of a Distribution widget, this can be set to be `percentile`.
     #[serde(rename = "display_type")]
     pub display_type: Option<String>,
     /// Label to display over the marker.
@@ -24,15 +24,15 @@ pub struct WidgetMarker {
     #[serde(rename = "time")]
     pub time: Option<String>,
     /// Value to apply. Can be a single value y = 15 or a range of values 0 < y < 10.
-    /// For Distribution widgets with `display_type` set to `percentile`, this should be
-    /// a numeric percentile value (for example, "90" for P90).
+/// For Distribution widgets with `display_type` set to `percentile`, this should be
+/// a numeric percentile value (for example, "90" for P90).
     #[serde(rename = "value")]
     pub value: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl WidgetMarker {
@@ -46,30 +46,29 @@ impl WidgetMarker {
             _unparsed: false,
         }
     }
-
+    
     pub fn display_type(mut self, value: String) -> Self {
         self.display_type = Some(value);
         self
     }
-
+    
     pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: String) -> Self {
         self.time = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for WidgetMarker {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -92,10 +91,7 @@ impl<'de> Deserialize<'de> for WidgetMarker {
                 let mut label: Option<String> = None;
                 let mut time: Option<String> = None;
                 let mut value: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -104,29 +100,28 @@ impl<'de> Deserialize<'de> for WidgetMarker {
                             if v.is_null() {
                                 continue;
                             }
-                            display_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label" => {
                             if v.is_null() {
                                 continue;
                             }
                             label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
                             }
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;

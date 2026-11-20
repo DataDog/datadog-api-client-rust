@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of an ownership feedback request.
 #[non_exhaustive]
@@ -15,18 +15,10 @@ pub struct OwnershipFeedbackRequestAttributes {
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::OwnershipFeedbackAction,
     /// The corrected owner handle. Required when `action` is `correct`.
-    #[serde(
-        rename = "corrected_owner_handle",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "corrected_owner_handle", default, with = "::serde_with::rust::double_option")]
     pub corrected_owner_handle: Option<Option<String>>,
     /// The corrected owner type. Required when `action` is `correct`.
-    #[serde(
-        rename = "corrected_owner_type",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "corrected_owner_type", default, with = "::serde_with::rust::double_option")]
     pub corrected_owner_type: Option<Option<String>>,
     /// The checksum of the inference being acted upon. Must match the current inference checksum or the request returns a conflict.
     #[serde(rename = "inference_checksum")]
@@ -38,14 +30,11 @@ pub struct OwnershipFeedbackRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OwnershipFeedbackRequestAttributes {
-    pub fn new(
-        action: crate::datadogV2::model::OwnershipFeedbackAction,
-        inference_checksum: String,
-    ) -> OwnershipFeedbackRequestAttributes {
+    pub fn new(action: crate::datadogV2::model::OwnershipFeedbackAction, inference_checksum: String) -> OwnershipFeedbackRequestAttributes {
         OwnershipFeedbackRequestAttributes {
             action,
             corrected_owner_handle: None,
@@ -56,30 +45,29 @@ impl OwnershipFeedbackRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn corrected_owner_handle(mut self, value: Option<String>) -> Self {
         self.corrected_owner_handle = Some(value);
         self
     }
-
+    
     pub fn corrected_owner_type(mut self, value: Option<String>) -> Self {
         self.corrected_owner_type = Some(value);
         self
     }
-
+    
     pub fn reason(mut self, value: Option<String>) -> Self {
         self.reason = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -103,10 +91,7 @@ impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
                 let mut corrected_owner_type: Option<Option<String>> = None;
                 let mut inference_checksum: Option<String> = None;
                 let mut reason: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,32 +106,28 @@ impl<'de> Deserialize<'de> for OwnershipFeedbackRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "corrected_owner_handle" => {
-                            corrected_owner_handle =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            corrected_owner_handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "corrected_owner_type" => {
-                            corrected_owner_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            corrected_owner_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "inference_checksum" => {
-                            inference_checksum =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            inference_checksum = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reason" => {
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
-                let inference_checksum = inference_checksum
-                    .ok_or_else(|| M::Error::missing_field("inference_checksum"))?;
+                let inference_checksum = inference_checksum.ok_or_else(|| M::Error::missing_field("inference_checksum"))?;
 
                 let content = OwnershipFeedbackRequestAttributes {
                     action,

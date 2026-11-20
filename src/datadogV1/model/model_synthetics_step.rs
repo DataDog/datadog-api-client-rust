@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The steps used in a Synthetic browser test.
 #[non_exhaustive]
@@ -45,7 +45,7 @@ pub struct SyntheticsStep {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsStep {
@@ -65,65 +65,63 @@ impl SyntheticsStep {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_failure(mut self, value: bool) -> Self {
         self.allow_failure = Some(value);
         self
     }
-
+    
     pub fn always_execute(mut self, value: bool) -> Self {
         self.always_execute = Some(value);
         self
     }
-
+    
     pub fn exit_if_succeed(mut self, value: bool) -> Self {
         self.exit_if_succeed = Some(value);
         self
     }
-
+    
     pub fn is_critical(mut self, value: bool) -> Self {
         self.is_critical = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
-
+    
     pub fn params(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.params = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn timeout(mut self, value: i64) -> Self {
         self.timeout = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: crate::datadogV1::model::SyntheticsStepType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsStep {
     fn default() -> Self {
@@ -154,15 +152,11 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                 let mut is_critical: Option<bool> = None;
                 let mut name: Option<String> = None;
                 let mut no_screenshot: Option<bool> = None;
-                let mut params: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut params: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut public_id: Option<String> = None;
                 let mut timeout: Option<i64> = None;
                 let mut type_: Option<crate::datadogV1::model::SyntheticsStepType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -171,61 +165,56 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_failure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "alwaysExecute" => {
                             if v.is_null() {
                                 continue;
                             }
-                            always_execute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            always_execute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exitIfSucceed" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exit_if_succeed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exit_if_succeed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "isCritical" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_critical =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "noScreenshot" => {
                             if v.is_null() {
                                 continue;
                             }
-                            no_screenshot =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            no_screenshot = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "params" => {
                             if v.is_null() {
                                 continue;
                             }
                             params = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timeout" => {
                             if v.is_null() {
                                 continue;
                             }
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -233,20 +222,18 @@ impl<'de> Deserialize<'de> for SyntheticsStep {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::SyntheticsStepType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV1::model::SyntheticsStepType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

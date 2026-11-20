@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Configuration object for a Synthetic browser test.
 #[non_exhaustive]
@@ -30,14 +30,11 @@ pub struct SyntheticsBrowserTestConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsBrowserTestConfig {
-    pub fn new(
-        assertions: Vec<crate::datadogV1::model::SyntheticsAssertion>,
-        request: crate::datadogV1::model::SyntheticsTestRequest,
-    ) -> SyntheticsBrowserTestConfig {
+    pub fn new(assertions: Vec<crate::datadogV1::model::SyntheticsAssertion>, request: crate::datadogV1::model::SyntheticsTestRequest) -> SyntheticsBrowserTestConfig {
         SyntheticsBrowserTestConfig {
             assertions,
             config_variables: None,
@@ -48,36 +45,29 @@ impl SyntheticsBrowserTestConfig {
             _unparsed: false,
         }
     }
-
-    pub fn config_variables(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
-    ) -> Self {
+    
+    pub fn config_variables(mut self, value: Vec<crate::datadogV1::model::SyntheticsConfigVariable>) -> Self {
         self.config_variables = Some(value);
         self
     }
-
+    
     pub fn set_cookie(mut self, value: String) -> Self {
         self.set_cookie = Some(value);
         self
     }
-
-    pub fn variables(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>,
-    ) -> Self {
+    
+    pub fn variables(mut self, value: Vec<crate::datadogV1::model::SyntheticsBrowserVariable>) -> Self {
         self.variables = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsBrowserTestConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,53 +86,45 @@ impl<'de> Deserialize<'de> for SyntheticsBrowserTestConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut assertions: Option<Vec<crate::datadogV1::model::SyntheticsAssertion>> =
-                    None;
-                let mut config_variables: Option<
-                    Vec<crate::datadogV1::model::SyntheticsConfigVariable>,
-                > = None;
+                let mut assertions: Option<Vec<crate::datadogV1::model::SyntheticsAssertion>> = None;
+                let mut config_variables: Option<Vec<crate::datadogV1::model::SyntheticsConfigVariable>> = None;
                 let mut request: Option<crate::datadogV1::model::SyntheticsTestRequest> = None;
                 let mut set_cookie: Option<String> = None;
-                let mut variables: Option<Vec<crate::datadogV1::model::SyntheticsBrowserVariable>> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut variables: Option<Vec<crate::datadogV1::model::SyntheticsBrowserVariable>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "assertions" => {
                             assertions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "configVariables" => {
                             if v.is_null() {
                                 continue;
                             }
-                            config_variables =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            config_variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "request" => {
                             request = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "setCookie" => {
                             if v.is_null() {
                                 continue;
                             }
                             set_cookie = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variables" => {
                             if v.is_null() {
                                 continue;
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let assertions = assertions.ok_or_else(|| M::Error::missing_field("assertions"))?;

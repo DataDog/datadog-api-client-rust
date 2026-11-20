@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListNotebooksOptionalParams is a struct for passing parameters to the method [`NotebooksAPI::list_notebooks`]
 #[non_exhaustive]
@@ -91,6 +88,9 @@ impl ListNotebooksOptionalParams {
     }
 }
 
+
+
+
 /// CreateNotebookError is a struct for typed errors of method [`NotebooksAPI::create_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -98,6 +98,7 @@ pub enum CreateNotebookError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteNotebookError is a struct for typed errors of method [`NotebooksAPI::delete_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -107,6 +108,7 @@ pub enum DeleteNotebookError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetNotebookError is a struct for typed errors of method [`NotebooksAPI::get_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -114,6 +116,7 @@ pub enum GetNotebookError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListNotebooksError is a struct for typed errors of method [`NotebooksAPI::list_notebooks`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -123,6 +126,7 @@ pub enum ListNotebooksError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateNotebookError is a struct for typed errors of method [`NotebooksAPI::update_notebook`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -130,6 +134,7 @@ pub enum UpdateNotebookError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Interact with your notebooks through the API to make it easier to organize, find, and
 /// share all of your notebooks with your team and organization. For more information, see the
@@ -155,7 +160,8 @@ impl NotebooksAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -200,57 +206,49 @@ impl NotebooksAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a notebook using the specified options.
-    pub async fn create_notebook(
-        &self,
-        body: crate::datadogV1::model::NotebookCreateRequest,
-    ) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<CreateNotebookError>>
-    {
+    pub async fn create_notebook(&self, body: crate::datadogV1::model::NotebookCreateRequest) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<CreateNotebookError>> {
         match self.create_notebook_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a notebook using the specified options.
-    pub async fn create_notebook_with_http_info(
-        &self,
-        body: crate::datadogV1::model::NotebookCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>,
-        datadog::Error<CreateNotebookError>,
-    > {
+    pub async fn create_notebook_with_http_info(&self, body: crate::datadogV1::model::NotebookCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>, datadog::Error<CreateNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_notebook";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -263,23 +261,16 @@ impl NotebooksAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -287,7 +278,10 @@ impl NotebooksAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -297,7 +291,10 @@ impl NotebooksAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -319,7 +316,7 @@ impl NotebooksAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -336,61 +333,53 @@ impl NotebooksAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateNotebookError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateNotebookError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a notebook using the specified ID.
-    pub async fn delete_notebook(
-        &self,
-        notebook_id: i64,
-    ) -> Result<(), datadog::Error<DeleteNotebookError>> {
+    pub async fn delete_notebook(&self, notebook_id: i64) -> Result<(), datadog::Error<DeleteNotebookError>> {
         match self.delete_notebook_with_http_info(notebook_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a notebook using the specified ID.
-    pub async fn delete_notebook_with_http_info(
-        &self,
-        notebook_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteNotebookError>> {
+    pub async fn delete_notebook_with_http_info(&self, notebook_id: i64) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_notebook";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            notebook_id = notebook_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), notebook_id=
+            notebook_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -403,22 +392,16 @@ impl NotebooksAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -436,60 +419,50 @@ impl NotebooksAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteNotebookError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteNotebookError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a notebook using the specified notebook ID.
-    pub async fn get_notebook(
-        &self,
-        notebook_id: i64,
-    ) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<GetNotebookError>> {
+    pub async fn get_notebook(&self, notebook_id: i64) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<GetNotebookError>> {
         match self.get_notebook_with_http_info(notebook_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a notebook using the specified notebook ID.
-    pub async fn get_notebook_with_http_info(
-        &self,
-        notebook_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>,
-        datadog::Error<GetNotebookError>,
-    > {
+    pub async fn get_notebook_with_http_info(&self, notebook_id: i64) -> Result<datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>, datadog::Error<GetNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.get_notebook";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            notebook_id = notebook_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), notebook_id=
+            notebook_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -502,22 +475,16 @@ impl NotebooksAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -529,58 +496,40 @@ impl NotebooksAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetNotebookError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all notebooks. This can also be used to search for notebooks with a particular `query` in the notebook
-    /// `name` or author `handle`.
-    pub async fn list_notebooks(
-        &self,
-        params: ListNotebooksOptionalParams,
-    ) -> Result<crate::datadogV1::model::NotebooksResponse, datadog::Error<ListNotebooksError>>
-    {
-        match self.list_notebooks_with_http_info(params).await {
+/// `name` or author `handle`.
+    pub async fn list_notebooks(&self, params: ListNotebooksOptionalParams) -> Result<crate::datadogV1::model::NotebooksResponse, datadog::Error<ListNotebooksError>> {
+        match self.list_notebooks_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_notebooks_with_pagination(
-        &self,
-        mut params: ListNotebooksOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV1::model::NotebooksResponseData,
-            datadog::Error<ListNotebooksError>,
-        >,
-    > + '_ {
+        &self, mut params: ListNotebooksOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV1::model::NotebooksResponseData, datadog::Error<ListNotebooksError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.count.is_none() {
@@ -609,18 +558,14 @@ impl NotebooksAPI {
         }
     }
 
+    
     /// Get all notebooks. This can also be used to search for notebooks with a particular `query` in the notebook
-    /// `name` or author `handle`.
-    pub async fn list_notebooks_with_http_info(
-        &self,
-        params: ListNotebooksOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::NotebooksResponse>,
-        datadog::Error<ListNotebooksError>,
-    > {
+/// `name` or author `handle`.
+    pub async fn list_notebooks_with_http_info(&self, params: ListNotebooksOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV1::model::NotebooksResponse>, datadog::Error<ListNotebooksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_notebooks";
 
+        
         // unbox and build optional parameters
         let author_handle = params.author_handle;
         let exclude_author_handle = params.exclude_author_handle;
@@ -637,55 +582,46 @@ impl NotebooksAPI {
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = author_handle {
-            local_req_builder =
-                local_req_builder.query(&[("author_handle", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("author_handle", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = exclude_author_handle {
-            local_req_builder = local_req_builder
-                .query(&[("exclude_author_handle", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("exclude_author_handle", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = start {
-            local_req_builder =
-                local_req_builder.query(&[("start", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("start", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = count {
-            local_req_builder =
-                local_req_builder.query(&[("count", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("count", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_field {
-            local_req_builder =
-                local_req_builder.query(&[("sort_field", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_field", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_dir {
-            local_req_builder =
-                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_dir", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_cells {
-            local_req_builder =
-                local_req_builder.query(&[("include_cells", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_cells", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = is_template {
-            local_req_builder =
-                local_req_builder.query(&[("is_template", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("is_template", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = type_ {
-            local_req_builder =
-                local_req_builder.query(&[("type", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("type", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -698,22 +634,16 @@ impl NotebooksAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -725,76 +655,60 @@ impl NotebooksAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::NotebooksResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::NotebooksResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListNotebooksError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListNotebooksError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a notebook using the specified ID.
-    pub async fn update_notebook(
-        &self,
-        notebook_id: i64,
-        body: crate::datadogV1::model::NotebookUpdateRequest,
-    ) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<UpdateNotebookError>>
-    {
+    pub async fn update_notebook(&self, notebook_id: i64, body: crate::datadogV1::model::NotebookUpdateRequest) -> Result<crate::datadogV1::model::NotebookResponse, datadog::Error<UpdateNotebookError>> {
         match self.update_notebook_with_http_info(notebook_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a notebook using the specified ID.
-    pub async fn update_notebook_with_http_info(
-        &self,
-        notebook_id: i64,
-        body: crate::datadogV1::model::NotebookUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>,
-        datadog::Error<UpdateNotebookError>,
-    > {
+    pub async fn update_notebook_with_http_info(&self, notebook_id: i64, body: crate::datadogV1::model::NotebookUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV1::model::NotebookResponse>, datadog::Error<UpdateNotebookError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.update_notebook";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/notebooks/{notebook_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            notebook_id = notebook_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), notebook_id=
+            notebook_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -807,23 +721,16 @@ impl NotebooksAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -831,7 +738,10 @@ impl NotebooksAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -841,7 +751,10 @@ impl NotebooksAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -863,7 +776,7 @@ impl NotebooksAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -880,25 +793,17 @@ impl NotebooksAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::NotebookResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateNotebookError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateNotebookError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

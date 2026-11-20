@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ApmResourceStatName {
-    ERROR_RATE,
-    ERRORS,
-    HITS,
-    LATENCY_AVG,
-    LATENCY_MAX,
-    LATENCY_P50,
-    LATENCY_P75,
-    LATENCY_P90,
-    LATENCY_P95,
-    LATENCY_P99,
-    LATENCY_DISTRIBUTION,
-    TOTAL_TIME,
+	ERROR_RATE,
+	ERRORS,
+	HITS,
+	LATENCY_AVG,
+	LATENCY_MAX,
+	LATENCY_P50,
+	LATENCY_P75,
+	LATENCY_P90,
+	LATENCY_P95,
+	LATENCY_P99,
+	LATENCY_DISTRIBUTION,
+	TOTAL_TIME,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -60,22 +61,8 @@ impl<'de> Deserialize<'de> for ApmResourceStatName {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "error_rate" => Self::ERROR_RATE,
-            "errors" => Self::ERRORS,
-            "hits" => Self::HITS,
-            "latency_avg" => Self::LATENCY_AVG,
-            "latency_max" => Self::LATENCY_MAX,
-            "latency_p50" => Self::LATENCY_P50,
-            "latency_p75" => Self::LATENCY_P75,
-            "latency_p90" => Self::LATENCY_P90,
-            "latency_p95" => Self::LATENCY_P95,
-            "latency_p99" => Self::LATENCY_P99,
-            "latency_distribution" => Self::LATENCY_DISTRIBUTION,
-            "total_time" => Self::TOTAL_TIME,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"error_rate" => Self::ERROR_RATE,"errors" => Self::ERRORS,"hits" => Self::HITS,"latency_avg" => Self::LATENCY_AVG,"latency_max" => Self::LATENCY_MAX,"latency_p50" => Self::LATENCY_P50,"latency_p75" => Self::LATENCY_P75,"latency_p90" => Self::LATENCY_P90,"latency_p95" => Self::LATENCY_P95,"latency_p99" => Self::LATENCY_P99,"latency_distribution" => Self::LATENCY_DISTRIBUTION,"total_time" => Self::TOTAL_TIME,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

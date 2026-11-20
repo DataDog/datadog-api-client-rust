@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AllocationType {
-    FEATURE_GATE,
-    CANARY,
+	FEATURE_GATE,
+	CANARY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,12 +41,8 @@ impl<'de> Deserialize<'de> for AllocationType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "FEATURE_GATE" => Self::FEATURE_GATE,
-            "CANARY" => Self::CANARY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"FEATURE_GATE" => Self::FEATURE_GATE,"CANARY" => Self::CANARY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

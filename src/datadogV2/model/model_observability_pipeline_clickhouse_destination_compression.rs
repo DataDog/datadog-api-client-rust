@@ -1,7 +1,7 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Compression setting for outbound HTTP requests to ClickHouse.
 /// Can be specified as a shorthand string (`"gzip"` or `"none"`) or as an object
@@ -10,15 +10,9 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ObservabilityPipelineClickhouseDestinationCompression {
-    ObservabilityPipelineClickhouseDestinationCompressionAlgorithm(
-        Box<
-            crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionAlgorithm,
-        >,
-    ),
-    ObservabilityPipelineClickhouseDestinationCompressionObject(
-        Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionObject>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ObservabilityPipelineClickhouseDestinationCompressionAlgorithm(Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionAlgorithm>),
+	ObservabilityPipelineClickhouseDestinationCompressionObject(Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionObject>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineClickhouseDestinationCompression {
@@ -27,7 +21,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineClickhouseDestinationCompres
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionAlgorithm>>(value.clone()) {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionAlgorithm>>(value.clone()) {
 			match *_v {
 				crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionAlgorithm::UnparsedObject(_v) => {},
 				_ => {
@@ -35,16 +29,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineClickhouseDestinationCompres
 				}
 			}
 		}
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionObject>>(value.clone()) {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineClickhouseDestinationCompressionObject>>(value.clone()) {
 			if !_v._unparsed {
                 return Ok(ObservabilityPipelineClickhouseDestinationCompression::ObservabilityPipelineClickhouseDestinationCompressionObject(_v));
             }
         }
-
-        return Ok(
-            ObservabilityPipelineClickhouseDestinationCompression::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(ObservabilityPipelineClickhouseDestinationCompression::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

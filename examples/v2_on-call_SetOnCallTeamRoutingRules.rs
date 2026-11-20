@@ -25,7 +25,8 @@ async fn main() {
     let escalation_policy_data_id = std::env::var("ESCALATION_POLICY_DATA_ID").unwrap();
     let body = TeamRoutingRulesRequest::new().data(
         TeamRoutingRulesRequestData::new(TeamRoutingRulesRequestDataType::TEAM_ROUTING_RULES)
-            .attributes(TeamRoutingRulesRequestDataAttributes::new().rules(vec![
+            .attributes(
+                TeamRoutingRulesRequestDataAttributes::new().rules(vec![
                     TeamRoutingRulesRequestRule::new()
                         .actions(vec![RoutingRuleAction::RoutingRuleEscalationPolicyAction(
                             Box::new(
@@ -96,7 +97,8 @@ async fn main() {
                             ),
                         )])
                         .query("".to_string()),
-                ]))
+                ]),
+            )
             .id(dd_team_data_id.clone()),
     );
     let configuration = datadog::Configuration::new();

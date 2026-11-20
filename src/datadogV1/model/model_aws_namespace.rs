@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AWSNamespace {
-    ELB,
-    APPLICATION_ELB,
-    SQS,
-    RDS,
-    CUSTOM,
-    NETWORK_ELB,
-    LAMBDA,
-    STEP_FUNCTIONS,
+	ELB,
+	APPLICATION_ELB,
+	SQS,
+	RDS,
+	CUSTOM,
+	NETWORK_ELB,
+	LAMBDA,
+	STEP_FUNCTIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for AWSNamespace {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "elb" => Self::ELB,
-            "application_elb" => Self::APPLICATION_ELB,
-            "sqs" => Self::SQS,
-            "rds" => Self::RDS,
-            "custom" => Self::CUSTOM,
-            "network_elb" => Self::NETWORK_ELB,
-            "lambda" => Self::LAMBDA,
-            "step_functions" => Self::STEP_FUNCTIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"elb" => Self::ELB,"application_elb" => Self::APPLICATION_ELB,"sqs" => Self::SQS,"rds" => Self::RDS,"custom" => Self::CUSTOM,"network_elb" => Self::NETWORK_ELB,"lambda" => Self::LAMBDA,"step_functions" => Self::STEP_FUNCTIONS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

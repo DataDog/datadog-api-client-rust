@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListCatalogEntityOptionalParams is a struct for passing parameters to the method [`SoftwareCatalogAPI::list_catalog_entity`]
 #[non_exhaustive]
@@ -193,6 +190,9 @@ impl ListCatalogRelationOptionalParams {
     }
 }
 
+
+
+
 /// DeleteCatalogEntityError is a struct for typed errors of method [`SoftwareCatalogAPI::delete_catalog_entity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -200,6 +200,7 @@ pub enum DeleteCatalogEntityError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteCatalogKindError is a struct for typed errors of method [`SoftwareCatalogAPI::delete_catalog_kind`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -209,6 +210,7 @@ pub enum DeleteCatalogKindError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCatalogEntityError is a struct for typed errors of method [`SoftwareCatalogAPI::list_catalog_entity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -216,6 +218,7 @@ pub enum ListCatalogEntityError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCatalogKindError is a struct for typed errors of method [`SoftwareCatalogAPI::list_catalog_kind`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -225,6 +228,7 @@ pub enum ListCatalogKindError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCatalogRelationError is a struct for typed errors of method [`SoftwareCatalogAPI::list_catalog_relation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -232,6 +236,7 @@ pub enum ListCatalogRelationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PreviewCatalogEntitiesError is a struct for typed errors of method [`SoftwareCatalogAPI::preview_catalog_entities`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -241,6 +246,7 @@ pub enum PreviewCatalogEntitiesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertCatalogEntityError is a struct for typed errors of method [`SoftwareCatalogAPI::upsert_catalog_entity`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -249,6 +255,7 @@ pub enum UpsertCatalogEntityError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertCatalogKindError is a struct for typed errors of method [`SoftwareCatalogAPI::upsert_catalog_kind`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -256,6 +263,7 @@ pub enum UpsertCatalogKindError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// API to create, update, retrieve, and delete Software Catalog entities.
 #[derive(Debug, Clone)]
@@ -279,7 +287,8 @@ impl SoftwareCatalogAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -324,45 +333,44 @@ impl SoftwareCatalogAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete a single entity in Software Catalog.
-    pub async fn delete_catalog_entity(
-        &self,
-        entity_id: String,
-    ) -> Result<(), datadog::Error<DeleteCatalogEntityError>> {
+    pub async fn delete_catalog_entity(&self, entity_id: String) -> Result<(), datadog::Error<DeleteCatalogEntityError>> {
         match self.delete_catalog_entity_with_http_info(entity_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a single entity in Software Catalog.
-    pub async fn delete_catalog_entity_with_http_info(
-        &self,
-        entity_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogEntityError>> {
+    pub async fn delete_catalog_entity_with_http_info(&self, entity_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogEntityError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_catalog_entity";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity/{entity_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            entity_id = datadog::urlencode(entity_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), entity_id=
+            datadog::urlencode(entity_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -375,22 +383,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -408,49 +410,44 @@ impl SoftwareCatalogAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCatalogEntityError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCatalogEntityError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a single kind in Software Catalog.
-    pub async fn delete_catalog_kind(
-        &self,
-        kind_id: String,
-    ) -> Result<(), datadog::Error<DeleteCatalogKindError>> {
+    pub async fn delete_catalog_kind(&self, kind_id: String) -> Result<(), datadog::Error<DeleteCatalogKindError>> {
         match self.delete_catalog_kind_with_http_info(kind_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a single kind in Software Catalog.
-    pub async fn delete_catalog_kind_with_http_info(
-        &self,
-        kind_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogKindError>> {
+    pub async fn delete_catalog_kind_with_http_info(&self, kind_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCatalogKindError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_catalog_kind";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind/{kind_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            kind_id = datadog::urlencode(kind_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), kind_id=
+            datadog::urlencode(kind_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -463,22 +460,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -496,45 +487,30 @@ impl SoftwareCatalogAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCatalogKindError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCatalogKindError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of entities from Software Catalog.
-    pub async fn list_catalog_entity(
-        &self,
-        params: ListCatalogEntityOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListEntityCatalogResponse,
-        datadog::Error<ListCatalogEntityError>,
-    > {
-        match self.list_catalog_entity_with_http_info(params).await {
+    pub async fn list_catalog_entity(&self, params: ListCatalogEntityOptionalParams) -> Result<crate::datadogV2::model::ListEntityCatalogResponse, datadog::Error<ListCatalogEntityError>> {
+        match self.list_catalog_entity_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_catalog_entity_with_pagination(
-        &self,
-        mut params: ListCatalogEntityOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::EntityData, datadog::Error<ListCatalogEntityError>>,
-    > + '_ {
+        &self, mut params: ListCatalogEntityOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::EntityData, datadog::Error<ListCatalogEntityError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_limit.is_none() {
@@ -563,17 +539,13 @@ impl SoftwareCatalogAPI {
         }
     }
 
+    
     /// Get a list of entities from Software Catalog.
-    pub async fn list_catalog_entity_with_http_info(
-        &self,
-        params: ListCatalogEntityOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListEntityCatalogResponse>,
-        datadog::Error<ListCatalogEntityError>,
-    > {
+    pub async fn list_catalog_entity_with_http_info(&self, params: ListCatalogEntityOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListEntityCatalogResponse>, datadog::Error<ListCatalogEntityError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_catalog_entity";
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -591,59 +563,49 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_ref {
-            local_req_builder =
-                local_req_builder.query(&[("filter[ref]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[ref]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_kind {
-            local_req_builder =
-                local_req_builder.query(&[("filter[kind]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[kind]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_owner {
-            local_req_builder =
-                local_req_builder.query(&[("filter[owner]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[owner]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_relation_type {
-            local_req_builder = local_req_builder
-                .query(&[("filter[relation][type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[relation][type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_exclude_snapshot {
-            local_req_builder = local_req_builder
-                .query(&[("filter[exclude_snapshot]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[exclude_snapshot]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_discovered {
-            local_req_builder =
-                local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -656,22 +618,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -683,58 +639,39 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListEntityCatalogResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListEntityCatalogResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCatalogEntityError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCatalogEntityError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of entity kinds from Software Catalog.
-    pub async fn list_catalog_kind(
-        &self,
-        params: ListCatalogKindOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListKindCatalogResponse,
-        datadog::Error<ListCatalogKindError>,
-    > {
-        match self.list_catalog_kind_with_http_info(params).await {
+    pub async fn list_catalog_kind(&self, params: ListCatalogKindOptionalParams) -> Result<crate::datadogV2::model::ListKindCatalogResponse, datadog::Error<ListCatalogKindError>> {
+        match self.list_catalog_kind_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_catalog_kind_with_pagination(
-        &self,
-        mut params: ListCatalogKindOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::KindData, datadog::Error<ListCatalogKindError>>,
-    > + '_ {
+        &self, mut params: ListCatalogKindOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::KindData, datadog::Error<ListCatalogKindError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_limit.is_none() {
@@ -763,17 +700,13 @@ impl SoftwareCatalogAPI {
         }
     }
 
+    
     /// Get a list of entity kinds from Software Catalog.
-    pub async fn list_catalog_kind_with_http_info(
-        &self,
-        params: ListCatalogKindOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListKindCatalogResponse>,
-        datadog::Error<ListCatalogKindError>,
-    > {
+    pub async fn list_catalog_kind_with_http_info(&self, params: ListCatalogKindOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListKindCatalogResponse>, datadog::Error<ListCatalogKindError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_catalog_kind";
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -784,31 +717,28 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[name]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -821,22 +751,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -848,61 +772,39 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListKindCatalogResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListKindCatalogResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCatalogKindError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCatalogKindError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of entity relations from Software Catalog.
-    pub async fn list_catalog_relation(
-        &self,
-        params: ListCatalogRelationOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListRelationCatalogResponse,
-        datadog::Error<ListCatalogRelationError>,
-    > {
-        match self.list_catalog_relation_with_http_info(params).await {
+    pub async fn list_catalog_relation(&self, params: ListCatalogRelationOptionalParams) -> Result<crate::datadogV2::model::ListRelationCatalogResponse, datadog::Error<ListCatalogRelationError>> {
+        match self.list_catalog_relation_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_catalog_relation_with_pagination(
-        &self,
-        mut params: ListCatalogRelationOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::RelationResponse,
-            datadog::Error<ListCatalogRelationError>,
-        >,
-    > + '_ {
+        &self, mut params: ListCatalogRelationOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::RelationResponse, datadog::Error<ListCatalogRelationError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_limit.is_none() {
@@ -931,17 +833,13 @@ impl SoftwareCatalogAPI {
         }
     }
 
+    
     /// Get a list of entity relations from Software Catalog.
-    pub async fn list_catalog_relation_with_http_info(
-        &self,
-        params: ListCatalogRelationOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListRelationCatalogResponse>,
-        datadog::Error<ListCatalogRelationError>,
-    > {
+    pub async fn list_catalog_relation_with_http_info(&self, params: ListCatalogRelationOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListRelationCatalogResponse>, datadog::Error<ListCatalogRelationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_catalog_relation";
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -955,43 +853,37 @@ impl SoftwareCatalogAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/relation",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_type {
-            local_req_builder =
-                local_req_builder.query(&[("filter[type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_from_ref {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from_ref]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[from_ref]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_to_ref {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to_ref]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[to_ref]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_discovered {
-            local_req_builder =
-                local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("includeDiscovered", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1004,22 +896,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1031,71 +917,55 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListRelationCatalogResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListRelationCatalogResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCatalogRelationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCatalogRelationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
-    pub async fn preview_catalog_entities(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::EntityResponseArray,
-        datadog::Error<PreviewCatalogEntitiesError>,
-    > {
+    
+    pub async fn preview_catalog_entities(&self) -> Result<crate::datadogV2::model::EntityResponseArray, datadog::Error<PreviewCatalogEntitiesError>> {
         match self.preview_catalog_entities_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
-    pub async fn preview_catalog_entities_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EntityResponseArray>,
-        datadog::Error<PreviewCatalogEntitiesError>,
-    > {
+    
+    pub async fn preview_catalog_entities_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::EntityResponseArray>, datadog::Error<PreviewCatalogEntitiesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.preview_catalog_entities";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity/preview",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1108,22 +978,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1135,76 +999,58 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EntityResponseArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EntityResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PreviewCatalogEntitiesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PreviewCatalogEntitiesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update entities in Software Catalog.
-    pub async fn upsert_catalog_entity(
-        &self,
-        body: crate::datadogV2::model::UpsertCatalogEntityRequest,
-    ) -> Result<
-        crate::datadogV2::model::UpsertCatalogEntityResponse,
-        datadog::Error<UpsertCatalogEntityError>,
-    > {
+    pub async fn upsert_catalog_entity(&self, body: crate::datadogV2::model::UpsertCatalogEntityRequest) -> Result<crate::datadogV2::model::UpsertCatalogEntityResponse, datadog::Error<UpsertCatalogEntityError>> {
         match self.upsert_catalog_entity_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update entities in Software Catalog.
-    pub async fn upsert_catalog_entity_with_http_info(
-        &self,
-        body: crate::datadogV2::model::UpsertCatalogEntityRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpsertCatalogEntityResponse>,
-        datadog::Error<UpsertCatalogEntityError>,
-    > {
+    pub async fn upsert_catalog_entity_with_http_info(&self, body: crate::datadogV2::model::UpsertCatalogEntityRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpsertCatalogEntityResponse>, datadog::Error<UpsertCatalogEntityError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_catalog_entity";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/entity",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1217,23 +1063,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1241,7 +1080,10 @@ impl SoftwareCatalogAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1251,7 +1093,10 @@ impl SoftwareCatalogAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1273,7 +1118,7 @@ impl SoftwareCatalogAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1290,76 +1135,58 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpsertCatalogEntityResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpsertCatalogEntityResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertCatalogEntityError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertCatalogEntityError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update kinds in Software Catalog.
-    pub async fn upsert_catalog_kind(
-        &self,
-        body: crate::datadogV2::model::UpsertCatalogKindRequest,
-    ) -> Result<
-        crate::datadogV2::model::UpsertCatalogKindResponse,
-        datadog::Error<UpsertCatalogKindError>,
-    > {
+    pub async fn upsert_catalog_kind(&self, body: crate::datadogV2::model::UpsertCatalogKindRequest) -> Result<crate::datadogV2::model::UpsertCatalogKindResponse, datadog::Error<UpsertCatalogKindError>> {
         match self.upsert_catalog_kind_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update kinds in Software Catalog.
-    pub async fn upsert_catalog_kind_with_http_info(
-        &self,
-        body: crate::datadogV2::model::UpsertCatalogKindRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpsertCatalogKindResponse>,
-        datadog::Error<UpsertCatalogKindError>,
-    > {
+    pub async fn upsert_catalog_kind_with_http_info(&self, body: crate::datadogV2::model::UpsertCatalogKindRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpsertCatalogKindResponse>, datadog::Error<UpsertCatalogKindError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_catalog_kind";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/catalog/kind",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1372,23 +1199,16 @@ impl SoftwareCatalogAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1396,7 +1216,10 @@ impl SoftwareCatalogAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1406,7 +1229,10 @@ impl SoftwareCatalogAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1428,7 +1254,7 @@ impl SoftwareCatalogAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1445,26 +1271,17 @@ impl SoftwareCatalogAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpsertCatalogKindResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpsertCatalogKindResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertCatalogKindError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertCatalogKindError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

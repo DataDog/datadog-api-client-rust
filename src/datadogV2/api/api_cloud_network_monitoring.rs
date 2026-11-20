@@ -1,9 +1,9 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// GetAggregatedConnectionsOptionalParams is a struct for passing parameters to the method [`CloudNetworkMonitoringAPI::get_aggregated_connections`]
 #[non_exhaustive]
@@ -107,6 +107,9 @@ impl GetAggregatedDnsOptionalParams {
     }
 }
 
+
+
+
 /// GetAggregatedConnectionsError is a struct for typed errors of method [`CloudNetworkMonitoringAPI::get_aggregated_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -115,6 +118,7 @@ pub enum GetAggregatedConnectionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAggregatedDnsError is a struct for typed errors of method [`CloudNetworkMonitoringAPI::get_aggregated_dns`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -122,6 +126,7 @@ pub enum GetAggregatedDnsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Cloud Network Monitoring API allows you to fetch aggregated connections and DNS traffic with their attributes. See the [Cloud Network Monitoring page](<https://docs.datadoghq.com/network_monitoring/cloud_network_monitoring/>) and [DNS Monitoring page](<https://docs.datadoghq.com/network_monitoring/dns/>) for more information.
 #[derive(Debug, Clone)]
@@ -145,7 +150,8 @@ impl CloudNetworkMonitoringAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -190,46 +196,33 @@ impl CloudNetworkMonitoringAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get all aggregated connections.
-    pub async fn get_aggregated_connections(
-        &self,
-        params: GetAggregatedConnectionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::SingleAggregatedConnectionResponseArray,
-        datadog::Error<GetAggregatedConnectionsError>,
-    > {
-        match self.get_aggregated_connections_with_http_info(params).await {
+    pub async fn get_aggregated_connections(&self, params: GetAggregatedConnectionsOptionalParams) -> Result<crate::datadogV2::model::SingleAggregatedConnectionResponseArray, datadog::Error<GetAggregatedConnectionsError>> {
+        match self.get_aggregated_connections_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all aggregated connections.
-    pub async fn get_aggregated_connections_with_http_info(
-        &self,
-        params: GetAggregatedConnectionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SingleAggregatedConnectionResponseArray>,
-        datadog::Error<GetAggregatedConnectionsError>,
-    > {
+    pub async fn get_aggregated_connections_with_http_info(&self, params: GetAggregatedConnectionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SingleAggregatedConnectionResponseArray>, datadog::Error<GetAggregatedConnectionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aggregated_connections";
 
+        
         // unbox and build optional parameters
         let from = params.from;
         let to = params.to;
@@ -242,38 +235,34 @@ impl CloudNetworkMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/network/connections/aggregate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = from {
-            local_req_builder =
-                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("from", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = to {
-            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = group_by {
-            local_req_builder =
-                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("group_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = tags {
-            local_req_builder =
-                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("tags", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -286,22 +275,16 @@ impl CloudNetworkMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -313,64 +296,42 @@ impl CloudNetworkMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::SingleAggregatedConnectionResponseArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SingleAggregatedConnectionResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAggregatedConnectionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAggregatedConnectionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all aggregated DNS traffic.
-    pub async fn get_aggregated_dns(
-        &self,
-        params: GetAggregatedDnsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::SingleAggregatedDnsResponseArray,
-        datadog::Error<GetAggregatedDnsError>,
-    > {
-        match self.get_aggregated_dns_with_http_info(params).await {
+    pub async fn get_aggregated_dns(&self, params: GetAggregatedDnsOptionalParams) -> Result<crate::datadogV2::model::SingleAggregatedDnsResponseArray, datadog::Error<GetAggregatedDnsError>> {
+        match self.get_aggregated_dns_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all aggregated DNS traffic.
-    pub async fn get_aggregated_dns_with_http_info(
-        &self,
-        params: GetAggregatedDnsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::SingleAggregatedDnsResponseArray>,
-        datadog::Error<GetAggregatedDnsError>,
-    > {
+    pub async fn get_aggregated_dns_with_http_info(&self, params: GetAggregatedDnsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::SingleAggregatedDnsResponseArray>, datadog::Error<GetAggregatedDnsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aggregated_dns";
 
+        
         // unbox and build optional parameters
         let from = params.from;
         let to = params.to;
@@ -383,38 +344,34 @@ impl CloudNetworkMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/network/dns/aggregate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = from {
-            local_req_builder =
-                local_req_builder.query(&[("from", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("from", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = to {
-            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("to", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = group_by {
-            local_req_builder =
-                local_req_builder.query(&[("group_by", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("group_by", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = tags {
-            local_req_builder =
-                local_req_builder.query(&[("tags", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("tags", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -427,22 +384,16 @@ impl CloudNetworkMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -454,26 +405,17 @@ impl CloudNetworkMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::SingleAggregatedDnsResponseArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::SingleAggregatedDnsResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAggregatedDnsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAggregatedDnsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Due date synchronization configuration for Jira integration.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct IntegrationJiraSyncDueDate {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IntegrationJiraSyncDueDate {
@@ -33,25 +33,23 @@ impl IntegrationJiraSyncDueDate {
             _unparsed: false,
         }
     }
-
+    
     pub fn jira_field_id(mut self, value: String) -> Self {
         self.jira_field_id = Some(value);
         self
     }
-
+    
     pub fn sync_type(mut self, value: String) -> Self {
         self.sync_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IntegrationJiraSyncDueDate {
     fn default() -> Self {
@@ -78,10 +76,7 @@ impl<'de> Deserialize<'de> for IntegrationJiraSyncDueDate {
             {
                 let mut jira_field_id: Option<String> = None;
                 let mut sync_type: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -90,20 +85,19 @@ impl<'de> Deserialize<'de> for IntegrationJiraSyncDueDate {
                             if v.is_null() {
                                 continue;
                             }
-                            jira_field_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            jira_field_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sync_type" => {
                             if v.is_null() {
                                 continue;
                             }
                             sync_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

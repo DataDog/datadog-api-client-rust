@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `InputSchemaParameters` object.
 #[non_exhaustive]
@@ -36,14 +36,11 @@ pub struct InputSchemaParameters {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl InputSchemaParameters {
-    pub fn new(
-        name: String,
-        type_: crate::datadogV2::model::InputSchemaParametersType,
-    ) -> InputSchemaParameters {
+    pub fn new(name: String, type_: crate::datadogV2::model::InputSchemaParametersType) -> InputSchemaParameters {
         InputSchemaParameters {
             allow_extra_values: None,
             allowed_values: None,
@@ -56,40 +53,39 @@ impl InputSchemaParameters {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_extra_values(mut self, value: bool) -> Self {
         self.allow_extra_values = Some(value);
         self
     }
-
+    
     pub fn allowed_values(mut self, value: serde_json::Value) -> Self {
         self.allowed_values = Some(value);
         self
     }
-
+    
     pub fn default_value(mut self, value: serde_json::Value) -> Self {
         self.default_value = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for InputSchemaParameters {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -115,10 +111,7 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
                 let mut label: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::InputSchemaParametersType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -127,39 +120,35 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_extra_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_extra_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "allowedValues" => {
                             if v.is_null() {
                                 continue;
                             }
-                            allowed_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allowed_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "defaultValue" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "label" => {
                             if v.is_null() {
                                 continue;
                             }
                             label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -170,12 +159,12 @@ impl<'de> Deserialize<'de> for InputSchemaParameters {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

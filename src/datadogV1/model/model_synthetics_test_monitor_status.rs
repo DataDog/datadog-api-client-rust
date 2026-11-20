@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsTestMonitorStatus {
-    UNTRIGGERED,
-    TRIGGERED,
-    NO_DATA,
+	UNTRIGGERED,
+	TRIGGERED,
+	NO_DATA,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -33,13 +34,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestMonitorStatus {
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
-        Ok(match s {
-            0 => Self::UNTRIGGERED,
-            1 => Self::TRIGGERED,
-            2 => Self::NO_DATA,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {0 => Self::UNTRIGGERED,1 => Self::TRIGGERED,2 => Self::NO_DATA,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

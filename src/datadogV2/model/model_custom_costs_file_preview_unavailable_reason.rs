@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CustomCostsFilePreviewUnavailableReason {
-    CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW,
+	CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for CustomCostsFilePreviewUnavailableReason {
     fn to_string(&self) -> String {
         match self {
-            Self::CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW => {
-                String::from("CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW")
-            }
+            Self::CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW => String::from("CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,13 +39,8 @@ impl<'de> Deserialize<'de> for CustomCostsFilePreviewUnavailableReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW" => {
-                Self::CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW" => Self::CHARGE_PERIOD_OUTSIDE_RETENTION_WINDOW,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

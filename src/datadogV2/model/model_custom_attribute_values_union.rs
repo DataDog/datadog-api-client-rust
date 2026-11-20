@@ -1,18 +1,18 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// The value of a custom attribute. The accepted format depends on the attribute's type and whether it accepts multiple values.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum CustomAttributeValuesUnion {
-    CustomAttributeStringValue(String),
-    CustomAttributeMultiStringValue(Vec<String>),
-    CustomAttributeNumberValue(f64),
-    CustomAttributeMultiNumberValue(Vec<f64>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	CustomAttributeStringValue(String),
+	CustomAttributeMultiStringValue(Vec<String>),
+	CustomAttributeNumberValue(f64),
+	CustomAttributeMultiNumberValue(Vec<f64>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CustomAttributeValuesUnion {
@@ -21,25 +21,19 @@ impl<'de> Deserialize<'de> for CustomAttributeValuesUnion {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
-            return Ok(CustomAttributeValuesUnion::CustomAttributeStringValue(_v));
-        }
-        if let Ok(_v) = serde_json::from_value::<Vec<String>>(value.clone()) {
-            return Ok(CustomAttributeValuesUnion::CustomAttributeMultiStringValue(
-                _v,
-            ));
-        }
-        if let Ok(_v) = serde_json::from_value::<f64>(value.clone()) {
-            return Ok(CustomAttributeValuesUnion::CustomAttributeNumberValue(_v));
-        }
-        if let Ok(_v) = serde_json::from_value::<Vec<f64>>(value.clone()) {
-            return Ok(CustomAttributeValuesUnion::CustomAttributeMultiNumberValue(
-                _v,
-            ));
-        }
-
-        return Ok(CustomAttributeValuesUnion::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+		if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
+			return Ok(CustomAttributeValuesUnion::CustomAttributeStringValue(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<Vec<String>>(value.clone()) {
+			return Ok(CustomAttributeValuesUnion::CustomAttributeMultiStringValue(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<f64>(value.clone()) {
+			return Ok(CustomAttributeValuesUnion::CustomAttributeNumberValue(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<Vec<f64>>(value.clone()) {
+			return Ok(CustomAttributeValuesUnion::CustomAttributeMultiNumberValue(_v))
+		}
+	
+        return Ok(CustomAttributeValuesUnion::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

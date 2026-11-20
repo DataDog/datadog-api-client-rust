@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for a container. For CPU or memory metrics, use its full `container_id` as
 /// `container_id:<container_id>` in `tag_filters` with the `container` data source.
@@ -22,21 +22,13 @@ pub struct ContainerAttributes {
     #[serde(rename = "host")]
     pub host: Option<String>,
     /// Digest of the compressed image manifest.
-    #[serde(
-        rename = "image_digest",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "image_digest", default, with = "::serde_with::rust::double_option")]
     pub image_digest: Option<Option<String>>,
     /// Name of the associated container image.
     #[serde(rename = "image_name")]
     pub image_name: Option<String>,
     /// List of image tags associated with the container image.
-    #[serde(
-        rename = "image_tags",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "image_tags", default, with = "::serde_with::rust::double_option")]
     pub image_tags: Option<Option<Vec<String>>>,
     /// Name of the container.
     #[serde(rename = "name")]
@@ -54,7 +46,7 @@ pub struct ContainerAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ContainerAttributes {
@@ -74,65 +66,63 @@ impl ContainerAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn container_id(mut self, value: String) -> Self {
         self.container_id = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
-
+    
     pub fn image_digest(mut self, value: Option<String>) -> Self {
         self.image_digest = Some(value);
         self
     }
-
+    
     pub fn image_name(mut self, value: String) -> Self {
         self.image_name = Some(value);
         self
     }
-
+    
     pub fn image_tags(mut self, value: Option<Vec<String>>) -> Self {
         self.image_tags = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn started_at(mut self, value: String) -> Self {
         self.started_at = Some(value);
         self
     }
-
+    
     pub fn state(mut self, value: String) -> Self {
         self.state = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ContainerAttributes {
     fn default() -> Self {
@@ -167,10 +157,7 @@ impl<'de> Deserialize<'de> for ContainerAttributes {
                 let mut started_at: Option<String> = None;
                 let mut state: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -179,63 +166,61 @@ impl<'de> Deserialize<'de> for ContainerAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            container_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "host" => {
                             if v.is_null() {
                                 continue;
                             }
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "image_digest" => {
-                            image_digest =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            image_digest = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "image_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             image_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "image_tags" => {
                             image_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "started_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "state" => {
                             if v.is_null() {
                                 continue;
                             }
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

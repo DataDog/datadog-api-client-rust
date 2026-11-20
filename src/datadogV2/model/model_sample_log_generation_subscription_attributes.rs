@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes describing a sample log generation subscription.
 #[non_exhaustive]
@@ -30,17 +30,11 @@ pub struct SampleLogGenerationSubscriptionAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SampleLogGenerationSubscriptionAttributes {
-    pub fn new(
-        content_pack_id: String,
-        created_at: chrono::DateTime<chrono::Utc>,
-        expires_at: chrono::DateTime<chrono::Utc>,
-        is_active: bool,
-        status: crate::datadogV2::model::SampleLogGenerationSubscriptionStatus,
-    ) -> SampleLogGenerationSubscriptionAttributes {
+    pub fn new(content_pack_id: String, created_at: chrono::DateTime<chrono::Utc>, expires_at: chrono::DateTime<chrono::Utc>, is_active: bool, status: crate::datadogV2::model::SampleLogGenerationSubscriptionStatus) -> SampleLogGenerationSubscriptionAttributes {
         SampleLogGenerationSubscriptionAttributes {
             content_pack_id,
             created_at,
@@ -51,15 +45,14 @@ impl SampleLogGenerationSubscriptionAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SampleLogGenerationSubscriptionAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -82,30 +75,24 @@ impl<'de> Deserialize<'de> for SampleLogGenerationSubscriptionAttributes {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut expires_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut is_active: Option<bool> = None;
-                let mut status: Option<
-                    crate::datadogV2::model::SampleLogGenerationSubscriptionStatus,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut status: Option<crate::datadogV2::model::SampleLogGenerationSubscriptionStatus> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "content_pack_id" => {
-                            content_pack_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            content_pack_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "expires_at" => {
                             expires_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_active" => {
                             is_active = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -116,16 +103,15 @@ impl<'de> Deserialize<'de> for SampleLogGenerationSubscriptionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let content_pack_id =
-                    content_pack_id.ok_or_else(|| M::Error::missing_field("content_pack_id"))?;
+                let content_pack_id = content_pack_id.ok_or_else(|| M::Error::missing_field("content_pack_id"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let expires_at = expires_at.ok_or_else(|| M::Error::missing_field("expires_at"))?;
                 let is_active = is_active.ok_or_else(|| M::Error::missing_field("is_active"))?;

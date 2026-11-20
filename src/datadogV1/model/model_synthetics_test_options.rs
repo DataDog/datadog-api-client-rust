@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing the extra options for a Synthetic test.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SyntheticsTestOptions {
     /// For SSL tests, whether or not the test should allow self signed
-    /// certificates.
+/// certificates.
     #[serde(rename = "accept_self_signed")]
     pub accept_self_signed: Option<bool>,
     /// Allows loading insecure content for an HTTP request in an API test.
@@ -49,7 +49,7 @@ pub struct SyntheticsTestOptions {
     #[serde(rename = "enableProfiling")]
     pub enable_profiling: Option<bool>,
     /// Enable security testing for browser tests. Security testing is not available anymore. This field is deprecated and won't be used.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "enableSecurityTesting")]
     pub enable_security_testing: Option<bool>,
     /// For API HTTP test, whether or not the test should follow redirects.
@@ -71,14 +71,14 @@ pub struct SyntheticsTestOptions {
     #[serde(rename = "min_failure_duration")]
     pub min_failure_duration: Option<i64>,
     /// Minimum number of locations in failure required to trigger
-    /// an alert.
+/// an alert.
     #[serde(rename = "min_location_failed")]
     pub min_location_failed: Option<i64>,
     /// The monitor name is used for the alert title as well as for all monitor dashboard widgets and SLOs.
     #[serde(rename = "monitor_name")]
     pub monitor_name: Option<String>,
     /// Object containing the options for a Synthetic test as a monitor
-    /// (for example, renotification).
+/// (for example, renotification).
     #[serde(rename = "monitor_options")]
     pub monitor_options: Option<crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions>,
     /// Integer from 1 (high) to 5 (low) indicating alert severity.
@@ -88,23 +88,23 @@ pub struct SyntheticsTestOptions {
     #[serde(rename = "noScreenshot")]
     pub no_screenshot: Option<bool>,
     /// A list of role identifiers that can be pulled from the Roles API, for restricting read and write access. This field is deprecated. Use the restriction policies API to manage permissions.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "restricted_roles")]
     pub restricted_roles: Option<Vec<String>>,
     /// Object describing the retry strategy to apply to a Synthetic test.
     #[serde(rename = "retry")]
     pub retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry>,
     /// The RUM data collection settings for the Synthetic browser test.
-    /// **Note:** There are 3 ways to format RUM settings:
-    ///
-    /// `{ isEnabled: false }`
-    /// RUM data is not collected.
-    ///
-    /// `{ isEnabled: true }`
-    /// RUM data is collected from the Synthetic test's default application.
-    ///
-    /// `{ isEnabled: true, applicationId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", clientTokenId: 12345 }`
-    /// RUM data is collected using the specified application.
+/// **Note:** There are 3 ways to format RUM settings:
+///
+/// `{ isEnabled: false }`
+/// RUM data is not collected.
+///
+/// `{ isEnabled: true }`
+/// RUM data is collected from the Synthetic test's default application.
+///
+/// `{ isEnabled: true, applicationId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", clientTokenId: 12345 }`
+/// RUM data is collected using the specified application.
     #[serde(rename = "rumSettings")]
     pub rum_settings: Option<crate::datadogV1::model::SyntheticsBrowserTestRumSettings>,
     /// Object containing timeframes and timezone used for advanced scheduling.
@@ -117,7 +117,7 @@ pub struct SyntheticsTestOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestOptions {
@@ -157,201 +157,187 @@ impl SyntheticsTestOptions {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn accept_self_signed(mut self, value: bool) -> Self {
         self.accept_self_signed = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn bits_ai_auto_investigate(mut self, value: bool) -> Self {
         self.bits_ai_auto_investigate = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn blocked_request_patterns(mut self, value: Vec<String>) -> Self {
         self.blocked_request_patterns = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn capture_network_payloads(mut self, value: bool) -> Self {
         self.capture_network_payloads = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn check_certificate_revocation(mut self, value: bool) -> Self {
         self.check_certificate_revocation = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci(mut self, value: crate::datadogV1::model::SyntheticsTestCiOptions) -> Self {
         self.ci = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn device_ids(mut self, value: Vec<String>) -> Self {
         self.device_ids = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn disable_aia_intermediate_fetching(mut self, value: bool) -> Self {
         self.disable_aia_intermediate_fetching = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn disable_cors(mut self, value: bool) -> Self {
         self.disable_cors = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn disable_csp(mut self, value: bool) -> Self {
         self.disable_csp = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn enable_profiling(mut self, value: bool) -> Self {
         self.enable_profiling = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn enable_security_testing(mut self, value: bool) -> Self {
         self.enable_security_testing = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn http_version(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
-    ) -> Self {
+    pub fn http_version(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion) -> Self {
         self.http_version = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ignore_server_certificate_error(mut self, value: bool) -> Self {
         self.ignore_server_certificate_error = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ignore_certificate_validation(mut self, value: bool) -> Self {
         self.ignore_certificate_validation = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn initial_navigation_timeout(mut self, value: i64) -> Self {
         self.initial_navigation_timeout = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn min_failure_duration(mut self, value: i64) -> Self {
         self.min_failure_duration = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn min_location_failed(mut self, value: i64) -> Self {
         self.min_location_failed = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn monitor_options(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
-    ) -> Self {
+    pub fn monitor_options(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions) -> Self {
         self.monitor_options = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn monitor_priority(mut self, value: i32) -> Self {
         self.monitor_priority = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn no_screenshot(mut self, value: bool) -> Self {
         self.no_screenshot = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn restricted_roles(mut self, value: Vec<String>) -> Self {
         self.restricted_roles = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn retry(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsRetry) -> Self {
         self.retry = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn rum_settings(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsBrowserTestRumSettings,
-    ) -> Self {
+    pub fn rum_settings(mut self, value: crate::datadogV1::model::SyntheticsBrowserTestRumSettings) -> Self {
         self.rum_settings = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn scheduling(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestOptionsScheduling,
-    ) -> Self {
+    pub fn scheduling(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsScheduling) -> Self {
         self.scheduling = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn tick_every(mut self, value: i64) -> Self {
         self.tick_every = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestOptions {
     fn default() -> Self {
@@ -390,33 +376,22 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                 let mut enable_profiling: Option<bool> = None;
                 let mut enable_security_testing: Option<bool> = None;
                 let mut follow_redirects: Option<bool> = None;
-                let mut http_version: Option<
-                    crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
-                > = None;
+                let mut http_version: Option<crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion> = None;
                 let mut ignore_server_certificate_error: Option<bool> = None;
                 let mut ignore_certificate_validation: Option<bool> = None;
                 let mut initial_navigation_timeout: Option<i64> = None;
                 let mut min_failure_duration: Option<i64> = None;
                 let mut min_location_failed: Option<i64> = None;
                 let mut monitor_name: Option<String> = None;
-                let mut monitor_options: Option<
-                    crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions,
-                > = None;
+                let mut monitor_options: Option<crate::datadogV1::model::SyntheticsTestOptionsMonitorOptions> = None;
                 let mut monitor_priority: Option<i32> = None;
                 let mut no_screenshot: Option<bool> = None;
                 let mut restricted_roles: Option<Vec<String>> = None;
                 let mut retry: Option<crate::datadogV1::model::SyntheticsTestOptionsRetry> = None;
-                let mut rum_settings: Option<
-                    crate::datadogV1::model::SyntheticsBrowserTestRumSettings,
-                > = None;
-                let mut scheduling: Option<
-                    crate::datadogV1::model::SyntheticsTestOptionsScheduling,
-                > = None;
+                let mut rum_settings: Option<crate::datadogV1::model::SyntheticsBrowserTestRumSettings> = None;
+                let mut scheduling: Option<crate::datadogV1::model::SyntheticsTestOptionsScheduling> = None;
                 let mut tick_every: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -425,104 +400,91 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            accept_self_signed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            accept_self_signed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "allow_insecure" => {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_insecure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_insecure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bits_ai_auto_investigate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bits_ai_auto_investigate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bits_ai_auto_investigate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "blockedRequestPatterns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            blocked_request_patterns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            blocked_request_patterns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "captureNetworkPayloads" => {
                             if v.is_null() {
                                 continue;
                             }
-                            capture_network_payloads =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            capture_network_payloads = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "checkCertificateRevocation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            check_certificate_revocation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            check_certificate_revocation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci" => {
                             if v.is_null() {
                                 continue;
                             }
                             ci = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "device_ids" => {
                             if v.is_null() {
                                 continue;
                             }
                             device_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "disableAiaIntermediateFetching" => {
                             if v.is_null() {
                                 continue;
                             }
-                            disable_aia_intermediate_fetching =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disable_aia_intermediate_fetching = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "disableCors" => {
                             if v.is_null() {
                                 continue;
                             }
-                            disable_cors =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disable_cors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "disableCsp" => {
                             if v.is_null() {
                                 continue;
                             }
-                            disable_csp =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disable_csp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enableProfiling" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enable_profiling =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enable_profiling = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enableSecurityTesting" => {
                             if v.is_null() {
                                 continue;
                             }
-                            enable_security_testing =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enable_security_testing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "follow_redirects" => {
                             if v.is_null() {
                                 continue;
                             }
-                            follow_redirects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            follow_redirects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "httpVersion" => {
                             if v.is_null() {
                                 continue;
                             }
-                            http_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            http_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _http_version) = http_version {
                                 match _http_version {
                                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion::UnparsedObject(_http_version) => {
@@ -531,107 +493,96 @@ impl<'de> Deserialize<'de> for SyntheticsTestOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "ignoreServerCertificateError" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ignore_server_certificate_error =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ignore_server_certificate_error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ignore_certificate_validation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ignore_certificate_validation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ignore_certificate_validation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "initialNavigationTimeout" => {
                             if v.is_null() {
                                 continue;
                             }
-                            initial_navigation_timeout =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            initial_navigation_timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "min_failure_duration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            min_failure_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            min_failure_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "min_location_failed" => {
                             if v.is_null() {
                                 continue;
                             }
-                            min_location_failed =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            min_location_failed = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitor_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitor_options" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitor_priority" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_priority =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "noScreenshot" => {
                             if v.is_null() {
                                 continue;
                             }
-                            no_screenshot =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            no_screenshot = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "restricted_roles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            restricted_roles =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            restricted_roles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "retry" => {
                             if v.is_null() {
                                 continue;
                             }
                             retry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rumSettings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_settings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scheduling" => {
                             if v.is_null() {
                                 continue;
                             }
                             scheduling = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tick_every" => {
                             if v.is_null() {
                                 continue;
                             }
                             tick_every = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

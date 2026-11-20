@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Options on third party detection method.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct SecurityMonitoringRuleThirdPartyOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleThirdPartyOptions {
@@ -41,41 +41,33 @@ impl SecurityMonitoringRuleThirdPartyOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn default_notifications(mut self, value: Vec<String>) -> Self {
         self.default_notifications = Some(value);
         self
     }
-
-    pub fn default_status(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleSeverity,
-    ) -> Self {
+    
+    pub fn default_status(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleSeverity) -> Self {
         self.default_status = Some(value);
         self
     }
-
-    pub fn root_queries(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>,
-    ) -> Self {
+    
+    pub fn root_queries(mut self, value: Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>) -> Self {
         self.root_queries = Some(value);
         self
     }
-
+    
     pub fn signal_title_template(mut self, value: String) -> Self {
         self.signal_title_template = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleThirdPartyOptions {
     fn default() -> Self {
@@ -101,17 +93,10 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleThirdPartyOptions {
                 M: MapAccess<'a>,
             {
                 let mut default_notifications: Option<Vec<String>> = None;
-                let mut default_status: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleSeverity,
-                > = None;
-                let mut root_queries: Option<
-                    Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>,
-                > = None;
+                let mut default_status: Option<crate::datadogV2::model::SecurityMonitoringRuleSeverity> = None;
+                let mut root_queries: Option<Vec<crate::datadogV2::model::SecurityMonitoringThirdPartyRootQuery>> = None;
                 let mut signal_title_template: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -120,15 +105,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleThirdPartyOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            default_notifications =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_notifications = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "defaultStatus" => {
                             if v.is_null() {
                                 continue;
                             }
-                            default_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            default_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _default_status) = default_status {
                                 match _default_status {
                                     crate::datadogV2::model::SecurityMonitoringRuleSeverity::UnparsedObject(_default_status) => {
@@ -137,26 +120,24 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleThirdPartyOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "rootQueries" => {
                             if v.is_null() {
                                 continue;
                             }
-                            root_queries =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            root_queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "signalTitleTemplate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            signal_title_template =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            signal_title_template = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

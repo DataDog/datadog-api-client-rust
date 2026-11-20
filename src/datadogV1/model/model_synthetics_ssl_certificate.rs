@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing the SSL certificate used for a Synthetic test.
 #[non_exhaustive]
@@ -51,7 +51,7 @@ pub struct SyntheticsSSLCertificate {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsSSLCertificate {
@@ -73,81 +73,73 @@ impl SyntheticsSSLCertificate {
             _unparsed: false,
         }
     }
-
+    
     pub fn cipher(mut self, value: String) -> Self {
         self.cipher = Some(value);
         self
     }
-
+    
     pub fn exponent(mut self, value: f64) -> Self {
         self.exponent = Some(value);
         self
     }
-
+    
     pub fn ext_key_usage(mut self, value: Vec<String>) -> Self {
         self.ext_key_usage = Some(value);
         self
     }
-
+    
     pub fn fingerprint(mut self, value: String) -> Self {
         self.fingerprint = Some(value);
         self
     }
-
+    
     pub fn fingerprint256(mut self, value: String) -> Self {
         self.fingerprint256 = Some(value);
         self
     }
-
-    pub fn issuer(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsSSLCertificateIssuer,
-    ) -> Self {
+    
+    pub fn issuer(mut self, value: crate::datadogV1::model::SyntheticsSSLCertificateIssuer) -> Self {
         self.issuer = Some(value);
         self
     }
-
+    
     pub fn modulus(mut self, value: String) -> Self {
         self.modulus = Some(value);
         self
     }
-
+    
     pub fn protocol(mut self, value: String) -> Self {
         self.protocol = Some(value);
         self
     }
-
+    
     pub fn serial_number(mut self, value: String) -> Self {
         self.serial_number = Some(value);
         self
     }
-
-    pub fn subject(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsSSLCertificateSubject,
-    ) -> Self {
+    
+    pub fn subject(mut self, value: crate::datadogV1::model::SyntheticsSSLCertificateSubject) -> Self {
         self.subject = Some(value);
         self
     }
-
+    
     pub fn valid_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.valid_from = Some(value);
         self
     }
-
+    
     pub fn valid_to(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.valid_to = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsSSLCertificate {
     fn default() -> Self {
@@ -177,19 +169,14 @@ impl<'de> Deserialize<'de> for SyntheticsSSLCertificate {
                 let mut ext_key_usage: Option<Vec<String>> = None;
                 let mut fingerprint: Option<String> = None;
                 let mut fingerprint256: Option<String> = None;
-                let mut issuer: Option<crate::datadogV1::model::SyntheticsSSLCertificateIssuer> =
-                    None;
+                let mut issuer: Option<crate::datadogV1::model::SyntheticsSSLCertificateIssuer> = None;
                 let mut modulus: Option<String> = None;
                 let mut protocol: Option<String> = None;
                 let mut serial_number: Option<String> = None;
-                let mut subject: Option<crate::datadogV1::model::SyntheticsSSLCertificateSubject> =
-                    None;
+                let mut subject: Option<crate::datadogV1::model::SyntheticsSSLCertificateSubject> = None;
                 let mut valid_from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut valid_to: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -199,82 +186,78 @@ impl<'de> Deserialize<'de> for SyntheticsSSLCertificate {
                                 continue;
                             }
                             cipher = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "exponent" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             exponent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "extKeyUsage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ext_key_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ext_key_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fingerprint" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fingerprint =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fingerprint = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fingerprint256" => {
                             if v.is_null() {
                                 continue;
                             }
-                            fingerprint256 =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fingerprint256 = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issuer" => {
                             if v.is_null() {
                                 continue;
                             }
                             issuer = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modulus" => {
                             if v.is_null() {
                                 continue;
                             }
                             modulus = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "protocol" => {
                             if v.is_null() {
                                 continue;
                             }
                             protocol = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "serialNumber" => {
                             if v.is_null() {
                                 continue;
                             }
-                            serial_number =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serial_number = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject" => {
                             if v.is_null() {
                                 continue;
                             }
                             subject = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "validFrom" => {
                             if v.is_null() {
                                 continue;
                             }
                             valid_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "validTo" => {
                             if v.is_null() {
                                 continue;
                             }
                             valid_to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

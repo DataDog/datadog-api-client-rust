@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The result of an LLM inference request, including input parameters and the model response.
 #[non_exhaustive]
@@ -24,32 +24,16 @@ pub struct LLMObsIntegrationInferenceResponse {
     #[serde(rename = "error_response")]
     pub error_response: Option<crate::datadogV2::model::LLMObsInferenceErrorResponse>,
     /// Frequency penalty that was applied.
-    #[serde(
-        rename = "frequency_penalty",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "frequency_penalty", default, with = "::serde_with::rust::double_option")]
     pub frequency_penalty: Option<Option<f64>>,
     /// JSON schema that was applied for structured output.
-    #[serde(
-        rename = "json_schema",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "json_schema", default, with = "::serde_with::rust::double_option")]
     pub json_schema: Option<Option<String>>,
     /// Maximum number of completion tokens that were configured.
-    #[serde(
-        rename = "max_completion_tokens",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "max_completion_tokens", default, with = "::serde_with::rust::double_option")]
     pub max_completion_tokens: Option<Option<i64>>,
     /// Maximum number of tokens that were configured.
-    #[serde(
-        rename = "max_tokens",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "max_tokens", default, with = "::serde_with::rust::double_option")]
     pub max_tokens: Option<Option<i64>>,
     /// List of messages in an inference conversation.
     #[serde(rename = "messages")]
@@ -61,21 +45,13 @@ pub struct LLMObsIntegrationInferenceResponse {
     #[serde(rename = "openai_metadata")]
     pub openai_metadata: Option<crate::datadogV2::model::LLMObsOpenAIMetadata>,
     /// Presence penalty that was applied.
-    #[serde(
-        rename = "presence_penalty",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "presence_penalty", default, with = "::serde_with::rust::double_option")]
     pub presence_penalty: Option<Option<f64>>,
     /// The output of a completed LLM inference call.
     #[serde(rename = "response")]
     pub response: crate::datadogV2::model::LLMObsInferenceRunResult,
     /// Sampling temperature that was used.
-    #[serde(
-        rename = "temperature",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "temperature", default, with = "::serde_with::rust::double_option")]
     pub temperature: Option<Option<f64>>,
     /// List of tools available to the model.
     #[serde(rename = "tools")]
@@ -93,15 +69,11 @@ pub struct LLMObsIntegrationInferenceResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsIntegrationInferenceResponse {
-    pub fn new(
-        messages: Vec<crate::datadogV2::model::LLMObsInferenceMessage>,
-        model_id: String,
-        response: crate::datadogV2::model::LLMObsInferenceRunResult,
-    ) -> LLMObsIntegrationInferenceResponse {
+    pub fn new(messages: Vec<crate::datadogV2::model::LLMObsInferenceMessage>, model_id: String, response: crate::datadogV2::model::LLMObsInferenceRunResult) -> LLMObsIntegrationInferenceResponse {
         LLMObsIntegrationInferenceResponse {
             anthropic_metadata: None,
             azure_openai_metadata: None,
@@ -125,105 +97,89 @@ impl LLMObsIntegrationInferenceResponse {
             _unparsed: false,
         }
     }
-
-    pub fn anthropic_metadata(
-        mut self,
-        value: crate::datadogV2::model::LLMObsAnthropicMetadata,
-    ) -> Self {
+    
+    pub fn anthropic_metadata(mut self, value: crate::datadogV2::model::LLMObsAnthropicMetadata) -> Self {
         self.anthropic_metadata = Some(value);
         self
     }
-
-    pub fn azure_openai_metadata(
-        mut self,
-        value: crate::datadogV2::model::LLMObsAzureOpenAIMetadata,
-    ) -> Self {
+    
+    pub fn azure_openai_metadata(mut self, value: crate::datadogV2::model::LLMObsAzureOpenAIMetadata) -> Self {
         self.azure_openai_metadata = Some(value);
         self
     }
-
-    pub fn bedrock_metadata(
-        mut self,
-        value: crate::datadogV2::model::LLMObsBedrockMetadata,
-    ) -> Self {
+    
+    pub fn bedrock_metadata(mut self, value: crate::datadogV2::model::LLMObsBedrockMetadata) -> Self {
         self.bedrock_metadata = Some(value);
         self
     }
-
-    pub fn error_response(
-        mut self,
-        value: crate::datadogV2::model::LLMObsInferenceErrorResponse,
-    ) -> Self {
+    
+    pub fn error_response(mut self, value: crate::datadogV2::model::LLMObsInferenceErrorResponse) -> Self {
         self.error_response = Some(value);
         self
     }
-
+    
     pub fn frequency_penalty(mut self, value: Option<f64>) -> Self {
         self.frequency_penalty = Some(value);
         self
     }
-
+    
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
     }
-
+    
     pub fn max_completion_tokens(mut self, value: Option<i64>) -> Self {
         self.max_completion_tokens = Some(value);
         self
     }
-
+    
     pub fn max_tokens(mut self, value: Option<i64>) -> Self {
         self.max_tokens = Some(value);
         self
     }
-
+    
     pub fn openai_metadata(mut self, value: crate::datadogV2::model::LLMObsOpenAIMetadata) -> Self {
         self.openai_metadata = Some(value);
         self
     }
-
+    
     pub fn presence_penalty(mut self, value: Option<f64>) -> Self {
         self.presence_penalty = Some(value);
         self
     }
-
+    
     pub fn temperature(mut self, value: Option<f64>) -> Self {
         self.temperature = Some(value);
         self
     }
-
+    
     pub fn tools(mut self, value: Vec<crate::datadogV2::model::LLMObsInferenceTool>) -> Self {
         self.tools = Some(value);
         self
     }
-
+    
     pub fn top_k(mut self, value: Option<i64>) -> Self {
         self.top_k = Some(value);
         self
     }
-
+    
     pub fn top_p(mut self, value: Option<f64>) -> Self {
         self.top_p = Some(value);
         self
     }
-
-    pub fn vertex_ai_metadata(
-        mut self,
-        value: crate::datadogV2::model::LLMObsVertexAIMetadata,
-    ) -> Self {
+    
+    pub fn vertex_ai_metadata(mut self, value: crate::datadogV2::model::LLMObsVertexAIMetadata) -> Self {
         self.vertex_ai_metadata = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsIntegrationInferenceResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -242,39 +198,25 @@ impl<'de> Deserialize<'de> for LLMObsIntegrationInferenceResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut anthropic_metadata: Option<
-                    crate::datadogV2::model::LLMObsAnthropicMetadata,
-                > = None;
-                let mut azure_openai_metadata: Option<
-                    crate::datadogV2::model::LLMObsAzureOpenAIMetadata,
-                > = None;
-                let mut bedrock_metadata: Option<crate::datadogV2::model::LLMObsBedrockMetadata> =
-                    None;
-                let mut error_response: Option<
-                    crate::datadogV2::model::LLMObsInferenceErrorResponse,
-                > = None;
+                let mut anthropic_metadata: Option<crate::datadogV2::model::LLMObsAnthropicMetadata> = None;
+                let mut azure_openai_metadata: Option<crate::datadogV2::model::LLMObsAzureOpenAIMetadata> = None;
+                let mut bedrock_metadata: Option<crate::datadogV2::model::LLMObsBedrockMetadata> = None;
+                let mut error_response: Option<crate::datadogV2::model::LLMObsInferenceErrorResponse> = None;
                 let mut frequency_penalty: Option<Option<f64>> = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut max_completion_tokens: Option<Option<i64>> = None;
                 let mut max_tokens: Option<Option<i64>> = None;
-                let mut messages: Option<Vec<crate::datadogV2::model::LLMObsInferenceMessage>> =
-                    None;
+                let mut messages: Option<Vec<crate::datadogV2::model::LLMObsInferenceMessage>> = None;
                 let mut model_id: Option<String> = None;
-                let mut openai_metadata: Option<crate::datadogV2::model::LLMObsOpenAIMetadata> =
-                    None;
+                let mut openai_metadata: Option<crate::datadogV2::model::LLMObsOpenAIMetadata> = None;
                 let mut presence_penalty: Option<Option<f64>> = None;
                 let mut response: Option<crate::datadogV2::model::LLMObsInferenceRunResult> = None;
                 let mut temperature: Option<Option<f64>> = None;
                 let mut tools: Option<Vec<crate::datadogV2::model::LLMObsInferenceTool>> = None;
                 let mut top_k: Option<Option<i64>> = None;
                 let mut top_p: Option<Option<f64>> = None;
-                let mut vertex_ai_metadata: Option<
-                    crate::datadogV2::model::LLMObsVertexAIMetadata,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut vertex_ai_metadata: Option<crate::datadogV2::model::LLMObsVertexAIMetadata> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -283,105 +225,94 @@ impl<'de> Deserialize<'de> for LLMObsIntegrationInferenceResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            anthropic_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            anthropic_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "azure_openai_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            azure_openai_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_openai_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bedrock_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bedrock_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bedrock_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_response" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_response =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_response = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "frequency_penalty" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            frequency_penalty =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            frequency_penalty = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "json_schema" => {
-                            json_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            json_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "max_completion_tokens" => {
-                            max_completion_tokens =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_completion_tokens = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "max_tokens" => {
                             max_tokens = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "messages" => {
                             messages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model_id" => {
                             model_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "openai_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            openai_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            openai_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "presence_penalty" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            presence_penalty =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            presence_penalty = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "response" => {
                             response = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "temperature" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            temperature =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            temperature = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tools" => {
                             if v.is_null() {
                                 continue;
                             }
                             tools = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "top_k" => {
                             top_k = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "top_p" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             top_p = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "vertex_ai_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vertex_ai_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vertex_ai_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let messages = messages.ok_or_else(|| M::Error::missing_field("messages"))?;

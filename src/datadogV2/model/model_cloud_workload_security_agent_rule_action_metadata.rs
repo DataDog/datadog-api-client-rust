@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The metadata action applied on the scope matching the rule
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct CloudWorkloadSecurityAgentRuleActionMetadata {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CloudWorkloadSecurityAgentRuleActionMetadata {
@@ -37,30 +37,28 @@ impl CloudWorkloadSecurityAgentRuleActionMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn image_tag(mut self, value: String) -> Self {
         self.image_tag = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn short_image(mut self, value: String) -> Self {
         self.short_image = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CloudWorkloadSecurityAgentRuleActionMetadata {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionMetadata {
                 let mut image_tag: Option<String> = None;
                 let mut service: Option<String> = None;
                 let mut short_image: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,25 +96,24 @@ impl<'de> Deserialize<'de> for CloudWorkloadSecurityAgentRuleActionMetadata {
                                 continue;
                             }
                             image_tag = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "short_image" => {
                             if v.is_null() {
                                 continue;
                             }
-                            short_image =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            short_image = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TopologyMapLayoutDirection {
-    TOP_TO_BOTTOM,
-    BOTTOM_TO_TOP,
-    LEFT_TO_RIGHT,
-    RIGHT_TO_LEFT,
+	TOP_TO_BOTTOM,
+	BOTTOM_TO_TOP,
+	LEFT_TO_RIGHT,
+	RIGHT_TO_LEFT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for TopologyMapLayoutDirection {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "top-to-bottom" => Self::TOP_TO_BOTTOM,
-            "bottom-to-top" => Self::BOTTOM_TO_TOP,
-            "left-to-right" => Self::LEFT_TO_RIGHT,
-            "right-to-left" => Self::RIGHT_TO_LEFT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"top-to-bottom" => Self::TOP_TO_BOTTOM,"bottom-to-top" => Self::BOTTOM_TO_TOP,"left-to-right" => Self::LEFT_TO_RIGHT,"right-to-left" => Self::RIGHT_TO_LEFT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

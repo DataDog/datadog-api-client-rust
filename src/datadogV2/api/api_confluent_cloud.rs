@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::create_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::create_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CreateConfluentResourceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::delete_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum DeleteConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::delete_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum DeleteConfluentResourceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::get_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum GetConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::get_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -57,6 +62,7 @@ pub enum GetConfluentResourceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::list_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +72,7 @@ pub enum ListConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::list_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,6 +80,7 @@ pub enum ListConfluentResourceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateConfluentAccountError is a struct for typed errors of method [`ConfluentCloudAPI::update_confluent_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -82,6 +90,7 @@ pub enum UpdateConfluentAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateConfluentResourceError is a struct for typed errors of method [`ConfluentCloudAPI::update_confluent_resource`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,6 +98,7 @@ pub enum UpdateConfluentResourceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Datadog Confluent Cloud integration accounts and account resources directly through the Datadog API. See the [Confluent Cloud page](<https://docs.datadoghq.com/integrations/confluent_cloud/>) for more information.
 #[derive(Debug, Clone)]
@@ -112,7 +122,8 @@ impl ConfluentCloudAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -157,59 +168,49 @@ impl ConfluentCloudAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a Confluent account.
-    pub async fn create_confluent_account(
-        &self,
-        body: crate::datadogV2::model::ConfluentAccountCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentAccountResponse,
-        datadog::Error<CreateConfluentAccountError>,
-    > {
+    pub async fn create_confluent_account(&self, body: crate::datadogV2::model::ConfluentAccountCreateRequest) -> Result<crate::datadogV2::model::ConfluentAccountResponse, datadog::Error<CreateConfluentAccountError>> {
         match self.create_confluent_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Confluent account.
-    pub async fn create_confluent_account_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ConfluentAccountCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
-        datadog::Error<CreateConfluentAccountError>,
-    > {
+    pub async fn create_confluent_account_with_http_info(&self, body: crate::datadogV2::model::ConfluentAccountCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, datadog::Error<CreateConfluentAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_confluent_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -222,23 +223,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -246,7 +240,10 @@ impl ConfluentCloudAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -256,7 +253,10 @@ impl ConfluentCloudAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -278,7 +278,7 @@ impl ConfluentCloudAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -295,82 +295,60 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateConfluentAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a Confluent resource for the account associated with the provided ID.
-    pub async fn create_confluent_resource(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::ConfluentResourceRequest,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentResourceResponse,
-        datadog::Error<CreateConfluentResourceError>,
-    > {
-        match self
-            .create_confluent_resource_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn create_confluent_resource(&self, account_id: String, body: crate::datadogV2::model::ConfluentResourceRequest) -> Result<crate::datadogV2::model::ConfluentResourceResponse, datadog::Error<CreateConfluentResourceError>> {
+        match self.create_confluent_resource_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Confluent resource for the account associated with the provided ID.
-    pub async fn create_confluent_resource_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::ConfluentResourceRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
-        datadog::Error<CreateConfluentResourceError>,
-    > {
+    pub async fn create_confluent_resource_with_http_info(&self, account_id: String, body: crate::datadogV2::model::ConfluentResourceRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, datadog::Error<CreateConfluentResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_confluent_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -383,23 +361,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -407,7 +378,10 @@ impl ConfluentCloudAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -417,7 +391,10 @@ impl ConfluentCloudAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -439,7 +416,7 @@ impl ConfluentCloudAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -456,65 +433,53 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateConfluentResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Confluent account with the provided account ID.
-    pub async fn delete_confluent_account(
-        &self,
-        account_id: String,
-    ) -> Result<(), datadog::Error<DeleteConfluentAccountError>> {
-        match self
-            .delete_confluent_account_with_http_info(account_id)
-            .await
-        {
+    pub async fn delete_confluent_account(&self, account_id: String) -> Result<(), datadog::Error<DeleteConfluentAccountError>> {
+        match self.delete_confluent_account_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Confluent account with the provided account ID.
-    pub async fn delete_confluent_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentAccountError>> {
+    pub async fn delete_confluent_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_confluent_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -527,22 +492,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -560,55 +519,46 @@ impl ConfluentCloudAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteConfluentAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn delete_confluent_resource(
-        &self,
-        account_id: String,
-        resource_id: String,
-    ) -> Result<(), datadog::Error<DeleteConfluentResourceError>> {
-        match self
-            .delete_confluent_resource_with_http_info(account_id, resource_id)
-            .await
-        {
+    pub async fn delete_confluent_resource(&self, account_id: String, resource_id: String) -> Result<(), datadog::Error<DeleteConfluentResourceError>> {
+        match self.delete_confluent_resource_with_http_info(account_id, resource_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn delete_confluent_resource_with_http_info(
-        &self,
-        account_id: String,
-        resource_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentResourceError>> {
+    pub async fn delete_confluent_resource_with_http_info(&self, account_id: String, resource_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteConfluentResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_confluent_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            resource_id = datadog::urlencode(resource_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , resource_id=
+            datadog::urlencode(resource_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -621,22 +571,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -654,63 +598,50 @@ impl ConfluentCloudAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteConfluentResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the Confluent account with the provided account ID.
-    pub async fn get_confluent_account(
-        &self,
-        account_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentAccountResponse,
-        datadog::Error<GetConfluentAccountError>,
-    > {
+    pub async fn get_confluent_account(&self, account_id: String) -> Result<crate::datadogV2::model::ConfluentAccountResponse, datadog::Error<GetConfluentAccountError>> {
         match self.get_confluent_account_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the Confluent account with the provided account ID.
-    pub async fn get_confluent_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
-        datadog::Error<GetConfluentAccountError>,
-    > {
+    pub async fn get_confluent_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, datadog::Error<GetConfluentAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_confluent_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -723,22 +654,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -750,82 +675,61 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetConfluentAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn get_confluent_resource(
-        &self,
-        account_id: String,
-        resource_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentResourceResponse,
-        datadog::Error<GetConfluentResourceError>,
-    > {
-        match self
-            .get_confluent_resource_with_http_info(account_id, resource_id)
-            .await
-        {
+    pub async fn get_confluent_resource(&self, account_id: String, resource_id: String) -> Result<crate::datadogV2::model::ConfluentResourceResponse, datadog::Error<GetConfluentResourceError>> {
+        match self.get_confluent_resource_with_http_info(account_id, resource_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn get_confluent_resource_with_http_info(
-        &self,
-        account_id: String,
-        resource_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
-        datadog::Error<GetConfluentResourceError>,
-    > {
+    pub async fn get_confluent_resource_with_http_info(&self, account_id: String, resource_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, datadog::Error<GetConfluentResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_confluent_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            resource_id = datadog::urlencode(resource_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , resource_id=
+            datadog::urlencode(resource_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -838,22 +742,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -865,73 +763,57 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetConfluentResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List Confluent accounts.
-    pub async fn list_confluent_account(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentAccountsResponse,
-        datadog::Error<ListConfluentAccountError>,
-    > {
+    pub async fn list_confluent_account(&self) -> Result<crate::datadogV2::model::ConfluentAccountsResponse, datadog::Error<ListConfluentAccountError>> {
         match self.list_confluent_account_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List Confluent accounts.
-    pub async fn list_confluent_account_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountsResponse>,
-        datadog::Error<ListConfluentAccountError>,
-    > {
+    pub async fn list_confluent_account_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountsResponse>, datadog::Error<ListConfluentAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_confluent_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -944,22 +826,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -971,79 +847,59 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListConfluentAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Confluent resource for the account associated with the provided ID.
-    pub async fn list_confluent_resource(
-        &self,
-        account_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentResourcesResponse,
-        datadog::Error<ListConfluentResourceError>,
-    > {
-        match self
-            .list_confluent_resource_with_http_info(account_id)
-            .await
-        {
+    pub async fn list_confluent_resource(&self, account_id: String) -> Result<crate::datadogV2::model::ConfluentResourcesResponse, datadog::Error<ListConfluentResourceError>> {
+        match self.list_confluent_resource_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Confluent resource for the account associated with the provided ID.
-    pub async fn list_confluent_resource_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentResourcesResponse>,
-        datadog::Error<ListConfluentResourceError>,
-    > {
+    pub async fn list_confluent_resource_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentResourcesResponse>, datadog::Error<ListConfluentResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_confluent_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1056,22 +912,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1083,82 +933,60 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourcesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourcesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListConfluentResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the Confluent account with the provided account ID.
-    pub async fn update_confluent_account(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentAccountResponse,
-        datadog::Error<UpdateConfluentAccountError>,
-    > {
-        match self
-            .update_confluent_account_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn update_confluent_account(&self, account_id: String, body: crate::datadogV2::model::ConfluentAccountUpdateRequest) -> Result<crate::datadogV2::model::ConfluentAccountResponse, datadog::Error<UpdateConfluentAccountError>> {
+        match self.update_confluent_account_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the Confluent account with the provided account ID.
-    pub async fn update_confluent_account_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::ConfluentAccountUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>,
-        datadog::Error<UpdateConfluentAccountError>,
-    > {
+    pub async fn update_confluent_account_with_http_info(&self, account_id: String, body: crate::datadogV2::model::ConfluentAccountUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentAccountResponse>, datadog::Error<UpdateConfluentAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_confluent_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1171,23 +999,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1195,7 +1016,10 @@ impl ConfluentCloudAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1205,7 +1029,10 @@ impl ConfluentCloudAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1227,7 +1054,7 @@ impl ConfluentCloudAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1244,85 +1071,62 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateConfluentAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateConfluentAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn update_confluent_resource(
-        &self,
-        account_id: String,
-        resource_id: String,
-        body: crate::datadogV2::model::ConfluentResourceRequest,
-    ) -> Result<
-        crate::datadogV2::model::ConfluentResourceResponse,
-        datadog::Error<UpdateConfluentResourceError>,
-    > {
-        match self
-            .update_confluent_resource_with_http_info(account_id, resource_id, body)
-            .await
-        {
+    pub async fn update_confluent_resource(&self, account_id: String, resource_id: String, body: crate::datadogV2::model::ConfluentResourceRequest) -> Result<crate::datadogV2::model::ConfluentResourceResponse, datadog::Error<UpdateConfluentResourceError>> {
+        match self.update_confluent_resource_with_http_info(account_id, resource_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Confluent resource with the provided resource id for the account associated with the provided account ID.
-    pub async fn update_confluent_resource_with_http_info(
-        &self,
-        account_id: String,
-        resource_id: String,
-        body: crate::datadogV2::model::ConfluentResourceRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>,
-        datadog::Error<UpdateConfluentResourceError>,
-    > {
+    pub async fn update_confluent_resource_with_http_info(&self, account_id: String, resource_id: String, body: crate::datadogV2::model::ConfluentResourceRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ConfluentResourceResponse>, datadog::Error<UpdateConfluentResourceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_confluent_resource";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/confluent-cloud/accounts/{account_id}/resources/{resource_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            resource_id = datadog::urlencode(resource_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , resource_id=
+            datadog::urlencode(resource_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1335,23 +1139,16 @@ impl ConfluentCloudAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1359,7 +1156,10 @@ impl ConfluentCloudAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1369,7 +1169,10 @@ impl ConfluentCloudAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1391,7 +1194,7 @@ impl ConfluentCloudAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1408,26 +1211,17 @@ impl ConfluentCloudAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ConfluentResourceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateConfluentResourceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateConfluentResourceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

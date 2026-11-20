@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a JavaScript source map file.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct SourcemapFileAttributes {
     #[serde(rename = "file")]
     pub file: String,
     /// The Base64 VLQ encoded string that maps positions in the minified
-    /// file to positions in the original source files.
+/// file to positions in the original source files.
     #[serde(rename = "mappings")]
     pub mappings: String,
     /// List of character counts for each line in the minified file.
@@ -40,20 +40,11 @@ pub struct SourcemapFileAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SourcemapFileAttributes {
-    pub fn new(
-        file: String,
-        mappings: String,
-        minified_line_lengths: Vec<i64>,
-        names: Vec<serde_json::Value>,
-        source_root: String,
-        sources: Vec<String>,
-        sources_content: Vec<String>,
-        version: i64,
-    ) -> SourcemapFileAttributes {
+    pub fn new(file: String, mappings: String, minified_line_lengths: Vec<i64>, names: Vec<serde_json::Value>, source_root: String, sources: Vec<String>, sources_content: Vec<String>, version: i64) -> SourcemapFileAttributes {
         SourcemapFileAttributes {
             file,
             mappings,
@@ -67,15 +58,14 @@ impl SourcemapFileAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SourcemapFileAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -102,58 +92,49 @@ impl<'de> Deserialize<'de> for SourcemapFileAttributes {
                 let mut sources: Option<Vec<String>> = None;
                 let mut sources_content: Option<Vec<String>> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "file" => {
                             file = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mappings" => {
                             mappings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "minifiedLineLengths" => {
-                            minified_line_lengths =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minified_line_lengths = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "names" => {
                             names = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sourceRoot" => {
-                            source_root =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_root = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sourcesContent" => {
-                            sources_content =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sources_content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let file = file.ok_or_else(|| M::Error::missing_field("file"))?;
                 let mappings = mappings.ok_or_else(|| M::Error::missing_field("mappings"))?;
-                let minified_line_lengths = minified_line_lengths
-                    .ok_or_else(|| M::Error::missing_field("minified_line_lengths"))?;
+                let minified_line_lengths = minified_line_lengths.ok_or_else(|| M::Error::missing_field("minified_line_lengths"))?;
                 let names = names.ok_or_else(|| M::Error::missing_field("names"))?;
-                let source_root =
-                    source_root.ok_or_else(|| M::Error::missing_field("source_root"))?;
+                let source_root = source_root.ok_or_else(|| M::Error::missing_field("source_root"))?;
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
-                let sources_content =
-                    sources_content.ok_or_else(|| M::Error::missing_field("sources_content"))?;
+                let sources_content = sources_content.ok_or_else(|| M::Error::missing_field("sources_content"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
                 let content = SourcemapFileAttributes {

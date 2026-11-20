@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The configuration used when `mode` is `custom`.
 #[non_exhaustive]
@@ -30,17 +30,11 @@ pub struct RumRetentionQuotaCustomConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RumRetentionQuotaCustomConfig {
-    pub fn new(
-        daily_reset_time: String,
-        daily_reset_timezone: String,
-        quota_reached_action: crate::datadogV2::model::RumRetentionQuotaReachedAction,
-        session_limit: i64,
-        window_type: crate::datadogV2::model::RumRetentionQuotaWindowType,
-    ) -> RumRetentionQuotaCustomConfig {
+    pub fn new(daily_reset_time: String, daily_reset_timezone: String, quota_reached_action: crate::datadogV2::model::RumRetentionQuotaReachedAction, session_limit: i64, window_type: crate::datadogV2::model::RumRetentionQuotaWindowType) -> RumRetentionQuotaCustomConfig {
         RumRetentionQuotaCustomConfig {
             daily_reset_time,
             daily_reset_timezone,
@@ -51,15 +45,14 @@ impl RumRetentionQuotaCustomConfig {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RumRetentionQuotaCustomConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -80,31 +73,22 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaCustomConfig {
             {
                 let mut daily_reset_time: Option<String> = None;
                 let mut daily_reset_timezone: Option<String> = None;
-                let mut quota_reached_action: Option<
-                    crate::datadogV2::model::RumRetentionQuotaReachedAction,
-                > = None;
+                let mut quota_reached_action: Option<crate::datadogV2::model::RumRetentionQuotaReachedAction> = None;
                 let mut session_limit: Option<i64> = None;
-                let mut window_type: Option<crate::datadogV2::model::RumRetentionQuotaWindowType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut window_type: Option<crate::datadogV2::model::RumRetentionQuotaWindowType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "daily_reset_time" => {
-                            daily_reset_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            daily_reset_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "daily_reset_timezone" => {
-                            daily_reset_timezone =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            daily_reset_timezone = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "quota_reached_action" => {
-                            quota_reached_action =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            quota_reached_action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _quota_reached_action) = quota_reached_action {
                                 match _quota_reached_action {
                                     crate::datadogV2::model::RumRetentionQuotaReachedAction::UnparsedObject(_quota_reached_action) => {
@@ -113,14 +97,12 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaCustomConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "session_limit" => {
-                            session_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            session_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "window_type" => {
-                            window_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            window_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _window_type) = window_type {
                                 match _window_type {
                                     crate::datadogV2::model::RumRetentionQuotaWindowType::UnparsedObject(_window_type) => {
@@ -129,24 +111,19 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaCustomConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let daily_reset_time =
-                    daily_reset_time.ok_or_else(|| M::Error::missing_field("daily_reset_time"))?;
-                let daily_reset_timezone = daily_reset_timezone
-                    .ok_or_else(|| M::Error::missing_field("daily_reset_timezone"))?;
-                let quota_reached_action = quota_reached_action
-                    .ok_or_else(|| M::Error::missing_field("quota_reached_action"))?;
-                let session_limit =
-                    session_limit.ok_or_else(|| M::Error::missing_field("session_limit"))?;
-                let window_type =
-                    window_type.ok_or_else(|| M::Error::missing_field("window_type"))?;
+                let daily_reset_time = daily_reset_time.ok_or_else(|| M::Error::missing_field("daily_reset_time"))?;
+                let daily_reset_timezone = daily_reset_timezone.ok_or_else(|| M::Error::missing_field("daily_reset_timezone"))?;
+                let quota_reached_action = quota_reached_action.ok_or_else(|| M::Error::missing_field("quota_reached_action"))?;
+                let session_limit = session_limit.ok_or_else(|| M::Error::missing_field("session_limit"))?;
+                let window_type = window_type.ok_or_else(|| M::Error::missing_field("window_type"))?;
 
                 let content = RumRetentionQuotaCustomConfig {
                     daily_reset_time,

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `databricks_zerobus` destination sends logs to Databricks using the Zerobus ingestion API, streaming data directly into your Databricks Lakehouse.
 ///
@@ -41,17 +41,11 @@ pub struct ObservabilityPipelineDatabricksZerobusDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineDatabricksZerobusDestination {
-    pub fn new(
-        auth: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationAuth,
-        id: String,
-        inputs: Vec<String>,
-        table_name: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType,
-    ) -> ObservabilityPipelineDatabricksZerobusDestination {
+    pub fn new(auth: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationAuth, id: String, inputs: Vec<String>, table_name: String, type_: crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType) -> ObservabilityPipelineDatabricksZerobusDestination {
         ObservabilityPipelineDatabricksZerobusDestination {
             auth,
             buffer: None,
@@ -65,33 +59,29 @@ impl ObservabilityPipelineDatabricksZerobusDestination {
             _unparsed: false,
         }
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
+    
     pub fn ingestion_endpoint_key(mut self, value: String) -> Self {
         self.ingestion_endpoint_key = Some(value);
         self
     }
-
+    
     pub fn unity_catalog_endpoint_key(mut self, value: String) -> Self {
         self.unity_catalog_endpoint_key = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -110,31 +100,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
             where
                 M: MapAccess<'a>,
             {
-                let mut auth: Option<
-                    crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationAuth,
-                > = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
+                let mut auth: Option<crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationAuth> = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
                 let mut id: Option<String> = None;
                 let mut ingestion_endpoint_key: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut table_name: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType,
-                > = None;
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineDatabricksZerobusDestinationType> = None;
                 let mut unity_catalog_endpoint_key: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "auth" => {
                             auth = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -148,23 +129,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ingestion_endpoint_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ingestion_endpoint_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingestion_endpoint_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "table_name" => {
                             table_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -175,19 +155,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatabricksZerobusDestination
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "unity_catalog_endpoint_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            unity_catalog_endpoint_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            unity_catalog_endpoint_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let auth = auth.ok_or_else(|| M::Error::missing_field("auth"))?;

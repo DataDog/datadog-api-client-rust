@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `UCConfigPairDataAttributesConfigsItems` object.
 #[non_exhaustive]
@@ -24,11 +24,7 @@ pub struct UCConfigPairDataAttributesConfigsItems {
     #[serde(rename = "dataset_type")]
     pub dataset_type: Option<String>,
     /// The `items` `error_messages`.
-    #[serde(
-        rename = "error_messages",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "error_messages", default, with = "::serde_with::rust::double_option")]
     pub error_messages: Option<Option<Vec<String>>>,
     /// The `items` `export_name`.
     #[serde(rename = "export_name")]
@@ -64,7 +60,7 @@ pub struct UCConfigPairDataAttributesConfigsItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UCConfigPairDataAttributesConfigsItems {
@@ -89,90 +85,88 @@ impl UCConfigPairDataAttributesConfigsItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn account_id(mut self, value: String) -> Self {
         self.account_id = Some(value);
         self
     }
-
+    
     pub fn client_id(mut self, value: String) -> Self {
         self.client_id = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn dataset_type(mut self, value: String) -> Self {
         self.dataset_type = Some(value);
         self
     }
-
+    
     pub fn error_messages(mut self, value: Option<Vec<String>>) -> Self {
         self.error_messages = Some(value);
         self
     }
-
+    
     pub fn export_name(mut self, value: String) -> Self {
         self.export_name = Some(value);
         self
     }
-
+    
     pub fn export_path(mut self, value: String) -> Self {
         self.export_path = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn months(mut self, value: i64) -> Self {
         self.months = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn status_updated_at(mut self, value: String) -> Self {
         self.status_updated_at = Some(value);
         self
     }
-
+    
     pub fn storage_account(mut self, value: String) -> Self {
         self.storage_account = Some(value);
         self
     }
-
+    
     pub fn storage_container(mut self, value: String) -> Self {
         self.storage_container = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UCConfigPairDataAttributesConfigsItems {
     fn default() -> Self {
@@ -212,10 +206,7 @@ impl<'de> Deserialize<'de> for UCConfigPairDataAttributesConfigsItems {
                 let mut storage_account: Option<String> = None;
                 let mut storage_container: Option<String> = None;
                 let mut updated_at: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -225,100 +216,93 @@ impl<'de> Deserialize<'de> for UCConfigPairDataAttributesConfigsItems {
                                 continue;
                             }
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "client_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dataset_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dataset_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dataset_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_messages" => {
-                            error_messages =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_messages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "export_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            export_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            export_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "export_path" => {
                             if v.is_null() {
                                 continue;
                             }
-                            export_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            export_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "months" => {
                             if v.is_null() {
                                 continue;
                             }
                             months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            status_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            status_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "storage_account" => {
                             if v.is_null() {
                                 continue;
                             }
-                            storage_account =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            storage_account = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "storage_container" => {
                             if v.is_null() {
                                 continue;
                             }
-                            storage_container =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            storage_container = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

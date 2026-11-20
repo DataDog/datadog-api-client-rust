@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsEVSITrafficUnavailableReason {
-    TRAFFIC_UNAVAILABLE,
-    INSUFFICIENT_COMPLETE_DAYS,
-    NO_TOTAL_EXPOSURES,
-    NO_LOOKBACK_EXPOSURES,
-    INVALID_TRAFFIC,
+	TRAFFIC_UNAVAILABLE,
+	INSUFFICIENT_COMPLETE_DAYS,
+	NO_TOTAL_EXPOSURES,
+	NO_LOOKBACK_EXPOSURES,
+	INVALID_TRAFFIC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ExperimentsEVSITrafficUnavailableReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "traffic_unavailable" => Self::TRAFFIC_UNAVAILABLE,
-            "insufficient_complete_days" => Self::INSUFFICIENT_COMPLETE_DAYS,
-            "no_total_exposures" => Self::NO_TOTAL_EXPOSURES,
-            "no_lookback_exposures" => Self::NO_LOOKBACK_EXPOSURES,
-            "invalid_traffic" => Self::INVALID_TRAFFIC,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"traffic_unavailable" => Self::TRAFFIC_UNAVAILABLE,"insufficient_complete_days" => Self::INSUFFICIENT_COMPLETE_DAYS,"no_total_exposures" => Self::NO_TOTAL_EXPOSURES,"no_lookback_exposures" => Self::NO_LOOKBACK_EXPOSURES,"invalid_traffic" => Self::INVALID_TRAFFIC,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines a custom metric generated from logs or traces, including its name, type, filter, value computation strategy,
 /// and optional grouping fields.
@@ -31,16 +31,11 @@ pub struct ObservabilityPipelineGeneratedMetric {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineGeneratedMetric {
-    pub fn new(
-        include: String,
-        metric_type: crate::datadogV2::model::ObservabilityPipelineGeneratedMetricMetricType,
-        name: String,
-        value: crate::datadogV2::model::ObservabilityPipelineMetricValue,
-    ) -> ObservabilityPipelineGeneratedMetric {
+    pub fn new(include: String, metric_type: crate::datadogV2::model::ObservabilityPipelineGeneratedMetricMetricType, name: String, value: crate::datadogV2::model::ObservabilityPipelineMetricValue) -> ObservabilityPipelineGeneratedMetric {
         ObservabilityPipelineGeneratedMetric {
             group_by: None,
             include,
@@ -51,20 +46,19 @@ impl ObservabilityPipelineGeneratedMetric {
             _unparsed: false,
         }
     }
-
+    
     pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineGeneratedMetric {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,16 +79,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGeneratedMetric {
             {
                 let mut group_by: Option<Vec<String>> = None;
                 let mut include: Option<String> = None;
-                let mut metric_type: Option<
-                    crate::datadogV2::model::ObservabilityPipelineGeneratedMetricMetricType,
-                > = None;
+                let mut metric_type: Option<crate::datadogV2::model::ObservabilityPipelineGeneratedMetricMetricType> = None;
                 let mut name: Option<String> = None;
-                let mut value: Option<crate::datadogV2::model::ObservabilityPipelineMetricValue> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut value: Option<crate::datadogV2::model::ObservabilityPipelineMetricValue> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -104,13 +92,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGeneratedMetric {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_type" => {
-                            metric_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            metric_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric_type) = metric_type {
                                 match _metric_type {
                                     crate::datadogV2::model::ObservabilityPipelineGeneratedMetricMetricType::UnparsedObject(_metric_type) => {
@@ -119,10 +106,10 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGeneratedMetric {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _value) = value {
@@ -133,17 +120,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineGeneratedMetric {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let include = include.ok_or_else(|| M::Error::missing_field("include"))?;
-                let metric_type =
-                    metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
+                let metric_type = metric_type.ok_or_else(|| M::Error::missing_field("metric_type"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 

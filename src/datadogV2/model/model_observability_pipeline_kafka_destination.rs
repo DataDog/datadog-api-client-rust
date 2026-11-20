@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `kafka` destination sends logs to Apache Kafka topics.
 ///
@@ -21,8 +21,7 @@ pub struct ObservabilityPipelineKafkaDestination {
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Compression codec for Kafka messages.
     #[serde(rename = "compression")]
-    pub compression:
-        Option<crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression>,
+    pub compression: Option<crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
     pub encoding: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationEncoding,
@@ -40,8 +39,7 @@ pub struct ObservabilityPipelineKafkaDestination {
     pub key_field: Option<String>,
     /// Optional list of advanced Kafka producer configuration options, defined as key-value pairs.
     #[serde(rename = "librdkafka_options")]
-    pub librdkafka_options:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>>,
+    pub librdkafka_options: Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>>,
     /// Maximum time in milliseconds to wait for message delivery confirmation.
     #[serde(rename = "message_timeout_ms")]
     pub message_timeout_ms: Option<i64>,
@@ -70,17 +68,11 @@ pub struct ObservabilityPipelineKafkaDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineKafkaDestination {
-    pub fn new(
-        encoding: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationEncoding,
-        id: String,
-        inputs: Vec<String>,
-        topic: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationType,
-    ) -> ObservabilityPipelineKafkaDestination {
+    pub fn new(encoding: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationEncoding, id: String, inputs: Vec<String>, topic: String, type_: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationType) -> ObservabilityPipelineKafkaDestination {
         ObservabilityPipelineKafkaDestination {
             bootstrap_servers_key: None,
             buffer: None,
@@ -103,84 +95,74 @@ impl ObservabilityPipelineKafkaDestination {
             _unparsed: false,
         }
     }
-
+    
     pub fn bootstrap_servers_key(mut self, value: String) -> Self {
         self.bootstrap_servers_key = Some(value);
         self
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
-    pub fn compression(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression,
-    ) -> Self {
+    
+    pub fn compression(mut self, value: crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression) -> Self {
         self.compression = Some(value);
         self
     }
-
+    
     pub fn headers_key(mut self, value: String) -> Self {
         self.headers_key = Some(value);
         self
     }
-
+    
     pub fn key_field(mut self, value: String) -> Self {
         self.key_field = Some(value);
         self
     }
-
-    pub fn librdkafka_options(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
-    ) -> Self {
+    
+    pub fn librdkafka_options(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>) -> Self {
         self.librdkafka_options = Some(value);
         self
     }
-
+    
     pub fn message_timeout_ms(mut self, value: i64) -> Self {
         self.message_timeout_ms = Some(value);
         self
     }
-
+    
     pub fn rate_limit_duration_secs(mut self, value: i64) -> Self {
         self.rate_limit_duration_secs = Some(value);
         self
     }
-
+    
     pub fn rate_limit_num(mut self, value: i64) -> Self {
         self.rate_limit_num = Some(value);
         self
     }
-
+    
     pub fn sasl(mut self, value: crate::datadogV2::model::ObservabilityPipelineKafkaSasl) -> Self {
         self.sasl = Some(value);
         self
     }
-
+    
     pub fn socket_timeout_ms(mut self, value: i64) -> Self {
         self.socket_timeout_ms = Some(value);
         self
     }
-
+    
     pub fn tls(mut self, value: crate::datadogV2::model::ObservabilityPipelineTls) -> Self {
         self.tls = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -200,37 +182,23 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                 M: MapAccess<'a>,
             {
                 let mut bootstrap_servers_key: Option<String> = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
-                let mut compression: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression,
-                > = None;
-                let mut encoding: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaDestinationEncoding,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
+                let mut compression: Option<crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression> = None;
+                let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineKafkaDestinationEncoding> = None;
                 let mut headers_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut inputs: Option<Vec<String>> = None;
                 let mut key_field: Option<String> = None;
-                let mut librdkafka_options: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>,
-                > = None;
+                let mut librdkafka_options: Option<Vec<crate::datadogV2::model::ObservabilityPipelineKafkaLibrdkafkaOption>> = None;
                 let mut message_timeout_ms: Option<i64> = None;
                 let mut rate_limit_duration_secs: Option<i64> = None;
                 let mut rate_limit_num: Option<i64> = None;
-                let mut sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl> =
-                    None;
+                let mut sasl: Option<crate::datadogV2::model::ObservabilityPipelineKafkaSasl> = None;
                 let mut socket_timeout_ms: Option<i64> = None;
                 let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineTls> = None;
                 let mut topic: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineKafkaDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineKafkaDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -239,9 +207,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                             if v.is_null() {
                                 continue;
                             }
-                            bootstrap_servers_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bootstrap_servers_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -255,13 +222,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "compression" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compression =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            compression = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _compression) = compression {
                                 match _compression {
                                     crate::datadogV2::model::ObservabilityPipelineKafkaDestinationCompression::UnparsedObject(_compression) => {
@@ -270,7 +236,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "encoding" => {
                             encoding = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _encoding) = encoding {
@@ -281,76 +247,70 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "headers_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            headers_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            headers_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "key_field" => {
                             if v.is_null() {
                                 continue;
                             }
                             key_field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "librdkafka_options" => {
                             if v.is_null() {
                                 continue;
                             }
-                            librdkafka_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            librdkafka_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "message_timeout_ms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            message_timeout_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            message_timeout_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rate_limit_duration_secs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rate_limit_duration_secs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rate_limit_duration_secs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rate_limit_num" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rate_limit_num =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rate_limit_num = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sasl" => {
                             if v.is_null() {
                                 continue;
                             }
                             sasl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "socket_timeout_ms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            socket_timeout_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            socket_timeout_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tls" => {
                             if v.is_null() {
                                 continue;
                             }
                             tls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "topic" => {
                             topic = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -361,12 +321,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineKafkaDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let encoding = encoding.ok_or_else(|| M::Error::missing_field("encoding"))?;

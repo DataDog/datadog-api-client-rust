@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `splunk_hec` destination forwards logs to Splunk using the HTTP Event Collector (HEC).
 ///
@@ -14,8 +14,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineSplunkHecDestination {
     /// If `true`, Splunk tries to extract timestamps from incoming log events.
-    /// If `false`, Splunk assigns the time the event was received.
-    /// Only applies when `endpoint_target` is `event`; cannot be `true` when `endpoint_target` is `raw`.
+/// If `false`, Splunk assigns the time the event was received.
+/// Only applies when `endpoint_target` is `event`; cannot be `true` when `endpoint_target` is `raw`.
     #[serde(rename = "auto_extract_timestamp")]
     pub auto_extract_timestamp: Option<bool>,
     /// Configuration for buffer settings on destination components.
@@ -23,12 +23,10 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     pub buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions>,
     /// Encoding format for log events.
     #[serde(rename = "encoding")]
-    pub encoding:
-        Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding>,
+    pub encoding: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding>,
     /// The Splunk HEC endpoint to send events to. Use `event` to send structured events to the `/event` endpoint, or `raw` to send the raw message to the `/raw` endpoint.
     #[serde(rename = "endpoint_target")]
-    pub endpoint_target:
-        Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget>,
+    pub endpoint_target: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget>,
     /// Name of the environment variable or secret that holds the Splunk HEC endpoint URL.
     #[serde(rename = "endpoint_url_key")]
     pub endpoint_url_key: Option<String>,
@@ -52,8 +50,7 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     pub token_key: Option<String>,
     /// Controls how the Splunk HEC token is supplied. Use `custom` to provide a token with `token_key`, or `from_source` to forward the token received from an upstream Splunk HEC source.
     #[serde(rename = "token_strategy")]
-    pub token_strategy:
-        Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy>,
+    pub token_strategy: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy>,
     /// The destination type. Always `splunk_hec`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
@@ -61,15 +58,11 @@ pub struct ObservabilityPipelineSplunkHecDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineSplunkHecDestination {
-    pub fn new(
-        id: String,
-        inputs: Vec<String>,
-        type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
-    ) -> ObservabilityPipelineSplunkHecDestination {
+    pub fn new(id: String, inputs: Vec<String>, type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType) -> ObservabilityPipelineSplunkHecDestination {
         ObservabilityPipelineSplunkHecDestination {
             auto_extract_timestamp: None,
             buffer: None,
@@ -88,77 +81,64 @@ impl ObservabilityPipelineSplunkHecDestination {
             _unparsed: false,
         }
     }
-
+    
     pub fn auto_extract_timestamp(mut self, value: bool) -> Self {
         self.auto_extract_timestamp = Some(value);
         self
     }
-
-    pub fn buffer(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-    ) -> Self {
+    
+    pub fn buffer(mut self, value: crate::datadogV2::model::ObservabilityPipelineBufferOptions) -> Self {
         self.buffer = Some(value);
         self
     }
-
-    pub fn encoding(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
-    ) -> Self {
+    
+    pub fn encoding(mut self, value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding) -> Self {
         self.encoding = Some(value);
         self
     }
-
-    pub fn endpoint_target(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget,
-    ) -> Self {
+    
+    pub fn endpoint_target(mut self, value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget) -> Self {
         self.endpoint_target = Some(value);
         self
     }
-
+    
     pub fn endpoint_url_key(mut self, value: String) -> Self {
         self.endpoint_url_key = Some(value);
         self
     }
-
+    
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
-
+    
     pub fn indexed_fields(mut self, value: Vec<String>) -> Self {
         self.indexed_fields = Some(value);
         self
     }
-
+    
     pub fn sourcetype(mut self, value: String) -> Self {
         self.sourcetype = Some(value);
         self
     }
-
+    
     pub fn token_key(mut self, value: String) -> Self {
         self.token_key = Some(value);
         self
     }
-
-    pub fn token_strategy(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy,
-    ) -> Self {
+    
+    pub fn token_strategy(mut self, value: crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy) -> Self {
         self.token_strategy = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -178,12 +158,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 M: MapAccess<'a>,
             {
                 let mut auto_extract_timestamp: Option<bool> = None;
-                let mut buffer: Option<
-                    crate::datadogV2::model::ObservabilityPipelineBufferOptions,
-                > = None;
-                let mut encoding: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding,
-                > = None;
+                let mut buffer: Option<crate::datadogV2::model::ObservabilityPipelineBufferOptions> = None;
+                let mut encoding: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEncoding> = None;
                 let mut endpoint_target: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget> = None;
                 let mut endpoint_url_key: Option<String> = None;
                 let mut id: Option<String> = None;
@@ -192,16 +168,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                 let mut inputs: Option<Vec<String>> = None;
                 let mut sourcetype: Option<String> = None;
                 let mut token_key: Option<String> = None;
-                let mut token_strategy: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut token_strategy: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy> = None;
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -210,9 +179,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                             if v.is_null() {
                                 continue;
                             }
-                            auto_extract_timestamp =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auto_extract_timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "buffer" => {
                             if v.is_null() {
                                 continue;
@@ -226,7 +194,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "encoding" => {
                             if v.is_null() {
                                 continue;
@@ -240,13 +208,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "endpoint_target" => {
                             if v.is_null() {
                                 continue;
                             }
-                            endpoint_target =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            endpoint_target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _endpoint_target) = endpoint_target {
                                 match _endpoint_target {
                                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationEndpointTarget::UnparsedObject(_endpoint_target) => {
@@ -255,51 +222,48 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "endpoint_url_key" => {
                             if v.is_null() {
                                 continue;
                             }
-                            endpoint_url_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            endpoint_url_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "index" => {
                             if v.is_null() {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indexed_fields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            indexed_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indexed_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "inputs" => {
                             inputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sourcetype" => {
                             if v.is_null() {
                                 continue;
                             }
                             sourcetype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "token_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             token_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "token_strategy" => {
                             if v.is_null() {
                                 continue;
                             }
-                            token_strategy =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            token_strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _token_strategy) = token_strategy {
                                 match _token_strategy {
                                     crate::datadogV2::model::ObservabilityPipelineSplunkHecDestinationTokenStrategy::UnparsedObject(_token_strategy) => {
@@ -308,7 +272,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -319,12 +283,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecDestination {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

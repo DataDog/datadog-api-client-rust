@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Rollout options request payload.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RolloutOptionsRequest {
     /// Whether the schedule should begin automatically.
-    #[serde(
-        rename = "autostart",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "autostart", default, with = "::serde_with::rust::double_option")]
     pub autostart: Option<Option<bool>>,
     /// Interval in milliseconds for uniform interval strategies.
     #[serde(rename = "selection_interval_ms")]
@@ -28,7 +24,7 @@ pub struct RolloutOptionsRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RolloutOptionsRequest {
@@ -41,25 +37,24 @@ impl RolloutOptionsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn autostart(mut self, value: Option<bool>) -> Self {
         self.autostart = Some(value);
         self
     }
-
+    
     pub fn selection_interval_ms(mut self, value: i64) -> Self {
         self.selection_interval_ms = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RolloutOptionsRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,42 +76,36 @@ impl<'de> Deserialize<'de> for RolloutOptionsRequest {
                 let mut autostart: Option<Option<bool>> = None;
                 let mut selection_interval_ms: Option<i64> = None;
                 let mut strategy: Option<crate::datadogV2::model::RolloutStrategy> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "autostart" => {
                             autostart = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "selection_interval_ms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            selection_interval_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            selection_interval_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "strategy" => {
                             strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _strategy) = strategy {
                                 match _strategy {
-                                    crate::datadogV2::model::RolloutStrategy::UnparsedObject(
-                                        _strategy,
-                                    ) => {
+                                    crate::datadogV2::model::RolloutStrategy::UnparsedObject(_strategy) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;

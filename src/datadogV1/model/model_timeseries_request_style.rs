@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Define request widget style for timeseries widgets.
 #[non_exhaustive]
@@ -21,8 +21,8 @@ pub struct TimeseriesRequestStyle {
     #[serde(rename = "line_width")]
     pub line_width: Option<crate::datadogV1::model::WidgetLineWidth>,
     /// How to order series in timeseries visualizations.
-    /// - `tags`: Order series alphabetically by tag name (default behavior)
-    /// - `values`: Order series by their current metric values (typically descending)
+/// - `tags`: Order series alphabetically by tag name (default behavior)
+/// - `values`: Order series by their current metric values (typically descending)
     #[serde(rename = "order_by")]
     pub order_by: Option<crate::datadogV1::model::WidgetStyleOrderBy>,
     /// Color palette to apply to the widget.
@@ -32,7 +32,7 @@ pub struct TimeseriesRequestStyle {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TimeseriesRequestStyle {
@@ -47,40 +47,38 @@ impl TimeseriesRequestStyle {
             _unparsed: false,
         }
     }
-
+    
     pub fn has_value_labels(mut self, value: bool) -> Self {
         self.has_value_labels = Some(value);
         self
     }
-
+    
     pub fn line_type(mut self, value: crate::datadogV1::model::WidgetLineType) -> Self {
         self.line_type = Some(value);
         self
     }
-
+    
     pub fn line_width(mut self, value: crate::datadogV1::model::WidgetLineWidth) -> Self {
         self.line_width = Some(value);
         self
     }
-
+    
     pub fn order_by(mut self, value: crate::datadogV1::model::WidgetStyleOrderBy) -> Self {
         self.order_by = Some(value);
         self
     }
-
+    
     pub fn palette(mut self, value: String) -> Self {
         self.palette = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TimeseriesRequestStyle {
     fn default() -> Self {
@@ -110,10 +108,7 @@ impl<'de> Deserialize<'de> for TimeseriesRequestStyle {
                 let mut line_width: Option<crate::datadogV1::model::WidgetLineWidth> = None;
                 let mut order_by: Option<crate::datadogV1::model::WidgetStyleOrderBy> = None;
                 let mut palette: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -122,9 +117,8 @@ impl<'de> Deserialize<'de> for TimeseriesRequestStyle {
                             if v.is_null() {
                                 continue;
                             }
-                            has_value_labels =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_value_labels = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "line_type" => {
                             if v.is_null() {
                                 continue;
@@ -132,15 +126,13 @@ impl<'de> Deserialize<'de> for TimeseriesRequestStyle {
                             line_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _line_type) = line_type {
                                 match _line_type {
-                                    crate::datadogV1::model::WidgetLineType::UnparsedObject(
-                                        _line_type,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetLineType::UnparsedObject(_line_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "line_width" => {
                             if v.is_null() {
                                 continue;
@@ -148,15 +140,13 @@ impl<'de> Deserialize<'de> for TimeseriesRequestStyle {
                             line_width = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _line_width) = line_width {
                                 match _line_width {
-                                    crate::datadogV1::model::WidgetLineWidth::UnparsedObject(
-                                        _line_width,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetLineWidth::UnparsedObject(_line_width) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "order_by" => {
                             if v.is_null() {
                                 continue;
@@ -164,26 +154,24 @@ impl<'de> Deserialize<'de> for TimeseriesRequestStyle {
                             order_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _order_by) = order_by {
                                 match _order_by {
-                                    crate::datadogV1::model::WidgetStyleOrderBy::UnparsedObject(
-                                        _order_by,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetStyleOrderBy::UnparsedObject(_order_by) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "palette" => {
                             if v.is_null() {
                                 continue;
                             }
                             palette = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

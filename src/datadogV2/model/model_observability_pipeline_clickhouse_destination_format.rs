@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineClickhouseDestinationFormat {
-    JSON_EACH_ROW,
-    JSON_AS_OBJECT,
-    JSON_AS_STRING,
-    ARROW_STREAM,
+	JSON_EACH_ROW,
+	JSON_AS_OBJECT,
+	JSON_AS_STRING,
+	ARROW_STREAM,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineClickhouseDestinationFormat 
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "json_each_row" => Self::JSON_EACH_ROW,
-            "json_as_object" => Self::JSON_AS_OBJECT,
-            "json_as_string" => Self::JSON_AS_STRING,
-            "arrow_stream" => Self::ARROW_STREAM,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"json_each_row" => Self::JSON_EACH_ROW,"json_as_object" => Self::JSON_AS_OBJECT,"json_as_string" => Self::JSON_AS_STRING,"arrow_stream" => Self::ARROW_STREAM,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

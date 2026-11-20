@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Details of a single data source connection, including its fields, join configuration, and audit metadata.
 #[non_exhaustive]
@@ -19,20 +19,16 @@ pub struct ListConnectionsResponseDataAttributesConnectionsItems {
     pub created_by: Option<String>,
     /// Type-specific configuration of the connection. Only the field matching the connection type is set.
     #[serde(rename = "details")]
-    pub details: Option<
-        crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
-    >,
+    pub details: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails>,
     /// List of custom attribute fields imported from the data source.
     #[serde(rename = "fields")]
-    pub fields:
-        Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>>,
+    pub fields: Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>>,
     /// Unique identifier of the connection.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The join configuration describing how the data source is linked to the entity.
     #[serde(rename = "join")]
-    pub join:
-        Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin>,
+    pub join: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin>,
     /// Additional key-value metadata associated with the connection.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, String>>,
@@ -52,7 +48,7 @@ pub struct ListConnectionsResponseDataAttributesConnectionsItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ListConnectionsResponseDataAttributesConnectionsItems {
@@ -73,79 +69,68 @@ impl ListConnectionsResponseDataAttributesConnectionsItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
-
-    pub fn details(
-        mut self,
-        value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails,
-    ) -> Self {
+    
+    pub fn details(mut self, value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails) -> Self {
         self.details = Some(value);
         self
     }
-
-    pub fn fields(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>,
-    ) -> Self {
+    
+    pub fn fields(mut self, value: Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>) -> Self {
         self.fields = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn join(
-        mut self,
-        value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin,
-    ) -> Self {
+    
+    pub fn join(mut self, value: crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin) -> Self {
         self.join = Some(value);
         self
     }
-
+    
     pub fn metadata(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
+    
     pub fn updated_by(mut self, value: String) -> Self {
         self.updated_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ListConnectionsResponseDataAttributesConnectionsItems {
     fn default() -> Self {
@@ -173,9 +158,7 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut details: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsDetails> = None;
-                let mut fields: Option<
-                    Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>,
-                > = None;
+                let mut fields: Option<Vec<crate::datadogV2::model::CreateConnectionRequestDataAttributesFieldsItems>> = None;
                 let mut id: Option<String> = None;
                 let mut join: Option<crate::datadogV2::model::ListConnectionsResponseDataAttributesConnectionsItemsJoin> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
@@ -183,10 +166,7 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                 let mut type_: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut updated_by: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -196,72 +176,72 @@ impl<'de> Deserialize<'de> for ListConnectionsResponseDataAttributesConnectionsI
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "details" => {
                             if v.is_null() {
                                 continue;
                             }
                             details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "fields" => {
                             if v.is_null() {
                                 continue;
                             }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "join" => {
                             if v.is_null() {
                                 continue;
                             }
                             join = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

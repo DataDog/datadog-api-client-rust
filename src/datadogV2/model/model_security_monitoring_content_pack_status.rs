@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringContentPackStatus {
-    INSTALL,
-    ACTIVATE,
-    INITIALIZING,
-    ACTIVE,
-    WARNING,
-    BROKEN,
-    NOT_CONFIGURED,
+	INSTALL,
+	ACTIVATE,
+	INITIALIZING,
+	ACTIVE,
+	WARNING,
+	BROKEN,
+	NOT_CONFIGURED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringContentPackStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "install" => Self::INSTALL,
-            "activate" => Self::ACTIVATE,
-            "initializing" => Self::INITIALIZING,
-            "active" => Self::ACTIVE,
-            "warning" => Self::WARNING,
-            "broken" => Self::BROKEN,
-            "not_configured" => Self::NOT_CONFIGURED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"install" => Self::INSTALL,"activate" => Self::ACTIVATE,"initializing" => Self::INITIALIZING,"active" => Self::ACTIVE,"warning" => Self::WARNING,"broken" => Self::BROKEN,"not_configured" => Self::NOT_CONFIGURED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data Jobs Monitoring, which collects performance, reliability, and cost data for your Databricks jobs.
 #[non_exhaustive]
@@ -30,20 +30,19 @@ impl DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::DatabricksDataObservabilityJobsMonitoringIntegrationDataflowSettingsRequest,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::DatabricksDataObservabilityJobsMonitoringIntegrationDataflowSettingsRequest) -> Self {
         self.settings = Some(value);
         self
     }
+    
 }
+
 
 impl Default for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequest {
     fn default() -> Self {
@@ -57,9 +56,7 @@ impl<'de> Deserialize<'de> for DatabricksDataObservabilityJobsMonitoringIntegrat
         D: Deserializer<'de>,
     {
         struct DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequestVisitor;
-        impl<'a> Visitor<'a>
-            for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequestVisitor
-        {
+        impl<'a> Visitor<'a> for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequestVisitor {
             type Value = DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -81,18 +78,16 @@ impl<'de> Deserialize<'de> for DatabricksDataObservabilityJobsMonitoringIntegrat
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -106,8 +101,6 @@ impl<'de> Deserialize<'de> for DatabricksDataObservabilityJobsMonitoringIntegrat
             }
         }
 
-        deserializer.deserialize_any(
-            DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequestVisitor,
-        )
+        deserializer.deserialize_any(DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRequestVisitor)
     }
 }

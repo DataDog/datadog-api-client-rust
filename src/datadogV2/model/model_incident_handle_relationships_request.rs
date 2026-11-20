@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationships to associate with an incident handle in a create or update request.
 #[non_exhaustive]
@@ -21,13 +21,11 @@ pub struct IncidentHandleRelationshipsRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentHandleRelationshipsRequest {
-    pub fn new(
-        incident_type: crate::datadogV2::model::IncidentHandleRelationship,
-    ) -> IncidentHandleRelationshipsRequest {
+    pub fn new(incident_type: crate::datadogV2::model::IncidentHandleRelationship) -> IncidentHandleRelationshipsRequest {
         IncidentHandleRelationshipsRequest {
             commander_user: None,
             incident_type,
@@ -35,23 +33,19 @@ impl IncidentHandleRelationshipsRequest {
             _unparsed: false,
         }
     }
-
-    pub fn commander_user(
-        mut self,
-        value: crate::datadogV2::model::IncidentHandleRelationship,
-    ) -> Self {
+    
+    pub fn commander_user(mut self, value: crate::datadogV2::model::IncidentHandleRelationship) -> Self {
         self.commander_user = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentHandleRelationshipsRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -70,15 +64,9 @@ impl<'de> Deserialize<'de> for IncidentHandleRelationshipsRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut commander_user: Option<
-                    crate::datadogV2::model::IncidentHandleRelationship,
-                > = None;
-                let mut incident_type: Option<crate::datadogV2::model::IncidentHandleRelationship> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut commander_user: Option<crate::datadogV2::model::IncidentHandleRelationship> = None;
+                let mut incident_type: Option<crate::datadogV2::model::IncidentHandleRelationship> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -87,22 +75,19 @@ impl<'de> Deserialize<'de> for IncidentHandleRelationshipsRequest {
                             if v.is_null() {
                                 continue;
                             }
-                            commander_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            commander_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_type" => {
-                            incident_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let incident_type =
-                    incident_type.ok_or_else(|| M::Error::missing_field("incident_type"))?;
+                let incident_type = incident_type.ok_or_else(|| M::Error::missing_field("incident_type"))?;
 
                 let content = IncidentHandleRelationshipsRequest {
                     commander_user,

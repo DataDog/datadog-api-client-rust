@@ -1,10 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
+
+
+
 
 /// GetDataObservabilityMonitorRunStatusError is a struct for typed errors of method [`DataObservabilityAPI::get_data_observability_monitor_run_status`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -15,6 +18,7 @@ pub enum GetDataObservabilityMonitorRunStatusError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RunDataObservabilityMonitorError is a struct for typed errors of method [`DataObservabilityAPI::run_data_observability_monitor`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -23,6 +27,7 @@ pub enum RunDataObservabilityMonitorError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage and run data observability monitors.
 #[derive(Debug, Clone)]
@@ -46,7 +51,8 @@ impl DataObservabilityAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -91,73 +97,58 @@ impl DataObservabilityAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Retrieves the current status of a data observability monitor run. Poll this endpoint after triggering a run to determine when evaluation is complete.
-    pub async fn get_data_observability_monitor_run_status(
-        &self,
-        run_id: String,
-    ) -> Result<
-        crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse,
-        datadog::Error<GetDataObservabilityMonitorRunStatusError>,
-    > {
-        match self
-            .get_data_observability_monitor_run_status_with_http_info(run_id)
-            .await
-        {
+    pub async fn get_data_observability_monitor_run_status(&self, run_id: String) -> Result<crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse, datadog::Error<GetDataObservabilityMonitorRunStatusError>> {
+        match self.get_data_observability_monitor_run_status_with_http_info(run_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves the current status of a data observability monitor run. Poll this endpoint after triggering a run to determine when evaluation is complete.
-    pub async fn get_data_observability_monitor_run_status_with_http_info(
-        &self,
-        run_id: String,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse,
-        >,
-        datadog::Error<GetDataObservabilityMonitorRunStatusError>,
-    > {
+    pub async fn get_data_observability_monitor_run_status_with_http_info(&self, run_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse>, datadog::Error<GetDataObservabilityMonitorRunStatusError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_data_observability_monitor_run_status";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_data_observability_monitor_run_status' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_data_observability_monitor_run_status' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/data-observability/monitors/runs/{run_id}/status",
-            local_configuration.get_operation_host(local_operation_id),
-            run_id = datadog::urlencode(run_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), run_id=
+            datadog::urlencode(run_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -170,22 +161,16 @@ impl DataObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -197,64 +182,38 @@ impl DataObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GetDataObservabilityMonitorRunStatusResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetDataObservabilityMonitorRunStatusError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetDataObservabilityMonitorRunStatusError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Manually triggers a run for a data observability monitor. Only monitors that are not scheduled (manually-runnable) can be triggered this way.
-    pub async fn run_data_observability_monitor(
-        &self,
-        monitor_id: i64,
-    ) -> Result<
-        crate::datadogV2::model::RunDataObservabilityMonitorResponse,
-        datadog::Error<RunDataObservabilityMonitorError>,
-    > {
-        match self
-            .run_data_observability_monitor_with_http_info(monitor_id)
-            .await
-        {
+    pub async fn run_data_observability_monitor(&self, monitor_id: i64) -> Result<crate::datadogV2::model::RunDataObservabilityMonitorResponse, datadog::Error<RunDataObservabilityMonitorError>> {
+        match self.run_data_observability_monitor_with_http_info(monitor_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Manually triggers a run for a data observability monitor. Only monitors that are not scheduled (manually-runnable) can be triggered this way.
-    pub async fn run_data_observability_monitor_with_http_info(
-        &self,
-        monitor_id: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RunDataObservabilityMonitorResponse>,
-        datadog::Error<RunDataObservabilityMonitorError>,
-    > {
+    pub async fn run_data_observability_monitor_with_http_info(&self, monitor_id: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::RunDataObservabilityMonitorResponse>, datadog::Error<RunDataObservabilityMonitorError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.run_data_observability_monitor";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -266,19 +225,24 @@ impl DataObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/data-observability/monitors/{monitor_id}/run",
-            local_configuration.get_operation_host(local_operation_id),
-            monitor_id = monitor_id
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), monitor_id=
+            monitor_id
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -291,22 +255,16 @@ impl DataObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -318,26 +276,17 @@ impl DataObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RunDataObservabilityMonitorResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RunDataObservabilityMonitorResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RunDataObservabilityMonitorError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RunDataObservabilityMonitorError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

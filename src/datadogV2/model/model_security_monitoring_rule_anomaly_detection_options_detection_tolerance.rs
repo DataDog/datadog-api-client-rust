@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
+	ONE,
+	TWO,
+	THREE,
+	FOUR,
+	FIVE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,15 +38,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptionsDete
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            1 => Self::ONE,
-            2 => Self::TWO,
-            3 => Self::THREE,
-            4 => Self::FOUR,
-            5 => Self::FIVE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {1 => Self::ONE,2 => Self::TWO,3 => Self::THREE,4 => Self::FOUR,5 => Self::FIVE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

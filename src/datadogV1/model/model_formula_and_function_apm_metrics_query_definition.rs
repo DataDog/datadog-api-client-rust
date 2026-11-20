@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A formula and functions APM metrics query.
 #[non_exhaustive]
@@ -51,15 +51,11 @@ pub struct FormulaAndFunctionApmMetricsQueryDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FormulaAndFunctionApmMetricsQueryDefinition {
-    pub fn new(
-        data_source: crate::datadogV1::model::FormulaAndFunctionApmMetricsDataSource,
-        name: String,
-        stat: crate::datadogV1::model::FormulaAndFunctionApmMetricStatName,
-    ) -> FormulaAndFunctionApmMetricsQueryDefinition {
+    pub fn new(data_source: crate::datadogV1::model::FormulaAndFunctionApmMetricsDataSource, name: String, stat: crate::datadogV1::model::FormulaAndFunctionApmMetricStatName) -> FormulaAndFunctionApmMetricsQueryDefinition {
         FormulaAndFunctionApmMetricsQueryDefinition {
             data_source,
             group_by: None,
@@ -77,63 +73,59 @@ impl FormulaAndFunctionApmMetricsQueryDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn group_by(mut self, value: Vec<String>) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn operation_mode(mut self, value: String) -> Self {
         self.operation_mode = Some(value);
         self
     }
-
+    
     pub fn operation_name(mut self, value: String) -> Self {
         self.operation_name = Some(value);
         self
     }
-
+    
     pub fn peer_tags(mut self, value: Vec<String>) -> Self {
         self.peer_tags = Some(value);
         self
     }
-
+    
     pub fn query_filter(mut self, value: String) -> Self {
         self.query_filter = Some(value);
         self
     }
-
+    
     pub fn resource_hash(mut self, value: String) -> Self {
         self.resource_hash = Some(value);
         self
     }
-
+    
     pub fn resource_name(mut self, value: String) -> Self {
         self.resource_name = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
-    pub fn span_kind(
-        mut self,
-        value: crate::datadogV1::model::FormulaAndFunctionApmMetricsSpanKind,
-    ) -> Self {
+    
+    pub fn span_kind(mut self, value: crate::datadogV1::model::FormulaAndFunctionApmMetricsSpanKind) -> Self {
         self.span_kind = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -152,9 +144,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
             where
                 M: MapAccess<'a>,
             {
-                let mut data_source: Option<
-                    crate::datadogV1::model::FormulaAndFunctionApmMetricsDataSource,
-                > = None;
+                let mut data_source: Option<crate::datadogV1::model::FormulaAndFunctionApmMetricsDataSource> = None;
                 let mut group_by: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut operation_mode: Option<String> = None;
@@ -164,22 +154,15 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
                 let mut resource_hash: Option<String> = None;
                 let mut resource_name: Option<String> = None;
                 let mut service: Option<String> = None;
-                let mut span_kind: Option<
-                    crate::datadogV1::model::FormulaAndFunctionApmMetricsSpanKind,
-                > = None;
-                let mut stat: Option<crate::datadogV1::model::FormulaAndFunctionApmMetricStatName> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut span_kind: Option<crate::datadogV1::model::FormulaAndFunctionApmMetricsSpanKind> = None;
+                let mut stat: Option<crate::datadogV1::model::FormulaAndFunctionApmMetricStatName> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::FormulaAndFunctionApmMetricsDataSource::UnparsedObject(_data_source) => {
@@ -188,63 +171,58 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "operation_mode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            operation_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            operation_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "operation_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            operation_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            operation_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "peer_tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             peer_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query_filter" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_filter =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_hash" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_hash =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_hash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_kind" => {
                             if v.is_null() {
                                 continue;
@@ -258,7 +236,7 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "stat" => {
                             stat = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _stat) = stat {
@@ -269,16 +247,15 @@ impl<'de> Deserialize<'de> for FormulaAndFunctionApmMetricsQueryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let stat = stat.ok_or_else(|| M::Error::missing_field("stat"))?;
 

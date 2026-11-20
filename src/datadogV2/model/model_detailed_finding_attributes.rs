@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The JSON:API attributes of the detailed finding.
 #[non_exhaustive]
@@ -48,7 +48,7 @@ pub struct DetailedFindingAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DetailedFindingAttributes {
@@ -69,73 +69,68 @@ impl DetailedFindingAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn evaluation(mut self, value: crate::datadogV2::model::FindingEvaluation) -> Self {
         self.evaluation = Some(value);
         self
     }
-
+    
     pub fn evaluation_changed_at(mut self, value: i64) -> Self {
         self.evaluation_changed_at = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn mute(mut self, value: crate::datadogV2::model::FindingMute) -> Self {
         self.mute = Some(value);
         self
     }
-
+    
     pub fn resource(mut self, value: String) -> Self {
         self.resource = Some(value);
         self
     }
-
-    pub fn resource_configuration(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn resource_configuration(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.resource_configuration = Some(value);
         self
     }
-
+    
     pub fn resource_discovery_date(mut self, value: i64) -> Self {
         self.resource_discovery_date = Some(value);
         self
     }
-
+    
     pub fn resource_type(mut self, value: String) -> Self {
         self.resource_type = Some(value);
         self
     }
-
+    
     pub fn rule(mut self, value: crate::datadogV2::model::FindingRule) -> Self {
         self.rule = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::FindingStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DetailedFindingAttributes {
     fn default() -> Self {
@@ -165,18 +160,13 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                 let mut message: Option<String> = None;
                 let mut mute: Option<crate::datadogV2::model::FindingMute> = None;
                 let mut resource: Option<String> = None;
-                let mut resource_configuration: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
+                let mut resource_configuration: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut resource_discovery_date: Option<i64> = None;
                 let mut resource_type: Option<String> = None;
                 let mut rule: Option<crate::datadogV2::model::FindingRule> = None;
                 let mut status: Option<crate::datadogV2::model::FindingStatus> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -188,67 +178,61 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                             evaluation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _evaluation) = evaluation {
                                 match _evaluation {
-                                    crate::datadogV2::model::FindingEvaluation::UnparsedObject(
-                                        _evaluation,
-                                    ) => {
+                                    crate::datadogV2::model::FindingEvaluation::UnparsedObject(_evaluation) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "evaluation_changed_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            evaluation_changed_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evaluation_changed_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mute" => {
                             if v.is_null() {
                                 continue;
                             }
                             mute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource" => {
                             if v.is_null() {
                                 continue;
                             }
                             resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource_configuration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_configuration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_discovery_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_discovery_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_discovery_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rule" => {
                             if v.is_null() {
                                 continue;
                             }
                             rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -256,26 +240,24 @@ impl<'de> Deserialize<'de> for DetailedFindingAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::FindingStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV2::model::FindingStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::create_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::create_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CreateFastlyServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::delete_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum DeleteFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::delete_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum DeleteFastlyServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::get_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum GetFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::get_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -57,6 +62,7 @@ pub enum GetFastlyServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListFastlyAccountsError is a struct for typed errors of method [`FastlyIntegrationAPI::list_fastly_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +72,7 @@ pub enum ListFastlyAccountsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListFastlyServicesError is a struct for typed errors of method [`FastlyIntegrationAPI::list_fastly_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,6 +80,7 @@ pub enum ListFastlyServicesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateFastlyAccountError is a struct for typed errors of method [`FastlyIntegrationAPI::update_fastly_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -82,6 +90,7 @@ pub enum UpdateFastlyAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateFastlyServiceError is a struct for typed errors of method [`FastlyIntegrationAPI::update_fastly_service`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,6 +98,7 @@ pub enum UpdateFastlyServiceError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Datadog Fastly integration accounts and services directly through the Datadog API. See the [Fastly integration page](<https://docs.datadoghq.com/integrations/fastly/>) for more information.
 #[derive(Debug, Clone)]
@@ -112,7 +122,8 @@ impl FastlyIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -157,59 +168,49 @@ impl FastlyIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a Fastly account.
-    pub async fn create_fastly_account(
-        &self,
-        body: crate::datadogV2::model::FastlyAccountCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::FastlyAccountResponse,
-        datadog::Error<CreateFastlyAccountError>,
-    > {
+    pub async fn create_fastly_account(&self, body: crate::datadogV2::model::FastlyAccountCreateRequest) -> Result<crate::datadogV2::model::FastlyAccountResponse, datadog::Error<CreateFastlyAccountError>> {
         match self.create_fastly_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Fastly account.
-    pub async fn create_fastly_account_with_http_info(
-        &self,
-        body: crate::datadogV2::model::FastlyAccountCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
-        datadog::Error<CreateFastlyAccountError>,
-    > {
+    pub async fn create_fastly_account_with_http_info(&self, body: crate::datadogV2::model::FastlyAccountCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>, datadog::Error<CreateFastlyAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_fastly_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -222,23 +223,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -246,7 +240,10 @@ impl FastlyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -256,7 +253,10 @@ impl FastlyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -278,7 +278,7 @@ impl FastlyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -295,82 +295,60 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFastlyAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateFastlyAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a Fastly service for an account.
-    pub async fn create_fastly_service(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        crate::datadogV2::model::FastlyServiceResponse,
-        datadog::Error<CreateFastlyServiceError>,
-    > {
-        match self
-            .create_fastly_service_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn create_fastly_service(&self, account_id: String, body: crate::datadogV2::model::FastlyServiceRequest) -> Result<crate::datadogV2::model::FastlyServiceResponse, datadog::Error<CreateFastlyServiceError>> {
+        match self.create_fastly_service_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Fastly service for an account.
-    pub async fn create_fastly_service_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
-        datadog::Error<CreateFastlyServiceError>,
-    > {
+    pub async fn create_fastly_service_with_http_info(&self, account_id: String, body: crate::datadogV2::model::FastlyServiceRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>, datadog::Error<CreateFastlyServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_fastly_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -383,23 +361,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -407,7 +378,10 @@ impl FastlyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -417,7 +391,10 @@ impl FastlyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -439,7 +416,7 @@ impl FastlyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -456,62 +433,53 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateFastlyServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateFastlyServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Fastly account.
-    pub async fn delete_fastly_account(
-        &self,
-        account_id: String,
-    ) -> Result<(), datadog::Error<DeleteFastlyAccountError>> {
+    pub async fn delete_fastly_account(&self, account_id: String) -> Result<(), datadog::Error<DeleteFastlyAccountError>> {
         match self.delete_fastly_account_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Fastly account.
-    pub async fn delete_fastly_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyAccountError>> {
+    pub async fn delete_fastly_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_fastly_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -524,22 +492,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -557,55 +519,46 @@ impl FastlyIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteFastlyAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteFastlyAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Fastly service for an account.
-    pub async fn delete_fastly_service(
-        &self,
-        account_id: String,
-        service_id: String,
-    ) -> Result<(), datadog::Error<DeleteFastlyServiceError>> {
-        match self
-            .delete_fastly_service_with_http_info(account_id, service_id)
-            .await
-        {
+    pub async fn delete_fastly_service(&self, account_id: String, service_id: String) -> Result<(), datadog::Error<DeleteFastlyServiceError>> {
+        match self.delete_fastly_service_with_http_info(account_id, service_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Fastly service for an account.
-    pub async fn delete_fastly_service_with_http_info(
-        &self,
-        account_id: String,
-        service_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyServiceError>> {
+    pub async fn delete_fastly_service_with_http_info(&self, account_id: String, service_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteFastlyServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_fastly_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            service_id = datadog::urlencode(service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , service_id=
+            datadog::urlencode(service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -618,22 +571,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -651,61 +598,50 @@ impl FastlyIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteFastlyServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteFastlyServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Fastly account.
-    pub async fn get_fastly_account(
-        &self,
-        account_id: String,
-    ) -> Result<crate::datadogV2::model::FastlyAccountResponse, datadog::Error<GetFastlyAccountError>>
-    {
+    pub async fn get_fastly_account(&self, account_id: String) -> Result<crate::datadogV2::model::FastlyAccountResponse, datadog::Error<GetFastlyAccountError>> {
         match self.get_fastly_account_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Fastly account.
-    pub async fn get_fastly_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
-        datadog::Error<GetFastlyAccountError>,
-    > {
+    pub async fn get_fastly_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>, datadog::Error<GetFastlyAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_fastly_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -718,22 +654,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -745,80 +675,61 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFastlyAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetFastlyAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Fastly service for an account.
-    pub async fn get_fastly_service(
-        &self,
-        account_id: String,
-        service_id: String,
-    ) -> Result<crate::datadogV2::model::FastlyServiceResponse, datadog::Error<GetFastlyServiceError>>
-    {
-        match self
-            .get_fastly_service_with_http_info(account_id, service_id)
-            .await
-        {
+    pub async fn get_fastly_service(&self, account_id: String, service_id: String) -> Result<crate::datadogV2::model::FastlyServiceResponse, datadog::Error<GetFastlyServiceError>> {
+        match self.get_fastly_service_with_http_info(account_id, service_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Fastly service for an account.
-    pub async fn get_fastly_service_with_http_info(
-        &self,
-        account_id: String,
-        service_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
-        datadog::Error<GetFastlyServiceError>,
-    > {
+    pub async fn get_fastly_service_with_http_info(&self, account_id: String, service_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>, datadog::Error<GetFastlyServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_fastly_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            service_id = datadog::urlencode(service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , service_id=
+            datadog::urlencode(service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -831,22 +742,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -858,73 +763,57 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFastlyServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetFastlyServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List Fastly accounts.
-    pub async fn list_fastly_accounts(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::FastlyAccountsResponse,
-        datadog::Error<ListFastlyAccountsError>,
-    > {
+    pub async fn list_fastly_accounts(&self) -> Result<crate::datadogV2::model::FastlyAccountsResponse, datadog::Error<ListFastlyAccountsError>> {
         match self.list_fastly_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List Fastly accounts.
-    pub async fn list_fastly_accounts_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyAccountsResponse>,
-        datadog::Error<ListFastlyAccountsError>,
-    > {
+    pub async fn list_fastly_accounts_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyAccountsResponse>, datadog::Error<ListFastlyAccountsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_fastly_accounts";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -937,22 +826,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -964,76 +847,59 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFastlyAccountsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListFastlyAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List Fastly services for an account.
-    pub async fn list_fastly_services(
-        &self,
-        account_id: String,
-    ) -> Result<
-        crate::datadogV2::model::FastlyServicesResponse,
-        datadog::Error<ListFastlyServicesError>,
-    > {
+    pub async fn list_fastly_services(&self, account_id: String) -> Result<crate::datadogV2::model::FastlyServicesResponse, datadog::Error<ListFastlyServicesError>> {
         match self.list_fastly_services_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List Fastly services for an account.
-    pub async fn list_fastly_services_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyServicesResponse>,
-        datadog::Error<ListFastlyServicesError>,
-    > {
+    pub async fn list_fastly_services_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyServicesResponse>, datadog::Error<ListFastlyServicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_fastly_services";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1046,22 +912,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1073,82 +933,60 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyServicesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServicesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListFastlyServicesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListFastlyServicesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Fastly account.
-    pub async fn update_fastly_account(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::FastlyAccountUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::FastlyAccountResponse,
-        datadog::Error<UpdateFastlyAccountError>,
-    > {
-        match self
-            .update_fastly_account_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn update_fastly_account(&self, account_id: String, body: crate::datadogV2::model::FastlyAccountUpdateRequest) -> Result<crate::datadogV2::model::FastlyAccountResponse, datadog::Error<UpdateFastlyAccountError>> {
+        match self.update_fastly_account_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Fastly account.
-    pub async fn update_fastly_account_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::FastlyAccountUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>,
-        datadog::Error<UpdateFastlyAccountError>,
-    > {
+    pub async fn update_fastly_account_with_http_info(&self, account_id: String, body: crate::datadogV2::model::FastlyAccountUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyAccountResponse>, datadog::Error<UpdateFastlyAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_fastly_account";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1161,23 +999,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1185,7 +1016,10 @@ impl FastlyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1195,7 +1029,10 @@ impl FastlyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1217,7 +1054,7 @@ impl FastlyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1234,85 +1071,62 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFastlyAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFastlyAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Fastly service for an account.
-    pub async fn update_fastly_service(
-        &self,
-        account_id: String,
-        service_id: String,
-        body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        crate::datadogV2::model::FastlyServiceResponse,
-        datadog::Error<UpdateFastlyServiceError>,
-    > {
-        match self
-            .update_fastly_service_with_http_info(account_id, service_id, body)
-            .await
-        {
+    pub async fn update_fastly_service(&self, account_id: String, service_id: String, body: crate::datadogV2::model::FastlyServiceRequest) -> Result<crate::datadogV2::model::FastlyServiceResponse, datadog::Error<UpdateFastlyServiceError>> {
+        match self.update_fastly_service_with_http_info(account_id, service_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Fastly service for an account.
-    pub async fn update_fastly_service_with_http_info(
-        &self,
-        account_id: String,
-        service_id: String,
-        body: crate::datadogV2::model::FastlyServiceRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>,
-        datadog::Error<UpdateFastlyServiceError>,
-    > {
+    pub async fn update_fastly_service_with_http_info(&self, account_id: String, service_id: String, body: crate::datadogV2::model::FastlyServiceRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::FastlyServiceResponse>, datadog::Error<UpdateFastlyServiceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_fastly_service";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integrations/fastly/accounts/{account_id}/services/{service_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id),
-            service_id = datadog::urlencode(service_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            , service_id=
+            datadog::urlencode(service_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1325,23 +1139,16 @@ impl FastlyIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1349,7 +1156,10 @@ impl FastlyIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1359,7 +1169,10 @@ impl FastlyIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1381,7 +1194,7 @@ impl FastlyIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1398,26 +1211,17 @@ impl FastlyIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FastlyServiceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFastlyServiceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFastlyServiceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

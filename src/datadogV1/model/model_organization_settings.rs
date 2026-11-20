@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A JSON array of settings.
 #[non_exhaustive]
@@ -15,20 +15,15 @@ pub struct OrganizationSettings {
     #[serde(rename = "private_widget_share")]
     pub private_widget_share: Option<bool>,
     /// Set the boolean property enabled to enable or disable single sign on with SAML.
-    /// See the SAML documentation for more information about all SAML settings.
+/// See the SAML documentation for more information about all SAML settings.
     #[serde(rename = "saml")]
     pub saml: Option<crate::datadogV1::model::OrganizationSettingsSaml>,
     /// The access role of the user. Options are **st** (standard user), **adm** (admin user), or **ro** (read-only user).
-    #[serde(
-        rename = "saml_autocreate_access_role",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "saml_autocreate_access_role", default, with = "::serde_with::rust::double_option")]
     pub saml_autocreate_access_role: Option<Option<crate::datadogV1::model::AccessRole>>,
     /// Has two properties, `enabled` (boolean) and `domains`, which is a list of domains without the @ symbol.
     #[serde(rename = "saml_autocreate_users_domains")]
-    pub saml_autocreate_users_domains:
-        Option<crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains>,
+    pub saml_autocreate_users_domains: Option<crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains>,
     /// Whether or not SAML can be enabled for this organization.
     #[serde(rename = "saml_can_be_enabled")]
     pub saml_can_be_enabled: Option<bool>,
@@ -37,8 +32,7 @@ pub struct OrganizationSettings {
     pub saml_idp_endpoint: Option<String>,
     /// Has one property enabled (boolean).
     #[serde(rename = "saml_idp_initiated_login")]
-    pub saml_idp_initiated_login:
-        Option<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>,
+    pub saml_idp_initiated_login: Option<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin>,
     /// Whether or not a SAML identity provider metadata file was provided to the Datadog organization.
     #[serde(rename = "saml_idp_metadata_uploaded")]
     pub saml_idp_metadata_uploaded: Option<bool>,
@@ -52,7 +46,7 @@ pub struct OrganizationSettings {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OrganizationSettings {
@@ -72,77 +66,63 @@ impl OrganizationSettings {
             _unparsed: false,
         }
     }
-
+    
     pub fn private_widget_share(mut self, value: bool) -> Self {
         self.private_widget_share = Some(value);
         self
     }
-
+    
     pub fn saml(mut self, value: crate::datadogV1::model::OrganizationSettingsSaml) -> Self {
         self.saml = Some(value);
         self
     }
-
-    pub fn saml_autocreate_access_role(
-        mut self,
-        value: Option<crate::datadogV1::model::AccessRole>,
-    ) -> Self {
+    
+    pub fn saml_autocreate_access_role(mut self, value: Option<crate::datadogV1::model::AccessRole>) -> Self {
         self.saml_autocreate_access_role = Some(value);
         self
     }
-
-    pub fn saml_autocreate_users_domains(
-        mut self,
-        value: crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains,
-    ) -> Self {
+    
+    pub fn saml_autocreate_users_domains(mut self, value: crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains) -> Self {
         self.saml_autocreate_users_domains = Some(value);
         self
     }
-
+    
     pub fn saml_can_be_enabled(mut self, value: bool) -> Self {
         self.saml_can_be_enabled = Some(value);
         self
     }
-
+    
     pub fn saml_idp_endpoint(mut self, value: String) -> Self {
         self.saml_idp_endpoint = Some(value);
         self
     }
-
-    pub fn saml_idp_initiated_login(
-        mut self,
-        value: crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin,
-    ) -> Self {
+    
+    pub fn saml_idp_initiated_login(mut self, value: crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin) -> Self {
         self.saml_idp_initiated_login = Some(value);
         self
     }
-
+    
     pub fn saml_idp_metadata_uploaded(mut self, value: bool) -> Self {
         self.saml_idp_metadata_uploaded = Some(value);
         self
     }
-
+    
     pub fn saml_login_url(mut self, value: String) -> Self {
         self.saml_login_url = Some(value);
         self
     }
-
-    pub fn saml_strict_mode(
-        mut self,
-        value: crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
-    ) -> Self {
+    
+    pub fn saml_strict_mode(mut self, value: crate::datadogV1::model::OrganizationSettingsSamlStrictMode) -> Self {
         self.saml_strict_mode = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for OrganizationSettings {
     fn default() -> Self {
@@ -169,26 +149,15 @@ impl<'de> Deserialize<'de> for OrganizationSettings {
             {
                 let mut private_widget_share: Option<bool> = None;
                 let mut saml: Option<crate::datadogV1::model::OrganizationSettingsSaml> = None;
-                let mut saml_autocreate_access_role: Option<
-                    Option<crate::datadogV1::model::AccessRole>,
-                > = None;
-                let mut saml_autocreate_users_domains: Option<
-                    crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains,
-                > = None;
+                let mut saml_autocreate_access_role: Option<Option<crate::datadogV1::model::AccessRole>> = None;
+                let mut saml_autocreate_users_domains: Option<crate::datadogV1::model::OrganizationSettingsSamlAutocreateUsersDomains> = None;
                 let mut saml_can_be_enabled: Option<bool> = None;
                 let mut saml_idp_endpoint: Option<String> = None;
-                let mut saml_idp_initiated_login: Option<
-                    crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin,
-                > = None;
+                let mut saml_idp_initiated_login: Option<crate::datadogV1::model::OrganizationSettingsSamlIdpInitiatedLogin> = None;
                 let mut saml_idp_metadata_uploaded: Option<bool> = None;
                 let mut saml_login_url: Option<String> = None;
-                let mut saml_strict_mode: Option<
-                    crate::datadogV1::model::OrganizationSettingsSamlStrictMode,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut saml_strict_mode: Option<crate::datadogV1::model::OrganizationSettingsSamlStrictMode> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -197,85 +166,72 @@ impl<'de> Deserialize<'de> for OrganizationSettings {
                             if v.is_null() {
                                 continue;
                             }
-                            private_widget_share =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_widget_share = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml" => {
                             if v.is_null() {
                                 continue;
                             }
                             saml = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "saml_autocreate_access_role" => {
-                            saml_autocreate_access_role =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _saml_autocreate_access_role) =
-                                saml_autocreate_access_role
-                            {
+                            saml_autocreate_access_role = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _saml_autocreate_access_role) = saml_autocreate_access_role {
                                 match _saml_autocreate_access_role {
-                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(
-                                        _saml_autocreate_access_role,
-                                    )) => {
+                                    Some(crate::datadogV1::model::AccessRole::UnparsedObject(_saml_autocreate_access_role)) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "saml_autocreate_users_domains" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_autocreate_users_domains =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_autocreate_users_domains = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_can_be_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_can_be_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_can_be_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_idp_endpoint" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_idp_endpoint =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_idp_endpoint = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_idp_initiated_login" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_idp_initiated_login =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_idp_initiated_login = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_idp_metadata_uploaded" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_idp_metadata_uploaded =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_idp_metadata_uploaded = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_login_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_login_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_login_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "saml_strict_mode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            saml_strict_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            saml_strict_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

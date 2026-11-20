@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The evaluation result with the recommended action and detected threat information.
 #[non_exhaustive]
@@ -15,8 +15,8 @@ pub struct AIGuardEvaluateAttributesResponse {
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::AIGuardAction,
     /// The span tags that tracers should add to the `ai_guard` span. Each item contains a
-    /// backend-defined key and value, and clients should not assume a fixed set of keys.
-    /// Example keys include `ai_guard.evaluate_id` and `ai_guard.evaluation_context`.
+/// backend-defined key and value, and clients should not assume a fixed set of keys.
+/// Example keys include `ai_guard.evaluate_id` and `ai_guard.evaluation_context`.
     #[serde(rename = "extra_tags")]
     pub extra_tags: Option<Vec<crate::datadogV2::model::AIGuardExtraTag>>,
     /// The global threat probability, between `0` and `1`. Included only when computed.
@@ -32,27 +32,27 @@ pub struct AIGuardEvaluateAttributesResponse {
     #[serde(rename = "redaction_replacements")]
     pub redaction_replacements: Option<Vec<crate::datadogV2::model::AIGuardRedactionReplacement>>,
     /// The Supply Chain Firewall verdict for the version-pinned install packages
-    /// found in the request. Evaluation requires Supply Chain Firewall to be enabled
-    /// for the organization and the caller to have the `appsec_vm_read` permission.
-    /// Without that permission, Supply Chain Firewall evaluation is skipped; the
-    /// AI Guard evaluation request itself is not rejected. Findings are omitted
-    /// when Supply Chain Firewall does not produce a result.
-    /// The recommended action combines the package outcomes.
-    /// Confirmation support is inferred from the evaluator profile, not from a
-    /// separate confirmation-capability flag. By default, a non-empty
-    /// `meta.coding_agent` selects the coding-agent profile, which assumes the caller
-    /// can ask for confirmation and retains WARN in `recommended_action`.
-    /// Omitting `meta.coding_agent` or setting it to an empty string selects the
-    /// default profile, which assumes the caller cannot ask for confirmation and
-    /// returns ALLOW instead of WARN in `recommended_action`. Package outcomes
-    /// still retain WARN, and BLOCK is never changed to ALLOW by this rule.
+/// found in the request. Evaluation requires Supply Chain Firewall to be enabled
+/// for the organization and the caller to have the `appsec_vm_read` permission.
+/// Without that permission, Supply Chain Firewall evaluation is skipped; the
+/// AI Guard evaluation request itself is not rejected. Findings are omitted
+/// when Supply Chain Firewall does not produce a result.
+/// The recommended action combines the package outcomes.
+/// Confirmation support is inferred from the evaluator profile, not from a
+/// separate confirmation-capability flag. By default, a non-empty
+/// `meta.coding_agent` selects the coding-agent profile, which assumes the caller
+/// can ask for confirmation and retains WARN in `recommended_action`.
+/// Omitting `meta.coding_agent` or setting it to an empty string selects the
+/// default profile, which assumes the caller cannot ask for confirmation and
+/// returns ALLOW instead of WARN in `recommended_action`. Package outcomes
+/// still retain WARN, and BLOCK is never changed to ALLOW by this rule.
     #[serde(rename = "scfw_findings")]
     pub scfw_findings: Option<crate::datadogV2::model::AIGuardScfwFindings>,
     /// The sensitive data findings from the Sensitive Data Scanner. Included only when findings exist.
     #[serde(rename = "sds_findings")]
     pub sds_findings: Option<Vec<crate::datadogV2::model::AIGuardSdsFinding>>,
     /// The detection confidence for each threat tag, between `0` and `1`. May be null when the evaluation does not produce per-category scores.
-    #[serialize_always]
+	#[serialize_always]
     #[serde(rename = "tag_probs")]
     pub tag_probs: Option<std::collections::BTreeMap<String, f64>>,
     /// The threat tags detected in the conversation.
@@ -62,17 +62,11 @@ pub struct AIGuardEvaluateAttributesResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AIGuardEvaluateAttributesResponse {
-    pub fn new(
-        action: crate::datadogV2::model::AIGuardAction,
-        is_blocking_enabled: bool,
-        reason: String,
-        tag_probs: Option<std::collections::BTreeMap<String, f64>>,
-        tags: Vec<String>,
-    ) -> AIGuardEvaluateAttributesResponse {
+    pub fn new(action: crate::datadogV2::model::AIGuardAction, is_blocking_enabled: bool, reason: String, tag_probs: Option<std::collections::BTreeMap<String, f64>>, tags: Vec<String>) -> AIGuardEvaluateAttributesResponse {
         AIGuardEvaluateAttributesResponse {
             action,
             extra_tags: None,
@@ -88,43 +82,39 @@ impl AIGuardEvaluateAttributesResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn extra_tags(mut self, value: Vec<crate::datadogV2::model::AIGuardExtraTag>) -> Self {
         self.extra_tags = Some(value);
         self
     }
-
+    
     pub fn global_prob(mut self, value: f64) -> Self {
         self.global_prob = Some(value);
         self
     }
-
-    pub fn redaction_replacements(
-        mut self,
-        value: Vec<crate::datadogV2::model::AIGuardRedactionReplacement>,
-    ) -> Self {
+    
+    pub fn redaction_replacements(mut self, value: Vec<crate::datadogV2::model::AIGuardRedactionReplacement>) -> Self {
         self.redaction_replacements = Some(value);
         self
     }
-
+    
     pub fn scfw_findings(mut self, value: crate::datadogV2::model::AIGuardScfwFindings) -> Self {
         self.scfw_findings = Some(value);
         self
     }
-
+    
     pub fn sds_findings(mut self, value: Vec<crate::datadogV2::model::AIGuardSdsFinding>) -> Self {
         self.sds_findings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -148,18 +138,12 @@ impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
                 let mut global_prob: Option<f64> = None;
                 let mut is_blocking_enabled: Option<bool> = None;
                 let mut reason: Option<String> = None;
-                let mut redaction_replacements: Option<
-                    Vec<crate::datadogV2::model::AIGuardRedactionReplacement>,
-                > = None;
+                let mut redaction_replacements: Option<Vec<crate::datadogV2::model::AIGuardRedactionReplacement>> = None;
                 let mut scfw_findings: Option<crate::datadogV2::model::AIGuardScfwFindings> = None;
-                let mut sds_findings: Option<Vec<crate::datadogV2::model::AIGuardSdsFinding>> =
-                    None;
+                let mut sds_findings: Option<Vec<crate::datadogV2::model::AIGuardSdsFinding>> = None;
                 let mut tag_probs: Option<Option<std::collections::BTreeMap<String, f64>>> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -168,72 +152,64 @@ impl<'de> Deserialize<'de> for AIGuardEvaluateAttributesResponse {
                             action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _action) = action {
                                 match _action {
-                                    crate::datadogV2::model::AIGuardAction::UnparsedObject(
-                                        _action,
-                                    ) => {
+                                    crate::datadogV2::model::AIGuardAction::UnparsedObject(_action) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "extra_tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             extra_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "global_prob" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            global_prob =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_prob = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_blocking_enabled" => {
-                            is_blocking_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_blocking_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "reason" => {
                             reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "redaction_replacements" => {
                             if v.is_null() {
                                 continue;
                             }
-                            redaction_replacements =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            redaction_replacements = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scfw_findings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            scfw_findings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            scfw_findings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_findings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            sds_findings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_findings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tag_probs" => {
                             tag_probs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
-                let is_blocking_enabled = is_blocking_enabled
-                    .ok_or_else(|| M::Error::missing_field("is_blocking_enabled"))?;
+                let is_blocking_enabled = is_blocking_enabled.ok_or_else(|| M::Error::missing_field("is_blocking_enabled"))?;
                 let reason = reason.ok_or_else(|| M::Error::missing_field("reason"))?;
                 let tag_probs = tag_probs.ok_or_else(|| M::Error::missing_field("tag_probs"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;

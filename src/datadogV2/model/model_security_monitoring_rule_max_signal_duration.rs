@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleMaxSignalDuration {
-    ZERO_MINUTES,
-    ONE_MINUTE,
-    FIVE_MINUTES,
-    TEN_MINUTES,
-    FIFTEEN_MINUTES,
-    THIRTY_MINUTES,
-    ONE_HOUR,
-    TWO_HOURS,
-    THREE_HOURS,
-    SIX_HOURS,
-    TWELVE_HOURS,
-    ONE_DAY,
+	ZERO_MINUTES,
+	ONE_MINUTE,
+	FIVE_MINUTES,
+	TEN_MINUTES,
+	FIFTEEN_MINUTES,
+	THIRTY_MINUTES,
+	ONE_HOUR,
+	TWO_HOURS,
+	THREE_HOURS,
+	SIX_HOURS,
+	TWELVE_HOURS,
+	ONE_DAY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -51,22 +52,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleMaxSignalDuration {
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            0 => Self::ZERO_MINUTES,
-            60 => Self::ONE_MINUTE,
-            300 => Self::FIVE_MINUTES,
-            600 => Self::TEN_MINUTES,
-            900 => Self::FIFTEEN_MINUTES,
-            1800 => Self::THIRTY_MINUTES,
-            3600 => Self::ONE_HOUR,
-            7200 => Self::TWO_HOURS,
-            10800 => Self::THREE_HOURS,
-            21600 => Self::SIX_HOURS,
-            43200 => Self::TWELVE_HOURS,
-            86400 => Self::ONE_DAY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {0 => Self::ZERO_MINUTES,60 => Self::ONE_MINUTE,300 => Self::FIVE_MINUTES,600 => Self::TEN_MINUTES,900 => Self::FIFTEEN_MINUTES,1800 => Self::THIRTY_MINUTES,3600 => Self::ONE_HOUR,7200 => Self::TWO_HOURS,10800 => Self::THREE_HOURS,21600 => Self::SIX_HOURS,43200 => Self::TWELVE_HOURS,86400 => Self::ONE_DAY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

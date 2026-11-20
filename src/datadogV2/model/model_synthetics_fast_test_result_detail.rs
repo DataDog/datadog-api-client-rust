@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Detailed result data for the fast test run. The exact shape of nested fields
 /// (`request`, `response`, `assertions`, etc.) depends on the test subtype.
@@ -73,7 +73,7 @@ pub struct SyntheticsFastTestResultDetail {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsFastTestResultDetail {
@@ -102,122 +102,108 @@ impl SyntheticsFastTestResultDetail {
             _unparsed: false,
         }
     }
-
-    pub fn assertions(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-    ) -> Self {
+    
+    pub fn assertions(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>) -> Self {
         self.assertions = Some(value);
         self
     }
-
+    
     pub fn call_type(mut self, value: String) -> Self {
         self.call_type = Some(value);
         self
     }
-
+    
     pub fn cert(mut self, value: crate::datadogV2::model::SyntheticsTestResultCertificate) -> Self {
         self.cert = Some(value);
         self
     }
-
+    
     pub fn duration(mut self, value: f64) -> Self {
         self.duration = Some(value);
         self
     }
-
+    
     pub fn failure(mut self, value: crate::datadogV2::model::SyntheticsTestResultFailure) -> Self {
         self.failure = Some(value);
         self
     }
-
+    
     pub fn finished_at(mut self, value: i64) -> Self {
         self.finished_at = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn is_fast_retry(mut self, value: bool) -> Self {
         self.is_fast_retry = Some(value);
         self
     }
-
-    pub fn request(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultRequestInfo,
-    ) -> Self {
+    
+    pub fn request(mut self, value: crate::datadogV2::model::SyntheticsTestResultRequestInfo) -> Self {
         self.request = Some(value);
         self
     }
-
+    
     pub fn resolved_ip(mut self, value: String) -> Self {
         self.resolved_ip = Some(value);
         self
     }
-
-    pub fn response(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-    ) -> Self {
+    
+    pub fn response(mut self, value: crate::datadogV2::model::SyntheticsTestResultResponseInfo) -> Self {
         self.response = Some(value);
         self
     }
-
+    
     pub fn run_type(mut self, value: crate::datadogV2::model::SyntheticsTestResultRunType) -> Self {
         self.run_type = Some(value);
         self
     }
-
+    
     pub fn started_at(mut self, value: i64) -> Self {
         self.started_at = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn steps(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultStep>) -> Self {
         self.steps = Some(value);
         self
     }
-
+    
     pub fn timings(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.timings = Some(value);
         self
     }
-
-    pub fn traceroute(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>,
-    ) -> Self {
+    
+    pub fn traceroute(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>) -> Self {
         self.traceroute = Some(value);
         self
     }
-
+    
     pub fn triggered_at(mut self, value: i64) -> Self {
         self.triggered_at = Some(value);
         self
     }
-
+    
     pub fn tunnel(mut self, value: bool) -> Self {
         self.tunnel = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsFastTestResultDetail {
     fn default() -> Self {
@@ -242,41 +228,26 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultDetail {
             where
                 M: MapAccess<'a>,
             {
-                let mut assertions: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-                > = None;
+                let mut assertions: Option<Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>> = None;
                 let mut call_type: Option<String> = None;
-                let mut cert: Option<crate::datadogV2::model::SyntheticsTestResultCertificate> =
-                    None;
+                let mut cert: Option<crate::datadogV2::model::SyntheticsTestResultCertificate> = None;
                 let mut duration: Option<f64> = None;
-                let mut failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure> =
-                    None;
+                let mut failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure> = None;
                 let mut finished_at: Option<i64> = None;
                 let mut id: Option<String> = None;
                 let mut is_fast_retry: Option<bool> = None;
-                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> =
-                    None;
+                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> = None;
                 let mut resolved_ip: Option<String> = None;
-                let mut response: Option<
-                    crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-                > = None;
-                let mut run_type: Option<crate::datadogV2::model::SyntheticsTestResultRunType> =
-                    None;
+                let mut response: Option<crate::datadogV2::model::SyntheticsTestResultResponseInfo> = None;
+                let mut run_type: Option<crate::datadogV2::model::SyntheticsTestResultRunType> = None;
                 let mut started_at: Option<i64> = None;
                 let mut status: Option<String> = None;
-                let mut steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>> =
-                    None;
-                let mut timings: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut traceroute: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>,
-                > = None;
+                let mut steps: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>> = None;
+                let mut timings: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut traceroute: Option<Vec<crate::datadogV2::model::SyntheticsTestResultTracerouteHop>> = None;
                 let mut triggered_at: Option<i64> = None;
                 let mut tunnel: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -286,70 +257,67 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultDetail {
                                 continue;
                             }
                             assertions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "call_type" => {
                             if v.is_null() {
                                 continue;
                             }
                             call_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cert" => {
                             if v.is_null() {
                                 continue;
                             }
                             cert = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "duration" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "failure" => {
                             if v.is_null() {
                                 continue;
                             }
                             failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "finished_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            finished_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            finished_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_fast_retry" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_fast_retry =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_fast_retry = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "request" => {
                             if v.is_null() {
                                 continue;
                             }
                             request = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resolved_ip" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resolved_ip =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resolved_ip = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "response" => {
                             if v.is_null() {
                                 continue;
                             }
                             response = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "run_type" => {
                             if v.is_null() {
                                 continue;
@@ -363,55 +331,54 @@ impl<'de> Deserialize<'de> for SyntheticsFastTestResultDetail {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "started_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "steps" => {
                             if v.is_null() {
                                 continue;
                             }
                             steps = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timings" => {
                             if v.is_null() {
                                 continue;
                             }
                             timings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "traceroute" => {
                             if v.is_null() {
                                 continue;
                             }
                             traceroute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "triggered_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            triggered_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            triggered_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tunnel" => {
                             if v.is_null() {
                                 continue;
                             }
                             tunnel = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

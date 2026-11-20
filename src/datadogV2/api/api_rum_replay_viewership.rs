@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListRumReplaySessionWatchersOptionalParams is a struct for passing parameters to the method [`RumReplayViewershipAPI::list_rum_replay_session_watchers`]
 #[non_exhaustive]
@@ -91,6 +88,9 @@ impl ListRumReplayViewershipHistorySessionsOptionalParams {
     }
 }
 
+
+
+
 /// CreateRumReplaySessionWatchError is a struct for typed errors of method [`RumReplayViewershipAPI::create_rum_replay_session_watch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -98,6 +98,7 @@ pub enum CreateRumReplaySessionWatchError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteRumReplaySessionWatchError is a struct for typed errors of method [`RumReplayViewershipAPI::delete_rum_replay_session_watch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -107,6 +108,7 @@ pub enum DeleteRumReplaySessionWatchError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRumReplaySessionWatchersError is a struct for typed errors of method [`RumReplayViewershipAPI::list_rum_replay_session_watchers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -115,6 +117,7 @@ pub enum ListRumReplaySessionWatchersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRumReplayViewershipHistorySessionsError is a struct for typed errors of method [`RumReplayViewershipAPI::list_rum_replay_viewership_history_sessions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -122,6 +125,7 @@ pub enum ListRumReplayViewershipHistorySessionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Track and manage RUM replay session viewership. Monitor who watches replay sessions and maintain watch history for audit and analytics purposes.
 #[derive(Debug, Clone)]
@@ -145,7 +149,8 @@ impl RumReplayViewershipAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -190,63 +195,51 @@ impl RumReplayViewershipAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Record a session watch.
-    pub async fn create_rum_replay_session_watch(
-        &self,
-        session_id: String,
-        body: crate::datadogV2::model::Watch,
-    ) -> Result<crate::datadogV2::model::Watch, datadog::Error<CreateRumReplaySessionWatchError>>
-    {
-        match self
-            .create_rum_replay_session_watch_with_http_info(session_id, body)
-            .await
-        {
+    pub async fn create_rum_replay_session_watch(&self, session_id: String, body: crate::datadogV2::model::Watch) -> Result<crate::datadogV2::model::Watch, datadog::Error<CreateRumReplaySessionWatchError>> {
+        match self.create_rum_replay_session_watch_with_http_info(session_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Record a session watch.
-    pub async fn create_rum_replay_session_watch_with_http_info(
-        &self,
-        session_id: String,
-        body: crate::datadogV2::model::Watch,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Watch>,
-        datadog::Error<CreateRumReplaySessionWatchError>,
-    > {
+    pub async fn create_rum_replay_session_watch_with_http_info(&self, session_id: String, body: crate::datadogV2::model::Watch) -> Result<datadog::ResponseContent<crate::datadogV2::model::Watch>, datadog::Error<CreateRumReplaySessionWatchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_replay_session_watch";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watches",
-            local_configuration.get_operation_host(local_operation_id),
-            session_id = datadog::urlencode(session_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), session_id=
+            datadog::urlencode(session_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -259,23 +252,16 @@ impl RumReplayViewershipAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -283,7 +269,10 @@ impl RumReplayViewershipAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -293,7 +282,10 @@ impl RumReplayViewershipAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -315,7 +307,7 @@ impl RumReplayViewershipAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -333,63 +325,52 @@ impl RumReplayViewershipAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Watch>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumReplaySessionWatchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateRumReplaySessionWatchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete session watch history.
-    pub async fn delete_rum_replay_session_watch(
-        &self,
-        session_id: String,
-    ) -> Result<(), datadog::Error<DeleteRumReplaySessionWatchError>> {
-        match self
-            .delete_rum_replay_session_watch_with_http_info(session_id)
-            .await
-        {
+    pub async fn delete_rum_replay_session_watch(&self, session_id: String) -> Result<(), datadog::Error<DeleteRumReplaySessionWatchError>> {
+        match self.delete_rum_replay_session_watch_with_http_info(session_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete session watch history.
-    pub async fn delete_rum_replay_session_watch_with_http_info(
-        &self,
-        session_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplaySessionWatchError>>
-    {
+    pub async fn delete_rum_replay_session_watch_with_http_info(&self, session_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplaySessionWatchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_replay_session_watch";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watches",
-            local_configuration.get_operation_host(local_operation_id),
-            session_id = datadog::urlencode(session_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), session_id=
+            datadog::urlencode(session_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -402,22 +383,16 @@ impl RumReplayViewershipAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -435,55 +410,33 @@ impl RumReplayViewershipAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumReplaySessionWatchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRumReplaySessionWatchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List session watchers.
-    pub async fn list_rum_replay_session_watchers(
-        &self,
-        session_id: String,
-        params: ListRumReplaySessionWatchersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::WatcherArray,
-        datadog::Error<ListRumReplaySessionWatchersError>,
-    > {
-        match self
-            .list_rum_replay_session_watchers_with_http_info(session_id, params)
-            .await
-        {
+    pub async fn list_rum_replay_session_watchers(&self, session_id: String, params: ListRumReplaySessionWatchersOptionalParams) -> Result<crate::datadogV2::model::WatcherArray, datadog::Error<ListRumReplaySessionWatchersError>> {
+        match self.list_rum_replay_session_watchers_with_http_info(session_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List session watchers.
-    pub async fn list_rum_replay_session_watchers_with_http_info(
-        &self,
-        session_id: String,
-        params: ListRumReplaySessionWatchersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::WatcherArray>,
-        datadog::Error<ListRumReplaySessionWatchersError>,
-    > {
+    pub async fn list_rum_replay_session_watchers_with_http_info(&self, session_id: String, params: ListRumReplaySessionWatchersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::WatcherArray>, datadog::Error<ListRumReplaySessionWatchersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_session_watchers";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -492,24 +445,24 @@ impl RumReplayViewershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/watchers",
-            local_configuration.get_operation_host(local_operation_id),
-            session_id = datadog::urlencode(session_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), session_id=
+            datadog::urlencode(session_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -522,22 +475,16 @@ impl RumReplayViewershipAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -550,63 +497,41 @@ impl RumReplayViewershipAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::WatcherArray>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplaySessionWatchersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRumReplaySessionWatchersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List watched sessions.
-    pub async fn list_rum_replay_viewership_history_sessions(
-        &self,
-        params: ListRumReplayViewershipHistorySessionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ViewershipHistorySessionArray,
-        datadog::Error<ListRumReplayViewershipHistorySessionsError>,
-    > {
-        match self
-            .list_rum_replay_viewership_history_sessions_with_http_info(params)
-            .await
-        {
+    pub async fn list_rum_replay_viewership_history_sessions(&self, params: ListRumReplayViewershipHistorySessionsOptionalParams) -> Result<crate::datadogV2::model::ViewershipHistorySessionArray, datadog::Error<ListRumReplayViewershipHistorySessionsError>> {
+        match self.list_rum_replay_viewership_history_sessions_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List watched sessions.
-    pub async fn list_rum_replay_viewership_history_sessions_with_http_info(
-        &self,
-        params: ListRumReplayViewershipHistorySessionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ViewershipHistorySessionArray>,
-        datadog::Error<ListRumReplayViewershipHistorySessionsError>,
-    > {
+    pub async fn list_rum_replay_viewership_history_sessions_with_http_info(&self, params: ListRumReplayViewershipHistorySessionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ViewershipHistorySessionArray>, datadog::Error<ListRumReplayViewershipHistorySessionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_viewership_history_sessions";
 
+        
         // unbox and build optional parameters
         let filter_watched_at_start = params.filter_watched_at_start;
         let page_number = params.page_number;
@@ -620,43 +545,37 @@ impl RumReplayViewershipAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/viewership-history/sessions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_watched_at_start {
-            local_req_builder = local_req_builder
-                .query(&[("filter[watched_at][start]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[watched_at][start]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_by {
-            local_req_builder =
-                local_req_builder.query(&[("filter[created_by]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_by]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_watched_at_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[watched_at][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[watched_at][end]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_session_ids {
-            local_req_builder =
-                local_req_builder.query(&[("filter[session_ids]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[session_ids]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_application_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[application_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[application_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -669,22 +588,16 @@ impl RumReplayViewershipAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -696,26 +609,17 @@ impl RumReplayViewershipAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ViewershipHistorySessionArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ViewershipHistorySessionArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplayViewershipHistorySessionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRumReplayViewershipHistorySessionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

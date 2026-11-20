@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Additional configuration options for snapshot creation.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct CreateSnapshotAdditionalConfig {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateSnapshotAdditionalConfig {
@@ -37,36 +37,28 @@ impl CreateSnapshotAdditionalConfig {
             _unparsed: false,
         }
     }
-
-    pub fn template_variables(
-        mut self,
-        value: Vec<crate::datadogV2::model::CreateSnapshotTemplateVariable>,
-    ) -> Self {
+    
+    pub fn template_variables(mut self, value: Vec<crate::datadogV2::model::CreateSnapshotTemplateVariable>) -> Self {
         self.template_variables = Some(value);
         self
     }
-
-    pub fn timeseries_legend_type(
-        mut self,
-        value: crate::datadogV2::model::CreateSnapshotTimeseriesLegendType,
-    ) -> Self {
+    
+    pub fn timeseries_legend_type(mut self, value: crate::datadogV2::model::CreateSnapshotTimeseriesLegendType) -> Self {
         self.timeseries_legend_type = Some(value);
         self
     }
-
+    
     pub fn timezone_offset_minutes(mut self, value: i64) -> Self {
         self.timezone_offset_minutes = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CreateSnapshotAdditionalConfig {
     fn default() -> Self {
@@ -91,17 +83,10 @@ impl<'de> Deserialize<'de> for CreateSnapshotAdditionalConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut template_variables: Option<
-                    Vec<crate::datadogV2::model::CreateSnapshotTemplateVariable>,
-                > = None;
-                let mut timeseries_legend_type: Option<
-                    crate::datadogV2::model::CreateSnapshotTimeseriesLegendType,
-                > = None;
+                let mut template_variables: Option<Vec<crate::datadogV2::model::CreateSnapshotTemplateVariable>> = None;
+                let mut timeseries_legend_type: Option<crate::datadogV2::model::CreateSnapshotTimeseriesLegendType> = None;
                 let mut timezone_offset_minutes: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -110,15 +95,13 @@ impl<'de> Deserialize<'de> for CreateSnapshotAdditionalConfig {
                             if v.is_null() {
                                 continue;
                             }
-                            template_variables =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            template_variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeseries_legend_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timeseries_legend_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            timeseries_legend_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _timeseries_legend_type) = timeseries_legend_type {
                                 match _timeseries_legend_type {
                                     crate::datadogV2::model::CreateSnapshotTimeseriesLegendType::UnparsedObject(_timeseries_legend_type) => {
@@ -127,19 +110,18 @@ impl<'de> Deserialize<'de> for CreateSnapshotAdditionalConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "timezone_offset_minutes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timezone_offset_minutes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timezone_offset_minutes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

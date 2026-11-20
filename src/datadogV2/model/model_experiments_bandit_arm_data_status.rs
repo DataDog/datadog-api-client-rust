@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsBanditArmDataStatus {
-    USABLE,
-    INSUFFICIENT_DATA,
-    ZERO_VARIANCE,
-    POOLED_WITHIN_VARIANCE,
-    POOLED_TOTAL_VARIANCE,
+	USABLE,
+	INSUFFICIENT_DATA,
+	ZERO_VARIANCE,
+	POOLED_WITHIN_VARIANCE,
+	POOLED_TOTAL_VARIANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ExperimentsBanditArmDataStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "usable" => Self::USABLE,
-            "insufficient_data" => Self::INSUFFICIENT_DATA,
-            "zero_variance" => Self::ZERO_VARIANCE,
-            "pooled_within_variance" => Self::POOLED_WITHIN_VARIANCE,
-            "pooled_total_variance" => Self::POOLED_TOTAL_VARIANCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"usable" => Self::USABLE,"insufficient_data" => Self::INSUFFICIENT_DATA,"zero_variance" => Self::ZERO_VARIANCE,"pooled_within_variance" => Self::POOLED_WITHIN_VARIANCE,"pooled_total_variance" => Self::POOLED_TOTAL_VARIANCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Complete column mappings and query used to replace the metric SQL model.
 #[non_exhaustive]
@@ -46,12 +46,7 @@ pub struct ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
 }
 
 impl ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
-    pub fn new(
-        name: String,
-        sql: String,
-        subject_types: Vec<crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2RequestDataAttributesSubjectTypesItems>,
-        timestamp_column: String,
-    ) -> ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
+    pub fn new(name: String, sql: String, subject_types: Vec<crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2RequestDataAttributesSubjectTypesItems>, timestamp_column: String) -> ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
         ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
             date_partition_column: None,
             description: None,
@@ -66,46 +61,39 @@ impl ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn date_partition_column(mut self, value: Option<String>) -> Self {
         self.date_partition_column = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn measures(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2RequestDataAttributesMeasuresItems>,
-    ) -> Self {
+    
+    pub fn measures(mut self, value: Vec<crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2RequestDataAttributesMeasuresItems>) -> Self {
         self.measures = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
-    pub fn properties(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsMetricSQLModelPropertyInput>,
-    ) -> Self {
+    
+    pub fn properties(mut self, value: Vec<crate::datadogV2::model::ExperimentsMetricSQLModelPropertyInput>) -> Self {
         self.properties = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -129,74 +117,62 @@ impl<'de> Deserialize<'de> for ExperimentsUpdateMetricSQLModelV2RequestDataAttri
                 let mut measures: Option<Vec<crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2RequestDataAttributesMeasuresItems>> = None;
                 let mut migration_metadata: Option<serde_json::Value> = None;
                 let mut name: Option<String> = None;
-                let mut properties: Option<
-                    Vec<crate::datadogV2::model::ExperimentsMetricSQLModelPropertyInput>,
-                > = None;
+                let mut properties: Option<Vec<crate::datadogV2::model::ExperimentsMetricSQLModelPropertyInput>> = None;
                 let mut sql: Option<String> = None;
                 let mut subject_types: Option<Vec<crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2RequestDataAttributesSubjectTypesItems>> = None;
                 let mut timestamp_column: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "date_partition_column" => {
-                            date_partition_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            date_partition_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "measures" => {
                             if v.is_null() {
                                 continue;
                             }
                             measures = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "properties" => {
                             if v.is_null() {
                                 continue;
                             }
                             properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sql" => {
                             sql = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subject_types" => {
-                            subject_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timestamp_column" => {
-                            timestamp_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timestamp_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let sql = sql.ok_or_else(|| M::Error::missing_field("sql"))?;
-                let subject_types =
-                    subject_types.ok_or_else(|| M::Error::missing_field("subject_types"))?;
-                let timestamp_column =
-                    timestamp_column.ok_or_else(|| M::Error::missing_field("timestamp_column"))?;
+                let subject_types = subject_types.ok_or_else(|| M::Error::missing_field("subject_types"))?;
+                let timestamp_column = timestamp_column.ok_or_else(|| M::Error::missing_field("timestamp_column"))?;
 
                 let content = ExperimentsUpdateMetricSQLModelV2RequestDataAttributes {
                     date_partition_column,

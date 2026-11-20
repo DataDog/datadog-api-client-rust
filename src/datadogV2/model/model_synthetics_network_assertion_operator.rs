@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsNetworkAssertionOperator {
-    IS,
-    IS_NOT,
-    LESS_THAN,
-    LESS_THAN_OR_EQUAL,
-    MORE_THAN,
-    MORE_THAN_OR_EQUAL,
+	IS,
+	IS_NOT,
+	LESS_THAN,
+	LESS_THAN_OR_EQUAL,
+	MORE_THAN,
+	MORE_THAN_OR_EQUAL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for SyntheticsNetworkAssertionOperator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "is" => Self::IS,
-            "isNot" => Self::IS_NOT,
-            "lessThan" => Self::LESS_THAN,
-            "lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,
-            "moreThan" => Self::MORE_THAN,
-            "moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"is" => Self::IS,"isNot" => Self::IS_NOT,"lessThan" => Self::LESS_THAN,"lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,"moreThan" => Self::MORE_THAN,"moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

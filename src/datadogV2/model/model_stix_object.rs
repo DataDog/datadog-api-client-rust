@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A STIX 2.1 object. Indicator objects are processed and ingested; all other STIX object types are ignored and are not included in the response counters.
 #[non_exhaustive]
@@ -63,7 +63,7 @@ pub struct STIXObject {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl STIXObject {
@@ -89,91 +89,84 @@ impl STIXObject {
             _unparsed: false,
         }
     }
-
+    
     pub fn confidence(mut self, value: i32) -> Self {
         self.confidence = Some(value);
         self
     }
-
+    
     pub fn created(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created = Some(value);
         self
     }
-
-    pub fn external_references(
-        mut self,
-        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn external_references(mut self, value: Vec<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.external_references = Some(value);
         self
     }
-
+    
     pub fn indicator_types(mut self, value: Vec<String>) -> Self {
         self.indicator_types = Some(value);
         self
     }
-
-    pub fn kill_chain_phases(
-        mut self,
-        value: Vec<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn kill_chain_phases(mut self, value: Vec<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.kill_chain_phases = Some(value);
         self
     }
-
+    
     pub fn labels(mut self, value: Vec<String>) -> Self {
         self.labels = Some(value);
         self
     }
-
+    
     pub fn modified(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified = Some(value);
         self
     }
-
+    
     pub fn object_marking_refs(mut self, value: Vec<String>) -> Self {
         self.object_marking_refs = Some(value);
         self
     }
-
+    
     pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
-
+    
     pub fn pattern_type(mut self, value: crate::datadogV2::model::STIXPatternType) -> Self {
         self.pattern_type = Some(value);
         self
     }
-
+    
     pub fn revoked(mut self, value: bool) -> Self {
         self.revoked = Some(value);
         self
     }
-
+    
     pub fn spec_version(mut self, value: String) -> Self {
         self.spec_version = Some(value);
         self
     }
-
+    
     pub fn valid_from(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.valid_from = Some(value);
         self
     }
-
+    
     pub fn valid_until(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.valid_until = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for STIXObject {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -194,14 +187,10 @@ impl<'de> Deserialize<'de> for STIXObject {
             {
                 let mut confidence: Option<i32> = None;
                 let mut created: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut external_references: Option<
-                    Vec<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut external_references: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut id: Option<String> = None;
                 let mut indicator_types: Option<Vec<String>> = None;
-                let mut kill_chain_phases: Option<
-                    Vec<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut kill_chain_phases: Option<Vec<std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut labels: Option<Vec<String>> = None;
                 let mut modified: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut object_marking_refs: Option<Vec<String>> = None;
@@ -212,10 +201,7 @@ impl<'de> Deserialize<'de> for STIXObject {
                 let mut type_: Option<String> = None;
                 let mut valid_from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut valid_until: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -225,113 +211,104 @@ impl<'de> Deserialize<'de> for STIXObject {
                                 continue;
                             }
                             confidence = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created" => {
                             if v.is_null() {
                                 continue;
                             }
                             created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "external_references" => {
                             if v.is_null() {
                                 continue;
                             }
-                            external_references =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            external_references = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indicator_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            indicator_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indicator_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "kill_chain_phases" => {
                             if v.is_null() {
                                 continue;
                             }
-                            kill_chain_phases =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            kill_chain_phases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "labels" => {
                             if v.is_null() {
                                 continue;
                             }
                             labels = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified" => {
                             if v.is_null() {
                                 continue;
                             }
                             modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "object_marking_refs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            object_marking_refs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            object_marking_refs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pattern" => {
                             if v.is_null() {
                                 continue;
                             }
                             pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pattern_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pattern_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            pattern_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _pattern_type) = pattern_type {
                                 match _pattern_type {
-                                    crate::datadogV2::model::STIXPatternType::UnparsedObject(
-                                        _pattern_type,
-                                    ) => {
+                                    crate::datadogV2::model::STIXPatternType::UnparsedObject(_pattern_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "revoked" => {
                             if v.is_null() {
                                 continue;
                             }
                             revoked = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "spec_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            spec_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            spec_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid_from" => {
                             if v.is_null() {
                                 continue;
                             }
                             valid_from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid_until" => {
                             if v.is_null() {
                                 continue;
                             }
-                            valid_until =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_until = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

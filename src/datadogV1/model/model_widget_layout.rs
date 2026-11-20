@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The layout for a widget on a `free` or **new dashboard layout** dashboard.
 #[non_exhaustive]
@@ -15,7 +15,7 @@ pub struct WidgetLayout {
     #[serde(rename = "height")]
     pub height: i64,
     /// Whether the widget should be the first one on the second column in high density or not.
-    /// **Note**: Only for the **new dashboard layout** and only one widget in the dashboard should have this property set to `true`.
+/// **Note**: Only for the **new dashboard layout** and only one widget in the dashboard should have this property set to `true`.
     #[serde(rename = "is_column_break")]
     pub is_column_break: Option<bool>,
     /// The width of the widget. Should be a non-negative integer.
@@ -31,7 +31,7 @@ pub struct WidgetLayout {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl WidgetLayout {
@@ -46,20 +46,19 @@ impl WidgetLayout {
             _unparsed: false,
         }
     }
-
+    
     pub fn is_column_break(mut self, value: bool) -> Self {
         self.is_column_break = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for WidgetLayout {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -83,38 +82,34 @@ impl<'de> Deserialize<'de> for WidgetLayout {
                 let mut width: Option<i64> = None;
                 let mut x: Option<i64> = None;
                 let mut y: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "height" => {
                             height = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_column_break" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_column_break =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_column_break = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "width" => {
                             width = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "x" => {
                             x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "y" => {
                             y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let height = height.ok_or_else(|| M::Error::missing_field("height"))?;

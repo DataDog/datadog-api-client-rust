@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
-    MANAGED_IDENTITY_CLIENT_ASSERTION,
+	MANAGED_IDENTITY_CLIENT_ASSERTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
     fn to_string(&self) -> String {
         match self {
-            Self::MANAGED_IDENTITY_CLIENT_ASSERTION => {
-                String::from("managed_identity_client_assertion")
-            }
+            Self::MANAGED_IDENTITY_CLIENT_ASSERTION => String::from("managed_identity_client_assertion"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -34,19 +33,14 @@ impl Serialize for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAs
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind
-{
+impl<'de> Deserialize<'de> for ObservabilityPipelineAzureDataExplorerManagedIdentityClientAssertionKind {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "managed_identity_client_assertion" => Self::MANAGED_IDENTITY_CLIENT_ASSERTION,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"managed_identity_client_assertion" => Self::MANAGED_IDENTITY_CLIENT_ASSERTION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

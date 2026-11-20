@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAPITestStepSubtype {
-    HTTP,
-    GRPC,
-    SSL,
-    DNS,
-    TCP,
-    UDP,
-    ICMP,
-    WEBSOCKET,
-    MCP,
+	HTTP,
+	GRPC,
+	SSL,
+	DNS,
+	TCP,
+	UDP,
+	ICMP,
+	WEBSOCKET,
+	MCP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestStepSubtype {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "http" => Self::HTTP,
-            "grpc" => Self::GRPC,
-            "ssl" => Self::SSL,
-            "dns" => Self::DNS,
-            "tcp" => Self::TCP,
-            "udp" => Self::UDP,
-            "icmp" => Self::ICMP,
-            "websocket" => Self::WEBSOCKET,
-            "mcp" => Self::MCP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"http" => Self::HTTP,"grpc" => Self::GRPC,"ssl" => Self::SSL,"dns" => Self::DNS,"tcp" => Self::TCP,"udp" => Self::UDP,"icmp" => Self::ICMP,"websocket" => Self::WEBSOCKET,"mcp" => Self::MCP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

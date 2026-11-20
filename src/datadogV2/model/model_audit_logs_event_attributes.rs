@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// JSON object containing all event attributes and their associated values.
 #[non_exhaustive]
@@ -18,8 +18,8 @@ pub struct AuditLogsEventAttributes {
     #[serde(rename = "message")]
     pub message: Option<String>,
     /// Name of the application or service generating Audit Logs events.
-    /// This name is used to correlate Audit Logs to APM, so make sure you specify the same
-    /// value when you use both products.
+/// This name is used to correlate Audit Logs to APM, so make sure you specify the same
+/// value when you use both products.
     #[serde(rename = "service")]
     pub service: Option<String>,
     /// Array of tags associated with your event.
@@ -32,7 +32,7 @@ pub struct AuditLogsEventAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AuditLogsEventAttributes {
@@ -47,43 +47,38 @@ impl AuditLogsEventAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn attributes(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn timestamp(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.timestamp = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AuditLogsEventAttributes {
     fn default() -> Self {
@@ -108,16 +103,12 @@ impl<'de> Deserialize<'de> for AuditLogsEventAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut attributes: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut message: Option<String> = None;
                 let mut service: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -127,36 +118,36 @@ impl<'de> Deserialize<'de> for AuditLogsEventAttributes {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp" => {
                             if v.is_null() {
                                 continue;
                             }
                             timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines a minimal threshold that applies to a specific partition instead of the processor-wide `minimal_threshold`.
 #[non_exhaustive]
@@ -16,20 +16,16 @@ pub struct ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
     pub fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
     /// The minimal threshold to apply to the matching partition.
     #[serde(rename = "minimal_threshold")]
-    pub minimal_threshold:
-        crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold,
+    pub minimal_threshold: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
-    pub fn new(
-        fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
-        minimal_threshold: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold,
-    ) -> ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
+    pub fn new(fields: Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>, minimal_threshold: crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold) -> ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
         ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
             fields,
             minimal_threshold,
@@ -37,15 +33,14 @@ impl ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -64,24 +59,18 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessorThre
             where
                 M: MapAccess<'a>,
             {
-                let mut fields: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>,
-                > = None;
+                let mut fields: Option<Vec<crate::datadogV2::model::ObservabilityPipelineFieldValue>> = None;
                 let mut minimal_threshold: Option<crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "fields" => {
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "minimal_threshold" => {
-                            minimal_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            minimal_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _minimal_threshold) = minimal_threshold {
                                 match _minimal_threshold {
                                     crate::datadogV2::model::ObservabilityPipelineSpikeProtectionProcessorMinimalThreshold::UnparsedObject(_minimal_threshold) => {
@@ -90,17 +79,16 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessorThre
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let fields = fields.ok_or_else(|| M::Error::missing_field("fields"))?;
-                let minimal_threshold = minimal_threshold
-                    .ok_or_else(|| M::Error::missing_field("minimal_threshold"))?;
+                let minimal_threshold = minimal_threshold.ok_or_else(|| M::Error::missing_field("minimal_threshold"))?;
 
                 let content = ObservabilityPipelineSpikeProtectionProcessorThresholdOverride {
                     fields,
@@ -113,7 +101,6 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSpikeProtectionProcessorThre
             }
         }
 
-        deserializer
-            .deserialize_any(ObservabilityPipelineSpikeProtectionProcessorThresholdOverrideVisitor)
+        deserializer.deserialize_any(ObservabilityPipelineSpikeProtectionProcessorThresholdOverrideVisitor)
     }
 }

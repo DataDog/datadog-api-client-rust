@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Result of one diagnostic check for an experiment.
 #[non_exhaustive]
@@ -37,11 +37,7 @@ pub struct ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
 }
 
 impl ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
-    pub fn new(
-        status: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus,
-        title: String,
-        type_: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsType,
-    ) -> ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
+    pub fn new(status: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus, title: String, type_: crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsType) -> ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
         ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
             message: None,
             metric_id: None,
@@ -53,33 +49,29 @@ impl ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn message(mut self, value: Option<String>) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn metric_id(mut self, value: Option<String>) -> Self {
         self.metric_id = Some(value);
         self
     }
-
-    pub fn skipped_reason(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason>,
-    ) -> Self {
+    
+    pub fn skipped_reason(mut self, value: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason>) -> Self {
         self.skipped_reason = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -87,9 +79,7 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
         D: Deserializer<'de>,
     {
         struct ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsVisitor;
-        impl<'a> Visitor<'a>
-            for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsVisitor
-        {
+        impl<'a> Visitor<'a> for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsVisitor {
             type Value = ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -106,23 +96,19 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                 let mut status: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_id" => {
                             metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "skipped_reason" => {
-                            skipped_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            skipped_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _skipped_reason) = skipped_reason {
                                 match _skipped_reason {
                                     Some(crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsSkippedReason::UnparsedObject(_skipped_reason)) => {
@@ -131,7 +117,7 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -142,10 +128,10 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -156,12 +142,12 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
@@ -183,8 +169,6 @@ impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttribut
             }
         }
 
-        deserializer.deserialize_any(
-            ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsVisitor,
-        )
+        deserializer.deserialize_any(ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsVisitor)
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Counters describing the result of the STIX ingestion request.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct STIXIngestResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl STIXIngestResponseAttributes {
@@ -37,15 +37,14 @@ impl STIXIngestResponseAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for STIXIngestResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -67,35 +66,30 @@ impl<'de> Deserialize<'de> for STIXIngestResponseAttributes {
                 let mut accepted: Option<i64> = None;
                 let mut invalid: Option<i64> = None;
                 let mut unsupported: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "accepted" => {
                             accepted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "invalid" => {
                             invalid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "unsupported" => {
-                            unsupported =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            unsupported = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let accepted = accepted.ok_or_else(|| M::Error::missing_field("accepted"))?;
                 let invalid = invalid.ok_or_else(|| M::Error::missing_field("invalid"))?;
-                let unsupported =
-                    unsupported.ok_or_else(|| M::Error::missing_field("unsupported"))?;
+                let unsupported = unsupported.ok_or_else(|| M::Error::missing_field("unsupported"))?;
 
                 let content = STIXIngestResponseAttributes {
                     accepted,

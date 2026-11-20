@@ -2,12 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TerraformCloudAuthPersonaMappingType {
-    TERRAFORM_CLOUD_AUTH_CONFIG,
+	TERRAFORM_CLOUD_AUTH_CONFIG,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,11 +39,8 @@ impl<'de> Deserialize<'de> for TerraformCloudAuthPersonaMappingType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "terraform_cloud_auth_config" => Self::TERRAFORM_CLOUD_AUTH_CONFIG,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"terraform_cloud_auth_config" => Self::TERRAFORM_CLOUD_AUTH_CONFIG,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

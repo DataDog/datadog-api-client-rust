@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayRateLimitWindowLimitWindow {
-    FIVE_MINUTES,
-    FIFTEEN_MINUTES,
-    THIRTY_MINUTES,
-    ONE_HOUR,
-    THREE_HOURS,
-    SIX_HOURS,
-    TWELVE_HOURS,
-    TWENTY_FOUR_HOURS,
+	FIVE_MINUTES,
+	FIFTEEN_MINUTES,
+	THIRTY_MINUTES,
+	ONE_HOUR,
+	THREE_HOURS,
+	SIX_HOURS,
+	TWELVE_HOURS,
+	TWENTY_FOUR_HOURS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitWindowLimitWindow {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "5m" => Self::FIVE_MINUTES,
-            "15m" => Self::FIFTEEN_MINUTES,
-            "30m" => Self::THIRTY_MINUTES,
-            "1h" => Self::ONE_HOUR,
-            "3h" => Self::THREE_HOURS,
-            "6h" => Self::SIX_HOURS,
-            "12h" => Self::TWELVE_HOURS,
-            "24h" => Self::TWENTY_FOUR_HOURS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"5m" => Self::FIVE_MINUTES,"15m" => Self::FIFTEEN_MINUTES,"30m" => Self::THIRTY_MINUTES,"1h" => Self::ONE_HOUR,"3h" => Self::THREE_HOURS,"6h" => Self::SIX_HOURS,"12h" => Self::TWELVE_HOURS,"24h" => Self::TWENTY_FOUR_HOURS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

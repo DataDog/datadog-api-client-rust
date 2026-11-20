@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CompletionConditionOperator {
-    OPERATOR_EQUAL,
-    OPERATOR_NOT_EQUAL,
-    OPERATOR_GREATER_THAN,
-    OPERATOR_LESS_THAN,
-    OPERATOR_GREATER_THAN_OR_EQUAL_TO,
-    OPERATOR_LESS_THAN_OR_EQUAL_TO,
-    OPERATOR_CONTAINS,
-    OPERATOR_DOES_NOT_CONTAIN,
-    OPERATOR_IS_NULL,
-    OPERATOR_IS_NOT_NULL,
-    OPERATOR_IS_EMPTY,
-    OPERATOR_IS_NOT_EMPTY,
+	OPERATOR_EQUAL,
+	OPERATOR_NOT_EQUAL,
+	OPERATOR_GREATER_THAN,
+	OPERATOR_LESS_THAN,
+	OPERATOR_GREATER_THAN_OR_EQUAL_TO,
+	OPERATOR_LESS_THAN_OR_EQUAL_TO,
+	OPERATOR_CONTAINS,
+	OPERATOR_DOES_NOT_CONTAIN,
+	OPERATOR_IS_NULL,
+	OPERATOR_IS_NOT_NULL,
+	OPERATOR_IS_EMPTY,
+	OPERATOR_IS_NOT_EMPTY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -29,9 +30,7 @@ impl ToString for CompletionConditionOperator {
             Self::OPERATOR_NOT_EQUAL => String::from("OPERATOR_NOT_EQUAL"),
             Self::OPERATOR_GREATER_THAN => String::from("OPERATOR_GREATER_THAN"),
             Self::OPERATOR_LESS_THAN => String::from("OPERATOR_LESS_THAN"),
-            Self::OPERATOR_GREATER_THAN_OR_EQUAL_TO => {
-                String::from("OPERATOR_GREATER_THAN_OR_EQUAL_TO")
-            }
+            Self::OPERATOR_GREATER_THAN_OR_EQUAL_TO => String::from("OPERATOR_GREATER_THAN_OR_EQUAL_TO"),
             Self::OPERATOR_LESS_THAN_OR_EQUAL_TO => String::from("OPERATOR_LESS_THAN_OR_EQUAL_TO"),
             Self::OPERATOR_CONTAINS => String::from("OPERATOR_CONTAINS"),
             Self::OPERATOR_DOES_NOT_CONTAIN => String::from("OPERATOR_DOES_NOT_CONTAIN"),
@@ -62,22 +61,8 @@ impl<'de> Deserialize<'de> for CompletionConditionOperator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "OPERATOR_EQUAL" => Self::OPERATOR_EQUAL,
-            "OPERATOR_NOT_EQUAL" => Self::OPERATOR_NOT_EQUAL,
-            "OPERATOR_GREATER_THAN" => Self::OPERATOR_GREATER_THAN,
-            "OPERATOR_LESS_THAN" => Self::OPERATOR_LESS_THAN,
-            "OPERATOR_GREATER_THAN_OR_EQUAL_TO" => Self::OPERATOR_GREATER_THAN_OR_EQUAL_TO,
-            "OPERATOR_LESS_THAN_OR_EQUAL_TO" => Self::OPERATOR_LESS_THAN_OR_EQUAL_TO,
-            "OPERATOR_CONTAINS" => Self::OPERATOR_CONTAINS,
-            "OPERATOR_DOES_NOT_CONTAIN" => Self::OPERATOR_DOES_NOT_CONTAIN,
-            "OPERATOR_IS_NULL" => Self::OPERATOR_IS_NULL,
-            "OPERATOR_IS_NOT_NULL" => Self::OPERATOR_IS_NOT_NULL,
-            "OPERATOR_IS_EMPTY" => Self::OPERATOR_IS_EMPTY,
-            "OPERATOR_IS_NOT_EMPTY" => Self::OPERATOR_IS_NOT_EMPTY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"OPERATOR_EQUAL" => Self::OPERATOR_EQUAL,"OPERATOR_NOT_EQUAL" => Self::OPERATOR_NOT_EQUAL,"OPERATOR_GREATER_THAN" => Self::OPERATOR_GREATER_THAN,"OPERATOR_LESS_THAN" => Self::OPERATOR_LESS_THAN,"OPERATOR_GREATER_THAN_OR_EQUAL_TO" => Self::OPERATOR_GREATER_THAN_OR_EQUAL_TO,"OPERATOR_LESS_THAN_OR_EQUAL_TO" => Self::OPERATOR_LESS_THAN_OR_EQUAL_TO,"OPERATOR_CONTAINS" => Self::OPERATOR_CONTAINS,"OPERATOR_DOES_NOT_CONTAIN" => Self::OPERATOR_DOES_NOT_CONTAIN,"OPERATOR_IS_NULL" => Self::OPERATOR_IS_NULL,"OPERATOR_IS_NOT_NULL" => Self::OPERATOR_IS_NOT_NULL,"OPERATOR_IS_EMPTY" => Self::OPERATOR_IS_EMPTY,"OPERATOR_IS_NOT_EMPTY" => Self::OPERATOR_IS_NOT_EMPTY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

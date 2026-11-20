@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Basic information about a deployment rule.
 #[non_exhaustive]
@@ -42,19 +42,11 @@ pub struct DeploymentRuleResponseDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DeploymentRuleResponseDataAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: crate::datadogV2::model::DeploymentRuleResponseDataAttributesCreatedBy,
-        dry_run: bool,
-        gate_id: String,
-        name: String,
-        options: crate::datadogV2::model::DeploymentRulesOptions,
-        type_: crate::datadogV2::model::DeploymentRuleResponseDataAttributesType,
-    ) -> DeploymentRuleResponseDataAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: crate::datadogV2::model::DeploymentRuleResponseDataAttributesCreatedBy, dry_run: bool, gate_id: String, name: String, options: crate::datadogV2::model::DeploymentRulesOptions, type_: crate::datadogV2::model::DeploymentRuleResponseDataAttributesType) -> DeploymentRuleResponseDataAttributes {
         DeploymentRuleResponseDataAttributes {
             created_at,
             created_by,
@@ -69,28 +61,24 @@ impl DeploymentRuleResponseDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn updated_by(
-        mut self,
-        value: crate::datadogV2::model::DeploymentRuleResponseDataAttributesUpdatedBy,
-    ) -> Self {
+    
+    pub fn updated_by(mut self, value: crate::datadogV2::model::DeploymentRuleResponseDataAttributesUpdatedBy) -> Self {
         self.updated_by = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -110,43 +98,34 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut created_by: Option<
-                    crate::datadogV2::model::DeploymentRuleResponseDataAttributesCreatedBy,
-                > = None;
+                let mut created_by: Option<crate::datadogV2::model::DeploymentRuleResponseDataAttributesCreatedBy> = None;
                 let mut dry_run: Option<bool> = None;
                 let mut gate_id: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::DeploymentRulesOptions> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::DeploymentRuleResponseDataAttributesType,
-                > = None;
+                let mut type_: Option<crate::datadogV2::model::DeploymentRuleResponseDataAttributesType> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut updated_by: Option<
-                    crate::datadogV2::model::DeploymentRuleResponseDataAttributesUpdatedBy,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut updated_by: Option<crate::datadogV2::model::DeploymentRuleResponseDataAttributesUpdatedBy> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dry_run" => {
                             dry_run = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "gate_id" => {
                             gate_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _options) = options {
@@ -157,7 +136,7 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -168,24 +147,24 @@ impl<'de> Deserialize<'de> for DeploymentRuleResponseDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Application Security details describing a service in a given environment.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct ApplicationSecurityServiceAttributes {
     #[serde(rename = "business_logic")]
     pub business_logic: Vec<String>,
     /// Deprecated: a display color associated with the service in the UI.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "color")]
     pub color: String,
     /// The environment the service runs in.
@@ -37,14 +37,14 @@ pub struct ApplicationSecurityServiceAttributes {
     #[serde(rename = "event_count")]
     pub event_count: i64,
     /// Deprecated: the trend of Application Security events over time.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "event_trend")]
     pub event_trend: Vec<i64>,
     /// Whether Application Security Management (Threats) is enabled for the service.
     #[serde(rename = "has_appsec_enabled")]
     pub has_appsec_enabled: bool,
     /// Deprecated: the number of hits for the service.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "hits")]
     pub hits: i64,
     /// Whether Interactive Application Security Testing (IAST) is enabled for the service.
@@ -84,11 +84,11 @@ pub struct ApplicationSecurityServiceAttributes {
     #[serde(rename = "service")]
     pub service: String,
     /// Deprecated: the number of security signals for the service.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "signal_count")]
     pub signal_count: i64,
     /// Deprecated: the trend of security signals over time.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "signal_trend")]
     pub signal_trend: Vec<i64>,
     /// The data sources that contributed information about the service.
@@ -104,11 +104,11 @@ pub struct ApplicationSecurityServiceAttributes {
     #[serde(rename = "vm-activation")]
     pub vm_activation: String,
     /// Deprecated: the number of critical-severity vulnerabilities for the service.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "vuln_critical_count")]
     pub vuln_critical_count: i64,
     /// Deprecated: the number of high-severity vulnerabilities for the service.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "vuln_high_count")]
     pub vuln_high_count: i64,
     /// The total number of services available without applying the service filter.
@@ -118,44 +118,11 @@ pub struct ApplicationSecurityServiceAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ApplicationSecurityServiceAttributes {
-    pub fn new(
-        agent_versions: Vec<String>,
-        app_type: String,
-        asm_threat_compatible: bool,
-        backend_waf_event_count: i64,
-        business_logic: Vec<String>,
-        color: String,
-        env: String,
-        event_count: i64,
-        event_trend: Vec<i64>,
-        has_appsec_enabled: bool,
-        hits: i64,
-        iast_product_activation: bool,
-        iast_product_compatibility: String,
-        iast_product_compatibility_reasons: Vec<String>,
-        languages: Vec<String>,
-        last_ingested_spans: i64,
-        rc_capabilities: Vec<String>,
-        recommended_business_logic: Vec<String>,
-        risk_product_activation: bool,
-        risk_product_compatibility: String,
-        risk_product_compatibility_reasons: Vec<String>,
-        rules_version: Vec<String>,
-        service: String,
-        signal_count: i64,
-        signal_trend: Vec<i64>,
-        source: Vec<String>,
-        teams: Vec<String>,
-        tracer_versions: Vec<String>,
-        vm_activation: String,
-        vuln_critical_count: i64,
-        vuln_high_count: i64,
-        without_filter_services: i64,
-    ) -> ApplicationSecurityServiceAttributes {
+    pub fn new(agent_versions: Vec<String>, app_type: String, asm_threat_compatible: bool, backend_waf_event_count: i64, business_logic: Vec<String>, color: String, env: String, event_count: i64, event_trend: Vec<i64>, has_appsec_enabled: bool, hits: i64, iast_product_activation: bool, iast_product_compatibility: String, iast_product_compatibility_reasons: Vec<String>, languages: Vec<String>, last_ingested_spans: i64, rc_capabilities: Vec<String>, recommended_business_logic: Vec<String>, risk_product_activation: bool, risk_product_compatibility: String, risk_product_compatibility_reasons: Vec<String>, rules_version: Vec<String>, service: String, signal_count: i64, signal_trend: Vec<i64>, source: Vec<String>, teams: Vec<String>, tracer_versions: Vec<String>, vm_activation: String, vuln_critical_count: i64, vuln_high_count: i64, without_filter_services: i64) -> ApplicationSecurityServiceAttributes {
         #[allow(deprecated)]
         ApplicationSecurityServiceAttributes {
             agent_versions,
@@ -194,15 +161,14 @@ impl ApplicationSecurityServiceAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ApplicationSecurityServiceAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -253,197 +219,146 @@ impl<'de> Deserialize<'de> for ApplicationSecurityServiceAttributes {
                 let mut vuln_critical_count: Option<i64> = None;
                 let mut vuln_high_count: Option<i64> = None;
                 let mut without_filter_services: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "agent_versions" => {
-                            agent_versions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "app_type" => {
                             app_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "asm_threat_compatible" => {
-                            asm_threat_compatible =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            asm_threat_compatible = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "backend_waf_event_count" => {
-                            backend_waf_event_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            backend_waf_event_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "business_logic" => {
-                            business_logic =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            business_logic = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "color" => {
                             color = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "env" => {
                             env = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "event_count" => {
-                            event_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_trend" => {
-                            event_trend =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_trend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "has_appsec_enabled" => {
-                            has_appsec_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_appsec_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hits" => {
                             hits = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "iast_product_activation" => {
-                            iast_product_activation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            iast_product_activation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "iast_product_compatibility" => {
-                            iast_product_compatibility =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            iast_product_compatibility = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "iast_product_compatibility_reasons" => {
-                            iast_product_compatibility_reasons =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            iast_product_compatibility_reasons = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "languages" => {
                             languages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_ingested_spans" => {
-                            last_ingested_spans =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_ingested_spans = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rc_capabilities" => {
-                            rc_capabilities =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rc_capabilities = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "recommended_business_logic" => {
-                            recommended_business_logic =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            recommended_business_logic = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "risk_product_activation" => {
-                            risk_product_activation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            risk_product_activation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "risk_product_compatibility" => {
-                            risk_product_compatibility =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            risk_product_compatibility = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "risk_product_compatibility_reasons" => {
-                            risk_product_compatibility_reasons =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            risk_product_compatibility_reasons = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rules_version" => {
-                            rules_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rules_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "signal_count" => {
-                            signal_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            signal_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "signal_trend" => {
-                            signal_trend =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            signal_trend = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "teams" => {
                             teams = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tracer_versions" => {
-                            tracer_versions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tracer_versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vm-activation" => {
-                            vm_activation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vm_activation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_critical_count" => {
-                            vuln_critical_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_critical_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_high_count" => {
-                            vuln_high_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_high_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "without_filter_services" => {
-                            without_filter_services =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            without_filter_services = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let agent_versions =
-                    agent_versions.ok_or_else(|| M::Error::missing_field("agent_versions"))?;
+                let agent_versions = agent_versions.ok_or_else(|| M::Error::missing_field("agent_versions"))?;
                 let app_type = app_type.ok_or_else(|| M::Error::missing_field("app_type"))?;
-                let asm_threat_compatible = asm_threat_compatible
-                    .ok_or_else(|| M::Error::missing_field("asm_threat_compatible"))?;
-                let backend_waf_event_count = backend_waf_event_count
-                    .ok_or_else(|| M::Error::missing_field("backend_waf_event_count"))?;
-                let business_logic =
-                    business_logic.ok_or_else(|| M::Error::missing_field("business_logic"))?;
+                let asm_threat_compatible = asm_threat_compatible.ok_or_else(|| M::Error::missing_field("asm_threat_compatible"))?;
+                let backend_waf_event_count = backend_waf_event_count.ok_or_else(|| M::Error::missing_field("backend_waf_event_count"))?;
+                let business_logic = business_logic.ok_or_else(|| M::Error::missing_field("business_logic"))?;
                 let color = color.ok_or_else(|| M::Error::missing_field("color"))?;
                 let env = env.ok_or_else(|| M::Error::missing_field("env"))?;
-                let event_count =
-                    event_count.ok_or_else(|| M::Error::missing_field("event_count"))?;
-                let event_trend =
-                    event_trend.ok_or_else(|| M::Error::missing_field("event_trend"))?;
-                let has_appsec_enabled = has_appsec_enabled
-                    .ok_or_else(|| M::Error::missing_field("has_appsec_enabled"))?;
+                let event_count = event_count.ok_or_else(|| M::Error::missing_field("event_count"))?;
+                let event_trend = event_trend.ok_or_else(|| M::Error::missing_field("event_trend"))?;
+                let has_appsec_enabled = has_appsec_enabled.ok_or_else(|| M::Error::missing_field("has_appsec_enabled"))?;
                 let hits = hits.ok_or_else(|| M::Error::missing_field("hits"))?;
-                let iast_product_activation = iast_product_activation
-                    .ok_or_else(|| M::Error::missing_field("iast_product_activation"))?;
-                let iast_product_compatibility = iast_product_compatibility
-                    .ok_or_else(|| M::Error::missing_field("iast_product_compatibility"))?;
-                let iast_product_compatibility_reasons = iast_product_compatibility_reasons
-                    .ok_or_else(|| M::Error::missing_field("iast_product_compatibility_reasons"))?;
+                let iast_product_activation = iast_product_activation.ok_or_else(|| M::Error::missing_field("iast_product_activation"))?;
+                let iast_product_compatibility = iast_product_compatibility.ok_or_else(|| M::Error::missing_field("iast_product_compatibility"))?;
+                let iast_product_compatibility_reasons = iast_product_compatibility_reasons.ok_or_else(|| M::Error::missing_field("iast_product_compatibility_reasons"))?;
                 let languages = languages.ok_or_else(|| M::Error::missing_field("languages"))?;
-                let last_ingested_spans = last_ingested_spans
-                    .ok_or_else(|| M::Error::missing_field("last_ingested_spans"))?;
-                let rc_capabilities =
-                    rc_capabilities.ok_or_else(|| M::Error::missing_field("rc_capabilities"))?;
-                let recommended_business_logic = recommended_business_logic
-                    .ok_or_else(|| M::Error::missing_field("recommended_business_logic"))?;
-                let risk_product_activation = risk_product_activation
-                    .ok_or_else(|| M::Error::missing_field("risk_product_activation"))?;
-                let risk_product_compatibility = risk_product_compatibility
-                    .ok_or_else(|| M::Error::missing_field("risk_product_compatibility"))?;
-                let risk_product_compatibility_reasons = risk_product_compatibility_reasons
-                    .ok_or_else(|| M::Error::missing_field("risk_product_compatibility_reasons"))?;
-                let rules_version =
-                    rules_version.ok_or_else(|| M::Error::missing_field("rules_version"))?;
+                let last_ingested_spans = last_ingested_spans.ok_or_else(|| M::Error::missing_field("last_ingested_spans"))?;
+                let rc_capabilities = rc_capabilities.ok_or_else(|| M::Error::missing_field("rc_capabilities"))?;
+                let recommended_business_logic = recommended_business_logic.ok_or_else(|| M::Error::missing_field("recommended_business_logic"))?;
+                let risk_product_activation = risk_product_activation.ok_or_else(|| M::Error::missing_field("risk_product_activation"))?;
+                let risk_product_compatibility = risk_product_compatibility.ok_or_else(|| M::Error::missing_field("risk_product_compatibility"))?;
+                let risk_product_compatibility_reasons = risk_product_compatibility_reasons.ok_or_else(|| M::Error::missing_field("risk_product_compatibility_reasons"))?;
+                let rules_version = rules_version.ok_or_else(|| M::Error::missing_field("rules_version"))?;
                 let service = service.ok_or_else(|| M::Error::missing_field("service"))?;
-                let signal_count =
-                    signal_count.ok_or_else(|| M::Error::missing_field("signal_count"))?;
-                let signal_trend =
-                    signal_trend.ok_or_else(|| M::Error::missing_field("signal_trend"))?;
+                let signal_count = signal_count.ok_or_else(|| M::Error::missing_field("signal_count"))?;
+                let signal_trend = signal_trend.ok_or_else(|| M::Error::missing_field("signal_trend"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
                 let teams = teams.ok_or_else(|| M::Error::missing_field("teams"))?;
-                let tracer_versions =
-                    tracer_versions.ok_or_else(|| M::Error::missing_field("tracer_versions"))?;
-                let vm_activation =
-                    vm_activation.ok_or_else(|| M::Error::missing_field("vm_activation"))?;
-                let vuln_critical_count = vuln_critical_count
-                    .ok_or_else(|| M::Error::missing_field("vuln_critical_count"))?;
-                let vuln_high_count =
-                    vuln_high_count.ok_or_else(|| M::Error::missing_field("vuln_high_count"))?;
-                let without_filter_services = without_filter_services
-                    .ok_or_else(|| M::Error::missing_field("without_filter_services"))?;
+                let tracer_versions = tracer_versions.ok_or_else(|| M::Error::missing_field("tracer_versions"))?;
+                let vm_activation = vm_activation.ok_or_else(|| M::Error::missing_field("vm_activation"))?;
+                let vuln_critical_count = vuln_critical_count.ok_or_else(|| M::Error::missing_field("vuln_critical_count"))?;
+                let vuln_high_count = vuln_high_count.ok_or_else(|| M::Error::missing_field("vuln_high_count"))?;
+                let without_filter_services = without_filter_services.ok_or_else(|| M::Error::missing_field("without_filter_services"))?;
 
                 #[allow(deprecated)]
                 let content = ApplicationSecurityServiceAttributes {

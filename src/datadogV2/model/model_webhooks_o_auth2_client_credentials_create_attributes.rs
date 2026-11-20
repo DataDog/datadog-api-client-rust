@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// OAuth2 client credentials attributes for a create request.
 #[non_exhaustive]
@@ -15,17 +15,13 @@ pub struct WebhooksOAuth2ClientCredentialsCreateAttributes {
     #[serde(rename = "access_token_url")]
     pub access_token_url: String,
     /// The intended audience for the OAuth2 access token.
-    #[serde(
-        rename = "audience",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "audience", default, with = "::serde_with::rust::double_option")]
     pub audience: Option<Option<String>>,
     /// The OAuth2 client ID issued by the authorization server.
     #[serde(rename = "client_id")]
     pub client_id: String,
     /// The OAuth2 client secret issued by the authorization server.
-    /// Write-only; never returned by the API.
+/// Write-only; never returned by the API.
     #[serde(rename = "client_secret")]
     pub client_secret: String,
     /// Human-readable name for this auth method. Must be unique within your organization.
@@ -38,16 +34,11 @@ pub struct WebhooksOAuth2ClientCredentialsCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl WebhooksOAuth2ClientCredentialsCreateAttributes {
-    pub fn new(
-        access_token_url: String,
-        client_id: String,
-        client_secret: String,
-        name: String,
-    ) -> WebhooksOAuth2ClientCredentialsCreateAttributes {
+    pub fn new(access_token_url: String, client_id: String, client_secret: String, name: String) -> WebhooksOAuth2ClientCredentialsCreateAttributes {
         WebhooksOAuth2ClientCredentialsCreateAttributes {
             access_token_url,
             audience: None,
@@ -59,25 +50,24 @@ impl WebhooksOAuth2ClientCredentialsCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn audience(mut self, value: Option<String>) -> Self {
         self.audience = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: Option<String>) -> Self {
         self.scope = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for WebhooksOAuth2ClientCredentialsCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -102,46 +92,39 @@ impl<'de> Deserialize<'de> for WebhooksOAuth2ClientCredentialsCreateAttributes {
                 let mut client_secret: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut scope: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "access_token_url" => {
-                            access_token_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            access_token_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "audience" => {
                             audience = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "client_id" => {
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "client_secret" => {
-                            client_secret =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            client_secret = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let access_token_url =
-                    access_token_url.ok_or_else(|| M::Error::missing_field("access_token_url"))?;
+                let access_token_url = access_token_url.ok_or_else(|| M::Error::missing_field("access_token_url"))?;
                 let client_id = client_id.ok_or_else(|| M::Error::missing_field("client_id"))?;
-                let client_secret =
-                    client_secret.ok_or_else(|| M::Error::missing_field("client_secret"))?;
+                let client_secret = client_secret.ok_or_else(|| M::Error::missing_field("client_secret"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
 
                 let content = WebhooksOAuth2ClientCredentialsCreateAttributes {

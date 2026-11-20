@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Monitor configuration options for data quality queries.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     /// Number of consecutive runs that must breach before the monitor alerts.
-    /// Only supported by `data-jobs alert` job duration monitors. Defaults to `1`.
+/// Only supported by `data-jobs alert` job duration monitors. Defaults to `1`.
     #[serde(rename = "consecutive_runs")]
     pub consecutive_runs: Option<i64>,
     /// Crontab expression to override the default schedule.
@@ -25,40 +25,35 @@ pub struct MonitorFormulaAndFunctionDataQualityMonitorOptions {
     #[serde(rename = "custom_where")]
     pub custom_where: Option<String>,
     /// How a `data-jobs alert` job duration monitor detects a breach. Must match the
-    /// `.detection()` call in the monitor query. Required for job duration monitors.
+/// `.detection()` call in the monitor query. Required for job duration monitors.
     #[serde(rename = "detection_type")]
-    pub detection_type:
-        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType>,
+    pub detection_type: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType>,
     /// Columns to group results by.
     #[serde(rename = "group_by_columns")]
     pub group_by_columns: Option<Vec<String>>,
     /// Tuning options for the anomaly detection model used by the monitor.
     #[serde(rename = "model_configuration")]
-    pub model_configuration:
-        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration>,
+    pub model_configuration: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration>,
     /// Override for the model type used in anomaly detection.
     #[serde(rename = "model_type_override")]
-    pub model_type_override:
-        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride>,
+    pub model_type_override: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride>,
     /// Platform-specific settings for a data quality monitor.
     #[serde(rename = "platform_settings")]
-    pub platform_settings:
-        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings>,
+    pub platform_settings: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings>,
     /// Sensitivity of the anomaly detection model, expressed as a multiplier on the width
-    /// of the predicted bounds. Higher values widen the bounds and produce fewer alerts;
-    /// lower values tighten them and produce more alerts. Defaults to `3.0`.
+/// of the predicted bounds. Higher values widen the bounds and produce fewer alerts;
+/// lower values tighten them and produce more alerts. Defaults to `3.0`.
     #[serde(rename = "sensitivity")]
     pub sensitivity: Option<f64>,
     /// Configuration for a source to target monitor, which compares the same measure
-    /// across two data entities and alerts on the difference between them.
+/// across two data entities and alerts on the difference between them.
     #[serde(rename = "source_to_target_config")]
-    pub source_to_target_config:
-        Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig>,
+    pub source_to_target_config: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
@@ -79,85 +74,68 @@ impl MonitorFormulaAndFunctionDataQualityMonitorOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn consecutive_runs(mut self, value: i64) -> Self {
         self.consecutive_runs = Some(value);
         self
     }
-
+    
     pub fn crontab_override(mut self, value: String) -> Self {
         self.crontab_override = Some(value);
         self
     }
-
+    
     pub fn custom_sql(mut self, value: String) -> Self {
         self.custom_sql = Some(value);
         self
     }
-
+    
     pub fn custom_where(mut self, value: String) -> Self {
         self.custom_where = Some(value);
         self
     }
-
-    pub fn detection_type(
-        mut self,
-        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType,
-    ) -> Self {
+    
+    pub fn detection_type(mut self, value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType) -> Self {
         self.detection_type = Some(value);
         self
     }
-
+    
     pub fn group_by_columns(mut self, value: Vec<String>) -> Self {
         self.group_by_columns = Some(value);
         self
     }
-
-    pub fn model_configuration(
-        mut self,
-        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration,
-    ) -> Self {
+    
+    pub fn model_configuration(mut self, value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration) -> Self {
         self.model_configuration = Some(value);
         self
     }
-
-    pub fn model_type_override(
-        mut self,
-        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
-    ) -> Self {
+    
+    pub fn model_type_override(mut self, value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride) -> Self {
         self.model_type_override = Some(value);
         self
     }
-
-    pub fn platform_settings(
-        mut self,
-        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings,
-    ) -> Self {
+    
+    pub fn platform_settings(mut self, value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings) -> Self {
         self.platform_settings = Some(value);
         self
     }
-
+    
     pub fn sensitivity(mut self, value: f64) -> Self {
         self.sensitivity = Some(value);
         self
     }
-
-    pub fn source_to_target_config(
-        mut self,
-        value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig,
-    ) -> Self {
+    
+    pub fn source_to_target_config(mut self, value: crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig) -> Self {
         self.source_to_target_config = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonitorFormulaAndFunctionDataQualityMonitorOptions {
     fn default() -> Self {
@@ -186,25 +164,14 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                 let mut crontab_override: Option<String> = None;
                 let mut custom_sql: Option<String> = None;
                 let mut custom_where: Option<String> = None;
-                let mut detection_type: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType,
-                > = None;
+                let mut detection_type: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType> = None;
                 let mut group_by_columns: Option<Vec<String>> = None;
-                let mut model_configuration: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration,
-                > = None;
-                let mut model_type_override: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride,
-                > = None;
-                let mut platform_settings: Option<
-                    crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings,
-                > = None;
+                let mut model_configuration: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelConfiguration> = None;
+                let mut model_type_override: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride> = None;
+                let mut platform_settings: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityPlatformSettings> = None;
                 let mut sensitivity: Option<f64> = None;
                 let mut source_to_target_config: Option<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualitySourceToTargetConfig> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -213,35 +180,31 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                             if v.is_null() {
                                 continue;
                             }
-                            consecutive_runs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            consecutive_runs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "crontab_override" => {
                             if v.is_null() {
                                 continue;
                             }
-                            crontab_override =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            crontab_override = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_sql" => {
                             if v.is_null() {
                                 continue;
                             }
                             custom_sql = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "custom_where" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_where =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_where = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "detection_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            detection_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            detection_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _detection_type) = detection_type {
                                 match _detection_type {
                                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityDetectionType::UnparsedObject(_detection_type) => {
@@ -250,27 +213,24 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_by_columns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            group_by_columns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            group_by_columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_configuration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            model_configuration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_configuration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_type_override" => {
                             if v.is_null() {
                                 continue;
                             }
-                            model_type_override =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            model_type_override = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _model_type_override) = model_type_override {
                                 match _model_type_override {
                                     crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityModelTypeOverride::UnparsedObject(_model_type_override) => {
@@ -279,33 +239,30 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionDataQualityMonitorOption
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "platform_settings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            platform_settings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            platform_settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sensitivity" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            sensitivity =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sensitivity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source_to_target_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source_to_target_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_to_target_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

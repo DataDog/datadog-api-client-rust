@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsDowntimeWeekdayPosition {
-    FIRST,
-    SECOND,
-    THIRD,
-    FOURTH,
-    LAST,
+	FIRST,
+	SECOND,
+	THIRD,
+	FOURTH,
+	LAST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -37,15 +38,8 @@ impl<'de> Deserialize<'de> for SyntheticsDowntimeWeekdayPosition {
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
-        Ok(match s {
-            1 => Self::FIRST,
-            2 => Self::SECOND,
-            3 => Self::THIRD,
-            4 => Self::FOURTH,
-            -1 => Self::LAST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {1 => Self::FIRST,2 => Self::SECOND,3 => Self::THIRD,4 => Self::FOURTH,-1 => Self::LAST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

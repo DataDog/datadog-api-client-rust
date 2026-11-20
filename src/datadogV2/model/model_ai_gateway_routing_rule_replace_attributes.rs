@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Partial route update. Omit tiers to preserve the entire graph, including hidden selections. Saved target IDs retain omitted settings. Replacing tiers must explicitly retain or remove every hidden occurrence.
 #[non_exhaustive]
@@ -23,7 +23,7 @@ pub struct AiGatewayRoutingRuleReplaceAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRoutingRuleReplaceAttributes {
@@ -36,33 +36,28 @@ impl AiGatewayRoutingRuleReplaceAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn expected_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.expected_updated_at = Some(value);
         self
     }
-
+    
     pub fn removed_target_ids(mut self, value: Vec<i64>) -> Self {
         self.removed_target_ids = Some(value);
         self
     }
-
-    pub fn tiers(
-        mut self,
-        value: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>,
-    ) -> Self {
+    
+    pub fn tiers(mut self, value: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>) -> Self {
         self.tiers = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AiGatewayRoutingRuleReplaceAttributes {
     fn default() -> Self {
@@ -89,13 +84,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleReplaceAttributes {
             {
                 let mut expected_updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut removed_target_ids: Option<Vec<i64>> = None;
-                let mut tiers: Option<
-                    Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut tiers: Option<Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -104,27 +94,25 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleReplaceAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            expected_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expected_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "removed_target_ids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            removed_target_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            removed_target_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tiers" => {
                             if v.is_null() {
                                 continue;
                             }
                             tiers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

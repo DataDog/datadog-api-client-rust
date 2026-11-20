@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AWSAccountPartition {
-    AWS,
-    AWS_CN,
-    AWS_US_GOV,
+	AWS,
+	AWS_CN,
+	AWS_US_GOV,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for AWSAccountPartition {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "aws" => Self::AWS,
-            "aws-cn" => Self::AWS_CN,
-            "aws-us-gov" => Self::AWS_US_GOV,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"aws" => Self::AWS,"aws-cn" => Self::AWS_CN,"aws-us-gov" => Self::AWS_US_GOV,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

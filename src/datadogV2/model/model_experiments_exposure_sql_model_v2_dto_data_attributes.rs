@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query and column mappings used to read experiment assignment data.
 #[non_exhaustive]
@@ -77,86 +77,78 @@ impl ExperimentsExposureSQLModelV2DTODataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn date_partition_column(mut self, value: Option<String>) -> Self {
         self.date_partition_column = Some(value);
         self
     }
-
+    
     pub fn experiment_column(mut self, value: String) -> Self {
         self.experiment_column = Some(value);
         self
     }
-
+    
     pub fn experiment_count(mut self, value: Option<i64>) -> Self {
         self.experiment_count = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn properties(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTODataAttributesItems>,
-    ) -> Self {
+    
+    pub fn properties(mut self, value: Vec<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTODataAttributesItems>) -> Self {
         self.properties = Some(value);
         self
     }
-
+    
     pub fn sql(mut self, value: String) -> Self {
         self.sql = Some(value);
         self
     }
-
-    pub fn subject_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2RequestDataAttributesSubjectTypesItems>,
-    ) -> Self {
+    
+    pub fn subject_types(mut self, value: Vec<crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2RequestDataAttributesSubjectTypesItems>) -> Self {
         self.subject_types = Some(value);
         self
     }
-
+    
     pub fn timestamp_column(mut self, value: String) -> Self {
         self.timestamp_column = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
+    
     pub fn variant_column(mut self, value: String) -> Self {
         self.variant_column = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsExposureSQLModelV2DTODataAttributes {
     fn default() -> Self {
@@ -194,96 +186,85 @@ impl<'de> Deserialize<'de> for ExperimentsExposureSQLModelV2DTODataAttributes {
                 let mut timestamp_column: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut variant_column: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "archived_at" => {
-                            archived_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archived_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "date_partition_column" => {
-                            date_partition_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            date_partition_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "experiment_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            experiment_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "experiment_count" => {
-                            experiment_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "properties" => {
                             if v.is_null() {
                                 continue;
                             }
                             properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sql" => {
                             if v.is_null() {
                                 continue;
                             }
                             sql = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subject_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subject_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timestamp_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timestamp_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timestamp_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variant_column" => {
                             if v.is_null() {
                                 continue;
                             }
-                            variant_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            variant_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamsOwnershipRuleType {
-    TEAMS_OWNERSHIP_GROUPED_MAPPINGS,
+	TEAMS_OWNERSHIP_GROUPED_MAPPINGS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TeamsOwnershipRuleType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEAMS_OWNERSHIP_GROUPED_MAPPINGS => {
-                String::from("teams_ownership_grouped_mappings")
-            }
+            Self::TEAMS_OWNERSHIP_GROUPED_MAPPINGS => String::from("teams_ownership_grouped_mappings"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for TeamsOwnershipRuleType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "teams_ownership_grouped_mappings" => Self::TEAMS_OWNERSHIP_GROUPED_MAPPINGS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"teams_ownership_grouped_mappings" => Self::TEAMS_OWNERSHIP_GROUPED_MAPPINGS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

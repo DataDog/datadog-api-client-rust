@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Options for the rule action
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct SecurityMonitoringRuleCaseActionOptions {
     pub duration: Option<i64>,
     /// Used with the case action of type 'flag_ip'. The value specified in this field is applied as a flag to the IP addresses.
     #[serde(rename = "flaggedIPType")]
-    pub flagged_ip_type:
-        Option<crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType>,
+    pub flagged_ip_type: Option<crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType>,
     /// Used with the case action of type 'user_behavior'. The value specified in this field is applied as a risk tag to all users affected by the rule.
     #[serde(rename = "userBehaviorName")]
     pub user_behavior_name: Option<String>,
@@ -25,7 +24,7 @@ pub struct SecurityMonitoringRuleCaseActionOptions {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleCaseActionOptions {
@@ -38,33 +37,28 @@ impl SecurityMonitoringRuleCaseActionOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn duration(mut self, value: i64) -> Self {
         self.duration = Some(value);
         self
     }
-
-    pub fn flagged_ip_type(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType,
-    ) -> Self {
+    
+    pub fn flagged_ip_type(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType) -> Self {
         self.flagged_ip_type = Some(value);
         self
     }
-
+    
     pub fn user_behavior_name(mut self, value: String) -> Self {
         self.user_behavior_name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleCaseActionOptions {
     fn default() -> Self {
@@ -90,14 +84,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
                 M: MapAccess<'a>,
             {
                 let mut duration: Option<i64> = None;
-                let mut flagged_ip_type: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType,
-                > = None;
+                let mut flagged_ip_type: Option<crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType> = None;
                 let mut user_behavior_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -107,13 +96,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "flaggedIPType" => {
                             if v.is_null() {
                                 continue;
                             }
-                            flagged_ip_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            flagged_ip_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _flagged_ip_type) = flagged_ip_type {
                                 match _flagged_ip_type {
                                     crate::datadogV2::model::SecurityMonitoringRuleCaseActionOptionsFlaggedIPType::UnparsedObject(_flagged_ip_type) => {
@@ -122,19 +110,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleCaseActionOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "userBehaviorName" => {
                             if v.is_null() {
                                 continue;
                             }
-                            user_behavior_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            user_behavior_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Defines the configurable attributes of a routing rule, such as actions, query, time restriction, and urgency.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct RoutingRuleAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RoutingRuleAttributes {
@@ -41,35 +41,33 @@ impl RoutingRuleAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn actions(mut self, value: Vec<crate::datadogV2::model::RoutingRuleAction>) -> Self {
         self.actions = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn time_restriction(mut self, value: crate::datadogV2::model::TimeRestrictions) -> Self {
         self.time_restriction = Some(value);
         self
     }
-
+    
     pub fn urgency(mut self, value: crate::datadogV2::model::Urgency) -> Self {
         self.urgency = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for RoutingRuleAttributes {
     fn default() -> Self {
@@ -98,10 +96,7 @@ impl<'de> Deserialize<'de> for RoutingRuleAttributes {
                 let mut query: Option<String> = None;
                 let mut time_restriction: Option<crate::datadogV2::model::TimeRestrictions> = None;
                 let mut urgency: Option<crate::datadogV2::model::Urgency> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,20 +106,19 @@ impl<'de> Deserialize<'de> for RoutingRuleAttributes {
                                 continue;
                             }
                             actions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "time_restriction" => {
                             if v.is_null() {
                                 continue;
                             }
-                            time_restriction =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            time_restriction = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "urgency" => {
                             if v.is_null() {
                                 continue;
@@ -134,16 +128,16 @@ impl<'de> Deserialize<'de> for RoutingRuleAttributes {
                                 match _urgency {
                                     crate::datadogV2::model::Urgency::UnparsedObject(_urgency) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Relationships of a maintenance update resource.
 #[non_exhaustive]
@@ -16,8 +16,7 @@ pub struct MaintenanceUpdateDataRelationships {
     pub created_by_user: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser>,
     /// A user relationship of a maintenance update.
     #[serde(rename = "last_modified_by_user")]
-    pub last_modified_by_user:
-        Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser>,
+    pub last_modified_by_user: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser>,
     /// The parent maintenance of the update.
     #[serde(rename = "maintenance")]
     pub maintenance: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsMaintenance>,
@@ -25,7 +24,7 @@ pub struct MaintenanceUpdateDataRelationships {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MaintenanceUpdateDataRelationships {
@@ -38,39 +37,28 @@ impl MaintenanceUpdateDataRelationships {
             _unparsed: false,
         }
     }
-
-    pub fn created_by_user(
-        mut self,
-        value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser,
-    ) -> Self {
+    
+    pub fn created_by_user(mut self, value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser) -> Self {
         self.created_by_user = Some(value);
         self
     }
-
-    pub fn last_modified_by_user(
-        mut self,
-        value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser,
-    ) -> Self {
+    
+    pub fn last_modified_by_user(mut self, value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser) -> Self {
         self.last_modified_by_user = Some(value);
         self
     }
-
-    pub fn maintenance(
-        mut self,
-        value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsMaintenance,
-    ) -> Self {
+    
+    pub fn maintenance(mut self, value: crate::datadogV2::model::MaintenanceUpdateDataRelationshipsMaintenance) -> Self {
         self.maintenance = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MaintenanceUpdateDataRelationships {
     fn default() -> Self {
@@ -95,19 +83,10 @@ impl<'de> Deserialize<'de> for MaintenanceUpdateDataRelationships {
             where
                 M: MapAccess<'a>,
             {
-                let mut created_by_user: Option<
-                    crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser,
-                > = None;
-                let mut last_modified_by_user: Option<
-                    crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser,
-                > = None;
-                let mut maintenance: Option<
-                    crate::datadogV2::model::MaintenanceUpdateDataRelationshipsMaintenance,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut created_by_user: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser> = None;
+                let mut last_modified_by_user: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsUser> = None;
+                let mut maintenance: Option<crate::datadogV2::model::MaintenanceUpdateDataRelationshipsMaintenance> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,28 +95,25 @@ impl<'de> Deserialize<'de> for MaintenanceUpdateDataRelationships {
                             if v.is_null() {
                                 continue;
                             }
-                            created_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            created_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_modified_by_user" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_modified_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "maintenance" => {
                             if v.is_null() {
                                 continue;
                             }
-                            maintenance =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            maintenance = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

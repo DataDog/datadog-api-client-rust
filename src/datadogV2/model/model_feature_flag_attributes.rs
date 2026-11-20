@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a feature flag.
 #[non_exhaustive]
@@ -12,11 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct FeatureFlagAttributes {
     /// The timestamp when the feature flag was archived.
-    #[serde(
-        rename = "archived_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "archived_at", default, with = "::serde_with::rust::double_option")]
     pub archived_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// How subjects are assigned to variants. `DATADOG` is the native scheme. `EPPO` reproduces the assignments that Eppo made for a flag migrated from Eppo, so its subjects keep their variants. Set when the flag is created and never changed.
     #[serde(rename = "bucketing_mode")]
@@ -40,11 +36,7 @@ pub struct FeatureFlagAttributes {
     #[serde(rename = "is_favorite")]
     pub is_favorite: Option<bool>,
     /// JSON schema for validation when value_type is JSON.
-    #[serde(
-        rename = "json_schema",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "json_schema", default, with = "::serde_with::rust::double_option")]
     pub json_schema: Option<Option<String>>,
     /// The unique key of the feature flag.
     #[serde(rename = "key")]
@@ -66,8 +58,7 @@ pub struct FeatureFlagAttributes {
     pub staleness_status: Option<String>,
     /// An explicit staleness status override. Omitted when no override is set.
     #[serde(rename = "staleness_status_override")]
-    pub staleness_status_override:
-        Option<crate::datadogV2::model::FeatureFlagStalenessStatusOverride>,
+    pub staleness_status_override: Option<crate::datadogV2::model::FeatureFlagStalenessStatusOverride>,
     /// Tags associated with the feature flag.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -84,17 +75,11 @@ pub struct FeatureFlagAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FeatureFlagAttributes {
-    pub fn new(
-        description: String,
-        key: String,
-        name: String,
-        value_type: crate::datadogV2::model::ValueType,
-        variants: Vec<crate::datadogV2::model::Variant>,
-    ) -> FeatureFlagAttributes {
+    pub fn new(description: String, key: String, name: String, value_type: crate::datadogV2::model::ValueType, variants: Vec<crate::datadogV2::model::Variant>) -> FeatureFlagAttributes {
         FeatureFlagAttributes {
             archived_at: None,
             bucketing_mode: None,
@@ -120,102 +105,89 @@ impl FeatureFlagAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn archived_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.archived_at = Some(value);
         self
     }
-
-    pub fn bucketing_mode(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagBucketingMode,
-    ) -> Self {
+    
+    pub fn bucketing_mode(mut self, value: crate::datadogV2::model::FeatureFlagBucketingMode) -> Self {
         self.bucketing_mode = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: uuid::Uuid) -> Self {
         self.created_by = Some(value);
         self
     }
-
+    
     pub fn distribution_channel(mut self, value: String) -> Self {
         self.distribution_channel = Some(value);
         self
     }
-
-    pub fn feature_flag_environments(
-        mut self,
-        value: Vec<crate::datadogV2::model::FeatureFlagEnvironment>,
-    ) -> Self {
+    
+    pub fn feature_flag_environments(mut self, value: Vec<crate::datadogV2::model::FeatureFlagEnvironment>) -> Self {
         self.feature_flag_environments = Some(value);
         self
     }
-
+    
     pub fn is_favorite(mut self, value: bool) -> Self {
         self.is_favorite = Some(value);
         self
     }
-
+    
     pub fn json_schema(mut self, value: Option<String>) -> Self {
         self.json_schema = Some(value);
         self
     }
-
+    
     pub fn last_updated_by(mut self, value: uuid::Uuid) -> Self {
         self.last_updated_by = Some(value);
         self
     }
-
+    
     pub fn require_approval(mut self, value: bool) -> Self {
         self.require_approval = Some(value);
         self
     }
-
-    pub fn staleness_details(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagStalenessDetails,
-    ) -> Self {
+    
+    pub fn staleness_details(mut self, value: crate::datadogV2::model::FeatureFlagStalenessDetails) -> Self {
         self.staleness_details = Some(value);
         self
     }
-
+    
     pub fn staleness_status(mut self, value: String) -> Self {
         self.staleness_status = Some(value);
         self
     }
-
-    pub fn staleness_status_override(
-        mut self,
-        value: crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
-    ) -> Self {
+    
+    pub fn staleness_status_override(mut self, value: crate::datadogV2::model::FeatureFlagStalenessStatusOverride) -> Self {
         self.staleness_status_override = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for FeatureFlagAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -235,50 +207,38 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                 M: MapAccess<'a>,
             {
                 let mut archived_at: Option<Option<chrono::DateTime<chrono::Utc>>> = None;
-                let mut bucketing_mode: Option<crate::datadogV2::model::FeatureFlagBucketingMode> =
-                    None;
+                let mut bucketing_mode: Option<crate::datadogV2::model::FeatureFlagBucketingMode> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<uuid::Uuid> = None;
                 let mut description: Option<String> = None;
                 let mut distribution_channel: Option<String> = None;
-                let mut feature_flag_environments: Option<
-                    Vec<crate::datadogV2::model::FeatureFlagEnvironment>,
-                > = None;
+                let mut feature_flag_environments: Option<Vec<crate::datadogV2::model::FeatureFlagEnvironment>> = None;
                 let mut is_favorite: Option<bool> = None;
                 let mut json_schema: Option<Option<String>> = None;
                 let mut key: Option<String> = None;
                 let mut last_updated_by: Option<uuid::Uuid> = None;
                 let mut name: Option<String> = None;
                 let mut require_approval: Option<bool> = None;
-                let mut staleness_details: Option<
-                    crate::datadogV2::model::FeatureFlagStalenessDetails,
-                > = None;
+                let mut staleness_details: Option<crate::datadogV2::model::FeatureFlagStalenessDetails> = None;
                 let mut staleness_status: Option<String> = None;
-                let mut staleness_status_override: Option<
-                    crate::datadogV2::model::FeatureFlagStalenessStatusOverride,
-                > = None;
+                let mut staleness_status_override: Option<crate::datadogV2::model::FeatureFlagStalenessStatusOverride> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut value_type: Option<crate::datadogV2::model::ValueType> = None;
                 let mut variants: Option<Vec<crate::datadogV2::model::Variant>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "archived_at" => {
-                            archived_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archived_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucketing_mode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bucketing_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            bucketing_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _bucketing_mode) = bucketing_mode {
                                 match _bucketing_mode {
                                     crate::datadogV2::model::FeatureFlagBucketingMode::UnparsedObject(_bucketing_mode) => {
@@ -287,90 +247,79 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "distribution_channel" => {
                             if v.is_null() {
                                 continue;
                             }
-                            distribution_channel =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            distribution_channel = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "feature_flag_environments" => {
                             if v.is_null() {
                                 continue;
                             }
-                            feature_flag_environments =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            feature_flag_environments = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_favorite" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_favorite =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_favorite = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "json_schema" => {
-                            json_schema =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            json_schema = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "key" => {
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_updated_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_updated_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_updated_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "require_approval" => {
                             if v.is_null() {
                                 continue;
                             }
-                            require_approval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            require_approval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "staleness_details" => {
                             if v.is_null() {
                                 continue;
                             }
-                            staleness_details =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            staleness_details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "staleness_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            staleness_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            staleness_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "staleness_status_override" => {
                             if v.is_null() {
                                 continue;
                             }
-                            staleness_status_override =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                            if let Some(ref _staleness_status_override) = staleness_status_override
-                            {
+                            staleness_status_override = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _staleness_status_override) = staleness_status_override {
                                 match _staleness_status_override {
                                     crate::datadogV2::model::FeatureFlagStalenessStatusOverride::UnparsedObject(_staleness_status_override) => {
                                         _unparsed = true;
@@ -378,44 +327,41 @@ impl<'de> Deserialize<'de> for FeatureFlagAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value_type" => {
                             value_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _value_type) = value_type {
                                 match _value_type {
-                                    crate::datadogV2::model::ValueType::UnparsedObject(
-                                        _value_type,
-                                    ) => {
+                                    crate::datadogV2::model::ValueType::UnparsedObject(_value_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "variants" => {
                             variants = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let value_type = value_type.ok_or_else(|| M::Error::missing_field("value_type"))?;

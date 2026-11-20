@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Options on new value detection method.
 #[non_exhaustive]
@@ -18,22 +18,20 @@ pub struct SecurityMonitoringRuleNewValueOptions {
     #[serde(rename = "instantaneousBaseline")]
     pub instantaneous_baseline: Option<bool>,
     /// The duration in days during which values are learned, and after which signals will be generated for values that
-    /// weren't learned. If set to 0, a signal will be generated for all new values after the first value is learned.
+/// weren't learned. If set to 0, a signal will be generated for all new values after the first value is learned.
     #[serde(rename = "learningDuration")]
     pub learning_duration: Option<i32>,
     /// The learning method used to determine when signals should be generated for values that weren't learned.
     #[serde(rename = "learningMethod")]
-    pub learning_method:
-        Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod>,
+    pub learning_method: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod>,
     /// A number of occurrences after which signals will be generated for values that weren't learned.
     #[serde(rename = "learningThreshold")]
-    pub learning_threshold:
-        Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold>,
+    pub learning_threshold: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringRuleNewValueOptions {
@@ -48,46 +46,38 @@ impl SecurityMonitoringRuleNewValueOptions {
             _unparsed: false,
         }
     }
-
+    
     pub fn forget_after(mut self, value: i32) -> Self {
         self.forget_after = Some(value);
         self
     }
-
+    
     pub fn instantaneous_baseline(mut self, value: bool) -> Self {
         self.instantaneous_baseline = Some(value);
         self
     }
-
+    
     pub fn learning_duration(mut self, value: i32) -> Self {
         self.learning_duration = Some(value);
         self
     }
-
-    pub fn learning_method(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod,
-    ) -> Self {
+    
+    pub fn learning_method(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod) -> Self {
         self.learning_method = Some(value);
         self
     }
-
-    pub fn learning_threshold(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold,
-    ) -> Self {
+    
+    pub fn learning_threshold(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold) -> Self {
         self.learning_threshold = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringRuleNewValueOptions {
     fn default() -> Self {
@@ -115,16 +105,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                 let mut forget_after: Option<i32> = None;
                 let mut instantaneous_baseline: Option<bool> = None;
                 let mut learning_duration: Option<i32> = None;
-                let mut learning_method: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod,
-                > = None;
-                let mut learning_threshold: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut learning_method: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod> = None;
+                let mut learning_threshold: Option<crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -133,29 +116,25 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                             if v.is_null() {
                                 continue;
                             }
-                            forget_after =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            forget_after = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "instantaneousBaseline" => {
                             if v.is_null() {
                                 continue;
                             }
-                            instantaneous_baseline =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            instantaneous_baseline = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "learningDuration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            learning_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            learning_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "learningMethod" => {
                             if v.is_null() {
                                 continue;
                             }
-                            learning_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            learning_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _learning_method) = learning_method {
                                 match _learning_method {
                                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningMethod::UnparsedObject(_learning_method) => {
@@ -164,13 +143,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "learningThreshold" => {
                             if v.is_null() {
                                 continue;
                             }
-                            learning_threshold =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            learning_threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _learning_threshold) = learning_threshold {
                                 match _learning_threshold {
                                     crate::datadogV2::model::SecurityMonitoringRuleNewValueOptionsLearningThreshold::UnparsedObject(_learning_threshold) => {
@@ -179,12 +157,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleNewValueOptions {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

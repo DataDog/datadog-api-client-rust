@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Name, description, and metric selection for the new collection.
 #[non_exhaustive]
@@ -41,33 +41,29 @@ impl ExperimentsCreateMetricCollectionV2RequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn is_guardrail(mut self, value: bool) -> Self {
         self.is_guardrail = Some(value);
         self
     }
-
-    pub fn metrics(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsCreateMetricCollectionV2RequestDataAttributesMetricsItems>,
-    ) -> Self {
+    
+    pub fn metrics(mut self, value: Vec<crate::datadogV2::model::ExperimentsCreateMetricCollectionV2RequestDataAttributesMetricsItems>) -> Self {
         self.metrics = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsCreateMetricCollectionV2RequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,39 +86,34 @@ impl<'de> Deserialize<'de> for ExperimentsCreateMetricCollectionV2RequestDataAtt
                 let mut is_guardrail: Option<bool> = None;
                 let mut metrics: Option<Vec<crate::datadogV2::model::ExperimentsCreateMetricCollectionV2RequestDataAttributesMetricsItems>> = None;
                 let mut name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_guardrail" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_guardrail =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_guardrail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics" => {
                             if v.is_null() {
                                 continue;
                             }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
@@ -140,7 +131,6 @@ impl<'de> Deserialize<'de> for ExperimentsCreateMetricCollectionV2RequestDataAtt
             }
         }
 
-        deserializer
-            .deserialize_any(ExperimentsCreateMetricCollectionV2RequestDataAttributesVisitor)
+        deserializer.deserialize_any(ExperimentsCreateMetricCollectionV2RequestDataAttributesVisitor)
     }
 }

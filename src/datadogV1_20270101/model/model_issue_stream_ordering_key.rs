@@ -1,0 +1,54 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
+
+#[non_exhaustive]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum IssueStreamOrderingKey {
+	TOTAL_COUNT,
+	FIRST_SEEN,
+	IMPACTED_SESSIONS,
+	IMPACTED_ACCOUNTS,
+	PRIORITY,
+    UnparsedObject(crate::datadog::UnparsedObject),
+}
+
+impl ToString for IssueStreamOrderingKey {
+    fn to_string(&self) -> String {
+        match self {
+            Self::TOTAL_COUNT => String::from("TOTAL_COUNT"),
+            Self::FIRST_SEEN => String::from("FIRST_SEEN"),
+            Self::IMPACTED_SESSIONS => String::from("IMPACTED_SESSIONS"),
+            Self::IMPACTED_ACCOUNTS => String::from("IMPACTED_ACCOUNTS"),
+            Self::PRIORITY => String::from("PRIORITY"),
+            Self::UnparsedObject(v) => v.value.to_string(),
+        }
+    }
+}
+
+impl Serialize for IssueStreamOrderingKey {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self {
+            Self::UnparsedObject(v) => v.serialize(serializer),
+            _ => serializer.serialize_str(self.to_string().as_str()),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for IssueStreamOrderingKey {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s: String = String::deserialize(deserializer)?;
+        Ok(match s.as_str() {"TOTAL_COUNT" => Self::TOTAL_COUNT,"FIRST_SEEN" => Self::FIRST_SEEN,"IMPACTED_SESSIONS" => Self::IMPACTED_SESSIONS,"IMPACTED_ACCOUNTS" => Self::IMPACTED_ACCOUNTS,"PRIORITY" => Self::PRIORITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
+        })
+    }
+}

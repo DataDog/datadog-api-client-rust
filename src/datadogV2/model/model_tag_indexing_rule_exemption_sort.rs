@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TagIndexingRuleExemptionSort {
-    NAME,
-    NAME_DESCENDING,
-    ESTIMATED_CHANGE_IN_VOLUME,
-    ESTIMATED_CHANGE_IN_VOLUME_DESCENDING,
+	NAME,
+	NAME_DESCENDING,
+	ESTIMATED_CHANGE_IN_VOLUME,
+	ESTIMATED_CHANGE_IN_VOLUME_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -20,9 +21,7 @@ impl ToString for TagIndexingRuleExemptionSort {
             Self::NAME => String::from("name"),
             Self::NAME_DESCENDING => String::from("-name"),
             Self::ESTIMATED_CHANGE_IN_VOLUME => String::from("estimated_change_in_volume"),
-            Self::ESTIMATED_CHANGE_IN_VOLUME_DESCENDING => {
-                String::from("-estimated_change_in_volume")
-            }
+            Self::ESTIMATED_CHANGE_IN_VOLUME_DESCENDING => String::from("-estimated_change_in_volume"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,14 +45,8 @@ impl<'de> Deserialize<'de> for TagIndexingRuleExemptionSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "-name" => Self::NAME_DESCENDING,
-            "estimated_change_in_volume" => Self::ESTIMATED_CHANGE_IN_VOLUME,
-            "-estimated_change_in_volume" => Self::ESTIMATED_CHANGE_IN_VOLUME_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"-name" => Self::NAME_DESCENDING,"estimated_change_in_volume" => Self::ESTIMATED_CHANGE_IN_VOLUME,"-estimated_change_in_volume" => Self::ESTIMATED_CHANGE_IN_VOLUME_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

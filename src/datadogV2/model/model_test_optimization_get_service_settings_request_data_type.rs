@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TestOptimizationGetServiceSettingsRequestDataType {
-    TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST,
+	TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for TestOptimizationGetServiceSettingsRequestDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST => {
-                String::from("test_optimization_get_service_settings_request")
-            }
+            Self::TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST => String::from("test_optimization_get_service_settings_request"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,13 +39,8 @@ impl<'de> Deserialize<'de> for TestOptimizationGetServiceSettingsRequestDataType
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "test_optimization_get_service_settings_request" => {
-                Self::TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"test_optimization_get_service_settings_request" => Self::TEST_OPTIMIZATION_GET_SERVICE_SETTINGS_REQUEST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for a Google Cloud Usage Cost config.
 #[non_exhaustive]
@@ -36,11 +36,7 @@ pub struct GCPUsageCostConfigAttributes {
     #[serde(rename = "dataset")]
     pub dataset: String,
     /// The error messages for the Google Cloud Usage Cost config.
-    #[serde(
-        rename = "error_messages",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "error_messages", default, with = "::serde_with::rust::double_option")]
     pub error_messages: Option<Option<Vec<String>>>,
     /// The export prefix used for the Google Cloud Usage Cost Report.
     #[serde(rename = "export_prefix")]
@@ -49,7 +45,7 @@ pub struct GCPUsageCostConfigAttributes {
     #[serde(rename = "export_project_name")]
     pub export_project_name: String,
     /// The number of months the report has been backfilled.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "months")]
     pub months: Option<i32>,
     /// The `project_id` of the Google Cloud Usage Cost report.
@@ -71,19 +67,11 @@ pub struct GCPUsageCostConfigAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GCPUsageCostConfigAttributes {
-    pub fn new(
-        account_id: String,
-        bucket_name: String,
-        dataset: String,
-        export_prefix: String,
-        export_project_name: String,
-        service_account: String,
-        status: String,
-    ) -> GCPUsageCostConfigAttributes {
+    pub fn new(account_id: String, bucket_name: String, dataset: String, export_prefix: String, export_project_name: String, service_account: String, status: String) -> GCPUsageCostConfigAttributes {
         #[allow(deprecated)]
         GCPUsageCostConfigAttributes {
             account_id,
@@ -107,78 +95,74 @@ impl GCPUsageCostConfigAttributes {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn cud_metadata_config(
-        mut self,
-        value: crate::datadogV2::model::GCPCudMetadataConfig,
-    ) -> Self {
+    pub fn cud_metadata_config(mut self, value: crate::datadogV2::model::GCPCudMetadataConfig) -> Self {
         self.cud_metadata_config = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cud_metadata_error_codes(mut self, value: Vec<i32>) -> Self {
         self.cud_metadata_error_codes = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cud_metadata_state(mut self, value: String) -> Self {
         self.cud_metadata_state = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cud_metadata_status_updated_at(mut self, value: String) -> Self {
         self.cud_metadata_status_updated_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn error_messages(mut self, value: Option<Vec<String>>) -> Self {
         self.error_messages = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn months(mut self, value: i32) -> Self {
         self.months = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn project_id(mut self, value: String) -> Self {
         self.project_id = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn status_updated_at(mut self, value: String) -> Self {
         self.status_updated_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn updated_at(mut self, value: String) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GCPUsageCostConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -200,8 +184,7 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigAttributes {
                 let mut account_id: Option<String> = None;
                 let mut bucket_name: Option<String> = None;
                 let mut created_at: Option<String> = None;
-                let mut cud_metadata_config: Option<crate::datadogV2::model::GCPCudMetadataConfig> =
-                    None;
+                let mut cud_metadata_config: Option<crate::datadogV2::model::GCPCudMetadataConfig> = None;
                 let mut cud_metadata_error_codes: Option<Vec<i32>> = None;
                 let mut cud_metadata_state: Option<String> = None;
                 let mut cud_metadata_status_updated_at: Option<String> = None;
@@ -215,119 +198,102 @@ impl<'de> Deserialize<'de> for GCPUsageCostConfigAttributes {
                 let mut status: Option<String> = None;
                 let mut status_updated_at: Option<String> = None;
                 let mut updated_at: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "account_id" => {
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bucket_name" => {
-                            bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cud_metadata_config" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cud_metadata_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cud_metadata_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cud_metadata_error_codes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cud_metadata_error_codes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cud_metadata_error_codes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cud_metadata_state" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cud_metadata_state =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cud_metadata_state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cud_metadata_status_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cud_metadata_status_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cud_metadata_status_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dataset" => {
                             dataset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error_messages" => {
-                            error_messages =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_messages = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "export_prefix" => {
-                            export_prefix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            export_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "export_project_name" => {
-                            export_project_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            export_project_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "months" => {
                             if v.is_null() {
                                 continue;
                             }
                             months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "project_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service_account" => {
-                            service_account =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            service_account = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status_updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            status_updated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            status_updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
-                let bucket_name =
-                    bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
+                let bucket_name = bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
                 let dataset = dataset.ok_or_else(|| M::Error::missing_field("dataset"))?;
-                let export_prefix =
-                    export_prefix.ok_or_else(|| M::Error::missing_field("export_prefix"))?;
-                let export_project_name = export_project_name
-                    .ok_or_else(|| M::Error::missing_field("export_project_name"))?;
-                let service_account =
-                    service_account.ok_or_else(|| M::Error::missing_field("service_account"))?;
+                let export_prefix = export_prefix.ok_or_else(|| M::Error::missing_field("export_prefix"))?;
+                let export_project_name = export_project_name.ok_or_else(|| M::Error::missing_field("export_project_name"))?;
+                let service_account = service_account.ok_or_else(|| M::Error::missing_field("service_account"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
                 #[allow(deprecated)]

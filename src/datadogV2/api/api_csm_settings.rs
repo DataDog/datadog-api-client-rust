@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 
 /// GetCSMAgentlessHostFacetInfoOptionalParams is a struct for passing parameters to the method [`CSMSettingsAPI::get_csm_agentless_host_facet_info`]
 #[non_exhaustive]
@@ -112,6 +112,9 @@ impl ListCSMUnifiedHostsOptionalParams {
     }
 }
 
+
+
+
 /// GetCSMAgentlessHostFacetInfoError is a struct for typed errors of method [`CSMSettingsAPI::get_csm_agentless_host_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -120,6 +123,7 @@ pub enum GetCSMAgentlessHostFacetInfoError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCSMUnifiedHostFacetInfoError is a struct for typed errors of method [`CSMSettingsAPI::get_csm_unified_host_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -130,6 +134,7 @@ pub enum GetCSMUnifiedHostFacetInfoError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCSMAgentlessHostFacetsError is a struct for typed errors of method [`CSMSettingsAPI::list_csm_agentless_host_facets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -137,6 +142,7 @@ pub enum ListCSMAgentlessHostFacetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCSMAgentlessHostsError is a struct for typed errors of method [`CSMSettingsAPI::list_csm_agentless_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -147,6 +153,7 @@ pub enum ListCSMAgentlessHostsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListCSMUnifiedHostFacetsError is a struct for typed errors of method [`CSMSettingsAPI::list_csm_unified_host_facets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -154,6 +161,7 @@ pub enum ListCSMUnifiedHostFacetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCSMUnifiedHostsError is a struct for typed errors of method [`CSMSettingsAPI::list_csm_unified_hosts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -163,6 +171,7 @@ pub enum ListCSMUnifiedHostsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Datadog Cloud Security Management (CSM) Settings APIs allow you to list and filter
 /// your cloud hosts monitored by CSM, covering both agentless and agent-based discovery.
@@ -188,7 +197,8 @@ impl CSMSettingsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -233,48 +243,29 @@ impl CSMSettingsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get the value distribution for a specific agentless host facet, with optional search and filtering.
-    pub async fn get_csm_agentless_host_facet_info(
-        &self,
-        facet: String,
-        params: GetCSMAgentlessHostFacetInfoOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CsmHostFacetInfoResponse,
-        datadog::Error<GetCSMAgentlessHostFacetInfoError>,
-    > {
-        match self
-            .get_csm_agentless_host_facet_info_with_http_info(facet, params)
-            .await
-        {
+    pub async fn get_csm_agentless_host_facet_info(&self, facet: String, params: GetCSMAgentlessHostFacetInfoOptionalParams) -> Result<crate::datadogV2::model::CsmHostFacetInfoResponse, datadog::Error<GetCSMAgentlessHostFacetInfoError>> {
+        match self.get_csm_agentless_host_facet_info_with_http_info(facet,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the value distribution for a specific agentless host facet, with optional search and filtering.
-    pub async fn get_csm_agentless_host_facet_info_with_http_info(
-        &self,
-        facet: String,
-        params: GetCSMAgentlessHostFacetInfoOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmHostFacetInfoResponse>,
-        datadog::Error<GetCSMAgentlessHostFacetInfoError>,
-    > {
+    pub async fn get_csm_agentless_host_facet_info_with_http_info(&self, facet: String, params: GetCSMAgentlessHostFacetInfoOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmHostFacetInfoResponse>, datadog::Error<GetCSMAgentlessHostFacetInfoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_csm_agentless_host_facet_info";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -286,6 +277,7 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let search = params.search;
         let query = params.query;
@@ -294,24 +286,23 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts/facet_info",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("facet", &facet.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("facet", &facet.to_string() )]);
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -324,22 +315,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -351,65 +336,38 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmHostFacetInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmHostFacetInfoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCSMAgentlessHostFacetInfoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCSMAgentlessHostFacetInfoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the value distribution for a specific unified host facet, with optional search and filtering.
-    pub async fn get_csm_unified_host_facet_info(
-        &self,
-        facet: String,
-        params: GetCSMUnifiedHostFacetInfoOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CsmHostFacetInfoResponse,
-        datadog::Error<GetCSMUnifiedHostFacetInfoError>,
-    > {
-        match self
-            .get_csm_unified_host_facet_info_with_http_info(facet, params)
-            .await
-        {
+    pub async fn get_csm_unified_host_facet_info(&self, facet: String, params: GetCSMUnifiedHostFacetInfoOptionalParams) -> Result<crate::datadogV2::model::CsmHostFacetInfoResponse, datadog::Error<GetCSMUnifiedHostFacetInfoError>> {
+        match self.get_csm_unified_host_facet_info_with_http_info(facet,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the value distribution for a specific unified host facet, with optional search and filtering.
-    pub async fn get_csm_unified_host_facet_info_with_http_info(
-        &self,
-        facet: String,
-        params: GetCSMUnifiedHostFacetInfoOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmHostFacetInfoResponse>,
-        datadog::Error<GetCSMUnifiedHostFacetInfoError>,
-    > {
+    pub async fn get_csm_unified_host_facet_info_with_http_info(&self, facet: String, params: GetCSMUnifiedHostFacetInfoOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmHostFacetInfoResponse>, datadog::Error<GetCSMUnifiedHostFacetInfoError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_csm_unified_host_facet_info";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -421,6 +379,7 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let search = params.search;
         let query = params.query;
@@ -429,24 +388,23 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts/facet_info",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("facet", &facet.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("facet", &facet.to_string() )]);
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -459,22 +417,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -486,58 +438,38 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmHostFacetInfoResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmHostFacetInfoResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCSMUnifiedHostFacetInfoError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCSMUnifiedHostFacetInfoError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of available facets for filtering agentless hosts.
-    pub async fn list_csm_agentless_host_facets(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::CsmAgentlessHostFacetsResponse,
-        datadog::Error<ListCSMAgentlessHostFacetsError>,
-    > {
+    pub async fn list_csm_agentless_host_facets(&self) -> Result<crate::datadogV2::model::CsmAgentlessHostFacetsResponse, datadog::Error<ListCSMAgentlessHostFacetsError>> {
         match self.list_csm_agentless_host_facets_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of available facets for filtering agentless hosts.
-    pub async fn list_csm_agentless_host_facets_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmAgentlessHostFacetsResponse>,
-        datadog::Error<ListCSMAgentlessHostFacetsError>,
-    > {
+    pub async fn list_csm_agentless_host_facets_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmAgentlessHostFacetsResponse>, datadog::Error<ListCSMAgentlessHostFacetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_csm_agentless_host_facets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -549,18 +481,22 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts/facets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -573,22 +509,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -600,60 +530,38 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmAgentlessHostFacetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmAgentlessHostFacetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCSMAgentlessHostFacetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCSMAgentlessHostFacetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of agentless hosts for CSM, with optional pagination and filtering.
-    pub async fn list_csm_agentless_hosts(
-        &self,
-        params: ListCSMAgentlessHostsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CsmAgentlessHostsResponse,
-        datadog::Error<ListCSMAgentlessHostsError>,
-    > {
-        match self.list_csm_agentless_hosts_with_http_info(params).await {
+    pub async fn list_csm_agentless_hosts(&self, params: ListCSMAgentlessHostsOptionalParams) -> Result<crate::datadogV2::model::CsmAgentlessHostsResponse, datadog::Error<ListCSMAgentlessHostsError>> {
+        match self.list_csm_agentless_hosts_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of agentless hosts for CSM, with optional pagination and filtering.
-    pub async fn list_csm_agentless_hosts_with_http_info(
-        &self,
-        params: ListCSMAgentlessHostsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmAgentlessHostsResponse>,
-        datadog::Error<ListCSMAgentlessHostsError>,
-    > {
+    pub async fn list_csm_agentless_hosts_with_http_info(&self, params: ListCSMAgentlessHostsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmAgentlessHostsResponse>, datadog::Error<ListCSMAgentlessHostsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_csm_agentless_hosts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -665,6 +573,7 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page = params.page;
         let size = params.size;
@@ -674,27 +583,25 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/agentless_hosts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page {
-            local_req_builder =
-                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = size {
-            local_req_builder =
-                local_req_builder.query(&[("size", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("size", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -707,22 +614,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -734,58 +635,38 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmAgentlessHostsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmAgentlessHostsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCSMAgentlessHostsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCSMAgentlessHostsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of available facets for filtering unified hosts.
-    pub async fn list_csm_unified_host_facets(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::CsmUnifiedHostFacetsResponse,
-        datadog::Error<ListCSMUnifiedHostFacetsError>,
-    > {
+    pub async fn list_csm_unified_host_facets(&self) -> Result<crate::datadogV2::model::CsmUnifiedHostFacetsResponse, datadog::Error<ListCSMUnifiedHostFacetsError>> {
         match self.list_csm_unified_host_facets_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of available facets for filtering unified hosts.
-    pub async fn list_csm_unified_host_facets_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmUnifiedHostFacetsResponse>,
-        datadog::Error<ListCSMUnifiedHostFacetsError>,
-    > {
+    pub async fn list_csm_unified_host_facets_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmUnifiedHostFacetsResponse>, datadog::Error<ListCSMUnifiedHostFacetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_csm_unified_host_facets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -797,18 +678,22 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts/facets",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -821,22 +706,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -848,60 +727,38 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmUnifiedHostFacetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmUnifiedHostFacetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCSMUnifiedHostFacetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCSMUnifiedHostFacetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of unified hosts for CSM, combining agent and agentless host data, with optional pagination and filtering.
-    pub async fn list_csm_unified_hosts(
-        &self,
-        params: ListCSMUnifiedHostsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::CsmUnifiedHostsResponse,
-        datadog::Error<ListCSMUnifiedHostsError>,
-    > {
-        match self.list_csm_unified_hosts_with_http_info(params).await {
+    pub async fn list_csm_unified_hosts(&self, params: ListCSMUnifiedHostsOptionalParams) -> Result<crate::datadogV2::model::CsmUnifiedHostsResponse, datadog::Error<ListCSMUnifiedHostsError>> {
+        match self.list_csm_unified_hosts_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of unified hosts for CSM, combining agent and agentless host data, with optional pagination and filtering.
-    pub async fn list_csm_unified_hosts_with_http_info(
-        &self,
-        params: ListCSMUnifiedHostsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CsmUnifiedHostsResponse>,
-        datadog::Error<ListCSMUnifiedHostsError>,
-    > {
+    pub async fn list_csm_unified_hosts_with_http_info(&self, params: ListCSMUnifiedHostsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CsmUnifiedHostsResponse>, datadog::Error<ListCSMUnifiedHostsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_csm_unified_hosts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -913,6 +770,7 @@ impl CSMSettingsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page = params.page;
         let size = params.size;
@@ -922,27 +780,25 @@ impl CSMSettingsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/csm/settings/hosts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page {
-            local_req_builder =
-                local_req_builder.query(&[("page", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = size {
-            local_req_builder =
-                local_req_builder.query(&[("size", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("size", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -955,22 +811,16 @@ impl CSMSettingsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -982,26 +832,17 @@ impl CSMSettingsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CsmUnifiedHostsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CsmUnifiedHostsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCSMUnifiedHostsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCSMUnifiedHostsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

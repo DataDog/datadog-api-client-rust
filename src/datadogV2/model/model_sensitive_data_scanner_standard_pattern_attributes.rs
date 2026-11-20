@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of the Sensitive Data Scanner standard pattern.
 #[non_exhaustive]
@@ -21,16 +21,16 @@ pub struct SensitiveDataScannerStandardPatternAttributes {
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// (Deprecated) Regex to match, optionally documented for older standard rules. Refer to the `description` field to understand what the rule does.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "pattern")]
     pub pattern: Option<String>,
     /// Integer from 1 (high) to 5 (low) indicating standard pattern issue severity.
     #[serde(rename = "priority")]
     pub priority: Option<i64>,
     /// Object describing suppressions for a rule, or the recommended suppression lists published by a standard pattern.
-    /// There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
-    /// Rules based on the Datadog library can use recommended or custom suppressions. Custom rules can only use custom suppressions.
-    /// Suppressed matches are not obfuscated, counted in metrics, or displayed in the Findings page.
+/// There are three types of suppressions, `starts_with`, `ends_with`, and `exact_match`.
+/// Rules based on the Datadog library can use recommended or custom suppressions. Custom rules can only use custom suppressions.
+/// Suppressed matches are not obfuscated, counted in metrics, or displayed in the Findings page.
     #[serde(rename = "suppressions")]
     pub suppressions: Option<crate::datadogV2::model::SensitiveDataScannerSuppressions>,
     /// List of tags.
@@ -40,7 +40,7 @@ pub struct SensitiveDataScannerStandardPatternAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SensitiveDataScannerStandardPatternAttributes {
@@ -58,60 +58,55 @@ impl SensitiveDataScannerStandardPatternAttributes {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn included_keywords(mut self, value: Vec<String>) -> Self {
         self.included_keywords = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn pattern(mut self, value: String) -> Self {
         self.pattern = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn priority(mut self, value: i64) -> Self {
         self.priority = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn suppressions(
-        mut self,
-        value: crate::datadogV2::model::SensitiveDataScannerSuppressions,
-    ) -> Self {
+    pub fn suppressions(mut self, value: crate::datadogV2::model::SensitiveDataScannerSuppressions) -> Self {
         self.suppressions = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SensitiveDataScannerStandardPatternAttributes {
     fn default() -> Self {
@@ -141,14 +136,9 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                 let mut name: Option<String> = None;
                 let mut pattern: Option<String> = None;
                 let mut priority: Option<i64> = None;
-                let mut suppressions: Option<
-                    crate::datadogV2::model::SensitiveDataScannerSuppressions,
-                > = None;
+                let mut suppressions: Option<crate::datadogV2::model::SensitiveDataScannerSuppressions> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -157,52 +147,49 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerStandardPatternAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "included_keywords" => {
                             if v.is_null() {
                                 continue;
                             }
-                            included_keywords =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            included_keywords = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pattern" => {
                             if v.is_null() {
                                 continue;
                             }
                             pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             if v.is_null() {
                                 continue;
                             }
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "suppressions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            suppressions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            suppressions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

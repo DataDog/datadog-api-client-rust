@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Cloud storage access configuration for the reference table data file.
 #[non_exhaustive]
@@ -37,39 +37,28 @@ impl TableResultV2DataAttributesFileMetadataOneOfAccessDetails {
             _unparsed: false,
         }
     }
-
-    pub fn aws_detail(
-        mut self,
-        value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAwsDetail,
-    ) -> Self {
+    
+    pub fn aws_detail(mut self, value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAwsDetail) -> Self {
         self.aws_detail = Some(value);
         self
     }
-
-    pub fn azure_detail(
-        mut self,
-        value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAzureDetail,
-    ) -> Self {
+    
+    pub fn azure_detail(mut self, value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAzureDetail) -> Self {
         self.azure_detail = Some(value);
         self
     }
-
-    pub fn gcp_detail(
-        mut self,
-        value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsGcpDetail,
-    ) -> Self {
+    
+    pub fn gcp_detail(mut self, value: crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsGcpDetail) -> Self {
         self.gcp_detail = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TableResultV2DataAttributesFileMetadataOneOfAccessDetails {
     fn default() -> Self {
@@ -97,10 +86,7 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataOneOfAcces
                 let mut aws_detail: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAwsDetail> = None;
                 let mut azure_detail: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsAzureDetail> = None;
                 let mut gcp_detail: Option<crate::datadogV2::model::TableResultV2DataAttributesFileMetadataOneOfAccessDetailsGcpDetail> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -110,25 +96,24 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataOneOfAcces
                                 continue;
                             }
                             aws_detail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "azure_detail" => {
                             if v.is_null() {
                                 continue;
                             }
-                            azure_detail =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            azure_detail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "gcp_detail" => {
                             if v.is_null() {
                                 continue;
                             }
                             gcp_detail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
@@ -144,7 +129,6 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataOneOfAcces
             }
         }
 
-        deserializer
-            .deserialize_any(TableResultV2DataAttributesFileMetadataOneOfAccessDetailsVisitor)
+        deserializer.deserialize_any(TableResultV2DataAttributesFileMetadataOneOfAccessDetailsVisitor)
     }
 }

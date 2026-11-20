@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum HamrOrgConnectionStatus {
-    UNSPECIFIED,
-    ONBOARDING,
-    PASSIVE,
-    FAILOVER,
-    ACTIVE,
-    RECOVERY,
+	UNSPECIFIED,
+	ONBOARDING,
+	PASSIVE,
+	FAILOVER,
+	ACTIVE,
+	RECOVERY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -39,16 +40,8 @@ impl<'de> Deserialize<'de> for HamrOrgConnectionStatus {
         D: Deserializer<'de>,
     {
         let s: i64 = i64::deserialize(deserializer)?;
-        Ok(match s {
-            0 => Self::UNSPECIFIED,
-            1 => Self::ONBOARDING,
-            2 => Self::PASSIVE,
-            3 => Self::FAILOVER,
-            4 => Self::ACTIVE,
-            5 => Self::RECOVERY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {0 => Self::UNSPECIFIED,1 => Self::ONBOARDING,2 => Self::PASSIVE,3 => Self::FAILOVER,4 => Self::ACTIVE,5 => Self::RECOVERY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ApplicationSecurityWafCustomRuleTagsCategory {
-    ATTACK_ATTEMPT,
-    BUSINESS_LOGIC,
-    SECURITY_RESPONSE,
+	ATTACK_ATTEMPT,
+	BUSINESS_LOGIC,
+	SECURITY_RESPONSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafCustomRuleTagsCategory {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "attack_attempt" => Self::ATTACK_ATTEMPT,
-            "business_logic" => Self::BUSINESS_LOGIC,
-            "security_response" => Self::SECURITY_RESPONSE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"attack_attempt" => Self::ATTACK_ATTEMPT,"business_logic" => Self::BUSINESS_LOGIC,"security_response" => Self::SECURITY_RESPONSE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

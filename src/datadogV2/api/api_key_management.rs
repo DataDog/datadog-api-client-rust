@@ -1,15 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetAPIKeyOptionalParams is a struct for passing parameters to the method [`KeyManagementAPI::get_api_key`]
 #[non_exhaustive]
@@ -48,16 +45,12 @@ impl GetApplicationKeyOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetPersonalAccessTokenOptionalParams {
     /// Comma-separated list of relationship objects that should be included in the response.
-    pub include:
-        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
+    pub include: Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
 }
 
 impl GetPersonalAccessTokenOptionalParams {
     /// Comma-separated list of relationship objects that should be included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>) -> Self {
         self.include = Some(value);
         self
     }
@@ -72,8 +65,8 @@ pub struct ListAPIKeysOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// API key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::APIKeysSort>,
     /// Filter API keys by the specified string.
     pub filter: Option<String>,
@@ -105,8 +98,8 @@ impl ListAPIKeysOptionalParams {
         self
     }
     /// API key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::APIKeysSort) -> Self {
         self.sort = Some(value);
         self
@@ -162,8 +155,8 @@ pub struct ListApplicationKeysOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// Application key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::ApplicationKeysSort>,
     /// Filter application keys by the specified string.
     pub filter: Option<String>,
@@ -189,8 +182,8 @@ impl ListApplicationKeysOptionalParams {
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
@@ -231,8 +224,8 @@ pub struct ListCurrentUserApplicationKeysOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// Application key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::ApplicationKeysSort>,
     /// Filter application keys by the specified string.
     pub filter: Option<String>,
@@ -256,8 +249,8 @@ impl ListCurrentUserApplicationKeysOptionalParams {
         self
     }
     /// Application key attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::ApplicationKeysSort) -> Self {
         self.sort = Some(value);
         self
@@ -293,8 +286,8 @@ pub struct ListPersonalAccessTokensOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// Access token attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub sort: Option<crate::datadogV2::model::PersonalAccessTokensSort>,
     /// Filter access tokens by the specified string.
     pub filter: Option<String>,
@@ -303,8 +296,7 @@ pub struct ListPersonalAccessTokensOptionalParams {
     /// When true, only return access tokens that have been detected as leaked. Has no effect when false.
     pub filter_leaked: Option<bool>,
     /// Comma-separated list of relationship objects that should be included in the response.
-    pub include:
-        Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
+    pub include: Option<Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>>,
 }
 
 impl ListPersonalAccessTokensOptionalParams {
@@ -319,8 +311,8 @@ impl ListPersonalAccessTokensOptionalParams {
         self
     }
     /// Access token attribute used to sort results. Sort order is ascending
-    /// by default. In order to specify a descending sort, prefix the
-    /// attribute with a minus sign.
+/// by default. In order to specify a descending sort, prefix the
+/// attribute with a minus sign.
     pub fn sort(mut self, value: crate::datadogV2::model::PersonalAccessTokensSort) -> Self {
         self.sort = Some(value);
         self
@@ -341,14 +333,14 @@ impl ListPersonalAccessTokensOptionalParams {
         self
     }
     /// Comma-separated list of relationship objects that should be included in the response.
-    pub fn include(
-        mut self,
-        value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>,
-    ) -> Self {
+    pub fn include(mut self, value: Vec<crate::datadogV2::model::PersonalAccessTokensIncludeQueryParameterItem>) -> Self {
         self.include = Some(value);
         self
     }
 }
+
+
+
 
 /// CreateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::create_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -358,6 +350,7 @@ pub enum CreateAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateCurrentUserApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::create_current_user_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -365,6 +358,7 @@ pub enum CreateCurrentUserApplicationKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreatePersonalAccessTokenError is a struct for typed errors of method [`KeyManagementAPI::create_personal_access_token`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -374,6 +368,7 @@ pub enum CreatePersonalAccessTokenError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -381,6 +376,7 @@ pub enum DeleteAPIKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -390,6 +386,7 @@ pub enum DeleteApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteCurrentUserApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::delete_current_user_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -397,6 +394,7 @@ pub enum DeleteCurrentUserApplicationKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::get_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -406,6 +404,7 @@ pub enum GetAPIKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::get_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -413,6 +412,7 @@ pub enum GetApplicationKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetCurrentUserApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::get_current_user_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -422,6 +422,7 @@ pub enum GetCurrentUserApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetPersonalAccessTokenError is a struct for typed errors of method [`KeyManagementAPI::get_personal_access_token`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -429,6 +430,7 @@ pub enum GetPersonalAccessTokenError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAPIKeysError is a struct for typed errors of method [`KeyManagementAPI::list_api_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -438,6 +440,7 @@ pub enum ListAPIKeysError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListApplicationKeysError is a struct for typed errors of method [`KeyManagementAPI::list_application_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -445,6 +448,7 @@ pub enum ListApplicationKeysError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListCurrentUserApplicationKeysError is a struct for typed errors of method [`KeyManagementAPI::list_current_user_application_keys`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -454,6 +458,7 @@ pub enum ListCurrentUserApplicationKeysError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListPersonalAccessTokensError is a struct for typed errors of method [`KeyManagementAPI::list_personal_access_tokens`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -461,6 +466,7 @@ pub enum ListPersonalAccessTokensError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RevokePersonalAccessTokenError is a struct for typed errors of method [`KeyManagementAPI::revoke_personal_access_token`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -470,6 +476,7 @@ pub enum RevokePersonalAccessTokenError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::update_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -477,6 +484,7 @@ pub enum UpdateAPIKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::update_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -486,6 +494,7 @@ pub enum UpdateApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateCurrentUserApplicationKeyError is a struct for typed errors of method [`KeyManagementAPI::update_current_user_application_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -494,6 +503,7 @@ pub enum UpdateCurrentUserApplicationKeyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdatePersonalAccessTokenError is a struct for typed errors of method [`KeyManagementAPI::update_personal_access_token`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -501,6 +511,7 @@ pub enum UpdatePersonalAccessTokenError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ValidateError is a struct for typed errors of method [`KeyManagementAPI::validate`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -511,6 +522,7 @@ pub enum ValidateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ValidateAPIKeyError is a struct for typed errors of method [`KeyManagementAPI::validate_api_key`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -518,6 +530,7 @@ pub enum ValidateAPIKeyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Datadog API and application keys. You need an API key and an
 /// application key for a user with the required permissions to interact with these endpoints.
@@ -547,7 +560,8 @@ impl KeyManagementAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -592,56 +606,49 @@ impl KeyManagementAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create an API key.
-    pub async fn create_api_key(
-        &self,
-        body: crate::datadogV2::model::APIKeyCreateRequest,
-    ) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<CreateAPIKeyError>> {
+    pub async fn create_api_key(&self, body: crate::datadogV2::model::APIKeyCreateRequest) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<CreateAPIKeyError>> {
         match self.create_api_key_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an API key.
-    pub async fn create_api_key_with_http_info(
-        &self,
-        body: crate::datadogV2::model::APIKeyCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>,
-        datadog::Error<CreateAPIKeyError>,
-    > {
+    pub async fn create_api_key_with_http_info(&self, body: crate::datadogV2::model::APIKeyCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>, datadog::Error<CreateAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -654,23 +661,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -678,7 +678,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -688,7 +691,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -710,7 +716,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -728,75 +734,57 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an application key for current user
-    pub async fn create_current_user_application_key(
-        &self,
-        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
-        datadog::Error<CreateCurrentUserApplicationKeyError>,
-    > {
-        match self
-            .create_current_user_application_key_with_http_info(body)
-            .await
-        {
+    pub async fn create_current_user_application_key(&self, body: crate::datadogV2::model::ApplicationKeyCreateRequest) -> Result<crate::datadogV2::model::ApplicationKeyResponse, datadog::Error<CreateCurrentUserApplicationKeyError>> {
+        match self.create_current_user_application_key_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an application key for current user
-    pub async fn create_current_user_application_key_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ApplicationKeyCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        datadog::Error<CreateCurrentUserApplicationKeyError>,
-    > {
+    pub async fn create_current_user_application_key_with_http_info(&self, body: crate::datadogV2::model::ApplicationKeyCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>, datadog::Error<CreateCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_current_user_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -809,23 +797,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -833,7 +814,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -843,7 +827,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -865,7 +852,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -882,76 +869,58 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateCurrentUserApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateCurrentUserApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a personal access token for the current user.
-    pub async fn create_personal_access_token(
-        &self,
-        body: crate::datadogV2::model::PersonalAccessTokenCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenCreateResponse,
-        datadog::Error<CreatePersonalAccessTokenError>,
-    > {
+    pub async fn create_personal_access_token(&self, body: crate::datadogV2::model::PersonalAccessTokenCreateRequest) -> Result<crate::datadogV2::model::PersonalAccessTokenCreateResponse, datadog::Error<CreatePersonalAccessTokenError>> {
         match self.create_personal_access_token_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a personal access token for the current user.
-    pub async fn create_personal_access_token_with_http_info(
-        &self,
-        body: crate::datadogV2::model::PersonalAccessTokenCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenCreateResponse>,
-        datadog::Error<CreatePersonalAccessTokenError>,
-    > {
+    pub async fn create_personal_access_token_with_http_info(&self, body: crate::datadogV2::model::PersonalAccessTokenCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenCreateResponse>, datadog::Error<CreatePersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_personal_access_token";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -964,23 +933,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -988,7 +950,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -998,7 +963,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1020,7 +988,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1037,62 +1005,53 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenCreateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenCreateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreatePersonalAccessTokenError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreatePersonalAccessTokenError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an API key.
-    pub async fn delete_api_key(
-        &self,
-        api_key_id: String,
-    ) -> Result<(), datadog::Error<DeleteAPIKeyError>> {
+    pub async fn delete_api_key(&self, api_key_id: String) -> Result<(), datadog::Error<DeleteAPIKeyError>> {
         match self.delete_api_key_with_http_info(api_key_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an API key.
-    pub async fn delete_api_key_with_http_info(
-        &self,
-        api_key_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAPIKeyError>> {
+    pub async fn delete_api_key_with_http_info(&self, api_key_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            api_key_id = datadog::urlencode(api_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), api_key_id=
+            datadog::urlencode(api_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1105,22 +1064,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1139,47 +1092,43 @@ impl KeyManagementAPI {
             })
         } else {
             let local_entity: Option<DeleteAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an application key
-    pub async fn delete_application_key(
-        &self,
-        app_key_id: String,
-    ) -> Result<(), datadog::Error<DeleteApplicationKeyError>> {
+    pub async fn delete_application_key(&self, app_key_id: String) -> Result<(), datadog::Error<DeleteApplicationKeyError>> {
         match self.delete_application_key_with_http_info(app_key_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an application key
-    pub async fn delete_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApplicationKeyError>> {
+    pub async fn delete_application_key_with_http_info(&self, app_key_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1192,22 +1141,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1225,53 +1168,44 @@ impl KeyManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an application key owned by current user
-    pub async fn delete_current_user_application_key(
-        &self,
-        app_key_id: String,
-    ) -> Result<(), datadog::Error<DeleteCurrentUserApplicationKeyError>> {
-        match self
-            .delete_current_user_application_key_with_http_info(app_key_id)
-            .await
-        {
+    pub async fn delete_current_user_application_key(&self, app_key_id: String) -> Result<(), datadog::Error<DeleteCurrentUserApplicationKeyError>> {
+        match self.delete_current_user_application_key_with_http_info(app_key_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an application key owned by current user
-    pub async fn delete_current_user_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCurrentUserApplicationKeyError>>
-    {
+    pub async fn delete_current_user_application_key_with_http_info(&self, app_key_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_current_user_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1284,22 +1218,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1317,49 +1245,33 @@ impl KeyManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteCurrentUserApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteCurrentUserApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an API key.
-    pub async fn get_api_key(
-        &self,
-        api_key_id: String,
-        params: GetAPIKeyOptionalParams,
-    ) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<GetAPIKeyError>> {
-        match self.get_api_key_with_http_info(api_key_id, params).await {
+    pub async fn get_api_key(&self, api_key_id: String, params: GetAPIKeyOptionalParams) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<GetAPIKeyError>> {
+        match self.get_api_key_with_http_info(api_key_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an API key.
-    pub async fn get_api_key_with_http_info(
-        &self,
-        api_key_id: String,
-        params: GetAPIKeyOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>,
-        datadog::Error<GetAPIKeyError>,
-    > {
+    pub async fn get_api_key_with_http_info(&self, api_key_id: String, params: GetAPIKeyOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>, datadog::Error<GetAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_api_key";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1367,20 +1279,21 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            api_key_id = datadog::urlencode(api_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), api_key_id=
+            datadog::urlencode(api_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1393,22 +1306,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1421,64 +1328,41 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an application key for your org.
-    pub async fn get_application_key(
-        &self,
-        app_key_id: String,
-        params: GetApplicationKeyOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
-        datadog::Error<GetApplicationKeyError>,
-    > {
-        match self
-            .get_application_key_with_http_info(app_key_id, params)
-            .await
-        {
+    pub async fn get_application_key(&self, app_key_id: String, params: GetApplicationKeyOptionalParams) -> Result<crate::datadogV2::model::ApplicationKeyResponse, datadog::Error<GetApplicationKeyError>> {
+        match self.get_application_key_with_http_info(app_key_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an application key for your org.
-    pub async fn get_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-        params: GetApplicationKeyOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        datadog::Error<GetApplicationKeyError>,
-    > {
+    pub async fn get_application_key_with_http_info(&self, app_key_id: String, params: GetApplicationKeyOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>, datadog::Error<GetApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_application_key";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1486,20 +1370,21 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1512,22 +1397,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1539,81 +1418,61 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an application key owned by current user.
-    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    pub async fn get_current_user_application_key(
-        &self,
-        app_key_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
-        datadog::Error<GetCurrentUserApplicationKeyError>,
-    > {
-        match self
-            .get_current_user_application_key_with_http_info(app_key_id)
-            .await
-        {
+/// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    pub async fn get_current_user_application_key(&self, app_key_id: String) -> Result<crate::datadogV2::model::ApplicationKeyResponse, datadog::Error<GetCurrentUserApplicationKeyError>> {
+        match self.get_current_user_application_key_with_http_info(app_key_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an application key owned by current user.
-    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    pub async fn get_current_user_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        datadog::Error<GetCurrentUserApplicationKeyError>,
-    > {
+/// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    pub async fn get_current_user_application_key_with_http_info(&self, app_key_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>, datadog::Error<GetCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_current_user_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1626,22 +1485,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1653,68 +1506,42 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetCurrentUserApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetCurrentUserApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific personal access token by its ID.
-    pub async fn get_personal_access_token(
-        &self,
-        token_id: String,
-        params: GetPersonalAccessTokenOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::PersonalAccessTokenResponse,
-        datadog::Error<GetPersonalAccessTokenError>,
-    > {
-        match self
-            .get_personal_access_token_with_http_info(token_id, params)
-            .await
-        {
+    pub async fn get_personal_access_token(&self, token_id: String, params: GetPersonalAccessTokenOptionalParams) -> Result<crate::datadogV2::model::PersonalAccessTokenResponse, datadog::Error<GetPersonalAccessTokenError>> {
+        match self.get_personal_access_token_with_http_info(token_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific personal access token by its ID.
-    pub async fn get_personal_access_token_with_http_info(
-        &self,
-        token_id: String,
-        params: GetPersonalAccessTokenOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>,
-        datadog::Error<GetPersonalAccessTokenError>,
-    > {
+    pub async fn get_personal_access_token_with_http_info(&self, token_id: String, params: GetPersonalAccessTokenOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::PersonalAccessTokenResponse>, datadog::Error<GetPersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_personal_access_token";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1722,27 +1549,21 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            token_id = datadog::urlencode(token_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), token_id=
+            datadog::urlencode(token_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1755,22 +1576,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1782,60 +1597,42 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PersonalAccessTokenResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetPersonalAccessTokenError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetPersonalAccessTokenError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all API keys available for your account.
-    pub async fn list_api_keys(
-        &self,
-        params: ListAPIKeysOptionalParams,
-    ) -> Result<crate::datadogV2::model::APIKeysResponse, datadog::Error<ListAPIKeysError>> {
-        match self.list_api_keys_with_http_info(params).await {
+    pub async fn list_api_keys(&self, params: ListAPIKeysOptionalParams) -> Result<crate::datadogV2::model::APIKeysResponse, datadog::Error<ListAPIKeysError>> {
+        match self.list_api_keys_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all API keys available for your account.
-    pub async fn list_api_keys_with_http_info(
-        &self,
-        params: ListAPIKeysOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::APIKeysResponse>,
-        datadog::Error<ListAPIKeysError>,
-    > {
+    pub async fn list_api_keys_with_http_info(&self, params: ListAPIKeysOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::APIKeysResponse>, datadog::Error<ListAPIKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_api_keys";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -1853,61 +1650,49 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_start {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][start]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][end]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_modified_at_start {
-            local_req_builder = local_req_builder
-                .query(&[("filter[modified_at][start]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[modified_at][start]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_modified_at_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[modified_at][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[modified_at][end]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_remote_config_read_enabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[remote_config_read_enabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[remote_config_read_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_category {
-            local_req_builder =
-                local_req_builder.query(&[("filter[category]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[category]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1920,22 +1705,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1948,59 +1727,41 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::APIKeysResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListAPIKeysError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all application keys available for your org
-    pub async fn list_application_keys(
-        &self,
-        params: ListApplicationKeysOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListApplicationKeysResponse,
-        datadog::Error<ListApplicationKeysError>,
-    > {
-        match self.list_application_keys_with_http_info(params).await {
+    pub async fn list_application_keys(&self, params: ListApplicationKeysOptionalParams) -> Result<crate::datadogV2::model::ListApplicationKeysResponse, datadog::Error<ListApplicationKeysError>> {
+        match self.list_application_keys_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all application keys available for your org
-    pub async fn list_application_keys_with_http_info(
-        &self,
-        params: ListApplicationKeysOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
-        datadog::Error<ListApplicationKeysError>,
-    > {
+    pub async fn list_application_keys_with_http_info(&self, params: ListApplicationKeysOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>, datadog::Error<ListApplicationKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_application_keys";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -2015,47 +1776,40 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_start {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][start]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][end]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_owned_by {
-            local_req_builder =
-                local_req_builder.query(&[("filter[owned_by]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[owned_by]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2068,22 +1822,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2095,66 +1843,42 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListApplicationKeysError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListApplicationKeysError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all application keys available for current user
-    pub async fn list_current_user_application_keys(
-        &self,
-        params: ListCurrentUserApplicationKeysOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListApplicationKeysResponse,
-        datadog::Error<ListCurrentUserApplicationKeysError>,
-    > {
-        match self
-            .list_current_user_application_keys_with_http_info(params)
-            .await
-        {
+    pub async fn list_current_user_application_keys(&self, params: ListCurrentUserApplicationKeysOptionalParams) -> Result<crate::datadogV2::model::ListApplicationKeysResponse, datadog::Error<ListCurrentUserApplicationKeysError>> {
+        match self.list_current_user_application_keys_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all application keys available for current user
-    pub async fn list_current_user_application_keys_with_http_info(
-        &self,
-        params: ListCurrentUserApplicationKeysOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>,
-        datadog::Error<ListCurrentUserApplicationKeysError>,
-    > {
+    pub async fn list_current_user_application_keys_with_http_info(&self, params: ListCurrentUserApplicationKeysOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListApplicationKeysResponse>, datadog::Error<ListCurrentUserApplicationKeysError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_current_user_application_keys";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -2168,43 +1892,37 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_start {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][start]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][start]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_created_at_end {
-            local_req_builder = local_req_builder
-                .query(&[("filter[created_at][end]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[created_at][end]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2217,22 +1935,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2244,66 +1956,42 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListApplicationKeysResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListCurrentUserApplicationKeysError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListCurrentUserApplicationKeysError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all access tokens for the organization.
-    pub async fn list_personal_access_tokens(
-        &self,
-        params: ListPersonalAccessTokensOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListPersonalAccessTokensResponse,
-        datadog::Error<ListPersonalAccessTokensError>,
-    > {
-        match self
-            .list_personal_access_tokens_with_http_info(params)
-            .await
-        {
+    pub async fn list_personal_access_tokens(&self, params: ListPersonalAccessTokensOptionalParams) -> Result<crate::datadogV2::model::ListPersonalAccessTokensResponse, datadog::Error<ListPersonalAccessTokensError>> {
+        match self.list_personal_access_tokens_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all access tokens for the organization.
-    pub async fn list_personal_access_tokens_with_http_info(
-        &self,
-        params: ListPersonalAccessTokensOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListPersonalAccessTokensResponse>,
-        datadog::Error<ListPersonalAccessTokensError>,
-    > {
+    pub async fn list_personal_access_tokens_with_http_info(&self, params: ListPersonalAccessTokensOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListPersonalAccessTokensResponse>, datadog::Error<ListPersonalAccessTokensError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_personal_access_tokens";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -2317,52 +2005,38 @@ impl KeyManagementAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_owned_by {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[owned_by]", &param.to_string())]);
+        if let Some(ref local) = filter_owned_by {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[owned_by]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_leaked {
-            local_req_builder =
-                local_req_builder.query(&[("filter[leaked]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[leaked]", &local_query_param.to_string() )]);
         };
         if let Some(ref local) = include {
-            local_req_builder = local_req_builder.query(&[(
-                "include",
-                &local
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include", &local.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2375,22 +2049,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2402,65 +2070,53 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListPersonalAccessTokensResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListPersonalAccessTokensResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListPersonalAccessTokensError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListPersonalAccessTokensError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Revoke a specific personal access token.
-    pub async fn revoke_personal_access_token(
-        &self,
-        token_id: String,
-    ) -> Result<(), datadog::Error<RevokePersonalAccessTokenError>> {
-        match self
-            .revoke_personal_access_token_with_http_info(token_id)
-            .await
-        {
+    pub async fn revoke_personal_access_token(&self, token_id: String) -> Result<(), datadog::Error<RevokePersonalAccessTokenError>> {
+        match self.revoke_personal_access_token_with_http_info(token_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Revoke a specific personal access token.
-    pub async fn revoke_personal_access_token_with_http_info(
-        &self,
-        token_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokePersonalAccessTokenError>> {
+    pub async fn revoke_personal_access_token_with_http_info(&self, token_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<RevokePersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.revoke_personal_access_token";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            token_id = datadog::urlencode(token_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), token_id=
+            datadog::urlencode(token_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2473,22 +2129,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2506,63 +2156,51 @@ impl KeyManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RevokePersonalAccessTokenError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RevokePersonalAccessTokenError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an API key.
-    pub async fn update_api_key(
-        &self,
-        api_key_id: String,
-        body: crate::datadogV2::model::APIKeyUpdateRequest,
-    ) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<UpdateAPIKeyError>> {
+    pub async fn update_api_key(&self, api_key_id: String, body: crate::datadogV2::model::APIKeyUpdateRequest) -> Result<crate::datadogV2::model::APIKeyResponse, datadog::Error<UpdateAPIKeyError>> {
         match self.update_api_key_with_http_info(api_key_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an API key.
-    pub async fn update_api_key_with_http_info(
-        &self,
-        api_key_id: String,
-        body: crate::datadogV2::model::APIKeyUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>,
-        datadog::Error<UpdateAPIKeyError>,
-    > {
+    pub async fn update_api_key_with_http_info(&self, api_key_id: String, body: crate::datadogV2::model::APIKeyUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::APIKeyResponse>, datadog::Error<UpdateAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/api_keys/{api_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            api_key_id = datadog::urlencode(api_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), api_key_id=
+            datadog::urlencode(api_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2575,23 +2213,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2599,7 +2230,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2609,7 +2243,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2631,7 +2268,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2649,78 +2286,59 @@ impl KeyManagementAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::APIKeyResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateAPIKeyError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Edit an application key
-    pub async fn update_application_key(
-        &self,
-        app_key_id: String,
-        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
-        datadog::Error<UpdateApplicationKeyError>,
-    > {
-        match self
-            .update_application_key_with_http_info(app_key_id, body)
-            .await
-        {
+    pub async fn update_application_key(&self, app_key_id: String, body: crate::datadogV2::model::ApplicationKeyUpdateRequest) -> Result<crate::datadogV2::model::ApplicationKeyResponse, datadog::Error<UpdateApplicationKeyError>> {
+        match self.update_application_key_with_http_info(app_key_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Edit an application key
-    pub async fn update_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        datadog::Error<UpdateApplicationKeyError>,
-    > {
+    pub async fn update_application_key_with_http_info(&self, app_key_id: String, body: crate::datadogV2::model::ApplicationKeyUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>, datadog::Error<UpdateApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2733,23 +2351,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2757,7 +2368,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2767,7 +2381,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2789,7 +2406,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2806,84 +2423,62 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Edit an application key owned by current user.
-    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    pub async fn update_current_user_application_key(
-        &self,
-        app_key_id: String,
-        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ApplicationKeyResponse,
-        datadog::Error<UpdateCurrentUserApplicationKeyError>,
-    > {
-        match self
-            .update_current_user_application_key_with_http_info(app_key_id, body)
-            .await
-        {
+/// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    pub async fn update_current_user_application_key(&self, app_key_id: String, body: crate::datadogV2::model::ApplicationKeyUpdateRequest) -> Result<crate::datadogV2::model::ApplicationKeyResponse, datadog::Error<UpdateCurrentUserApplicationKeyError>> {
+        match self.update_current_user_application_key_with_http_info(app_key_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Edit an application key owned by current user.
-    /// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
-    pub async fn update_current_user_application_key_with_http_info(
-        &self,
-        app_key_id: String,
-        body: crate::datadogV2::model::ApplicationKeyUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>,
-        datadog::Error<UpdateCurrentUserApplicationKeyError>,
-    > {
+/// The `key` field is not returned for organizations in [One-Time Read mode](<https://docs.datadoghq.com/account_management/api-app-keys/#one-time-read-mode>).
+    pub async fn update_current_user_application_key_with_http_info(&self, app_key_id: String, body: crate::datadogV2::model::ApplicationKeyUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ApplicationKeyResponse>, datadog::Error<UpdateCurrentUserApplicationKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_current_user_application_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/current_user/application_keys/{app_key_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_key_id = datadog::urlencode(app_key_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_key_id=
+            datadog::urlencode(app_key_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2896,23 +2491,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2920,7 +2508,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2930,7 +2521,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2952,7 +2546,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2969,82 +2563,60 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ApplicationKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateCurrentUserApplicationKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateCurrentUserApplicationKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a specific personal access token.
-    pub async fn update_personal_access_token(
-        &self,
-        token_id: String,
-        body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::UpdatedPersonalAccessTokenResponse,
-        datadog::Error<UpdatePersonalAccessTokenError>,
-    > {
-        match self
-            .update_personal_access_token_with_http_info(token_id, body)
-            .await
-        {
+    pub async fn update_personal_access_token(&self, token_id: String, body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest) -> Result<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse, datadog::Error<UpdatePersonalAccessTokenError>> {
+        match self.update_personal_access_token_with_http_info(token_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a specific personal access token.
-    pub async fn update_personal_access_token_with_http_info(
-        &self,
-        token_id: String,
-        body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>,
-        datadog::Error<UpdatePersonalAccessTokenError>,
-    > {
+    pub async fn update_personal_access_token_with_http_info(&self, token_id: String, body: crate::datadogV2::model::PersonalAccessTokenUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>, datadog::Error<UpdatePersonalAccessTokenError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_personal_access_token";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/personal_access_tokens/{token_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            token_id = datadog::urlencode(token_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), token_id=
+            datadog::urlencode(token_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3057,23 +2629,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3081,7 +2646,10 @@ impl KeyManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3091,7 +2659,10 @@ impl KeyManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3113,7 +2684,7 @@ impl KeyManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3130,55 +2701,38 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpdatedPersonalAccessTokenResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdatePersonalAccessTokenError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdatePersonalAccessTokenError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Check if the API key is valid. Returns the organization UUID, API key ID, and associated scopes.
-    pub async fn validate(
-        &self,
-    ) -> Result<crate::datadogV2::model::ValidateV2Response, datadog::Error<ValidateError>> {
+    pub async fn validate(&self) -> Result<crate::datadogV2::model::ValidateV2Response, datadog::Error<ValidateError>> {
         match self.validate_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Check if the API key is valid. Returns the organization UUID, API key ID, and associated scopes.
-    pub async fn validate_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ValidateV2Response>,
-        datadog::Error<ValidateError>,
-    > {
+    pub async fn validate_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ValidateV2Response>, datadog::Error<ValidateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.validate";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3190,18 +2744,22 @@ impl KeyManagementAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/validate",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3214,15 +2772,13 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3234,76 +2790,63 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ValidateV2Response>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ValidateV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ValidateError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Check that the API key and application key used for the request are both valid.
-    /// Returns `{"status": "ok"}` on success, `401` or `403` otherwise. Useful as a
-    /// lightweight authentication probe before issuing other API calls that require
-    /// full credentials.
-    pub async fn validate_api_key(
-        &self,
-    ) -> Result<crate::datadogV2::model::ValidateAPIKeyResponse, datadog::Error<ValidateAPIKeyError>>
-    {
+/// Returns `{"status": "ok"}` on success, `401` or `403` otherwise. Useful as a
+/// lightweight authentication probe before issuing other API calls that require
+/// full credentials.
+    pub async fn validate_api_key(&self) -> Result<crate::datadogV2::model::ValidateAPIKeyResponse, datadog::Error<ValidateAPIKeyError>> {
         match self.validate_api_key_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Check that the API key and application key used for the request are both valid.
-    /// Returns `{"status": "ok"}` on success, `401` or `403` otherwise. Useful as a
-    /// lightweight authentication probe before issuing other API calls that require
-    /// full credentials.
-    pub async fn validate_api_key_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ValidateAPIKeyResponse>,
-        datadog::Error<ValidateAPIKeyError>,
-    > {
+/// Returns `{"status": "ok"}` on success, `401` or `403` otherwise. Useful as a
+/// lightweight authentication probe before issuing other API calls that require
+/// full credentials.
+    pub async fn validate_api_key_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ValidateAPIKeyResponse>, datadog::Error<ValidateAPIKeyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.validate_api_key";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/validate_keys",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3316,22 +2859,16 @@ impl KeyManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3343,26 +2880,17 @@ impl KeyManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ValidateAPIKeyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ValidateAPIKeyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ValidateAPIKeyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ValidateAPIKeyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

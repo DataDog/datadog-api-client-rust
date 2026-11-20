@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes used to create an AI Gateway model group.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct AiGatewayModelGroupCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayModelGroupCreateAttributes {
@@ -53,51 +53,44 @@ impl AiGatewayModelGroupCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_fast_mode(mut self, value: bool) -> Self {
         self.allow_fast_mode = Some(value);
         self
     }
-
-    pub fn bindings(
-        mut self,
-        value: Vec<crate::datadogV2::model::AiGatewayModelGroupBinding>,
-    ) -> Self {
+    
+    pub fn bindings(mut self, value: Vec<crate::datadogV2::model::AiGatewayModelGroupBinding>) -> Self {
         self.bindings = Some(value);
         self
     }
-
-    pub fn max_reasoning_level(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayMaxReasoningLevel,
-    ) -> Self {
+    
+    pub fn max_reasoning_level(mut self, value: crate::datadogV2::model::AiGatewayMaxReasoningLevel) -> Self {
         self.max_reasoning_level = Some(value);
         self
     }
-
+    
     pub fn model_ids(mut self, value: Vec<i64>) -> Self {
         self.model_ids = Some(value);
         self
     }
-
+    
     pub fn provider_ids(mut self, value: Vec<i64>) -> Self {
         self.provider_ids = Some(value);
         self
     }
-
+    
     pub fn routing_rule_slugs(mut self, value: Vec<String>) -> Self {
         self.routing_rule_slugs = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayModelGroupCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -117,19 +110,13 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut allow_fast_mode: Option<bool> = None;
-                let mut bindings: Option<Vec<crate::datadogV2::model::AiGatewayModelGroupBinding>> =
-                    None;
-                let mut max_reasoning_level: Option<
-                    crate::datadogV2::model::AiGatewayMaxReasoningLevel,
-                > = None;
+                let mut bindings: Option<Vec<crate::datadogV2::model::AiGatewayModelGroupBinding>> = None;
+                let mut max_reasoning_level: Option<crate::datadogV2::model::AiGatewayMaxReasoningLevel> = None;
                 let mut model_ids: Option<Vec<i64>> = None;
                 let mut name: Option<String> = None;
                 let mut provider_ids: Option<Vec<i64>> = None;
                 let mut routing_rule_slugs: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -138,21 +125,19 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupCreateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_fast_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_fast_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bindings" => {
                             if v.is_null() {
                                 continue;
                             }
                             bindings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "max_reasoning_level" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_reasoning_level =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            max_reasoning_level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _max_reasoning_level) = max_reasoning_level {
                                 match _max_reasoning_level {
                                     crate::datadogV2::model::AiGatewayMaxReasoningLevel::UnparsedObject(_max_reasoning_level) => {
@@ -161,35 +146,33 @@ impl<'de> Deserialize<'de> for AiGatewayModelGroupCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "model_ids" => {
                             if v.is_null() {
                                 continue;
                             }
                             model_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider_ids" => {
                             if v.is_null() {
                                 continue;
                             }
-                            provider_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "routing_rule_slugs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            routing_rule_slugs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            routing_rule_slugs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

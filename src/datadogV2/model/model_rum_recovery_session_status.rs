@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RumRecoverySessionStatus {
-    AVAILABLE,
-    PENDING,
-    PROCESSING,
-    RECOVERED,
-    FAILED,
-    RETAINED,
-    EXPIRED,
-    CANCELLED,
+	AVAILABLE,
+	PENDING,
+	PROCESSING,
+	RECOVERED,
+	FAILED,
+	RETAINED,
+	EXPIRED,
+	CANCELLED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for RumRecoverySessionStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "AVAILABLE" => Self::AVAILABLE,
-            "PENDING" => Self::PENDING,
-            "PROCESSING" => Self::PROCESSING,
-            "RECOVERED" => Self::RECOVERED,
-            "FAILED" => Self::FAILED,
-            "RETAINED" => Self::RETAINED,
-            "EXPIRED" => Self::EXPIRED,
-            "CANCELLED" => Self::CANCELLED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"AVAILABLE" => Self::AVAILABLE,"PENDING" => Self::PENDING,"PROCESSING" => Self::PROCESSING,"RECOVERED" => Self::RECOVERED,"FAILED" => Self::FAILED,"RETAINED" => Self::RETAINED,"EXPIRED" => Self::EXPIRED,"CANCELLED" => Self::CANCELLED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

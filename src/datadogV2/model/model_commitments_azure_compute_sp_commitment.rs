@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Azure Compute Savings Plan commitment details.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct CommitmentsAzureComputeSPCommitment {
     #[serde(rename = "expiration_date")]
     pub expiration_date: Option<String>,
     /// The Azure Savings Plan type, `Compute` or `Database`, based on the product order name. Omitted when
-    /// the type can't be classified.
+/// the type can't be classified.
     #[serde(rename = "savings_plan_type")]
     pub savings_plan_type: Option<String>,
     /// The start date of the commitment.
@@ -40,7 +40,7 @@ pub struct CommitmentsAzureComputeSPCommitment {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CommitmentsAzureComputeSPCommitment {
@@ -58,45 +58,44 @@ impl CommitmentsAzureComputeSPCommitment {
             _unparsed: false,
         }
     }
-
+    
     pub fn committed_spend_per_hour(mut self, value: f64) -> Self {
         self.committed_spend_per_hour = Some(value);
         self
     }
-
+    
     pub fn expiration_date(mut self, value: String) -> Self {
         self.expiration_date = Some(value);
         self
     }
-
+    
     pub fn savings_plan_type(mut self, value: String) -> Self {
         self.savings_plan_type = Some(value);
         self
     }
-
+    
     pub fn start_date(mut self, value: String) -> Self {
         self.start_date = Some(value);
         self
     }
-
+    
     pub fn term_length_months(mut self, value: i64) -> Self {
         self.term_length_months = Some(value);
         self
     }
-
+    
     pub fn utilization(mut self, value: f64) -> Self {
         self.utilization = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CommitmentsAzureComputeSPCommitment {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -123,74 +122,62 @@ impl<'de> Deserialize<'de> for CommitmentsAzureComputeSPCommitment {
                 let mut start_date: Option<String> = None;
                 let mut term_length_months: Option<i64> = None;
                 let mut utilization: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "benefit_name" => {
-                            benefit_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            benefit_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "commitment_id" => {
-                            commitment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            commitment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "committed_spend_per_hour" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            committed_spend_per_hour =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            committed_spend_per_hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "expiration_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            expiration_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expiration_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "savings_plan_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            savings_plan_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            savings_plan_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start_date" => {
                             if v.is_null() {
                                 continue;
                             }
                             start_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "term_length_months" => {
                             if v.is_null() {
                                 continue;
                             }
-                            term_length_months =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            term_length_months = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "utilization" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            utilization =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            utilization = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let benefit_name =
-                    benefit_name.ok_or_else(|| M::Error::missing_field("benefit_name"))?;
-                let commitment_id =
-                    commitment_id.ok_or_else(|| M::Error::missing_field("commitment_id"))?;
+                let benefit_name = benefit_name.ok_or_else(|| M::Error::missing_field("benefit_name"))?;
+                let commitment_id = commitment_id.ok_or_else(|| M::Error::missing_field("commitment_id"))?;
 
                 let content = CommitmentsAzureComputeSPCommitment {
                     benefit_name,

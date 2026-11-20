@@ -1,15 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ArchiveExperimentProtocolOptionalParams is a struct for passing parameters to the method [`ExperimentsAPI::archive_experiment_protocol`]
 #[non_exhaustive]
@@ -94,13 +91,13 @@ impl GetBanditTrafficSummaryOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetExposureSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count.
+/// experiment_count.
     pub include: Option<Vec<String>>,
 }
 
 impl GetExposureSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count.
+/// experiment_count.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -112,13 +109,13 @@ impl GetExposureSQLModelOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetMetricOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count: how many experiments currently reference this metric.
+/// experiment_count: how many experiments currently reference this metric.
     pub include: Option<Vec<String>>,
 }
 
 impl GetMetricOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count: how many experiments currently reference this metric.
+/// experiment_count: how many experiments currently reference this metric.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -130,13 +127,13 @@ impl GetMetricOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct GetMetricSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds metric_count
-    /// and experiment_count.
+/// and experiment_count.
     pub include: Option<Vec<String>>,
 }
 
 impl GetMetricSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds metric_count
-    /// and experiment_count.
+/// and experiment_count.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -216,15 +213,15 @@ pub struct ListBanditsOptionalParams {
     /// Sort fields: `name`, `created_at`, or `updated_at`. Use a comma-separated list in priority order; for example, `name,-created_at`. Prefix each field with `-` for descending. Defaults to `created_at` descending.
     pub sort: Option<String>,
     /// Filter by bandit status. Accepted values are `DRAFT`, `SCHEDULED`, `RUNNING`, `PAUSED`, `STOPPED`, and `COMPLETED`.
-    /// Repeat this parameter to select several statuses; for example,
-    /// `filter[status]=RUNNING&filter[status]=PAUSED`.
+/// Repeat this parameter to select several statuses; for example,
+/// `filter[status]=RUNNING&filter[status]=PAUSED`.
     pub filter_status: Option<Vec<String>>,
     /// Filter by subject type UUID. Repeat this parameter to supply several IDs. A bandit matches if it uses any
-    /// listed subject type.
+/// listed subject type.
     pub filter_subject_type_id: Option<Vec<uuid::Uuid>>,
     /// Filter by tag name. Repeat this parameter to supply several tags. A bandit matches if it has at least one
-    /// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
-    /// one of each.
+/// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
+/// one of each.
     pub filter_tags: Option<Vec<String>>,
 }
 
@@ -250,21 +247,21 @@ impl ListBanditsOptionalParams {
         self
     }
     /// Filter by bandit status. Accepted values are `DRAFT`, `SCHEDULED`, `RUNNING`, `PAUSED`, `STOPPED`, and `COMPLETED`.
-    /// Repeat this parameter to select several statuses; for example,
-    /// `filter[status]=RUNNING&filter[status]=PAUSED`.
+/// Repeat this parameter to select several statuses; for example,
+/// `filter[status]=RUNNING&filter[status]=PAUSED`.
     pub fn filter_status(mut self, value: Vec<String>) -> Self {
         self.filter_status = Some(value);
         self
     }
     /// Filter by subject type UUID. Repeat this parameter to supply several IDs. A bandit matches if it uses any
-    /// listed subject type.
+/// listed subject type.
     pub fn filter_subject_type_id(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.filter_subject_type_id = Some(value);
         self
     }
     /// Filter by tag name. Repeat this parameter to supply several tags. A bandit matches if it has at least one
-    /// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
-    /// one of each.
+/// listed tag. Use `team:<handle>` to filter by team. When both tags and teams are given, a bandit must match
+/// one of each.
     pub fn filter_tags(mut self, value: Vec<String>) -> Self {
         self.filter_tags = Some(value);
         self
@@ -276,12 +273,11 @@ impl ListBanditsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListExperimentProtocolsOptionalParams {
     /// Filter by protocol status. Repeat this parameter to select more than one status.
-    pub filter_status:
-        Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus>>,
+    pub filter_status: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus>>,
     /// Filter by the UUID of the primary metric in the protocol template.
     pub filter_primary_metric_id: Option<uuid::Uuid>,
     /// Find protocols whose names contain the search text, regardless of case. Leading and trailing spaces are
-    /// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
+/// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
     pub filter_query: Option<String>,
     /// Filter by the UUID of the subject type in the protocol template.
     pub filter_subject_type_id: Option<uuid::Uuid>,
@@ -290,16 +286,13 @@ pub struct ListExperimentProtocolsOptionalParams {
     /// Number of results to skip before returning this page.
     pub page_offset: Option<i64>,
     /// Sort by `name`, `subject_type_name`, `primary_metric_name`, or `updated_at`. Prefix with `-` for
-    /// descending order. The default is `-updated_at`.
+/// descending order. The default is `-updated_at`.
     pub sort: Option<String>,
 }
 
 impl ListExperimentProtocolsOptionalParams {
     /// Filter by protocol status. Repeat this parameter to select more than one status.
-    pub fn filter_status(
-        mut self,
-        value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus>,
-    ) -> Self {
+    pub fn filter_status(mut self, value: Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesStatus>) -> Self {
         self.filter_status = Some(value);
         self
     }
@@ -309,7 +302,7 @@ impl ListExperimentProtocolsOptionalParams {
         self
     }
     /// Find protocols whose names contain the search text, regardless of case. Leading and trailing spaces are
-    /// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
+/// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
@@ -330,7 +323,7 @@ impl ListExperimentProtocolsOptionalParams {
         self
     }
     /// Sort by `name`, `subject_type_name`, `primary_metric_name`, or `updated_at`. Prefix with `-` for
-    /// descending order. The default is `-updated_at`.
+/// descending order. The default is `-updated_at`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -350,7 +343,7 @@ pub struct ListExperimentsOptionalParams {
     /// Number of results to skip for pagination. Defaults to 0 when omitted.
     pub page_offset: Option<i64>,
     /// Filter by protocol UUID. Repeat this parameter to supply several IDs. An experiment matches if it uses any
-    /// listed protocol.
+/// listed protocol.
     pub protocol_id: Option<Vec<uuid::Uuid>>,
     /// Return only experiments whose results_last_updated is before this RFC3339 timestamp. results_last_updated is the later of the latest successful run completion and the latest stored result refresh. Exclusive, and excludes experiments without successful results.
     pub results_updated_before: Option<chrono::DateTime<chrono::Utc>>,
@@ -361,11 +354,11 @@ pub struct ListExperimentsOptionalParams {
     /// Sort fields: name, created_at, or updated_at. Use a comma-separated list in priority order, for example name,-created_at. Prefix each field with `-` for descending. Defaults to created_at descending.
     pub sort: Option<String>,
     /// Filter by experiment status. Accepted values are DRAFT, SCHEDULED, IN_PROGRESS, READY_FOR_DECISION,
-    /// DECISION_MADE, and CANCELLED. Repeat this parameter to select several statuses, for example
-    /// `status=IN_PROGRESS&status=READY_FOR_DECISION`.
+/// DECISION_MADE, and CANCELLED. Repeat this parameter to select several statuses, for example
+/// `status=IN_PROGRESS&status=READY_FOR_DECISION`.
     pub status: Option<Vec<String>>,
     /// Filter by tag name. Repeat this parameter to supply several tags. An experiment matches if it has at least
-    /// one listed tag.
+/// one listed tag.
     pub tags: Option<Vec<String>>,
 }
 
@@ -391,7 +384,7 @@ impl ListExperimentsOptionalParams {
         self
     }
     /// Filter by protocol UUID. Repeat this parameter to supply several IDs. An experiment matches if it uses any
-    /// listed protocol.
+/// listed protocol.
     pub fn protocol_id(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.protocol_id = Some(value);
         self
@@ -417,14 +410,14 @@ impl ListExperimentsOptionalParams {
         self
     }
     /// Filter by experiment status. Accepted values are DRAFT, SCHEDULED, IN_PROGRESS, READY_FOR_DECISION,
-    /// DECISION_MADE, and CANCELLED. Repeat this parameter to select several statuses, for example
-    /// `status=IN_PROGRESS&status=READY_FOR_DECISION`.
+/// DECISION_MADE, and CANCELLED. Repeat this parameter to select several statuses, for example
+/// `status=IN_PROGRESS&status=READY_FOR_DECISION`.
     pub fn status(mut self, value: Vec<String>) -> Self {
         self.status = Some(value);
         self
     }
     /// Filter by tag name. Repeat this parameter to supply several tags. An experiment matches if it has at least
-    /// one listed tag.
+/// one listed tag.
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
@@ -436,7 +429,7 @@ impl ListExperimentsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListExposureSQLModelsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count, which costs an extra aggregate query.
+/// experiment_count, which costs an extra aggregate query.
     pub include: Option<Vec<String>>,
     /// When `true`, archived models are included in the result. Defaults to `false`, so archived models are hidden.
     pub include_archived: Option<bool>,
@@ -447,13 +440,13 @@ pub struct ListExposureSQLModelsOptionalParams {
     /// Find exposure SQL models whose names contain the search text, regardless of case.
     pub search: Option<String>,
     /// Sort field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending (for example, `-created_at`).
-    /// Defaults to `created_at` descending.
+/// Defaults to `created_at` descending.
     pub sort: Option<String>,
 }
 
 impl ListExposureSQLModelsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count, which costs an extra aggregate query.
+/// experiment_count, which costs an extra aggregate query.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -479,7 +472,7 @@ impl ListExposureSQLModelsOptionalParams {
         self
     }
     /// Sort field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending (for example, `-created_at`).
-    /// Defaults to `created_at` descending.
+/// Defaults to `created_at` descending.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -497,10 +490,10 @@ pub struct ListMetricCollectionsOptionalParams {
     /// Number of results to skip before returning this page.
     pub page_offset: Option<i64>,
     /// Find collections whose names contain the search text, regardless of case. Leading and trailing spaces are
-    /// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
+/// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
     pub search: Option<String>,
     /// Sort by one field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending order. The
-    /// default is `-created_at`.
+/// default is `-created_at`.
     pub sort: Option<String>,
 }
 
@@ -521,13 +514,13 @@ impl ListMetricCollectionsOptionalParams {
         self
     }
     /// Find collections whose names contain the search text, regardless of case. Leading and trailing spaces are
-    /// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
+/// ignored. Blank values apply no filter. The maximum length is 1024 UTF-8 bytes.
     pub fn search(mut self, value: String) -> Self {
         self.search = Some(value);
         self
     }
     /// Sort by one field: `name`, `created_at`, or `updated_at`. Prefix with `-` for descending order. The
-    /// default is `-created_at`.
+/// default is `-created_at`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -539,21 +532,21 @@ impl ListMetricCollectionsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListMetricSQLModelsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds metric_count
-    /// and experiment_count, which cost an extra aggregate query.
+/// and experiment_count, which cost an extra aggregate query.
     pub include: Option<Vec<String>>,
     /// Maximum number of results to return. Defaults to 25 when omitted, and is capped at 50 (larger values are clamped to 50). The response includes meta.page (with total) and pagination links.
     pub page_limit: Option<i64>,
     /// Number of results to skip for pagination. Defaults to 0 when omitted.
     pub page_offset: Option<i64>,
     /// Sort field: name, created_at, updated_at, metric_count, or experiment_count. A single field only; a
-    /// comma-separated list is rejected. Prefix with `-` for descending (for example, `-created_at`). Defaults to
-    /// created_at descending.
+/// comma-separated list is rejected. Prefix with `-` for descending (for example, `-created_at`). Defaults to
+/// created_at descending.
     pub sort: Option<String>,
 }
 
 impl ListMetricSQLModelsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds metric_count
-    /// and experiment_count, which cost an extra aggregate query.
+/// and experiment_count, which cost an extra aggregate query.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -569,8 +562,8 @@ impl ListMetricSQLModelsOptionalParams {
         self
     }
     /// Sort field: name, created_at, updated_at, metric_count, or experiment_count. A single field only; a
-    /// comma-separated list is rejected. Prefix with `-` for descending (for example, `-created_at`). Defaults to
-    /// created_at descending.
+/// comma-separated list is rejected. Prefix with `-` for descending (for example, `-created_at`). Defaults to
+/// created_at descending.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -582,7 +575,7 @@ impl ListMetricSQLModelsOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct ListMetricsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count on each metric, which costs an extra aggregate query.
+/// experiment_count on each metric, which costs an extra aggregate query.
     pub include: Option<Vec<String>>,
     /// Maximum number of results to return. Defaults to 25 when omitted, and is capped at 50 (larger values are clamped to 50). The response includes meta.page (with total) and pagination links.
     pub page_limit: Option<i64>,
@@ -591,13 +584,13 @@ pub struct ListMetricsOptionalParams {
     /// Find metrics whose names contain the search text, regardless of case.
     pub search: Option<String>,
     /// Sort field: name, created_at, or updated_at. Prefix with `-` for descending (for example, `-created_at`).
-    /// A single field only; a comma-separated list is rejected. Defaults to created_at descending.
+/// A single field only; a comma-separated list is rejected. Defaults to created_at descending.
     pub sort: Option<String>,
 }
 
 impl ListMetricsOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count on each metric, which costs an extra aggregate query.
+/// experiment_count on each metric, which costs an extra aggregate query.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
@@ -618,7 +611,7 @@ impl ListMetricsOptionalParams {
         self
     }
     /// Sort field: name, created_at, or updated_at. Prefix with `-` for descending (for example, `-created_at`).
-    /// A single field only; a comma-separated list is rejected. Defaults to created_at descending.
+/// A single field only; a comma-separated list is rejected. Defaults to created_at descending.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -741,10 +734,7 @@ pub struct StartExperimentOptionalParams {
 }
 
 impl StartExperimentOptionalParams {
-    pub fn body(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsStartExperimentV2Request,
-    ) -> Self {
+    pub fn body(mut self, value: crate::datadogV2::model::ExperimentsStartExperimentV2Request) -> Self {
         self.body = Some(value);
         self
     }
@@ -755,18 +745,21 @@ impl StartExperimentOptionalParams {
 #[derive(Clone, Default, Debug)]
 pub struct UpdateExposureSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count to the updated model.
+/// experiment_count to the updated model.
     pub include: Option<Vec<String>>,
 }
 
 impl UpdateExposureSQLModelOptionalParams {
     /// Optional fields to include. Repeat this parameter to request several fields. `counts` adds
-    /// experiment_count to the updated model.
+/// experiment_count to the updated model.
     pub fn include(mut self, value: Vec<String>) -> Self {
         self.include = Some(value);
         self
     }
 }
+
+
+
 
 /// ArchiveExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::archive_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -777,6 +770,7 @@ pub enum ArchiveExperimentProtocolError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ArchiveExposureSQLModelError is a struct for typed errors of method [`ExperimentsAPI::archive_exposure_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -785,6 +779,7 @@ pub enum ArchiveExposureSQLModelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CancelExperimentError is a struct for typed errors of method [`ExperimentsAPI::cancel_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -795,6 +790,7 @@ pub enum CancelExperimentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ConcludeExperimentError is a struct for typed errors of method [`ExperimentsAPI::conclude_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -803,6 +799,7 @@ pub enum ConcludeExperimentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateBanditError is a struct for typed errors of method [`ExperimentsAPI::create_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -813,6 +810,7 @@ pub enum CreateBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateExperimentError is a struct for typed errors of method [`ExperimentsAPI::create_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -821,6 +819,7 @@ pub enum CreateExperimentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateExperimentMetricGroupError is a struct for typed errors of method [`ExperimentsAPI::create_experiment_metric_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -831,6 +830,7 @@ pub enum CreateExperimentMetricGroupError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateExperimentMetricGroupFromCollectionError is a struct for typed errors of method [`ExperimentsAPI::create_experiment_metric_group_from_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -839,6 +839,7 @@ pub enum CreateExperimentMetricGroupFromCollectionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::create_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -849,6 +850,7 @@ pub enum CreateExperimentProtocolError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateExposureSQLModelError is a struct for typed errors of method [`ExperimentsAPI::create_exposure_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -857,6 +859,7 @@ pub enum CreateExposureSQLModelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateMetricError is a struct for typed errors of method [`ExperimentsAPI::create_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -867,6 +870,7 @@ pub enum CreateMetricError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateMetricCollectionError is a struct for typed errors of method [`ExperimentsAPI::create_metric_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -875,6 +879,7 @@ pub enum CreateMetricCollectionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateMetricSQLModelError is a struct for typed errors of method [`ExperimentsAPI::create_metric_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -885,6 +890,7 @@ pub enum CreateMetricSQLModelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateSubjectTypeError is a struct for typed errors of method [`ExperimentsAPI::create_subject_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -893,6 +899,7 @@ pub enum CreateSubjectTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteBanditError is a struct for typed errors of method [`ExperimentsAPI::delete_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -903,6 +910,7 @@ pub enum DeleteBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteExperimentError is a struct for typed errors of method [`ExperimentsAPI::delete_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -911,6 +919,7 @@ pub enum DeleteExperimentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteExperimentMetricGroupError is a struct for typed errors of method [`ExperimentsAPI::delete_experiment_metric_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -921,6 +930,7 @@ pub enum DeleteExperimentMetricGroupError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::delete_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -929,6 +939,7 @@ pub enum DeleteExperimentProtocolError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteMetricError is a struct for typed errors of method [`ExperimentsAPI::delete_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -939,6 +950,7 @@ pub enum DeleteMetricError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteMetricCollectionError is a struct for typed errors of method [`ExperimentsAPI::delete_metric_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -947,6 +959,7 @@ pub enum DeleteMetricCollectionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteSubjectTypeError is a struct for typed errors of method [`ExperimentsAPI::delete_subject_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -957,6 +970,7 @@ pub enum DeleteSubjectTypeError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetBanditError is a struct for typed errors of method [`ExperimentsAPI::get_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -965,6 +979,7 @@ pub enum GetBanditError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetBanditResultsError is a struct for typed errors of method [`ExperimentsAPI::get_bandit_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -975,6 +990,7 @@ pub enum GetBanditResultsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetBanditTrafficSummaryError is a struct for typed errors of method [`ExperimentsAPI::get_bandit_traffic_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -983,6 +999,7 @@ pub enum GetBanditTrafficSummaryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetExperimentError is a struct for typed errors of method [`ExperimentsAPI::get_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -993,6 +1010,7 @@ pub enum GetExperimentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetExperimentAnalysisPlanError is a struct for typed errors of method [`ExperimentsAPI::get_experiment_analysis_plan`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1001,6 +1019,7 @@ pub enum GetExperimentAnalysisPlanError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetExperimentDiagnosticsError is a struct for typed errors of method [`ExperimentsAPI::get_experiment_diagnostics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1011,6 +1030,7 @@ pub enum GetExperimentDiagnosticsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::get_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1019,6 +1039,7 @@ pub enum GetExperimentProtocolError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetExperimentResultsError is a struct for typed errors of method [`ExperimentsAPI::get_experiment_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1029,6 +1050,7 @@ pub enum GetExperimentResultsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetExperimentTrafficSummaryError is a struct for typed errors of method [`ExperimentsAPI::get_experiment_traffic_summary`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1037,6 +1059,7 @@ pub enum GetExperimentTrafficSummaryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetExposureSQLModelError is a struct for typed errors of method [`ExperimentsAPI::get_exposure_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1047,6 +1070,7 @@ pub enum GetExposureSQLModelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetMetricError is a struct for typed errors of method [`ExperimentsAPI::get_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1055,6 +1079,7 @@ pub enum GetMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetMetricCollectionError is a struct for typed errors of method [`ExperimentsAPI::get_metric_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1065,6 +1090,7 @@ pub enum GetMetricCollectionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetMetricSQLModelError is a struct for typed errors of method [`ExperimentsAPI::get_metric_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1073,6 +1099,7 @@ pub enum GetMetricSQLModelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetSubjectTypeError is a struct for typed errors of method [`ExperimentsAPI::get_subject_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1083,6 +1110,7 @@ pub enum GetSubjectTypeError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListBanditPoliciesError is a struct for typed errors of method [`ExperimentsAPI::list_bandit_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1091,6 +1119,7 @@ pub enum ListBanditPoliciesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListBanditsError is a struct for typed errors of method [`ExperimentsAPI::list_bandits`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1101,6 +1130,7 @@ pub enum ListBanditsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListExperimentHoldoutsError is a struct for typed errors of method [`ExperimentsAPI::list_experiment_holdouts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1109,6 +1139,7 @@ pub enum ListExperimentHoldoutsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListExperimentMetricGroupsError is a struct for typed errors of method [`ExperimentsAPI::list_experiment_metric_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1119,6 +1150,7 @@ pub enum ListExperimentMetricGroupsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListExperimentProtocolsError is a struct for typed errors of method [`ExperimentsAPI::list_experiment_protocols`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1127,6 +1159,7 @@ pub enum ListExperimentProtocolsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListExperimentsError is a struct for typed errors of method [`ExperimentsAPI::list_experiments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1137,6 +1170,7 @@ pub enum ListExperimentsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListExposureSQLModelsError is a struct for typed errors of method [`ExperimentsAPI::list_exposure_sql_models`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1145,6 +1179,7 @@ pub enum ListExposureSQLModelsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListMetricCollectionsError is a struct for typed errors of method [`ExperimentsAPI::list_metric_collections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1155,6 +1190,7 @@ pub enum ListMetricCollectionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListMetricSQLModelsError is a struct for typed errors of method [`ExperimentsAPI::list_metric_sql_models`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1163,6 +1199,7 @@ pub enum ListMetricSQLModelsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListMetricsError is a struct for typed errors of method [`ExperimentsAPI::list_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1173,6 +1210,7 @@ pub enum ListMetricsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListSubjectTypesError is a struct for typed errors of method [`ExperimentsAPI::list_subject_types`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1181,6 +1219,7 @@ pub enum ListSubjectTypesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PatchBanditError is a struct for typed errors of method [`ExperimentsAPI::patch_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1191,6 +1230,7 @@ pub enum PatchBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// PatchExperimentError is a struct for typed errors of method [`ExperimentsAPI::patch_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1199,6 +1239,7 @@ pub enum PatchExperimentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PatchExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::patch_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1209,6 +1250,7 @@ pub enum PatchExperimentProtocolError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// PatchSubjectTypeError is a struct for typed errors of method [`ExperimentsAPI::patch_subject_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1217,6 +1259,7 @@ pub enum PatchSubjectTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// PauseBanditError is a struct for typed errors of method [`ExperimentsAPI::pause_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1227,6 +1270,7 @@ pub enum PauseBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// PublishExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::publish_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1235,6 +1279,7 @@ pub enum PublishExperimentProtocolError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RefreshBanditError is a struct for typed errors of method [`ExperimentsAPI::refresh_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1245,6 +1290,7 @@ pub enum RefreshBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RefreshExperimentResultsError is a struct for typed errors of method [`ExperimentsAPI::refresh_experiment_results`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1253,6 +1299,7 @@ pub enum RefreshExperimentResultsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RefreshExperimentResultsForOrgError is a struct for typed errors of method [`ExperimentsAPI::refresh_experiment_results_for_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1263,6 +1310,7 @@ pub enum RefreshExperimentResultsForOrgError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ReplaceExperimentProtocolError is a struct for typed errors of method [`ExperimentsAPI::replace_experiment_protocol`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1271,6 +1319,7 @@ pub enum ReplaceExperimentProtocolError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ResumeBanditError is a struct for typed errors of method [`ExperimentsAPI::resume_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1281,6 +1330,7 @@ pub enum ResumeBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SetDefaultSubjectTypeError is a struct for typed errors of method [`ExperimentsAPI::set_default_subject_type`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1289,6 +1339,7 @@ pub enum SetDefaultSubjectTypeError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// StartBanditError is a struct for typed errors of method [`ExperimentsAPI::start_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1299,6 +1350,7 @@ pub enum StartBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// StartExperimentError is a struct for typed errors of method [`ExperimentsAPI::start_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1307,6 +1359,7 @@ pub enum StartExperimentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// StopBanditError is a struct for typed errors of method [`ExperimentsAPI::stop_bandit`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1317,6 +1370,7 @@ pub enum StopBanditError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UnarchiveExposureSQLModelError is a struct for typed errors of method [`ExperimentsAPI::unarchive_exposure_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1325,6 +1379,7 @@ pub enum UnarchiveExposureSQLModelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateExperimentAnalysisPlanAttributesError is a struct for typed errors of method [`ExperimentsAPI::update_experiment_analysis_plan_attributes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1335,6 +1390,7 @@ pub enum UpdateExperimentAnalysisPlanAttributesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateExperimentMetricGroupError is a struct for typed errors of method [`ExperimentsAPI::update_experiment_metric_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1343,6 +1399,7 @@ pub enum UpdateExperimentMetricGroupError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateExposureSQLModelError is a struct for typed errors of method [`ExperimentsAPI::update_exposure_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1353,6 +1410,7 @@ pub enum UpdateExposureSQLModelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateMetricError is a struct for typed errors of method [`ExperimentsAPI::update_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1361,6 +1419,7 @@ pub enum UpdateMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateMetricCollectionError is a struct for typed errors of method [`ExperimentsAPI::update_metric_collection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1371,6 +1430,7 @@ pub enum UpdateMetricCollectionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateMetricSQLModelError is a struct for typed errors of method [`ExperimentsAPI::update_metric_sql_model`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1379,6 +1439,7 @@ pub enum UpdateMetricSQLModelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Create and manage experiments, metrics, subject types, SQL models, and protocols.
 #[derive(Debug, Clone)]
@@ -1402,7 +1463,8 @@ impl ExperimentsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -1447,51 +1509,33 @@ impl ExperimentsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Archive a draft or published protocol. Archived protocols cannot be edited or used to create new experiments. Existing experiments keep their settings. Archiving an already archived protocol returns 409.
-    pub async fn archive_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-        params: ArchiveExperimentProtocolOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<ArchiveExperimentProtocolError>,
-    > {
-        match self
-            .archive_experiment_protocol_with_http_info(protocol_id, params)
-            .await
-        {
+    pub async fn archive_experiment_protocol(&self, protocol_id: uuid::Uuid, params: ArchiveExperimentProtocolOptionalParams) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<ArchiveExperimentProtocolError>> {
+        match self.archive_experiment_protocol_with_http_info(protocol_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Archive a draft or published protocol. Archived protocols cannot be edited or used to create new experiments. Existing experiments keep their settings. Archiving an already archived protocol returns 409.
-    pub async fn archive_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-        params: ArchiveExperimentProtocolOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<ArchiveExperimentProtocolError>,
-    > {
+    pub async fn archive_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid, params: ArchiveExperimentProtocolOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<ArchiveExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.archive_experiment_protocol";
 
+        
         // unbox and build optional parameters
         let expected_updated_at = params.expected_updated_at;
 
@@ -1499,21 +1543,22 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}/archive",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = expected_updated_at {
-            local_req_builder =
-                local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -1525,22 +1570,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1552,65 +1591,53 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ArchiveExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ArchiveExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Archive an exposure SQL model. Archived models are hidden from the default list and are no longer refreshed for new feature flags. Experiments already reading from the model keep working. Archiving is how a model that is in use by an experiment, and therefore cannot be deleted, is retired.
-    pub async fn archive_exposure_sql_model(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<ArchiveExposureSQLModelError>> {
-        match self
-            .archive_exposure_sql_model_with_http_info(exposure_sql_model_id)
-            .await
-        {
+    pub async fn archive_exposure_sql_model(&self, exposure_sql_model_id: uuid::Uuid) -> Result<(), datadog::Error<ArchiveExposureSQLModelError>> {
+        match self.archive_exposure_sql_model_with_http_info(exposure_sql_model_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Archive an exposure SQL model. Archived models are hidden from the default list and are no longer refreshed for new feature flags. Experiments already reading from the model keep working. Archiving is how a model that is in use by an experiment, and therefore cannot be deleted, is retired.
-    pub async fn archive_exposure_sql_model_with_http_info(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ArchiveExposureSQLModelError>> {
+    pub async fn archive_exposure_sql_model_with_http_info(&self, exposure_sql_model_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<ArchiveExposureSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.archive_exposure_sql_model";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models/{exposure_sql_model_id}/archive",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_sql_model_id = datadog::urlencode(exposure_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_sql_model_id=
+            datadog::urlencode(exposure_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1623,22 +1650,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1656,67 +1677,57 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<ArchiveExposureSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ArchiveExposureSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Cancel an experiment, ending it without a winning variant. The experiment moves to CANCELLED status, the
-    /// supplied reason is recorded in its conclusion as the decision reason, and the experiment is unlinked from the
-    /// feature flag allocations that exposed it, which stops its exposure. An experiment that has already completed
-    /// its rollout, had its code removed, or been canceled cannot be canceled again. Canceling is not reversible: an
-    /// experiment cannot be returned to a running state afterward. It is also not idempotent: canceling an
-    /// already-canceled experiment returns 409, so a retry after a timeout cannot be distinguished from a
-    /// cancellation made by someone else.
-    pub async fn cancel_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCancelExperimentV2Request,
-    ) -> Result<(), datadog::Error<CancelExperimentError>> {
-        match self
-            .cancel_experiment_with_http_info(experiment_id, body)
-            .await
-        {
+/// supplied reason is recorded in its conclusion as the decision reason, and the experiment is unlinked from the
+/// feature flag allocations that exposed it, which stops its exposure. An experiment that has already completed
+/// its rollout, had its code removed, or been canceled cannot be canceled again. Canceling is not reversible: an
+/// experiment cannot be returned to a running state afterward. It is also not idempotent: canceling an
+/// already-canceled experiment returns 409, so a retry after a timeout cannot be distinguished from a
+/// cancellation made by someone else.
+    pub async fn cancel_experiment(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCancelExperimentV2Request) -> Result<(), datadog::Error<CancelExperimentError>> {
+        match self.cancel_experiment_with_http_info(experiment_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Cancel an experiment, ending it without a winning variant. The experiment moves to CANCELLED status, the
-    /// supplied reason is recorded in its conclusion as the decision reason, and the experiment is unlinked from the
-    /// feature flag allocations that exposed it, which stops its exposure. An experiment that has already completed
-    /// its rollout, had its code removed, or been canceled cannot be canceled again. Canceling is not reversible: an
-    /// experiment cannot be returned to a running state afterward. It is also not idempotent: canceling an
-    /// already-canceled experiment returns 409, so a retry after a timeout cannot be distinguished from a
-    /// cancellation made by someone else.
-    pub async fn cancel_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCancelExperimentV2Request,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelExperimentError>> {
+/// supplied reason is recorded in its conclusion as the decision reason, and the experiment is unlinked from the
+/// feature flag allocations that exposed it, which stops its exposure. An experiment that has already completed
+/// its rollout, had its code removed, or been canceled cannot be canceled again. Canceling is not reversible: an
+/// experiment cannot be returned to a running state afterward. It is also not idempotent: canceling an
+/// already-canceled experiment returns 409, so a retry after a timeout cannot be distinguished from a
+/// cancellation made by someone else.
+    pub async fn cancel_experiment_with_http_info(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCancelExperimentV2Request) -> Result<datadog::ResponseContent<()>, datadog::Error<CancelExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.cancel_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/cancel",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1729,23 +1740,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1753,7 +1757,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1763,7 +1770,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1785,7 +1795,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1808,55 +1818,45 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CancelExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CancelExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Conclude an experiment on a winning variant. The experiment moves to DECISION_MADE status, the outcome is recorded in its conclusion, and for a flag-backed experiment the winning variant is rolled out to 100% of the linked feature flag allocation. `decision_variant_key` must match a variant in the experiment. Only an experiment that is currently running or ready for a decision can be concluded. Concluding is not reversible and is not idempotent: concluding an already-concluded experiment returns 409.
-    pub async fn conclude_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsConcludeExperimentV2Request,
-    ) -> Result<(), datadog::Error<ConcludeExperimentError>> {
-        match self
-            .conclude_experiment_with_http_info(experiment_id, body)
-            .await
-        {
+    pub async fn conclude_experiment(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsConcludeExperimentV2Request) -> Result<(), datadog::Error<ConcludeExperimentError>> {
+        match self.conclude_experiment_with_http_info(experiment_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Conclude an experiment on a winning variant. The experiment moves to DECISION_MADE status, the outcome is recorded in its conclusion, and for a flag-backed experiment the winning variant is rolled out to 100% of the linked feature flag allocation. `decision_variant_key` must match a variant in the experiment. Only an experiment that is currently running or ready for a decision can be concluded. Concluding is not reversible and is not idempotent: concluding an already-concluded experiment returns 409.
-    pub async fn conclude_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsConcludeExperimentV2Request,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ConcludeExperimentError>> {
+    pub async fn conclude_experiment_with_http_info(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsConcludeExperimentV2Request) -> Result<datadog::ResponseContent<()>, datadog::Error<ConcludeExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.conclude_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/conclude",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1869,23 +1869,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1893,7 +1886,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1903,7 +1899,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1925,7 +1924,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1948,45 +1947,29 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<ConcludeExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ConcludeExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a draft bandit. `name` is required; you can set everything else now, or later with PATCH `/api/v2/experiments/bandits/{bandit_id}`. A draft on a flag holds a targeting rule that doesn't serve traffic until the bandit starts. `variants` lists the flag variants the bandit uses by `feature_flag_variant_id`: `is_active` makes a variant an arm (the default), and `is_fallback` marks the variant served after a scheduled end. The server fills in each variant's `key` and `name` from the flag. A scheduled end needs a fallback. Setting `datadog_flag_configuration` or `variants` needs feature flag and environment read permissions and edit access to the flag. Whether the draft is ready to run is checked when it starts. Validation can return several field errors at once. This endpoint is not idempotent. Bandits must be enabled for the organization.
-    pub async fn create_bandit(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateBanditV2Request,
-    ) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<CreateBanditError>>
-    {
+    pub async fn create_bandit(&self, body: crate::datadogV2::model::ExperimentsCreateBanditV2Request) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<CreateBanditError>> {
         match self.create_bandit_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a draft bandit. `name` is required; you can set everything else now, or later with PATCH `/api/v2/experiments/bandits/{bandit_id}`. A draft on a flag holds a targeting rule that doesn't serve traffic until the bandit starts. `variants` lists the flag variants the bandit uses by `feature_flag_variant_id`: `is_active` makes a variant an arm (the default), and `is_fallback` marks the variant served after a scheduled end. The server fills in each variant's `key` and `name` from the flag. A scheduled end needs a fallback. Setting `datadog_flag_configuration` or `variants` needs feature flag and environment read permissions and edit access to the flag. Whether the draft is ready to run is checked when it starts. Validation can return several field errors at once. This endpoint is not idempotent. Bandits must be enabled for the organization.
-    pub async fn create_bandit_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateBanditV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>,
-        datadog::Error<CreateBanditError>,
-    > {
+    pub async fn create_bandit_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateBanditV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>, datadog::Error<CreateBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1998,19 +1981,23 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2023,23 +2010,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2047,7 +2027,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2057,7 +2040,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2079,7 +2065,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2096,75 +2082,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a draft experiment. `name` is required. `structured_metadata` identifies each metadata field by `field_key`; use `freetext_value` for free-text fields and `enum_values` for enum fields. When this attribute is present, the request must include a value for every required metadata field. When `protocol_id` is present, the published protocol supplies the subject type, decision metrics, analysis-plan defaults, and configuration and enforcement baselines. The request may also include hypothesis, tags, teams, related links, and assignment or event date overrides that satisfy the protocol's duration rules; omit subject_type_id, decision_metrics, variants, warehouse_exposure_configuration, datadog_flag_configuration, traffic_exposure, split_by_properties, and structured_metadata. The protocol association cannot be changed after creation. Without `protocol_id`, a complete Warehouse or Datadog configuration saves the experiment and its configuration in one transaction. For Datadog flag configuration, send `name`, `subject_type_id`, `decision_metrics`, `variants`, `traffic_exposure`, `assignments_start_date`, `assignments_end_date`, `events_start_date`, and `events_end_date`. The four date fields can be null. Inside `datadog_flag_configuration`, send `feature_flag_id`, `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when unused. This creates one saved draft allocation that does not serve traffic. Omit all configuration fields to create an experiment without an allocation. This endpoint is not idempotent.
-    pub async fn create_experiment(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentV2DTO,
-        datadog::Error<CreateExperimentError>,
-    > {
+    pub async fn create_experiment(&self, body: crate::datadogV2::model::ExperimentsCreateExperimentV2Request) -> Result<crate::datadogV2::model::ExperimentsExperimentV2DTO, datadog::Error<CreateExperimentError>> {
         match self.create_experiment_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a draft experiment. `name` is required. `structured_metadata` identifies each metadata field by `field_key`; use `freetext_value` for free-text fields and `enum_values` for enum fields. When this attribute is present, the request must include a value for every required metadata field. When `protocol_id` is present, the published protocol supplies the subject type, decision metrics, analysis-plan defaults, and configuration and enforcement baselines. The request may also include hypothesis, tags, teams, related links, and assignment or event date overrides that satisfy the protocol's duration rules; omit subject_type_id, decision_metrics, variants, warehouse_exposure_configuration, datadog_flag_configuration, traffic_exposure, split_by_properties, and structured_metadata. The protocol association cannot be changed after creation. Without `protocol_id`, a complete Warehouse or Datadog configuration saves the experiment and its configuration in one transaction. For Datadog flag configuration, send `name`, `subject_type_id`, `decision_metrics`, `variants`, `traffic_exposure`, `assignments_start_date`, `assignments_end_date`, `events_start_date`, and `events_end_date`. The four date fields can be null. Inside `datadog_flag_configuration`, send `feature_flag_id`, `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when unused. This creates one saved draft allocation that does not serve traffic. Omit all configuration fields to create an experiment without an allocation. This endpoint is not idempotent.
-    pub async fn create_experiment_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2DTO>,
-        datadog::Error<CreateExperimentError>,
-    > {
+    pub async fn create_experiment_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateExperimentV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2DTO>, datadog::Error<CreateExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2177,23 +2146,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2201,7 +2163,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2211,7 +2176,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2233,7 +2201,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2250,84 +2218,60 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a non-decision metric group. The optional metrics array is ordered. Decision groups remain managed through decision_metrics on the experiment resource. This operation does not synchronously recompute results.
-    pub async fn create_experiment_metric_group(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentMetricGroupV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        datadog::Error<CreateExperimentMetricGroupError>,
-    > {
-        match self
-            .create_experiment_metric_group_with_http_info(experiment_id, body)
-            .await
-        {
+    pub async fn create_experiment_metric_group(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateExperimentMetricGroupV2Request) -> Result<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2, datadog::Error<CreateExperimentMetricGroupError>> {
+        match self.create_experiment_metric_group_with_http_info(experiment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a non-decision metric group. The optional metrics array is ordered. Decision groups remain managed through decision_metrics on the experiment resource. This operation does not synchronously recompute results.
-    pub async fn create_experiment_metric_group_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentMetricGroupV2Request,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        >,
-        datadog::Error<CreateExperimentMetricGroupError>,
-    > {
+    pub async fn create_experiment_metric_group_with_http_info(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateExperimentMetricGroupV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>, datadog::Error<CreateExperimentMetricGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_experiment_metric_group";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/metric-groups",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2340,23 +2284,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2364,7 +2301,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2374,7 +2314,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2396,7 +2339,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2413,73 +2356,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateExperimentMetricGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateExperimentMetricGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Copy a metric collection into a new non-decision metric group. The group is a request-time snapshot: later changes to the collection do not affect the experiment. Metric order is preserved. The operation is not idempotent, and incompatible or empty collections are rejected without creating a group.
-    pub async fn create_experiment_metric_group_from_collection(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        datadog::Error<CreateExperimentMetricGroupFromCollectionError>,
-    > {
-        match self
-            .create_experiment_metric_group_from_collection_with_http_info(
-                experiment_id,
-                metric_collection_id,
-            )
-            .await
-        {
+    pub async fn create_experiment_metric_group_from_collection(&self, experiment_id: uuid::Uuid, metric_collection_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2, datadog::Error<CreateExperimentMetricGroupFromCollectionError>> {
+        match self.create_experiment_metric_group_from_collection_with_http_info(experiment_id, metric_collection_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Copy a metric collection into a new non-decision metric group. The group is a request-time snapshot: later changes to the collection do not affect the experiment. Metric order is preserved. The operation is not idempotent, and incompatible or empty collections are rejected without creating a group.
-    pub async fn create_experiment_metric_group_from_collection_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        >,
-        datadog::Error<CreateExperimentMetricGroupFromCollectionError>,
-    > {
+    pub async fn create_experiment_metric_group_from_collection_with_http_info(&self, experiment_id: uuid::Uuid, metric_collection_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>, datadog::Error<CreateExperimentMetricGroupFromCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_experiment_metric_group_from_collection";
+
+        
 
         let local_client = &self.client;
 
@@ -2490,12 +2402,15 @@ impl ExperimentsAPI {
             , metric_collection_id=
             datadog::urlencode(metric_collection_id.to_string())
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2508,22 +2423,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2535,77 +2444,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateExperimentMetricGroupFromCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateExperimentMetricGroupFromCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a draft protocol with a name and optional description and migration metadata. The organization's default subject type is selected. Use PATCH to configure the draft, then publish it before creating experiments from it.
-    pub async fn create_experiment_protocol(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentProtocolRequest,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<CreateExperimentProtocolError>,
-    > {
+    pub async fn create_experiment_protocol(&self, body: crate::datadogV2::model::ExperimentsCreateExperimentProtocolRequest) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<CreateExperimentProtocolError>> {
         match self.create_experiment_protocol_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a draft protocol with a name and optional description and migration metadata. The organization's default subject type is selected. Use PATCH to configure the draft, then publish it before creating experiments from it.
-    pub async fn create_experiment_protocol_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExperimentProtocolRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<CreateExperimentProtocolError>,
-    > {
+    pub async fn create_experiment_protocol_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateExperimentProtocolRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<CreateExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_experiment_protocol";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2618,23 +2508,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2642,7 +2525,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2652,7 +2538,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2674,7 +2563,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2691,76 +2580,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an exposure SQL model. Requires at least one subject type. The warehouse connection is resolved from the organization, which has exactly one.
-    pub async fn create_exposure_sql_model(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO,
-        datadog::Error<CreateExposureSQLModelError>,
-    > {
+    pub async fn create_exposure_sql_model(&self, body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request) -> Result<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO, datadog::Error<CreateExposureSQLModelError>> {
         match self.create_exposure_sql_model_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an exposure SQL model. Requires at least one subject type. The warehouse connection is resolved from the organization, which has exactly one.
-    pub async fn create_exposure_sql_model_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>,
-        datadog::Error<CreateExposureSQLModelError>,
-    > {
+    pub async fn create_exposure_sql_model_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>, datadog::Error<CreateExposureSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_exposure_sql_model";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2773,23 +2644,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2797,7 +2661,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2807,7 +2674,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2829,7 +2699,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2846,74 +2716,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateExposureSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateExposureSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a metric. The metric's type is derived from the aggregation shape: a numerator alone is SIMPLE, a numerator with a denominator is RATIO, and a percentile aggregation is PERCENTILE. Warehouse aggregations reference measures by UUID. Property filters use property_id or measure_id UUIDs returned by the same metric SQL model; every reference must belong to the aggregation's data source. The is_certified attribute is rejected. Certification cannot be changed through this endpoint.
-    pub async fn create_metric(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricV2Request,
-    ) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<CreateMetricError>>
-    {
+    pub async fn create_metric(&self, body: crate::datadogV2::model::ExperimentsCreateMetricV2Request) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<CreateMetricError>> {
         match self.create_metric_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a metric. The metric's type is derived from the aggregation shape: a numerator alone is SIMPLE, a numerator with a denominator is RATIO, and a percentile aggregation is PERCENTILE. Warehouse aggregations reference measures by UUID. Property filters use property_id or measure_id UUIDs returned by the same metric SQL model; every reference must belong to the aggregation's data source. The is_certified attribute is rejected. Certification cannot be changed through this endpoint.
-    pub async fn create_metric_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>,
-        datadog::Error<CreateMetricError>,
-    > {
+    pub async fn create_metric_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateMetricV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>, datadog::Error<CreateMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2926,23 +2780,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2950,7 +2797,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2960,7 +2810,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2982,7 +2835,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2999,75 +2852,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateMetricError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create metric collection.
-    pub async fn create_metric_collection(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricCollectionV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricCollectionV2DTO,
-        datadog::Error<CreateMetricCollectionError>,
-    > {
+    pub async fn create_metric_collection(&self, body: crate::datadogV2::model::ExperimentsCreateMetricCollectionV2Request) -> Result<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO, datadog::Error<CreateMetricCollectionError>> {
         match self.create_metric_collection_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create metric collection.
-    pub async fn create_metric_collection_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricCollectionV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>,
-        datadog::Error<CreateMetricCollectionError>,
-    > {
+    pub async fn create_metric_collection_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateMetricCollectionV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>, datadog::Error<CreateMetricCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_metric_collection";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-collections",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3080,23 +2916,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3104,7 +2933,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3114,7 +2946,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3136,7 +2971,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3153,76 +2988,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateMetricCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateMetricCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a metric SQL model. Requires at least one subject type, whose subject_type_id must already exist for the organization (list them with GET /api/v2/experiments/subject-types). The model is created against the organization's warehouse connection, which is resolved server-side. Only customer-defined measures belong in measures. The response provides unique_subject_count_measure_id for each subject type and event_count_measure_id for use in metric aggregations. column_type is required for every measure and property. Certification is read-only and cannot be changed through this endpoint.
-    pub async fn create_metric_sql_model(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO,
-        datadog::Error<CreateMetricSQLModelError>,
-    > {
+    pub async fn create_metric_sql_model(&self, body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request) -> Result<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO, datadog::Error<CreateMetricSQLModelError>> {
         match self.create_metric_sql_model_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a metric SQL model. Requires at least one subject type, whose subject_type_id must already exist for the organization (list them with GET /api/v2/experiments/subject-types). The model is created against the organization's warehouse connection, which is resolved server-side. Only customer-defined measures belong in measures. The response provides unique_subject_count_measure_id for each subject type and event_count_measure_id for use in metric aggregations. column_type is required for every measure and property. Certification is read-only and cannot be changed through this endpoint.
-    pub async fn create_metric_sql_model_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>,
-        datadog::Error<CreateMetricSQLModelError>,
-    > {
+    pub async fn create_metric_sql_model_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>, datadog::Error<CreateMetricSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_metric_sql_model";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-sql-models",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3235,23 +3052,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3259,7 +3069,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3269,7 +3082,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3291,7 +3107,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3308,76 +3124,58 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateMetricSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateMetricSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a subject type for the organization.
-    pub async fn create_subject_type(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateSubjectTypeV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsSubjectTypeV2DTO,
-        datadog::Error<CreateSubjectTypeError>,
-    > {
+    pub async fn create_subject_type(&self, body: crate::datadogV2::model::ExperimentsCreateSubjectTypeV2Request) -> Result<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO, datadog::Error<CreateSubjectTypeError>> {
         match self.create_subject_type_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a subject type for the organization.
-    pub async fn create_subject_type_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ExperimentsCreateSubjectTypeV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>,
-        datadog::Error<CreateSubjectTypeError>,
-    > {
+    pub async fn create_subject_type_with_http_info(&self, body: crate::datadogV2::model::ExperimentsCreateSubjectTypeV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>, datadog::Error<CreateSubjectTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_subject_type";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3390,23 +3188,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3414,7 +3205,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3424,7 +3218,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3446,7 +3243,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3463,46 +3260,32 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateSubjectTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateSubjectTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a bandit in any status, with its targeting rule, in one transaction. As with deleting an experiment, a running bandit's rule stops serving and traffic falls through to the flag's other rules; the flag can then be used by another bandit or experiment. After deletion the API no longer returns the bandit. Deleting a bandit cannot be undone. Bandits must be enabled for the organization.
-    pub async fn delete_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteBanditError>> {
+    pub async fn delete_bandit(&self, bandit_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteBanditError>> {
         match self.delete_bandit_with_http_info(bandit_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a bandit in any status, with its targeting rule, in one transaction. As with deleting an experiment, a running bandit's rule stops serving and traffic falls through to the flag's other rules; the flag can then be used by another bandit or experiment. After deletion the API no longer returns the bandit. Deleting a bandit cannot be undone. Bandits must be enabled for the organization.
-    pub async fn delete_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteBanditError>> {
+    pub async fn delete_bandit_with_http_info(&self, bandit_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3514,19 +3297,24 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3539,22 +3327,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3573,47 +3355,43 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<DeleteBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an experiment and its linked feature flag allocations in one database transaction. After deletion, the experiment is no longer returned by the API. If the transaction fails, neither the experiment nor its allocations are deleted. Deleting an experiment cannot be undone.
-    pub async fn delete_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteExperimentError>> {
+    pub async fn delete_experiment(&self, experiment_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteExperimentError>> {
         match self.delete_experiment_with_http_info(experiment_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an experiment and its linked feature flag allocations in one database transaction. After deletion, the experiment is no longer returned by the API. If the transaction fails, neither the experiment nor its allocations are deleted. Deleting an experiment cannot be undone.
-    pub async fn delete_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentError>> {
+    pub async fn delete_experiment_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3626,22 +3404,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3659,56 +3431,46 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a non-decision metric group and its memberships. Decision groups remain managed through the experiment resource. This operation does not start a pipeline. Read experiment results after deletion to check stale metadata, then explicitly refresh results when required.
-    pub async fn delete_experiment_metric_group(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_group_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteExperimentMetricGroupError>> {
-        match self
-            .delete_experiment_metric_group_with_http_info(experiment_id, metric_group_id)
-            .await
-        {
+    pub async fn delete_experiment_metric_group(&self, experiment_id: uuid::Uuid, metric_group_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteExperimentMetricGroupError>> {
+        match self.delete_experiment_metric_group_with_http_info(experiment_id, metric_group_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a non-decision metric group and its memberships. Decision groups remain managed through the experiment resource. This operation does not start a pipeline. Read experiment results after deletion to check stale metadata, then explicitly refresh results when required.
-    pub async fn delete_experiment_metric_group_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_group_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentMetricGroupError>>
-    {
+    pub async fn delete_experiment_metric_group_with_http_info(&self, experiment_id: uuid::Uuid, metric_group_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentMetricGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_experiment_metric_group";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/metric-groups/{metric_group_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string()),
-            metric_group_id = datadog::urlencode(metric_group_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            , metric_group_id=
+            datadog::urlencode(metric_group_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3721,22 +3483,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3754,41 +3510,27 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteExperimentMetricGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteExperimentMetricGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a protocol with no linked experiments. Draft, published, and archived protocols can be deleted. Returns 204 with no response body.
-    pub async fn delete_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-        params: DeleteExperimentProtocolOptionalParams,
-    ) -> Result<(), datadog::Error<DeleteExperimentProtocolError>> {
-        match self
-            .delete_experiment_protocol_with_http_info(protocol_id, params)
-            .await
-        {
+    pub async fn delete_experiment_protocol(&self, protocol_id: uuid::Uuid, params: DeleteExperimentProtocolOptionalParams) -> Result<(), datadog::Error<DeleteExperimentProtocolError>> {
+        match self.delete_experiment_protocol_with_http_info(protocol_id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a protocol with no linked experiments. Draft, published, and archived protocols can be deleted. Returns 204 with no response body.
-    pub async fn delete_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-        params: DeleteExperimentProtocolOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentProtocolError>> {
+    pub async fn delete_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid, params: DeleteExperimentProtocolOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_experiment_protocol";
 
+        
         // unbox and build optional parameters
         let expected_updated_at = params.expected_updated_at;
 
@@ -3796,20 +3538,21 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = expected_updated_at {
-            local_req_builder =
-                local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3822,22 +3565,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3855,49 +3592,44 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a metric. Certified metrics are read-only through this endpoint. The record is soft-deleted and stops appearing in reads. A metric still referenced by an experiment cannot be deleted; detach it from those experiments first.
-    pub async fn delete_metric(
-        &self,
-        metric_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteMetricError>> {
+    pub async fn delete_metric(&self, metric_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteMetricError>> {
         match self.delete_metric_with_http_info(metric_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a metric. Certified metrics are read-only through this endpoint. The record is soft-deleted and stops appearing in reads. A metric still referenced by an experiment cannot be deleted; detach it from those experiments first.
-    pub async fn delete_metric_with_http_info(
-        &self,
-        metric_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMetricError>> {
+    pub async fn delete_metric_with_http_info(&self, metric_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3910,22 +3642,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3944,50 +3670,43 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<DeleteMetricError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete metric collection.
-    pub async fn delete_metric_collection(
-        &self,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteMetricCollectionError>> {
-        match self
-            .delete_metric_collection_with_http_info(metric_collection_id)
-            .await
-        {
+    pub async fn delete_metric_collection(&self, metric_collection_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteMetricCollectionError>> {
+        match self.delete_metric_collection_with_http_info(metric_collection_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete metric collection.
-    pub async fn delete_metric_collection_with_http_info(
-        &self,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMetricCollectionError>> {
+    pub async fn delete_metric_collection_with_http_info(&self, metric_collection_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteMetricCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_metric_collection";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-collections/{metric_collection_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_collection_id = datadog::urlencode(metric_collection_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_collection_id=
+            datadog::urlencode(metric_collection_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4000,22 +3719,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4033,52 +3746,44 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteMetricCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteMetricCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a subject type. The record is soft-deleted and stops appearing in reads. The call is idempotent: deleting the same subject type again also returns 204. The organization's default subject type cannot be deleted; make another one the default first. A subject type that experiments, exposure SQL models, metric SQL models or protocols still reference cannot be deleted either; the refusal names the blockers.
-    pub async fn delete_subject_type(
-        &self,
-        subject_type_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteSubjectTypeError>> {
-        match self
-            .delete_subject_type_with_http_info(subject_type_id)
-            .await
-        {
+    pub async fn delete_subject_type(&self, subject_type_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteSubjectTypeError>> {
+        match self.delete_subject_type_with_http_info(subject_type_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a subject type. The record is soft-deleted and stops appearing in reads. The call is idempotent: deleting the same subject type again also returns 204. The organization's default subject type cannot be deleted; make another one the default first. A subject type that experiments, exposure SQL models, metric SQL models or protocols still reference cannot be deleted either; the refusal names the blockers.
-    pub async fn delete_subject_type_with_http_info(
-        &self,
-        subject_type_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSubjectTypeError>> {
+    pub async fn delete_subject_type_with_http_info(&self, subject_type_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSubjectTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_subject_type";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types/{subject_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subject_type_id = datadog::urlencode(subject_type_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subject_type_id=
+            datadog::urlencode(subject_type_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4091,22 +3796,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4124,45 +3823,29 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteSubjectTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteSubjectTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a bandit: its setup, the policy it serves, its latest refresh, and the arm most likely to be best. When the caller lacks feature flag or environment read permissions, the response omits `datadog_flag_configuration` and `meta.warnings` includes `datadog_flag_configuration_omitted`. Bandits must be enabled for the organization.
-    pub async fn get_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<GetBanditError>>
-    {
+    pub async fn get_bandit(&self, bandit_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<GetBanditError>> {
         match self.get_bandit_with_http_info(bandit_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a bandit: its setup, the policy it serves, its latest refresh, and the arm most likely to be best. When the caller lacks feature flag or environment read permissions, the response omits `datadog_flag_configuration` and `meta.warnings` includes `datadog_flag_configuration_omitted`. Bandits must be enabled for the organization.
-    pub async fn get_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>,
-        datadog::Error<GetBanditError>,
-    > {
+    pub async fn get_bandit_with_http_info(&self, bandit_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>, datadog::Error<GetBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4174,19 +3857,24 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4199,22 +3887,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4226,64 +3908,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get what a bandit's refreshes have learned: each arm's estimate and probability of being best from the latest saved refresh, and each arm's point estimate over time. `filter[from]` and `filter[to]` narrow only `point_estimates`, not the latest estimates. For observation counts, use Get bandit traffic summary. Bandits must be enabled for the organization.
-    pub async fn get_bandit_results(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: GetBanditResultsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsBanditResultsV2DTO,
-        datadog::Error<GetBanditResultsError>,
-    > {
-        match self
-            .get_bandit_results_with_http_info(bandit_id, params)
-            .await
-        {
+    pub async fn get_bandit_results(&self, bandit_id: uuid::Uuid, params: GetBanditResultsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsBanditResultsV2DTO, datadog::Error<GetBanditResultsError>> {
+        match self.get_bandit_results_with_http_info(bandit_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get what a bandit's refreshes have learned: each arm's estimate and probability of being best from the latest saved refresh, and each arm's point estimate over time. `filter[from]` and `filter[to]` narrow only `point_estimates`, not the latest estimates. For observation counts, use Get bandit traffic summary. Bandits must be enabled for the organization.
-    pub async fn get_bandit_results_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: GetBanditResultsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>,
-        datadog::Error<GetBanditResultsError>,
-    > {
+    pub async fn get_bandit_results_with_http_info(&self, bandit_id: uuid::Uuid, params: GetBanditResultsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>, datadog::Error<GetBanditResultsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_bandit_results";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4295,6 +3951,7 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -4303,28 +3960,24 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/results",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[from]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[to]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4337,22 +3990,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4364,65 +4011,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditResultsV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetBanditResultsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetBanditResultsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get what a bandit has observed, as of its latest saved refresh: observation counts, subjects, and each arm's valid observations and subjects in total and per UTC day. An observation is a subject's reward on the arm it was exposed to, counted on the UTC day of its anchor time. `filter[from]` and `filter[to]` narrow only `daily`, not the totals. Bandits must be enabled for the organization.
-    pub async fn get_bandit_traffic_summary(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: GetBanditTrafficSummaryOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO,
-        datadog::Error<GetBanditTrafficSummaryError>,
-    > {
-        match self
-            .get_bandit_traffic_summary_with_http_info(bandit_id, params)
-            .await
-        {
+    pub async fn get_bandit_traffic_summary(&self, bandit_id: uuid::Uuid, params: GetBanditTrafficSummaryOptionalParams) -> Result<crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO, datadog::Error<GetBanditTrafficSummaryError>> {
+        match self.get_bandit_traffic_summary_with_http_info(bandit_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get what a bandit has observed, as of its latest saved refresh: observation counts, subjects, and each arm's valid observations and subjects in total and per UTC day. An observation is a subject's reward on the arm it was exposed to, counted on the UTC day of its anchor time. `filter[from]` and `filter[to]` narrow only `daily`, not the totals. Bandits must be enabled for the organization.
-    pub async fn get_bandit_traffic_summary_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: GetBanditTrafficSummaryOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO>,
-        datadog::Error<GetBanditTrafficSummaryError>,
-    > {
+    pub async fn get_bandit_traffic_summary_with_http_info(&self, bandit_id: uuid::Uuid, params: GetBanditTrafficSummaryOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO>, datadog::Error<GetBanditTrafficSummaryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_bandit_traffic_summary";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4434,6 +4054,7 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -4442,28 +4063,24 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/traffic-summary",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[from]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[to]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4476,22 +4093,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4503,77 +4114,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditTrafficSummaryV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetBanditTrafficSummaryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetBanditTrafficSummaryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a complete experiment by ID. The response includes structured metadata, related links, and, when a complete setup exists, decision metrics, variants, `warehouse_exposure_configuration`, `datadog_flag_configuration`, STATIC or STEPS traffic exposure, and assignment and event dates. STEPS describes the configured plan rather than wall-clock history; Datadog step durations exclude pauses. The list endpoint omits these setup details.
-    pub async fn get_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentV2DTO,
-        datadog::Error<GetExperimentError>,
-    > {
+    pub async fn get_experiment(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsExperimentV2DTO, datadog::Error<GetExperimentError>> {
         match self.get_experiment_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a complete experiment by ID. The response includes structured metadata, related links, and, when a complete setup exists, decision metrics, variants, `warehouse_exposure_configuration`, `datadog_flag_configuration`, STATIC or STEPS traffic exposure, and assignment and event dates. STEPS describes the configured plan rather than wall-clock history; Datadog step durations exclude pauses. The list endpoint omits these setup details.
-    pub async fn get_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2DTO>,
-        datadog::Error<GetExperimentError>,
-    > {
+    pub async fn get_experiment_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2DTO>, datadog::Error<GetExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4586,22 +4179,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4613,79 +4200,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the effective public statistical analysis settings for an experiment. has_custom_analysis_settings compares only settings the caller can edit; protocol-required differences from company defaults do not make the plan custom.
-    pub async fn get_experiment_analysis_plan(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO,
-        datadog::Error<GetExperimentAnalysisPlanError>,
-    > {
-        match self
-            .get_experiment_analysis_plan_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn get_experiment_analysis_plan(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO, datadog::Error<GetExperimentAnalysisPlanError>> {
+        match self.get_experiment_analysis_plan_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the effective public statistical analysis settings for an experiment. has_custom_analysis_settings compares only settings the caller can edit; protocol-required differences from company defaults do not make the plan custom.
-    pub async fn get_experiment_analysis_plan_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO>,
-        datadog::Error<GetExperimentAnalysisPlanError>,
-    > {
+    pub async fn get_experiment_analysis_plan_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO>, datadog::Error<GetExperimentAnalysisPlanError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment_analysis_plan";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/analysis-plan",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4698,22 +4265,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4725,79 +4286,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsAnalysisPlanV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentAnalysisPlanError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentAnalysisPlanError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the diagnostics produced by an experiment's latest analysis run. Each diagnostic includes its category, and the response includes an overall diagnostic or pipeline lifecycle status.
-    pub async fn get_experiment_diagnostics(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO,
-        datadog::Error<GetExperimentDiagnosticsError>,
-    > {
-        match self
-            .get_experiment_diagnostics_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn get_experiment_diagnostics(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO, datadog::Error<GetExperimentDiagnosticsError>> {
+        match self.get_experiment_diagnostics_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the diagnostics produced by an experiment's latest analysis run. Each diagnostic includes its category, and the response includes an overall diagnostic or pipeline lifecycle status.
-    pub async fn get_experiment_diagnostics_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO>,
-        datadog::Error<GetExperimentDiagnosticsError>,
-    > {
+    pub async fn get_experiment_diagnostics_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO>, datadog::Error<GetExperimentDiagnosticsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment_diagnostics";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/diagnostics",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4810,22 +4351,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4837,80 +4372,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentDiagnosticsV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentDiagnosticsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentDiagnosticsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a draft, published, or archived experiment protocol by ID.
-    pub async fn get_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<GetExperimentProtocolError>,
-    > {
-        match self
-            .get_experiment_protocol_with_http_info(protocol_id)
-            .await
-        {
+    pub async fn get_experiment_protocol(&self, protocol_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<GetExperimentProtocolError>> {
+        match self.get_experiment_protocol_with_http_info(protocol_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a draft, published, or archived experiment protocol by ID.
-    pub async fn get_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<GetExperimentProtocolError>,
-    > {
+    pub async fn get_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<GetExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment_protocol";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4923,22 +4437,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4950,79 +4458,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero. The response includes the selected run ID and, when recorded, EVSI forecast context and unavailable reasons for Bayesian analyses.
-    pub async fn get_experiment_results(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray,
-        datadog::Error<GetExperimentResultsError>,
-    > {
-        match self
-            .get_experiment_results_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn get_experiment_results(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray, datadog::Error<GetExperimentResultsError>> {
+        match self.get_experiment_results_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an experiment's computed results: per-variant statistical analysis for the latest successful run. A historical run cannot be selected. Unavailable analysis statistics, including `p_value` and `confidence_interval`, are omitted. The `numerator`, `denominator`, and `variant_metric_value` fields can be null when their values are unavailable. Do not treat an omitted or null value as zero. The response includes the selected run ID and, when recorded, EVSI forecast context and unavailable reasons for Bayesian analyses.
-    pub async fn get_experiment_results_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray>,
-        datadog::Error<GetExperimentResultsError>,
-    > {
+    pub async fn get_experiment_results_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray>, datadog::Error<GetExperimentResultsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment_results";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/results",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5035,22 +4523,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5062,79 +4544,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsVariantResultsV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentResultsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentResultsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an experiment's traffic summary: per-variant exposure counts and a sample-ratio-mismatch flag (is_traffic_imbalanced). SRM statistics live on the diagnostics endpoint.
-    pub async fn get_experiment_traffic_summary(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO,
-        datadog::Error<GetExperimentTrafficSummaryError>,
-    > {
-        match self
-            .get_experiment_traffic_summary_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn get_experiment_traffic_summary(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO, datadog::Error<GetExperimentTrafficSummaryError>> {
+        match self.get_experiment_traffic_summary_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an experiment's traffic summary: per-variant exposure counts and a sample-ratio-mismatch flag (is_traffic_imbalanced). SRM statistics live on the diagnostics endpoint.
-    pub async fn get_experiment_traffic_summary_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO>,
-        datadog::Error<GetExperimentTrafficSummaryError>,
-    > {
+    pub async fn get_experiment_traffic_summary_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO>, datadog::Error<GetExperimentTrafficSummaryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_experiment_traffic_summary";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/traffic-summary",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5147,22 +4609,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5174,68 +4630,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsTrafficSummaryV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExperimentTrafficSummaryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExperimentTrafficSummaryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an exposure SQL model. Returns a single model by its ID for the organization, including its subject types and properties.
-    pub async fn get_exposure_sql_model(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-        params: GetExposureSQLModelOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO,
-        datadog::Error<GetExposureSQLModelError>,
-    > {
-        match self
-            .get_exposure_sql_model_with_http_info(exposure_sql_model_id, params)
-            .await
-        {
+    pub async fn get_exposure_sql_model(&self, exposure_sql_model_id: uuid::Uuid, params: GetExposureSQLModelOptionalParams) -> Result<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO, datadog::Error<GetExposureSQLModelError>> {
+        match self.get_exposure_sql_model_with_http_info(exposure_sql_model_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an exposure SQL model. Returns a single model by its ID for the organization, including its subject types and properties.
-    pub async fn get_exposure_sql_model_with_http_info(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-        params: GetExposureSQLModelOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>,
-        datadog::Error<GetExposureSQLModelError>,
-    > {
+    pub async fn get_exposure_sql_model_with_http_info(&self, exposure_sql_model_id: uuid::Uuid, params: GetExposureSQLModelOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>, datadog::Error<GetExposureSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_exposure_sql_model";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -5243,14 +4673,13 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models/{exposure_sql_model_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_sql_model_id = datadog::urlencode(exposure_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_sql_model_id=
+            datadog::urlencode(exposure_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
@@ -5258,6 +4687,8 @@ impl ExperimentsAPI {
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5270,22 +4701,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5297,63 +4722,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetExposureSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetExposureSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a metric. Returns a single experiment metric by its ID for the organization.
-    pub async fn get_metric(
-        &self,
-        metric_id: uuid::Uuid,
-        params: GetMetricOptionalParams,
-    ) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<GetMetricError>>
-    {
-        match self.get_metric_with_http_info(metric_id, params).await {
+    pub async fn get_metric(&self, metric_id: uuid::Uuid, params: GetMetricOptionalParams) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<GetMetricError>> {
+        match self.get_metric_with_http_info(metric_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a metric. Returns a single experiment metric by its ID for the organization.
-    pub async fn get_metric_with_http_info(
-        &self,
-        metric_id: uuid::Uuid,
-        params: GetMetricOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>,
-        datadog::Error<GetMetricError>,
-    > {
+    pub async fn get_metric_with_http_info(&self, metric_id: uuid::Uuid, params: GetMetricOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>, datadog::Error<GetMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_metric";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -5361,14 +4765,13 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
@@ -5377,6 +4780,8 @@ impl ExperimentsAPI {
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -5388,22 +4793,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5415,78 +4814,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetMetricError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get metric collection.
-    pub async fn get_metric_collection(
-        &self,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricCollectionV2DTO,
-        datadog::Error<GetMetricCollectionError>,
-    > {
-        match self
-            .get_metric_collection_with_http_info(metric_collection_id)
-            .await
-        {
+    pub async fn get_metric_collection(&self, metric_collection_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO, datadog::Error<GetMetricCollectionError>> {
+        match self.get_metric_collection_with_http_info(metric_collection_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get metric collection.
-    pub async fn get_metric_collection_with_http_info(
-        &self,
-        metric_collection_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>,
-        datadog::Error<GetMetricCollectionError>,
-    > {
+    pub async fn get_metric_collection_with_http_info(&self, metric_collection_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>, datadog::Error<GetMetricCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_metric_collection";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-collections/{metric_collection_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_collection_id = datadog::urlencode(metric_collection_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_collection_id=
+            datadog::urlencode(metric_collection_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5499,22 +4879,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5526,68 +4900,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetMetricCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetMetricCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a metric SQL model. Returns a single model by its ID for the organization, including its subject types, measures and properties.
-    pub async fn get_metric_sql_model(
-        &self,
-        metric_sql_model_id: uuid::Uuid,
-        params: GetMetricSQLModelOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO,
-        datadog::Error<GetMetricSQLModelError>,
-    > {
-        match self
-            .get_metric_sql_model_with_http_info(metric_sql_model_id, params)
-            .await
-        {
+    pub async fn get_metric_sql_model(&self, metric_sql_model_id: uuid::Uuid, params: GetMetricSQLModelOptionalParams) -> Result<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO, datadog::Error<GetMetricSQLModelError>> {
+        match self.get_metric_sql_model_with_http_info(metric_sql_model_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a metric SQL model. Returns a single model by its ID for the organization, including its subject types, measures and properties.
-    pub async fn get_metric_sql_model_with_http_info(
-        &self,
-        metric_sql_model_id: uuid::Uuid,
-        params: GetMetricSQLModelOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>,
-        datadog::Error<GetMetricSQLModelError>,
-    > {
+    pub async fn get_metric_sql_model_with_http_info(&self, metric_sql_model_id: uuid::Uuid, params: GetMetricSQLModelOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>, datadog::Error<GetMetricSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_metric_sql_model";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -5595,14 +4943,13 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-sql-models/{metric_sql_model_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_sql_model_id = datadog::urlencode(metric_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_sql_model_id=
+            datadog::urlencode(metric_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
@@ -5611,6 +4958,8 @@ impl ExperimentsAPI {
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -5622,22 +4971,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5649,68 +4992,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetMetricSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetMetricSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a subject type. Returns a single subject type by its ID for the organization.
-    pub async fn get_subject_type(
-        &self,
-        subject_type_id: uuid::Uuid,
-        params: GetSubjectTypeOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsSubjectTypeV2DTO,
-        datadog::Error<GetSubjectTypeError>,
-    > {
-        match self
-            .get_subject_type_with_http_info(subject_type_id, params)
-            .await
-        {
+    pub async fn get_subject_type(&self, subject_type_id: uuid::Uuid, params: GetSubjectTypeOptionalParams) -> Result<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO, datadog::Error<GetSubjectTypeError>> {
+        match self.get_subject_type_with_http_info(subject_type_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a subject type. Returns a single subject type by its ID for the organization.
-    pub async fn get_subject_type_with_http_info(
-        &self,
-        subject_type_id: uuid::Uuid,
-        params: GetSubjectTypeOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>,
-        datadog::Error<GetSubjectTypeError>,
-    > {
+    pub async fn get_subject_type_with_http_info(&self, subject_type_id: uuid::Uuid, params: GetSubjectTypeOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>, datadog::Error<GetSubjectTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_subject_type";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -5718,20 +5035,21 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types/{subject_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subject_type_id = datadog::urlencode(subject_type_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subject_type_id=
+            datadog::urlencode(subject_type_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5744,22 +5062,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5771,65 +5083,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetSubjectTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetSubjectTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the policies a bandit has served, newest first by default, including the policy it serves after it ends. Each policy is the traffic split SDKs served from when it was applied until the next one. Exposures log the policy's ID as `bandit.policy_id`, so the history tells you the split behind each exposure. Exposures logged after the bandit ends have no policy ID. `filter[from]` and `filter[to]` keep the policies in effect during the range, including the one already in effect at `filter[from]`. Bandits must be enabled for the organization.
-    pub async fn list_bandit_policies(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: ListBanditPoliciesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray,
-        datadog::Error<ListBanditPoliciesError>,
-    > {
-        match self
-            .list_bandit_policies_with_http_info(bandit_id, params)
-            .await
-        {
+    pub async fn list_bandit_policies(&self, bandit_id: uuid::Uuid, params: ListBanditPoliciesOptionalParams) -> Result<crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray, datadog::Error<ListBanditPoliciesError>> {
+        match self.list_bandit_policies_with_http_info(bandit_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the policies a bandit has served, newest first by default, including the policy it serves after it ends. Each policy is the traffic split SDKs served from when it was applied until the next one. Exposures log the policy's ID as `bandit.policy_id`, so the history tells you the split behind each exposure. Exposures logged after the bandit ends have no policy ID. `filter[from]` and `filter[to]` keep the policies in effect during the range, including the one already in effect at `filter[from]`. Bandits must be enabled for the organization.
-    pub async fn list_bandit_policies_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: ListBanditPoliciesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray>,
-        datadog::Error<ListBanditPoliciesError>,
-    > {
+    pub async fn list_bandit_policies_with_http_info(&self, bandit_id: uuid::Uuid, params: ListBanditPoliciesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray>, datadog::Error<ListBanditPoliciesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_bandit_policies";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5841,6 +5126,7 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -5852,40 +5138,33 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/policies",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[from]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[to]",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5898,22 +5177,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5925,61 +5198,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditPolicyHistoryV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListBanditPoliciesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListBanditPoliciesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the organization's bandits, newest first by default. Each item is a summary. For a bandit's setup, active policy, and latest refresh, use Get bandit. Bandits must be enabled for the organization.
-    pub async fn list_bandits(
-        &self,
-        params: ListBanditsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsBanditV2ListDTOArray,
-        datadog::Error<ListBanditsError>,
-    > {
-        match self.list_bandits_with_http_info(params).await {
+    pub async fn list_bandits(&self, params: ListBanditsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray, datadog::Error<ListBanditsError>> {
+        match self.list_bandits_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the organization's bandits, newest first by default. Each item is a summary. For a bandit's setup, active policy, and latest refresh, use Get bandit. Bandits must be enabled for the organization.
-    pub async fn list_bandits_with_http_info(
-        &self,
-        params: ListBanditsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>,
-        datadog::Error<ListBanditsError>,
-    > {
+    pub async fn list_bandits_with_http_info(&self, params: ListBanditsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>, datadog::Error<ListBanditsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_bandits";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5991,6 +5241,7 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_limit = params.page_limit;
@@ -6004,49 +5255,40 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = filter_status {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[status]", &param.to_string())]);
+        if let Some(ref local) = filter_status {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[status]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_subject_type_id {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[subject_type_id]", &param.to_string())]);
+        if let Some(ref local) = filter_subject_type_id {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[subject_type_id]", &param.to_string())]);
             }
         };
-        if let Some(ref local) = filter_tags {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[tags]", &param.to_string())]);
+        if let Some(ref local) = filter_tags {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[tags]", &param.to_string())]);
             }
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6059,22 +5301,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6086,78 +5322,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2ListDTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListBanditsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the holdouts an experiment is attached to, in evaluation order: MANAGED holdouts first, starting with the GLOBAL holdout, followed by EXTERNAL holdouts. For a draft experiment, the response includes the GLOBAL holdout that the experiment would join if it started. The response excludes archived and deleted holdouts, and MANAGED holdouts past their analysis window. EXTERNAL holdouts are listed until they are archived. MANAGED holdouts are listed only for experiments that use a Datadog feature flag, because Datadog serves holdouts only through its flags. The order matches the experiment's `holdout_ids` attribute.
-    pub async fn list_experiment_holdouts(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray,
-        datadog::Error<ListExperimentHoldoutsError>,
-    > {
-        match self
-            .list_experiment_holdouts_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn list_experiment_holdouts(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray, datadog::Error<ListExperimentHoldoutsError>> {
+        match self.list_experiment_holdouts_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the holdouts an experiment is attached to, in evaluation order: MANAGED holdouts first, starting with the GLOBAL holdout, followed by EXTERNAL holdouts. For a draft experiment, the response includes the GLOBAL holdout that the experiment would join if it started. The response excludes archived and deleted holdouts, and MANAGED holdouts past their analysis window. EXTERNAL holdouts are listed until they are archived. MANAGED holdouts are listed only for experiments that use a Datadog feature flag, because Datadog serves holdouts only through its flags. The order matches the experiment's `holdout_ids` attribute.
-    pub async fn list_experiment_holdouts_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray>,
-        datadog::Error<ListExperimentHoldoutsError>,
-    > {
+    pub async fn list_experiment_holdouts_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray>, datadog::Error<ListExperimentHoldoutsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_experiment_holdouts";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/holdouts",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6170,22 +5387,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6197,82 +5408,59 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentHoldoutV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListExperimentHoldoutsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListExperimentHoldoutsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List every decision and non-decision metric group attached to an experiment. Metric references are returned in their stored order. An incomplete draft can have no decision group and returns only the groups that exist.
-    pub async fn list_experiment_metric_groups(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray,
-        datadog::Error<ListExperimentMetricGroupsError>,
-    > {
-        match self
-            .list_experiment_metric_groups_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn list_experiment_metric_groups(&self, experiment_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray, datadog::Error<ListExperimentMetricGroupsError>> {
+        match self.list_experiment_metric_groups_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List every decision and non-decision metric group attached to an experiment. Metric references are returned in their stored order. An incomplete draft can have no decision group and returns only the groups that exist.
-    pub async fn list_experiment_metric_groups_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray,
-        >,
-        datadog::Error<ListExperimentMetricGroupsError>,
-    > {
+    pub async fn list_experiment_metric_groups_with_http_info(&self, experiment_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray>, datadog::Error<ListExperimentMetricGroupsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_experiment_metric_groups";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/metric-groups",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6285,22 +5473,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6312,66 +5494,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentMetricGroupV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListExperimentMetricGroupsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListExperimentMetricGroupsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List draft, published, and archived experiment protocols. Omit filter[status] to return all statuses. Only published protocols can be used to create experiments.
-    pub async fn list_experiment_protocols(
-        &self,
-        params: ListExperimentProtocolsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray,
-        datadog::Error<ListExperimentProtocolsError>,
-    > {
-        match self.list_experiment_protocols_with_http_info(params).await {
+    pub async fn list_experiment_protocols(&self, params: ListExperimentProtocolsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray, datadog::Error<ListExperimentProtocolsError>> {
+        match self.list_experiment_protocols_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List draft, published, and archived experiment protocols. Omit filter[status] to return all statuses. Only published protocols can be used to create experiments.
-    pub async fn list_experiment_protocols_with_http_info(
-        &self,
-        params: ListExperimentProtocolsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray,
-        >,
-        datadog::Error<ListExperimentProtocolsError>,
-    > {
+    pub async fn list_experiment_protocols_with_http_info(&self, params: ListExperimentProtocolsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray>, datadog::Error<ListExperimentProtocolsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_experiment_protocols";
 
+        
         // unbox and build optional parameters
         let filter_status = params.filter_status;
         let filter_primary_metric_id = params.filter_primary_metric_id;
@@ -6385,45 +5543,38 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = filter_status {
-            for param in local {
-                local_req_builder =
-                    local_req_builder.query(&[("filter[status]", &param.to_string())]);
+        
+        if let Some(ref local) = filter_status {for param in local {
+                local_req_builder = local_req_builder.query(&[("filter[status]", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = filter_primary_metric_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[primary_metric_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[primary_metric_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_subject_type_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[subject_type_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[subject_type_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6436,22 +5587,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6463,64 +5608,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolListResponseArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListExperimentProtocolsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListExperimentProtocolsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List experiments. Returns a paginated list of experiments and their structured metadata for the organization. Supports filtering and pagination. Use Get experiment for variants, decision metrics, traffic exposure, and assignment configuration.
-    pub async fn list_experiments(
-        &self,
-        params: ListExperimentsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray,
-        datadog::Error<ListExperimentsError>,
-    > {
-        match self.list_experiments_with_http_info(params).await {
+    pub async fn list_experiments(&self, params: ListExperimentsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray, datadog::Error<ListExperimentsError>> {
+        match self.list_experiments_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List experiments. Returns a paginated list of experiments and their structured metadata for the organization. Supports filtering and pagination. Use Get experiment for variants, decision metrics, traffic exposure, and assignment configuration.
-    pub async fn list_experiments_with_http_info(
-        &self,
-        params: ListExperimentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray>,
-        datadog::Error<ListExperimentsError>,
-    > {
+    pub async fn list_experiments_with_http_info(&self, params: ListExperimentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray>, datadog::Error<ListExperimentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_experiments";
 
+        
         // unbox and build optional parameters
         let concluded_since = params.concluded_since;
         let created_since = params.created_since;
@@ -6538,63 +5661,43 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = concluded_since {
-            local_req_builder = local_req_builder.query(&[(
-                "concluded_since",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("concluded_since", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = created_since {
-            local_req_builder = local_req_builder.query(&[(
-                "created_since",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("created_since", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = protocol_id {
-            for param in local {
+        if let Some(ref local) = protocol_id {for param in local {
                 local_req_builder = local_req_builder.query(&[("protocol_id", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = results_updated_before {
-            local_req_builder = local_req_builder.query(&[(
-                "results_updated_before",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("results_updated_before", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = results_updated_since {
-            local_req_builder = local_req_builder.query(&[(
-                "results_updated_since",
-                &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-            )]);
+            local_req_builder = local_req_builder.query(&[("results_updated_since", &local_query_param.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = status {
-            for param in local {
+        if let Some(ref local) = status {for param in local {
                 local_req_builder = local_req_builder.query(&[("status", &param.to_string())]);
             }
         };
-        if let Some(ref local) = tags {
-            for param in local {
+        if let Some(ref local) = tags {for param in local {
                 local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
             }
         };
@@ -6602,6 +5705,8 @@ impl ExperimentsAPI {
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6614,22 +5719,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6641,63 +5740,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentV2ListDTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListExperimentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListExperimentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List exposure SQL models. Returns a paginated list of the SQL models that experiment exposures are read from for the organization. Models maintained by Datadog are not included: they cannot be modified and cannot be used as an experiment's assignment source.
-    pub async fn list_exposure_sql_models(
-        &self,
-        params: ListExposureSQLModelsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray,
-        datadog::Error<ListExposureSQLModelsError>,
-    > {
-        match self.list_exposure_sql_models_with_http_info(params).await {
+    pub async fn list_exposure_sql_models(&self, params: ListExposureSQLModelsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray, datadog::Error<ListExposureSQLModelsError>> {
+        match self.list_exposure_sql_models_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List exposure SQL models. Returns a paginated list of the SQL models that experiment exposures are read from for the organization. Models maintained by Datadog are not included: they cannot be modified and cannot be used as an experiment's assignment source.
-    pub async fn list_exposure_sql_models_with_http_info(
-        &self,
-        params: ListExposureSQLModelsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray>,
-        datadog::Error<ListExposureSQLModelsError>,
-    > {
+    pub async fn list_exposure_sql_models_with_http_info(&self, params: ListExposureSQLModelsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray>, datadog::Error<ListExposureSQLModelsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_exposure_sql_models";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let include_archived = params.include_archived;
@@ -6710,40 +5788,35 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = include_archived {
-            local_req_builder =
-                local_req_builder.query(&[("include_archived", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_archived", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6756,22 +5829,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6783,64 +5850,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExposureSQLModelV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListExposureSQLModelsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListExposureSQLModelsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List metric collections for the organization. Collections are reusable ordered metric sets; attaching one to an experiment creates an independent snapshot.
-    pub async fn list_metric_collections(
-        &self,
-        params: ListMetricCollectionsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray,
-        datadog::Error<ListMetricCollectionsError>,
-    > {
-        match self.list_metric_collections_with_http_info(params).await {
+    pub async fn list_metric_collections(&self, params: ListMetricCollectionsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray, datadog::Error<ListMetricCollectionsError>> {
+        match self.list_metric_collections_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List metric collections for the organization. Collections are reusable ordered metric sets; attaching one to an experiment creates an independent snapshot.
-    pub async fn list_metric_collections_with_http_info(
-        &self,
-        params: ListMetricCollectionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray>,
-        datadog::Error<ListMetricCollectionsError>,
-    > {
+    pub async fn list_metric_collections_with_http_info(&self, params: ListMetricCollectionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray>, datadog::Error<ListMetricCollectionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_metric_collections";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_limit = params.page_limit;
@@ -6852,36 +5897,32 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-collections",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6894,22 +5935,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6921,64 +5956,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMetricCollectionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMetricCollectionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List metric SQL models. Returns a paginated list of the SQL models that metrics are defined on for the organization.
-    pub async fn list_metric_sql_models(
-        &self,
-        params: ListMetricSQLModelsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray,
-        datadog::Error<ListMetricSQLModelsError>,
-    > {
-        match self.list_metric_sql_models_with_http_info(params).await {
+    pub async fn list_metric_sql_models(&self, params: ListMetricSQLModelsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray, datadog::Error<ListMetricSQLModelsError>> {
+        match self.list_metric_sql_models_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List metric SQL models. Returns a paginated list of the SQL models that metrics are defined on for the organization.
-    pub async fn list_metric_sql_models_with_http_info(
-        &self,
-        params: ListMetricSQLModelsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray>,
-        datadog::Error<ListMetricSQLModelsError>,
-    > {
+    pub async fn list_metric_sql_models_with_http_info(&self, params: ListMetricSQLModelsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray>, datadog::Error<ListMetricSQLModelsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_metric_sql_models";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_limit = params.page_limit;
@@ -6989,32 +6002,29 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-sql-models",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7027,22 +6037,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7054,63 +6058,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricSQLModelV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListMetricSQLModelsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListMetricSQLModelsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List metrics. Returns a paginated list of the experiment metrics defined for the organization.
-    pub async fn list_metrics(
-        &self,
-        params: ListMetricsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricV2DTOArray,
-        datadog::Error<ListMetricsError>,
-    > {
-        match self.list_metrics_with_http_info(params).await {
+    pub async fn list_metrics(&self, params: ListMetricsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTOArray, datadog::Error<ListMetricsError>> {
+        match self.list_metrics_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List metrics. Returns a paginated list of the experiment metrics defined for the organization.
-    pub async fn list_metrics_with_http_info(
-        &self,
-        params: ListMetricsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTOArray>,
-        datadog::Error<ListMetricsError>,
-    > {
+    pub async fn list_metrics_with_http_info(&self, params: ListMetricsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTOArray>, datadog::Error<ListMetricsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_metrics";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_limit = params.page_limit;
@@ -7122,36 +6105,32 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metrics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7164,22 +6143,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7191,62 +6164,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListMetricsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List subject types. Returns a paginated list of the subject types defined for the organization.
-    pub async fn list_subject_types(
-        &self,
-        params: ListSubjectTypesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray,
-        datadog::Error<ListSubjectTypesError>,
-    > {
-        match self.list_subject_types_with_http_info(params).await {
+    pub async fn list_subject_types(&self, params: ListSubjectTypesOptionalParams) -> Result<crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray, datadog::Error<ListSubjectTypesError>> {
+        match self.list_subject_types_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List subject types. Returns a paginated list of the subject types defined for the organization.
-    pub async fn list_subject_types_with_http_info(
-        &self,
-        params: ListSubjectTypesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray>,
-        datadog::Error<ListSubjectTypesError>,
-    > {
+    pub async fn list_subject_types_with_http_info(&self, params: ListSubjectTypesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray>, datadog::Error<ListSubjectTypesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_subject_types";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_limit = params.page_limit;
@@ -7258,35 +6211,31 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = search {
-            local_req_builder =
-                local_req_builder.query(&[("search", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("search", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7299,22 +6248,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7326,60 +6269,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListSubjectTypesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListSubjectTypesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a bandit. Omitted attributes, including omitted fields of `datadog_flag_configuration` and `bayesian_prior`, are unchanged. `variants`, `tags`, and `teams` replace the stored lists. Setting a nullable attribute to `null` clears it; `datadog_flag_configuration: null` takes a draft off its flag. What can change depends on the status. A draft can change anything. A running or paused bandit can change its name, description, refresh schedule, scheduled end, prior, fallback (send the current arms in `variants` with a different `is_fallback`), tags, and teams. A stopped or completed bandit can change only its tags and teams. Values that don't change can be sent again in any status. Setting `datadog_flag_configuration` or `variants` needs feature flag and environment read permissions and edit access to the flag. Validation can return several field errors at once: HTTP 400 if any is about invalid input, or 409 if all are status conflicts. Bandits must be enabled for the organization.
-    pub async fn patch_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchBanditV2Request,
-    ) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<PatchBanditError>>
-    {
+    pub async fn patch_bandit(&self, bandit_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchBanditV2Request) -> Result<crate::datadogV2::model::ExperimentsBanditV2DTO, datadog::Error<PatchBanditError>> {
         match self.patch_bandit_with_http_info(bandit_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a bandit. Omitted attributes, including omitted fields of `datadog_flag_configuration` and `bayesian_prior`, are unchanged. `variants`, `tags`, and `teams` replace the stored lists. Setting a nullable attribute to `null` clears it; `datadog_flag_configuration: null` takes a draft off its flag. What can change depends on the status. A draft can change anything. A running or paused bandit can change its name, description, refresh schedule, scheduled end, prior, fallback (send the current arms in `variants` with a different `is_fallback`), tags, and teams. A stopped or completed bandit can change only its tags and teams. Values that don't change can be sent again in any status. Setting `datadog_flag_configuration` or `variants` needs feature flag and environment read permissions and edit access to the flag. Validation can return several field errors at once: HTTP 400 if any is about invalid input, or 409 if all are status conflicts. Bandits must be enabled for the organization.
-    pub async fn patch_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchBanditV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>,
-        datadog::Error<PatchBanditError>,
-    > {
+    pub async fn patch_bandit_with_http_info(&self, bandit_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchBanditV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditV2DTO>, datadog::Error<PatchBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7391,20 +6312,25 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7417,23 +6343,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7441,7 +6360,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7451,7 +6373,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7473,7 +6398,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7490,193 +6415,172 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<PatchBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update mutable experiment fields. State and protocol restrictions apply.
-    ///
-    /// **PATCH behavior**
-    ///
-    /// - Omitted fields stay unchanged, including fields inside `datadog_flag_configuration`.
-    /// - Supplied `tags`, `teams`, `related_links`, `decision_metrics`, and `variants` replace their stored lists.
-    /// - Validation can return several field errors before saving any changes. The response is HTTP 400 if any error
-    ///   concerns invalid input. It is HTTP 409 if all errors concern state or protocol conflicts.
-    ///
-    /// **Result refreshes**
-    ///
-    /// This endpoint does not start a pipeline run. `meta.needs_pipeline_refresh` states whether the edit requires a
-    /// run. When true, POST to `meta.refresh_endpoint` after finishing your edits. Its `full_refresh` query parameter
-    /// selects the run type.
-    ///
-    /// Keep refresh requirements across edits. A later false value does not clear an earlier requirement. Any
-    /// `full_refresh=true` requirement takes priority.
-    ///
-    /// After start, STATIC and STEPS exposure changes for warehouse experiments without a Datadog flag attempt to
-    /// recalculate stored results. Changes to decision metrics or the control variant also attempt recalculation when
-    /// results exist. If stored data is insufficient or recalculation fails, the edit stays saved and
-    /// `meta.needs_pipeline_refresh` is true.
-    ///
-    /// **Exposure rules**
-    ///
-    /// - Draft experiments can replace the full STATIC or STEPS plan through `traffic_exposure`.
-    /// - Warehouse steps start at `assignments_start_date` and can have different durations.
-    /// - Running warehouse experiments can replace step fractions, durations, and exposure mode. Retained variant
-    ///   weights cannot change through this API. You can send unchanged values again.
-    /// - After a warehouse experiment ends, configuration replacement supports only STATIC fraction changes.
-    /// - New Datadog plans have at most five steps. The first fraction must be positive. All steps except the last
-    ///   have equal durations. Durations exclude pauses.
-    /// - The last step has a null duration. Its fraction stays in effect until assignment ends.
-    /// - After start, use the experiment UI to change traffic exposure for experiments linked to a Datadog flag.
-    ///
-    /// **Metadata**
-    ///
-    /// `structured_metadata` updates fields by `field_key`. Use `freetext_value: ""` or `enum_values: []` to clear an
-    /// optional field. Omitted fields stay unchanged. A null or empty `structured_metadata` attribute makes no
-    /// change.
-    ///
-    /// **Flag changes**
-    ///
-    /// Before start, a Datadog update creates or edits the saved draft allocation. To add or replace a flag, send
-    /// `variants` and `traffic_exposure`. Inside `datadog_flag_configuration`, send `feature_flag_id`,
-    /// `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when
-    /// unused.
-    ///
-    /// To replace a flag, also set `reset_on_feature_flag_change: true` inside that object. The server deletes the
-    /// old draft and creates a new one in the same transaction. The response includes a
-    /// `datadog_flag_configuration_reset` warning in `meta.warnings`.
-    ///
-    /// Set `datadog_flag_configuration: null` to delete the draft allocation. This also clears the experiment's flag
-    /// association, variants, assignment sources, and entry point. The experiment remains.
-    ///
-    /// Flag replacement and removal require a draft experiment without warehouse exposure. These actions do not
-    /// convert hybrid experiments.
-    pub async fn patch_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPatchExperimentV2Response,
-        datadog::Error<PatchExperimentError>,
-    > {
-        match self
-            .patch_experiment_with_http_info(experiment_id, body)
-            .await
-        {
+///
+/// **PATCH behavior**
+///
+/// - Omitted fields stay unchanged, including fields inside `datadog_flag_configuration`.
+/// - Supplied `tags`, `teams`, `related_links`, `decision_metrics`, and `variants` replace their stored lists.
+/// - Validation can return several field errors before saving any changes. The response is HTTP 400 if any error
+///   concerns invalid input. It is HTTP 409 if all errors concern state or protocol conflicts.
+///
+/// **Result refreshes**
+///
+/// This endpoint does not start a pipeline run. `meta.needs_pipeline_refresh` states whether the edit requires a
+/// run. When true, POST to `meta.refresh_endpoint` after finishing your edits. Its `full_refresh` query parameter
+/// selects the run type.
+///
+/// Keep refresh requirements across edits. A later false value does not clear an earlier requirement. Any
+/// `full_refresh=true` requirement takes priority.
+///
+/// After start, STATIC and STEPS exposure changes for warehouse experiments without a Datadog flag attempt to
+/// recalculate stored results. Changes to decision metrics or the control variant also attempt recalculation when
+/// results exist. If stored data is insufficient or recalculation fails, the edit stays saved and
+/// `meta.needs_pipeline_refresh` is true.
+///
+/// **Exposure rules**
+///
+/// - Draft experiments can replace the full STATIC or STEPS plan through `traffic_exposure`.
+/// - Warehouse steps start at `assignments_start_date` and can have different durations.
+/// - Running warehouse experiments can replace step fractions, durations, and exposure mode. Retained variant
+///   weights cannot change through this API. You can send unchanged values again.
+/// - After a warehouse experiment ends, configuration replacement supports only STATIC fraction changes.
+/// - New Datadog plans have at most five steps. The first fraction must be positive. All steps except the last
+///   have equal durations. Durations exclude pauses.
+/// - The last step has a null duration. Its fraction stays in effect until assignment ends.
+/// - After start, use the experiment UI to change traffic exposure for experiments linked to a Datadog flag.
+///
+/// **Metadata**
+///
+/// `structured_metadata` updates fields by `field_key`. Use `freetext_value: ""` or `enum_values: []` to clear an
+/// optional field. Omitted fields stay unchanged. A null or empty `structured_metadata` attribute makes no
+/// change.
+///
+/// **Flag changes**
+///
+/// Before start, a Datadog update creates or edits the saved draft allocation. To add or replace a flag, send
+/// `variants` and `traffic_exposure`. Inside `datadog_flag_configuration`, send `feature_flag_id`,
+/// `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when
+/// unused.
+///
+/// To replace a flag, also set `reset_on_feature_flag_change: true` inside that object. The server deletes the
+/// old draft and creates a new one in the same transaction. The response includes a
+/// `datadog_flag_configuration_reset` warning in `meta.warnings`.
+///
+/// Set `datadog_flag_configuration: null` to delete the draft allocation. This also clears the experiment's flag
+/// association, variants, assignment sources, and entry point. The experiment remains.
+///
+/// Flag replacement and removal require a draft experiment without warehouse exposure. These actions do not
+/// convert hybrid experiments.
+    pub async fn patch_experiment(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentV2Request) -> Result<crate::datadogV2::model::ExperimentsPatchExperimentV2Response, datadog::Error<PatchExperimentError>> {
+        match self.patch_experiment_with_http_info(experiment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update mutable experiment fields. State and protocol restrictions apply.
-    ///
-    /// **PATCH behavior**
-    ///
-    /// - Omitted fields stay unchanged, including fields inside `datadog_flag_configuration`.
-    /// - Supplied `tags`, `teams`, `related_links`, `decision_metrics`, and `variants` replace their stored lists.
-    /// - Validation can return several field errors before saving any changes. The response is HTTP 400 if any error
-    ///   concerns invalid input. It is HTTP 409 if all errors concern state or protocol conflicts.
-    ///
-    /// **Result refreshes**
-    ///
-    /// This endpoint does not start a pipeline run. `meta.needs_pipeline_refresh` states whether the edit requires a
-    /// run. When true, POST to `meta.refresh_endpoint` after finishing your edits. Its `full_refresh` query parameter
-    /// selects the run type.
-    ///
-    /// Keep refresh requirements across edits. A later false value does not clear an earlier requirement. Any
-    /// `full_refresh=true` requirement takes priority.
-    ///
-    /// After start, STATIC and STEPS exposure changes for warehouse experiments without a Datadog flag attempt to
-    /// recalculate stored results. Changes to decision metrics or the control variant also attempt recalculation when
-    /// results exist. If stored data is insufficient or recalculation fails, the edit stays saved and
-    /// `meta.needs_pipeline_refresh` is true.
-    ///
-    /// **Exposure rules**
-    ///
-    /// - Draft experiments can replace the full STATIC or STEPS plan through `traffic_exposure`.
-    /// - Warehouse steps start at `assignments_start_date` and can have different durations.
-    /// - Running warehouse experiments can replace step fractions, durations, and exposure mode. Retained variant
-    ///   weights cannot change through this API. You can send unchanged values again.
-    /// - After a warehouse experiment ends, configuration replacement supports only STATIC fraction changes.
-    /// - New Datadog plans have at most five steps. The first fraction must be positive. All steps except the last
-    ///   have equal durations. Durations exclude pauses.
-    /// - The last step has a null duration. Its fraction stays in effect until assignment ends.
-    /// - After start, use the experiment UI to change traffic exposure for experiments linked to a Datadog flag.
-    ///
-    /// **Metadata**
-    ///
-    /// `structured_metadata` updates fields by `field_key`. Use `freetext_value: ""` or `enum_values: []` to clear an
-    /// optional field. Omitted fields stay unchanged. A null or empty `structured_metadata` attribute makes no
-    /// change.
-    ///
-    /// **Flag changes**
-    ///
-    /// Before start, a Datadog update creates or edits the saved draft allocation. To add or replace a flag, send
-    /// `variants` and `traffic_exposure`. Inside `datadog_flag_configuration`, send `feature_flag_id`,
-    /// `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when
-    /// unused.
-    ///
-    /// To replace a flag, also set `reset_on_feature_flag_change: true` inside that object. The server deletes the
-    /// old draft and creates a new one in the same transaction. The response includes a
-    /// `datadog_flag_configuration_reset` warning in `meta.warnings`.
-    ///
-    /// Set `datadog_flag_configuration: null` to delete the draft allocation. This also clears the experiment's flag
-    /// association, variants, assignment sources, and entry point. The experiment remains.
-    ///
-    /// Flag replacement and removal require a draft experiment without warehouse exposure. These actions do not
-    /// convert hybrid experiments.
-    pub async fn patch_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPatchExperimentV2Response>,
-        datadog::Error<PatchExperimentError>,
-    > {
+///
+/// **PATCH behavior**
+///
+/// - Omitted fields stay unchanged, including fields inside `datadog_flag_configuration`.
+/// - Supplied `tags`, `teams`, `related_links`, `decision_metrics`, and `variants` replace their stored lists.
+/// - Validation can return several field errors before saving any changes. The response is HTTP 400 if any error
+///   concerns invalid input. It is HTTP 409 if all errors concern state or protocol conflicts.
+///
+/// **Result refreshes**
+///
+/// This endpoint does not start a pipeline run. `meta.needs_pipeline_refresh` states whether the edit requires a
+/// run. When true, POST to `meta.refresh_endpoint` after finishing your edits. Its `full_refresh` query parameter
+/// selects the run type.
+///
+/// Keep refresh requirements across edits. A later false value does not clear an earlier requirement. Any
+/// `full_refresh=true` requirement takes priority.
+///
+/// After start, STATIC and STEPS exposure changes for warehouse experiments without a Datadog flag attempt to
+/// recalculate stored results. Changes to decision metrics or the control variant also attempt recalculation when
+/// results exist. If stored data is insufficient or recalculation fails, the edit stays saved and
+/// `meta.needs_pipeline_refresh` is true.
+///
+/// **Exposure rules**
+///
+/// - Draft experiments can replace the full STATIC or STEPS plan through `traffic_exposure`.
+/// - Warehouse steps start at `assignments_start_date` and can have different durations.
+/// - Running warehouse experiments can replace step fractions, durations, and exposure mode. Retained variant
+///   weights cannot change through this API. You can send unchanged values again.
+/// - After a warehouse experiment ends, configuration replacement supports only STATIC fraction changes.
+/// - New Datadog plans have at most five steps. The first fraction must be positive. All steps except the last
+///   have equal durations. Durations exclude pauses.
+/// - The last step has a null duration. Its fraction stays in effect until assignment ends.
+/// - After start, use the experiment UI to change traffic exposure for experiments linked to a Datadog flag.
+///
+/// **Metadata**
+///
+/// `structured_metadata` updates fields by `field_key`. Use `freetext_value: ""` or `enum_values: []` to clear an
+/// optional field. Omitted fields stay unchanged. A null or empty `structured_metadata` attribute makes no
+/// change.
+///
+/// **Flag changes**
+///
+/// Before start, a Datadog update creates or edits the saved draft allocation. To add or replace a flag, send
+/// `variants` and `traffic_exposure`. Inside `datadog_flag_configuration`, send `feature_flag_id`,
+/// `environment_id`, `targeting_rules`, and `entry_point`. Use `targeting_rules: []` and `entry_point: null` when
+/// unused.
+///
+/// To replace a flag, also set `reset_on_feature_flag_change: true` inside that object. The server deletes the
+/// old draft and creates a new one in the same transaction. The response includes a
+/// `datadog_flag_configuration_reset` warning in `meta.warnings`.
+///
+/// Set `datadog_flag_configuration: null` to delete the draft allocation. This also clears the experiment's flag
+/// association, variants, assignment sources, and entry point. The experiment remains.
+///
+/// Flag replacement and removal require a draft experiment without warehouse exposure. These actions do not
+/// convert hybrid experiments.
+    pub async fn patch_experiment_with_http_info(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPatchExperimentV2Response>, datadog::Error<PatchExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_experiment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7689,23 +6593,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7713,7 +6610,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7723,7 +6623,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7745,7 +6648,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7762,87 +6665,64 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsPatchExperimentV2Response,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPatchExperimentV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PatchExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the supplied fields of a draft protocol. Published protocols accept only name, description, and migration_metadata changes through PATCH. Use PUT to replace their settings. Archived protocols cannot be edited.
-    ///
-    /// Omitted fields keep their current values, including fields inside analysis_plan, exposure_schedule, and enforcement. Arrays replace the stored arrays. Supported null values clear fields; see the request schema. Use primary_metric_id to select the primary metric and default_duration_days to set the experiment analysis duration. Nested metric is_primary and analysis_plan.target_duration_days fields are rejected.
-    pub async fn patch_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentProtocolRequest,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<PatchExperimentProtocolError>,
-    > {
-        match self
-            .patch_experiment_protocol_with_http_info(protocol_id, body)
-            .await
-        {
+///
+/// Omitted fields keep their current values, including fields inside analysis_plan, exposure_schedule, and enforcement. Arrays replace the stored arrays. Supported null values clear fields; see the request schema. Use primary_metric_id to select the primary metric and default_duration_days to set the experiment analysis duration. Nested metric is_primary and analysis_plan.target_duration_days fields are rejected.
+    pub async fn patch_experiment_protocol(&self, protocol_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentProtocolRequest) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<PatchExperimentProtocolError>> {
+        match self.patch_experiment_protocol_with_http_info(protocol_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the supplied fields of a draft protocol. Published protocols accept only name, description, and migration_metadata changes through PATCH. Use PUT to replace their settings. Archived protocols cannot be edited.
-    ///
-    /// Omitted fields keep their current values, including fields inside analysis_plan, exposure_schedule, and enforcement. Arrays replace the stored arrays. Supported null values clear fields; see the request schema. Use primary_metric_id to select the primary metric and default_duration_days to set the experiment analysis duration. Nested metric is_primary and analysis_plan.target_duration_days fields are rejected.
-    pub async fn patch_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentProtocolRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<PatchExperimentProtocolError>,
-    > {
+///
+/// Omitted fields keep their current values, including fields inside analysis_plan, exposure_schedule, and enforcement. Arrays replace the stored arrays. Supported null values clear fields; see the request schema. Use primary_metric_id to select the primary metric and default_duration_days to set the experiment analysis duration. Nested metric is_primary and analysis_plan.target_duration_days fields are rejected.
+    pub async fn patch_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentProtocolRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<PatchExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_experiment_protocol";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7855,23 +6735,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -7879,7 +6752,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7889,7 +6765,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -7911,7 +6790,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -7928,82 +6807,60 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PatchExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update mutable fields on a subject type. Only the fields present in the body are changed. Any subject type can be updated, including the organization's default one, but the is_default flag itself is read-only here: which subject type is the default cannot be changed through this endpoint.
-    pub async fn patch_subject_type(
-        &self,
-        subject_type_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchSubjectTypeV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsSubjectTypeV2DTO,
-        datadog::Error<PatchSubjectTypeError>,
-    > {
-        match self
-            .patch_subject_type_with_http_info(subject_type_id, body)
-            .await
-        {
+    pub async fn patch_subject_type(&self, subject_type_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchSubjectTypeV2Request) -> Result<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO, datadog::Error<PatchSubjectTypeError>> {
+        match self.patch_subject_type_with_http_info(subject_type_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update mutable fields on a subject type. Only the fields present in the body are changed. Any subject type can be updated, including the organization's default one, but the is_default flag itself is read-only here: which subject type is the default cannot be changed through this endpoint.
-    pub async fn patch_subject_type_with_http_info(
-        &self,
-        subject_type_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchSubjectTypeV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>,
-        datadog::Error<PatchSubjectTypeError>,
-    > {
+    pub async fn patch_subject_type_with_http_info(&self, subject_type_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchSubjectTypeV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>, datadog::Error<PatchSubjectTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.patch_subject_type";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types/{subject_type_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subject_type_id = datadog::urlencode(subject_type_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subject_type_id=
+            datadog::urlencode(subject_type_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8016,23 +6873,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8040,7 +6890,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8050,7 +6903,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8072,7 +6928,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8089,46 +6945,32 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsSubjectTypeV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PatchSubjectTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PatchSubjectTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Pause a running bandit. Its targeting rule keeps serving the current traffic split, and refreshes stop changing the split until the bandit is resumed. Pausing a bandit that isn't running returns 409. Bandits must be enabled for the organization.
-    pub async fn pause_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<PauseBanditError>> {
+    pub async fn pause_bandit(&self, bandit_id: uuid::Uuid) -> Result<(), datadog::Error<PauseBanditError>> {
         match self.pause_bandit_with_http_info(bandit_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Pause a running bandit. Its targeting rule keeps serving the current traffic split, and refreshes stop changing the split until the bandit is resumed. Pausing a bandit that isn't running returns 409. Bandits must be enabled for the organization.
-    pub async fn pause_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<PauseBanditError>> {
+    pub async fn pause_bandit_with_http_info(&self, bandit_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<PauseBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.pause_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8140,19 +6982,24 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/pause",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8165,22 +7012,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8199,68 +7040,53 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<PauseBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Publish a valid draft protocol. The protocol must have a name and subject type. Supplied references and settings must be valid. An exposure schedule or targeting rules require an environment. Enabled limits require their values. Configurable template fields must have a value before they can be locked.
-    ///
-    /// Independent configuration errors are returned together in the JSON:API errors array with source.pointer values that identify the fields. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged.
-    pub async fn publish_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<PublishExperimentProtocolError>,
-    > {
-        match self
-            .publish_experiment_protocol_with_http_info(protocol_id)
-            .await
-        {
+///
+/// Independent configuration errors are returned together in the JSON:API errors array with source.pointer values that identify the fields. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged.
+    pub async fn publish_experiment_protocol(&self, protocol_id: uuid::Uuid) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<PublishExperimentProtocolError>> {
+        match self.publish_experiment_protocol_with_http_info(protocol_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Publish a valid draft protocol. The protocol must have a name and subject type. Supplied references and settings must be valid. An exposure schedule or targeting rules require an environment. Enabled limits require their values. Configurable template fields must have a value before they can be locked.
-    ///
-    /// Independent configuration errors are returned together in the JSON:API errors array with source.pointer values that identify the fields. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged.
-    pub async fn publish_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<PublishExperimentProtocolError>,
-    > {
+///
+/// Independent configuration errors are returned together in the JSON:API errors array with source.pointer values that identify the fields. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged.
+    pub async fn publish_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<PublishExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.publish_experiment_protocol";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}/publish",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8273,22 +7099,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8300,62 +7120,38 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<PublishExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<PublishExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Start a refresh of a running bandit now, instead of waiting for its schedule. The refresh reads the bandit's latest data and saves new results. Outside warmup it also serves the traffic split it proposes, so it can change traffic. HTTP 202 confirms the refresh started, not that it finished. The response returns the refresh ID, which the bandit then reports as `latest_refresh`. Bandits must be enabled for the organization.
-    pub async fn refresh_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: RefreshBanditOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsBanditRefreshV2DTO,
-        datadog::Error<RefreshBanditError>,
-    > {
-        match self.refresh_bandit_with_http_info(bandit_id, params).await {
+    pub async fn refresh_bandit(&self, bandit_id: uuid::Uuid, params: RefreshBanditOptionalParams) -> Result<crate::datadogV2::model::ExperimentsBanditRefreshV2DTO, datadog::Error<RefreshBanditError>> {
+        match self.refresh_bandit_with_http_info(bandit_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Start a refresh of a running bandit now, instead of waiting for its schedule. The refresh reads the bandit's latest data and saves new results. Outside warmup it also serves the traffic split it proposes, so it can change traffic. HTTP 202 confirms the refresh started, not that it finished. The response returns the refresh ID, which the bandit then reports as `latest_refresh`. Bandits must be enabled for the organization.
-    pub async fn refresh_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        params: RefreshBanditOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditRefreshV2DTO>,
-        datadog::Error<RefreshBanditError>,
-    > {
+    pub async fn refresh_bandit_with_http_info(&self, bandit_id: uuid::Uuid, params: RefreshBanditOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsBanditRefreshV2DTO>, datadog::Error<RefreshBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.refresh_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8367,6 +7163,7 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let full_refresh = params.full_refresh;
 
@@ -8374,20 +7171,21 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/refresh",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = full_refresh {
-            local_req_builder =
-                local_req_builder.query(&[("full_refresh", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("full_refresh", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8400,22 +7198,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8427,68 +7219,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditRefreshV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsBanditRefreshV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RefreshBanditError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RefreshBanditError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Request a results refresh for one experiment. HTTP 202 confirms acceptance, not completed results. The response identifies the experiment and does not include a job ID. Read experiment results to check freshness. A request while a refresh is queued or running returns 409. After completion, another request can start another refresh.
-    pub async fn refresh_experiment_results(
-        &self,
-        experiment_id: uuid::Uuid,
-        params: RefreshExperimentResultsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO,
-        datadog::Error<RefreshExperimentResultsError>,
-    > {
-        match self
-            .refresh_experiment_results_with_http_info(experiment_id, params)
-            .await
-        {
+    pub async fn refresh_experiment_results(&self, experiment_id: uuid::Uuid, params: RefreshExperimentResultsOptionalParams) -> Result<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO, datadog::Error<RefreshExperimentResultsError>> {
+        match self.refresh_experiment_results_with_http_info(experiment_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Request a results refresh for one experiment. HTTP 202 confirms acceptance, not completed results. The response identifies the experiment and does not include a job ID. Read experiment results to check freshness. A request while a refresh is queued or running returns 409. After completion, another request can start another refresh.
-    pub async fn refresh_experiment_results_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        params: RefreshExperimentResultsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO>,
-        datadog::Error<RefreshExperimentResultsError>,
-    > {
+    pub async fn refresh_experiment_results_with_http_info(&self, experiment_id: uuid::Uuid, params: RefreshExperimentResultsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO>, datadog::Error<RefreshExperimentResultsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.refresh_experiment_results";
 
+        
         // unbox and build optional parameters
         let full_refresh = params.full_refresh;
 
@@ -8496,20 +7262,21 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/results/refresh",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = full_refresh {
-            local_req_builder =
-                local_req_builder.query(&[("full_refresh", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("full_refresh", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8522,22 +7289,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8549,69 +7310,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RefreshExperimentResultsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RefreshExperimentResultsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Trigger a results refresh across the organization's active experiments. Returns the count of experiments whose refresh was triggered (meta.experiments_updated) plus a per-experiment breakdown of what happened to each (meta.results).
-    pub async fn refresh_experiment_results_for_org(
-        &self,
-        params: RefreshExperimentResultsForOrgOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray,
-        datadog::Error<RefreshExperimentResultsForOrgError>,
-    > {
-        match self
-            .refresh_experiment_results_for_org_with_http_info(params)
-            .await
-        {
+    pub async fn refresh_experiment_results_for_org(&self, params: RefreshExperimentResultsForOrgOptionalParams) -> Result<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray, datadog::Error<RefreshExperimentResultsForOrgError>> {
+        match self.refresh_experiment_results_for_org_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Trigger a results refresh across the organization's active experiments. Returns the count of experiments whose refresh was triggered (meta.experiments_updated) plus a per-experiment breakdown of what happened to each (meta.results).
-    pub async fn refresh_experiment_results_for_org_with_http_info(
-        &self,
-        params: RefreshExperimentResultsForOrgOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray,
-        >,
-        datadog::Error<RefreshExperimentResultsForOrgError>,
-    > {
+    pub async fn refresh_experiment_results_for_org_with_http_info(&self, params: RefreshExperimentResultsForOrgOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray>, datadog::Error<RefreshExperimentResultsForOrgError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.refresh_experiment_results_for_org";
 
+        
         // unbox and build optional parameters
         let full_refresh = params.full_refresh;
 
@@ -8619,19 +7353,19 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/results/refresh",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = full_refresh {
-            local_req_builder =
-                local_req_builder.query(&[("full_refresh", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("full_refresh", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8644,22 +7378,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8671,79 +7399,50 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsRefreshExperimentResultsV2DTOArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RefreshExperimentResultsForOrgError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RefreshExperimentResultsForOrgError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Replace the template of a published protocol. Draft and archived protocols return 409. Send subject_type_id, all four required boolean settings, and metric_groups. Omitted optional template fields are cleared. Omitted enforcement keeps the existing locks.
-    ///
-    /// Use primary_metric_id to select the primary metric. Use default_duration_days to set target_duration_days on experiments created from the protocol. The nested metric is_primary and analysis_plan.target_duration_days fields are rejected. An unchanged GET response can be sent as the request body. Response-only fields are ignored.
-    ///
-    /// Independent configuration errors are returned together in the JSON:API errors array. Each error identifies the field in source.pointer. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged. Changes apply to future experiments; existing experiments keep their settings.
-    pub async fn replace_experiment_protocol(
-        &self,
-        protocol_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsReplaceExperimentProtocolRequest,
-        params: ReplaceExperimentProtocolOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsPublicProtocolResponse,
-        datadog::Error<ReplaceExperimentProtocolError>,
-    > {
-        match self
-            .replace_experiment_protocol_with_http_info(protocol_id, body, params)
-            .await
-        {
+///
+/// Use primary_metric_id to select the primary metric. Use default_duration_days to set target_duration_days on experiments created from the protocol. The nested metric is_primary and analysis_plan.target_duration_days fields are rejected. An unchanged GET response can be sent as the request body. Response-only fields are ignored.
+///
+/// Independent configuration errors are returned together in the JSON:API errors array. Each error identifies the field in source.pointer. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged. Changes apply to future experiments; existing experiments keep their settings.
+    pub async fn replace_experiment_protocol(&self, protocol_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsReplaceExperimentProtocolRequest, params: ReplaceExperimentProtocolOptionalParams) -> Result<crate::datadogV2::model::ExperimentsPublicProtocolResponse, datadog::Error<ReplaceExperimentProtocolError>> {
+        match self.replace_experiment_protocol_with_http_info(protocol_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Replace the template of a published protocol. Draft and archived protocols return 409. Send subject_type_id, all four required boolean settings, and metric_groups. Omitted optional template fields are cleared. Omitted enforcement keeps the existing locks.
-    ///
-    /// Use primary_metric_id to select the primary metric. Use default_duration_days to set target_duration_days on experiments created from the protocol. The nested metric is_primary and analysis_plan.target_duration_days fields are rejected. An unchanged GET response can be sent as the request body. Response-only fields are ignored.
-    ///
-    /// Independent configuration errors are returned together in the JSON:API errors array. Each error identifies the field in source.pointer. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged. Changes apply to future experiments; existing experiments keep their settings.
-    pub async fn replace_experiment_protocol_with_http_info(
-        &self,
-        protocol_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsReplaceExperimentProtocolRequest,
-        params: ReplaceExperimentProtocolOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>,
-        datadog::Error<ReplaceExperimentProtocolError>,
-    > {
+///
+/// Use primary_metric_id to select the primary metric. Use default_duration_days to set target_duration_days on experiments created from the protocol. The nested metric is_primary and analysis_plan.target_duration_days fields are rejected. An unchanged GET response can be sent as the request body. Response-only fields are ignored.
+///
+/// Independent configuration errors are returned together in the JSON:API errors array. Each error identifies the field in source.pointer. Earlier request and reference checks can stop on the first error. A failed request leaves the protocol unchanged. Changes apply to future experiments; existing experiments keep their settings.
+    pub async fn replace_experiment_protocol_with_http_info(&self, protocol_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsReplaceExperimentProtocolRequest, params: ReplaceExperimentProtocolOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsPublicProtocolResponse>, datadog::Error<ReplaceExperimentProtocolError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.replace_experiment_protocol";
 
+        
         // unbox and build optional parameters
         let expected_updated_at = params.expected_updated_at;
 
@@ -8751,21 +7450,22 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/protocols/{protocol_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            protocol_id = datadog::urlencode(protocol_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), protocol_id=
+            datadog::urlencode(protocol_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = expected_updated_at {
-            local_req_builder =
-                local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("expected_updated_at", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8778,23 +7478,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -8802,7 +7495,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8812,7 +7508,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -8834,7 +7533,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -8851,46 +7550,32 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsPublicProtocolResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ReplaceExperimentProtocolError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ReplaceExperimentProtocolError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Resume a paused bandit, so refreshes change its traffic split again. Resuming a bandit that isn't paused returns 409. Bandits must be enabled for the organization.
-    pub async fn resume_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<ResumeBanditError>> {
+    pub async fn resume_bandit(&self, bandit_id: uuid::Uuid) -> Result<(), datadog::Error<ResumeBanditError>> {
         match self.resume_bandit_with_http_info(bandit_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Resume a paused bandit, so refreshes change its traffic split again. Resuming a bandit that isn't paused returns 409. Bandits must be enabled for the organization.
-    pub async fn resume_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<ResumeBanditError>> {
+    pub async fn resume_bandit_with_http_info(&self, bandit_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<ResumeBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.resume_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8902,19 +7587,24 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/resume",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8927,22 +7617,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8961,50 +7645,43 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<ResumeBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Make this subject type the organization's default. Experiment creation uses the default when the request names no subject type. Promoting one subject type demotes the previous default in the same transaction, so the organization always has exactly one. The call is idempotent: promoting the current default succeeds and changes nothing. There is no matching demote, because an organization cannot have no default; promote a different subject type instead.
-    pub async fn set_default_subject_type(
-        &self,
-        subject_type_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<SetDefaultSubjectTypeError>> {
-        match self
-            .set_default_subject_type_with_http_info(subject_type_id)
-            .await
-        {
+    pub async fn set_default_subject_type(&self, subject_type_id: uuid::Uuid) -> Result<(), datadog::Error<SetDefaultSubjectTypeError>> {
+        match self.set_default_subject_type_with_http_info(subject_type_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Make this subject type the organization's default. Experiment creation uses the default when the request names no subject type. Promoting one subject type demotes the previous default in the same transaction, so the organization always has exactly one. The call is idempotent: promoting the current default succeeds and changes nothing. There is no matching demote, because an organization cannot have no default; promote a different subject type instead.
-    pub async fn set_default_subject_type_with_http_info(
-        &self,
-        subject_type_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<SetDefaultSubjectTypeError>> {
+    pub async fn set_default_subject_type_with_http_info(&self, subject_type_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<SetDefaultSubjectTypeError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.set_default_subject_type";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/subject-types/{subject_type_id}/default",
-            local_configuration.get_operation_host(local_operation_id),
-            subject_type_id = datadog::urlencode(subject_type_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subject_type_id=
+            datadog::urlencode(subject_type_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9017,22 +7694,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9050,33 +7721,23 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<SetDefaultSubjectTypeError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SetDefaultSubjectTypeError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Start a draft bandit. Its targeting rule is published serving every arm equally, and each refresh then shifts traffic toward the arms that do best. The bandit starts exactly as it is configured; set it up with PATCH `/api/v2/experiments/bandits/{bandit_id}` first. It needs a flag, at least two arms, a subject type, a metric, and an exposure SQL model. The request is idempotent: a bandit that is already running still returns 204, so a retry after a timeout is safe. Stop is not idempotent. A start is blocked when the flag environment requires an approval or a pending change request touches the flag's targeting rules; retrying alone does not resolve an approval requirement. Bandits must be enabled for the organization.
-    pub async fn start_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<StartBanditError>> {
+    pub async fn start_bandit(&self, bandit_id: uuid::Uuid) -> Result<(), datadog::Error<StartBanditError>> {
         match self.start_bandit_with_http_info(bandit_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Start a draft bandit. Its targeting rule is published serving every arm equally, and each refresh then shifts traffic toward the arms that do best. The bandit starts exactly as it is configured; set it up with PATCH `/api/v2/experiments/bandits/{bandit_id}` first. It needs a flag, at least two arms, a subject type, a metric, and an exposure SQL model. The request is idempotent: a bandit that is already running still returns 204, so a retry after a timeout is safe. Stop is not idempotent. A start is blocked when the flag environment requires an approval or a pending change request touches the flag's targeting rules; retrying alone does not resolve an approval requirement. Bandits must be enabled for the organization.
-    pub async fn start_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<StartBanditError>> {
+    pub async fn start_bandit_with_http_info(&self, bandit_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<StartBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.start_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9088,19 +7749,24 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/start",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9113,22 +7779,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9147,39 +7807,26 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<StartBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Start an experiment. The experiment is started exactly as it is configured; this endpoint accepts no attributes, and a request body carrying any is rejected rather than ignored. Set the run window, duration, or variants with PATCH /api/v2/experiments/{experiment_id} before starting. An unconfigured draft returns HTTP 409. Configure either warehouse_exposure_configuration or datadog_flag_configuration, plus the required experiment fields, before starting. Start validation errors can include meta.configuration_pointer to identify a field on the experiment to correct. For a flag-backed experiment this enables the linked feature flag's environment, clears any stored variant override on it, and starts the allocation's rollout. The request is idempotent: an experiment that is already running or ready for a decision still returns 204, so a retry after a timeout is safe. One exception: an experiment scheduled to start is accepted only when it is backed by your own feature flag; a Datadog-flag experiment in that state returns 409 because its stored state and flag allocation disagree. Cancel and conclude are not idempotent and return 409 when repeated.
-    pub async fn start_experiment(
-        &self,
-        experiment_id: uuid::Uuid,
-        params: StartExperimentOptionalParams,
-    ) -> Result<(), datadog::Error<StartExperimentError>> {
-        match self
-            .start_experiment_with_http_info(experiment_id, params)
-            .await
-        {
+    pub async fn start_experiment(&self, experiment_id: uuid::Uuid, params: StartExperimentOptionalParams) -> Result<(), datadog::Error<StartExperimentError>> {
+        match self.start_experiment_with_http_info(experiment_id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Start an experiment. The experiment is started exactly as it is configured; this endpoint accepts no attributes, and a request body carrying any is rejected rather than ignored. Set the run window, duration, or variants with PATCH /api/v2/experiments/{experiment_id} before starting. An unconfigured draft returns HTTP 409. Configure either warehouse_exposure_configuration or datadog_flag_configuration, plus the required experiment fields, before starting. Start validation errors can include meta.configuration_pointer to identify a field on the experiment to correct. For a flag-backed experiment this enables the linked feature flag's environment, clears any stored variant override on it, and starts the allocation's rollout. The request is idempotent: an experiment that is already running or ready for a decision still returns 204, so a retry after a timeout is safe. One exception: an experiment scheduled to start is accepted only when it is backed by your own feature flag; a Datadog-flag experiment in that state returns 409 because its stored state and flag allocation disagree. Cancel and conclude are not idempotent and return 409 when repeated.
-    pub async fn start_experiment_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        params: StartExperimentOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<StartExperimentError>> {
+    pub async fn start_experiment_with_http_info(&self, experiment_id: uuid::Uuid, params: StartExperimentOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<StartExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.start_experiment";
 
+        
         // unbox and build optional parameters
         let body = params.body;
 
@@ -9187,16 +7834,19 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/start",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9209,23 +7859,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9233,7 +7876,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9243,7 +7889,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9265,7 +7914,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9288,35 +7937,23 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<StartExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<StartExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Stop a running or paused bandit. From then on its targeting rule serves `served_variant_key` to everyone, overriding any configured fallback, and the bandit stops refreshing. `served_variant_key` can be any of the flag's variants. Stopping can't be reversed and is not idempotent: stopping a bandit that has already stopped or completed returns 409. Bandits must be enabled for the organization.
-    pub async fn stop_bandit(
-        &self,
-        bandit_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsStopBanditV2Request,
-    ) -> Result<(), datadog::Error<StopBanditError>> {
+    pub async fn stop_bandit(&self, bandit_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsStopBanditV2Request) -> Result<(), datadog::Error<StopBanditError>> {
         match self.stop_bandit_with_http_info(bandit_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Stop a running or paused bandit. From then on its targeting rule serves `served_variant_key` to everyone, overriding any configured fallback, and the bandit stops refreshing. `served_variant_key` can be any of the flag's variants. Stopping can't be reversed and is not idempotent: stopping a bandit that has already stopped or completed returns 409. Bandits must be enabled for the organization.
-    pub async fn stop_bandit_with_http_info(
-        &self,
-        bandit_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsStopBanditV2Request,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<StopBanditError>> {
+    pub async fn stop_bandit_with_http_info(&self, bandit_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsStopBanditV2Request) -> Result<datadog::ResponseContent<()>, datadog::Error<StopBanditError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.stop_bandit";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9328,20 +7965,25 @@ impl ExperimentsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/bandits/{bandit_id}/stop",
-            local_configuration.get_operation_host(local_operation_id),
-            bandit_id = datadog::urlencode(bandit_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), bandit_id=
+            datadog::urlencode(bandit_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9354,23 +7996,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9378,7 +8013,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9388,7 +8026,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9410,7 +8051,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9434,50 +8075,43 @@ impl ExperimentsAPI {
             })
         } else {
             let local_entity: Option<StopBanditError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Unarchive an exposure SQL model. Restores an archived model to the default list.
-    pub async fn unarchive_exposure_sql_model(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<UnarchiveExposureSQLModelError>> {
-        match self
-            .unarchive_exposure_sql_model_with_http_info(exposure_sql_model_id)
-            .await
-        {
+    pub async fn unarchive_exposure_sql_model(&self, exposure_sql_model_id: uuid::Uuid) -> Result<(), datadog::Error<UnarchiveExposureSQLModelError>> {
+        match self.unarchive_exposure_sql_model_with_http_info(exposure_sql_model_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Unarchive an exposure SQL model. Restores an archived model to the default list.
-    pub async fn unarchive_exposure_sql_model_with_http_info(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnarchiveExposureSQLModelError>> {
+    pub async fn unarchive_exposure_sql_model_with_http_info(&self, exposure_sql_model_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<UnarchiveExposureSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unarchive_exposure_sql_model";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models/{exposure_sql_model_id}/unarchive",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_sql_model_id = datadog::urlencode(exposure_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_sql_model_id=
+            datadog::urlencode(exposure_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9490,22 +8124,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9523,71 +8151,51 @@ impl ExperimentsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnarchiveExposureSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnarchiveExposureSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update selected statistical analysis settings. Omitted attributes remain unchanged and nullable attributes can be cleared with null. Protocol-locked settings cannot be changed.
-    pub async fn update_experiment_analysis_plan_attributes(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse,
-        datadog::Error<UpdateExperimentAnalysisPlanAttributesError>,
-    > {
-        match self
-            .update_experiment_analysis_plan_attributes_with_http_info(experiment_id, body)
-            .await
-        {
+    pub async fn update_experiment_analysis_plan_attributes(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2Request) -> Result<crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse, datadog::Error<UpdateExperimentAnalysisPlanAttributesError>> {
+        match self.update_experiment_analysis_plan_attributes_with_http_info(experiment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update selected statistical analysis settings. Omitted attributes remain unchanged and nullable attributes can be cleared with null. Protocol-locked settings cannot be changed.
-    pub async fn update_experiment_analysis_plan_attributes_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2Request,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse,
-        >,
-        datadog::Error<UpdateExperimentAnalysisPlanAttributesError>,
-    > {
+    pub async fn update_experiment_analysis_plan_attributes_with_http_info(&self, experiment_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse>, datadog::Error<UpdateExperimentAnalysisPlanAttributesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_experiment_analysis_plan_attributes";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/analysis-plan",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9600,23 +8208,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9624,7 +8225,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9634,7 +8238,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9656,7 +8263,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9673,88 +8280,62 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsAnalysisPlanV2MutationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateExperimentAnalysisPlanAttributesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateExperimentAnalysisPlanAttributesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a non-decision metric group. Omitted attributes are unchanged; a supplied metrics array is the complete ordered replacement. Decision groups remain managed through the experiment resource. This operation does not synchronously recompute results.
-    pub async fn update_experiment_metric_group(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentMetricGroupV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        datadog::Error<UpdateExperimentMetricGroupError>,
-    > {
-        match self
-            .update_experiment_metric_group_with_http_info(experiment_id, metric_group_id, body)
-            .await
-        {
+    pub async fn update_experiment_metric_group(&self, experiment_id: uuid::Uuid, metric_group_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentMetricGroupV2Request) -> Result<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2, datadog::Error<UpdateExperimentMetricGroupError>> {
+        match self.update_experiment_metric_group_with_http_info(experiment_id, metric_group_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a non-decision metric group. Omitted attributes are unchanged; a supplied metrics array is the complete ordered replacement. Decision groups remain managed through the experiment resource. This operation does not synchronously recompute results.
-    pub async fn update_experiment_metric_group_with_http_info(
-        &self,
-        experiment_id: uuid::Uuid,
-        metric_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchExperimentMetricGroupV2Request,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-        >,
-        datadog::Error<UpdateExperimentMetricGroupError>,
-    > {
+    pub async fn update_experiment_metric_group_with_http_info(&self, experiment_id: uuid::Uuid, metric_group_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchExperimentMetricGroupV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>, datadog::Error<UpdateExperimentMetricGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_experiment_metric_group";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/{experiment_id}/metric-groups/{metric_group_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id.to_string()),
-            metric_group_id = datadog::urlencode(metric_group_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id.to_string())
+            , metric_group_id=
+            datadog::urlencode(metric_group_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9767,23 +8348,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9791,7 +8365,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9801,7 +8378,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9823,7 +8403,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9840,73 +8420,42 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsExperimentMetricGroupMutationV2>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateExperimentMetricGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateExperimentMetricGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Replace an exposure SQL model. This is a full replacement and is destructive: any subject type or property not present in the body is deleted, and properties are matched on name, column_name and column_type together, so changing one of those replaces the property rather than editing it. Send the complete set you want to keep. Anything removed is listed under meta.removed_subject_type_ids and meta.removed_property_names in the response. The warehouse connection is not settable and is left as stored.
-    pub async fn update_exposure_sql_model(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request,
-        params: UpdateExposureSQLModelOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response,
-        datadog::Error<UpdateExposureSQLModelError>,
-    > {
-        match self
-            .update_exposure_sql_model_with_http_info(exposure_sql_model_id, body, params)
-            .await
-        {
+    pub async fn update_exposure_sql_model(&self, exposure_sql_model_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request, params: UpdateExposureSQLModelOptionalParams) -> Result<crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response, datadog::Error<UpdateExposureSQLModelError>> {
+        match self.update_exposure_sql_model_with_http_info(exposure_sql_model_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Replace an exposure SQL model. This is a full replacement and is destructive: any subject type or property not present in the body is deleted, and properties are matched on name, column_name and column_type together, so changing one of those replaces the property rather than editing it. Send the complete set you want to keep. Anything removed is listed under meta.removed_subject_type_ids and meta.removed_property_names in the response. The warehouse connection is not settable and is left as stored.
-    pub async fn update_exposure_sql_model_with_http_info(
-        &self,
-        exposure_sql_model_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request,
-        params: UpdateExposureSQLModelOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response,
-        >,
-        datadog::Error<UpdateExposureSQLModelError>,
-    > {
+    pub async fn update_exposure_sql_model_with_http_info(&self, exposure_sql_model_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateExposureSQLModelV2Request, params: UpdateExposureSQLModelOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response>, datadog::Error<UpdateExposureSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_exposure_sql_model";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -9914,14 +8463,13 @@ impl ExperimentsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/exposure-sql-models/{exposure_sql_model_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            exposure_sql_model_id = datadog::urlencode(exposure_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), exposure_sql_model_id=
+            datadog::urlencode(exposure_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
-        if let Some(ref local) = include {
-            for param in local {
+        
+        if let Some(ref local) = include {for param in local {
                 local_req_builder = local_req_builder.query(&[("include", &param.to_string())]);
             }
         };
@@ -9931,6 +8479,8 @@ impl ExperimentsAPI {
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -9942,23 +8492,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9966,7 +8509,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9976,7 +8522,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9998,7 +8547,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10015,78 +8564,60 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsUpdateExposureSQLModelV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateExposureSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateExposureSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a metric. Certified metrics are read-only through this endpoint. This is a partial update: every attribute is optional and an omitted attribute keeps its stored value, so a body carrying only the fields being changed is enough. `guardrail_cutoff_threshold` is nullable -- send null to clear it, omit it to leave it alone. Omitting the aggregation leaves the metric's definition untouched; supplying one replaces it wholesale, and the metric's type is re-derived from the shape supplied. Property filters use property_id or measure_id UUIDs from the aggregation's data source. Attributes that are computed rather than stored (short_id, metric_type, certified_at, experiment_count, created_at, updated_at) are rejected rather than ignored, so a body copied from GET must have them removed. The is_certified attribute is rejected. Certification cannot be changed through this endpoint.
-    pub async fn update_metric(
-        &self,
-        metric_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsUpdateMetricV2Request,
-    ) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<UpdateMetricError>>
-    {
+    pub async fn update_metric(&self, metric_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsUpdateMetricV2Request) -> Result<crate::datadogV2::model::ExperimentsMetricV2DTO, datadog::Error<UpdateMetricError>> {
         match self.update_metric_with_http_info(metric_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a metric. Certified metrics are read-only through this endpoint. This is a partial update: every attribute is optional and an omitted attribute keeps its stored value, so a body carrying only the fields being changed is enough. `guardrail_cutoff_threshold` is nullable -- send null to clear it, omit it to leave it alone. Omitting the aggregation leaves the metric's definition untouched; supplying one replaces it wholesale, and the metric's type is re-derived from the shape supplied. Property filters use property_id or measure_id UUIDs from the aggregation's data source. Attributes that are computed rather than stored (short_id, metric_type, certified_at, experiment_count, created_at, updated_at) are rejected rather than ignored, so a body copied from GET must have them removed. The is_certified attribute is rejected. Certification cannot be changed through this endpoint.
-    pub async fn update_metric_with_http_info(
-        &self,
-        metric_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsUpdateMetricV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>,
-        datadog::Error<UpdateMetricError>,
-    > {
+    pub async fn update_metric_with_http_info(&self, metric_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsUpdateMetricV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricV2DTO>, datadog::Error<UpdateMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_metric";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metrics/{metric_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_id = datadog::urlencode(metric_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_id=
+            datadog::urlencode(metric_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10099,23 +8630,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10123,7 +8647,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10133,7 +8660,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10155,7 +8685,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10172,81 +8702,60 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateMetricError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update metric collection.
-    pub async fn update_metric_collection(
-        &self,
-        metric_collection_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchMetricCollectionV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsMetricCollectionV2DTO,
-        datadog::Error<UpdateMetricCollectionError>,
-    > {
-        match self
-            .update_metric_collection_with_http_info(metric_collection_id, body)
-            .await
-        {
+    pub async fn update_metric_collection(&self, metric_collection_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchMetricCollectionV2Request) -> Result<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO, datadog::Error<UpdateMetricCollectionError>> {
+        match self.update_metric_collection_with_http_info(metric_collection_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update metric collection.
-    pub async fn update_metric_collection_with_http_info(
-        &self,
-        metric_collection_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsPatchMetricCollectionV2Request,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>,
-        datadog::Error<UpdateMetricCollectionError>,
-    > {
+    pub async fn update_metric_collection_with_http_info(&self, metric_collection_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsPatchMetricCollectionV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>, datadog::Error<UpdateMetricCollectionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_metric_collection";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-collections/{metric_collection_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_collection_id = datadog::urlencode(metric_collection_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_collection_id=
+            datadog::urlencode(metric_collection_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10259,23 +8768,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10283,7 +8785,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10293,7 +8798,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10315,7 +8823,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10332,84 +8840,60 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsMetricCollectionV2DTO>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateMetricCollectionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateMetricCollectionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Replace a metric SQL model. This is a destructive full replace: subject types, customer-defined measures, and properties absent from the body are deleted, so send the complete set. Properties are matched by name; changing a property's column, type, or description preserves its ID. column_type is required for every measure and property. Removing a measure or property that an active metric references returns 409 Conflict. Server-generated IDs returned by GET are read-only and can be left in a replayed body. The response reports removals in meta.deleted_subject_types, meta.deleted_measures, and meta.deleted_properties. Certification is read-only. Certified models cannot be replaced through this endpoint.
-    pub async fn update_metric_sql_model(
-        &self,
-        metric_sql_model_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request,
-    ) -> Result<
-        crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response,
-        datadog::Error<UpdateMetricSQLModelError>,
-    > {
-        match self
-            .update_metric_sql_model_with_http_info(metric_sql_model_id, body)
-            .await
-        {
+    pub async fn update_metric_sql_model(&self, metric_sql_model_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request) -> Result<crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response, datadog::Error<UpdateMetricSQLModelError>> {
+        match self.update_metric_sql_model_with_http_info(metric_sql_model_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Replace a metric SQL model. This is a destructive full replace: subject types, customer-defined measures, and properties absent from the body are deleted, so send the complete set. Properties are matched by name; changing a property's column, type, or description preserves its ID. column_type is required for every measure and property. Removing a measure or property that an active metric references returns 409 Conflict. Server-generated IDs returned by GET are read-only and can be left in a replayed body. The response reports removals in meta.deleted_subject_types, meta.deleted_measures, and meta.deleted_properties. Certification is read-only. Certified models cannot be replaced through this endpoint.
-    pub async fn update_metric_sql_model_with_http_info(
-        &self,
-        metric_sql_model_id: uuid::Uuid,
-        body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response,
-        >,
-        datadog::Error<UpdateMetricSQLModelError>,
-    > {
+    pub async fn update_metric_sql_model_with_http_info(&self, metric_sql_model_id: uuid::Uuid, body: crate::datadogV2::model::ExperimentsCreateMetricSQLModelV2Request) -> Result<datadog::ResponseContent<crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response>, datadog::Error<UpdateMetricSQLModelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_metric_sql_model";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/experiments/metric-sql-models/{metric_sql_model_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            metric_sql_model_id = datadog::urlencode(metric_sql_model_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), metric_sql_model_id=
+            datadog::urlencode(metric_sql_model_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10422,23 +8906,16 @@ impl ExperimentsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10446,7 +8923,10 @@ impl ExperimentsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10456,7 +8936,10 @@ impl ExperimentsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10478,7 +8961,7 @@ impl ExperimentsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10495,27 +8978,17 @@ impl ExperimentsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ExperimentsUpdateMetricSQLModelV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateMetricSQLModelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateMetricSQLModelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

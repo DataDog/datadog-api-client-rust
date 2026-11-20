@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ListTeamsSort {
-    NAME,
-    _NAME,
-    USER_COUNT,
-    _USER_COUNT,
-    LINK_COUNT,
-    _LINK_COUNT,
+	NAME,
+	_NAME,
+	USER_COUNT,
+	_USER_COUNT,
+	LINK_COUNT,
+	_LINK_COUNT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for ListTeamsSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "-name" => Self::_NAME,
-            "user_count" => Self::USER_COUNT,
-            "-user_count" => Self::_USER_COUNT,
-            "link_count" => Self::LINK_COUNT,
-            "-link_count" => Self::_LINK_COUNT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"-name" => Self::_NAME,"user_count" => Self::USER_COUNT,"-user_count" => Self::_USER_COUNT,"link_count" => Self::LINK_COUNT,"-link_count" => Self::_LINK_COUNT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

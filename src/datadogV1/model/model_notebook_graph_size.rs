@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum NotebookGraphSize {
-    EXTRA_SMALL,
-    SMALL,
-    MEDIUM,
-    LARGE,
-    EXTRA_LARGE,
+	EXTRA_SMALL,
+	SMALL,
+	MEDIUM,
+	LARGE,
+	EXTRA_LARGE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for NotebookGraphSize {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "xs" => Self::EXTRA_SMALL,
-            "s" => Self::SMALL,
-            "m" => Self::MEDIUM,
-            "l" => Self::LARGE,
-            "xl" => Self::EXTRA_LARGE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"xs" => Self::EXTRA_SMALL,"s" => Self::SMALL,"m" => Self::MEDIUM,"l" => Self::LARGE,"xl" => Self::EXTRA_LARGE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

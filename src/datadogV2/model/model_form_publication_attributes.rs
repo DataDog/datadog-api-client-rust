@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a form publication.
 #[non_exhaustive]
@@ -42,20 +42,11 @@ pub struct FormPublicationAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FormPublicationAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        form_id: uuid::Uuid,
-        form_version: i64,
-        modified_at: chrono::DateTime<chrono::Utc>,
-        org_id: i64,
-        publish_seq: i64,
-        user_id: i64,
-        user_uuid: uuid::Uuid,
-    ) -> FormPublicationAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, form_id: uuid::Uuid, form_version: i64, modified_at: chrono::DateTime<chrono::Utc>, org_id: i64, publish_seq: i64, user_id: i64, user_uuid: uuid::Uuid) -> FormPublicationAttributes {
         FormPublicationAttributes {
             created_at,
             form_id,
@@ -70,20 +61,19 @@ impl FormPublicationAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for FormPublicationAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -111,63 +101,54 @@ impl<'de> Deserialize<'de> for FormPublicationAttributes {
                 let mut publish_seq: Option<i64> = None;
                 let mut user_id: Option<i64> = None;
                 let mut user_uuid: Option<uuid::Uuid> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "form_id" => {
                             form_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "form_version" => {
-                            form_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            form_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_id" => {
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "publish_seq" => {
-                            publish_seq =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            publish_seq = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user_id" => {
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_uuid" => {
                             user_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let form_id = form_id.ok_or_else(|| M::Error::missing_field("form_id"))?;
-                let form_version =
-                    form_version.ok_or_else(|| M::Error::missing_field("form_version"))?;
-                let modified_at =
-                    modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
+                let form_version = form_version.ok_or_else(|| M::Error::missing_field("form_version"))?;
+                let modified_at = modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
-                let publish_seq =
-                    publish_seq.ok_or_else(|| M::Error::missing_field("publish_seq"))?;
+                let publish_seq = publish_seq.ok_or_else(|| M::Error::missing_field("publish_seq"))?;
                 let user_id = user_id.ok_or_else(|| M::Error::missing_field("user_id"))?;
                 let user_uuid = user_uuid.ok_or_else(|| M::Error::missing_field("user_uuid"))?;
 

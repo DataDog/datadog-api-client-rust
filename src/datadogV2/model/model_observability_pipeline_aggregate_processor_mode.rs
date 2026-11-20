@@ -2,18 +2,19 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ObservabilityPipelineAggregateProcessorMode {
-    AUTO,
-    SUM,
-    LATEST,
-    COUNT,
-    MAX,
-    MIN,
-    MEAN,
+	AUTO,
+	SUM,
+	LATEST,
+	COUNT,
+	MAX,
+	MIN,
+	MEAN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -50,17 +51,8 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineAggregateProcessorMode {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "auto" => Self::AUTO,
-            "sum" => Self::SUM,
-            "latest" => Self::LATEST,
-            "count" => Self::COUNT,
-            "max" => Self::MAX,
-            "min" => Self::MIN,
-            "mean" => Self::MEAN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"auto" => Self::AUTO,"sum" => Self::SUM,"latest" => Self::LATEST,"count" => Self::COUNT,"max" => Self::MAX,"min" => Self::MIN,"mean" => Self::MEAN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

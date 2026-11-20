@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an open Agent Health issue, including available remediation.
 #[non_exhaustive]
@@ -60,18 +60,11 @@ pub struct AgentHealthIssueAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AgentHealthIssueAttributes {
-    pub fn new(
-        issue_name: String,
-        issue_type: String,
-        resource_id: String,
-        resource_kind: String,
-        severity: String,
-        state: String,
-    ) -> AgentHealthIssueAttributes {
+    pub fn new(issue_name: String, issue_type: String, resource_id: String, resource_kind: String, severity: String, state: String) -> AgentHealthIssueAttributes {
         AgentHealthIssueAttributes {
             category: None,
             description: None,
@@ -92,60 +85,59 @@ impl AgentHealthIssueAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn category(mut self, value: String) -> Self {
         self.category = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn extra(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.extra = Some(value);
         self
     }
-
+    
     pub fn first_seen_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.first_seen_at = Some(value);
         self
     }
-
+    
     pub fn remediation(mut self, value: crate::datadogV2::model::AgentHealthRemediation) -> Self {
         self.remediation = Some(value);
         self
     }
-
+    
     pub fn resource_type(mut self, value: String) -> Self {
         self.resource_type = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -179,10 +171,7 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                 let mut tags: Option<Vec<String>> = None;
                 let mut title: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -192,92 +181,84 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                                 continue;
                             }
                             category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "extra" => {
                             if v.is_null() {
                                 continue;
                             }
                             extra = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "first_seen_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            first_seen_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            first_seen_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issue_name" => {
                             issue_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "issue_type" => {
                             issue_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "remediation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            remediation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            remediation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_id" => {
-                            resource_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_kind" => {
-                            resource_kind =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "severity" => {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "state" => {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let issue_name = issue_name.ok_or_else(|| M::Error::missing_field("issue_name"))?;
                 let issue_type = issue_type.ok_or_else(|| M::Error::missing_field("issue_type"))?;
-                let resource_id =
-                    resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
-                let resource_kind =
-                    resource_kind.ok_or_else(|| M::Error::missing_field("resource_kind"))?;
+                let resource_id = resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
+                let resource_kind = resource_kind.ok_or_else(|| M::Error::missing_field("resource_kind"))?;
                 let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
                 let state = state.ok_or_else(|| M::Error::missing_field("state"))?;
 

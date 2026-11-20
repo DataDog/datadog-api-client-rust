@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a Model Lab project.
 #[non_exhaustive]
@@ -18,21 +18,13 @@ pub struct ModelLabProjectAttributes {
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// The date and time the project was soft-deleted.
-    #[serde(
-        rename = "deleted_at",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "deleted_at", default, with = "::serde_with::rust::double_option")]
     pub deleted_at: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// A description of the project.
     #[serde(rename = "description")]
     pub description: String,
     /// An optional external URL associated with the project.
-    #[serde(
-        rename = "external_url",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "external_url", default, with = "::serde_with::rust::double_option")]
     pub external_url: Option<Option<String>>,
     /// Whether the project is starred by the current user.
     #[serde(rename = "is_starred")]
@@ -41,11 +33,7 @@ pub struct ModelLabProjectAttributes {
     #[serde(rename = "name")]
     pub name: String,
     /// The UUID of the user that created the project. The creator is always an owner of the project.
-    #[serde(
-        rename = "owner_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "owner_id", default, with = "::serde_with::rust::double_option")]
     pub owner_id: Option<Option<String>>,
     /// The UUIDs of the project's owners besides its creator, in the order they became owners.
     #[serde(rename = "owner_ids")]
@@ -60,19 +48,11 @@ pub struct ModelLabProjectAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ModelLabProjectAttributes {
-    pub fn new(
-        artifact_storage_location: String,
-        created_at: chrono::DateTime<chrono::Utc>,
-        description: String,
-        is_starred: bool,
-        name: String,
-        tags: Vec<crate::datadogV2::model::ModelLabTag>,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> ModelLabProjectAttributes {
+    pub fn new(artifact_storage_location: String, created_at: chrono::DateTime<chrono::Utc>, description: String, is_starred: bool, name: String, tags: Vec<crate::datadogV2::model::ModelLabTag>, updated_at: chrono::DateTime<chrono::Utc>) -> ModelLabProjectAttributes {
         ModelLabProjectAttributes {
             artifact_storage_location,
             created_at,
@@ -89,35 +69,34 @@ impl ModelLabProjectAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn deleted_at(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.deleted_at = Some(value);
         self
     }
-
+    
     pub fn external_url(mut self, value: Option<String>) -> Self {
         self.external_url = Some(value);
         self
     }
-
+    
     pub fn owner_id(mut self, value: Option<String>) -> Self {
         self.owner_id = Some(value);
         self
     }
-
+    
     pub fn owner_ids(mut self, value: Vec<uuid::Uuid>) -> Self {
         self.owner_ids = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ModelLabProjectAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -147,65 +126,57 @@ impl<'de> Deserialize<'de> for ModelLabProjectAttributes {
                 let mut owner_ids: Option<Vec<uuid::Uuid>> = None;
                 let mut tags: Option<Vec<crate::datadogV2::model::ModelLabTag>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "artifact_storage_location" => {
-                            artifact_storage_location =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            artifact_storage_location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "deleted_at" => {
                             deleted_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "external_url" => {
-                            external_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            external_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_starred" => {
                             is_starred = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "owner_id" => {
                             owner_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "owner_ids" => {
                             if v.is_null() {
                                 continue;
                             }
                             owner_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let artifact_storage_location = artifact_storage_location
-                    .ok_or_else(|| M::Error::missing_field("artifact_storage_location"))?;
+                let artifact_storage_location = artifact_storage_location.ok_or_else(|| M::Error::missing_field("artifact_storage_location"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
                 let is_starred = is_starred.ok_or_else(|| M::Error::missing_field("is_starred"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let tags = tags.ok_or_else(|| M::Error::missing_field("tags"))?;

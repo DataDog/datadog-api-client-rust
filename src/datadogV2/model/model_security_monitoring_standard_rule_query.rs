@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query for matching rule.
 #[non_exhaustive]
@@ -36,15 +36,15 @@ pub struct SecurityMonitoringStandardRuleQuery {
     #[serde(rename = "hasOptionalGroupByFields")]
     pub has_optional_group_by_fields: Option<bool>,
     /// **This field is currently unstable and might be removed in a minor version upgrade.**
-    /// The index to run the query on, if the `dataSource` is `logs`. Only used for scheduled rules - in other words, when the `schedulingOptions` field is present in the rule payload.
+/// The index to run the query on, if the `dataSource` is `logs`. Only used for scheduled rules - in other words, when the `schedulingOptions` field is present in the rule payload.
     #[serde(rename = "index")]
     pub index: Option<String>,
     /// List of indexes to query when the `dataSource` is `logs`. Only used for scheduled rules, such as when the `schedulingOptions` field is present in the rule payload.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
     /// (Deprecated) The target field to aggregate over when using the sum or max
-    /// aggregations. `metrics` field should be used instead.
-    #[deprecated]
+/// aggregations. `metrics` field should be used instead.
+	#[deprecated]
     #[serde(rename = "metric")]
     pub metric: Option<String>,
     /// Group of target fields to aggregate over when using the sum, max, geo data, or new value aggregations. The sum, max, and geo data aggregations only accept one value in this list, whereas the new value aggregation accepts up to five values.
@@ -63,7 +63,7 @@ pub struct SecurityMonitoringStandardRuleQuery {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringStandardRuleQuery {
@@ -89,111 +89,103 @@ impl SecurityMonitoringStandardRuleQuery {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn aggregation(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
-    ) -> Self {
+    pub fn aggregation(mut self, value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation) -> Self {
         self.aggregation = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_query_extension(mut self, value: String) -> Self {
         self.custom_query_extension = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn data_source(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringStandardDataSource,
-    ) -> Self {
+    pub fn data_source(mut self, value: crate::datadogV2::model::SecurityMonitoringStandardDataSource) -> Self {
         self.data_source = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dataset_ids(mut self, value: Vec<String>) -> Self {
         self.dataset_ids = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dataset_versions(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
         self.dataset_versions = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn distinct_fields(mut self, value: Vec<String>) -> Self {
         self.distinct_fields = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn group_by_fields(mut self, value: Vec<String>) -> Self {
         self.group_by_fields = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn has_optional_group_by_fields(mut self, value: bool) -> Self {
         self.has_optional_group_by_fields = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn metric(mut self, value: String) -> Self {
         self.metric = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn query_language(mut self, value: String) -> Self {
         self.query_language = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringStandardRuleQuery {
     fn default() -> Self {
@@ -218,13 +210,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation: Option<
-                    crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
-                > = None;
+                let mut aggregation: Option<crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation> = None;
                 let mut custom_query_extension: Option<String> = None;
-                let mut data_source: Option<
-                    crate::datadogV2::model::SecurityMonitoringStandardDataSource,
-                > = None;
+                let mut data_source: Option<crate::datadogV2::model::SecurityMonitoringStandardDataSource> = None;
                 let mut dataset_ids: Option<Vec<String>> = None;
                 let mut dataset_versions: Option<std::collections::BTreeMap<String, i64>> = None;
                 let mut distinct_fields: Option<Vec<String>> = None;
@@ -237,10 +225,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut query_language: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -249,8 +234,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation) = aggregation {
                                 match _aggregation {
                                     crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation::UnparsedObject(_aggregation) => {
@@ -259,20 +243,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "customQueryExtension" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_query_extension =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_query_extension = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dataSource" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV2::model::SecurityMonitoringStandardDataSource::UnparsedObject(_data_source) => {
@@ -281,90 +263,84 @@ impl<'de> Deserialize<'de> for SecurityMonitoringStandardRuleQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "datasetIds" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dataset_ids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dataset_ids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datasetVersions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dataset_versions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dataset_versions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "distinctFields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            distinct_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            distinct_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "groupByFields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            group_by_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            group_by_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hasOptionalGroupByFields" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_optional_group_by_fields =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_optional_group_by_fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "index" => {
                             if v.is_null() {
                                 continue;
                             }
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric" => {
                             if v.is_null() {
                                 continue;
                             }
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metrics" => {
                             if v.is_null() {
                                 continue;
                             }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "queryLanguage" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_language =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

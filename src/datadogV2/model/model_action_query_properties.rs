@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The properties of the action query.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct ActionQueryProperties {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ActionQueryProperties {
@@ -61,73 +61,54 @@ impl ActionQueryProperties {
             _unparsed: false,
         }
     }
-
+    
     pub fn condition(mut self, value: crate::datadogV2::model::ActionQueryCondition) -> Self {
         self.condition = Some(value);
         self
     }
-
-    pub fn debounce_in_ms(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryDebounceInMs,
-    ) -> Self {
+    
+    pub fn debounce_in_ms(mut self, value: crate::datadogV2::model::ActionQueryDebounceInMs) -> Self {
         self.debounce_in_ms = Some(value);
         self
     }
-
-    pub fn mocked_outputs(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryMockedOutputs,
-    ) -> Self {
+    
+    pub fn mocked_outputs(mut self, value: crate::datadogV2::model::ActionQueryMockedOutputs) -> Self {
         self.mocked_outputs = Some(value);
         self
     }
-
-    pub fn only_trigger_manually(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryOnlyTriggerManually,
-    ) -> Self {
+    
+    pub fn only_trigger_manually(mut self, value: crate::datadogV2::model::ActionQueryOnlyTriggerManually) -> Self {
         self.only_trigger_manually = Some(value);
         self
     }
-
+    
     pub fn outputs(mut self, value: String) -> Self {
         self.outputs = Some(value);
         self
     }
-
-    pub fn polling_interval_in_ms(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryPollingIntervalInMs,
-    ) -> Self {
+    
+    pub fn polling_interval_in_ms(mut self, value: crate::datadogV2::model::ActionQueryPollingIntervalInMs) -> Self {
         self.polling_interval_in_ms = Some(value);
         self
     }
-
-    pub fn requires_confirmation(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryRequiresConfirmation,
-    ) -> Self {
+    
+    pub fn requires_confirmation(mut self, value: crate::datadogV2::model::ActionQueryRequiresConfirmation) -> Self {
         self.requires_confirmation = Some(value);
         self
     }
-
-    pub fn show_toast_on_error(
-        mut self,
-        value: crate::datadogV2::model::ActionQueryShowToastOnError,
-    ) -> Self {
+    
+    pub fn show_toast_on_error(mut self, value: crate::datadogV2::model::ActionQueryShowToastOnError) -> Self {
         self.show_toast_on_error = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ActionQueryProperties {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -147,28 +128,15 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                 M: MapAccess<'a>,
             {
                 let mut condition: Option<crate::datadogV2::model::ActionQueryCondition> = None;
-                let mut debounce_in_ms: Option<crate::datadogV2::model::ActionQueryDebounceInMs> =
-                    None;
-                let mut mocked_outputs: Option<crate::datadogV2::model::ActionQueryMockedOutputs> =
-                    None;
-                let mut only_trigger_manually: Option<
-                    crate::datadogV2::model::ActionQueryOnlyTriggerManually,
-                > = None;
+                let mut debounce_in_ms: Option<crate::datadogV2::model::ActionQueryDebounceInMs> = None;
+                let mut mocked_outputs: Option<crate::datadogV2::model::ActionQueryMockedOutputs> = None;
+                let mut only_trigger_manually: Option<crate::datadogV2::model::ActionQueryOnlyTriggerManually> = None;
                 let mut outputs: Option<String> = None;
-                let mut polling_interval_in_ms: Option<
-                    crate::datadogV2::model::ActionQueryPollingIntervalInMs,
-                > = None;
-                let mut requires_confirmation: Option<
-                    crate::datadogV2::model::ActionQueryRequiresConfirmation,
-                > = None;
-                let mut show_toast_on_error: Option<
-                    crate::datadogV2::model::ActionQueryShowToastOnError,
-                > = None;
+                let mut polling_interval_in_ms: Option<crate::datadogV2::model::ActionQueryPollingIntervalInMs> = None;
+                let mut requires_confirmation: Option<crate::datadogV2::model::ActionQueryRequiresConfirmation> = None;
+                let mut show_toast_on_error: Option<crate::datadogV2::model::ActionQueryShowToastOnError> = None;
                 let mut spec: Option<crate::datadogV2::model::ActionQuerySpec> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -186,13 +154,12 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "debounceInMs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            debounce_in_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            debounce_in_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _debounce_in_ms) = debounce_in_ms {
                                 match _debounce_in_ms {
                                     crate::datadogV2::model::ActionQueryDebounceInMs::UnparsedObject(_debounce_in_ms) => {
@@ -201,13 +168,12 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "mockedOutputs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mocked_outputs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            mocked_outputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mocked_outputs) = mocked_outputs {
                                 match _mocked_outputs {
                                     crate::datadogV2::model::ActionQueryMockedOutputs::UnparsedObject(_mocked_outputs) => {
@@ -216,13 +182,12 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "onlyTriggerManually" => {
                             if v.is_null() {
                                 continue;
                             }
-                            only_trigger_manually =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            only_trigger_manually = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _only_trigger_manually) = only_trigger_manually {
                                 match _only_trigger_manually {
                                     crate::datadogV2::model::ActionQueryOnlyTriggerManually::UnparsedObject(_only_trigger_manually) => {
@@ -231,19 +196,18 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "outputs" => {
                             if v.is_null() {
                                 continue;
                             }
                             outputs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "pollingIntervalInMs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            polling_interval_in_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            polling_interval_in_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _polling_interval_in_ms) = polling_interval_in_ms {
                                 match _polling_interval_in_ms {
                                     crate::datadogV2::model::ActionQueryPollingIntervalInMs::UnparsedObject(_polling_interval_in_ms) => {
@@ -252,13 +216,12 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "requiresConfirmation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            requires_confirmation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            requires_confirmation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _requires_confirmation) = requires_confirmation {
                                 match _requires_confirmation {
                                     crate::datadogV2::model::ActionQueryRequiresConfirmation::UnparsedObject(_requires_confirmation) => {
@@ -267,13 +230,12 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "showToastOnError" => {
                             if v.is_null() {
                                 continue;
                             }
-                            show_toast_on_error =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            show_toast_on_error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _show_toast_on_error) = show_toast_on_error {
                                 match _show_toast_on_error {
                                     crate::datadogV2::model::ActionQueryShowToastOnError::UnparsedObject(_show_toast_on_error) => {
@@ -282,25 +244,23 @@ impl<'de> Deserialize<'de> for ActionQueryProperties {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "spec" => {
                             spec = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _spec) = spec {
                                 match _spec {
-                                    crate::datadogV2::model::ActionQuerySpec::UnparsedObject(
-                                        _spec,
-                                    ) => {
+                                    crate::datadogV2::model::ActionQuerySpec::UnparsedObject(_spec) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let spec = spec.ok_or_else(|| M::Error::missing_field("spec"))?;

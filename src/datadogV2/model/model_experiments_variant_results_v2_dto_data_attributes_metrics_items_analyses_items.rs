@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// One statistical comparison for a metric and variant.
 #[non_exhaustive]
@@ -117,145 +117,128 @@ impl ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
             _unparsed: false,
         }
     }
-
-    pub fn confidence_interval(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsConfidenceInterval,
-    ) -> Self {
+    
+    pub fn confidence_interval(mut self, value: crate::datadogV2::model::ExperimentsConfidenceInterval) -> Self {
         self.confidence_interval = Some(value);
         self
     }
-
+    
     pub fn confidence_level(mut self, value: f64) -> Self {
         self.confidence_level = Some(value);
         self
     }
-
+    
     pub fn evsi(mut self, value: f64) -> Self {
         self.evsi = Some(value);
         self
     }
-
+    
     pub fn evsi_future_se(mut self, value: f64) -> Self {
         self.evsi_future_se = Some(value);
         self
     }
-
-    pub fn evsi_unavailable_reason(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsEVSIUnavailableReason,
-    ) -> Self {
+    
+    pub fn evsi_unavailable_reason(mut self, value: crate::datadogV2::model::ExperimentsEVSIUnavailableReason) -> Self {
         self.evsi_unavailable_reason = Some(value);
         self
     }
-
+    
     pub fn expectation_above_zero(mut self, value: f64) -> Self {
         self.expectation_above_zero = Some(value);
         self
     }
-
+    
     pub fn expectation_below_zero(mut self, value: f64) -> Self {
         self.expectation_below_zero = Some(value);
         self
     }
-
+    
     pub fn global_lift(mut self, value: f64) -> Self {
         self.global_lift = Some(value);
         self
     }
-
+    
     pub fn global_lift_lower_bound(mut self, value: f64) -> Self {
         self.global_lift_lower_bound = Some(value);
         self
     }
-
+    
     pub fn global_lift_upper_bound(mut self, value: f64) -> Self {
         self.global_lift_upper_bound = Some(value);
         self
     }
-
+    
     pub fn is_cuped_adjusted(mut self, value: bool) -> Self {
         self.is_cuped_adjusted = Some(value);
         self
     }
-
+    
     pub fn is_unreliable(mut self, value: bool) -> Self {
         self.is_unreliable = Some(value);
         self
     }
-
-    pub fn lift_type(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsLiftType,
-    ) -> Self {
+    
+    pub fn lift_type(mut self, value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsLiftType) -> Self {
         self.lift_type = Some(value);
         self
     }
-
-    pub fn method(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsMethod,
-    ) -> Self {
+    
+    pub fn method(mut self, value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsMethod) -> Self {
         self.method = Some(value);
         self
     }
-
+    
     pub fn minimum_expected_regret(mut self, value: f64) -> Self {
         self.minimum_expected_regret = Some(value);
         self
     }
-
+    
     pub fn p_value(mut self, value: f64) -> Self {
         self.p_value = Some(value);
         self
     }
-
+    
     pub fn point_estimate(mut self, value: f64) -> Self {
         self.point_estimate = Some(value);
         self
     }
-
+    
     pub fn probability_above_zero(mut self, value: f64) -> Self {
         self.probability_above_zero = Some(value);
         self
     }
-
+    
     pub fn probability_below_zero(mut self, value: f64) -> Self {
         self.probability_below_zero = Some(value);
         self
     }
-
+    
     pub fn standard_error(mut self, value: f64) -> Self {
         self.standard_error = Some(value);
         self
     }
-
-    pub fn unreliable_reason(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsUnreliableReason,
-    ) -> Self {
+    
+    pub fn unreliable_reason(mut self, value: crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsUnreliableReason) -> Self {
         self.unreliable_reason = Some(value);
         self
     }
-
+    
     pub fn variant_metric_value(mut self, value: Option<f64>) -> Self {
         self.variant_metric_value = Some(value);
         self
     }
-
+    
     pub fn z_score(mut self, value: f64) -> Self {
         self.z_score = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
     fn default() -> Self {
@@ -263,17 +246,13 @@ impl Default for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalyse
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems
-{
+impl<'de> Deserialize<'de> for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsVisitor;
-        impl<'a> Visitor<'a>
-            for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsVisitor
-        {
+        impl<'a> Visitor<'a> for ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsVisitor {
             type Value = ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -284,15 +263,11 @@ impl<'de> Deserialize<'de>
             where
                 M: MapAccess<'a>,
             {
-                let mut confidence_interval: Option<
-                    crate::datadogV2::model::ExperimentsConfidenceInterval,
-                > = None;
+                let mut confidence_interval: Option<crate::datadogV2::model::ExperimentsConfidenceInterval> = None;
                 let mut confidence_level: Option<f64> = None;
                 let mut evsi: Option<f64> = None;
                 let mut evsi_future_se: Option<f64> = None;
-                let mut evsi_unavailable_reason: Option<
-                    crate::datadogV2::model::ExperimentsEVSIUnavailableReason,
-                > = None;
+                let mut evsi_unavailable_reason: Option<crate::datadogV2::model::ExperimentsEVSIUnavailableReason> = None;
                 let mut expectation_above_zero: Option<f64> = None;
                 let mut expectation_below_zero: Option<f64> = None;
                 let mut global_lift: Option<f64> = None;
@@ -311,10 +286,7 @@ impl<'de> Deserialize<'de>
                 let mut unreliable_reason: Option<crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsUnreliableReason> = None;
                 let mut variant_metric_value: Option<Option<f64>> = None;
                 let mut z_score: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -323,35 +295,31 @@ impl<'de> Deserialize<'de>
                             if v.is_null() {
                                 continue;
                             }
-                            confidence_interval =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            confidence_interval = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "confidence_level" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            confidence_level =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            confidence_level = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evsi" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             evsi = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "evsi_future_se" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            evsi_future_se =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            evsi_future_se = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "evsi_unavailable_reason" => {
                             if v.is_null() {
                                 continue;
                             }
-                            evsi_unavailable_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            evsi_unavailable_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _evsi_unavailable_reason) = evsi_unavailable_reason {
                                 match _evsi_unavailable_reason {
                                     crate::datadogV2::model::ExperimentsEVSIUnavailableReason::UnparsedObject(_evsi_unavailable_reason) => {
@@ -360,56 +328,49 @@ impl<'de> Deserialize<'de>
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "expectation_above_zero" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            expectation_above_zero =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expectation_above_zero = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "expectation_below_zero" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            expectation_below_zero =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            expectation_below_zero = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "global_lift" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            global_lift =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_lift = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "global_lift_lower_bound" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            global_lift_lower_bound =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_lift_lower_bound = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "global_lift_upper_bound" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            global_lift_upper_bound =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_lift_upper_bound = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_cuped_adjusted" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_cuped_adjusted =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_cuped_adjusted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_unreliable" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_unreliable =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_unreliable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lift_type" => {
                             if v.is_null() {
                                 continue;
@@ -423,7 +384,7 @@ impl<'de> Deserialize<'de>
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "method" => {
                             if v.is_null() {
                                 continue;
@@ -437,54 +398,48 @@ impl<'de> Deserialize<'de>
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "minimum_expected_regret" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            minimum_expected_regret =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimum_expected_regret = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "p_value" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             p_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "point_estimate" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            point_estimate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            point_estimate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "probability_above_zero" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            probability_above_zero =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            probability_above_zero = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "probability_below_zero" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            probability_below_zero =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            probability_below_zero = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "standard_error" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            standard_error =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            standard_error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "unreliable_reason" => {
                             if v.is_null() {
                                 continue;
                             }
-                            unreliable_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            unreliable_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _unreliable_reason) = unreliable_reason {
                                 match _unreliable_reason {
                                     crate::datadogV2::model::ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsUnreliableReason::UnparsedObject(_unreliable_reason) => {
@@ -493,63 +448,59 @@ impl<'de> Deserialize<'de>
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "variant_metric_value" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            variant_metric_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            variant_metric_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "z_score" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             z_score = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
-                let content =
-                    ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
-                        confidence_interval,
-                        confidence_level,
-                        evsi,
-                        evsi_future_se,
-                        evsi_unavailable_reason,
-                        expectation_above_zero,
-                        expectation_below_zero,
-                        global_lift,
-                        global_lift_lower_bound,
-                        global_lift_upper_bound,
-                        is_cuped_adjusted,
-                        is_unreliable,
-                        lift_type,
-                        method,
-                        minimum_expected_regret,
-                        p_value,
-                        point_estimate,
-                        probability_above_zero,
-                        probability_below_zero,
-                        standard_error,
-                        unreliable_reason,
-                        variant_metric_value,
-                        z_score,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItems {
+                    confidence_interval,
+                    confidence_level,
+                    evsi,
+                    evsi_future_se,
+                    evsi_unavailable_reason,
+                    expectation_above_zero,
+                    expectation_below_zero,
+                    global_lift,
+                    global_lift_lower_bound,
+                    global_lift_upper_bound,
+                    is_cuped_adjusted,
+                    is_unreliable,
+                    lift_type,
+                    method,
+                    minimum_expected_regret,
+                    p_value,
+                    point_estimate,
+                    probability_above_zero,
+                    probability_below_zero,
+                    standard_error,
+                    unreliable_reason,
+                    variant_metric_value,
+                    z_score,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsVisitor,
-        )
+        deserializer.deserialize_any(ExperimentsVariantResultsV2DTODataAttributesMetricsItemsAnalysesItemsVisitor)
     }
 }

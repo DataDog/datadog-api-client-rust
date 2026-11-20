@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsDatadogEntryPointFilterColumnType {
-    VARCHAR,
-    INT,
-    DOUBLE,
-    BOOLEAN,
-    VARCHAR_ARRAY,
-    INT_ARRAY,
-    DOUBLE_ARRAY,
-    RAW,
+	VARCHAR,
+	INT,
+	DOUBLE,
+	BOOLEAN,
+	VARCHAR_ARRAY,
+	INT_ARRAY,
+	DOUBLE_ARRAY,
+	RAW,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for ExperimentsDatadogEntryPointFilterColumnType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "varchar" => Self::VARCHAR,
-            "int" => Self::INT,
-            "double" => Self::DOUBLE,
-            "boolean" => Self::BOOLEAN,
-            "varchar_array" => Self::VARCHAR_ARRAY,
-            "int_array" => Self::INT_ARRAY,
-            "double_array" => Self::DOUBLE_ARRAY,
-            "raw" => Self::RAW,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"varchar" => Self::VARCHAR,"int" => Self::INT,"double" => Self::DOUBLE,"boolean" => Self::BOOLEAN,"varchar_array" => Self::VARCHAR_ARRAY,"int_array" => Self::INT_ARRAY,"double_array" => Self::DOUBLE_ARRAY,"raw" => Self::RAW,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

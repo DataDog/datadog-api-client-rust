@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Deprecated - Legacy metric-based host map request. Use the infrastructure-backed (`request_type: infrastructure_hostmap`) or DDSQL (`request_type: data_projection`) format instead.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct HostMapRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HostMapRequest {
@@ -61,63 +61,58 @@ impl HostMapRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn apm_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.apm_query = Some(value);
         self
     }
-
+    
     pub fn event_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.event_query = Some(value);
         self
     }
-
+    
     pub fn log_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.log_query = Some(value);
         self
     }
-
+    
     pub fn network_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.network_query = Some(value);
         self
     }
-
+    
     pub fn process_query(mut self, value: crate::datadogV1::model::ProcessQueryDefinition) -> Self {
         self.process_query = Some(value);
         self
     }
-
-    pub fn profile_metrics_query(
-        mut self,
-        value: crate::datadogV1::model::LogQueryDefinition,
-    ) -> Self {
+    
+    pub fn profile_metrics_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.profile_metrics_query = Some(value);
         self
     }
-
+    
     pub fn q(mut self, value: String) -> Self {
         self.q = Some(value);
         self
     }
-
+    
     pub fn rum_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.rum_query = Some(value);
         self
     }
-
+    
     pub fn security_query(mut self, value: crate::datadogV1::model::LogQueryDefinition) -> Self {
         self.security_query = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for HostMapRequest {
     fn default() -> Self {
@@ -146,17 +141,12 @@ impl<'de> Deserialize<'de> for HostMapRequest {
                 let mut event_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut log_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut network_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
-                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> =
-                    None;
-                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> =
-                    None;
+                let mut process_query: Option<crate::datadogV1::model::ProcessQueryDefinition> = None;
+                let mut profile_metrics_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut q: Option<String> = None;
                 let mut rum_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
                 let mut security_query: Option<crate::datadogV1::model::LogQueryDefinition> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -166,65 +156,60 @@ impl<'de> Deserialize<'de> for HostMapRequest {
                                 continue;
                             }
                             apm_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "event_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "log_query" => {
                             if v.is_null() {
                                 continue;
                             }
                             log_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "network_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            network_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "process_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            process_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            process_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profile_metrics_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            profile_metrics_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profile_metrics_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "q" => {
                             if v.is_null() {
                                 continue;
                             }
                             q = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rum_query" => {
                             if v.is_null() {
                                 continue;
                             }
                             rum_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "security_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            security_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            security_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

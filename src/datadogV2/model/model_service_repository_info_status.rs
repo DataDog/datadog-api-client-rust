@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ServiceRepositoryInfoStatus {
-    SUCCESS,
-    NOT_FOUND,
-    NO_REPOSITORY,
-    INTERNAL_ERROR,
-    UNKNOWN,
+	SUCCESS,
+	NOT_FOUND,
+	NO_REPOSITORY,
+	INTERNAL_ERROR,
+	UNKNOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for ServiceRepositoryInfoStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "success" => Self::SUCCESS,
-            "not_found" => Self::NOT_FOUND,
-            "no_repository" => Self::NO_REPOSITORY,
-            "internal_error" => Self::INTERNAL_ERROR,
-            "unknown" => Self::UNKNOWN,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"success" => Self::SUCCESS,"not_found" => Self::NOT_FOUND,"no_repository" => Self::NO_REPOSITORY,"internal_error" => Self::INTERNAL_ERROR,"unknown" => Self::UNKNOWN,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

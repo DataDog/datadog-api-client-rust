@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// How many observations the latest saved refresh saw, regardless of the requested range. `null` when its counts can't be read.
 #[non_exhaustive]
@@ -27,16 +27,11 @@ pub struct ExperimentsBanditObservationCountsV2 {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsBanditObservationCountsV2 {
-    pub fn new(
-        invalid: i64,
-        total: i64,
-        valid_immature: i64,
-        valid_mature: i64,
-    ) -> ExperimentsBanditObservationCountsV2 {
+    pub fn new(invalid: i64, total: i64, valid_immature: i64, valid_mature: i64) -> ExperimentsBanditObservationCountsV2 {
         ExperimentsBanditObservationCountsV2 {
             invalid,
             total,
@@ -46,15 +41,14 @@ impl ExperimentsBanditObservationCountsV2 {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsBanditObservationCountsV2 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,41 +71,34 @@ impl<'de> Deserialize<'de> for ExperimentsBanditObservationCountsV2 {
                 let mut total: Option<i64> = None;
                 let mut valid_immature: Option<i64> = None;
                 let mut valid_mature: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "invalid" => {
                             invalid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total" => {
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid_immature" => {
-                            valid_immature =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_immature = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "valid_mature" => {
-                            valid_mature =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_mature = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let invalid = invalid.ok_or_else(|| M::Error::missing_field("invalid"))?;
                 let total = total.ok_or_else(|| M::Error::missing_field("total"))?;
-                let valid_immature =
-                    valid_immature.ok_or_else(|| M::Error::missing_field("valid_immature"))?;
-                let valid_mature =
-                    valid_mature.ok_or_else(|| M::Error::missing_field("valid_mature"))?;
+                let valid_immature = valid_immature.ok_or_else(|| M::Error::missing_field("valid_immature"))?;
+                let valid_mature = valid_mature.ok_or_else(|| M::Error::missing_field("valid_mature"))?;
 
                 let content = ExperimentsBanditObservationCountsV2 {
                     invalid,

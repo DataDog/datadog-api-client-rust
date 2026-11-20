@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ConvertJobResultsToSignalsDataType {
-    HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION,
+	HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ConvertJobResultsToSignalsDataType {
     fn to_string(&self) -> String {
         match self {
-            Self::HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION => {
-                String::from("historicalDetectionsJobResultSignalConversion")
-            }
+            Self::HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION => String::from("historicalDetectionsJobResultSignalConversion"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,13 +39,8 @@ impl<'de> Deserialize<'de> for ConvertJobResultsToSignalsDataType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "historicalDetectionsJobResultSignalConversion" => {
-                Self::HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION
-            }
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"historicalDetectionsJobResultSignalConversion" => Self::HISTORICALDETECTIONSJOBRESULTSIGNALCONVERSION,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

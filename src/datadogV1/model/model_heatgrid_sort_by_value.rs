@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Sort rows by their aggregated values.
 #[non_exhaustive]
@@ -22,15 +22,11 @@ pub struct HeatgridSortByValue {
     pub property: crate::datadogV1::model::HeatgridSortByValueProperty,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HeatgridSortByValue {
-    pub fn new(
-        aggregation: crate::datadogV1::model::HeatgridSortAggregation,
-        order: crate::datadogV1::model::HeatgridSortOrder,
-        property: crate::datadogV1::model::HeatgridSortByValueProperty,
-    ) -> HeatgridSortByValue {
+    pub fn new(aggregation: crate::datadogV1::model::HeatgridSortAggregation, order: crate::datadogV1::model::HeatgridSortOrder, property: crate::datadogV1::model::HeatgridSortByValueProperty) -> HeatgridSortByValue {
         HeatgridSortByValue {
             aggregation,
             order,
@@ -38,7 +34,10 @@ impl HeatgridSortByValue {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for HeatgridSortByValue {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -57,18 +56,15 @@ impl<'de> Deserialize<'de> for HeatgridSortByValue {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation: Option<crate::datadogV1::model::HeatgridSortAggregation> =
-                    None;
+                let mut aggregation: Option<crate::datadogV1::model::HeatgridSortAggregation> = None;
                 let mut order: Option<crate::datadogV1::model::HeatgridSortOrder> = None;
-                let mut property: Option<crate::datadogV1::model::HeatgridSortByValueProperty> =
-                    None;
+                let mut property: Option<crate::datadogV1::model::HeatgridSortByValueProperty> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aggregation" => {
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation) = aggregation {
                                 match _aggregation {
                                     crate::datadogV1::model::HeatgridSortAggregation::UnparsedObject(_aggregation) => {
@@ -77,20 +73,18 @@ impl<'de> Deserialize<'de> for HeatgridSortByValue {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "order" => {
                             order = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _order) = order {
                                 match _order {
-                                    crate::datadogV1::model::HeatgridSortOrder::UnparsedObject(
-                                        _order,
-                                    ) => {
+                                    crate::datadogV1::model::HeatgridSortOrder::UnparsedObject(_order) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "property" => {
                             property = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _property) = property {
@@ -101,16 +95,13 @@ impl<'de> Deserialize<'de> for HeatgridSortByValue {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let aggregation =
-                    aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
+                let aggregation = aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
                 let order = order.ok_or_else(|| M::Error::missing_field("order"))?;
                 let property = property.ok_or_else(|| M::Error::missing_field("property"))?;
 

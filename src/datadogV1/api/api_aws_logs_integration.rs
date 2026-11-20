@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CheckAWSLogsLambdaAsyncError is a struct for typed errors of method [`AWSLogsIntegrationAPI::check_aws_logs_lambda_async`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CheckAWSLogsLambdaAsyncError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CheckAWSLogsServicesAsyncError is a struct for typed errors of method [`AWSLogsIntegrationAPI::check_aws_logs_services_async`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CheckAWSLogsServicesAsyncError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAWSLambdaARNError is a struct for typed errors of method [`AWSLogsIntegrationAPI::create_aws_lambda_arn`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum CreateAWSLambdaARNError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAWSLambdaARNError is a struct for typed errors of method [`AWSLogsIntegrationAPI::delete_aws_lambda_arn`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum DeleteAWSLambdaARNError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// EnableAWSLogServicesError is a struct for typed errors of method [`AWSLogsIntegrationAPI::enable_aws_log_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum EnableAWSLogServicesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAWSLogsIntegrationsError is a struct for typed errors of method [`AWSLogsIntegrationAPI::list_aws_logs_integrations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -58,6 +63,7 @@ pub enum ListAWSLogsIntegrationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAWSLogsServicesError is a struct for typed errors of method [`AWSLogsIntegrationAPI::list_aws_logs_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -65,6 +71,7 @@ pub enum ListAWSLogsServicesError {
     APIErrorResponse(crate::datadogV1::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your Datadog-AWS-Logs integration directly through Datadog API.
 /// For more information, see the [AWS integration page](<https://docs.datadoghq.com/integrations/amazon_web_services/#log-collection>).
@@ -89,7 +96,8 @@ impl AWSLogsIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -134,73 +142,63 @@ impl AWSLogsIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// **This endpoint is deprecated.** Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
-    /// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
-    /// endpoint can be polled intermittently instead of blocking.
-    ///
-    /// - Returns a status of 'created' when it's checking if the Lambda exists in the account.
-    /// - Returns a status of 'waiting' while checking.
-    /// - Returns a status of 'checked and ok' if the Lambda exists.
-    /// - Returns a status of 'error' if the Lambda does not exist.
-    pub async fn check_aws_logs_lambda_async(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        crate::datadogV1::model::AWSLogsAsyncResponse,
-        datadog::Error<CheckAWSLogsLambdaAsyncError>,
-    > {
+/// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
+/// endpoint can be polled intermittently instead of blocking.
+///
+/// - Returns a status of 'created' when it's checking if the Lambda exists in the account.
+/// - Returns a status of 'waiting' while checking.
+/// - Returns a status of 'checked and ok' if the Lambda exists.
+/// - Returns a status of 'error' if the Lambda does not exist.
+    pub async fn check_aws_logs_lambda_async(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<crate::datadogV1::model::AWSLogsAsyncResponse, datadog::Error<CheckAWSLogsLambdaAsyncError>> {
         match self.check_aws_logs_lambda_async_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated.** Test if permissions are present to add a log-forwarding triggers for the given services and AWS account. The input
-    /// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
-    /// endpoint can be polled intermittently instead of blocking.
-    ///
-    /// - Returns a status of 'created' when it's checking if the Lambda exists in the account.
-    /// - Returns a status of 'waiting' while checking.
-    /// - Returns a status of 'checked and ok' if the Lambda exists.
-    /// - Returns a status of 'error' if the Lambda does not exist.
-    pub async fn check_aws_logs_lambda_async_with_http_info(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
-        datadog::Error<CheckAWSLogsLambdaAsyncError>,
-    > {
+/// is the same as for Enable an AWS service log collection. Subsequent requests will always repeat the above, so this
+/// endpoint can be polled intermittently instead of blocking.
+///
+/// - Returns a status of 'created' when it's checking if the Lambda exists in the account.
+/// - Returns a status of 'waiting' while checking.
+/// - Returns a status of 'checked and ok' if the Lambda exists.
+/// - Returns a status of 'error' if the Lambda does not exist.
+    pub async fn check_aws_logs_lambda_async_with_http_info(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<datadog::ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>, datadog::Error<CheckAWSLogsLambdaAsyncError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.check_aws_logs_lambda_async";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/check_async",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -213,23 +211,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -237,7 +228,10 @@ impl AWSLogsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -247,7 +241,10 @@ impl AWSLogsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -269,7 +266,7 @@ impl AWSLogsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -286,97 +283,76 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CheckAWSLogsLambdaAsyncError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CheckAWSLogsLambdaAsyncError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// **This endpoint is deprecated.** Test if permissions are present to add log-forwarding triggers for the
-    /// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
-    /// Done async, so can be repeatedly polled in a non-blocking fashion until
-    /// the async request completes.
-    ///
-    /// - Returns a status of `created` when it's checking if the permissions exists
-    ///   in the AWS account.
-    /// - Returns a status of `waiting` while checking.
-    /// - Returns a status of `checked and ok` if the Lambda exists.
-    /// - Returns a status of `error` if the Lambda does not exist.
-    pub async fn check_aws_logs_services_async(
-        &self,
-        body: crate::datadogV1::model::AWSLogsServicesRequest,
-    ) -> Result<
-        crate::datadogV1::model::AWSLogsAsyncResponse,
-        datadog::Error<CheckAWSLogsServicesAsyncError>,
-    > {
-        match self
-            .check_aws_logs_services_async_with_http_info(body)
-            .await
-        {
+/// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
+/// Done async, so can be repeatedly polled in a non-blocking fashion until
+/// the async request completes.
+///
+/// - Returns a status of `created` when it's checking if the permissions exists
+///   in the AWS account.
+/// - Returns a status of `waiting` while checking.
+/// - Returns a status of `checked and ok` if the Lambda exists.
+/// - Returns a status of `error` if the Lambda does not exist.
+    pub async fn check_aws_logs_services_async(&self, body: crate::datadogV1::model::AWSLogsServicesRequest) -> Result<crate::datadogV1::model::AWSLogsAsyncResponse, datadog::Error<CheckAWSLogsServicesAsyncError>> {
+        match self.check_aws_logs_services_async_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated.** Test if permissions are present to add log-forwarding triggers for the
-    /// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
-    /// Done async, so can be repeatedly polled in a non-blocking fashion until
-    /// the async request completes.
-    ///
-    /// - Returns a status of `created` when it's checking if the permissions exists
-    ///   in the AWS account.
-    /// - Returns a status of `waiting` while checking.
-    /// - Returns a status of `checked and ok` if the Lambda exists.
-    /// - Returns a status of `error` if the Lambda does not exist.
-    pub async fn check_aws_logs_services_async_with_http_info(
-        &self,
-        body: crate::datadogV1::model::AWSLogsServicesRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>,
-        datadog::Error<CheckAWSLogsServicesAsyncError>,
-    > {
+/// given services and AWS account. Input is the same as for `EnableAWSLogServices`.
+/// Done async, so can be repeatedly polled in a non-blocking fashion until
+/// the async request completes.
+///
+/// - Returns a status of `created` when it's checking if the permissions exists
+///   in the AWS account.
+/// - Returns a status of `waiting` while checking.
+/// - Returns a status of `checked and ok` if the Lambda exists.
+/// - Returns a status of `error` if the Lambda does not exist.
+    pub async fn check_aws_logs_services_async_with_http_info(&self, body: crate::datadogV1::model::AWSLogsServicesRequest) -> Result<datadog::ResponseContent<crate::datadogV1::model::AWSLogsAsyncResponse>, datadog::Error<CheckAWSLogsServicesAsyncError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.check_aws_logs_services_async";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services_async",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -389,23 +365,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -413,7 +382,10 @@ impl AWSLogsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -423,7 +395,10 @@ impl AWSLogsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -445,7 +420,7 @@ impl AWSLogsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -462,76 +437,58 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV1::model::AWSLogsAsyncResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CheckAWSLogsServicesAsyncError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CheckAWSLogsServicesAsyncError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// **This endpoint is deprecated.** Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
-    pub async fn create_aws_lambda_arn(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        std::collections::BTreeMap<String, serde_json::Value>,
-        datadog::Error<CreateAWSLambdaARNError>,
-    > {
+    pub async fn create_aws_lambda_arn(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<std::collections::BTreeMap<String, serde_json::Value>, datadog::Error<CreateAWSLambdaARNError>> {
         match self.create_aws_lambda_arn_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated.** Attach the Lambda ARN of the Lambda created for the Datadog-AWS log collection to your AWS account ID to enable log collection.
-    pub async fn create_aws_lambda_arn_with_http_info(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        datadog::Error<CreateAWSLambdaARNError>,
-    > {
+    pub async fn create_aws_lambda_arn_with_http_info(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>, datadog::Error<CreateAWSLambdaARNError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.create_aws_lambda_arn";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -544,23 +501,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -568,7 +518,10 @@ impl AWSLogsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -578,7 +531,10 @@ impl AWSLogsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -600,7 +556,7 @@ impl AWSLogsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -617,76 +573,58 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAWSLambdaARNError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAWSLambdaARNError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// **This endpoint is deprecated.** Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
-    pub async fn delete_aws_lambda_arn(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        std::collections::BTreeMap<String, serde_json::Value>,
-        datadog::Error<DeleteAWSLambdaARNError>,
-    > {
+    pub async fn delete_aws_lambda_arn(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<std::collections::BTreeMap<String, serde_json::Value>, datadog::Error<DeleteAWSLambdaARNError>> {
         match self.delete_aws_lambda_arn_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated.** Delete a Datadog-AWS logs configuration by removing the specific Lambda ARN associated with a given AWS account.
-    pub async fn delete_aws_lambda_arn_with_http_info(
-        &self,
-        body: crate::datadogV1::model::AWSAccountAndLambdaRequest,
-    ) -> Result<
-        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        datadog::Error<DeleteAWSLambdaARNError>,
-    > {
+    pub async fn delete_aws_lambda_arn_with_http_info(&self, body: crate::datadogV1::model::AWSAccountAndLambdaRequest) -> Result<datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>, datadog::Error<DeleteAWSLambdaARNError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.delete_aws_lambda_arn";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -699,23 +637,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -723,7 +654,10 @@ impl AWSLogsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -733,7 +667,10 @@ impl AWSLogsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -755,7 +692,7 @@ impl AWSLogsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -772,76 +709,58 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteAWSLambdaARNError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAWSLambdaARNError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable automatic log collection for a list of services. This should be run after running `CreateAWSLambdaARN` to save the configuration.
-    pub async fn enable_aws_log_services(
-        &self,
-        body: crate::datadogV1::model::AWSLogsServicesRequest,
-    ) -> Result<
-        std::collections::BTreeMap<String, serde_json::Value>,
-        datadog::Error<EnableAWSLogServicesError>,
-    > {
+    pub async fn enable_aws_log_services(&self, body: crate::datadogV1::model::AWSLogsServicesRequest) -> Result<std::collections::BTreeMap<String, serde_json::Value>, datadog::Error<EnableAWSLogServicesError>> {
         match self.enable_aws_log_services_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable automatic log collection for a list of services. This should be run after running `CreateAWSLambdaARN` to save the configuration.
-    pub async fn enable_aws_log_services_with_http_info(
-        &self,
-        body: crate::datadogV1::model::AWSLogsServicesRequest,
-    ) -> Result<
-        datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>,
-        datadog::Error<EnableAWSLogServicesError>,
-    > {
+    pub async fn enable_aws_log_services_with_http_info(&self, body: crate::datadogV1::model::AWSLogsServicesRequest) -> Result<datadog::ResponseContent<std::collections::BTreeMap<String, serde_json::Value>>, datadog::Error<EnableAWSLogServicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.enable_aws_log_services";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -854,23 +773,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -878,7 +790,10 @@ impl AWSLogsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -888,7 +803,10 @@ impl AWSLogsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -910,7 +828,7 @@ impl AWSLogsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -927,73 +845,57 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<std::collections::BTreeMap<String, serde_json::Value>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<EnableAWSLogServicesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<EnableAWSLogServicesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Datadog-AWS Logs integrations configured in your Datadog account.
-    pub async fn list_aws_logs_integrations(
-        &self,
-    ) -> Result<
-        Vec<crate::datadogV1::model::AWSLogsListResponse>,
-        datadog::Error<ListAWSLogsIntegrationsError>,
-    > {
+    pub async fn list_aws_logs_integrations(&self) -> Result<Vec<crate::datadogV1::model::AWSLogsListResponse>, datadog::Error<ListAWSLogsIntegrationsError>> {
         match self.list_aws_logs_integrations_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Datadog-AWS Logs integrations configured in your Datadog account.
-    pub async fn list_aws_logs_integrations_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<Vec<crate::datadogV1::model::AWSLogsListResponse>>,
-        datadog::Error<ListAWSLogsIntegrationsError>,
-    > {
+    pub async fn list_aws_logs_integrations_with_http_info(&self) -> Result<datadog::ResponseContent<Vec<crate::datadogV1::model::AWSLogsListResponse>>, datadog::Error<ListAWSLogsIntegrationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_aws_logs_integrations";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1006,22 +908,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1033,73 +929,57 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListResponse>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListResponse>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSLogsIntegrationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSLogsIntegrationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// **This endpoint is deprecated - use the V2 endpoint instead.** Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
-    pub async fn list_aws_logs_services(
-        &self,
-    ) -> Result<
-        Vec<crate::datadogV1::model::AWSLogsListServicesResponse>,
-        datadog::Error<ListAWSLogsServicesError>,
-    > {
+    pub async fn list_aws_logs_services(&self) -> Result<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>, datadog::Error<ListAWSLogsServicesError>> {
         match self.list_aws_logs_services_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated - use the V2 endpoint instead.** Get the list of current AWS services that Datadog offers automatic log collection. Use returned service IDs with the services parameter for the Enable an AWS service log collection API endpoint.
-    pub async fn list_aws_logs_services_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>,
-        datadog::Error<ListAWSLogsServicesError>,
-    > {
+    pub async fn list_aws_logs_services_with_http_info(&self) -> Result<datadog::ResponseContent<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>, datadog::Error<ListAWSLogsServicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v1.list_aws_logs_services";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v1/integration/aws/logs/services",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1112,22 +992,16 @@ impl AWSLogsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1139,26 +1013,17 @@ impl AWSLogsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<Vec<crate::datadogV1::model::AWSLogsListServicesResponse>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAWSLogsServicesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAWSLogsServicesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

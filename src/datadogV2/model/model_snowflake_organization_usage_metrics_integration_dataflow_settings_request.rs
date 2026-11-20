@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the organization usage metrics dataflow. Only the fields provided are changed.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequest {
     pub organization_usage_metrics_aggregate_last_24h: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequest {
@@ -26,12 +26,14 @@ impl SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn organization_usage_metrics_aggregate_last_24h(mut self, value: bool) -> Self {
         self.organization_usage_metrics_aggregate_last_24h = Some(value);
         self
     }
+    
 }
+
 
 impl Default for SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -45,9 +47,7 @@ impl<'de> Deserialize<'de> for SnowflakeOrganizationUsageMetricsIntegrationDataf
         D: Deserializer<'de>,
     {
         struct SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequestVisitor;
-        impl<'a> Visitor<'a>
-            for SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequestVisitor
-        {
+        impl<'a> Visitor<'a> for SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequestVisitor {
             type Value = SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -67,14 +67,11 @@ impl<'de> Deserialize<'de> for SnowflakeOrganizationUsageMetricsIntegrationDataf
                             if v.is_null() {
                                 continue;
                             }
-                            organization_usage_metrics_aggregate_last_24h =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            organization_usage_metrics_aggregate_last_24h = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -87,8 +84,6 @@ impl<'de> Deserialize<'de> for SnowflakeOrganizationUsageMetricsIntegrationDataf
             }
         }
 
-        deserializer.deserialize_any(
-            SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequestVisitor,
-        )
+        deserializer.deserialize_any(SnowflakeOrganizationUsageMetricsIntegrationDataflowSettingsRequestVisitor)
     }
 }

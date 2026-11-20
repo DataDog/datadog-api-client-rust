@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Number of hourly recorded custom metrics for a given organization.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct UsageTopAvgMetricsHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageTopAvgMetricsHour {
@@ -41,35 +41,33 @@ impl UsageTopAvgMetricsHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn avg_metric_hour(mut self, value: i64) -> Self {
         self.avg_metric_hour = Some(value);
         self
     }
-
+    
     pub fn max_metric_hour(mut self, value: i64) -> Self {
         self.max_metric_hour = Some(value);
         self
     }
-
+    
     pub fn metric_category(mut self, value: crate::datadogV1::model::UsageMetricCategory) -> Self {
         self.metric_category = Some(value);
         self
     }
-
+    
     pub fn metric_name(mut self, value: String) -> Self {
         self.metric_name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageTopAvgMetricsHour {
     fn default() -> Self {
@@ -96,13 +94,9 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
             {
                 let mut avg_metric_hour: Option<i64> = None;
                 let mut max_metric_hour: Option<i64> = None;
-                let mut metric_category: Option<crate::datadogV1::model::UsageMetricCategory> =
-                    None;
+                let mut metric_category: Option<crate::datadogV1::model::UsageMetricCategory> = None;
                 let mut metric_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -111,22 +105,19 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
                             if v.is_null() {
                                 continue;
                             }
-                            avg_metric_hour =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            avg_metric_hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "max_metric_hour" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_metric_hour =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_metric_hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_category" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            metric_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric_category) = metric_category {
                                 match _metric_category {
                                     crate::datadogV1::model::UsageMetricCategory::UnparsedObject(_metric_category) => {
@@ -135,19 +126,18 @@ impl<'de> Deserialize<'de> for UsageTopAvgMetricsHour {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "metric_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

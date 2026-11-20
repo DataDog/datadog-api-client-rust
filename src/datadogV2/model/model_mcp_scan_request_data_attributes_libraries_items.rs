@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A library declaration to include in the dependency scan.
 #[non_exhaustive]
@@ -33,16 +33,11 @@ pub struct McpScanRequestDataAttributesLibrariesItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl McpScanRequestDataAttributesLibrariesItems {
-    pub fn new(
-        is_dev: bool,
-        is_direct: bool,
-        package_manager: String,
-        purl: String,
-    ) -> McpScanRequestDataAttributesLibrariesItems {
+    pub fn new(is_dev: bool, is_direct: bool, package_manager: String, purl: String) -> McpScanRequestDataAttributesLibrariesItems {
         McpScanRequestDataAttributesLibrariesItems {
             exclusions: None,
             is_dev,
@@ -54,25 +49,24 @@ impl McpScanRequestDataAttributesLibrariesItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn exclusions(mut self, value: Vec<String>) -> Self {
         self.exclusions = Some(value);
         self
     }
-
+    
     pub fn target_frameworks(mut self, value: Vec<String>) -> Self {
         self.target_frameworks = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for McpScanRequestDataAttributesLibrariesItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -97,10 +91,7 @@ impl<'de> Deserialize<'de> for McpScanRequestDataAttributesLibrariesItems {
                 let mut package_manager: Option<String> = None;
                 let mut purl: Option<String> = None;
                 let mut target_frameworks: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -110,38 +101,35 @@ impl<'de> Deserialize<'de> for McpScanRequestDataAttributesLibrariesItems {
                                 continue;
                             }
                             exclusions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_dev" => {
                             is_dev = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_direct" => {
                             is_direct = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "package_manager" => {
-                            package_manager =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            package_manager = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "purl" => {
                             purl = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target_frameworks" => {
                             if v.is_null() {
                                 continue;
                             }
-                            target_frameworks =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_frameworks = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let is_dev = is_dev.ok_or_else(|| M::Error::missing_field("is_dev"))?;
                 let is_direct = is_direct.ok_or_else(|| M::Error::missing_field("is_direct"))?;
-                let package_manager =
-                    package_manager.ok_or_else(|| M::Error::missing_field("package_manager"))?;
+                let package_manager = package_manager.ok_or_else(|| M::Error::missing_field("package_manager"))?;
                 let purl = purl.ok_or_else(|| M::Error::missing_field("purl"))?;
 
                 let content = McpScanRequestDataAttributesLibrariesItems {

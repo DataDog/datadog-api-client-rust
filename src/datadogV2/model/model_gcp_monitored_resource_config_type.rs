@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GCPMonitoredResourceConfigType {
-    CLOUD_FUNCTION,
-    CLOUD_RUN_REVISION,
-    GCE_INSTANCE,
+	CLOUD_FUNCTION,
+	CLOUD_RUN_REVISION,
+	GCE_INSTANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for GCPMonitoredResourceConfigType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "cloud_function" => Self::CLOUD_FUNCTION,
-            "cloud_run_revision" => Self::CLOUD_RUN_REVISION,
-            "gce_instance" => Self::GCE_INSTANCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"cloud_function" => Self::CLOUD_FUNCTION,"cloud_run_revision" => Self::CLOUD_RUN_REVISION,"gce_instance" => Self::GCE_INSTANCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

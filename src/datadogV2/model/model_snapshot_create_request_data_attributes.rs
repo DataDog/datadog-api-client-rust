@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating a heatmap snapshot, including the view, session, event, and device context.
 #[non_exhaustive]
@@ -42,19 +42,11 @@ pub struct SnapshotCreateRequestDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnapshotCreateRequestDataAttributes {
-    pub fn new(
-        application_id: String,
-        device_type: String,
-        event_id: String,
-        is_device_type_selected_by_user: bool,
-        snapshot_name: String,
-        start: i64,
-        view_name: String,
-    ) -> SnapshotCreateRequestDataAttributes {
+    pub fn new(application_id: String, device_type: String, event_id: String, is_device_type_selected_by_user: bool, snapshot_name: String, start: i64, view_name: String) -> SnapshotCreateRequestDataAttributes {
         SnapshotCreateRequestDataAttributes {
             application_id,
             device_type,
@@ -69,25 +61,24 @@ impl SnapshotCreateRequestDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn session_id(mut self, value: String) -> Self {
         self.session_id = Some(value);
         self
     }
-
+    
     pub fn view_id(mut self, value: String) -> Self {
         self.view_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SnapshotCreateRequestDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -115,67 +106,56 @@ impl<'de> Deserialize<'de> for SnapshotCreateRequestDataAttributes {
                 let mut start: Option<i64> = None;
                 let mut view_id: Option<String> = None;
                 let mut view_name: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "application_id" => {
-                            application_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "device_type" => {
-                            device_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            device_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_id" => {
                             event_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_device_type_selected_by_user" => {
-                            is_device_type_selected_by_user =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_device_type_selected_by_user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "session_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             session_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "snapshot_name" => {
-                            snapshot_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snapshot_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "view_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             view_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "view_name" => {
                             view_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let application_id =
-                    application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
-                let device_type =
-                    device_type.ok_or_else(|| M::Error::missing_field("device_type"))?;
+                let application_id = application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
+                let device_type = device_type.ok_or_else(|| M::Error::missing_field("device_type"))?;
                 let event_id = event_id.ok_or_else(|| M::Error::missing_field("event_id"))?;
-                let is_device_type_selected_by_user = is_device_type_selected_by_user
-                    .ok_or_else(|| M::Error::missing_field("is_device_type_selected_by_user"))?;
-                let snapshot_name =
-                    snapshot_name.ok_or_else(|| M::Error::missing_field("snapshot_name"))?;
+                let is_device_type_selected_by_user = is_device_type_selected_by_user.ok_or_else(|| M::Error::missing_field("is_device_type_selected_by_user"))?;
+                let snapshot_name = snapshot_name.ok_or_else(|| M::Error::missing_field("snapshot_name"))?;
                 let start = start.ok_or_else(|| M::Error::missing_field("start"))?;
                 let view_name = view_name.ok_or_else(|| M::Error::missing_field("view_name"))?;
 

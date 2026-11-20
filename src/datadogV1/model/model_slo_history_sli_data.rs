@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An object that holds an SLI value and its associated data. It can represent an SLO's overall SLI value.
 /// This can also represent the SLI value for a specific monitor in multi-monitor SLOs, or a group in grouped SLOs.
@@ -22,13 +22,13 @@ pub struct SLOHistorySLIData {
     #[serde(rename = "group")]
     pub group: Option<String>,
     /// The state transition history for `monitor` or `time-slice` SLOs. It is represented as
-    /// an array of pairs. Each pair is an array containing the timestamp of the transition
-    /// as an integer in Unix epoch format in the first element, and the state as an integer in the
-    /// second element. An integer value of `0` for state means uptime, `1` means downtime, and `2` means no data.
-    /// Periods of no data count as uptime in time-slice SLOs, while for monitor SLOs, no data is counted
-    /// either as uptime or downtime depending on monitor settings. See
-    /// [SLO documentation](<https://docs.datadoghq.com/service_management/service_level_objectives/monitor/#missing-data>)
-    /// for detailed information.
+/// an array of pairs. Each pair is an array containing the timestamp of the transition
+/// as an integer in Unix epoch format in the first element, and the state as an integer in the
+/// second element. An integer value of `0` for state means uptime, `1` means downtime, and `2` means no data.
+/// Periods of no data count as uptime in time-slice SLOs, while for monitor SLOs, no data is counted
+/// either as uptime or downtime depending on monitor settings. See
+/// [SLO documentation](<https://docs.datadoghq.com/service_management/service_level_objectives/monitor/#missing-data>)
+/// for detailed information.
     #[serde(rename = "history")]
     pub history: Option<Vec<Vec<f64>>>,
     /// For `monitor` based SLOs, this is the last modified timestamp in epoch seconds of the monitor.
@@ -44,28 +44,24 @@ pub struct SLOHistorySLIData {
     #[serde(rename = "precision")]
     pub precision: Option<std::collections::BTreeMap<String, f64>>,
     /// For `monitor` based SLOs, when `true` this indicates that a replay is in progress to give an accurate uptime
-    /// calculation.
+/// calculation.
     #[serde(rename = "preview")]
     pub preview: Option<bool>,
     /// The current SLI value of the SLO over the history window.
-    #[serde(
-        rename = "sli_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "sli_value", default, with = "::serde_with::rust::double_option")]
     pub sli_value: Option<Option<f64>>,
     /// The amount of decimal places the SLI value is accurate to for the given from `&&` to timestamp.
     #[serde(rename = "span_precision")]
     pub span_precision: Option<f64>,
     /// Use `sli_value` instead.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "uptime", default, with = "::serde_with::rust::double_option")]
     pub uptime: Option<Option<f64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SLOHistorySLIData {
@@ -88,93 +84,85 @@ impl SLOHistorySLIData {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn error_budget_remaining(
-        mut self,
-        value: std::collections::BTreeMap<String, f64>,
-    ) -> Self {
+    pub fn error_budget_remaining(mut self, value: std::collections::BTreeMap<String, f64>) -> Self {
         self.error_budget_remaining = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn errors(
-        mut self,
-        value: Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>,
-    ) -> Self {
+    pub fn errors(mut self, value: Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>) -> Self {
         self.errors = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn group(mut self, value: String) -> Self {
         self.group = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn history(mut self, value: Vec<Vec<f64>>) -> Self {
         self.history = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn monitor_modified(mut self, value: i64) -> Self {
         self.monitor_modified = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn monitor_type(mut self, value: String) -> Self {
         self.monitor_type = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn precision(mut self, value: std::collections::BTreeMap<String, f64>) -> Self {
         self.precision = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn preview(mut self, value: bool) -> Self {
         self.preview = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sli_value(mut self, value: Option<f64>) -> Self {
         self.sli_value = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn span_precision(mut self, value: f64) -> Self {
         self.span_precision = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn uptime(mut self, value: Option<f64>) -> Self {
         self.uptime = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SLOHistorySLIData {
     fn default() -> Self {
@@ -199,11 +187,8 @@ impl<'de> Deserialize<'de> for SLOHistorySLIData {
             where
                 M: MapAccess<'a>,
             {
-                let mut error_budget_remaining: Option<std::collections::BTreeMap<String, f64>> =
-                    None;
-                let mut errors: Option<
-                    Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>,
-                > = None;
+                let mut error_budget_remaining: Option<std::collections::BTreeMap<String, f64>> = None;
+                let mut errors: Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>> = None;
                 let mut group: Option<String> = None;
                 let mut history: Option<Vec<Vec<f64>>> = None;
                 let mut monitor_modified: Option<i64> = None;
@@ -214,10 +199,7 @@ impl<'de> Deserialize<'de> for SLOHistorySLIData {
                 let mut sli_value: Option<Option<f64>> = None;
                 let mut span_precision: Option<f64> = None;
                 let mut uptime: Option<Option<f64>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -226,83 +208,79 @@ impl<'de> Deserialize<'de> for SLOHistorySLIData {
                             if v.is_null() {
                                 continue;
                             }
-                            error_budget_remaining =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_budget_remaining = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "errors" => {
                             if v.is_null() {
                                 continue;
                             }
                             errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "group" => {
                             if v.is_null() {
                                 continue;
                             }
                             group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "history" => {
                             if v.is_null() {
                                 continue;
                             }
                             history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "monitor_modified" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_modified =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_modified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitor_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "precision" => {
                             if v.is_null() {
                                 continue;
                             }
                             precision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "preview" => {
                             if v.is_null() {
                                 continue;
                             }
                             preview = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sli_value" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             sli_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_precision" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            span_precision =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            span_precision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "uptime" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

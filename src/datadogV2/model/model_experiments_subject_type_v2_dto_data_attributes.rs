@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Details of the subject type.
 #[non_exhaustive]
@@ -15,28 +15,16 @@ pub struct ExperimentsSubjectTypeV2DTODataAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Number of experiments that reference this resource.
-    #[serde(
-        rename = "experiment_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "experiment_count", default, with = "::serde_with::rust::double_option")]
     pub experiment_count: Option<Option<i64>>,
     /// Number of exposure sources that reference this subject type.
-    #[serde(
-        rename = "exposure_source_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "exposure_source_count", default, with = "::serde_with::rust::double_option")]
     pub exposure_source_count: Option<Option<i64>>,
     /// Whether this is the organization's default subject type.
     #[serde(rename = "is_default")]
     pub is_default: Option<bool>,
     /// Number of metric SQL models that reference this subject type.
-    #[serde(
-        rename = "metric_sql_model_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "metric_sql_model_count", default, with = "::serde_with::rust::double_option")]
     pub metric_sql_model_count: Option<Option<i64>>,
     /// Metadata retained for resources imported from another system.
     #[serde(rename = "migration_metadata")]
@@ -48,11 +36,7 @@ pub struct ExperimentsSubjectTypeV2DTODataAttributes {
     #[serde(rename = "product_analytics_attribute")]
     pub product_analytics_attribute: Option<String>,
     /// Number of protocols that reference this subject type.
-    #[serde(
-        rename = "protocol_count",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "protocol_count", default, with = "::serde_with::rust::double_option")]
     pub protocol_count: Option<Option<i64>>,
     /// Time when this resource was last updated.
     #[serde(rename = "updated_at")]
@@ -64,7 +48,7 @@ pub struct ExperimentsSubjectTypeV2DTODataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsSubjectTypeV2DTODataAttributes {
@@ -85,70 +69,68 @@ impl ExperimentsSubjectTypeV2DTODataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn experiment_count(mut self, value: Option<i64>) -> Self {
         self.experiment_count = Some(value);
         self
     }
-
+    
     pub fn exposure_source_count(mut self, value: Option<i64>) -> Self {
         self.exposure_source_count = Some(value);
         self
     }
-
+    
     pub fn is_default(mut self, value: bool) -> Self {
         self.is_default = Some(value);
         self
     }
-
+    
     pub fn metric_sql_model_count(mut self, value: Option<i64>) -> Self {
         self.metric_sql_model_count = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn product_analytics_attribute(mut self, value: String) -> Self {
         self.product_analytics_attribute = Some(value);
         self
     }
-
+    
     pub fn protocol_count(mut self, value: Option<i64>) -> Self {
         self.protocol_count = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
+    
     pub fn warehouse_column_names(mut self, value: Vec<String>) -> Self {
         self.warehouse_column_names = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsSubjectTypeV2DTODataAttributes {
     fn default() -> Self {
@@ -184,10 +166,7 @@ impl<'de> Deserialize<'de> for ExperimentsSubjectTypeV2DTODataAttributes {
                 let mut protocol_count: Option<Option<i64>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut warehouse_column_names: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -197,67 +176,60 @@ impl<'de> Deserialize<'de> for ExperimentsSubjectTypeV2DTODataAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "experiment_count" => {
-                            experiment_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            experiment_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exposure_source_count" => {
-                            exposure_source_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exposure_source_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_default" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_sql_model_count" => {
-                            metric_sql_model_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_sql_model_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "product_analytics_attribute" => {
                             if v.is_null() {
                                 continue;
                             }
-                            product_analytics_attribute =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_analytics_attribute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "protocol_count" => {
-                            protocol_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            protocol_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "warehouse_column_names" => {
                             if v.is_null() {
                                 continue;
                             }
-                            warehouse_column_names =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            warehouse_column_names = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

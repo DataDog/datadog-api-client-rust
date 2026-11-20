@@ -2,12 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum GetMultipleRulesetsRequestDataType {
-    GET_MULTIPLE_RULESETS_REQUEST,
+	GET_MULTIPLE_RULESETS_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,11 +39,8 @@ impl<'de> Deserialize<'de> for GetMultipleRulesetsRequestDataType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "get_multiple_rulesets_request" => Self::GET_MULTIPLE_RULESETS_REQUEST,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"get_multiple_rulesets_request" => Self::GET_MULTIPLE_RULESETS_REQUEST,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

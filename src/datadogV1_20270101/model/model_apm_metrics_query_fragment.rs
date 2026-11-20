@@ -1,0 +1,273 @@
+// Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
+// This product includes software developed at Datadog (https://www.datadoghq.com/).
+// Copyright 2019-Present Datadog, Inc.
+use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
+
+/// Test-only generated schema for the dashboard versioning proof of concept.
+#[non_exhaustive]
+#[skip_serializing_none]
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct ApmMetricsQueryFragment {
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "alias")]
+    pub alias: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "byoc_cluster")]
+    pub byoc_cluster: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "data_source")]
+    pub data_source: crate::datadogV1_20270101::model::ApmMetricsQueryFragmentDataSource,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "operation_mode")]
+    pub operation_mode: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "operation_name")]
+    pub operation_name: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "peer_tags")]
+    pub peer_tags: Option<Vec<String>>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "query_filter")]
+    pub query_filter: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "resource_hash")]
+    pub resource_hash: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "resource_name")]
+    pub resource_name: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "service")]
+    pub service: Option<String>,
+    /// Test-only generated schema for the dashboard versioning proof of concept.
+    #[serde(rename = "span_kind")]
+    pub span_kind: Option<crate::datadogV1_20270101::model::SpanKind>,
+    #[serde(skip)]
+    #[serde(default)]
+    pub(crate) _unparsed: bool
+}
+
+impl ApmMetricsQueryFragment {
+    pub fn new(data_source: crate::datadogV1_20270101::model::ApmMetricsQueryFragmentDataSource, name: String) -> ApmMetricsQueryFragment {
+        ApmMetricsQueryFragment {
+            alias: None,
+            byoc_cluster: None,
+            data_source,
+            name,
+            operation_mode: None,
+            operation_name: None,
+            peer_tags: None,
+            query_filter: None,
+            resource_hash: None,
+            resource_name: None,
+            service: None,
+            span_kind: None,
+            _unparsed: false,
+        }
+    }
+    
+    pub fn alias(mut self, value: String) -> Self {
+        self.alias = Some(value);
+        self
+    }
+    
+    pub fn byoc_cluster(mut self, value: String) -> Self {
+        self.byoc_cluster = Some(value);
+        self
+    }
+    
+    pub fn operation_mode(mut self, value: String) -> Self {
+        self.operation_mode = Some(value);
+        self
+    }
+    
+    pub fn operation_name(mut self, value: String) -> Self {
+        self.operation_name = Some(value);
+        self
+    }
+    
+    pub fn peer_tags(mut self, value: Vec<String>) -> Self {
+        self.peer_tags = Some(value);
+        self
+    }
+    
+    pub fn query_filter(mut self, value: String) -> Self {
+        self.query_filter = Some(value);
+        self
+    }
+    
+    pub fn resource_hash(mut self, value: String) -> Self {
+        self.resource_hash = Some(value);
+        self
+    }
+    
+    pub fn resource_name(mut self, value: String) -> Self {
+        self.resource_name = Some(value);
+        self
+    }
+    
+    pub fn service(mut self, value: String) -> Self {
+        self.service = Some(value);
+        self
+    }
+    
+    pub fn span_kind(mut self, value: crate::datadogV1_20270101::model::SpanKind) -> Self {
+        self.span_kind = Some(value);
+        self
+    }
+    
+}
+
+
+
+impl<'de> Deserialize<'de> for ApmMetricsQueryFragment {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct ApmMetricsQueryFragmentVisitor;
+        impl<'a> Visitor<'a> for ApmMetricsQueryFragmentVisitor {
+            type Value = ApmMetricsQueryFragment;
+
+            fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
+                f.write_str("a mapping")
+            }
+
+            fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
+            where
+                M: MapAccess<'a>,
+            {
+                let mut alias: Option<String> = None;
+                let mut byoc_cluster: Option<String> = None;
+                let mut data_source: Option<crate::datadogV1_20270101::model::ApmMetricsQueryFragmentDataSource> = None;
+                let mut name: Option<String> = None;
+                let mut operation_mode: Option<String> = None;
+                let mut operation_name: Option<String> = None;
+                let mut peer_tags: Option<Vec<String>> = None;
+                let mut query_filter: Option<String> = None;
+                let mut resource_hash: Option<String> = None;
+                let mut resource_name: Option<String> = None;
+                let mut service: Option<String> = None;
+                let mut span_kind: Option<crate::datadogV1_20270101::model::SpanKind> = None;
+                let mut _unparsed = false;
+
+                while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
+                    match k.as_str() {
+                        "alias" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            alias = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "byoc_cluster" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            byoc_cluster = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "data_source" => {
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _data_source) = data_source {
+                                match _data_source {
+                                    crate::datadogV1_20270101::model::ApmMetricsQueryFragmentDataSource::UnparsedObject(_data_source) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        "name" => {
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "operation_mode" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            operation_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "operation_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            operation_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "peer_tags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            peer_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "query_filter" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            query_filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "resource_hash" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_hash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "resource_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            resource_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
+                        "span_kind" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            span_kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _span_kind) = span_kind {
+                                match _span_kind {
+                                    crate::datadogV1_20270101::model::SpanKind::UnparsedObject(_span_kind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        },
+                        &_ => {
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
+                    }
+                }
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
+
+                let content = ApmMetricsQueryFragment {
+                    alias,
+                    byoc_cluster,
+                    data_source,
+                    name,
+                    operation_mode,
+                    operation_name,
+                    peer_tags,
+                    query_filter,
+                    resource_hash,
+                    resource_name,
+                    service,
+                    span_kind,
+                    _unparsed,
+                };
+
+                Ok(content)
+            }
+        }
+
+        deserializer.deserialize_any(ApmMetricsQueryFragmentVisitor)
+    }
+}

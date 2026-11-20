@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Replace a substring of the matching group label.
 #[non_exhaustive]
@@ -22,15 +22,11 @@ pub struct HeatgridTextFormatReplaceSubstring {
     pub with: String,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HeatgridTextFormatReplaceSubstring {
-    pub fn new(
-        substring: String,
-        type_: crate::datadogV1::model::HeatgridTextFormatReplaceSubstringType,
-        with: String,
-    ) -> HeatgridTextFormatReplaceSubstring {
+    pub fn new(substring: String, type_: crate::datadogV1::model::HeatgridTextFormatReplaceSubstringType, with: String) -> HeatgridTextFormatReplaceSubstring {
         HeatgridTextFormatReplaceSubstring {
             substring,
             type_,
@@ -38,7 +34,10 @@ impl HeatgridTextFormatReplaceSubstring {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for HeatgridTextFormatReplaceSubstring {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -58,9 +57,7 @@ impl<'de> Deserialize<'de> for HeatgridTextFormatReplaceSubstring {
                 M: MapAccess<'a>,
             {
                 let mut substring: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV1::model::HeatgridTextFormatReplaceSubstringType,
-                > = None;
+                let mut type_: Option<crate::datadogV1::model::HeatgridTextFormatReplaceSubstringType> = None;
                 let mut with: Option<String> = None;
                 let mut _unparsed = false;
 
@@ -68,7 +65,7 @@ impl<'de> Deserialize<'de> for HeatgridTextFormatReplaceSubstring {
                     match k.as_str() {
                         "substring" => {
                             substring = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -79,15 +76,13 @@ impl<'de> Deserialize<'de> for HeatgridTextFormatReplaceSubstring {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "with" => {
                             with = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let substring = substring.ok_or_else(|| M::Error::missing_field("substring"))?;

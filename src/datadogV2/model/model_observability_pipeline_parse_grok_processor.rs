@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The `parse_grok` processor extracts structured fields from unstructured log messages using Grok patterns.
 ///
@@ -33,8 +33,7 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     pub include: String,
     /// The list of custom Grok parsing rules selected by either source field or include query. Omit to use only the Datadog library rules.
     #[serde(rename = "rules")]
-    pub rules:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>>,
+    pub rules: Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>>,
     /// The processor type. The value should always be `parse_grok`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
@@ -42,16 +41,11 @@ pub struct ObservabilityPipelineParseGrokProcessor {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineParseGrokProcessor {
-    pub fn new(
-        enabled: bool,
-        id: String,
-        include: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
-    ) -> ObservabilityPipelineParseGrokProcessor {
+    pub fn new(enabled: bool, id: String, include: String, type_: crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType) -> ObservabilityPipelineParseGrokProcessor {
         ObservabilityPipelineParseGrokProcessor {
             disable_library_rules: None,
             display_name: None,
@@ -65,38 +59,34 @@ impl ObservabilityPipelineParseGrokProcessor {
             _unparsed: false,
         }
     }
-
+    
     pub fn disable_library_rules(mut self, value: bool) -> Self {
         self.disable_library_rules = Some(value);
         self
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
+    
     pub fn field(mut self, value: String) -> Self {
         self.field = Some(value);
         self
     }
-
-    pub fn rules(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
-    ) -> Self {
+    
+    pub fn rules(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>) -> Self {
         self.rules = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -121,16 +111,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                 let mut field: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut rules: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut rules: Option<Vec<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorRuleItem>> = None;
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineParseGrokProcessorType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -139,37 +122,35 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                             if v.is_null() {
                                 continue;
                             }
-                            disable_library_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disable_library_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "field" => {
                             if v.is_null() {
                                 continue;
                             }
                             field = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rules" => {
                             if v.is_null() {
                                 continue;
                             }
                             rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -180,12 +161,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineParseGrokProcessor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;

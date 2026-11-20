@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating an AI custom rule revision.
 #[non_exhaustive]
@@ -51,22 +51,11 @@ pub struct AiCustomRuleRevisionRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiCustomRuleRevisionRequestAttributes {
-    pub fn new(
-        category: crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
-        content: String,
-        description: String,
-        directories: Vec<String>,
-        execution_mode: crate::datadogV2::model::AiCustomRuleRevisionExecutionMode,
-        globs: Vec<String>,
-        is_published: bool,
-        is_testing: bool,
-        severity: crate::datadogV2::model::CustomRuleRevisionAttributesSeverity,
-        short_description: String,
-    ) -> AiCustomRuleRevisionRequestAttributes {
+    pub fn new(category: crate::datadogV2::model::CustomRuleRevisionAttributesCategory, content: String, description: String, directories: Vec<String>, execution_mode: crate::datadogV2::model::AiCustomRuleRevisionExecutionMode, globs: Vec<String>, is_published: bool, is_testing: bool, severity: crate::datadogV2::model::CustomRuleRevisionAttributesSeverity, short_description: String) -> AiCustomRuleRevisionRequestAttributes {
         AiCustomRuleRevisionRequestAttributes {
             category,
             content,
@@ -84,25 +73,24 @@ impl AiCustomRuleRevisionRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn cwe(mut self, value: Option<String>) -> Self {
         self.cwe = Some(value);
         self
     }
-
+    
     pub fn version_id(mut self, value: i64) -> Self {
         self.version_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiCustomRuleRevisionRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -121,28 +109,19 @@ impl<'de> Deserialize<'de> for AiCustomRuleRevisionRequestAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut category: Option<
-                    crate::datadogV2::model::CustomRuleRevisionAttributesCategory,
-                > = None;
+                let mut category: Option<crate::datadogV2::model::CustomRuleRevisionAttributesCategory> = None;
                 let mut content: Option<String> = None;
                 let mut cwe: Option<Option<String>> = None;
                 let mut description: Option<String> = None;
                 let mut directories: Option<Vec<String>> = None;
-                let mut execution_mode: Option<
-                    crate::datadogV2::model::AiCustomRuleRevisionExecutionMode,
-                > = None;
+                let mut execution_mode: Option<crate::datadogV2::model::AiCustomRuleRevisionExecutionMode> = None;
                 let mut globs: Option<Vec<String>> = None;
                 let mut is_published: Option<bool> = None;
                 let mut is_testing: Option<bool> = None;
-                let mut severity: Option<
-                    crate::datadogV2::model::CustomRuleRevisionAttributesSeverity,
-                > = None;
+                let mut severity: Option<crate::datadogV2::model::CustomRuleRevisionAttributesSeverity> = None;
                 let mut short_description: Option<String> = None;
                 let mut version_id: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -157,24 +136,21 @@ impl<'de> Deserialize<'de> for AiCustomRuleRevisionRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "content" => {
                             content = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cwe" => {
                             cwe = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "directories" => {
-                            directories =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            directories = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "execution_mode" => {
-                            execution_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            execution_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _execution_mode) = execution_mode {
                                 match _execution_mode {
                                     crate::datadogV2::model::AiCustomRuleRevisionExecutionMode::UnparsedObject(_execution_mode) => {
@@ -183,17 +159,16 @@ impl<'de> Deserialize<'de> for AiCustomRuleRevisionRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "globs" => {
                             globs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_published" => {
-                            is_published =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_published = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_testing" => {
                             is_testing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "severity" => {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _severity) = severity {
@@ -204,39 +179,33 @@ impl<'de> Deserialize<'de> for AiCustomRuleRevisionRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "short_description" => {
-                            short_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            short_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             version_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let category = category.ok_or_else(|| M::Error::missing_field("category"))?;
                 let content = content.ok_or_else(|| M::Error::missing_field("content"))?;
-                let description =
-                    description.ok_or_else(|| M::Error::missing_field("description"))?;
-                let directories =
-                    directories.ok_or_else(|| M::Error::missing_field("directories"))?;
-                let execution_mode =
-                    execution_mode.ok_or_else(|| M::Error::missing_field("execution_mode"))?;
+                let description = description.ok_or_else(|| M::Error::missing_field("description"))?;
+                let directories = directories.ok_or_else(|| M::Error::missing_field("directories"))?;
+                let execution_mode = execution_mode.ok_or_else(|| M::Error::missing_field("execution_mode"))?;
                 let globs = globs.ok_or_else(|| M::Error::missing_field("globs"))?;
-                let is_published =
-                    is_published.ok_or_else(|| M::Error::missing_field("is_published"))?;
+                let is_published = is_published.ok_or_else(|| M::Error::missing_field("is_published"))?;
                 let is_testing = is_testing.ok_or_else(|| M::Error::missing_field("is_testing"))?;
                 let severity = severity.ok_or_else(|| M::Error::missing_field("severity"))?;
-                let short_description = short_description
-                    .ok_or_else(|| M::Error::missing_field("short_description"))?;
+                let short_description = short_description.ok_or_else(|| M::Error::missing_field("short_description"))?;
 
                 let content = AiCustomRuleRevisionRequestAttributes {
                     category,

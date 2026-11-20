@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Specifies the pipeline's configuration, including its sources, processors, and destinations.
 #[non_exhaustive]
@@ -19,36 +19,32 @@ pub struct ObservabilityPipelineConfig {
     pub pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType>,
     /// A list of processor groups that transform or enrich log data.
     #[serde(rename = "processor_groups")]
-    pub processor_groups:
-        Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
+    pub processor_groups: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
     /// A list of processor groups that transform or enrich log data.
-    ///
-    /// **Deprecated:** This field is deprecated, you should now use the processor_groups field.
-    #[deprecated]
+///
+/// **Deprecated:** This field is deprecated, you should now use the processor_groups field.
+	#[deprecated]
     #[serde(rename = "processors")]
     pub processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>>,
     /// A list of configured data sources for the pipeline.
     #[serde(rename = "sources")]
     pub sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
     /// Set to `true` to continue using the legacy search syntax while migrating filter queries. After migrating all queries to the new syntax, set to `false`.
-    /// The legacy syntax is deprecated and will eventually be removed.
-    /// Requires Observability Pipelines Worker 2.11 or later.
-    /// Only applies to `logs` pipelines. This field is ignored for `metrics` and `traces` pipelines.
-    /// See [Upgrade Your Filter Queries to the New Search Syntax](<https://docs.datadoghq.com/observability_pipelines/guide/upgrade_your_filter_queries_to_the_new_search_syntax/>) for more information.
+/// The legacy syntax is deprecated and will eventually be removed.
+/// Requires Observability Pipelines Worker 2.11 or later.
+/// Only applies to `logs` pipelines. This field is ignored for `metrics` and `traces` pipelines.
+/// See [Upgrade Your Filter Queries to the New Search Syntax](<https://docs.datadoghq.com/observability_pipelines/guide/upgrade_your_filter_queries_to_the_new_search_syntax/>) for more information.
     #[serde(rename = "use_legacy_search_syntax")]
     pub use_legacy_search_syntax: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineConfig {
-    pub fn new(
-        destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
-        sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
-    ) -> ObservabilityPipelineConfig {
+    pub fn new(destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>, sources: Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>) -> ObservabilityPipelineConfig {
         #[allow(deprecated)]
         ObservabilityPipelineConfig {
             destinations,
@@ -61,48 +57,38 @@ impl ObservabilityPipelineConfig {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
-    pub fn pipeline_type(
-        mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
-    ) -> Self {
+    pub fn pipeline_type(mut self, value: crate::datadogV2::model::ObservabilityPipelineConfigPipelineType) -> Self {
         self.pipeline_type = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn processor_groups(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
-    ) -> Self {
+    pub fn processor_groups(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>) -> Self {
         self.processor_groups = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn processors(
-        mut self,
-        value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
-    ) -> Self {
+    pub fn processors(mut self, value: Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>) -> Self {
         self.processors = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn use_legacy_search_syntax(mut self, value: bool) -> Self {
         self.use_legacy_search_syntax = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -121,40 +107,25 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut destinations: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
-                > = None;
-                let mut pipeline_type: Option<
-                    crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
-                > = None;
-                let mut processor_groups: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
-                > = None;
-                let mut processors: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>,
-                > = None;
-                let mut sources: Option<
-                    Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>,
-                > = None;
+                let mut destinations: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>> = None;
+                let mut pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType> = None;
+                let mut processor_groups: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>> = None;
+                let mut processors: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigProcessorGroup>> = None;
+                let mut sources: Option<Vec<crate::datadogV2::model::ObservabilityPipelineConfigSourceItem>> = None;
                 let mut use_legacy_search_syntax: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "destinations" => {
-                            destinations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            destinations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pipeline_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            pipeline_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            pipeline_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _pipeline_type) = pipeline_type {
                                 match _pipeline_type {
                                     crate::datadogV2::model::ObservabilityPipelineConfigPipelineType::UnparsedObject(_pipeline_type) => {
@@ -163,39 +134,36 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "processor_groups" => {
                             if v.is_null() {
                                 continue;
                             }
-                            processor_groups =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            processor_groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "processors" => {
                             if v.is_null() {
                                 continue;
                             }
                             processors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "use_legacy_search_syntax" => {
                             if v.is_null() {
                                 continue;
                             }
-                            use_legacy_search_syntax =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            use_legacy_search_syntax = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let destinations =
-                    destinations.ok_or_else(|| M::Error::missing_field("destinations"))?;
+                let destinations = destinations.ok_or_else(|| M::Error::missing_field("destinations"))?;
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;
 
                 #[allow(deprecated)]

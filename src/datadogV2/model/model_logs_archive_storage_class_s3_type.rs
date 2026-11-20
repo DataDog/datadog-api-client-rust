@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LogsArchiveStorageClassS3Type {
-    STANDARD,
-    STANDARD_IA,
-    ONEZONE_IA,
-    INTELLIGENT_TIERING,
-    GLACIER_IR,
+	STANDARD,
+	STANDARD_IA,
+	ONEZONE_IA,
+	INTELLIGENT_TIERING,
+	GLACIER_IR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for LogsArchiveStorageClassS3Type {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "STANDARD" => Self::STANDARD,
-            "STANDARD_IA" => Self::STANDARD_IA,
-            "ONEZONE_IA" => Self::ONEZONE_IA,
-            "INTELLIGENT_TIERING" => Self::INTELLIGENT_TIERING,
-            "GLACIER_IR" => Self::GLACIER_IR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"STANDARD" => Self::STANDARD,"STANDARD_IA" => Self::STANDARD_IA,"ONEZONE_IA" => Self::ONEZONE_IA,"INTELLIGENT_TIERING" => Self::INTELLIGENT_TIERING,"GLACIER_IR" => Self::GLACIER_IR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

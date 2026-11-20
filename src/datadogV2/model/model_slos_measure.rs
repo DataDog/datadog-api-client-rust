@@ -2,21 +2,22 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SlosMeasure {
-    GOOD_EVENTS,
-    BAD_EVENTS,
-    SLO_STATUS,
-    ERROR_BUDGET_REMAINING,
-    ERROR_BUDGET_REMAINING_HISTORY,
-    ERROR_BUDGET_BURNDOWN,
-    BURN_RATE,
-    SLO_STATUS_HISTORY,
-    GOOD_MINUTES,
-    BAD_MINUTES,
+	GOOD_EVENTS,
+	BAD_EVENTS,
+	SLO_STATUS,
+	ERROR_BUDGET_REMAINING,
+	ERROR_BUDGET_REMAINING_HISTORY,
+	ERROR_BUDGET_BURNDOWN,
+	BURN_RATE,
+	SLO_STATUS_HISTORY,
+	GOOD_MINUTES,
+	BAD_MINUTES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -56,20 +57,8 @@ impl<'de> Deserialize<'de> for SlosMeasure {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "good_events" => Self::GOOD_EVENTS,
-            "bad_events" => Self::BAD_EVENTS,
-            "slo_status" => Self::SLO_STATUS,
-            "error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,
-            "error_budget_remaining_history" => Self::ERROR_BUDGET_REMAINING_HISTORY,
-            "error_budget_burndown" => Self::ERROR_BUDGET_BURNDOWN,
-            "burn_rate" => Self::BURN_RATE,
-            "slo_status_history" => Self::SLO_STATUS_HISTORY,
-            "good_minutes" => Self::GOOD_MINUTES,
-            "bad_minutes" => Self::BAD_MINUTES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"good_events" => Self::GOOD_EVENTS,"bad_events" => Self::BAD_EVENTS,"slo_status" => Self::SLO_STATUS,"error_budget_remaining" => Self::ERROR_BUDGET_REMAINING,"error_budget_remaining_history" => Self::ERROR_BUDGET_REMAINING_HISTORY,"error_budget_burndown" => Self::ERROR_BUDGET_BURNDOWN,"burn_rate" => Self::BURN_RATE,"slo_status_history" => Self::SLO_STATUS_HISTORY,"good_minutes" => Self::GOOD_MINUTES,"bad_minutes" => Self::BAD_MINUTES,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

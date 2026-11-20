@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The data attributes of a notebook.
 #[non_exhaustive]
@@ -24,11 +24,7 @@ pub struct NotebookCreateDataAttributes {
     #[serde(rename = "status")]
     pub status: Option<crate::datadogV1::model::NotebookStatus>,
     /// List of template variables for this notebook.
-    #[serde(
-        rename = "template_variables",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "template_variables", default, with = "::serde_with::rust::double_option")]
     pub template_variables: Option<Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>>,
     /// Notebook global timeframe.
     #[serde(rename = "time")]
@@ -37,15 +33,11 @@ pub struct NotebookCreateDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotebookCreateDataAttributes {
-    pub fn new(
-        cells: Vec<crate::datadogV1::model::NotebookCellCreateRequest>,
-        name: String,
-        time: crate::datadogV1::model::NotebookGlobalTime,
-    ) -> NotebookCreateDataAttributes {
+    pub fn new(cells: Vec<crate::datadogV1::model::NotebookCellCreateRequest>, name: String, time: crate::datadogV1::model::NotebookGlobalTime) -> NotebookCreateDataAttributes {
         NotebookCreateDataAttributes {
             cells,
             metadata: None,
@@ -57,33 +49,29 @@ impl NotebookCreateDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn metadata(mut self, value: crate::datadogV1::model::NotebookMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV1::model::NotebookStatus) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn template_variables(
-        mut self,
-        value: Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>,
-    ) -> Self {
+    
+    pub fn template_variables(mut self, value: Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>) -> Self {
         self.template_variables = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -102,35 +90,29 @@ impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut cells: Option<Vec<crate::datadogV1::model::NotebookCellCreateRequest>> =
-                    None;
+                let mut cells: Option<Vec<crate::datadogV1::model::NotebookCellCreateRequest>> = None;
                 let mut metadata: Option<crate::datadogV1::model::NotebookMetadata> = None;
                 let mut name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::NotebookStatus> = None;
-                let mut template_variables: Option<
-                    Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>,
-                > = None;
+                let mut template_variables: Option<Option<Vec<crate::datadogV1::model::NotebookTemplateVariable>>> = None;
                 let mut time: Option<crate::datadogV1::model::NotebookGlobalTime> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "cells" => {
                             cells = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -138,37 +120,32 @@ impl<'de> Deserialize<'de> for NotebookCreateDataAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV1::model::NotebookStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV1::model::NotebookStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "template_variables" => {
-                            template_variables =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            template_variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time" => {
                             time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _time) = time {
                                 match _time {
-                                    crate::datadogV1::model::NotebookGlobalTime::UnparsedObject(
-                                        _time,
-                                    ) => {
+                                    crate::datadogV1::model::NotebookGlobalTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let cells = cells.ok_or_else(|| M::Error::missing_field("cells"))?;

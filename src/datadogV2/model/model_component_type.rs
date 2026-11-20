@@ -2,31 +2,32 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ComponentType {
-    TABLE,
-    TEXTINPUT,
-    TEXTAREA,
-    BUTTON,
-    TEXT,
-    SELECT,
-    MODAL,
-    SCHEMAFORM,
-    CHECKBOX,
-    TABS,
-    VEGACHART,
-    RADIOBUTTONS,
-    NUMBERINPUT,
-    FILEINPUT,
-    JSONINPUT,
-    GRIDCELL,
-    DATERANGEPICKER,
-    SEARCH,
-    CONTAINER,
-    CALLOUTVALUE,
+	TABLE,
+	TEXTINPUT,
+	TEXTAREA,
+	BUTTON,
+	TEXT,
+	SELECT,
+	MODAL,
+	SCHEMAFORM,
+	CHECKBOX,
+	TABS,
+	VEGACHART,
+	RADIOBUTTONS,
+	NUMBERINPUT,
+	FILEINPUT,
+	JSONINPUT,
+	GRIDCELL,
+	DATERANGEPICKER,
+	SEARCH,
+	CONTAINER,
+	CALLOUTVALUE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -76,30 +77,8 @@ impl<'de> Deserialize<'de> for ComponentType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "table" => Self::TABLE,
-            "textInput" => Self::TEXTINPUT,
-            "textArea" => Self::TEXTAREA,
-            "button" => Self::BUTTON,
-            "text" => Self::TEXT,
-            "select" => Self::SELECT,
-            "modal" => Self::MODAL,
-            "schemaForm" => Self::SCHEMAFORM,
-            "checkbox" => Self::CHECKBOX,
-            "tabs" => Self::TABS,
-            "vegaChart" => Self::VEGACHART,
-            "radioButtons" => Self::RADIOBUTTONS,
-            "numberInput" => Self::NUMBERINPUT,
-            "fileInput" => Self::FILEINPUT,
-            "jsonInput" => Self::JSONINPUT,
-            "gridCell" => Self::GRIDCELL,
-            "dateRangePicker" => Self::DATERANGEPICKER,
-            "search" => Self::SEARCH,
-            "container" => Self::CONTAINER,
-            "calloutValue" => Self::CALLOUTVALUE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"table" => Self::TABLE,"textInput" => Self::TEXTINPUT,"textArea" => Self::TEXTAREA,"button" => Self::BUTTON,"text" => Self::TEXT,"select" => Self::SELECT,"modal" => Self::MODAL,"schemaForm" => Self::SCHEMAFORM,"checkbox" => Self::CHECKBOX,"tabs" => Self::TABS,"vegaChart" => Self::VEGACHART,"radioButtons" => Self::RADIOBUTTONS,"numberInput" => Self::NUMBERINPUT,"fileInput" => Self::FILEINPUT,"jsonInput" => Self::JSONINPUT,"gridCell" => Self::GRIDCELL,"dateRangePicker" => Self::DATERANGEPICKER,"search" => Self::SEARCH,"container" => Self::CONTAINER,"calloutValue" => Self::CALLOUTVALUE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

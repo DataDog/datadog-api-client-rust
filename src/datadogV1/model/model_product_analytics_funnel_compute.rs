@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Compute configuration for user journey funnel.
 #[non_exhaustive]
@@ -19,21 +19,21 @@ pub struct ProductAnalyticsFunnelCompute {
     pub metric: crate::datadogV1::model::ProductAnalyticsFunnelComputeMetric,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsFunnelCompute {
-    pub fn new(
-        aggregation: crate::datadogV1::model::ProductAnalyticsFunnelComputeAggregation,
-        metric: crate::datadogV1::model::ProductAnalyticsFunnelComputeMetric,
-    ) -> ProductAnalyticsFunnelCompute {
+    pub fn new(aggregation: crate::datadogV1::model::ProductAnalyticsFunnelComputeAggregation, metric: crate::datadogV1::model::ProductAnalyticsFunnelComputeMetric) -> ProductAnalyticsFunnelCompute {
         ProductAnalyticsFunnelCompute {
             aggregation,
             metric,
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsFunnelCompute {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -52,19 +52,14 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelCompute {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation: Option<
-                    crate::datadogV1::model::ProductAnalyticsFunnelComputeAggregation,
-                > = None;
-                let mut metric: Option<
-                    crate::datadogV1::model::ProductAnalyticsFunnelComputeMetric,
-                > = None;
+                let mut aggregation: Option<crate::datadogV1::model::ProductAnalyticsFunnelComputeAggregation> = None;
+                let mut metric: Option<crate::datadogV1::model::ProductAnalyticsFunnelComputeMetric> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aggregation" => {
-                            aggregation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation) = aggregation {
                                 match _aggregation {
                                     crate::datadogV1::model::ProductAnalyticsFunnelComputeAggregation::UnparsedObject(_aggregation) => {
@@ -73,7 +68,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelCompute {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "metric" => {
                             metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric) = metric {
@@ -84,16 +79,13 @@ impl<'de> Deserialize<'de> for ProductAnalyticsFunnelCompute {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let aggregation =
-                    aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
+                let aggregation = aggregation.ok_or_else(|| M::Error::missing_field("aggregation"))?;
                 let metric = metric.ok_or_else(|| M::Error::missing_field("metric"))?;
 
                 let content = ProductAnalyticsFunnelCompute {

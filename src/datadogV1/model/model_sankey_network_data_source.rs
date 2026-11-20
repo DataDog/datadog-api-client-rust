@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SankeyNetworkDataSource {
-    NETWORK_DEVICE_FLOWS,
-    NETWORK,
+	NETWORK_DEVICE_FLOWS,
+	NETWORK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,12 +41,8 @@ impl<'de> Deserialize<'de> for SankeyNetworkDataSource {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "network_device_flows" => Self::NETWORK_DEVICE_FLOWS,
-            "network" => Self::NETWORK,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"network_device_flows" => Self::NETWORK_DEVICE_FLOWS,"network" => Self::NETWORK,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

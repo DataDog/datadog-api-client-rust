@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a newly created secure embed shared dashboard.
 #[non_exhaustive]
@@ -31,8 +31,7 @@ pub struct SecureEmbedCreateResponseAttributes {
     pub id: Option<String>,
     /// Template variables with their configuration.
     #[serde(rename = "selectable_template_vars")]
-    pub selectable_template_vars:
-        Option<Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>>,
+    pub selectable_template_vars: Option<Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>>,
     /// The type of share. Always `secure_embed`.
     #[serde(rename = "share_type")]
     pub share_type: Option<crate::datadogV2::model::SecureEmbedShareType>,
@@ -55,7 +54,7 @@ pub struct SecureEmbedCreateResponseAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecureEmbedCreateResponseAttributes {
@@ -78,86 +77,78 @@ impl SecureEmbedCreateResponseAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: String) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn credential(mut self, value: String) -> Self {
         self.credential = Some(value);
         self
     }
-
+    
     pub fn dashboard_id(mut self, value: String) -> Self {
         self.dashboard_id = Some(value);
         self
     }
-
+    
     pub fn global_time(mut self, value: crate::datadogV2::model::SecureEmbedGlobalTime) -> Self {
         self.global_time = Some(value);
         self
     }
-
+    
     pub fn global_time_selectable(mut self, value: bool) -> Self {
         self.global_time_selectable = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn selectable_template_vars(
-        mut self,
-        value: Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>,
-    ) -> Self {
+    
+    pub fn selectable_template_vars(mut self, value: Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>) -> Self {
         self.selectable_template_vars = Some(value);
         self
     }
-
+    
     pub fn share_type(mut self, value: crate::datadogV2::model::SecureEmbedShareType) -> Self {
         self.share_type = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV2::model::SecureEmbedStatus) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn token(mut self, value: String) -> Self {
         self.token = Some(value);
         self
     }
-
+    
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }
-
-    pub fn viewing_preferences(
-        mut self,
-        value: crate::datadogV2::model::SecureEmbedViewingPreferences,
-    ) -> Self {
+    
+    pub fn viewing_preferences(mut self, value: crate::datadogV2::model::SecureEmbedViewingPreferences) -> Self {
         self.viewing_preferences = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecureEmbedCreateResponseAttributes {
     fn default() -> Self {
@@ -188,21 +179,14 @@ impl<'de> Deserialize<'de> for SecureEmbedCreateResponseAttributes {
                 let mut global_time: Option<crate::datadogV2::model::SecureEmbedGlobalTime> = None;
                 let mut global_time_selectable: Option<bool> = None;
                 let mut id: Option<String> = None;
-                let mut selectable_template_vars: Option<
-                    Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>,
-                > = None;
+                let mut selectable_template_vars: Option<Vec<crate::datadogV2::model::SecureEmbedSelectableTemplateVariable>> = None;
                 let mut share_type: Option<crate::datadogV2::model::SecureEmbedShareType> = None;
                 let mut status: Option<crate::datadogV2::model::SecureEmbedStatus> = None;
                 let mut title: Option<String> = None;
                 let mut token: Option<String> = None;
                 let mut url: Option<String> = None;
-                let mut viewing_preferences: Option<
-                    crate::datadogV2::model::SecureEmbedViewingPreferences,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut viewing_preferences: Option<crate::datadogV2::model::SecureEmbedViewingPreferences> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -212,47 +196,43 @@ impl<'de> Deserialize<'de> for SecureEmbedCreateResponseAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "credential" => {
                             if v.is_null() {
                                 continue;
                             }
                             credential = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dashboard_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dashboard_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dashboard_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "global_time" => {
                             if v.is_null() {
                                 continue;
                             }
-                            global_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "global_time_selectable" => {
                             if v.is_null() {
                                 continue;
                             }
-                            global_time_selectable =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            global_time_selectable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "selectable_template_vars" => {
                             if v.is_null() {
                                 continue;
                             }
-                            selectable_template_vars =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            selectable_template_vars = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "share_type" => {
                             if v.is_null() {
                                 continue;
@@ -266,7 +246,7 @@ impl<'de> Deserialize<'de> for SecureEmbedCreateResponseAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -274,45 +254,42 @@ impl<'de> Deserialize<'de> for SecureEmbedCreateResponseAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::SecureEmbedStatus::UnparsedObject(
-                                        _status,
-                                    ) => {
+                                    crate::datadogV2::model::SecureEmbedStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "token" => {
                             if v.is_null() {
                                 continue;
                             }
                             token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "url" => {
                             if v.is_null() {
                                 continue;
                             }
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "viewing_preferences" => {
                             if v.is_null() {
                                 continue;
                             }
-                            viewing_preferences =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            viewing_preferences = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

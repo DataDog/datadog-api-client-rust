@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data object for creating a tag rule.
 #[non_exhaustive]
@@ -12,8 +12,8 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TagRuleCreateData {
     /// Attributes that can be supplied when creating a tag rule. If `tag_value_patterns`
-    /// contains `*`, set `required` and `negated` to different values. If both are `false`,
-    /// the rule has no effect. If both are `true`, no value can satisfy the rule.
+/// contains `*`, set `required` and `negated` to different values. If both are `false`,
+/// the rule has no effect. If both are `true`, no value can satisfy the rule.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::TagRuleCreateAttributes,
     /// JSON:API resource type for a tag rule. Requests accept `tag_rule` or `tag_policy`; responses use `tag_policy`.
@@ -23,14 +23,11 @@ pub struct TagRuleCreateData {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TagRuleCreateData {
-    pub fn new(
-        attributes: crate::datadogV2::model::TagRuleCreateAttributes,
-        type_: crate::datadogV2::model::TagRuleResourceType,
-    ) -> TagRuleCreateData {
+    pub fn new(attributes: crate::datadogV2::model::TagRuleCreateAttributes, type_: crate::datadogV2::model::TagRuleResourceType) -> TagRuleCreateData {
         TagRuleCreateData {
             attributes,
             type_,
@@ -38,15 +35,14 @@ impl TagRuleCreateData {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TagRuleCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -67,17 +63,14 @@ impl<'de> Deserialize<'de> for TagRuleCreateData {
             {
                 let mut attributes: Option<crate::datadogV2::model::TagRuleCreateAttributes> = None;
                 let mut type_: Option<crate::datadogV2::model::TagRuleResourceType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "attributes" => {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -88,12 +81,12 @@ impl<'de> Deserialize<'de> for TagRuleCreateData {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

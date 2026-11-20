@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ModelLabFacetType {
-    PARAMETER,
-    ATTRIBUTE,
-    TAG,
-    METRIC,
+	PARAMETER,
+	ATTRIBUTE,
+	TAG,
+	METRIC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for ModelLabFacetType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "parameter" => Self::PARAMETER,
-            "attribute" => Self::ATTRIBUTE,
-            "tag" => Self::TAG,
-            "metric" => Self::METRIC,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"parameter" => Self::PARAMETER,"attribute" => Self::ATTRIBUTE,"tag" => Self::TAG,"metric" => Self::METRIC,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

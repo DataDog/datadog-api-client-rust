@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating an HCP Terraform persona mapping.
 #[non_exhaustive]
@@ -18,20 +18,16 @@ pub struct TerraformCloudAuthPersonaMappingCreateAttributes {
     #[serde(rename = "issuer_url")]
     pub issuer_url: crate::datadogV2::model::TerraformCloudAuthIssuerURL,
     /// Pattern matched against the `sub` claim of HCP Terraform workload identity tokens. Use `organization:<org>:project:<project>:workspace:<workspace>:run_phase:<plan|apply>` for workspace runs, or `organization:<org>:module:<module>:operation:test_run` for module test runs. Segments are HCP Terraform names, not IDs.
-    /// Any segment except the organization can be `*` to match any value.
+/// Any segment except the organization can be `*` to match any value.
     #[serde(rename = "sub_pattern")]
     pub sub_pattern: String,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TerraformCloudAuthPersonaMappingCreateAttributes {
-    pub fn new(
-        account_identifier: String,
-        issuer_url: crate::datadogV2::model::TerraformCloudAuthIssuerURL,
-        sub_pattern: String,
-    ) -> TerraformCloudAuthPersonaMappingCreateAttributes {
+    pub fn new(account_identifier: String, issuer_url: crate::datadogV2::model::TerraformCloudAuthIssuerURL, sub_pattern: String) -> TerraformCloudAuthPersonaMappingCreateAttributes {
         TerraformCloudAuthPersonaMappingCreateAttributes {
             account_identifier,
             issuer_url,
@@ -39,7 +35,10 @@ impl TerraformCloudAuthPersonaMappingCreateAttributes {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for TerraformCloudAuthPersonaMappingCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -59,17 +58,15 @@ impl<'de> Deserialize<'de> for TerraformCloudAuthPersonaMappingCreateAttributes 
                 M: MapAccess<'a>,
             {
                 let mut account_identifier: Option<String> = None;
-                let mut issuer_url: Option<crate::datadogV2::model::TerraformCloudAuthIssuerURL> =
-                    None;
+                let mut issuer_url: Option<crate::datadogV2::model::TerraformCloudAuthIssuerURL> = None;
                 let mut sub_pattern: Option<String> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "account_identifier" => {
-                            account_identifier =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            account_identifier = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "issuer_url" => {
                             issuer_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _issuer_url) = issuer_url {
@@ -80,23 +77,18 @@ impl<'de> Deserialize<'de> for TerraformCloudAuthPersonaMappingCreateAttributes 
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "sub_pattern" => {
-                            sub_pattern =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sub_pattern = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let account_identifier = account_identifier
-                    .ok_or_else(|| M::Error::missing_field("account_identifier"))?;
+                let account_identifier = account_identifier.ok_or_else(|| M::Error::missing_field("account_identifier"))?;
                 let issuer_url = issuer_url.ok_or_else(|| M::Error::missing_field("issuer_url"))?;
-                let sub_pattern =
-                    sub_pattern.ok_or_else(|| M::Error::missing_field("sub_pattern"))?;
+                let sub_pattern = sub_pattern.ok_or_else(|| M::Error::missing_field("sub_pattern"))?;
 
                 let content = TerraformCloudAuthPersonaMappingCreateAttributes {
                     account_identifier,

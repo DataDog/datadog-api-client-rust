@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CancelArchiveSearchError is a struct for typed errors of method [`LogsArchiveSearchesAPI::cancel_archive_search`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -20,6 +20,7 @@ pub enum CancelArchiveSearchError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateArchiveSearchError is a struct for typed errors of method [`LogsArchiveSearchesAPI::create_archive_search`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -28,6 +29,7 @@ pub enum CreateArchiveSearchError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetArchiveSearchError is a struct for typed errors of method [`LogsArchiveSearchesAPI::get_archive_search`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,6 +40,7 @@ pub enum GetArchiveSearchError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListArchiveSearchesError is a struct for typed errors of method [`LogsArchiveSearchesAPI::list_archive_searches`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -47,6 +50,7 @@ pub enum ListArchiveSearchesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RehydrateArchiveSearchError is a struct for typed errors of method [`LogsArchiveSearchesAPI::rehydrate_archive_search`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -55,6 +59,7 @@ pub enum RehydrateArchiveSearchError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Archive Search queries logs directly from long-term storage archives without prior
 /// rehydration and charges only for the data scanned.
@@ -87,7 +92,8 @@ impl LogsArchiveSearchesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -132,48 +138,31 @@ impl LogsArchiveSearchesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Cancel a running Archive Search. Cancelling an Archive Search that has already finished is a
-    /// no-op: it returns the resource unchanged instead of returning an error.
-    pub async fn cancel_archive_search(
-        &self,
-        archive_search_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ArchiveSearchResponse,
-        datadog::Error<CancelArchiveSearchError>,
-    > {
-        match self
-            .cancel_archive_search_with_http_info(archive_search_id)
-            .await
-        {
+/// no-op: it returns the resource unchanged instead of returning an error.
+    pub async fn cancel_archive_search(&self, archive_search_id: String) -> Result<crate::datadogV2::model::ArchiveSearchResponse, datadog::Error<CancelArchiveSearchError>> {
+        match self.cancel_archive_search_with_http_info(archive_search_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Cancel a running Archive Search. Cancelling an Archive Search that has already finished is a
-    /// no-op: it returns the resource unchanged instead of returning an error.
-    pub async fn cancel_archive_search_with_http_info(
-        &self,
-        archive_search_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>,
-        datadog::Error<CancelArchiveSearchError>,
-    > {
+/// no-op: it returns the resource unchanged instead of returning an error.
+    pub async fn cancel_archive_search_with_http_info(&self, archive_search_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>, datadog::Error<CancelArchiveSearchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.cancel_archive_search";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -185,19 +174,24 @@ impl LogsArchiveSearchesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/archive_searches/{archive_search_id}/cancel",
-            local_configuration.get_operation_host(local_operation_id),
-            archive_search_id = datadog::urlencode(archive_search_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), archive_search_id=
+            datadog::urlencode(archive_search_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -210,22 +204,16 @@ impl LogsArchiveSearchesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -237,68 +225,46 @@ impl LogsArchiveSearchesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CancelArchiveSearchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CancelArchiveSearchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Start a search over the logs stored in an archive.
-    ///
-    /// Without a `rehydration` object, the search only scans the archive and reports how much data
-    /// matched. With one, the matched logs are also indexed into a retained historical view, which
-    /// requires the `logs_write_historical_view` permission.
-    pub async fn create_archive_search(
-        &self,
-        body: crate::datadogV2::model::ArchiveSearchCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ArchiveSearchResponse,
-        datadog::Error<CreateArchiveSearchError>,
-    > {
+///
+/// Without a `rehydration` object, the search only scans the archive and reports how much data
+/// matched. With one, the matched logs are also indexed into a retained historical view, which
+/// requires the `logs_write_historical_view` permission.
+    pub async fn create_archive_search(&self, body: crate::datadogV2::model::ArchiveSearchCreateRequest) -> Result<crate::datadogV2::model::ArchiveSearchResponse, datadog::Error<CreateArchiveSearchError>> {
         match self.create_archive_search_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Start a search over the logs stored in an archive.
-    ///
-    /// Without a `rehydration` object, the search only scans the archive and reports how much data
-    /// matched. With one, the matched logs are also indexed into a retained historical view, which
-    /// requires the `logs_write_historical_view` permission.
-    pub async fn create_archive_search_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ArchiveSearchCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>,
-        datadog::Error<CreateArchiveSearchError>,
-    > {
+///
+/// Without a `rehydration` object, the search only scans the archive and reports how much data
+/// matched. With one, the matched logs are also indexed into a retained historical view, which
+/// requires the `logs_write_historical_view` permission.
+    pub async fn create_archive_search_with_http_info(&self, body: crate::datadogV2::model::ArchiveSearchCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>, datadog::Error<CreateArchiveSearchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_archive_search";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -310,19 +276,23 @@ impl LogsArchiveSearchesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/archive_searches",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -335,23 +305,16 @@ impl LogsArchiveSearchesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -359,7 +322,10 @@ impl LogsArchiveSearchesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -369,7 +335,10 @@ impl LogsArchiveSearchesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -391,7 +360,7 @@ impl LogsArchiveSearchesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -408,61 +377,38 @@ impl LogsArchiveSearchesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateArchiveSearchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateArchiveSearchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single Archive Search, including its status and the amount of archive data scanned when the search finishes.
-    pub async fn get_archive_search(
-        &self,
-        archive_search_id: String,
-    ) -> Result<crate::datadogV2::model::ArchiveSearchResponse, datadog::Error<GetArchiveSearchError>>
-    {
-        match self
-            .get_archive_search_with_http_info(archive_search_id)
-            .await
-        {
+    pub async fn get_archive_search(&self, archive_search_id: String) -> Result<crate::datadogV2::model::ArchiveSearchResponse, datadog::Error<GetArchiveSearchError>> {
+        match self.get_archive_search_with_http_info(archive_search_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single Archive Search, including its status and the amount of archive data scanned when the search finishes.
-    pub async fn get_archive_search_with_http_info(
-        &self,
-        archive_search_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>,
-        datadog::Error<GetArchiveSearchError>,
-    > {
+    pub async fn get_archive_search_with_http_info(&self, archive_search_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>, datadog::Error<GetArchiveSearchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_archive_search";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -474,19 +420,24 @@ impl LogsArchiveSearchesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/archive_searches/{archive_search_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            archive_search_id = datadog::urlencode(archive_search_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), archive_search_id=
+            datadog::urlencode(archive_search_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -499,22 +450,16 @@ impl LogsArchiveSearchesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -526,60 +471,40 @@ impl LogsArchiveSearchesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetArchiveSearchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetArchiveSearchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the organization's Archive Searches that haven't expired, up to 5,000. When more
-    /// exist, `meta.truncated` is `true`.
-    pub async fn list_archive_searches(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::ArchiveSearchListResponse,
-        datadog::Error<ListArchiveSearchesError>,
-    > {
+/// exist, `meta.truncated` is `true`.
+    pub async fn list_archive_searches(&self) -> Result<crate::datadogV2::model::ArchiveSearchListResponse, datadog::Error<ListArchiveSearchesError>> {
         match self.list_archive_searches_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the organization's Archive Searches that haven't expired, up to 5,000. When more
-    /// exist, `meta.truncated` is `true`.
-    pub async fn list_archive_searches_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchListResponse>,
-        datadog::Error<ListArchiveSearchesError>,
-    > {
+/// exist, `meta.truncated` is `true`.
+    pub async fn list_archive_searches_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchListResponse>, datadog::Error<ListArchiveSearchesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_archive_searches";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -591,18 +516,22 @@ impl LogsArchiveSearchesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/archive_searches",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -615,22 +544,16 @@ impl LogsArchiveSearchesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -642,69 +565,42 @@ impl LogsArchiveSearchesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListArchiveSearchesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListArchiveSearchesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Turn a plain Archive Search into a Search & Rehydration by indexing the matched logs into a
-    /// retained historical view. Rehydration is the only thing this endpoint can change, and it only
-    /// applies to a search that has already finished scanning.
-    pub async fn rehydrate_archive_search(
-        &self,
-        archive_search_id: String,
-        body: crate::datadogV2::model::ArchiveSearchRehydrateRequest,
-    ) -> Result<
-        crate::datadogV2::model::ArchiveSearchResponse,
-        datadog::Error<RehydrateArchiveSearchError>,
-    > {
-        match self
-            .rehydrate_archive_search_with_http_info(archive_search_id, body)
-            .await
-        {
+/// retained historical view. Rehydration is the only thing this endpoint can change, and it only
+/// applies to a search that has already finished scanning.
+    pub async fn rehydrate_archive_search(&self, archive_search_id: String, body: crate::datadogV2::model::ArchiveSearchRehydrateRequest) -> Result<crate::datadogV2::model::ArchiveSearchResponse, datadog::Error<RehydrateArchiveSearchError>> {
+        match self.rehydrate_archive_search_with_http_info(archive_search_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Turn a plain Archive Search into a Search & Rehydration by indexing the matched logs into a
-    /// retained historical view. Rehydration is the only thing this endpoint can change, and it only
-    /// applies to a search that has already finished scanning.
-    pub async fn rehydrate_archive_search_with_http_info(
-        &self,
-        archive_search_id: String,
-        body: crate::datadogV2::model::ArchiveSearchRehydrateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>,
-        datadog::Error<RehydrateArchiveSearchError>,
-    > {
+/// retained historical view. Rehydration is the only thing this endpoint can change, and it only
+/// applies to a search that has already finished scanning.
+    pub async fn rehydrate_archive_search_with_http_info(&self, archive_search_id: String, body: crate::datadogV2::model::ArchiveSearchRehydrateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::ArchiveSearchResponse>, datadog::Error<RehydrateArchiveSearchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.rehydrate_archive_search";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -716,20 +612,25 @@ impl LogsArchiveSearchesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/logs/archive_searches/{archive_search_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            archive_search_id = datadog::urlencode(archive_search_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), archive_search_id=
+            datadog::urlencode(archive_search_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -742,23 +643,16 @@ impl LogsArchiveSearchesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -766,7 +660,10 @@ impl LogsArchiveSearchesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -776,7 +673,10 @@ impl LogsArchiveSearchesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -798,7 +698,7 @@ impl LogsArchiveSearchesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -815,26 +715,17 @@ impl LogsArchiveSearchesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ArchiveSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RehydrateArchiveSearchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RehydrateArchiveSearchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

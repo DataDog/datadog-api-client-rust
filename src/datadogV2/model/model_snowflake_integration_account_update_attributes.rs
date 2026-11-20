@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Writable attributes used to update a Snowflake integration account. Every field is optional; only the fields provided are changed. When `dataflows` is provided, only the dataflow ids included in the request are modified; dataflows omitted from the map keep their current configuration, as do the settings of an included dataflow that provides only `enabled`.
 #[non_exhaustive]
@@ -13,13 +13,12 @@ use std::fmt::{self, Formatter};
 pub struct SnowflakeIntegrationAccountUpdateAttributes {
     /// Authentication for updating the Snowflake integration account. Exactly one method is set.
     #[serde(rename = "authentication")]
-    pub authentication:
-        Option<crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate>,
+    pub authentication: Option<crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate>,
     /// Data Datadog collects from Snowflake, keyed by dataflow id. Each dataflow turns on a distinct kind of collection: set `enabled` to start or stop it, and use `settings` to configure what it collects. Defaults listed on each dataflow apply when the account is created; on update, omitted fields keep their current values. Every dataflow reads from Snowflake as the user in `settings.username`, so that user's role must be granted access to the underlying views; a dataflow enabled without those grants is stored but collects no data.
     #[serde(rename = "dataflows")]
     pub dataflows: Option<crate::datadogV2::model::SnowflakeIntegrationDataflowsRequest>,
     /// Human-readable name of the Snowflake integration account. Must be
-    /// unique within your Datadog organization.
+/// unique within your Datadog organization.
     #[serde(rename = "name")]
     pub name: Option<String>,
     /// Settings for updating the Snowflake integration account. Only the fields provided are changed.
@@ -29,7 +28,7 @@ pub struct SnowflakeIntegrationAccountUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeIntegrationAccountUpdateAttributes {
@@ -43,44 +42,33 @@ impl SnowflakeIntegrationAccountUpdateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn authentication(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate,
-    ) -> Self {
+    
+    pub fn authentication(mut self, value: crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate) -> Self {
         self.authentication = Some(value);
         self
     }
-
-    pub fn dataflows(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeIntegrationDataflowsRequest,
-    ) -> Self {
+    
+    pub fn dataflows(mut self, value: crate::datadogV2::model::SnowflakeIntegrationDataflowsRequest) -> Self {
         self.dataflows = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeIntegrationAccountSettingsUpdate,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::SnowflakeIntegrationAccountSettingsUpdate) -> Self {
         self.settings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SnowflakeIntegrationAccountUpdateAttributes {
     fn default() -> Self {
@@ -105,20 +93,11 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut authentication: Option<
-                    crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate,
-                > = None;
-                let mut dataflows: Option<
-                    crate::datadogV2::model::SnowflakeIntegrationDataflowsRequest,
-                > = None;
+                let mut authentication: Option<crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate> = None;
+                let mut dataflows: Option<crate::datadogV2::model::SnowflakeIntegrationDataflowsRequest> = None;
                 let mut name: Option<String> = None;
-                let mut settings: Option<
-                    crate::datadogV2::model::SnowflakeIntegrationAccountSettingsUpdate,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut settings: Option<crate::datadogV2::model::SnowflakeIntegrationAccountSettingsUpdate> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -127,8 +106,7 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            authentication =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            authentication = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _authentication) = authentication {
                                 match _authentication {
                                     crate::datadogV2::model::SnowflakeIntegrationAccountAuthenticationUpdate::UnparsedObject(_authentication) => {
@@ -137,30 +115,30 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "dataflows" => {
                             if v.is_null() {
                                 continue;
                             }
                             dataflows = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

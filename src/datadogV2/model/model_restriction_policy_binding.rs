@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Specifies which principals are associated with a relation.
 #[non_exhaustive]
@@ -12,9 +12,9 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RestrictionPolicyBinding {
     /// An array of principals. A principal is a subject or group of subjects.
-    /// Each principal is formatted as `type:id`. Supported types: `role`, `team`, `user`, and `org`.
-    /// The org ID can be obtained through the api/v2/current_user API.
-    /// The user principal type accepts service account IDs.
+/// Each principal is formatted as `type:id`. Supported types: `role`, `team`, `user`, and `org`.
+/// The org ID can be obtained through the api/v2/current_user API.
+/// The user principal type accepts service account IDs.
     #[serde(rename = "principals")]
     pub principals: Vec<String>,
     /// The role/level of access.
@@ -24,7 +24,7 @@ pub struct RestrictionPolicyBinding {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RestrictionPolicyBinding {
@@ -36,15 +36,14 @@ impl RestrictionPolicyBinding {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RestrictionPolicyBinding {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -65,25 +64,22 @@ impl<'de> Deserialize<'de> for RestrictionPolicyBinding {
             {
                 let mut principals: Option<Vec<String>> = None;
                 let mut relation: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "principals" => {
                             principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "relation" => {
                             relation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let principals = principals.ok_or_else(|| M::Error::missing_field("principals"))?;

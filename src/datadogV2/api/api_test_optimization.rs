@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// SearchFlakyTestsOptionalParams is a struct for passing parameters to the method [`TestOptimizationAPI::search_flaky_tests`]
 #[non_exhaustive]
@@ -26,6 +23,9 @@ impl SearchFlakyTestsOptionalParams {
     }
 }
 
+
+
+
 /// DeleteTestOptimizationServiceSettingsError is a struct for typed errors of method [`TestOptimizationAPI::delete_test_optimization_service_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -33,6 +33,7 @@ pub enum DeleteTestOptimizationServiceSettingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetFlakyTestsManagementPoliciesError is a struct for typed errors of method [`TestOptimizationAPI::get_flaky_tests_management_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -42,6 +43,7 @@ pub enum GetFlakyTestsManagementPoliciesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTestOptimizationServiceSettingsError is a struct for typed errors of method [`TestOptimizationAPI::get_test_optimization_service_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -49,6 +51,7 @@ pub enum GetTestOptimizationServiceSettingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// SearchFlakyTestsError is a struct for typed errors of method [`TestOptimizationAPI::search_flaky_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -58,6 +61,7 @@ pub enum SearchFlakyTestsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateFlakyTestsError is a struct for typed errors of method [`TestOptimizationAPI::update_flaky_tests`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -65,6 +69,7 @@ pub enum UpdateFlakyTestsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateFlakyTestsManagementPoliciesError is a struct for typed errors of method [`TestOptimizationAPI::update_flaky_tests_management_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -74,6 +79,7 @@ pub enum UpdateFlakyTestsManagementPoliciesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTestOptimizationServiceSettingsError is a struct for typed errors of method [`TestOptimizationAPI::update_test_optimization_service_settings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -81,6 +87,7 @@ pub enum UpdateTestOptimizationServiceSettingsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Search and manage flaky tests through Test Optimization. See the [Test Optimization page](<https://docs.datadoghq.com/tests/>) for more information.
 #[derive(Debug, Clone)]
@@ -104,7 +111,8 @@ impl TestOptimizationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -149,51 +157,43 @@ impl TestOptimizationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete Test Optimization settings for a specific service identified by repository, service name, and environment.
-    pub async fn delete_test_optimization_service_settings(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationDeleteServiceSettingsRequest,
-    ) -> Result<(), datadog::Error<DeleteTestOptimizationServiceSettingsError>> {
-        match self
-            .delete_test_optimization_service_settings_with_http_info(body)
-            .await
-        {
+    pub async fn delete_test_optimization_service_settings(&self, body: crate::datadogV2::model::TestOptimizationDeleteServiceSettingsRequest) -> Result<(), datadog::Error<DeleteTestOptimizationServiceSettingsError>> {
+        match self.delete_test_optimization_service_settings_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete Test Optimization settings for a specific service identified by repository, service name, and environment.
-    pub async fn delete_test_optimization_service_settings_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationDeleteServiceSettingsRequest,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteTestOptimizationServiceSettingsError>,
-    > {
+    pub async fn delete_test_optimization_service_settings_with_http_info(&self, body: crate::datadogV2::model::TestOptimizationDeleteServiceSettingsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTestOptimizationServiceSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_test_optimization_service_settings";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -206,23 +206,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -230,7 +223,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -240,7 +236,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -262,7 +261,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -285,68 +284,49 @@ impl TestOptimizationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTestOptimizationServiceSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTestOptimizationServiceSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve Flaky Tests Management repository-level policies for the given repository.
-    pub async fn get_flaky_tests_management_policies(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequest,
-    ) -> Result<
-        crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-        datadog::Error<GetFlakyTestsManagementPoliciesError>,
-    > {
-        match self
-            .get_flaky_tests_management_policies_with_http_info(body)
-            .await
-        {
+    pub async fn get_flaky_tests_management_policies(&self, body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequest) -> Result<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse, datadog::Error<GetFlakyTestsManagementPoliciesError>> {
+        match self.get_flaky_tests_management_policies_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve Flaky Tests Management repository-level policies for the given repository.
-    pub async fn get_flaky_tests_management_policies_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-        >,
-        datadog::Error<GetFlakyTestsManagementPoliciesError>,
-    > {
+    pub async fn get_flaky_tests_management_policies_with_http_info(&self, body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesGetRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse>, datadog::Error<GetFlakyTestsManagementPoliciesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_flaky_tests_management_policies";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -359,23 +339,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -383,7 +356,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -393,7 +369,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -415,7 +394,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -432,80 +411,58 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetFlakyTestsManagementPoliciesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetFlakyTestsManagementPoliciesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve Test Optimization settings for a specific service identified by repository, service name, and environment.
-    pub async fn get_test_optimization_service_settings(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationGetServiceSettingsRequest,
-    ) -> Result<
-        crate::datadogV2::model::TestOptimizationServiceSettingsResponse,
-        datadog::Error<GetTestOptimizationServiceSettingsError>,
-    > {
-        match self
-            .get_test_optimization_service_settings_with_http_info(body)
-            .await
-        {
+    pub async fn get_test_optimization_service_settings(&self, body: crate::datadogV2::model::TestOptimizationGetServiceSettingsRequest) -> Result<crate::datadogV2::model::TestOptimizationServiceSettingsResponse, datadog::Error<GetTestOptimizationServiceSettingsError>> {
+        match self.get_test_optimization_service_settings_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve Test Optimization settings for a specific service identified by repository, service name, and environment.
-    pub async fn get_test_optimization_service_settings_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationGetServiceSettingsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>,
-        datadog::Error<GetTestOptimizationServiceSettingsError>,
-    > {
+    pub async fn get_test_optimization_service_settings_with_http_info(&self, body: crate::datadogV2::model::TestOptimizationGetServiceSettingsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>, datadog::Error<GetTestOptimizationServiceSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_test_optimization_service_settings";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -518,23 +475,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -542,7 +492,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -552,7 +505,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -574,7 +530,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -591,72 +547,52 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TestOptimizationServiceSettingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTestOptimizationServiceSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTestOptimizationServiceSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List endpoint returning flaky tests from Flaky Test Management. Results are paginated.
-    ///
-    /// The response includes comprehensive test information including:
-    /// - Test identification and metadata (module, suite, name)
-    /// - Flaky state and categorization
-    /// - First and last flake occurrences (timestamp, branch, commit SHA)
-    /// - Test execution statistics from the last 7 days (failure rate)
-    /// - Pipeline impact metrics (failed pipelines count, total lost time)
-    /// - Complete status change history (optional, ordered from most recent to oldest)
-    ///
-    /// Set `include_history` to `true` in the request to receive the status change history for each test.
-    /// History is disabled by default for better performance.
-    ///
-    /// Results support filtering by various facets including service, environment, repository, branch, and test state.
-    pub async fn search_flaky_tests(
-        &self,
-        params: SearchFlakyTestsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::FlakyTestsSearchResponse,
-        datadog::Error<SearchFlakyTestsError>,
-    > {
-        match self.search_flaky_tests_with_http_info(params).await {
+///
+/// The response includes comprehensive test information including:
+/// - Test identification and metadata (module, suite, name)
+/// - Flaky state and categorization
+/// - First and last flake occurrences (timestamp, branch, commit SHA)
+/// - Test execution statistics from the last 7 days (failure rate)
+/// - Pipeline impact metrics (failed pipelines count, total lost time)
+/// - Complete status change history (optional, ordered from most recent to oldest)
+///
+/// Set `include_history` to `true` in the request to receive the status change history for each test.
+/// History is disabled by default for better performance.
+///
+/// Results support filtering by various facets including service, environment, repository, branch, and test state.
+    pub async fn search_flaky_tests(&self, params: SearchFlakyTestsOptionalParams) -> Result<crate::datadogV2::model::FlakyTestsSearchResponse, datadog::Error<SearchFlakyTestsError>> {
+        match self.search_flaky_tests_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn search_flaky_tests_with_pagination(
-        &self,
-        mut params: SearchFlakyTestsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::FlakyTest, datadog::Error<SearchFlakyTestsError>>,
-    > + '_ {
+        &self, mut params: SearchFlakyTestsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::FlakyTest, datadog::Error<SearchFlakyTestsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.body.is_none() {
@@ -697,30 +633,26 @@ impl TestOptimizationAPI {
         }
     }
 
+    
     /// List endpoint returning flaky tests from Flaky Test Management. Results are paginated.
-    ///
-    /// The response includes comprehensive test information including:
-    /// - Test identification and metadata (module, suite, name)
-    /// - Flaky state and categorization
-    /// - First and last flake occurrences (timestamp, branch, commit SHA)
-    /// - Test execution statistics from the last 7 days (failure rate)
-    /// - Pipeline impact metrics (failed pipelines count, total lost time)
-    /// - Complete status change history (optional, ordered from most recent to oldest)
-    ///
-    /// Set `include_history` to `true` in the request to receive the status change history for each test.
-    /// History is disabled by default for better performance.
-    ///
-    /// Results support filtering by various facets including service, environment, repository, branch, and test state.
-    pub async fn search_flaky_tests_with_http_info(
-        &self,
-        params: SearchFlakyTestsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::FlakyTestsSearchResponse>,
-        datadog::Error<SearchFlakyTestsError>,
-    > {
+///
+/// The response includes comprehensive test information including:
+/// - Test identification and metadata (module, suite, name)
+/// - Flaky state and categorization
+/// - First and last flake occurrences (timestamp, branch, commit SHA)
+/// - Test execution statistics from the last 7 days (failure rate)
+/// - Pipeline impact metrics (failed pipelines count, total lost time)
+/// - Complete status change history (optional, ordered from most recent to oldest)
+///
+/// Set `include_history` to `true` in the request to receive the status change history for each test.
+/// History is disabled by default for better performance.
+///
+/// Results support filtering by various facets including service, environment, repository, branch, and test state.
+    pub async fn search_flaky_tests_with_http_info(&self, params: SearchFlakyTestsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::FlakyTestsSearchResponse>, datadog::Error<SearchFlakyTestsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_flaky_tests";
 
+        
         // unbox and build optional parameters
         let body = params.body;
 
@@ -728,15 +660,17 @@ impl TestOptimizationAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/test/flaky-test-management/tests",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -749,23 +683,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -773,7 +700,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -783,7 +713,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -805,7 +738,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -822,76 +755,58 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::FlakyTestsSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::FlakyTestsSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SearchFlakyTestsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SearchFlakyTestsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the state of multiple flaky tests in Flaky Test Management.
-    pub async fn update_flaky_tests(
-        &self,
-        body: crate::datadogV2::model::UpdateFlakyTestsRequest,
-    ) -> Result<
-        crate::datadogV2::model::UpdateFlakyTestsResponse,
-        datadog::Error<UpdateFlakyTestsError>,
-    > {
+    pub async fn update_flaky_tests(&self, body: crate::datadogV2::model::UpdateFlakyTestsRequest) -> Result<crate::datadogV2::model::UpdateFlakyTestsResponse, datadog::Error<UpdateFlakyTestsError>> {
         match self.update_flaky_tests_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the state of multiple flaky tests in Flaky Test Management.
-    pub async fn update_flaky_tests_with_http_info(
-        &self,
-        body: crate::datadogV2::model::UpdateFlakyTestsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpdateFlakyTestsResponse>,
-        datadog::Error<UpdateFlakyTestsError>,
-    > {
+    pub async fn update_flaky_tests_with_http_info(&self, body: crate::datadogV2::model::UpdateFlakyTestsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpdateFlakyTestsResponse>, datadog::Error<UpdateFlakyTestsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_flaky_tests";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/test/flaky-test-management/tests",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -904,23 +819,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -928,7 +836,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -938,7 +849,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -960,7 +874,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -977,83 +891,60 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpdateFlakyTestsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpdateFlakyTestsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFlakyTestsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFlakyTestsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update Flaky Tests Management repository-level policies for the given repository.
-    /// Only provided policy blocks are updated; omitted blocks are left unchanged.
-    pub async fn update_flaky_tests_management_policies(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-        datadog::Error<UpdateFlakyTestsManagementPoliciesError>,
-    > {
-        match self
-            .update_flaky_tests_management_policies_with_http_info(body)
-            .await
-        {
+/// Only provided policy blocks are updated; omitted blocks are left unchanged.
+    pub async fn update_flaky_tests_management_policies(&self, body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequest) -> Result<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse, datadog::Error<UpdateFlakyTestsManagementPoliciesError>> {
+        match self.update_flaky_tests_management_policies_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update Flaky Tests Management repository-level policies for the given repository.
-    /// Only provided policy blocks are updated; omitted blocks are left unchanged.
-    pub async fn update_flaky_tests_management_policies_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-        >,
-        datadog::Error<UpdateFlakyTestsManagementPoliciesError>,
-    > {
+/// Only provided policy blocks are updated; omitted blocks are left unchanged.
+    pub async fn update_flaky_tests_management_policies_with_http_info(&self, body: crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse>, datadog::Error<UpdateFlakyTestsManagementPoliciesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_flaky_tests_management_policies";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1066,23 +957,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1090,7 +974,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1100,7 +987,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1122,7 +1012,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1139,86 +1029,64 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TestOptimizationFlakyTestsManagementPoliciesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateFlakyTestsManagementPoliciesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateFlakyTestsManagementPoliciesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update Test Optimization settings for a specific service identified by repository, service name, and environment.
-    /// Only provided fields are updated; setting a field to `null` is a no-op.
-    /// To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
-    /// The `pr_comments_enabled` field is ignored as it cannot be overridden at the service level.
-    pub async fn update_test_optimization_service_settings(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationUpdateServiceSettingsRequest,
-    ) -> Result<
-        crate::datadogV2::model::TestOptimizationServiceSettingsResponse,
-        datadog::Error<UpdateTestOptimizationServiceSettingsError>,
-    > {
-        match self
-            .update_test_optimization_service_settings_with_http_info(body)
-            .await
-        {
+/// Only provided fields are updated; setting a field to `null` is a no-op.
+/// To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
+/// The `pr_comments_enabled` field is ignored as it cannot be overridden at the service level.
+    pub async fn update_test_optimization_service_settings(&self, body: crate::datadogV2::model::TestOptimizationUpdateServiceSettingsRequest) -> Result<crate::datadogV2::model::TestOptimizationServiceSettingsResponse, datadog::Error<UpdateTestOptimizationServiceSettingsError>> {
+        match self.update_test_optimization_service_settings_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update Test Optimization settings for a specific service identified by repository, service name, and environment.
-    /// Only provided fields are updated; setting a field to `null` is a no-op.
-    /// To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
-    /// The `pr_comments_enabled` field is ignored as it cannot be overridden at the service level.
-    pub async fn update_test_optimization_service_settings_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TestOptimizationUpdateServiceSettingsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>,
-        datadog::Error<UpdateTestOptimizationServiceSettingsError>,
-    > {
+/// Only provided fields are updated; setting a field to `null` is a no-op.
+/// To reset a setting to inherit from the repository level, use the corresponding `<setting>_inherit` field.
+/// The `pr_comments_enabled` field is ignored as it cannot be overridden at the service level.
+    pub async fn update_test_optimization_service_settings_with_http_info(&self, body: crate::datadogV2::model::TestOptimizationUpdateServiceSettingsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>, datadog::Error<UpdateTestOptimizationServiceSettingsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_test_optimization_service_settings";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ci/test-optimization/settings/service",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1231,23 +1099,16 @@ impl TestOptimizationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1255,7 +1116,10 @@ impl TestOptimizationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1265,7 +1129,10 @@ impl TestOptimizationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1287,7 +1154,7 @@ impl TestOptimizationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1304,27 +1171,17 @@ impl TestOptimizationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TestOptimizationServiceSettingsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TestOptimizationServiceSettingsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTestOptimizationServiceSettingsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTestOptimizationServiceSettingsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

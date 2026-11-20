@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Security logs from the Snowflake `ACCOUNT_USAGE` schema, for analyzing the security of your Snowflake account and running threat detection with [Cloud SIEM](<https://docs.datadoghq.com/security/cloud_siem/>).
 #[non_exhaustive]
@@ -16,11 +16,10 @@ pub struct SnowflakeSecurityLogsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     /// Settings of the security logs dataflow. Only the fields provided are changed.
     #[serde(rename = "settings")]
-    pub settings:
-        Option<crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowSettingsRequest>,
+    pub settings: Option<crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowSettingsRequest>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeSecurityLogsIntegrationDataflowRequest {
@@ -31,20 +30,19 @@ impl SnowflakeSecurityLogsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowSettingsRequest,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowSettingsRequest) -> Self {
         self.settings = Some(value);
         self
     }
+    
 }
+
 
 impl Default for SnowflakeSecurityLogsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -80,18 +78,16 @@ impl<'de> Deserialize<'de> for SnowflakeSecurityLogsIntegrationDataflowRequest {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityAgentInvestigationNoRunReason {
-    INVESTIGATION_NOT_STARTED,
-    NOT_INVESTIGATED,
-    RULE_NOT_ENABLED,
-    SIGNAL_NOT_FOUND,
-    ORG_NOT_ACTIVATED,
+	INVESTIGATION_NOT_STARTED,
+	NOT_INVESTIGATED,
+	RULE_NOT_ENABLED,
+	SIGNAL_NOT_FOUND,
+	ORG_NOT_ACTIVATED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for SecurityAgentInvestigationNoRunReason {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "investigation_not_started" => Self::INVESTIGATION_NOT_STARTED,
-            "not_investigated" => Self::NOT_INVESTIGATED,
-            "rule_not_enabled" => Self::RULE_NOT_ENABLED,
-            "signal_not_found" => Self::SIGNAL_NOT_FOUND,
-            "org_not_activated" => Self::ORG_NOT_ACTIVATED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"investigation_not_started" => Self::INVESTIGATION_NOT_STARTED,"not_investigated" => Self::NOT_INVESTIGATED,"rule_not_enabled" => Self::RULE_NOT_ENABLED,"signal_not_found" => Self::SIGNAL_NOT_FOUND,"org_not_activated" => Self::ORG_NOT_ACTIVATED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

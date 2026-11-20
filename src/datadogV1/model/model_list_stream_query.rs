@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Updated list stream widget.
 #[non_exhaustive]
@@ -54,21 +54,18 @@ pub struct ListStreamQuery {
     #[serde(rename = "team_handles")]
     pub team_handles: Option<Vec<String>>,
     /// Version of the query for the logs transaction stream widget. When omitted, v1 query behavior is
-    /// preserved. Set to `sequential_query` to use v2 behavior. **This feature is in Preview.**
+/// preserved. Set to `sequential_query` to use v2 behavior. **This feature is in Preview.**
     #[serde(rename = "version")]
     pub version: Option<crate::datadogV1::model::ListStreamQueryVersion>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ListStreamQuery {
-    pub fn new(
-        data_source: crate::datadogV1::model::ListStreamSource,
-        query_string: String,
-    ) -> ListStreamQuery {
+    pub fn new(data_source: crate::datadogV1::model::ListStreamSource, query_string: String) -> ListStreamQuery {
         ListStreamQuery {
             assignee_uuids: None,
             clustering_pattern_field_path: None,
@@ -89,80 +86,79 @@ impl ListStreamQuery {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignee_uuids(mut self, value: Vec<String>) -> Self {
         self.assignee_uuids = Some(value);
         self
     }
-
+    
     pub fn clustering_pattern_field_path(mut self, value: String) -> Self {
         self.clustering_pattern_field_path = Some(value);
         self
     }
-
+    
     pub fn compute(mut self, value: Vec<crate::datadogV1::model::ListStreamComputeItems>) -> Self {
         self.compute = Some(value);
         self
     }
-
+    
     pub fn event_size(mut self, value: crate::datadogV1::model::WidgetEventSize) -> Self {
         self.event_size = Some(value);
         self
     }
-
+    
     pub fn group_by(mut self, value: Vec<crate::datadogV1::model::ListStreamGroupByItems>) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
+    
     pub fn persona(mut self, value: crate::datadogV1::model::ListStreamIssuePersona) -> Self {
         self.persona = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV1::model::WidgetFieldSort) -> Self {
         self.sort = Some(value);
         self
     }
-
+    
     pub fn states(mut self, value: Vec<crate::datadogV1::model::ListStreamIssueState>) -> Self {
         self.states = Some(value);
         self
     }
-
+    
     pub fn storage(mut self, value: String) -> Self {
         self.storage = Some(value);
         self
     }
-
+    
     pub fn suspected_causes(mut self, value: Vec<String>) -> Self {
         self.suspected_causes = Some(value);
         self
     }
-
+    
     pub fn team_handles(mut self, value: Vec<String>) -> Self {
         self.team_handles = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: crate::datadogV1::model::ListStreamQueryVersion) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ListStreamQuery {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -183,12 +179,10 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
             {
                 let mut assignee_uuids: Option<Vec<String>> = None;
                 let mut clustering_pattern_field_path: Option<String> = None;
-                let mut compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>> =
-                    None;
+                let mut compute: Option<Vec<crate::datadogV1::model::ListStreamComputeItems>> = None;
                 let mut data_source: Option<crate::datadogV1::model::ListStreamSource> = None;
                 let mut event_size: Option<crate::datadogV1::model::WidgetEventSize> = None;
-                let mut group_by: Option<Vec<crate::datadogV1::model::ListStreamGroupByItems>> =
-                    None;
+                let mut group_by: Option<Vec<crate::datadogV1::model::ListStreamGroupByItems>> = None;
                 let mut indexes: Option<Vec<String>> = None;
                 let mut persona: Option<crate::datadogV1::model::ListStreamIssuePersona> = None;
                 let mut query_string: Option<String> = None;
@@ -198,10 +192,7 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                 let mut suspected_causes: Option<Vec<String>> = None;
                 let mut team_handles: Option<Vec<String>> = None;
                 let mut version: Option<crate::datadogV1::model::ListStreamQueryVersion> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -210,36 +201,31 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            assignee_uuids =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignee_uuids = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "clustering_pattern_field_path" => {
                             if v.is_null() {
                                 continue;
                             }
-                            clustering_pattern_field_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            clustering_pattern_field_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "compute" => {
                             if v.is_null() {
                                 continue;
                             }
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
-                                    crate::datadogV1::model::ListStreamSource::UnparsedObject(
-                                        _data_source,
-                                    ) => {
+                                    crate::datadogV1::model::ListStreamSource::UnparsedObject(_data_source) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "event_size" => {
                             if v.is_null() {
                                 continue;
@@ -247,27 +233,25 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                             event_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_size) = event_size {
                                 match _event_size {
-                                    crate::datadogV1::model::WidgetEventSize::UnparsedObject(
-                                        _event_size,
-                                    ) => {
+                                    crate::datadogV1::model::WidgetEventSize::UnparsedObject(_event_size) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "persona" => {
                             if v.is_null() {
                                 continue;
@@ -281,43 +265,40 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "query_string" => {
-                            query_string =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_string = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "states" => {
                             if v.is_null() {
                                 continue;
                             }
                             states = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "storage" => {
                             if v.is_null() {
                                 continue;
                             }
                             storage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "suspected_causes" => {
                             if v.is_null() {
                                 continue;
                             }
-                            suspected_causes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            suspected_causes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "team_handles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            team_handles =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            team_handles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -331,18 +312,16 @@ impl<'de> Deserialize<'de> for ListStreamQuery {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
-                let query_string =
-                    query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let query_string = query_string.ok_or_else(|| M::Error::missing_field("query_string"))?;
 
                 let content = ListStreamQuery {
                     assignee_uuids,

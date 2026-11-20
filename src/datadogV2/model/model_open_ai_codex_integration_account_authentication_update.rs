@@ -1,17 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Authentication for updating the OpenAI Codex integration account. Exactly one method is set.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum OpenAICodexIntegrationAccountAuthenticationUpdate {
-    OpenAICodexIntegrationAccountBearerTokenAuthUpdate(
-        Box<crate::datadogV2::model::OpenAICodexIntegrationAccountBearerTokenAuthUpdate>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	OpenAICodexIntegrationAccountBearerTokenAuthUpdate(Box<crate::datadogV2::model::OpenAICodexIntegrationAccountBearerTokenAuthUpdate>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for OpenAICodexIntegrationAccountAuthenticationUpdate {
@@ -20,19 +18,12 @@ impl<'de> Deserialize<'de> for OpenAICodexIntegrationAccountAuthenticationUpdate
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::OpenAICodexIntegrationAccountBearerTokenAuthUpdate>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::OpenAICodexIntegrationAccountBearerTokenAuthUpdate>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(OpenAICodexIntegrationAccountAuthenticationUpdate::OpenAICodexIntegrationAccountBearerTokenAuthUpdate(_v));
             }
         }
-
-        return Ok(
-            OpenAICodexIntegrationAccountAuthenticationUpdate::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(OpenAICodexIntegrationAccountAuthenticationUpdate::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

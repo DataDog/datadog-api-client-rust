@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of a due date rule returned by the API.
 #[non_exhaustive]
@@ -39,20 +39,11 @@ pub struct DueDateRuleAttributesResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DueDateRuleAttributesResponse {
-    pub fn new(
-        action: crate::datadogV2::model::DueDateRuleAction,
-        created_at: i64,
-        created_by: crate::datadogV2::model::AutomationRuleCreatedBy,
-        enabled: bool,
-        modified_at: i64,
-        modified_by: crate::datadogV2::model::AutomationRuleModifiedBy,
-        name: String,
-        rule: crate::datadogV2::model::AutomationRuleScope,
-    ) -> DueDateRuleAttributesResponse {
+    pub fn new(action: crate::datadogV2::model::DueDateRuleAction, created_at: i64, created_by: crate::datadogV2::model::AutomationRuleCreatedBy, enabled: bool, modified_at: i64, modified_by: crate::datadogV2::model::AutomationRuleModifiedBy, name: String, rule: crate::datadogV2::model::AutomationRuleScope) -> DueDateRuleAttributesResponse {
         DueDateRuleAttributesResponse {
             action,
             created_at,
@@ -66,15 +57,14 @@ impl DueDateRuleAttributesResponse {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DueDateRuleAttributesResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -98,59 +88,51 @@ impl<'de> Deserialize<'de> for DueDateRuleAttributesResponse {
                 let mut created_by: Option<crate::datadogV2::model::AutomationRuleCreatedBy> = None;
                 let mut enabled: Option<bool> = None;
                 let mut modified_at: Option<i64> = None;
-                let mut modified_by: Option<crate::datadogV2::model::AutomationRuleModifiedBy> =
-                    None;
+                let mut modified_by: Option<crate::datadogV2::model::AutomationRuleModifiedBy> = None;
                 let mut name: Option<String> = None;
                 let mut rule: Option<crate::datadogV2::model::AutomationRuleScope> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "action" => {
                             action = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "modified_at" => {
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_by" => {
-                            modified_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule" => {
                             rule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let action = action.ok_or_else(|| M::Error::missing_field("action"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let modified_at =
-                    modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
-                let modified_by =
-                    modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
+                let modified_at = modified_at.ok_or_else(|| M::Error::missing_field("modified_at"))?;
+                let modified_by = modified_by.ok_or_else(|| M::Error::missing_field("modified_by"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let rule = rule.ok_or_else(|| M::Error::missing_field("rule"))?;
 

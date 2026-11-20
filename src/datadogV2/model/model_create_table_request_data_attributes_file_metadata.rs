@@ -1,20 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// Metadata specifying where and how to access the reference table's data file.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum CreateTableRequestDataAttributesFileMetadata {
-    CreateTableRequestDataAttributesFileMetadataCloudStorage(
-        Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataCloudStorage>,
-    ),
-    CreateTableRequestDataAttributesFileMetadataLocalFile(
-        Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataLocalFile>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	CreateTableRequestDataAttributesFileMetadataCloudStorage(Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataCloudStorage>),
+	CreateTableRequestDataAttributesFileMetadataLocalFile(Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataLocalFile>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for CreateTableRequestDataAttributesFileMetadata {
@@ -23,27 +19,17 @@ impl<'de> Deserialize<'de> for CreateTableRequestDataAttributesFileMetadata {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataCloudStorage>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataCloudStorage>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(CreateTableRequestDataAttributesFileMetadata::CreateTableRequestDataAttributesFileMetadataCloudStorage(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataLocalFile>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::CreateTableRequestDataAttributesFileMetadataLocalFile>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(CreateTableRequestDataAttributesFileMetadata::CreateTableRequestDataAttributesFileMetadataLocalFile(_v));
             }
         }
-
-        return Ok(
-            CreateTableRequestDataAttributesFileMetadata::UnparsedObject(
-                crate::datadog::UnparsedObject { value },
-            ),
-        );
+	
+        return Ok(CreateTableRequestDataAttributesFileMetadata::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

@@ -2,28 +2,29 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TeamsField {
-    ID,
-    NAME,
-    HANDLE,
-    SUMMARY,
-    DESCRIPTION,
-    AVATAR,
-    BANNER,
-    VISIBLE_MODULES,
-    HIDDEN_MODULES,
-    CREATED_AT,
-    MODIFIED_AT,
-    USER_COUNT,
-    LINK_COUNT,
-    TEAM_LINKS,
-    USER_TEAM_PERMISSIONS,
-    IS_MANAGED,
-    PROVISIONED_BY,
+	ID,
+	NAME,
+	HANDLE,
+	SUMMARY,
+	DESCRIPTION,
+	AVATAR,
+	BANNER,
+	VISIBLE_MODULES,
+	HIDDEN_MODULES,
+	CREATED_AT,
+	MODIFIED_AT,
+	USER_COUNT,
+	LINK_COUNT,
+	TEAM_LINKS,
+	USER_TEAM_PERMISSIONS,
+	IS_MANAGED,
+	PROVISIONED_BY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -70,27 +71,8 @@ impl<'de> Deserialize<'de> for TeamsField {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "id" => Self::ID,
-            "name" => Self::NAME,
-            "handle" => Self::HANDLE,
-            "summary" => Self::SUMMARY,
-            "description" => Self::DESCRIPTION,
-            "avatar" => Self::AVATAR,
-            "banner" => Self::BANNER,
-            "visible_modules" => Self::VISIBLE_MODULES,
-            "hidden_modules" => Self::HIDDEN_MODULES,
-            "created_at" => Self::CREATED_AT,
-            "modified_at" => Self::MODIFIED_AT,
-            "user_count" => Self::USER_COUNT,
-            "link_count" => Self::LINK_COUNT,
-            "team_links" => Self::TEAM_LINKS,
-            "user_team_permissions" => Self::USER_TEAM_PERMISSIONS,
-            "is_managed" => Self::IS_MANAGED,
-            "provisioned_by" => Self::PROVISIONED_BY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"id" => Self::ID,"name" => Self::NAME,"handle" => Self::HANDLE,"summary" => Self::SUMMARY,"description" => Self::DESCRIPTION,"avatar" => Self::AVATAR,"banner" => Self::BANNER,"visible_modules" => Self::VISIBLE_MODULES,"hidden_modules" => Self::HIDDEN_MODULES,"created_at" => Self::CREATED_AT,"modified_at" => Self::MODIFIED_AT,"user_count" => Self::USER_COUNT,"link_count" => Self::LINK_COUNT,"team_links" => Self::TEAM_LINKS,"user_team_permissions" => Self::USER_TEAM_PERMISSIONS,"is_managed" => Self::IS_MANAGED,"provisioned_by" => Self::PROVISIONED_BY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

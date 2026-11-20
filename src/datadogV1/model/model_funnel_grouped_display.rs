@@ -2,13 +2,14 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FunnelGroupedDisplay {
-    STACKED,
-    SIDE_BY_SIDE,
+	STACKED,
+	SIDE_BY_SIDE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,12 +41,8 @@ impl<'de> Deserialize<'de> for FunnelGroupedDisplay {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "stacked" => Self::STACKED,
-            "side_by_side" => Self::SIDE_BY_SIDE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"stacked" => Self::STACKED,"side_by_side" => Self::SIDE_BY_SIDE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

@@ -1,71 +1,33 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A data source for the pipeline.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ObservabilityPipelineConfigSourceItem {
-    ObservabilityPipelineDatadogAgentSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
-    ),
-    ObservabilityPipelineOpentelemetrySource(
-        Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
-    ),
-    ObservabilityPipelineAmazonDataFirehoseSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
-    ),
-    ObservabilityPipelineAmazonS3Source(
-        Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
-    ),
-    ObservabilityPipelineFluentBitSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>,
-    ),
-    ObservabilityPipelineFluentdSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
-    ),
-    ObservabilityPipelineGooglePubSubSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>,
-    ),
-    ObservabilityPipelineHttpClientSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>,
-    ),
-    ObservabilityPipelineHttpServerSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
-    ),
-    ObservabilityPipelineKafkaSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
-    ),
-    ObservabilityPipelineLogstashSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
-    ),
-    ObservabilityPipelineRsyslogSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
-    ),
-    ObservabilityPipelineSocketSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>,
-    ),
-    ObservabilityPipelineSplunkHecSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
-    ),
-    ObservabilityPipelineSplunkTcpSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
-    ),
-    ObservabilityPipelineSumoLogicSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
-    ),
-    ObservabilityPipelineSyslogNgSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
-    ),
-    ObservabilityPipelineWebsocketSource(
-        Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>,
-    ),
-    ObservabilityPipelinePrometheusRemoteWriteSource(
-        Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	ObservabilityPipelineDatadogAgentSource(Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>),
+	ObservabilityPipelineOpentelemetrySource(Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>),
+	ObservabilityPipelineAmazonDataFirehoseSource(Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>),
+	ObservabilityPipelineAmazonS3Source(Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>),
+	ObservabilityPipelineFluentBitSource(Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>),
+	ObservabilityPipelineFluentdSource(Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>),
+	ObservabilityPipelineGooglePubSubSource(Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>),
+	ObservabilityPipelineHttpClientSource(Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>),
+	ObservabilityPipelineHttpServerSource(Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>),
+	ObservabilityPipelineKafkaSource(Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>),
+	ObservabilityPipelineLogstashSource(Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>),
+	ObservabilityPipelineRsyslogSource(Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>),
+	ObservabilityPipelineSocketSource(Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>),
+	ObservabilityPipelineSplunkHecSource(Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>),
+	ObservabilityPipelineSplunkTcpSource(Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>),
+	ObservabilityPipelineSumoLogicSource(Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>),
+	ObservabilityPipelineSyslogNgSource(Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>),
+	ObservabilityPipelineWebsocketSource(Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>),
+	ObservabilityPipelinePrometheusRemoteWriteSource(Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
@@ -74,205 +36,102 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineDatadogAgentSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineDatadogAgentSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineOpentelemetrySource(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineOpentelemetrySource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineOpentelemetrySource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineAmazonDataFirehoseSource>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonDataFirehoseSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonS3Source(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonS3Source(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentBitSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentBitSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentdSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineFluentdSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineFluentdSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineGooglePubSubSource(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineGooglePubSubSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineGooglePubSubSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpClientSource(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineHttpClientSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpClientSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpServerSource(
-                        _v,
-                    ),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineHttpServerSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineHttpServerSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineKafkaSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineKafkaSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineKafkaSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineLogstashSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineLogstashSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineLogstashSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineRsyslogSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineRsyslogSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineRsyslogSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSocketSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineSocketSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSocketSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkHecSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineSplunkHecSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkHecSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkTcpSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineSplunkTcpSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSplunkTcpSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSumoLogicSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineSumoLogicSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSumoLogicSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineSyslogNgSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineSyslogNgSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
-                return Ok(
-                    ObservabilityPipelineConfigSourceItem::ObservabilityPipelineWebsocketSource(_v),
-                );
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelineWebsocketSource>>(value.clone()) {
+			if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineWebsocketSource(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ObservabilityPipelinePrometheusRemoteWriteSource>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelinePrometheusRemoteWriteSource(_v));
             }
         }
-
-        return Ok(ObservabilityPipelineConfigSourceItem::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(ObservabilityPipelineConfigSourceItem::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

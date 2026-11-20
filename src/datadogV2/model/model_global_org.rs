@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Organization information for a global organization association.
 #[non_exhaustive]
@@ -15,18 +15,10 @@ pub struct GlobalOrg {
     #[serde(rename = "name")]
     pub name: String,
     /// The public identifier of the organization.
-    #[serde(
-        rename = "public_id",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "public_id", default, with = "::serde_with::rust::double_option")]
     pub public_id: Option<Option<String>>,
     /// The subdomain used to access the organization, if configured.
-    #[serde(
-        rename = "subdomain",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "subdomain", default, with = "::serde_with::rust::double_option")]
     pub subdomain: Option<Option<String>>,
     /// The UUID of the organization.
     #[serde(rename = "uuid")]
@@ -35,7 +27,7 @@ pub struct GlobalOrg {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GlobalOrg {
@@ -49,25 +41,24 @@ impl GlobalOrg {
             _unparsed: false,
         }
     }
-
+    
     pub fn public_id(mut self, value: Option<String>) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn subdomain(mut self, value: Option<String>) -> Self {
         self.subdomain = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GlobalOrg {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,31 +81,28 @@ impl<'de> Deserialize<'de> for GlobalOrg {
                 let mut public_id: Option<Option<String>> = None;
                 let mut subdomain: Option<Option<String>> = None;
                 let mut uuid: Option<uuid::Uuid> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subdomain" => {
                             subdomain = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "uuid" => {
                             uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

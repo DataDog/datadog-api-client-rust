@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TableResultV2DataAttributesFileMetadataCloudStorageErrorType {
-    TABLE_SCHEMA_ERROR,
-    FILE_FORMAT_ERROR,
-    CONFIGURATION_ERROR,
-    QUOTA_EXCEEDED,
-    CONFLICT_ERROR,
-    VALIDATION_ERROR,
-    STATE_ERROR,
-    OPERATION_ERROR,
-    SYSTEM_ERROR,
+	TABLE_SCHEMA_ERROR,
+	FILE_FORMAT_ERROR,
+	CONFIGURATION_ERROR,
+	QUOTA_EXCEEDED,
+	CONFLICT_ERROR,
+	VALIDATION_ERROR,
+	STATE_ERROR,
+	OPERATION_ERROR,
+	SYSTEM_ERROR,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for TableResultV2DataAttributesFileMetadataCloudStora
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "TABLE_SCHEMA_ERROR" => Self::TABLE_SCHEMA_ERROR,
-            "FILE_FORMAT_ERROR" => Self::FILE_FORMAT_ERROR,
-            "CONFIGURATION_ERROR" => Self::CONFIGURATION_ERROR,
-            "QUOTA_EXCEEDED" => Self::QUOTA_EXCEEDED,
-            "CONFLICT_ERROR" => Self::CONFLICT_ERROR,
-            "VALIDATION_ERROR" => Self::VALIDATION_ERROR,
-            "STATE_ERROR" => Self::STATE_ERROR,
-            "OPERATION_ERROR" => Self::OPERATION_ERROR,
-            "SYSTEM_ERROR" => Self::SYSTEM_ERROR,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"TABLE_SCHEMA_ERROR" => Self::TABLE_SCHEMA_ERROR,"FILE_FORMAT_ERROR" => Self::FILE_FORMAT_ERROR,"CONFIGURATION_ERROR" => Self::CONFIGURATION_ERROR,"QUOTA_EXCEEDED" => Self::QUOTA_EXCEEDED,"CONFLICT_ERROR" => Self::CONFLICT_ERROR,"VALIDATION_ERROR" => Self::VALIDATION_ERROR,"STATE_ERROR" => Self::STATE_ERROR,"OPERATION_ERROR" => Self::OPERATION_ERROR,"SYSTEM_ERROR" => Self::SYSTEM_ERROR,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

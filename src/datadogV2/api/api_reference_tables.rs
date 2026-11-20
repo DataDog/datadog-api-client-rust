@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListReferenceTableRowsOptionalParams is a struct for passing parameters to the method [`ReferenceTablesAPI::list_reference_table_rows`]
 #[non_exhaustive]
@@ -84,6 +81,9 @@ impl ListTablesOptionalParams {
     }
 }
 
+
+
+
 /// BatchRowsQueryError is a struct for typed errors of method [`ReferenceTablesAPI::batch_rows_query`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -91,6 +91,7 @@ pub enum BatchRowsQueryError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateReferenceTableError is a struct for typed errors of method [`ReferenceTablesAPI::create_reference_table`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -100,6 +101,7 @@ pub enum CreateReferenceTableError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateReferenceTableUploadError is a struct for typed errors of method [`ReferenceTablesAPI::create_reference_table_upload`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -107,6 +109,7 @@ pub enum CreateReferenceTableUploadError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteRowsError is a struct for typed errors of method [`ReferenceTablesAPI::delete_rows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -116,6 +119,7 @@ pub enum DeleteRowsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTableError is a struct for typed errors of method [`ReferenceTablesAPI::delete_table`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -123,6 +127,7 @@ pub enum DeleteTableError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRowsByIDError is a struct for typed errors of method [`ReferenceTablesAPI::get_rows_by_id`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -132,6 +137,7 @@ pub enum GetRowsByIDError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTableError is a struct for typed errors of method [`ReferenceTablesAPI::get_table`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -139,6 +145,7 @@ pub enum GetTableError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListReferenceTableRowsError is a struct for typed errors of method [`ReferenceTablesAPI::list_reference_table_rows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -148,6 +155,7 @@ pub enum ListReferenceTableRowsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTablesError is a struct for typed errors of method [`ReferenceTablesAPI::list_tables`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -155,6 +163,7 @@ pub enum ListTablesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateReferenceTableError is a struct for typed errors of method [`ReferenceTablesAPI::update_reference_table`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -164,6 +173,7 @@ pub enum UpdateReferenceTableError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertRowsError is a struct for typed errors of method [`ReferenceTablesAPI::upsert_rows`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -171,6 +181,7 @@ pub enum UpsertRowsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// View and manage Reference Tables in your organization.
 #[derive(Debug, Clone)]
@@ -194,7 +205,8 @@ impl ReferenceTablesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -239,57 +251,49 @@ impl ReferenceTablesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Batch query reference table rows by their primary key values. Returns only found rows in the included array.
-    pub async fn batch_rows_query(
-        &self,
-        body: crate::datadogV2::model::BatchRowsQueryRequest,
-    ) -> Result<crate::datadogV2::model::BatchRowsQueryResponse, datadog::Error<BatchRowsQueryError>>
-    {
+    pub async fn batch_rows_query(&self, body: crate::datadogV2::model::BatchRowsQueryRequest) -> Result<crate::datadogV2::model::BatchRowsQueryResponse, datadog::Error<BatchRowsQueryError>> {
         match self.batch_rows_query_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Batch query reference table rows by their primary key values. Returns only found rows in the included array.
-    pub async fn batch_rows_query_with_http_info(
-        &self,
-        body: crate::datadogV2::model::BatchRowsQueryRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::BatchRowsQueryResponse>,
-        datadog::Error<BatchRowsQueryError>,
-    > {
+    pub async fn batch_rows_query_with_http_info(&self, body: crate::datadogV2::model::BatchRowsQueryRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::BatchRowsQueryResponse>, datadog::Error<BatchRowsQueryError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.batch_rows_query";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/queries/batch-rows",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -302,23 +306,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -326,7 +323,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -336,7 +336,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -358,7 +361,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -375,82 +378,66 @@ impl ReferenceTablesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::BatchRowsQueryResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::BatchRowsQueryResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<BatchRowsQueryError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BatchRowsQueryError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a reference table. You can provide data in two ways:
-    /// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
-    ///    (not the file itself) in chunks to each URL in the request body. Finally, call this
-    ///    POST endpoint with `upload_id` in `file_metadata`.
-    /// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
-    pub async fn create_reference_table(
-        &self,
-        body: crate::datadogV2::model::CreateTableRequest,
-    ) -> Result<crate::datadogV2::model::TableResultV2, datadog::Error<CreateReferenceTableError>>
-    {
+/// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
+///    (not the file itself) in chunks to each URL in the request body. Finally, call this
+///    POST endpoint with `upload_id` in `file_metadata`.
+/// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
+    pub async fn create_reference_table(&self, body: crate::datadogV2::model::CreateTableRequest) -> Result<crate::datadogV2::model::TableResultV2, datadog::Error<CreateReferenceTableError>> {
         match self.create_reference_table_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a reference table. You can provide data in two ways:
-    /// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
-    ///    (not the file itself) in chunks to each URL in the request body. Finally, call this
-    ///    POST endpoint with `upload_id` in `file_metadata`.
-    /// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
-    pub async fn create_reference_table_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateTableRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TableResultV2>,
-        datadog::Error<CreateReferenceTableError>,
-    > {
+/// 1. Call POST /api/v2/reference-tables/upload to get an upload ID. Then, PUT the CSV data
+///    (not the file itself) in chunks to each URL in the request body. Finally, call this
+///    POST endpoint with `upload_id` in `file_metadata`.
+/// 2. Provide `access_details` in `file_metadata` pointing to a CSV file in cloud storage.
+    pub async fn create_reference_table_with_http_info(&self, body: crate::datadogV2::model::CreateTableRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TableResultV2>, datadog::Error<CreateReferenceTableError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_reference_table";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -463,23 +450,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -487,7 +467,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -497,7 +480,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -519,7 +505,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -537,76 +523,57 @@ impl ReferenceTablesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TableResultV2>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateReferenceTableError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateReferenceTableError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a reference table upload for bulk data ingestion
-    pub async fn create_reference_table_upload(
-        &self,
-        body: crate::datadogV2::model::CreateUploadRequest,
-    ) -> Result<
-        crate::datadogV2::model::CreateUploadResponse,
-        datadog::Error<CreateReferenceTableUploadError>,
-    > {
-        match self
-            .create_reference_table_upload_with_http_info(body)
-            .await
-        {
+    pub async fn create_reference_table_upload(&self, body: crate::datadogV2::model::CreateUploadRequest) -> Result<crate::datadogV2::model::CreateUploadResponse, datadog::Error<CreateReferenceTableUploadError>> {
+        match self.create_reference_table_upload_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a reference table upload for bulk data ingestion
-    pub async fn create_reference_table_upload_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateUploadRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CreateUploadResponse>,
-        datadog::Error<CreateReferenceTableUploadError>,
-    > {
+    pub async fn create_reference_table_upload_with_http_info(&self, body: crate::datadogV2::model::CreateUploadRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CreateUploadResponse>, datadog::Error<CreateReferenceTableUploadError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_reference_table_upload";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/uploads",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -619,23 +586,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -643,7 +603,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -653,7 +616,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -675,7 +641,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -692,65 +658,54 @@ impl ReferenceTablesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CreateUploadResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CreateUploadResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateReferenceTableUploadError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateReferenceTableUploadError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete multiple rows from a Reference Table by their primary key values.
-    pub async fn delete_rows(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::BatchDeleteRowsRequestArray,
-    ) -> Result<(), datadog::Error<DeleteRowsError>> {
+    pub async fn delete_rows(&self, id: String, body: crate::datadogV2::model::BatchDeleteRowsRequestArray) -> Result<(), datadog::Error<DeleteRowsError>> {
         match self.delete_rows_with_http_info(id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete multiple rows from a Reference Table by their primary key values.
-    pub async fn delete_rows_with_http_info(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::BatchDeleteRowsRequestArray,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRowsError>> {
+    pub async fn delete_rows_with_http_info(&self, id: String, body: crate::datadogV2::model::BatchDeleteRowsRequestArray) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRowsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rows";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -763,23 +718,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -787,7 +735,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -797,7 +748,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -819,7 +773,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -843,15 +797,11 @@ impl ReferenceTablesAPI {
             })
         } else {
             let local_entity: Option<DeleteRowsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a reference table by ID
     pub async fn delete_table(&self, id: String) -> Result<(), datadog::Error<DeleteTableError>> {
         match self.delete_table_with_http_info(id).await {
@@ -860,27 +810,30 @@ impl ReferenceTablesAPI {
         }
     }
 
+    
     /// Delete a reference table by ID
-    pub async fn delete_table_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTableError>> {
+    pub async fn delete_table_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTableError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_table";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -893,22 +846,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -927,71 +874,50 @@ impl ReferenceTablesAPI {
             })
         } else {
             let local_entity: Option<DeleteTableError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get reference table rows by their primary key values.
-    pub async fn get_rows_by_id(
-        &self,
-        id: String,
-        row_id: Vec<String>,
-    ) -> Result<crate::datadogV2::model::TableRowResourceArray, datadog::Error<GetRowsByIDError>>
-    {
+    pub async fn get_rows_by_id(&self, id: String, row_id: Vec<String>) -> Result<crate::datadogV2::model::TableRowResourceArray, datadog::Error<GetRowsByIDError>> {
         match self.get_rows_by_id_with_http_info(id, row_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get reference table rows by their primary key values.
-    pub async fn get_rows_by_id_with_http_info(
-        &self,
-        id: String,
-        row_id: Vec<String>,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TableRowResourceArray>,
-        datadog::Error<GetRowsByIDError>,
-    > {
+    pub async fn get_rows_by_id_with_http_info(&self, id: String, row_id: Vec<String>) -> Result<datadog::ResponseContent<crate::datadogV2::model::TableRowResourceArray>, datadog::Error<GetRowsByIDError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rows_by_id";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "row_id",
-            &row_id
-                .iter()
-                .map(|p| p.to_string())
-                .collect::<Vec<String>>()
-                .join(",")
-                .to_string(),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("row_id", &row_id.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1004,22 +930,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1031,72 +951,59 @@ impl ReferenceTablesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TableRowResourceArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TableRowResourceArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetRowsByIDError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a reference table by ID
-    pub async fn get_table(
-        &self,
-        id: String,
-    ) -> Result<crate::datadogV2::model::TableResultV2, datadog::Error<GetTableError>> {
+    pub async fn get_table(&self, id: String) -> Result<crate::datadogV2::model::TableResultV2, datadog::Error<GetTableError>> {
         match self.get_table_with_http_info(id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a reference table by ID
-    pub async fn get_table_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TableResultV2>,
-        datadog::Error<GetTableError>,
-    > {
+    pub async fn get_table_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TableResultV2>, datadog::Error<GetTableError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_table";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1109,22 +1016,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1137,64 +1038,41 @@ impl ReferenceTablesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::TableResultV2>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetTableError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all rows in a reference table using cursor-based pagination. Pass the `page[continuation_token]` from the previous response to fetch the next page on the same consistent snapshot. Returns 400 for tables with more than 10,000,000 rows.
-    pub async fn list_reference_table_rows(
-        &self,
-        id: String,
-        params: ListReferenceTableRowsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListRowsResponse,
-        datadog::Error<ListReferenceTableRowsError>,
-    > {
-        match self
-            .list_reference_table_rows_with_http_info(id, params)
-            .await
-        {
+    pub async fn list_reference_table_rows(&self, id: String, params: ListReferenceTableRowsOptionalParams) -> Result<crate::datadogV2::model::ListRowsResponse, datadog::Error<ListReferenceTableRowsError>> {
+        match self.list_reference_table_rows_with_http_info(id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all rows in a reference table using cursor-based pagination. Pass the `page[continuation_token]` from the previous response to fetch the next page on the same consistent snapshot. Returns 400 for tables with more than 10,000,000 rows.
-    pub async fn list_reference_table_rows_with_http_info(
-        &self,
-        id: String,
-        params: ListReferenceTableRowsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListRowsResponse>,
-        datadog::Error<ListReferenceTableRowsError>,
-    > {
+    pub async fn list_reference_table_rows_with_http_info(&self, id: String, params: ListReferenceTableRowsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListRowsResponse>, datadog::Error<ListReferenceTableRowsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_reference_table_rows";
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_continuation_token = params.page_continuation_token;
@@ -1203,24 +1081,24 @@ impl ReferenceTablesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows/list",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_continuation_token {
-            local_req_builder = local_req_builder
-                .query(&[("page[continuation_token]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[continuation_token]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1233,22 +1111,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1260,59 +1132,42 @@ impl ReferenceTablesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListRowsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListRowsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListReferenceTableRowsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListReferenceTableRowsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all reference tables in this organization.
-    pub async fn list_tables(
-        &self,
-        params: ListTablesOptionalParams,
-    ) -> Result<crate::datadogV2::model::TableResultV2Array, datadog::Error<ListTablesError>> {
-        match self.list_tables_with_http_info(params).await {
+    pub async fn list_tables(&self, params: ListTablesOptionalParams) -> Result<crate::datadogV2::model::TableResultV2Array, datadog::Error<ListTablesError>> {
+        match self.list_tables_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all reference tables in this organization.
-    pub async fn list_tables_with_http_info(
-        &self,
-        params: ListTablesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TableResultV2Array>,
-        datadog::Error<ListTablesError>,
-    > {
+    pub async fn list_tables_with_http_info(&self, params: ListTablesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TableResultV2Array>, datadog::Error<ListTablesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_tables";
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
@@ -1325,41 +1180,34 @@ impl ReferenceTablesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[status]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_table_name_exact {
-            local_req_builder = local_req_builder
-                .query(&[("filter[table_name][exact]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[table_name][exact]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_table_name_contains {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[table_name][contains]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[table_name][contains]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1372,22 +1220,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1399,64 +1241,54 @@ impl ReferenceTablesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TableResultV2Array>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TableResultV2Array>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListTablesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a reference table by ID. You can update the table's data, description, and tags. Note: The source type cannot be changed after table creation. For data updates: For existing tables of type `source:LOCAL_FILE`, call POST api/v2/reference-tables/uploads first to get an upload ID, then PUT chunks of CSV data to each provided URL, and finally call this PATCH endpoint with the upload_id in file_metadata. For existing tables with `source:` types of `S3`, `GCS`, or `AZURE`, provide updated access_details in file_metadata pointing to a CSV file in the same type of cloud storage.
-    pub async fn update_reference_table(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::PatchTableRequest,
-    ) -> Result<(), datadog::Error<UpdateReferenceTableError>> {
+    pub async fn update_reference_table(&self, id: String, body: crate::datadogV2::model::PatchTableRequest) -> Result<(), datadog::Error<UpdateReferenceTableError>> {
         match self.update_reference_table_with_http_info(id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a reference table by ID. You can update the table's data, description, and tags. Note: The source type cannot be changed after table creation. For data updates: For existing tables of type `source:LOCAL_FILE`, call POST api/v2/reference-tables/uploads first to get an upload ID, then PUT chunks of CSV data to each provided URL, and finally call this PATCH endpoint with the upload_id in file_metadata. For existing tables with `source:` types of `S3`, `GCS`, or `AZURE`, provide updated access_details in file_metadata pointing to a CSV file in the same type of cloud storage.
-    pub async fn update_reference_table_with_http_info(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::PatchTableRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateReferenceTableError>> {
+    pub async fn update_reference_table_with_http_info(&self, id: String, body: crate::datadogV2::model::PatchTableRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateReferenceTableError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_reference_table";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1469,23 +1301,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1493,7 +1318,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1503,7 +1331,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1525,7 +1356,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1548,52 +1379,45 @@ impl ReferenceTablesAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateReferenceTableError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateReferenceTableError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update rows in a Reference Table by their primary key values. If a row with the specified primary key exists, it is updated; otherwise, a new row is created.
-    pub async fn upsert_rows(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::BatchUpsertRowsRequestArray,
-    ) -> Result<(), datadog::Error<UpsertRowsError>> {
+    pub async fn upsert_rows(&self, id: String, body: crate::datadogV2::model::BatchUpsertRowsRequestArray) -> Result<(), datadog::Error<UpsertRowsError>> {
         match self.upsert_rows_with_http_info(id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update rows in a Reference Table by their primary key values. If a row with the specified primary key exists, it is updated; otherwise, a new row is created.
-    pub async fn upsert_rows_with_http_info(
-        &self,
-        id: String,
-        body: crate::datadogV2::model::BatchUpsertRowsRequestArray,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpsertRowsError>> {
+    pub async fn upsert_rows_with_http_info(&self, id: String, body: crate::datadogV2::model::BatchUpsertRowsRequestArray) -> Result<datadog::ResponseContent<()>, datadog::Error<UpsertRowsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_rows";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/reference-tables/tables/{id}/rows",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1606,23 +1430,16 @@ impl ReferenceTablesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1630,7 +1447,10 @@ impl ReferenceTablesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1640,7 +1460,10 @@ impl ReferenceTablesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1662,7 +1485,7 @@ impl ReferenceTablesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1686,11 +1509,7 @@ impl ReferenceTablesAPI {
             })
         } else {
             let local_entity: Option<UpsertRowsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

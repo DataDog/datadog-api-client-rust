@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Sort configuration for retention group by.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct RetentionGroupBySort {
     pub order: Option<crate::datadogV1::model::WidgetSort>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RetentionGroupBySort {
@@ -26,12 +26,14 @@ impl RetentionGroupBySort {
             _unparsed: false,
         }
     }
-
+    
     pub fn order(mut self, value: crate::datadogV1::model::WidgetSort) -> Self {
         self.order = Some(value);
         self
     }
+    
 }
+
 
 impl Default for RetentionGroupBySort {
     fn default() -> Self {
@@ -70,20 +72,21 @@ impl<'de> Deserialize<'de> for RetentionGroupBySort {
                                 match _order {
                                     crate::datadogV1::model::WidgetSort::UnparsedObject(_order) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content = RetentionGroupBySort { order, _unparsed };
+                let content = RetentionGroupBySort {
+                    order,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

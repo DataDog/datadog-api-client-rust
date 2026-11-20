@@ -2,12 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AIImpactUserActivityType {
-    AI_IMPACT_USER_ACTIVITY,
+	AI_IMPACT_USER_ACTIVITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,11 +39,8 @@ impl<'de> Deserialize<'de> for AIImpactUserActivityType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "ai_impact_user_activity" => Self::AI_IMPACT_USER_ACTIVITY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"ai_impact_user_activity" => Self::AI_IMPACT_USER_ACTIVITY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

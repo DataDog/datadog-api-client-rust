@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Bearer token authentication. Use the API key of a Temporal Cloud service account with the Metrics Read-Only account-level role.
 #[non_exhaustive]
@@ -13,28 +13,27 @@ use std::fmt::{self, Formatter};
 pub struct TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
     /// The authentication method type.
     #[serde(rename = "auth_type")]
-    pub auth_type:
-        crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthType,
+    pub auth_type: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthType,
     /// Secret token used to authenticate with Temporal Cloud.
     #[serde(rename = "token")]
     pub token: String,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
-    pub fn new(
-        auth_type: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthType,
-        token: String,
-    ) -> TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
+    pub fn new(auth_type: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthType, token: String) -> TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
         TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
             auth_type,
             token,
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -69,15 +68,13 @@ impl<'de> Deserialize<'de> for TemporalCloudOpenMetricsIntegrationAccountBearerT
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "token" => {
                             token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
@@ -93,8 +90,6 @@ impl<'de> Deserialize<'de> for TemporalCloudOpenMetricsIntegrationAccountBearerT
             }
         }
 
-        deserializer.deserialize_any(
-            TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequestVisitor,
-        )
+        deserializer.deserialize_any(TemporalCloudOpenMetricsIntegrationAccountBearerTokenAuthRequestVisitor)
     }
 }

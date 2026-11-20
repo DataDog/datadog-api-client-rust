@@ -2,25 +2,26 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsCheckType {
-    EQUALS,
-    NOT_EQUALS,
-    CONTAINS,
-    NOT_CONTAINS,
-    STARTS_WITH,
-    NOT_STARTS_WITH,
-    GREATER,
-    LOWER,
-    GREATER_EQUALS,
-    LOWER_EQUALS,
-    MATCH_REGEX,
-    BETWEEN,
-    IS_EMPTY,
-    NOT_IS_EMPTY,
+	EQUALS,
+	NOT_EQUALS,
+	CONTAINS,
+	NOT_CONTAINS,
+	STARTS_WITH,
+	NOT_STARTS_WITH,
+	GREATER,
+	LOWER,
+	GREATER_EQUALS,
+	LOWER_EQUALS,
+	MATCH_REGEX,
+	BETWEEN,
+	IS_EMPTY,
+	NOT_IS_EMPTY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -64,24 +65,8 @@ impl<'de> Deserialize<'de> for SyntheticsCheckType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "equals" => Self::EQUALS,
-            "notEquals" => Self::NOT_EQUALS,
-            "contains" => Self::CONTAINS,
-            "notContains" => Self::NOT_CONTAINS,
-            "startsWith" => Self::STARTS_WITH,
-            "notStartsWith" => Self::NOT_STARTS_WITH,
-            "greater" => Self::GREATER,
-            "lower" => Self::LOWER,
-            "greaterEquals" => Self::GREATER_EQUALS,
-            "lowerEquals" => Self::LOWER_EQUALS,
-            "matchRegex" => Self::MATCH_REGEX,
-            "between" => Self::BETWEEN,
-            "isEmpty" => Self::IS_EMPTY,
-            "notIsEmpty" => Self::NOT_IS_EMPTY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"equals" => Self::EQUALS,"notEquals" => Self::NOT_EQUALS,"contains" => Self::CONTAINS,"notContains" => Self::NOT_CONTAINS,"startsWith" => Self::STARTS_WITH,"notStartsWith" => Self::NOT_STARTS_WITH,"greater" => Self::GREATER,"lower" => Self::LOWER,"greaterEquals" => Self::GREATER_EQUALS,"lowerEquals" => Self::LOWER_EQUALS,"matchRegex" => Self::MATCH_REGEX,"between" => Self::BETWEEN,"isEmpty" => Self::IS_EMPTY,"notIsEmpty" => Self::NOT_IS_EMPTY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

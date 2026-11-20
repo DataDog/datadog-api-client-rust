@@ -2,28 +2,29 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetMonitorSummarySort {
-    NAME,
-    GROUP,
-    STATUS,
-    TAGS,
-    TRIGGERED,
-    GROUP_ASCENDING,
-    GROUP_DESCENDING,
-    NAME_ASCENDING,
-    NAME_DESCENDING,
-    STATUS_ASCENDING,
-    STATUS_DESCENDING,
-    TAGS_ASCENDING,
-    TAGS_DESCENDING,
-    TRIGGERED_ASCENDING,
-    TRIGGERED_DESCENDING,
-    PRIORITY_ASCENDING,
-    PRIORITY_DESCENDING,
+	NAME,
+	GROUP,
+	STATUS,
+	TAGS,
+	TRIGGERED,
+	GROUP_ASCENDING,
+	GROUP_DESCENDING,
+	NAME_ASCENDING,
+	NAME_DESCENDING,
+	STATUS_ASCENDING,
+	STATUS_DESCENDING,
+	TAGS_ASCENDING,
+	TAGS_DESCENDING,
+	TRIGGERED_ASCENDING,
+	TRIGGERED_DESCENDING,
+	PRIORITY_ASCENDING,
+	PRIORITY_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -70,27 +71,8 @@ impl<'de> Deserialize<'de> for WidgetMonitorSummarySort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "group" => Self::GROUP,
-            "status" => Self::STATUS,
-            "tags" => Self::TAGS,
-            "triggered" => Self::TRIGGERED,
-            "group,asc" => Self::GROUP_ASCENDING,
-            "group,desc" => Self::GROUP_DESCENDING,
-            "name,asc" => Self::NAME_ASCENDING,
-            "name,desc" => Self::NAME_DESCENDING,
-            "status,asc" => Self::STATUS_ASCENDING,
-            "status,desc" => Self::STATUS_DESCENDING,
-            "tags,asc" => Self::TAGS_ASCENDING,
-            "tags,desc" => Self::TAGS_DESCENDING,
-            "triggered,asc" => Self::TRIGGERED_ASCENDING,
-            "triggered,desc" => Self::TRIGGERED_DESCENDING,
-            "priority,asc" => Self::PRIORITY_ASCENDING,
-            "priority,desc" => Self::PRIORITY_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"group" => Self::GROUP,"status" => Self::STATUS,"tags" => Self::TAGS,"triggered" => Self::TRIGGERED,"group,asc" => Self::GROUP_ASCENDING,"group,desc" => Self::GROUP_DESCENDING,"name,asc" => Self::NAME_ASCENDING,"name,desc" => Self::NAME_DESCENDING,"status,asc" => Self::STATUS_ASCENDING,"status,desc" => Self::STATUS_DESCENDING,"tags,asc" => Self::TAGS_ASCENDING,"tags,desc" => Self::TAGS_DESCENDING,"triggered,asc" => Self::TRIGGERED_ASCENDING,"triggered,desc" => Self::TRIGGERED_DESCENDING,"priority,asc" => Self::PRIORITY_ASCENDING,"priority,desc" => Self::PRIORITY_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

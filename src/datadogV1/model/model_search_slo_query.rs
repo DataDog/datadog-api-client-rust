@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A metric-based SLO. **Required if type is `metric`**. Note that Datadog only allows the sum by aggregator
 /// to be used because this will sum up all request counts instead of averaging them, or taking the max or
@@ -17,12 +17,8 @@ pub struct SearchSLOQuery {
     #[serde(rename = "denominator")]
     pub denominator: Option<String>,
     /// Metric names used in the query's numerator and denominator.
-    /// This field will return null and will be implemented in the next version of this endpoint.
-    #[serde(
-        rename = "metrics",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// This field will return null and will be implemented in the next version of this endpoint.
+    #[serde(rename = "metrics", default, with = "::serde_with::rust::double_option")]
     pub metrics: Option<Option<Vec<String>>>,
     /// A Datadog metric query for good events.
     #[serde(rename = "numerator")]
@@ -31,7 +27,7 @@ pub struct SearchSLOQuery {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SearchSLOQuery {
@@ -44,30 +40,28 @@ impl SearchSLOQuery {
             _unparsed: false,
         }
     }
-
+    
     pub fn denominator(mut self, value: String) -> Self {
         self.denominator = Some(value);
         self
     }
-
+    
     pub fn metrics(mut self, value: Option<Vec<String>>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     pub fn numerator(mut self, value: String) -> Self {
         self.numerator = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SearchSLOQuery {
     fn default() -> Self {
@@ -95,10 +89,7 @@ impl<'de> Deserialize<'de> for SearchSLOQuery {
                 let mut denominator: Option<String> = None;
                 let mut metrics: Option<Option<Vec<String>>> = None;
                 let mut numerator: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -107,23 +98,22 @@ impl<'de> Deserialize<'de> for SearchSLOQuery {
                             if v.is_null() {
                                 continue;
                             }
-                            denominator =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            denominator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics" => {
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "numerator" => {
                             if v.is_null() {
                                 continue;
                             }
                             numerator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

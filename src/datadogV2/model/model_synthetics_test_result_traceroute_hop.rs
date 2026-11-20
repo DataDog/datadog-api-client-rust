@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A network probe result, used for traceroute hops and ping summaries.
 #[non_exhaustive]
@@ -39,7 +39,7 @@ pub struct SyntheticsTestResultTracerouteHop {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultTracerouteHop {
@@ -57,61 +57,53 @@ impl SyntheticsTestResultTracerouteHop {
             _unparsed: false,
         }
     }
-
+    
     pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
-
-    pub fn latency(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultNetworkLatency,
-    ) -> Self {
+    
+    pub fn latency(mut self, value: crate::datadogV2::model::SyntheticsTestResultNetworkLatency) -> Self {
         self.latency = Some(value);
         self
     }
-
+    
     pub fn packet_loss_percentage(mut self, value: f64) -> Self {
         self.packet_loss_percentage = Some(value);
         self
     }
-
+    
     pub fn packet_size(mut self, value: i64) -> Self {
         self.packet_size = Some(value);
         self
     }
-
+    
     pub fn packets_received(mut self, value: i64) -> Self {
         self.packets_received = Some(value);
         self
     }
-
+    
     pub fn packets_sent(mut self, value: i64) -> Self {
         self.packets_sent = Some(value);
         self
     }
-
+    
     pub fn resolved_ip(mut self, value: String) -> Self {
         self.resolved_ip = Some(value);
         self
     }
-
-    pub fn routers(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultRouter>,
-    ) -> Self {
+    
+    pub fn routers(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultRouter>) -> Self {
         self.routers = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultTracerouteHop {
     fn default() -> Self {
@@ -137,20 +129,14 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultTracerouteHop {
                 M: MapAccess<'a>,
             {
                 let mut host: Option<String> = None;
-                let mut latency: Option<
-                    crate::datadogV2::model::SyntheticsTestResultNetworkLatency,
-                > = None;
+                let mut latency: Option<crate::datadogV2::model::SyntheticsTestResultNetworkLatency> = None;
                 let mut packet_loss_percentage: Option<f64> = None;
                 let mut packet_size: Option<i64> = None;
                 let mut packets_received: Option<i64> = None;
                 let mut packets_sent: Option<i64> = None;
                 let mut resolved_ip: Option<String> = None;
-                let mut routers: Option<Vec<crate::datadogV2::model::SyntheticsTestResultRouter>> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut routers: Option<Vec<crate::datadogV2::model::SyntheticsTestResultRouter>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -160,59 +146,54 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultTracerouteHop {
                                 continue;
                             }
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "latency" => {
                             if v.is_null() {
                                 continue;
                             }
                             latency = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "packet_loss_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            packet_loss_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packet_loss_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "packet_size" => {
                             if v.is_null() {
                                 continue;
                             }
-                            packet_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packet_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "packets_received" => {
                             if v.is_null() {
                                 continue;
                             }
-                            packets_received =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packets_received = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "packets_sent" => {
                             if v.is_null() {
                                 continue;
                             }
-                            packets_sent =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            packets_sent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resolved_ip" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resolved_ip =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resolved_ip = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "routers" => {
                             if v.is_null() {
                                 continue;
                             }
                             routers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

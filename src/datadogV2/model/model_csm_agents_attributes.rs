@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A CSM Agent returned by the API.
 #[non_exhaustive]
@@ -42,46 +42,22 @@ pub struct CsmAgentsAttributes {
     #[serde(rename = "install_method_tool")]
     pub install_method_tool: Option<String>,
     /// Indicates if CSM VM Containers is enabled.
-    #[serde(
-        rename = "is_csm_vm_containers_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_csm_vm_containers_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_csm_vm_containers_enabled: Option<Option<bool>>,
     /// Indicates if CSM VM Hosts is enabled.
-    #[serde(
-        rename = "is_csm_vm_hosts_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_csm_vm_hosts_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_csm_vm_hosts_enabled: Option<Option<bool>>,
     /// Indicates if CSPM is enabled.
-    #[serde(
-        rename = "is_cspm_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_cspm_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_cspm_enabled: Option<Option<bool>>,
     /// Indicates if CWS is enabled.
-    #[serde(
-        rename = "is_cws_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_cws_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_cws_enabled: Option<Option<bool>>,
     /// Indicates if CWS Remote Configuration is enabled.
-    #[serde(
-        rename = "is_cws_remote_configuration_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_cws_remote_configuration_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_cws_remote_configuration_enabled: Option<Option<bool>>,
     /// Indicates if Remote Configuration is enabled.
-    #[serde(
-        rename = "is_remote_configuration_enabled",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "is_remote_configuration_enabled", default, with = "::serde_with::rust::double_option")]
     pub is_remote_configuration_enabled: Option<Option<bool>>,
     /// Operating system of the host.
     #[serde(rename = "os")]
@@ -90,7 +66,7 @@ pub struct CsmAgentsAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CsmAgentsAttributes {
@@ -117,100 +93,98 @@ impl CsmAgentsAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn agent_version(mut self, value: String) -> Self {
         self.agent_version = Some(value);
         self
     }
-
+    
     pub fn aws_fargate(mut self, value: String) -> Self {
         self.aws_fargate = Some(value);
         self
     }
-
+    
     pub fn cluster_name(mut self, value: Vec<String>) -> Self {
         self.cluster_name = Some(value);
         self
     }
-
+    
     pub fn datadog_agent(mut self, value: String) -> Self {
         self.datadog_agent = Some(value);
         self
     }
-
+    
     pub fn ecs_fargate_task_arn(mut self, value: String) -> Self {
         self.ecs_fargate_task_arn = Some(value);
         self
     }
-
+    
     pub fn envs(mut self, value: Option<Vec<String>>) -> Self {
         self.envs = Some(value);
         self
     }
-
+    
     pub fn host_id(mut self, value: i64) -> Self {
         self.host_id = Some(value);
         self
     }
-
+    
     pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
-
+    
     pub fn install_method_installer_version(mut self, value: String) -> Self {
         self.install_method_installer_version = Some(value);
         self
     }
-
+    
     pub fn install_method_tool(mut self, value: String) -> Self {
         self.install_method_tool = Some(value);
         self
     }
-
+    
     pub fn is_csm_vm_containers_enabled(mut self, value: Option<bool>) -> Self {
         self.is_csm_vm_containers_enabled = Some(value);
         self
     }
-
+    
     pub fn is_csm_vm_hosts_enabled(mut self, value: Option<bool>) -> Self {
         self.is_csm_vm_hosts_enabled = Some(value);
         self
     }
-
+    
     pub fn is_cspm_enabled(mut self, value: Option<bool>) -> Self {
         self.is_cspm_enabled = Some(value);
         self
     }
-
+    
     pub fn is_cws_enabled(mut self, value: Option<bool>) -> Self {
         self.is_cws_enabled = Some(value);
         self
     }
-
+    
     pub fn is_cws_remote_configuration_enabled(mut self, value: Option<bool>) -> Self {
         self.is_cws_remote_configuration_enabled = Some(value);
         self
     }
-
+    
     pub fn is_remote_configuration_enabled(mut self, value: Option<bool>) -> Self {
         self.is_remote_configuration_enabled = Some(value);
         self
     }
-
+    
     pub fn os(mut self, value: String) -> Self {
         self.os = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for CsmAgentsAttributes {
     fn default() -> Self {
@@ -252,10 +226,7 @@ impl<'de> Deserialize<'de> for CsmAgentsAttributes {
                 let mut is_cws_remote_configuration_enabled: Option<Option<bool>> = None;
                 let mut is_remote_configuration_enabled: Option<Option<bool>> = None;
                 let mut os: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -264,101 +235,88 @@ impl<'de> Deserialize<'de> for CsmAgentsAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            agent_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "aws_fargate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            aws_fargate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            aws_fargate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cluster_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cluster_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cluster_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "datadog_agent" => {
                             if v.is_null() {
                                 continue;
                             }
-                            datadog_agent =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            datadog_agent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ecs_fargate_task_arn" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ecs_fargate_task_arn =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ecs_fargate_task_arn = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "envs" => {
                             envs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "host_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             host_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "hostname" => {
                             if v.is_null() {
                                 continue;
                             }
                             hostname = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "install_method_installer_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            install_method_installer_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            install_method_installer_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "install_method_tool" => {
                             if v.is_null() {
                                 continue;
                             }
-                            install_method_tool =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            install_method_tool = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_csm_vm_containers_enabled" => {
-                            is_csm_vm_containers_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_csm_vm_containers_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_csm_vm_hosts_enabled" => {
-                            is_csm_vm_hosts_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_csm_vm_hosts_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_cspm_enabled" => {
-                            is_cspm_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_cspm_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_cws_enabled" => {
-                            is_cws_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_cws_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_cws_remote_configuration_enabled" => {
-                            is_cws_remote_configuration_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_cws_remote_configuration_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_remote_configuration_enabled" => {
-                            is_remote_configuration_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_remote_configuration_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "os" => {
                             if v.is_null() {
                                 continue;
                             }
                             os = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

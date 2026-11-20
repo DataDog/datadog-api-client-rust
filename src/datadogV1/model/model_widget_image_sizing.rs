@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetImageSizing {
-    FILL,
-    CONTAIN,
-    COVER,
-    NONE,
-    SCALEDOWN,
-    ZOOM,
-    FIT,
-    CENTER,
+	FILL,
+	CONTAIN,
+	COVER,
+	NONE,
+	SCALEDOWN,
+	ZOOM,
+	FIT,
+	CENTER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for WidgetImageSizing {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "fill" => Self::FILL,
-            "contain" => Self::CONTAIN,
-            "cover" => Self::COVER,
-            "none" => Self::NONE,
-            "scale-down" => Self::SCALEDOWN,
-            "zoom" => Self::ZOOM,
-            "fit" => Self::FIT,
-            "center" => Self::CENTER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"fill" => Self::FILL,"contain" => Self::CONTAIN,"cover" => Self::COVER,"none" => Self::NONE,"scale-down" => Self::SCALEDOWN,"zoom" => Self::ZOOM,"fit" => Self::FIT,"center" => Self::CENTER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

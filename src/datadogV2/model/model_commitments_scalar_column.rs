@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A column in a scalar response. When type is "group", values contains arrays of strings. When type is "number", values contains numeric values.
 #[non_exhaustive]
@@ -27,15 +27,11 @@ pub struct CommitmentsScalarColumn {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CommitmentsScalarColumn {
-    pub fn new(
-        name: String,
-        type_: crate::datadogV2::model::CommitmentsScalarColumnType,
-        values: Vec<serde_json::Value>,
-    ) -> CommitmentsScalarColumn {
+    pub fn new(name: String, type_: crate::datadogV2::model::CommitmentsScalarColumnType, values: Vec<serde_json::Value>) -> CommitmentsScalarColumn {
         CommitmentsScalarColumn {
             meta: None,
             name,
@@ -45,20 +41,19 @@ impl CommitmentsScalarColumn {
             _unparsed: false,
         }
     }
-
+    
     pub fn meta(mut self, value: crate::datadogV2::model::CommitmentsScalarColumnMeta) -> Self {
         self.meta = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for CommitmentsScalarColumn {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -81,10 +76,7 @@ impl<'de> Deserialize<'de> for CommitmentsScalarColumn {
                 let mut name: Option<String> = None;
                 let mut type_: Option<crate::datadogV2::model::CommitmentsScalarColumnType> = None;
                 let mut values: Option<Vec<serde_json::Value>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -94,10 +86,10 @@ impl<'de> Deserialize<'de> for CommitmentsScalarColumn {
                                 continue;
                             }
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -108,15 +100,15 @@ impl<'de> Deserialize<'de> for CommitmentsScalarColumn {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "values" => {
                             values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

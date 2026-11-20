@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing the Synthetic test request.
 #[non_exhaustive]
@@ -24,8 +24,8 @@ pub struct SyntheticsTestRequest {
     #[serde(rename = "bodyType")]
     pub body_type: Option<crate::datadogV1::model::SyntheticsTestRequestBodyType>,
     /// The type of call to perform. Used by gRPC steps (`healthcheck`, `unary`)
-    /// and MCP steps (`init`, `tool_list`, `tool_call`). Valid values depend on
-    /// the parent step's `subtype`.
+/// and MCP steps (`init`, `tool_list`, `tool_call`). Valid values depend on
+/// the parent step's `subtype`.
     #[serde(rename = "callType")]
     pub call_type: Option<crate::datadogV1::model::SyntheticsTestCallType>,
     /// Client certificate to use when performing the test request.
@@ -107,8 +107,8 @@ pub struct SyntheticsTestRequest {
     #[serde(rename = "query")]
     pub query: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// For SSL tests, it specifies on which server you want to initiate the TLS handshake,
-    /// allowing the server to present one of multiple possible certificates on
-    /// the same IP address and TCP port number.
+/// allowing the server to present one of multiple possible certificates on
+/// the same IP address and TCP port number.
     #[serde(rename = "servername")]
     pub servername: Option<String>,
     /// The gRPC service on which you want to perform the gRPC call.
@@ -133,7 +133,7 @@ pub struct SyntheticsTestRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestRequest {
@@ -181,226 +181,203 @@ impl SyntheticsTestRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_insecure(mut self, value: bool) -> Self {
         self.allow_insecure = Some(value);
         self
     }
-
+    
     pub fn basic_auth(mut self, value: crate::datadogV1::model::SyntheticsBasicAuth) -> Self {
         self.basic_auth = Some(value);
         self
     }
-
+    
     pub fn body(mut self, value: String) -> Self {
         self.body = Some(value);
         self
     }
-
-    pub fn body_type(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestRequestBodyType,
-    ) -> Self {
+    
+    pub fn body_type(mut self, value: crate::datadogV1::model::SyntheticsTestRequestBodyType) -> Self {
         self.body_type = Some(value);
         self
     }
-
+    
     pub fn call_type(mut self, value: crate::datadogV1::model::SyntheticsTestCallType) -> Self {
         self.call_type = Some(value);
         self
     }
-
-    pub fn certificate(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestRequestCertificate,
-    ) -> Self {
+    
+    pub fn certificate(mut self, value: crate::datadogV1::model::SyntheticsTestRequestCertificate) -> Self {
         self.certificate = Some(value);
         self
     }
-
+    
     pub fn certificate_domains(mut self, value: Vec<String>) -> Self {
         self.certificate_domains = Some(value);
         self
     }
-
+    
     pub fn check_certificate_revocation(mut self, value: bool) -> Self {
         self.check_certificate_revocation = Some(value);
         self
     }
-
+    
     pub fn compressed_json_descriptor(mut self, value: String) -> Self {
         self.compressed_json_descriptor = Some(value);
         self
     }
-
+    
     pub fn compressed_proto_file(mut self, value: String) -> Self {
         self.compressed_proto_file = Some(value);
         self
     }
-
+    
     pub fn disable_aia_intermediate_fetching(mut self, value: bool) -> Self {
         self.disable_aia_intermediate_fetching = Some(value);
         self
     }
-
+    
     pub fn dns_server(mut self, value: String) -> Self {
         self.dns_server = Some(value);
         self
     }
-
-    pub fn dns_server_port(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestRequestDNSServerPort,
-    ) -> Self {
+    
+    pub fn dns_server_port(mut self, value: crate::datadogV1::model::SyntheticsTestRequestDNSServerPort) -> Self {
         self.dns_server_port = Some(value);
         self
     }
-
-    pub fn files(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>,
-    ) -> Self {
+    
+    pub fn files(mut self, value: Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>) -> Self {
         self.files = Some(value);
         self
     }
-
+    
     pub fn follow_redirects(mut self, value: bool) -> Self {
         self.follow_redirects = Some(value);
         self
     }
-
+    
     pub fn form(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.form = Some(value);
         self
     }
-
+    
     pub fn headers(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.headers = Some(value);
         self
     }
-
+    
     pub fn host(mut self, value: String) -> Self {
         self.host = Some(value);
         self
     }
-
-    pub fn http_version(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
-    ) -> Self {
+    
+    pub fn http_version(mut self, value: crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion) -> Self {
         self.http_version = Some(value);
         self
     }
-
+    
     pub fn ignore_certificate_validation(mut self, value: bool) -> Self {
         self.ignore_certificate_validation = Some(value);
         self
     }
-
+    
     pub fn is_message_base64_encoded(mut self, value: bool) -> Self {
         self.is_message_base64_encoded = Some(value);
         self
     }
-
-    pub fn mcp_protocol_version(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMCPProtocolVersion,
-    ) -> Self {
+    
+    pub fn mcp_protocol_version(mut self, value: crate::datadogV1::model::SyntheticsMCPProtocolVersion) -> Self {
         self.mcp_protocol_version = Some(value);
         self
     }
-
+    
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
         self
     }
-
+    
     pub fn metadata(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn method(mut self, value: String) -> Self {
         self.method = Some(value);
         self
     }
-
+    
     pub fn no_saving_response_body(mut self, value: bool) -> Self {
         self.no_saving_response_body = Some(value);
         self
     }
-
+    
     pub fn number_of_packets(mut self, value: i32) -> Self {
         self.number_of_packets = Some(value);
         self
     }
-
+    
     pub fn persist_cookies(mut self, value: bool) -> Self {
         self.persist_cookies = Some(value);
         self
     }
-
+    
     pub fn port(mut self, value: crate::datadogV1::model::SyntheticsTestRequestPort) -> Self {
         self.port = Some(value);
         self
     }
-
+    
     pub fn proxy(mut self, value: crate::datadogV1::model::SyntheticsTestRequestProxy) -> Self {
         self.proxy = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn servername(mut self, value: String) -> Self {
         self.servername = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn should_track_hops(mut self, value: bool) -> Self {
         self.should_track_hops = Some(value);
         self
     }
-
+    
     pub fn timeout(mut self, value: f64) -> Self {
         self.timeout = Some(value);
         self
     }
-
-    pub fn tool_args(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn tool_args(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.tool_args = Some(value);
         self
     }
-
+    
     pub fn tool_name(mut self, value: String) -> Self {
         self.tool_name = Some(value);
         self
     }
-
+    
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestRequest {
     fn default() -> Self {
@@ -428,35 +405,25 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut allow_insecure: Option<bool> = None;
                 let mut basic_auth: Option<crate::datadogV1::model::SyntheticsBasicAuth> = None;
                 let mut body: Option<String> = None;
-                let mut body_type: Option<crate::datadogV1::model::SyntheticsTestRequestBodyType> =
-                    None;
+                let mut body_type: Option<crate::datadogV1::model::SyntheticsTestRequestBodyType> = None;
                 let mut call_type: Option<crate::datadogV1::model::SyntheticsTestCallType> = None;
-                let mut certificate: Option<
-                    crate::datadogV1::model::SyntheticsTestRequestCertificate,
-                > = None;
+                let mut certificate: Option<crate::datadogV1::model::SyntheticsTestRequestCertificate> = None;
                 let mut certificate_domains: Option<Vec<String>> = None;
                 let mut check_certificate_revocation: Option<bool> = None;
                 let mut compressed_json_descriptor: Option<String> = None;
                 let mut compressed_proto_file: Option<String> = None;
                 let mut disable_aia_intermediate_fetching: Option<bool> = None;
                 let mut dns_server: Option<String> = None;
-                let mut dns_server_port: Option<
-                    crate::datadogV1::model::SyntheticsTestRequestDNSServerPort,
-                > = None;
-                let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> =
-                    None;
+                let mut dns_server_port: Option<crate::datadogV1::model::SyntheticsTestRequestDNSServerPort> = None;
+                let mut files: Option<Vec<crate::datadogV1::model::SyntheticsTestRequestBodyFile>> = None;
                 let mut follow_redirects: Option<bool> = None;
                 let mut form: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut headers: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut host: Option<String> = None;
-                let mut http_version: Option<
-                    crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion,
-                > = None;
+                let mut http_version: Option<crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion> = None;
                 let mut ignore_certificate_validation: Option<bool> = None;
                 let mut is_message_base64_encoded: Option<bool> = None;
-                let mut mcp_protocol_version: Option<
-                    crate::datadogV1::model::SyntheticsMCPProtocolVersion,
-                > = None;
+                let mut mcp_protocol_version: Option<crate::datadogV1::model::SyntheticsMCPProtocolVersion> = None;
                 let mut message: Option<String> = None;
                 let mut metadata: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut method: Option<String> = None;
@@ -470,14 +437,10 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                 let mut service: Option<String> = None;
                 let mut should_track_hops: Option<bool> = None;
                 let mut timeout: Option<f64> = None;
-                let mut tool_args: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut tool_args: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut tool_name: Option<String> = None;
                 let mut url: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -486,9 +449,8 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_insecure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_insecure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "basicAuth" => {
                             if v.is_null() {
                                 continue;
@@ -502,13 +464,13 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "body" => {
                             if v.is_null() {
                                 continue;
                             }
                             body = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bodyType" => {
                             if v.is_null() {
                                 continue;
@@ -522,7 +484,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "callType" => {
                             if v.is_null() {
                                 continue;
@@ -536,61 +498,54 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "certificate" => {
                             if v.is_null() {
                                 continue;
                             }
-                            certificate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            certificate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "certificateDomains" => {
                             if v.is_null() {
                                 continue;
                             }
-                            certificate_domains =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            certificate_domains = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "checkCertificateRevocation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            check_certificate_revocation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            check_certificate_revocation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "compressedJsonDescriptor" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compressed_json_descriptor =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compressed_json_descriptor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "compressedProtoFile" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compressed_proto_file =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compressed_proto_file = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "disableAiaIntermediateFetching" => {
                             if v.is_null() {
                                 continue;
                             }
-                            disable_aia_intermediate_fetching =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            disable_aia_intermediate_fetching = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dnsServer" => {
                             if v.is_null() {
                                 continue;
                             }
                             dns_server = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "dnsServerPort" => {
                             if v.is_null() {
                                 continue;
                             }
-                            dns_server_port =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            dns_server_port = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _dns_server_port) = dns_server_port {
                                 match _dns_server_port {
                                     crate::datadogV1::model::SyntheticsTestRequestDNSServerPort::UnparsedObject(_dns_server_port) => {
@@ -599,44 +554,42 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "files" => {
                             if v.is_null() {
                                 continue;
                             }
                             files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "follow_redirects" => {
                             if v.is_null() {
                                 continue;
                             }
-                            follow_redirects =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            follow_redirects = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "form" => {
                             if v.is_null() {
                                 continue;
                             }
                             form = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "headers" => {
                             if v.is_null() {
                                 continue;
                             }
                             headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "host" => {
                             if v.is_null() {
                                 continue;
                             }
                             host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "httpVersion" => {
                             if v.is_null() {
                                 continue;
                             }
-                            http_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            http_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _http_version) = http_version {
                                 match _http_version {
                                     crate::datadogV1::model::SyntheticsTestOptionsHTTPVersion::UnparsedObject(_http_version) => {
@@ -645,27 +598,24 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "ignore_certificate_validation" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ignore_certificate_validation =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ignore_certificate_validation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "isMessageBase64Encoded" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_message_base64_encoded =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_message_base64_encoded = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mcpProtocolVersion" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mcp_protocol_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            mcp_protocol_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mcp_protocol_version) = mcp_protocol_version {
                                 match _mcp_protocol_version {
                                     crate::datadogV1::model::SyntheticsMCPProtocolVersion::UnparsedObject(_mcp_protocol_version) => {
@@ -674,46 +624,43 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "method" => {
                             if v.is_null() {
                                 continue;
                             }
                             method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "noSavingResponseBody" => {
                             if v.is_null() {
                                 continue;
                             }
-                            no_saving_response_body =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            no_saving_response_body = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "numberOfPackets" => {
                             if v.is_null() {
                                 continue;
                             }
-                            number_of_packets =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            number_of_packets = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "persistCookies" => {
                             if v.is_null() {
                                 continue;
                             }
-                            persist_cookies =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            persist_cookies = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "port" => {
                             if v.is_null() {
                                 continue;
@@ -727,67 +674,66 @@ impl<'de> Deserialize<'de> for SyntheticsTestRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "proxy" => {
                             if v.is_null() {
                                 continue;
                             }
                             proxy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "servername" => {
                             if v.is_null() {
                                 continue;
                             }
                             servername = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "shouldTrackHops" => {
                             if v.is_null() {
                                 continue;
                             }
-                            should_track_hops =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            should_track_hops = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timeout" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             timeout = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "toolArgs" => {
                             if v.is_null() {
                                 continue;
                             }
                             tool_args = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "toolName" => {
                             if v.is_null() {
                                 continue;
                             }
                             tool_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "url" => {
                             if v.is_null() {
                                 continue;
                             }
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

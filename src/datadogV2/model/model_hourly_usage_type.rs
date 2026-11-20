@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum HourlyUsageType {
-    APP_SEC_HOST_COUNT,
-    OBSERVABILITY_PIPELINES_BYTES_PROCESSSED,
-    LAMBDA_TRACED_INVOCATIONS_COUNT,
+	APP_SEC_HOST_COUNT,
+	OBSERVABILITY_PIPELINES_BYTES_PROCESSSED,
+	LAMBDA_TRACED_INVOCATIONS_COUNT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,12 +18,8 @@ impl ToString for HourlyUsageType {
     fn to_string(&self) -> String {
         match self {
             Self::APP_SEC_HOST_COUNT => String::from("app_sec_host_count"),
-            Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED => {
-                String::from("observability_pipelines_bytes_processed")
-            }
-            Self::LAMBDA_TRACED_INVOCATIONS_COUNT => {
-                String::from("lambda_traced_invocations_count")
-            }
+            Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED => String::from("observability_pipelines_bytes_processed"),
+            Self::LAMBDA_TRACED_INVOCATIONS_COUNT => String::from("lambda_traced_invocations_count"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,15 +43,8 @@ impl<'de> Deserialize<'de> for HourlyUsageType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "app_sec_host_count" => Self::APP_SEC_HOST_COUNT,
-            "observability_pipelines_bytes_processed" => {
-                Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED
-            }
-            "lambda_traced_invocations_count" => Self::LAMBDA_TRACED_INVOCATIONS_COUNT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"app_sec_host_count" => Self::APP_SEC_HOST_COUNT,"observability_pipelines_bytes_processed" => Self::OBSERVABILITY_PIPELINES_BYTES_PROCESSSED,"lambda_traced_invocations_count" => Self::LAMBDA_TRACED_INVOCATIONS_COUNT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

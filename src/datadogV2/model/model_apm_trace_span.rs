@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single APM span returned as part of a trace.
 #[non_exhaustive]
@@ -21,11 +21,11 @@ pub struct APMTraceSpan {
     #[serde(rename = "error")]
     pub error: crate::datadogV2::model::APMSpanErrorFlag,
     /// String-valued tags attached to the span. Tag keys starting with `_` are
-    /// filtered out of the response.
+/// filtered out of the response.
     #[serde(rename = "meta")]
     pub meta: std::collections::BTreeMap<String, String>,
     /// Numeric metrics attached to the span. Metric keys starting with `_` are
-    /// filtered out of the response.
+/// filtered out of the response.
     #[serde(rename = "metrics")]
     pub metrics: std::collections::BTreeMap<String, f64>,
     /// The operation name of the span.
@@ -59,7 +59,7 @@ pub struct APMTraceSpan {
     #[serde(rename = "traceID")]
     pub trace_id: i64,
     /// The trace ID as requested: a decimal ID is returned unchanged, and a hexadecimal ID is lowercased and
-    /// left-padded with zeros to 32 characters.
+/// left-padded with zeros to 32 characters.
     #[serde(rename = "traceIDFull")]
     pub trace_id_full: String,
     /// The type of the span (for example, `web`, `db`, or `rpc`).
@@ -69,26 +69,11 @@ pub struct APMTraceSpan {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl APMTraceSpan {
-    pub fn new(
-        duration: i64,
-        end_time: i64,
-        error: crate::datadogV2::model::APMSpanErrorFlag,
-        meta: std::collections::BTreeMap<String, String>,
-        metrics: std::collections::BTreeMap<String, f64>,
-        name: String,
-        parent_id: i64,
-        resource: String,
-        service: String,
-        span_id: i64,
-        start_time: i64,
-        trace_id: i64,
-        trace_id_full: String,
-        type_: String,
-    ) -> APMTraceSpan {
+    pub fn new(duration: i64, end_time: i64, error: crate::datadogV2::model::APMSpanErrorFlag, meta: std::collections::BTreeMap<String, String>, metrics: std::collections::BTreeMap<String, f64>, name: String, parent_id: i64, resource: String, service: String, span_id: i64, start_time: i64, trace_id: i64, trace_id_full: String, type_: String) -> APMTraceSpan {
         APMTraceSpan {
             duration,
             end_time,
@@ -111,30 +96,29 @@ impl APMTraceSpan {
             _unparsed: false,
         }
     }
-
+    
     pub fn resource_hash(mut self, value: String) -> Self {
         self.resource_hash = Some(value);
         self
     }
-
+    
     pub fn restricted(mut self, value: bool) -> Self {
         self.restricted = Some(value);
         self
     }
-
+    
     pub fn self_time(mut self, value: f64) -> Self {
         self.self_time = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for APMTraceSpan {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -170,91 +154,84 @@ impl<'de> Deserialize<'de> for APMTraceSpan {
                 let mut trace_id: Option<i64> = None;
                 let mut trace_id_full: Option<String> = None;
                 let mut type_: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "duration" => {
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "endTime" => {
                             end_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error" => {
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _error) = error {
                                 match _error {
-                                    crate::datadogV2::model::APMSpanErrorFlag::UnparsedObject(
-                                        _error,
-                                    ) => {
+                                    crate::datadogV2::model::APMSpanErrorFlag::UnparsedObject(_error) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "meta" => {
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metrics" => {
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parentID" => {
                             parent_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource" => {
                             resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resourceHash" => {
                             if v.is_null() {
                                 continue;
                             }
-                            resource_hash =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_hash = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "restricted" => {
                             if v.is_null() {
                                 continue;
                             }
                             restricted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "self_time" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             self_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "spanID" => {
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "startTime" => {
                             start_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "traceID" => {
                             trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "traceIDFull" => {
-                            trace_id_full =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            trace_id_full = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let duration = duration.ok_or_else(|| M::Error::missing_field("duration"))?;
@@ -269,8 +246,7 @@ impl<'de> Deserialize<'de> for APMTraceSpan {
                 let span_id = span_id.ok_or_else(|| M::Error::missing_field("span_id"))?;
                 let start_time = start_time.ok_or_else(|| M::Error::missing_field("start_time"))?;
                 let trace_id = trace_id.ok_or_else(|| M::Error::missing_field("trace_id"))?;
-                let trace_id_full =
-                    trace_id_full.ok_or_else(|| M::Error::missing_field("trace_id_full"))?;
+                let trace_id_full = trace_id_full.ok_or_else(|| M::Error::missing_field("trace_id_full"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = APMTraceSpan {

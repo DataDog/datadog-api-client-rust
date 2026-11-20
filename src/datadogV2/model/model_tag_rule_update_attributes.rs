@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Mutable attributes of a tag rule. Each field is optional; omitting a field leaves its
 /// current value unchanged. The `source` of a rule cannot be changed. Tag keys, patterns,
@@ -27,8 +27,8 @@ pub struct TagRuleUpdateAttributes {
     #[serde(rename = "required")]
     pub required: Option<bool>,
     /// How the rule is enforced. `blocking` rejects telemetry that violates the rule.
-    /// `surfacing` only highlights non-compliant telemetry without blocking it.
-    /// RUM supports only `surfacing` rules.
+/// `surfacing` only highlights non-compliant telemetry without blocking it.
+/// RUM supports only `surfacing` rules.
     #[serde(rename = "rule_type")]
     pub rule_type: Option<crate::datadogV2::model::TagRuleType>,
     /// The scope the rule applies within.
@@ -44,7 +44,7 @@ pub struct TagRuleUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TagRuleUpdateAttributes {
@@ -62,55 +62,53 @@ impl TagRuleUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn negated(mut self, value: bool) -> Self {
         self.negated = Some(value);
         self
     }
-
+    
     pub fn required(mut self, value: bool) -> Self {
         self.required = Some(value);
         self
     }
-
+    
     pub fn rule_type(mut self, value: crate::datadogV2::model::TagRuleType) -> Self {
         self.rule_type = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn tag_key(mut self, value: String) -> Self {
         self.tag_key = Some(value);
         self
     }
-
+    
     pub fn tag_value_patterns(mut self, value: Vec<String>) -> Self {
         self.tag_value_patterns = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TagRuleUpdateAttributes {
     fn default() -> Self {
@@ -143,10 +141,7 @@ impl<'de> Deserialize<'de> for TagRuleUpdateAttributes {
                 let mut scope: Option<String> = None;
                 let mut tag_key: Option<String> = None;
                 let mut tag_value_patterns: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -156,25 +151,25 @@ impl<'de> Deserialize<'de> for TagRuleUpdateAttributes {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "negated" => {
                             if v.is_null() {
                                 continue;
                             }
                             negated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "required" => {
                             if v.is_null() {
                                 continue;
                             }
                             required = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_type" => {
                             if v.is_null() {
                                 continue;
@@ -182,39 +177,36 @@ impl<'de> Deserialize<'de> for TagRuleUpdateAttributes {
                             rule_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rule_type) = rule_type {
                                 match _rule_type {
-                                    crate::datadogV2::model::TagRuleType::UnparsedObject(
-                                        _rule_type,
-                                    ) => {
+                                    crate::datadogV2::model::TagRuleType::UnparsedObject(_rule_type) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_key" => {
                             if v.is_null() {
                                 continue;
                             }
                             tag_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tag_value_patterns" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_value_patterns =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_value_patterns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Number of indexed logs for each hour and index for a given organization.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct UsageLogsByIndexHour {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UsageLogsByIndexHour {
@@ -53,50 +53,48 @@ impl UsageLogsByIndexHour {
             _unparsed: false,
         }
     }
-
+    
     pub fn event_count(mut self, value: i64) -> Self {
         self.event_count = Some(value);
         self
     }
-
+    
     pub fn hour(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.hour = Some(value);
         self
     }
-
+    
     pub fn index_id(mut self, value: String) -> Self {
         self.index_id = Some(value);
         self
     }
-
+    
     pub fn index_name(mut self, value: String) -> Self {
         self.index_name = Some(value);
         self
     }
-
+    
     pub fn org_name(mut self, value: String) -> Self {
         self.org_name = Some(value);
         self
     }
-
+    
     pub fn public_id(mut self, value: String) -> Self {
         self.public_id = Some(value);
         self
     }
-
+    
     pub fn retention(mut self, value: i64) -> Self {
         self.retention = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UsageLogsByIndexHour {
     fn default() -> Self {
@@ -128,10 +126,7 @@ impl<'de> Deserialize<'de> for UsageLogsByIndexHour {
                 let mut org_name: Option<String> = None;
                 let mut public_id: Option<String> = None;
                 let mut retention: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,50 +135,49 @@ impl<'de> Deserialize<'de> for UsageLogsByIndexHour {
                             if v.is_null() {
                                 continue;
                             }
-                            event_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "hour" => {
                             if v.is_null() {
                                 continue;
                             }
                             hour = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "index_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             index_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "index_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             index_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "public_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retention" => {
                             if v.is_null() {
                                 continue;
                             }
                             retention = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

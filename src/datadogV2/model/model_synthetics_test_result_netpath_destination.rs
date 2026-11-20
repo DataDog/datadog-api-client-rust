@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Destination endpoint of a network path measurement.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct SyntheticsTestResultNetpathDestination {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultNetpathDestination {
@@ -37,30 +37,28 @@ impl SyntheticsTestResultNetpathDestination {
             _unparsed: false,
         }
     }
-
+    
     pub fn hostname(mut self, value: String) -> Self {
         self.hostname = Some(value);
         self
     }
-
+    
     pub fn ip_address(mut self, value: String) -> Self {
         self.ip_address = Some(value);
         self
     }
-
+    
     pub fn port(mut self, value: i64) -> Self {
         self.port = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultNetpathDestination {
     fn default() -> Self {
@@ -88,10 +86,7 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultNetpathDestination {
                 let mut hostname: Option<String> = None;
                 let mut ip_address: Option<String> = None;
                 let mut port: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -101,24 +96,24 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultNetpathDestination {
                                 continue;
                             }
                             hostname = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ip_address" => {
                             if v.is_null() {
                                 continue;
                             }
                             ip_address = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "port" => {
                             if v.is_null() {
                                 continue;
                             }
                             port = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

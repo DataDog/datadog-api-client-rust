@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for linking a page to an incident.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct IncidentOnCallPageDataAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentOnCallPageDataAttributesRequest {
@@ -37,30 +37,28 @@ impl IncidentOnCallPageDataAttributesRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn key(mut self, value: String) -> Self {
         self.key = Some(value);
         self
     }
-
+    
     pub fn page_target(mut self, value: crate::datadogV2::model::IncidentOnCallPageTarget) -> Self {
         self.page_target = Some(value);
         self
     }
-
+    
     pub fn team_id(mut self, value: String) -> Self {
         self.team_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IncidentOnCallPageDataAttributesRequest {
     fn default() -> Self {
@@ -86,13 +84,9 @@ impl<'de> Deserialize<'de> for IncidentOnCallPageDataAttributesRequest {
                 M: MapAccess<'a>,
             {
                 let mut key: Option<String> = None;
-                let mut page_target: Option<crate::datadogV2::model::IncidentOnCallPageTarget> =
-                    None;
+                let mut page_target: Option<crate::datadogV2::model::IncidentOnCallPageTarget> = None;
                 let mut team_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -102,25 +96,24 @@ impl<'de> Deserialize<'de> for IncidentOnCallPageDataAttributesRequest {
                                 continue;
                             }
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "page_target" => {
                             if v.is_null() {
                                 continue;
                             }
-                            page_target =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            page_target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "team_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             team_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

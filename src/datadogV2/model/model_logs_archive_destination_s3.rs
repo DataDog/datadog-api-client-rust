@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The S3 archive destination.
 #[non_exhaustive]
@@ -33,15 +33,11 @@ pub struct LogsArchiveDestinationS3 {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsArchiveDestinationS3 {
-    pub fn new(
-        bucket: String,
-        integration: crate::datadogV2::model::LogsArchiveIntegrationS3,
-        type_: crate::datadogV2::model::LogsArchiveDestinationS3Type,
-    ) -> LogsArchiveDestinationS3 {
+    pub fn new(bucket: String, integration: crate::datadogV2::model::LogsArchiveIntegrationS3, type_: crate::datadogV2::model::LogsArchiveDestinationS3Type) -> LogsArchiveDestinationS3 {
         LogsArchiveDestinationS3 {
             bucket,
             encryption: None,
@@ -53,33 +49,29 @@ impl LogsArchiveDestinationS3 {
             _unparsed: false,
         }
     }
-
+    
     pub fn encryption(mut self, value: crate::datadogV2::model::LogsArchiveEncryptionS3) -> Self {
         self.encryption = Some(value);
         self
     }
-
+    
     pub fn path(mut self, value: String) -> Self {
         self.path = Some(value);
         self
     }
-
-    pub fn storage_class(
-        mut self,
-        value: crate::datadogV2::model::LogsArchiveStorageClassS3Type,
-    ) -> Self {
+    
+    pub fn storage_class(mut self, value: crate::datadogV2::model::LogsArchiveStorageClassS3Type) -> Self {
         self.storage_class = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -100,33 +92,26 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
             {
                 let mut bucket: Option<String> = None;
                 let mut encryption: Option<crate::datadogV2::model::LogsArchiveEncryptionS3> = None;
-                let mut integration: Option<crate::datadogV2::model::LogsArchiveIntegrationS3> =
-                    None;
+                let mut integration: Option<crate::datadogV2::model::LogsArchiveIntegrationS3> = None;
                 let mut path: Option<String> = None;
-                let mut storage_class: Option<
-                    crate::datadogV2::model::LogsArchiveStorageClassS3Type,
-                > = None;
+                let mut storage_class: Option<crate::datadogV2::model::LogsArchiveStorageClassS3Type> = None;
                 let mut type_: Option<crate::datadogV2::model::LogsArchiveDestinationS3Type> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "bucket" => {
                             bucket = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "encryption" => {
                             if v.is_null() {
                                 continue;
                             }
                             encryption = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "integration" => {
-                            integration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            integration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _integration) = integration {
                                 match _integration {
                                     crate::datadogV2::model::LogsArchiveIntegrationS3::UnparsedObject(_integration) => {
@@ -135,19 +120,18 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "path" => {
                             if v.is_null() {
                                 continue;
                             }
                             path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "storage_class" => {
                             if v.is_null() {
                                 continue;
                             }
-                            storage_class =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            storage_class = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _storage_class) = storage_class {
                                 match _storage_class {
                                     crate::datadogV2::model::LogsArchiveStorageClassS3Type::UnparsedObject(_storage_class) => {
@@ -156,7 +140,7 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -167,17 +151,16 @@ impl<'de> Deserialize<'de> for LogsArchiveDestinationS3 {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let bucket = bucket.ok_or_else(|| M::Error::missing_field("bucket"))?;
-                let integration =
-                    integration.ok_or_else(|| M::Error::missing_field("integration"))?;
+                let integration = integration.ok_or_else(|| M::Error::missing_field("integration"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = LogsArchiveDestinationS3 {

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Deletion attribute for data deletion response.
 #[non_exhaustive]
@@ -69,25 +69,11 @@ pub struct DataDeletionResponseItemAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DataDeletionResponseItemAttributes {
-    pub fn new(
-        created_at: String,
-        created_by: String,
-        displayed_total: i64,
-        from_time: i64,
-        is_created: bool,
-        org_id: i64,
-        product: String,
-        query: String,
-        starting_at: String,
-        status: String,
-        to_time: i64,
-        total_unrestricted: i64,
-        updated_at: String,
-    ) -> DataDeletionResponseItemAttributes {
+    pub fn new(created_at: String, created_by: String, displayed_total: i64, from_time: i64, is_created: bool, org_id: i64, product: String, query: String, starting_at: String, status: String, to_time: i64, total_unrestricted: i64, updated_at: String) -> DataDeletionResponseItemAttributes {
         DataDeletionResponseItemAttributes {
             created_at,
             created_by,
@@ -111,40 +97,39 @@ impl DataDeletionResponseItemAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn customer_message(mut self, value: String) -> Self {
         self.customer_message = Some(value);
         self
     }
-
+    
     pub fn error_category(mut self, value: String) -> Self {
         self.error_category = Some(value);
         self
     }
-
+    
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
-
+    
     pub fn recoverable_until(mut self, value: String) -> Self {
         self.recoverable_until = Some(value);
         self
     }
-
+    
     pub fn source(mut self, value: String) -> Self {
         self.source = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -181,111 +166,99 @@ impl<'de> Deserialize<'de> for DataDeletionResponseItemAttributes {
                 let mut to_time: Option<i64> = None;
                 let mut total_unrestricted: Option<i64> = None;
                 let mut updated_at: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "customer_message" => {
                             if v.is_null() {
                                 continue;
                             }
-                            customer_message =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            customer_message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "displayed_total" => {
-                            displayed_total =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            displayed_total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_category" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "from_time" => {
                             from_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "indexes" => {
                             if v.is_null() {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_created" => {
                             is_created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "org_id" => {
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "product" => {
                             product = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "recoverable_until" => {
                             if v.is_null() {
                                 continue;
                             }
-                            recoverable_until =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            recoverable_until = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source" => {
                             if v.is_null() {
                                 continue;
                             }
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "starting_at" => {
-                            starting_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            starting_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "to_time" => {
                             to_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "total_unrestricted" => {
-                            total_unrestricted =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_unrestricted = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let displayed_total =
-                    displayed_total.ok_or_else(|| M::Error::missing_field("displayed_total"))?;
+                let displayed_total = displayed_total.ok_or_else(|| M::Error::missing_field("displayed_total"))?;
                 let from_time = from_time.ok_or_else(|| M::Error::missing_field("from_time"))?;
                 let is_created = is_created.ok_or_else(|| M::Error::missing_field("is_created"))?;
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
                 let product = product.ok_or_else(|| M::Error::missing_field("product"))?;
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
-                let starting_at =
-                    starting_at.ok_or_else(|| M::Error::missing_field("starting_at"))?;
+                let starting_at = starting_at.ok_or_else(|| M::Error::missing_field("starting_at"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let to_time = to_time.ok_or_else(|| M::Error::missing_field("to_time"))?;
-                let total_unrestricted = total_unrestricted
-                    .ok_or_else(|| M::Error::missing_field("total_unrestricted"))?;
+                let total_unrestricted = total_unrestricted.ok_or_else(|| M::Error::missing_field("total_unrestricted"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = DataDeletionResponseItemAttributes {

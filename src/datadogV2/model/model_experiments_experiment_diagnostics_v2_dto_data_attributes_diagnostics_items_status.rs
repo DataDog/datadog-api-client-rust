@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus {
-    PASS,
-    FAIL,
-    WARN,
-    ERROR,
-    SKIPPED,
+	PASS,
+	FAIL,
+	WARN,
+	ERROR,
+	SKIPPED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -40,23 +41,14 @@ impl Serialize for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnostic
     }
 }
 
-impl<'de> Deserialize<'de>
-    for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus
-{
+impl<'de> Deserialize<'de> for ExperimentsExperimentDiagnosticsV2DTODataAttributesDiagnosticsItemsStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "PASS" => Self::PASS,
-            "FAIL" => Self::FAIL,
-            "WARN" => Self::WARN,
-            "ERROR" => Self::ERROR,
-            "SKIPPED" => Self::SKIPPED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"PASS" => Self::PASS,"FAIL" => Self::FAIL,"WARN" => Self::WARN,"ERROR" => Self::ERROR,"SKIPPED" => Self::SKIPPED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

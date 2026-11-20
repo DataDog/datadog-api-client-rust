@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the information of a search result.
 #[non_exhaustive]
@@ -12,15 +12,15 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssuesSearchResultAttributes {
     /// Count of sessions impacted by the issue over the queried time window.
-    /// Returned for RUM and LLM Observability tracks, for browser, mobile, and agent personas,
-    /// or when `issue.impacted_sessions` is requested in the `include` query parameter.
-    /// Omitted when zero unless requested in the `include` query parameter.
+/// Returned for RUM and LLM Observability tracks, for browser, mobile, and agent personas,
+/// or when `issue.impacted_sessions` is requested in the `include` query parameter.
+/// Omitted when zero unless requested in the `include` query parameter.
     #[serde(rename = "impacted_sessions")]
     pub impacted_sessions: Option<i64>,
     /// Count of users impacted by the issue over the queried time window.
-    /// Returned for the RUM track, for browser and mobile personas,
-    /// or when `issue.impacted_users` is requested in the `include` query parameter.
-    /// Omitted when zero unless requested in the `include` query parameter.
+/// Returned for the RUM track, for browser and mobile personas,
+/// or when `issue.impacted_users` is requested in the `include` query parameter.
+/// Omitted when zero unless requested in the `include` query parameter.
     #[serde(rename = "impacted_users")]
     pub impacted_users: Option<i64>,
     /// Total count of errors that match the issue over the queried time window.
@@ -30,7 +30,7 @@ pub struct IssuesSearchResultAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssuesSearchResultAttributes {
@@ -43,30 +43,28 @@ impl IssuesSearchResultAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn impacted_sessions(mut self, value: i64) -> Self {
         self.impacted_sessions = Some(value);
         self
     }
-
+    
     pub fn impacted_users(mut self, value: i64) -> Self {
         self.impacted_users = Some(value);
         self
     }
-
+    
     pub fn total_count(mut self, value: i64) -> Self {
         self.total_count = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IssuesSearchResultAttributes {
     fn default() -> Self {
@@ -94,10 +92,7 @@ impl<'de> Deserialize<'de> for IssuesSearchResultAttributes {
                 let mut impacted_sessions: Option<i64> = None;
                 let mut impacted_users: Option<i64> = None;
                 let mut total_count: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -106,28 +101,25 @@ impl<'de> Deserialize<'de> for IssuesSearchResultAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            impacted_sessions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            impacted_sessions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "impacted_users" => {
                             if v.is_null() {
                                 continue;
                             }
-                            impacted_users =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            impacted_users = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

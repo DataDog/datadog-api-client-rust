@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateAwsOnDemandTaskError is a struct for typed errors of method [`AgentlessScanningAPI::create_aws_on_demand_task`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -18,6 +18,7 @@ pub enum CreateAwsOnDemandTaskError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::create_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -25,6 +26,7 @@ pub enum CreateAwsScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateAzureScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::create_azure_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -34,6 +36,7 @@ pub enum CreateAzureScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateGcpScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::create_gcp_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +44,7 @@ pub enum CreateGcpScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::delete_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +54,7 @@ pub enum DeleteAwsScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteAzureScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::delete_azure_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -57,6 +62,7 @@ pub enum DeleteAzureScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteGcpScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::delete_gcp_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -66,6 +72,7 @@ pub enum DeleteGcpScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAwsOnDemandTaskError is a struct for typed errors of method [`AgentlessScanningAPI::get_aws_on_demand_task`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -73,6 +80,7 @@ pub enum GetAwsOnDemandTaskError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::get_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -82,6 +90,7 @@ pub enum GetAwsScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetAzureScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::get_azure_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -89,6 +98,7 @@ pub enum GetAzureScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetGcpScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::get_gcp_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -98,6 +108,7 @@ pub enum GetGcpScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAwsOnDemandTasksError is a struct for typed errors of method [`AgentlessScanningAPI::list_aws_on_demand_tasks`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -105,6 +116,7 @@ pub enum ListAwsOnDemandTasksError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::list_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -114,6 +126,7 @@ pub enum ListAwsScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListAzureScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::list_azure_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -121,6 +134,7 @@ pub enum ListAzureScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListGcpScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::list_gcp_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -130,6 +144,7 @@ pub enum ListGcpScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateAwsScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::update_aws_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -137,6 +152,7 @@ pub enum UpdateAwsScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateAzureScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::update_azure_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -146,6 +162,7 @@ pub enum UpdateAzureScanOptionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateGcpScanOptionsError is a struct for typed errors of method [`AgentlessScanningAPI::update_gcp_scan_options`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -153,6 +170,7 @@ pub enum UpdateGcpScanOptionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Datadog Agentless Scanning provides visibility into risks and vulnerabilities
 /// within your hosts, running containers, and serverless functions—all without
@@ -180,7 +198,8 @@ impl AgentlessScanningAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -225,59 +244,49 @@ impl AgentlessScanningAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Trigger the scan of an AWS resource with a high priority. Agentless scanning must be activated for the AWS account containing the resource to scan.
-    pub async fn create_aws_on_demand_task(
-        &self,
-        body: crate::datadogV2::model::AwsOnDemandCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AwsOnDemandResponse,
-        datadog::Error<CreateAwsOnDemandTaskError>,
-    > {
+    pub async fn create_aws_on_demand_task(&self, body: crate::datadogV2::model::AwsOnDemandCreateRequest) -> Result<crate::datadogV2::model::AwsOnDemandResponse, datadog::Error<CreateAwsOnDemandTaskError>> {
         match self.create_aws_on_demand_task_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Trigger the scan of an AWS resource with a high priority. Agentless scanning must be activated for the AWS account containing the resource to scan.
-    pub async fn create_aws_on_demand_task_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AwsOnDemandCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>,
-        datadog::Error<CreateAwsOnDemandTaskError>,
-    > {
+    pub async fn create_aws_on_demand_task_with_http_info(&self, body: crate::datadogV2::model::AwsOnDemandCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>, datadog::Error<CreateAwsOnDemandTaskError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_on_demand_task";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -290,23 +299,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -314,7 +316,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -324,7 +329,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -346,7 +354,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -363,76 +371,58 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAwsOnDemandTaskError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAwsOnDemandTaskError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Activate Agentless scan options for an AWS account.
-    pub async fn create_aws_scan_options(
-        &self,
-        body: crate::datadogV2::model::AwsScanOptionsCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::AwsScanOptionsResponse,
-        datadog::Error<CreateAwsScanOptionsError>,
-    > {
+    pub async fn create_aws_scan_options(&self, body: crate::datadogV2::model::AwsScanOptionsCreateRequest) -> Result<crate::datadogV2::model::AwsScanOptionsResponse, datadog::Error<CreateAwsScanOptionsError>> {
         match self.create_aws_scan_options_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Activate Agentless scan options for an AWS account.
-    pub async fn create_aws_scan_options_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AwsScanOptionsCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsResponse>,
-        datadog::Error<CreateAwsScanOptionsError>,
-    > {
+    pub async fn create_aws_scan_options_with_http_info(&self, body: crate::datadogV2::model::AwsScanOptionsCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsResponse>, datadog::Error<CreateAwsScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_aws_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -445,23 +435,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -469,7 +452,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -479,7 +465,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -501,7 +490,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -518,76 +507,58 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAwsScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Activate Agentless scan options for an Azure subscription.
-    pub async fn create_azure_scan_options(
-        &self,
-        body: crate::datadogV2::model::AzureScanOptions,
-    ) -> Result<
-        crate::datadogV2::model::AzureScanOptions,
-        datadog::Error<CreateAzureScanOptionsError>,
-    > {
+    pub async fn create_azure_scan_options(&self, body: crate::datadogV2::model::AzureScanOptions) -> Result<crate::datadogV2::model::AzureScanOptions, datadog::Error<CreateAzureScanOptionsError>> {
         match self.create_azure_scan_options_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Activate Agentless scan options for an Azure subscription.
-    pub async fn create_azure_scan_options_with_http_info(
-        &self,
-        body: crate::datadogV2::model::AzureScanOptions,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>,
-        datadog::Error<CreateAzureScanOptionsError>,
-    > {
+    pub async fn create_azure_scan_options_with_http_info(&self, body: crate::datadogV2::model::AzureScanOptions) -> Result<datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>, datadog::Error<CreateAzureScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_azure_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -600,23 +571,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -624,7 +588,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -634,7 +601,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -656,7 +626,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -673,73 +643,58 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateAzureScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateAzureScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Activate Agentless scan options for a GCP project.
-    pub async fn create_gcp_scan_options(
-        &self,
-        body: crate::datadogV2::model::GcpScanOptions,
-    ) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<CreateGcpScanOptionsError>>
-    {
+    pub async fn create_gcp_scan_options(&self, body: crate::datadogV2::model::GcpScanOptions) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<CreateGcpScanOptionsError>> {
         match self.create_gcp_scan_options_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Activate Agentless scan options for a GCP project.
-    pub async fn create_gcp_scan_options_with_http_info(
-        &self,
-        body: crate::datadogV2::model::GcpScanOptions,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>,
-        datadog::Error<CreateGcpScanOptionsError>,
-    > {
+    pub async fn create_gcp_scan_options_with_http_info(&self, body: crate::datadogV2::model::GcpScanOptions) -> Result<datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>, datadog::Error<CreateGcpScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_gcp_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -752,23 +707,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -776,7 +724,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -786,7 +737,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -808,7 +762,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -826,62 +780,52 @@ impl AgentlessScanningAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::GcpScanOptions>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateGcpScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateGcpScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete Agentless scan options for an AWS account.
-    pub async fn delete_aws_scan_options(
-        &self,
-        account_id: String,
-    ) -> Result<(), datadog::Error<DeleteAwsScanOptionsError>> {
-        match self
-            .delete_aws_scan_options_with_http_info(account_id)
-            .await
-        {
+    pub async fn delete_aws_scan_options(&self, account_id: String) -> Result<(), datadog::Error<DeleteAwsScanOptionsError>> {
+        match self.delete_aws_scan_options_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete Agentless scan options for an AWS account.
-    pub async fn delete_aws_scan_options_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAwsScanOptionsError>> {
+    pub async fn delete_aws_scan_options_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAwsScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_aws_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -894,22 +838,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -927,52 +865,44 @@ impl AgentlessScanningAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAwsScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete Agentless scan options for an Azure subscription.
-    pub async fn delete_azure_scan_options(
-        &self,
-        subscription_id: String,
-    ) -> Result<(), datadog::Error<DeleteAzureScanOptionsError>> {
-        match self
-            .delete_azure_scan_options_with_http_info(subscription_id)
-            .await
-        {
+    pub async fn delete_azure_scan_options(&self, subscription_id: String) -> Result<(), datadog::Error<DeleteAzureScanOptionsError>> {
+        match self.delete_azure_scan_options_with_http_info(subscription_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete Agentless scan options for an Azure subscription.
-    pub async fn delete_azure_scan_options_with_http_info(
-        &self,
-        subscription_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAzureScanOptionsError>> {
+    pub async fn delete_azure_scan_options_with_http_info(&self, subscription_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteAzureScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_azure_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subscription_id = datadog::urlencode(subscription_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subscription_id=
+            datadog::urlencode(subscription_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -985,22 +915,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1018,52 +942,44 @@ impl AgentlessScanningAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteAzureScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteAzureScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete Agentless scan options for a GCP project.
-    pub async fn delete_gcp_scan_options(
-        &self,
-        project_id: String,
-    ) -> Result<(), datadog::Error<DeleteGcpScanOptionsError>> {
-        match self
-            .delete_gcp_scan_options_with_http_info(project_id)
-            .await
-        {
+    pub async fn delete_gcp_scan_options(&self, project_id: String) -> Result<(), datadog::Error<DeleteGcpScanOptionsError>> {
+        match self.delete_gcp_scan_options_with_http_info(project_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete Agentless scan options for a GCP project.
-    pub async fn delete_gcp_scan_options_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGcpScanOptionsError>> {
+    pub async fn delete_gcp_scan_options_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteGcpScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_gcp_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1076,22 +992,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1109,61 +1019,50 @@ impl AgentlessScanningAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteGcpScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteGcpScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetch the data of a specific on demand task.
-    pub async fn get_aws_on_demand_task(
-        &self,
-        task_id: String,
-    ) -> Result<crate::datadogV2::model::AwsOnDemandResponse, datadog::Error<GetAwsOnDemandTaskError>>
-    {
+    pub async fn get_aws_on_demand_task(&self, task_id: String) -> Result<crate::datadogV2::model::AwsOnDemandResponse, datadog::Error<GetAwsOnDemandTaskError>> {
         match self.get_aws_on_demand_task_with_http_info(task_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetch the data of a specific on demand task.
-    pub async fn get_aws_on_demand_task_with_http_info(
-        &self,
-        task_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>,
-        datadog::Error<GetAwsOnDemandTaskError>,
-    > {
+    pub async fn get_aws_on_demand_task_with_http_info(&self, task_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandResponse>, datadog::Error<GetAwsOnDemandTaskError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_on_demand_task";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws/{task_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            task_id = datadog::urlencode(task_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), task_id=
+            datadog::urlencode(task_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1176,22 +1075,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1203,76 +1096,59 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAwsOnDemandTaskError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAwsOnDemandTaskError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the Agentless scan options for an activated account.
-    pub async fn get_aws_scan_options(
-        &self,
-        account_id: String,
-    ) -> Result<
-        crate::datadogV2::model::AwsScanOptionsResponse,
-        datadog::Error<GetAwsScanOptionsError>,
-    > {
+    pub async fn get_aws_scan_options(&self, account_id: String) -> Result<crate::datadogV2::model::AwsScanOptionsResponse, datadog::Error<GetAwsScanOptionsError>> {
         match self.get_aws_scan_options_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the Agentless scan options for an activated account.
-    pub async fn get_aws_scan_options_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsResponse>,
-        datadog::Error<GetAwsScanOptionsError>,
-    > {
+    pub async fn get_aws_scan_options_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsResponse>, datadog::Error<GetAwsScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_aws_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1285,22 +1161,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1312,77 +1182,59 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAwsScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the Agentless scan options for an activated subscription.
-    pub async fn get_azure_scan_options(
-        &self,
-        subscription_id: String,
-    ) -> Result<crate::datadogV2::model::AzureScanOptions, datadog::Error<GetAzureScanOptionsError>>
-    {
-        match self
-            .get_azure_scan_options_with_http_info(subscription_id)
-            .await
-        {
+    pub async fn get_azure_scan_options(&self, subscription_id: String) -> Result<crate::datadogV2::model::AzureScanOptions, datadog::Error<GetAzureScanOptionsError>> {
+        match self.get_azure_scan_options_with_http_info(subscription_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the Agentless scan options for an activated subscription.
-    pub async fn get_azure_scan_options_with_http_info(
-        &self,
-        subscription_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>,
-        datadog::Error<GetAzureScanOptionsError>,
-    > {
+    pub async fn get_azure_scan_options_with_http_info(&self, subscription_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>, datadog::Error<GetAzureScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_azure_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subscription_id = datadog::urlencode(subscription_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subscription_id=
+            datadog::urlencode(subscription_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1395,22 +1247,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1422,73 +1268,59 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetAzureScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetAzureScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the Agentless scan options for an activated GCP project.
-    pub async fn get_gcp_scan_options(
-        &self,
-        project_id: String,
-    ) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<GetGcpScanOptionsError>>
-    {
+    pub async fn get_gcp_scan_options(&self, project_id: String) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<GetGcpScanOptionsError>> {
         match self.get_gcp_scan_options_with_http_info(project_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the Agentless scan options for an activated GCP project.
-    pub async fn get_gcp_scan_options_with_http_info(
-        &self,
-        project_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>,
-        datadog::Error<GetGcpScanOptionsError>,
-    > {
+    pub async fn get_gcp_scan_options_with_http_info(&self, project_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>, datadog::Error<GetGcpScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_gcp_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1501,22 +1333,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1529,70 +1355,56 @@ impl AgentlessScanningAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::GcpScanOptions>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetGcpScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetGcpScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the most recent 1000 AWS on demand tasks.
-    pub async fn list_aws_on_demand_tasks(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AwsOnDemandListResponse,
-        datadog::Error<ListAwsOnDemandTasksError>,
-    > {
+    pub async fn list_aws_on_demand_tasks(&self) -> Result<crate::datadogV2::model::AwsOnDemandListResponse, datadog::Error<ListAwsOnDemandTasksError>> {
         match self.list_aws_on_demand_tasks_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the most recent 1000 AWS on demand tasks.
-    pub async fn list_aws_on_demand_tasks_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandListResponse>,
-        datadog::Error<ListAwsOnDemandTasksError>,
-    > {
+    pub async fn list_aws_on_demand_tasks_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsOnDemandListResponse>, datadog::Error<ListAwsOnDemandTasksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_on_demand_tasks";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/ondemand/aws",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1605,22 +1417,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1632,73 +1438,57 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsOnDemandListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAwsOnDemandTasksError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAwsOnDemandTasksError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the scan options configured for AWS accounts.
-    pub async fn list_aws_scan_options(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AwsScanOptionsListResponse,
-        datadog::Error<ListAwsScanOptionsError>,
-    > {
+    pub async fn list_aws_scan_options(&self) -> Result<crate::datadogV2::model::AwsScanOptionsListResponse, datadog::Error<ListAwsScanOptionsError>> {
         match self.list_aws_scan_options_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the scan options configured for AWS accounts.
-    pub async fn list_aws_scan_options_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsListResponse>,
-        datadog::Error<ListAwsScanOptionsError>,
-    > {
+    pub async fn list_aws_scan_options_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AwsScanOptionsListResponse>, datadog::Error<ListAwsScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_aws_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1711,22 +1501,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1738,73 +1522,57 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AwsScanOptionsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAwsScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the scan options configured for Azure accounts.
-    pub async fn list_azure_scan_options(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::AzureScanOptionsArray,
-        datadog::Error<ListAzureScanOptionsError>,
-    > {
+    pub async fn list_azure_scan_options(&self) -> Result<crate::datadogV2::model::AzureScanOptionsArray, datadog::Error<ListAzureScanOptionsError>> {
         match self.list_azure_scan_options_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the scan options configured for Azure accounts.
-    pub async fn list_azure_scan_options_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AzureScanOptionsArray>,
-        datadog::Error<ListAzureScanOptionsError>,
-    > {
+    pub async fn list_azure_scan_options_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::AzureScanOptionsArray>, datadog::Error<ListAzureScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_azure_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1817,22 +1585,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1844,71 +1606,57 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptionsArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptionsArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListAzureScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListAzureScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches the scan options configured for all GCP projects.
-    pub async fn list_gcp_scan_options(
-        &self,
-    ) -> Result<crate::datadogV2::model::GcpScanOptionsArray, datadog::Error<ListGcpScanOptionsError>>
-    {
+    pub async fn list_gcp_scan_options(&self) -> Result<crate::datadogV2::model::GcpScanOptionsArray, datadog::Error<ListGcpScanOptionsError>> {
         match self.list_gcp_scan_options_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches the scan options configured for all GCP projects.
-    pub async fn list_gcp_scan_options_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GcpScanOptionsArray>,
-        datadog::Error<ListGcpScanOptionsError>,
-    > {
+    pub async fn list_gcp_scan_options_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::GcpScanOptionsArray>, datadog::Error<ListGcpScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_gcp_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1921,22 +1669,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1948,69 +1690,55 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GcpScanOptionsArray>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GcpScanOptionsArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListGcpScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListGcpScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the Agentless scan options for an activated account.
-    pub async fn update_aws_scan_options(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::AwsScanOptionsUpdateRequest,
-    ) -> Result<(), datadog::Error<UpdateAwsScanOptionsError>> {
-        match self
-            .update_aws_scan_options_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn update_aws_scan_options(&self, account_id: String, body: crate::datadogV2::model::AwsScanOptionsUpdateRequest) -> Result<(), datadog::Error<UpdateAwsScanOptionsError>> {
+        match self.update_aws_scan_options_with_http_info(account_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the Agentless scan options for an activated account.
-    pub async fn update_aws_scan_options_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::AwsScanOptionsUpdateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAwsScanOptionsError>> {
+    pub async fn update_aws_scan_options_with_http_info(&self, account_id: String, body: crate::datadogV2::model::AwsScanOptionsUpdateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateAwsScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_aws_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/aws/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
 
+        
+
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
             Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
@@ -2022,23 +1750,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2046,7 +1767,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2056,7 +1780,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2078,7 +1805,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2101,69 +1828,51 @@ impl AgentlessScanningAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateAwsScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAwsScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the Agentless scan options for an activated subscription.
-    pub async fn update_azure_scan_options(
-        &self,
-        subscription_id: String,
-        body: crate::datadogV2::model::AzureScanOptionsInputUpdate,
-    ) -> Result<
-        crate::datadogV2::model::AzureScanOptions,
-        datadog::Error<UpdateAzureScanOptionsError>,
-    > {
-        match self
-            .update_azure_scan_options_with_http_info(subscription_id, body)
-            .await
-        {
+    pub async fn update_azure_scan_options(&self, subscription_id: String, body: crate::datadogV2::model::AzureScanOptionsInputUpdate) -> Result<crate::datadogV2::model::AzureScanOptions, datadog::Error<UpdateAzureScanOptionsError>> {
+        match self.update_azure_scan_options_with_http_info(subscription_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the Agentless scan options for an activated subscription.
-    pub async fn update_azure_scan_options_with_http_info(
-        &self,
-        subscription_id: String,
-        body: crate::datadogV2::model::AzureScanOptionsInputUpdate,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>,
-        datadog::Error<UpdateAzureScanOptionsError>,
-    > {
+    pub async fn update_azure_scan_options_with_http_info(&self, subscription_id: String, body: crate::datadogV2::model::AzureScanOptionsInputUpdate) -> Result<datadog::ResponseContent<crate::datadogV2::model::AzureScanOptions>, datadog::Error<UpdateAzureScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_azure_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/azure/{subscription_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            subscription_id = datadog::urlencode(subscription_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), subscription_id=
+            datadog::urlencode(subscription_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2176,23 +1885,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2200,7 +1902,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2210,7 +1915,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2232,7 +1940,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2249,79 +1957,60 @@ impl AgentlessScanningAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::AzureScanOptions>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateAzureScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateAzureScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the Agentless scan options for an activated GCP project.
-    pub async fn update_gcp_scan_options(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::GcpScanOptionsInputUpdate,
-    ) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<UpdateGcpScanOptionsError>>
-    {
-        match self
-            .update_gcp_scan_options_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn update_gcp_scan_options(&self, project_id: String, body: crate::datadogV2::model::GcpScanOptionsInputUpdate) -> Result<crate::datadogV2::model::GcpScanOptions, datadog::Error<UpdateGcpScanOptionsError>> {
+        match self.update_gcp_scan_options_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the Agentless scan options for an activated GCP project.
-    pub async fn update_gcp_scan_options_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::GcpScanOptionsInputUpdate,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>,
-        datadog::Error<UpdateGcpScanOptionsError>,
-    > {
+    pub async fn update_gcp_scan_options_with_http_info(&self, project_id: String, body: crate::datadogV2::model::GcpScanOptionsInputUpdate) -> Result<datadog::ResponseContent<crate::datadogV2::model::GcpScanOptions>, datadog::Error<UpdateGcpScanOptionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_gcp_scan_options";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/agentless_scanning/accounts/gcp/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2334,23 +2023,16 @@ impl AgentlessScanningAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2358,7 +2040,10 @@ impl AgentlessScanningAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2368,7 +2053,10 @@ impl AgentlessScanningAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2390,7 +2078,7 @@ impl AgentlessScanningAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2408,23 +2096,16 @@ impl AgentlessScanningAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::GcpScanOptions>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateGcpScanOptionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateGcpScanOptionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

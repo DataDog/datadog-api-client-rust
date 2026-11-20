@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// DeleteScopesRestrictionError is a struct for typed errors of method [`OAuth2ClientPublicAPI::delete_scopes_restriction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -20,6 +20,7 @@ pub enum DeleteScopesRestrictionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOAuth2WellKnownSitesError is a struct for typed errors of method [`OAuth2ClientPublicAPI::get_o_auth2_well_known_sites`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -28,6 +29,7 @@ pub enum GetOAuth2WellKnownSitesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOIDCDiscoveryDocumentError is a struct for typed errors of method [`OAuth2ClientPublicAPI::get_oidc_discovery_document`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -35,6 +37,7 @@ pub enum GetOIDCDiscoveryDocumentError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetScopesRestrictionError is a struct for typed errors of method [`OAuth2ClientPublicAPI::get_scopes_restriction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -45,6 +48,7 @@ pub enum GetScopesRestrictionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RegisterOAuthClientError is a struct for typed errors of method [`OAuth2ClientPublicAPI::register_o_auth_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -54,6 +58,7 @@ pub enum RegisterOAuthClientError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertScopesRestrictionError is a struct for typed errors of method [`OAuth2ClientPublicAPI::upsert_scopes_restriction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -62,6 +67,7 @@ pub enum UpsertScopesRestrictionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure OAuth2 clients for Datadog.
 /// Supports RFC 7591 Dynamic Client Registration and management of OAuth2 client scopes restrictions.
@@ -86,7 +92,8 @@ impl OAuth2ClientPublicAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -131,32 +138,23 @@ impl OAuth2ClientPublicAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete the scopes restriction configured for the OAuth2 client.
-    pub async fn delete_scopes_restriction(
-        &self,
-        client_uuid: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteScopesRestrictionError>> {
-        match self
-            .delete_scopes_restriction_with_http_info(client_uuid)
-            .await
-        {
+    pub async fn delete_scopes_restriction(&self, client_uuid: uuid::Uuid) -> Result<(), datadog::Error<DeleteScopesRestrictionError>> {
+        match self.delete_scopes_restriction_with_http_info(client_uuid).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the scopes restriction configured for the OAuth2 client.
-    pub async fn delete_scopes_restriction_with_http_info(
-        &self,
-        client_uuid: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScopesRestrictionError>> {
+    pub async fn delete_scopes_restriction_with_http_info(&self, client_uuid: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScopesRestrictionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_scopes_restriction";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -168,19 +166,24 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(local_operation_id),
-            client_uuid = datadog::urlencode(client_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), client_uuid=
+            datadog::urlencode(client_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -193,22 +196,16 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -226,45 +223,29 @@ impl OAuth2ClientPublicAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteScopesRestrictionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteScopesRestrictionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the list of public OAuth2 sites available for the current environment. This endpoint is used for OAuth2 discovery and returns sites where users can authenticate.
-    pub async fn get_o_auth2_well_known_sites(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OAuth2WellKnownSitesResponse,
-        datadog::Error<GetOAuth2WellKnownSitesError>,
-    > {
+    pub async fn get_o_auth2_well_known_sites(&self) -> Result<crate::datadogV2::model::OAuth2WellKnownSitesResponse, datadog::Error<GetOAuth2WellKnownSitesError>> {
         match self.get_o_auth2_well_known_sites_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the list of public OAuth2 sites available for the current environment. This endpoint is used for OAuth2 discovery and returns sites where users can authenticate.
-    pub async fn get_o_auth2_well_known_sites_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OAuth2WellKnownSitesResponse>,
-        datadog::Error<GetOAuth2WellKnownSitesError>,
-    > {
+    pub async fn get_o_auth2_well_known_sites_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OAuth2WellKnownSitesResponse>, datadog::Error<GetOAuth2WellKnownSitesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_o_auth2_well_known_sites";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -276,18 +257,22 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/.well-known/sites",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -300,8 +285,10 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -313,58 +300,38 @@ impl OAuth2ClientPublicAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OAuth2WellKnownSitesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OAuth2WellKnownSitesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOAuth2WellKnownSitesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOAuth2WellKnownSitesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve OpenID Connect provider metadata for the OAuth2 v2 token endpoint.
-    pub async fn get_oidc_discovery_document(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OIDCDiscoveryDocument,
-        datadog::Error<GetOIDCDiscoveryDocumentError>,
-    > {
+    pub async fn get_oidc_discovery_document(&self) -> Result<crate::datadogV2::model::OIDCDiscoveryDocument, datadog::Error<GetOIDCDiscoveryDocumentError>> {
         match self.get_oidc_discovery_document_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve OpenID Connect provider metadata for the OAuth2 v2 token endpoint.
-    pub async fn get_oidc_discovery_document_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OIDCDiscoveryDocument>,
-        datadog::Error<GetOIDCDiscoveryDocumentError>,
-    > {
+    pub async fn get_oidc_discovery_document_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OIDCDiscoveryDocument>, datadog::Error<GetOIDCDiscoveryDocumentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_oidc_discovery_document";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -376,18 +343,22 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/.well-known/openid-configuration",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -400,8 +371,10 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -413,63 +386,38 @@ impl OAuth2ClientPublicAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OIDCDiscoveryDocument>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OIDCDiscoveryDocument>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOIDCDiscoveryDocumentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOIDCDiscoveryDocumentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the scopes restriction configured for the OAuth2 client.
-    pub async fn get_scopes_restriction(
-        &self,
-        client_uuid: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OAuthScopesRestrictionResponse,
-        datadog::Error<GetScopesRestrictionError>,
-    > {
-        match self
-            .get_scopes_restriction_with_http_info(client_uuid)
-            .await
-        {
+    pub async fn get_scopes_restriction(&self, client_uuid: uuid::Uuid) -> Result<crate::datadogV2::model::OAuthScopesRestrictionResponse, datadog::Error<GetScopesRestrictionError>> {
+        match self.get_scopes_restriction_with_http_info(client_uuid).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the scopes restriction configured for the OAuth2 client.
-    pub async fn get_scopes_restriction_with_http_info(
-        &self,
-        client_uuid: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OAuthScopesRestrictionResponse>,
-        datadog::Error<GetScopesRestrictionError>,
-    > {
+    pub async fn get_scopes_restriction_with_http_info(&self, client_uuid: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OAuthScopesRestrictionResponse>, datadog::Error<GetScopesRestrictionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_scopes_restriction";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -481,19 +429,24 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(local_operation_id),
-            client_uuid = datadog::urlencode(client_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), client_uuid=
+            datadog::urlencode(client_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -506,22 +459,16 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -533,60 +480,38 @@ impl OAuth2ClientPublicAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OAuthScopesRestrictionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OAuthScopesRestrictionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetScopesRestrictionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetScopesRestrictionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Register an OAuth2 client using the Dynamic Client Registration protocol defined in RFC 7591.
-    pub async fn register_o_auth_client(
-        &self,
-        body: crate::datadogV2::model::OAuthClientRegistrationRequest,
-    ) -> Result<
-        crate::datadogV2::model::OAuthClientRegistrationResponse,
-        datadog::Error<RegisterOAuthClientError>,
-    > {
+    pub async fn register_o_auth_client(&self, body: crate::datadogV2::model::OAuthClientRegistrationRequest) -> Result<crate::datadogV2::model::OAuthClientRegistrationResponse, datadog::Error<RegisterOAuthClientError>> {
         match self.register_o_auth_client_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Register an OAuth2 client using the Dynamic Client Registration protocol defined in RFC 7591.
-    pub async fn register_o_auth_client_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OAuthClientRegistrationRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OAuthClientRegistrationResponse>,
-        datadog::Error<RegisterOAuthClientError>,
-    > {
+    pub async fn register_o_auth_client_with_http_info(&self, body: crate::datadogV2::model::OAuthClientRegistrationRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OAuthClientRegistrationResponse>, datadog::Error<RegisterOAuthClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.register_o_auth_client";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -598,19 +523,23 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/register",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -623,9 +552,10 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -633,7 +563,10 @@ impl OAuth2ClientPublicAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -643,7 +576,10 @@ impl OAuth2ClientPublicAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -665,7 +601,7 @@ impl OAuth2ClientPublicAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -682,65 +618,38 @@ impl OAuth2ClientPublicAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OAuthClientRegistrationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OAuthClientRegistrationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RegisterOAuthClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RegisterOAuthClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update the scopes restriction configured for the OAuth2 client.
-    pub async fn upsert_scopes_restriction(
-        &self,
-        client_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::UpsertOAuthScopesRestrictionRequest,
-    ) -> Result<
-        crate::datadogV2::model::OAuthScopesRestrictionResponse,
-        datadog::Error<UpsertScopesRestrictionError>,
-    > {
-        match self
-            .upsert_scopes_restriction_with_http_info(client_uuid, body)
-            .await
-        {
+    pub async fn upsert_scopes_restriction(&self, client_uuid: uuid::Uuid, body: crate::datadogV2::model::UpsertOAuthScopesRestrictionRequest) -> Result<crate::datadogV2::model::OAuthScopesRestrictionResponse, datadog::Error<UpsertScopesRestrictionError>> {
+        match self.upsert_scopes_restriction_with_http_info(client_uuid, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update the scopes restriction configured for the OAuth2 client.
-    pub async fn upsert_scopes_restriction_with_http_info(
-        &self,
-        client_uuid: uuid::Uuid,
-        body: crate::datadogV2::model::UpsertOAuthScopesRestrictionRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OAuthScopesRestrictionResponse>,
-        datadog::Error<UpsertScopesRestrictionError>,
-    > {
+    pub async fn upsert_scopes_restriction_with_http_info(&self, client_uuid: uuid::Uuid, body: crate::datadogV2::model::UpsertOAuthScopesRestrictionRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OAuthScopesRestrictionResponse>, datadog::Error<UpsertScopesRestrictionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_scopes_restriction";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -752,20 +661,25 @@ impl OAuth2ClientPublicAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/oauth2/clients/{client_uuid}/scopes_restriction",
-            local_configuration.get_operation_host(local_operation_id),
-            client_uuid = datadog::urlencode(client_uuid.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), client_uuid=
+            datadog::urlencode(client_uuid.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -778,23 +692,16 @@ impl OAuth2ClientPublicAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -802,7 +709,10 @@ impl OAuth2ClientPublicAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -812,7 +722,10 @@ impl OAuth2ClientPublicAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -834,7 +747,7 @@ impl OAuth2ClientPublicAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -851,26 +764,17 @@ impl OAuth2ClientPublicAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OAuthScopesRestrictionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OAuthScopesRestrictionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertScopesRestrictionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertScopesRestrictionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

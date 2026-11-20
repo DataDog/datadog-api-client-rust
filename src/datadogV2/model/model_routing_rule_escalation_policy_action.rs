@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Triggers an escalation policy.
 #[non_exhaustive]
@@ -19,8 +19,7 @@ pub struct RoutingRuleEscalationPolicyAction {
     pub policy_id: String,
     /// Support hours during which the escalation policy will be executed. Outside of these hours, the escalation policy will be on hold and triggered once the next support hours window starts. This is mutually exclusive with the top-level `time_restriction` field on the routing rule.
     #[serde(rename = "support_hours")]
-    pub support_hours:
-        Option<crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours>,
+    pub support_hours: Option<crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours>,
     /// Indicates that the action pages an escalation policy. This action can be set once per routing rule item, and is mutually exclusive with the top-level `policy_id` field on the routing rule.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
@@ -31,14 +30,11 @@ pub struct RoutingRuleEscalationPolicyAction {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RoutingRuleEscalationPolicyAction {
-    pub fn new(
-        policy_id: String,
-        type_: crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
-    ) -> RoutingRuleEscalationPolicyAction {
+    pub fn new(policy_id: String, type_: crate::datadogV2::model::RoutingRuleEscalationPolicyActionType) -> RoutingRuleEscalationPolicyAction {
         RoutingRuleEscalationPolicyAction {
             ack_timeout_minutes: None,
             policy_id,
@@ -49,33 +45,29 @@ impl RoutingRuleEscalationPolicyAction {
             _unparsed: false,
         }
     }
-
+    
     pub fn ack_timeout_minutes(mut self, value: i64) -> Self {
         self.ack_timeout_minutes = Some(value);
         self
     }
-
-    pub fn support_hours(
-        mut self,
-        value: crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours,
-    ) -> Self {
+    
+    pub fn support_hours(mut self, value: crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours) -> Self {
         self.support_hours = Some(value);
         self
     }
-
+    
     pub fn urgency(mut self, value: crate::datadogV2::model::Urgency) -> Self {
         self.urgency = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -96,17 +88,10 @@ impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
             {
                 let mut ack_timeout_minutes: Option<i64> = None;
                 let mut policy_id: Option<String> = None;
-                let mut support_hours: Option<
-                    crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours,
-                > = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::RoutingRuleEscalationPolicyActionType,
-                > = None;
+                let mut support_hours: Option<crate::datadogV2::model::RoutingRuleEscalationPolicyActionSupportHours> = None;
+                let mut type_: Option<crate::datadogV2::model::RoutingRuleEscalationPolicyActionType> = None;
                 let mut urgency: Option<crate::datadogV2::model::Urgency> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -115,19 +100,17 @@ impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
                             if v.is_null() {
                                 continue;
                             }
-                            ack_timeout_minutes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ack_timeout_minutes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "policy_id" => {
                             policy_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "support_hours" => {
                             if v.is_null() {
                                 continue;
                             }
-                            support_hours =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            support_hours = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -138,7 +121,7 @@ impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "urgency" => {
                             if v.is_null() {
                                 continue;
@@ -148,16 +131,16 @@ impl<'de> Deserialize<'de> for RoutingRuleEscalationPolicyAction {
                                 match _urgency {
                                     crate::datadogV2::model::Urgency::UnparsedObject(_urgency) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let policy_id = policy_id.ok_or_else(|| M::Error::missing_field("policy_id"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing results for your Synthetic API test.
 #[non_exhaustive]
@@ -25,9 +25,7 @@ pub struct SyntheticsAPITestResultData {
     pub http_status_code: Option<i64>,
     /// Request header object used for the API test.
     #[serde(rename = "requestHeaders")]
-    pub request_headers: Option<
-        std::collections::BTreeMap<String, std::collections::BTreeMap<String, serde_json::Value>>,
-    >,
+    pub request_headers: Option<std::collections::BTreeMap<String, std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Response body returned for the API test.
     #[serde(rename = "responseBody")]
     pub response_body: Option<String>,
@@ -38,14 +36,14 @@ pub struct SyntheticsAPITestResultData {
     #[serde(rename = "responseSize")]
     pub response_size: Option<i64>,
     /// Object containing all metrics and their values collected for a Synthetic API test.
-    /// See the [Synthetic Monitoring Metrics documentation](<https://docs.datadoghq.com/synthetics/metrics/>).
+/// See the [Synthetic Monitoring Metrics documentation](<https://docs.datadoghq.com/synthetics/metrics/>).
     #[serde(rename = "timings")]
     pub timings: Option<crate::datadogV1::model::SyntheticsTiming>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsAPITestResultData {
@@ -64,75 +62,58 @@ impl SyntheticsAPITestResultData {
             _unparsed: false,
         }
     }
-
+    
     pub fn cert(mut self, value: crate::datadogV1::model::SyntheticsSSLCertificate) -> Self {
         self.cert = Some(value);
         self
     }
-
-    pub fn event_type(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsTestProcessStatus,
-    ) -> Self {
+    
+    pub fn event_type(mut self, value: crate::datadogV1::model::SyntheticsTestProcessStatus) -> Self {
         self.event_type = Some(value);
         self
     }
-
-    pub fn failure(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsApiTestResultFailure,
-    ) -> Self {
+    
+    pub fn failure(mut self, value: crate::datadogV1::model::SyntheticsApiTestResultFailure) -> Self {
         self.failure = Some(value);
         self
     }
-
+    
     pub fn http_status_code(mut self, value: i64) -> Self {
         self.http_status_code = Some(value);
         self
     }
-
-    pub fn request_headers(
-        mut self,
-        value: std::collections::BTreeMap<
-            String,
-            std::collections::BTreeMap<String, serde_json::Value>,
-        >,
-    ) -> Self {
+    
+    pub fn request_headers(mut self, value: std::collections::BTreeMap<String, std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.request_headers = Some(value);
         self
     }
-
+    
     pub fn response_body(mut self, value: String) -> Self {
         self.response_body = Some(value);
         self
     }
-
-    pub fn response_headers(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn response_headers(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.response_headers = Some(value);
         self
     }
-
+    
     pub fn response_size(mut self, value: i64) -> Self {
         self.response_size = Some(value);
         self
     }
-
+    
     pub fn timings(mut self, value: crate::datadogV1::model::SyntheticsTiming) -> Self {
         self.timings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsAPITestResultData {
     fn default() -> Self {
@@ -158,27 +139,15 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultData {
                 M: MapAccess<'a>,
             {
                 let mut cert: Option<crate::datadogV1::model::SyntheticsSSLCertificate> = None;
-                let mut event_type: Option<crate::datadogV1::model::SyntheticsTestProcessStatus> =
-                    None;
-                let mut failure: Option<crate::datadogV1::model::SyntheticsApiTestResultFailure> =
-                    None;
+                let mut event_type: Option<crate::datadogV1::model::SyntheticsTestProcessStatus> = None;
+                let mut failure: Option<crate::datadogV1::model::SyntheticsApiTestResultFailure> = None;
                 let mut http_status_code: Option<i64> = None;
-                let mut request_headers: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        std::collections::BTreeMap<String, serde_json::Value>,
-                    >,
-                > = None;
+                let mut request_headers: Option<std::collections::BTreeMap<String, std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut response_body: Option<String> = None;
-                let mut response_headers: Option<
-                    std::collections::BTreeMap<String, serde_json::Value>,
-                > = None;
+                let mut response_headers: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut response_size: Option<i64> = None;
                 let mut timings: Option<crate::datadogV1::model::SyntheticsTiming> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -188,7 +157,7 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultData {
                                 continue;
                             }
                             cert = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "eventType" => {
                             if v.is_null() {
                                 continue;
@@ -202,59 +171,54 @@ impl<'de> Deserialize<'de> for SyntheticsAPITestResultData {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "failure" => {
                             if v.is_null() {
                                 continue;
                             }
                             failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "httpStatusCode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            http_status_code =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            http_status_code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requestHeaders" => {
                             if v.is_null() {
                                 continue;
                             }
-                            request_headers =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            request_headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "responseBody" => {
                             if v.is_null() {
                                 continue;
                             }
-                            response_body =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            response_body = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "responseHeaders" => {
                             if v.is_null() {
                                 continue;
                             }
-                            response_headers =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            response_headers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "responseSize" => {
                             if v.is_null() {
                                 continue;
                             }
-                            response_size =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            response_size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "timings" => {
                             if v.is_null() {
                                 continue;
                             }
                             timings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

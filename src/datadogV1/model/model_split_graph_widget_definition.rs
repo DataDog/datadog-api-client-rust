@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The split graph widget allows you to create repeating units of a graph - one for each value in a group (for example: one per service)
 #[non_exhaustive]
@@ -36,16 +36,11 @@ pub struct SplitGraphWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SplitGraphWidgetDefinition {
-    pub fn new(
-        size: crate::datadogV1::model::SplitGraphVizSize,
-        source_widget_definition: crate::datadogV1::model::SplitGraphSourceWidgetDefinition,
-        split_config: crate::datadogV1::model::SplitConfig,
-        type_: crate::datadogV1::model::SplitGraphWidgetDefinitionType,
-    ) -> SplitGraphWidgetDefinition {
+    pub fn new(size: crate::datadogV1::model::SplitGraphVizSize, source_widget_definition: crate::datadogV1::model::SplitGraphSourceWidgetDefinition, split_config: crate::datadogV1::model::SplitConfig, type_: crate::datadogV1::model::SplitGraphWidgetDefinitionType) -> SplitGraphWidgetDefinition {
         SplitGraphWidgetDefinition {
             has_uniform_y_axes: None,
             size,
@@ -58,30 +53,29 @@ impl SplitGraphWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     pub fn has_uniform_y_axes(mut self, value: bool) -> Self {
         self.has_uniform_y_axes = Some(value);
         self
     }
-
+    
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -102,18 +96,12 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
             {
                 let mut has_uniform_y_axes: Option<bool> = None;
                 let mut size: Option<crate::datadogV1::model::SplitGraphVizSize> = None;
-                let mut source_widget_definition: Option<
-                    crate::datadogV1::model::SplitGraphSourceWidgetDefinition,
-                > = None;
+                let mut source_widget_definition: Option<crate::datadogV1::model::SplitGraphSourceWidgetDefinition> = None;
                 let mut split_config: Option<crate::datadogV1::model::SplitConfig> = None;
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
-                let mut type_: Option<crate::datadogV1::model::SplitGraphWidgetDefinitionType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV1::model::SplitGraphWidgetDefinitionType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -122,25 +110,21 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            has_uniform_y_axes =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_uniform_y_axes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "size" => {
                             size = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _size) = size {
                                 match _size {
-                                    crate::datadogV1::model::SplitGraphVizSize::UnparsedObject(
-                                        _size,
-                                    ) => {
+                                    crate::datadogV1::model::SplitGraphVizSize::UnparsedObject(_size) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "source_widget_definition" => {
-                            source_widget_definition =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            source_widget_definition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source_widget_definition) = source_widget_definition {
                                 match _source_widget_definition {
                                     crate::datadogV1::model::SplitGraphSourceWidgetDefinition::UnparsedObject(_source_widget_definition) => {
@@ -149,11 +133,10 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "split_config" => {
-                            split_config =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            split_config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -163,17 +146,17 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -184,19 +167,17 @@ impl<'de> Deserialize<'de> for SplitGraphWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let size = size.ok_or_else(|| M::Error::missing_field("size"))?;
-                let source_widget_definition = source_widget_definition
-                    .ok_or_else(|| M::Error::missing_field("source_widget_definition"))?;
-                let split_config =
-                    split_config.ok_or_else(|| M::Error::missing_field("split_config"))?;
+                let source_widget_definition = source_widget_definition.ok_or_else(|| M::Error::missing_field("source_widget_definition"))?;
+                let split_config = split_config.ok_or_else(|| M::Error::missing_field("split_config"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = SplitGraphWidgetDefinition {

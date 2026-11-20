@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The remapper processor remaps any source attribute(s) or tag to another target attribute or tag.
 /// Constraints on the tag/attribute name are explained in the [Tag Best Practice documentation](<https://docs.datadoghq.com/logs/guide/log-parsing-best-practice>).
@@ -35,8 +35,8 @@ pub struct LogsAttributeRemapper {
     #[serde(rename = "target")]
     pub target: String,
     /// If the `target_type` of the remapper is `attribute`, try to cast the value to a new specific type.
-    /// If the cast is not possible, the original type is kept. `string`, `integer`, or `double` are the possible types.
-    /// If the `target_type` is `tag`, this parameter may not be specified.
+/// If the cast is not possible, the original type is kept. `string`, `integer`, or `double` are the possible types.
+/// If the `target_type` is `tag`, this parameter may not be specified.
     #[serde(rename = "target_format")]
     pub target_format: Option<crate::datadogV1::model::TargetFormatType>,
     /// Defines if the final attribute or tag name is from log `attribute` or `tag`.
@@ -49,15 +49,11 @@ pub struct LogsAttributeRemapper {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LogsAttributeRemapper {
-    pub fn new(
-        sources: Vec<String>,
-        target: String,
-        type_: crate::datadogV1::model::LogsAttributeRemapperType,
-    ) -> LogsAttributeRemapper {
+    pub fn new(sources: Vec<String>, target: String, type_: crate::datadogV1::model::LogsAttributeRemapperType) -> LogsAttributeRemapper {
         LogsAttributeRemapper {
             is_enabled: None,
             name: None,
@@ -73,50 +69,49 @@ impl LogsAttributeRemapper {
             _unparsed: false,
         }
     }
-
+    
     pub fn is_enabled(mut self, value: bool) -> Self {
         self.is_enabled = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn override_on_conflict(mut self, value: bool) -> Self {
         self.override_on_conflict = Some(value);
         self
     }
-
+    
     pub fn preserve_source(mut self, value: bool) -> Self {
         self.preserve_source = Some(value);
         self
     }
-
+    
     pub fn source_type(mut self, value: String) -> Self {
         self.source_type = Some(value);
         self
     }
-
+    
     pub fn target_format(mut self, value: crate::datadogV1::model::TargetFormatType) -> Self {
         self.target_format = Some(value);
         self
     }
-
+    
     pub fn target_type(mut self, value: String) -> Self {
         self.target_type = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LogsAttributeRemapper {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -145,10 +140,7 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                 let mut target_format: Option<crate::datadogV1::model::TargetFormatType> = None;
                 let mut target_type: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::LogsAttributeRemapperType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -158,64 +150,57 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                                 continue;
                             }
                             is_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "override_on_conflict" => {
                             if v.is_null() {
                                 continue;
                             }
-                            override_on_conflict =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            override_on_conflict = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "preserve_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            preserve_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            preserve_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            source_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sources" => {
                             sources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            target_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            target_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _target_format) = target_format {
                                 match _target_format {
-                                    crate::datadogV1::model::TargetFormatType::UnparsedObject(
-                                        _target_format,
-                                    ) => {
+                                    crate::datadogV1::model::TargetFormatType::UnparsedObject(_target_format) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "target_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            target_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            target_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -226,12 +211,12 @@ impl<'de> Deserialize<'de> for LogsAttributeRemapper {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let sources = sources.ok_or_else(|| M::Error::missing_field("sources"))?;

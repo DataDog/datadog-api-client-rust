@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The treemap visualization enables you to display hierarchical and nested data. It is well suited for queries that describe part-whole relationships, such as resource usage by availability zone, data center, or team.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct TreeMapWidgetDefinition {
     /// (deprecated) The attribute formerly used to determine color in the widget.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "color_by")]
     pub color_by: Option<crate::datadogV1::model::TreeMapColorBy>,
     /// List of custom links.
@@ -22,14 +22,14 @@ pub struct TreeMapWidgetDefinition {
     #[serde(rename = "description")]
     pub description: Option<String>,
     /// (deprecated) The attribute formerly used to group elements in the widget.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "group_by")]
     pub group_by: Option<crate::datadogV1::model::TreeMapGroupBy>,
     /// List of treemap widget requests.
     #[serde(rename = "requests")]
     pub requests: Vec<crate::datadogV1::model::TreeMapWidgetRequest>,
     /// (deprecated) The attribute formerly used to determine size in the widget.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "size_by")]
     pub size_by: Option<crate::datadogV1::model::TreeMapSizeBy>,
     /// Time setting for the widget.
@@ -45,14 +45,11 @@ pub struct TreeMapWidgetDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TreeMapWidgetDefinition {
-    pub fn new(
-        requests: Vec<crate::datadogV1::model::TreeMapWidgetRequest>,
-        type_: crate::datadogV1::model::TreeMapWidgetDefinitionType,
-    ) -> TreeMapWidgetDefinition {
+    pub fn new(requests: Vec<crate::datadogV1::model::TreeMapWidgetRequest>, type_: crate::datadogV1::model::TreeMapWidgetDefinitionType) -> TreeMapWidgetDefinition {
         #[allow(deprecated)]
         TreeMapWidgetDefinition {
             color_by: None,
@@ -68,57 +65,56 @@ impl TreeMapWidgetDefinition {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn color_by(mut self, value: crate::datadogV1::model::TreeMapColorBy) -> Self {
         self.color_by = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_links(mut self, value: Vec<crate::datadogV1::model::WidgetCustomLink>) -> Self {
         self.custom_links = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn group_by(mut self, value: crate::datadogV1::model::TreeMapGroupBy) -> Self {
         self.group_by = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn size_by(mut self, value: crate::datadogV1::model::TreeMapSizeBy) -> Self {
         self.size_by = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn time(mut self, value: crate::datadogV1::model::WidgetTime) -> Self {
         self.time = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -146,10 +142,7 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                 let mut time: Option<crate::datadogV1::model::WidgetTime> = None;
                 let mut title: Option<String> = None;
                 let mut type_: Option<crate::datadogV1::model::TreeMapWidgetDefinitionType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -161,29 +154,25 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                             color_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _color_by) = color_by {
                                 match _color_by {
-                                    crate::datadogV1::model::TreeMapColorBy::UnparsedObject(
-                                        _color_by,
-                                    ) => {
+                                    crate::datadogV1::model::TreeMapColorBy::UnparsedObject(_color_by) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "custom_links" => {
                             if v.is_null() {
                                 continue;
                             }
-                            custom_links =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "group_by" => {
                             if v.is_null() {
                                 continue;
@@ -191,18 +180,16 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                             group_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _group_by) = group_by {
                                 match _group_by {
-                                    crate::datadogV1::model::TreeMapGroupBy::UnparsedObject(
-                                        _group_by,
-                                    ) => {
+                                    crate::datadogV1::model::TreeMapGroupBy::UnparsedObject(_group_by) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "size_by" => {
                             if v.is_null() {
                                 continue;
@@ -210,15 +197,13 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                             size_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _size_by) = size_by {
                                 match _size_by {
-                                    crate::datadogV1::model::TreeMapSizeBy::UnparsedObject(
-                                        _size_by,
-                                    ) => {
+                                    crate::datadogV1::model::TreeMapSizeBy::UnparsedObject(_size_by) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "time" => {
                             if v.is_null() {
                                 continue;
@@ -228,17 +213,17 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                                 match _time {
                                     crate::datadogV1::model::WidgetTime::UnparsedObject(_time) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -249,12 +234,12 @@ impl<'de> Deserialize<'de> for TreeMapWidgetDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;

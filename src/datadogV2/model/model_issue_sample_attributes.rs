@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the information of a sample.
 #[non_exhaustive]
@@ -33,7 +33,7 @@ pub struct IssueSampleAttributes {
     #[serde(rename = "debug_info_captured")]
     pub debug_info_captured: Option<bool>,
     /// Source type set by the SDK or tracer that reported the error, such as `browser` for RUM browser errors
-    /// or `Crashtracking` for backend crash reports. Usually not set for APM and logs errors.
+/// or `Crashtracking` for backend crash reports. Usually not set for APM and logs errors.
     #[serde(rename = "error_source_type")]
     pub error_source_type: Option<String>,
     /// Parsed stack trace of the error. Only the sample picked by the `git_metadata` bias has frames.
@@ -97,14 +97,11 @@ pub struct IssueSampleAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssueSampleAttributes {
-    pub fn new(
-        error_stack: crate::datadogV2::model::IssueSampleErrorStack,
-        timestamp: chrono::DateTime<chrono::Utc>,
-    ) -> IssueSampleAttributes {
+    pub fn new(error_stack: crate::datadogV2::model::IssueSampleErrorStack, timestamp: chrono::DateTime<chrono::Utc>) -> IssueSampleAttributes {
         IssueSampleAttributes {
             application_id: None,
             biases: None,
@@ -137,140 +134,139 @@ impl IssueSampleAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn application_id(mut self, value: String) -> Self {
         self.application_id = Some(value);
         self
     }
-
+    
     pub fn biases(mut self, value: Vec<crate::datadogV2::model::IssueSampleBias>) -> Self {
         self.biases = Some(value);
         self
     }
-
+    
     pub fn build_id(mut self, value: String) -> Self {
         self.build_id = Some(value);
         self
     }
-
+    
     pub fn bundle_version(mut self, value: String) -> Self {
         self.bundle_version = Some(value);
         self
     }
-
+    
     pub fn data_source(mut self, value: crate::datadogV2::model::IssueSampleDataSource) -> Self {
         self.data_source = Some(value);
         self
     }
-
+    
     pub fn debug_id(mut self, value: String) -> Self {
         self.debug_id = Some(value);
         self
     }
-
+    
     pub fn debug_info_captured(mut self, value: bool) -> Self {
         self.debug_info_captured = Some(value);
         self
     }
-
+    
     pub fn error_source_type(mut self, value: String) -> Self {
         self.error_source_type = Some(value);
         self
     }
-
+    
     pub fn event(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.event = Some(value);
         self
     }
-
+    
     pub fn git_commit_sha(mut self, value: String) -> Self {
         self.git_commit_sha = Some(value);
         self
     }
-
+    
     pub fn git_repository_id(mut self, value: String) -> Self {
         self.git_repository_id = Some(value);
         self
     }
-
+    
     pub fn git_repository_url(mut self, value: String) -> Self {
         self.git_repository_url = Some(value);
         self
     }
-
+    
     pub fn has_session_replay(mut self, value: bool) -> Self {
         self.has_session_replay = Some(value);
         self
     }
-
+    
     pub fn language(mut self, value: String) -> Self {
         self.language = Some(value);
         self
     }
-
+    
     pub fn links(mut self, value: Vec<crate::datadogV2::model::IssueSampleFrameLink>) -> Self {
         self.links = Some(value);
         self
     }
-
+    
     pub fn os_name(mut self, value: String) -> Self {
         self.os_name = Some(value);
         self
     }
-
+    
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
-
+    
     pub fn session_id(mut self, value: String) -> Self {
         self.session_id = Some(value);
         self
     }
-
+    
     pub fn session_replay_url(mut self, value: String) -> Self {
         self.session_replay_url = Some(value);
         self
     }
-
+    
     pub fn snapshot_id(mut self, value: String) -> Self {
         self.snapshot_id = Some(value);
         self
     }
-
+    
     pub fn span_id(mut self, value: String) -> Self {
         self.span_id = Some(value);
         self
     }
-
+    
     pub fn trace_id(mut self, value: String) -> Self {
         self.trace_id = Some(value);
         self
     }
-
+    
     pub fn variant(mut self, value: String) -> Self {
         self.variant = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: String) -> Self {
         self.version = Some(value);
         self
     }
-
+    
     pub fn view_id(mut self, value: String) -> Self {
         self.view_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IssueSampleAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -316,10 +312,7 @@ impl<'de> Deserialize<'de> for IssueSampleAttributes {
                 let mut variant: Option<String> = None;
                 let mut version: Option<String> = None;
                 let mut view_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -328,34 +321,31 @@ impl<'de> Deserialize<'de> for IssueSampleAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            application_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            application_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "biases" => {
                             if v.is_null() {
                                 continue;
                             }
                             biases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "build_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             build_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bundle_version" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bundle_version =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bundle_version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV2::model::IssueSampleDataSource::UnparsedObject(_data_source) => {
@@ -364,151 +354,141 @@ impl<'de> Deserialize<'de> for IssueSampleAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "debug_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             debug_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "debug_info_captured" => {
                             if v.is_null() {
                                 continue;
                             }
-                            debug_info_captured =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            debug_info_captured = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_source_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_source_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_source_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_stack" => {
-                            error_stack =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_stack = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event" => {
                             if v.is_null() {
                                 continue;
                             }
                             event = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "git_commit_sha" => {
                             if v.is_null() {
                                 continue;
                             }
-                            git_commit_sha =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            git_commit_sha = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "git_repository_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            git_repository_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            git_repository_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "git_repository_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            git_repository_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            git_repository_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "has_session_replay" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_session_replay =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_session_replay = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "language" => {
                             if v.is_null() {
                                 continue;
                             }
                             language = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "links" => {
                             if v.is_null() {
                                 continue;
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "os_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             os_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "session_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             session_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "session_replay_url" => {
                             if v.is_null() {
                                 continue;
                             }
-                            session_replay_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            session_replay_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snapshot_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snapshot_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snapshot_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "span_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp" => {
                             timestamp = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "trace_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variant" => {
                             if v.is_null() {
                                 continue;
                             }
                             variant = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "view_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             view_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let error_stack =
-                    error_stack.ok_or_else(|| M::Error::missing_field("error_stack"))?;
+                let error_stack = error_stack.ok_or_else(|| M::Error::missing_field("error_stack"))?;
                 let timestamp = timestamp.ok_or_else(|| M::Error::missing_field("timestamp"))?;
 
                 let content = IssueSampleAttributes {

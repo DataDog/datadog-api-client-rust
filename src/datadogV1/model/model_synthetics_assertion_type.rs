@@ -2,34 +2,35 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAssertionType {
-    BODY,
-    HEADER,
-    STATUS_CODE,
-    CERTIFICATE,
-    RESPONSE_TIME,
-    PROPERTY,
-    RECORD_EVERY,
-    RECORD_SOME,
-    TLS_VERSION,
-    MIN_TLS_VERSION,
-    LATENCY,
-    PACKET_LOSS_PERCENTAGE,
-    PACKETS_RECEIVED,
-    NETWORK_HOP,
-    RECEIVED_MESSAGE,
-    GRPC_HEALTHCHECK_STATUS,
-    GRPC_METADATA,
-    GRPC_PROTO,
-    CONNECTION,
-    MULTI_NETWORK_HOP,
-    JITTER,
-    MCP_TOOL_NAME_LENGTH,
-    MCP_TOOL_COUNT,
+	BODY,
+	HEADER,
+	STATUS_CODE,
+	CERTIFICATE,
+	RESPONSE_TIME,
+	PROPERTY,
+	RECORD_EVERY,
+	RECORD_SOME,
+	TLS_VERSION,
+	MIN_TLS_VERSION,
+	LATENCY,
+	PACKET_LOSS_PERCENTAGE,
+	PACKETS_RECEIVED,
+	NETWORK_HOP,
+	RECEIVED_MESSAGE,
+	GRPC_HEALTHCHECK_STATUS,
+	GRPC_METADATA,
+	GRPC_PROTO,
+	CONNECTION,
+	MULTI_NETWORK_HOP,
+	JITTER,
+	MCP_TOOL_NAME_LENGTH,
+	MCP_TOOL_COUNT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -82,33 +83,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "body" => Self::BODY,
-            "header" => Self::HEADER,
-            "statusCode" => Self::STATUS_CODE,
-            "certificate" => Self::CERTIFICATE,
-            "responseTime" => Self::RESPONSE_TIME,
-            "property" => Self::PROPERTY,
-            "recordEvery" => Self::RECORD_EVERY,
-            "recordSome" => Self::RECORD_SOME,
-            "tlsVersion" => Self::TLS_VERSION,
-            "minTlsVersion" => Self::MIN_TLS_VERSION,
-            "latency" => Self::LATENCY,
-            "packetLossPercentage" => Self::PACKET_LOSS_PERCENTAGE,
-            "packetsReceived" => Self::PACKETS_RECEIVED,
-            "networkHop" => Self::NETWORK_HOP,
-            "receivedMessage" => Self::RECEIVED_MESSAGE,
-            "grpcHealthcheckStatus" => Self::GRPC_HEALTHCHECK_STATUS,
-            "grpcMetadata" => Self::GRPC_METADATA,
-            "grpcProto" => Self::GRPC_PROTO,
-            "connection" => Self::CONNECTION,
-            "multiNetworkHop" => Self::MULTI_NETWORK_HOP,
-            "jitter" => Self::JITTER,
-            "mcpToolNameLength" => Self::MCP_TOOL_NAME_LENGTH,
-            "mcpToolCount" => Self::MCP_TOOL_COUNT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"body" => Self::BODY,"header" => Self::HEADER,"statusCode" => Self::STATUS_CODE,"certificate" => Self::CERTIFICATE,"responseTime" => Self::RESPONSE_TIME,"property" => Self::PROPERTY,"recordEvery" => Self::RECORD_EVERY,"recordSome" => Self::RECORD_SOME,"tlsVersion" => Self::TLS_VERSION,"minTlsVersion" => Self::MIN_TLS_VERSION,"latency" => Self::LATENCY,"packetLossPercentage" => Self::PACKET_LOSS_PERCENTAGE,"packetsReceived" => Self::PACKETS_RECEIVED,"networkHop" => Self::NETWORK_HOP,"receivedMessage" => Self::RECEIVED_MESSAGE,"grpcHealthcheckStatus" => Self::GRPC_HEALTHCHECK_STATUS,"grpcMetadata" => Self::GRPC_METADATA,"grpcProto" => Self::GRPC_PROTO,"connection" => Self::CONNECTION,"multiNetworkHop" => Self::MULTI_NETWORK_HOP,"jitter" => Self::JITTER,"mcpToolNameLength" => Self::MCP_TOOL_NAME_LENGTH,"mcpToolCount" => Self::MCP_TOOL_COUNT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

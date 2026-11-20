@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing metadata about a change action.
 #[non_exhaustive]
@@ -18,13 +18,8 @@ pub struct SyntheticsTestVersionActionMetadata {
     #[serde(rename = "before_value")]
     pub before_value: Option<serde_json::Value>,
     /// List of diff patches for text changes.
-    #[serde(
-        rename = "diff_patches",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
-    pub diff_patches:
-        Option<Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>>,
+    #[serde(rename = "diff_patches", default, with = "::serde_with::rust::double_option")]
+    pub diff_patches: Option<Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>>,
     /// The dot-separated path of the property that was changed.
     #[serde(rename = "property_path")]
     pub property_path: Option<String>,
@@ -32,7 +27,7 @@ pub struct SyntheticsTestVersionActionMetadata {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestVersionActionMetadata {
@@ -46,38 +41,33 @@ impl SyntheticsTestVersionActionMetadata {
             _unparsed: false,
         }
     }
-
+    
     pub fn after_value(mut self, value: serde_json::Value) -> Self {
         self.after_value = Some(value);
         self
     }
-
+    
     pub fn before_value(mut self, value: serde_json::Value) -> Self {
         self.before_value = Some(value);
         self
     }
-
-    pub fn diff_patches(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>,
-    ) -> Self {
+    
+    pub fn diff_patches(mut self, value: Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>) -> Self {
         self.diff_patches = Some(value);
         self
     }
-
+    
     pub fn property_path(mut self, value: String) -> Self {
         self.property_path = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestVersionActionMetadata {
     fn default() -> Self {
@@ -104,14 +94,9 @@ impl<'de> Deserialize<'de> for SyntheticsTestVersionActionMetadata {
             {
                 let mut after_value: Option<serde_json::Value> = None;
                 let mut before_value: Option<serde_json::Value> = None;
-                let mut diff_patches: Option<
-                    Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>,
-                > = None;
+                let mut diff_patches: Option<Option<Vec<crate::datadogV2::model::SyntheticsTestVersionDiffPatches>>> = None;
                 let mut property_path: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -120,32 +105,28 @@ impl<'de> Deserialize<'de> for SyntheticsTestVersionActionMetadata {
                             if v.is_null() {
                                 continue;
                             }
-                            after_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            after_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "before_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            before_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            before_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "diff_patches" => {
-                            diff_patches =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            diff_patches = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "property_path" => {
                             if v.is_null() {
                                 continue;
                             }
-                            property_path =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            property_path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

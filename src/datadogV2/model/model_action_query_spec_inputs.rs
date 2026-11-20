@@ -1,16 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// The inputs to the action query. These are the values that are passed to the action when it is triggered.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ActionQuerySpecInputs {
-    String(String),
-    ActionQuerySpecInput(std::collections::BTreeMap<String, serde_json::Value>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	String(String),
+	ActionQuerySpecInput(std::collections::BTreeMap<String, serde_json::Value>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ActionQuerySpecInputs {
@@ -19,18 +19,13 @@ impl<'de> Deserialize<'de> for ActionQuerySpecInputs {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
-            return Ok(ActionQuerySpecInputs::String(_v));
-        }
-        if let Ok(_v) = serde_json::from_value::<
-            std::collections::BTreeMap<String, serde_json::Value>,
-        >(value.clone())
-        {
-            return Ok(ActionQuerySpecInputs::ActionQuerySpecInput(_v));
-        }
-
-        return Ok(ActionQuerySpecInputs::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+		if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
+			return Ok(ActionQuerySpecInputs::String(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<std::collections::BTreeMap<String, serde_json::Value>>(value.clone()) {
+			return Ok(ActionQuerySpecInputs::ActionQuerySpecInput(_v))
+		}
+	
+        return Ok(ActionQuerySpecInputs::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

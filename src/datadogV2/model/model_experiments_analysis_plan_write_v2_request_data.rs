@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Analysis plan resource to update.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ExperimentsAnalysisPlanWriteV2RequestData {
     /// Statistical settings and duration targets to apply to the experiment.
     #[serde(rename = "attributes")]
-    pub attributes:
-        Option<crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes>,
+    pub attributes: Option<crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes>,
     /// Identifier of the experiment. If supplied, it must match experiment_id in the path.
     #[serde(rename = "id")]
     pub id: Option<uuid::Uuid>,
@@ -25,13 +24,11 @@ pub struct ExperimentsAnalysisPlanWriteV2RequestData {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsAnalysisPlanWriteV2RequestData {
-    pub fn new(
-        type_: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataType,
-    ) -> ExperimentsAnalysisPlanWriteV2RequestData {
+    pub fn new(type_: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataType) -> ExperimentsAnalysisPlanWriteV2RequestData {
         ExperimentsAnalysisPlanWriteV2RequestData {
             attributes: None,
             id: None,
@@ -40,28 +37,24 @@ impl ExperimentsAnalysisPlanWriteV2RequestData {
             _unparsed: false,
         }
     }
-
-    pub fn attributes(
-        mut self,
-        value: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes,
-    ) -> Self {
+    
+    pub fn attributes(mut self, value: crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes) -> Self {
         self.attributes = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: uuid::Uuid) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsAnalysisPlanWriteV2RequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -80,17 +73,10 @@ impl<'de> Deserialize<'de> for ExperimentsAnalysisPlanWriteV2RequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataAttributes> = None;
                 let mut id: Option<uuid::Uuid> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ExperimentsAnalysisPlanWriteV2RequestDataType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -100,13 +86,13 @@ impl<'de> Deserialize<'de> for ExperimentsAnalysisPlanWriteV2RequestData {
                                 continue;
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -117,12 +103,12 @@ impl<'de> Deserialize<'de> for ExperimentsAnalysisPlanWriteV2RequestData {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;

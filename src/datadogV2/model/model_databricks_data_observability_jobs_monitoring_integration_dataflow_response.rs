@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data Jobs Monitoring, which collects performance, reliability, and cost data for your Databricks jobs.
 #[non_exhaustive]
@@ -33,28 +33,23 @@ impl DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
-    pub fn settings(
-        mut self,
-        value: crate::datadogV2::model::DatabricksDataObservabilityJobsMonitoringIntegrationDataflowSettingsResponse,
-    ) -> Self {
+    
+    pub fn settings(mut self, value: crate::datadogV2::model::DatabricksDataObservabilityJobsMonitoringIntegrationDataflowSettingsResponse) -> Self {
         self.settings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse {
     fn default() -> Self {
@@ -62,17 +57,13 @@ impl Default for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowRes
     }
 }
 
-impl<'de> Deserialize<'de>
-    for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse
-{
+impl<'de> Deserialize<'de> for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponseVisitor;
-        impl<'a> Visitor<'a>
-            for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponseVisitor
-        {
+        impl<'a> Visitor<'a> for DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponseVisitor {
             type Value = DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -85,10 +76,7 @@ impl<'de> Deserialize<'de>
             {
                 let mut enabled: Option<bool> = None;
                 let mut settings: Option<crate::datadogV2::model::DatabricksDataObservabilityJobsMonitoringIntegrationDataflowSettingsResponse> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -98,35 +86,32 @@ impl<'de> Deserialize<'de>
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "settings" => {
                             if v.is_null() {
                                 continue;
                             }
                             settings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 
-                let content =
-                    DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse {
-                        enabled,
-                        settings,
-                        additional_properties,
-                        _unparsed,
-                    };
+                let content = DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponse {
+                    enabled,
+                    settings,
+                    additional_properties,
+                    _unparsed,
+                };
 
                 Ok(content)
             }
         }
 
-        deserializer.deserialize_any(
-            DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponseVisitor,
-        )
+        deserializer.deserialize_any(DatabricksDataObservabilityJobsMonitoringIntegrationDataflowResponseVisitor)
     }
 }

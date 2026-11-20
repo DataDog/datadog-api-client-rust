@@ -2,12 +2,13 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WebhooksAuthMethodType {
-    WEBHOOKS_AUTH_METHOD,
+	WEBHOOKS_AUTH_METHOD,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -38,11 +39,8 @@ impl<'de> Deserialize<'de> for WebhooksAuthMethodType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "webhooks-auth-method" => Self::WEBHOOKS_AUTH_METHOD,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"webhooks-auth-method" => Self::WEBHOOKS_AUTH_METHOD,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

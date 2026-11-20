@@ -1,35 +1,21 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A formula and function query.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum MonitorFormulaAndFunctionQueryDefinition {
-    MonitorFormulaAndFunctionEventQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionCostQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionCostQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionDataQualityQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionDataJobsQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionAggregateFilteredQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition>,
-    ),
-    MonitorFormulaAndFunctionMetricQueryDefinition(
-        Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>,
-    ),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	MonitorFormulaAndFunctionEventQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>),
+	MonitorFormulaAndFunctionCostQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionCostQueryDefinition>),
+	MonitorFormulaAndFunctionDataQualityQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityQueryDefinition>),
+	MonitorFormulaAndFunctionDataJobsQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsQueryDefinition>),
+	MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition>),
+	MonitorFormulaAndFunctionAggregateFilteredQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition>),
+	MonitorFormulaAndFunctionMetricQueryDefinition(Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionQueryDefinition {
@@ -38,67 +24,42 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionQueryDefinition {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionEventQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionEventQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionCostQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionCostQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionCostQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataQualityQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionDataQualityQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionDataJobsQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionDataJobsQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<
-                crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition,
-            >,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionAggregateAugmentedQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionAggregateFilteredQueryDefinition(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV1::model::MonitorFormulaAndFunctionMetricQueryDefinition>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(MonitorFormulaAndFunctionQueryDefinition::MonitorFormulaAndFunctionMetricQueryDefinition(_v));
             }
         }
-
-        return Ok(MonitorFormulaAndFunctionQueryDefinition::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(MonitorFormulaAndFunctionQueryDefinition::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

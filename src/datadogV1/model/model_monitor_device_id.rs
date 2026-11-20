@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorDeviceID {
-    LAPTOP_LARGE,
-    TABLET,
-    MOBILE_SMALL,
-    CHROME_LAPTOP_LARGE,
-    CHROME_TABLET,
-    CHROME_MOBILE_SMALL,
-    FIREFOX_LAPTOP_LARGE,
-    FIREFOX_TABLET,
-    FIREFOX_MOBILE_SMALL,
+	LAPTOP_LARGE,
+	TABLET,
+	MOBILE_SMALL,
+	CHROME_LAPTOP_LARGE,
+	CHROME_TABLET,
+	CHROME_MOBILE_SMALL,
+	FIREFOX_LAPTOP_LARGE,
+	FIREFOX_TABLET,
+	FIREFOX_MOBILE_SMALL,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for MonitorDeviceID {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "laptop_large" => Self::LAPTOP_LARGE,
-            "tablet" => Self::TABLET,
-            "mobile_small" => Self::MOBILE_SMALL,
-            "chrome.laptop_large" => Self::CHROME_LAPTOP_LARGE,
-            "chrome.tablet" => Self::CHROME_TABLET,
-            "chrome.mobile_small" => Self::CHROME_MOBILE_SMALL,
-            "firefox.laptop_large" => Self::FIREFOX_LAPTOP_LARGE,
-            "firefox.tablet" => Self::FIREFOX_TABLET,
-            "firefox.mobile_small" => Self::FIREFOX_MOBILE_SMALL,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"laptop_large" => Self::LAPTOP_LARGE,"tablet" => Self::TABLET,"mobile_small" => Self::MOBILE_SMALL,"chrome.laptop_large" => Self::CHROME_LAPTOP_LARGE,"chrome.tablet" => Self::CHROME_TABLET,"chrome.mobile_small" => Self::CHROME_MOBILE_SMALL,"firefox.laptop_large" => Self::FIREFOX_LAPTOP_LARGE,"firefox.tablet" => Self::FIREFOX_TABLET,"firefox.mobile_small" => Self::FIREFOX_MOBILE_SMALL,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

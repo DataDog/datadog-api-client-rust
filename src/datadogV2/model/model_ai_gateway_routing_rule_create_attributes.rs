@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes used to create an AI Gateway routing rule.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleCreateAttributes {
     /// Reserved for initial View and Edit permissions. Supplying this attribute returns HTTP 400 and doesn't
-    /// create the route. Create the route, then set its permissions through the restriction policy API.
+/// create the route. Create the route, then set its permissions through the restriction policy API.
     #[serde(rename = "initial_bindings")]
     pub initial_bindings: Option<Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>>,
     /// Organization-unique resource slug.
@@ -24,14 +24,11 @@ pub struct AiGatewayRoutingRuleCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRoutingRuleCreateAttributes {
-    pub fn new(
-        slug: String,
-        tiers: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>,
-    ) -> AiGatewayRoutingRuleCreateAttributes {
+    pub fn new(slug: String, tiers: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>) -> AiGatewayRoutingRuleCreateAttributes {
         AiGatewayRoutingRuleCreateAttributes {
             initial_bindings: None,
             slug,
@@ -40,23 +37,19 @@ impl AiGatewayRoutingRuleCreateAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn initial_bindings(
-        mut self,
-        value: Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>,
-    ) -> Self {
+    
+    pub fn initial_bindings(mut self, value: Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>) -> Self {
         self.initial_bindings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -75,17 +68,10 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut initial_bindings: Option<
-                    Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>,
-                > = None;
+                let mut initial_bindings: Option<Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>> = None;
                 let mut slug: Option<String> = None;
-                let mut tiers: Option<
-                    Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut tiers: Option<Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -94,20 +80,19 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            initial_bindings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            initial_bindings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "slug" => {
                             slug = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tiers" => {
                             tiers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let slug = slug.ok_or_else(|| M::Error::missing_field("slug"))?;

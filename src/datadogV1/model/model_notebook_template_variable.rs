@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Notebook template variable.
 #[non_exhaustive]
@@ -12,27 +12,18 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct NotebookTemplateVariable {
     /// The list of values that the template variable drop-down is limited to.
-    #[serde(
-        rename = "available_values",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "available_values", default, with = "::serde_with::rust::double_option")]
     pub available_values: Option<Option<Vec<String>>>,
     /// Query used to dynamically populate the list of available values for the template variable.
     #[serde(rename = "available_values_query")]
-    pub available_values_query:
-        Option<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery>,
+    pub available_values_query: Option<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery>,
     /// Mapping of data source names to template variable values.
     #[serde(rename = "data_source_mappings")]
     pub data_source_mappings: Option<std::collections::BTreeMap<String, String>>,
     /// (deprecated) The default value for the template variable on notebook load.
-    /// Cannot be used in conjunction with `defaults`.
-    #[deprecated]
-    #[serde(
-        rename = "default",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+/// Cannot be used in conjunction with `defaults`.
+	#[deprecated]
+    #[serde(rename = "default", default, with = "::serde_with::rust::double_option")]
     pub default: Option<Option<String>>,
     /// One or many default values for the template variable. Cannot be used in conjunction with `default`.
     #[serde(rename = "defaults")]
@@ -51,7 +42,7 @@ pub struct NotebookTemplateVariable {
     pub type_: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotebookTemplateVariable {
@@ -70,61 +61,58 @@ impl NotebookTemplateVariable {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn available_values(mut self, value: Option<Vec<String>>) -> Self {
         self.available_values = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn available_values_query(
-        mut self,
-        value: crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery,
-    ) -> Self {
+    pub fn available_values_query(mut self, value: crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery) -> Self {
         self.available_values_query = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
-    pub fn data_source_mappings(
-        mut self,
-        value: std::collections::BTreeMap<String, String>,
-    ) -> Self {
+    pub fn data_source_mappings(mut self, value: std::collections::BTreeMap<String, String>) -> Self {
         self.data_source_mappings = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn default(mut self, value: Option<String>) -> Self {
         self.default = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn defaults(mut self, value: Vec<String>) -> Self {
         self.defaults = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn placement(mut self, value: String) -> Self {
         self.placement = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn prefix(mut self, value: Option<String>) -> Self {
         self.prefix = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for NotebookTemplateVariable {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -144,11 +132,8 @@ impl<'de> Deserialize<'de> for NotebookTemplateVariable {
                 M: MapAccess<'a>,
             {
                 let mut available_values: Option<Option<Vec<String>>> = None;
-                let mut available_values_query: Option<
-                    crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery,
-                > = None;
-                let mut data_source_mappings: Option<std::collections::BTreeMap<String, String>> =
-                    None;
+                let mut available_values_query: Option<crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery> = None;
+                let mut data_source_mappings: Option<std::collections::BTreeMap<String, String>> = None;
                 let mut default: Option<Option<String>> = None;
                 let mut defaults: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
@@ -160,15 +145,13 @@ impl<'de> Deserialize<'de> for NotebookTemplateVariable {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "available_values" => {
-                            available_values =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            available_values = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "available_values_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            available_values_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            available_values_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _available_values_query) = available_values_query {
                                 match _available_values_query {
                                     crate::datadogV1::model::NotebookTemplateVariableAvailableValuesQuery::UnparsedObject(_available_values_query) => {
@@ -177,46 +160,43 @@ impl<'de> Deserialize<'de> for NotebookTemplateVariable {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "data_source_mappings" => {
                             if v.is_null() {
                                 continue;
                             }
-                            data_source_mappings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_source_mappings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default" => {
                             default = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "defaults" => {
                             if v.is_null() {
                                 continue;
                             }
                             defaults = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "placement" => {
                             if v.is_null() {
                                 continue;
                             }
                             placement = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "prefix" => {
                             prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

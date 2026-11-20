@@ -1,34 +1,31 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListPermissionsOptionalParams is a struct for passing parameters to the method [`RolesAPI::list_permissions`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListPermissionsOptionalParams {
     /// Set to `true` to return all permissions, including both permissions
-    /// that can be assigned to user roles and permissions that can only be
-    /// used as scopes for OAuth clients and scoped credentials. When `false`
-    /// (default), only permissions that can be assigned to user roles are
-    /// returned.
+/// that can be assigned to user roles and permissions that can only be
+/// used as scopes for OAuth clients and scoped credentials. When `false`
+/// (default), only permissions that can be assigned to user roles are
+/// returned.
     pub include_scopes: Option<bool>,
 }
 
 impl ListPermissionsOptionalParams {
     /// Set to `true` to return all permissions, including both permissions
-    /// that can be assigned to user roles and permissions that can only be
-    /// used as scopes for OAuth clients and scoped credentials. When `false`
-    /// (default), only permissions that can be assigned to user roles are
-    /// returned.
+/// that can be assigned to user roles and permissions that can only be
+/// used as scopes for OAuth clients and scoped credentials. When `false`
+/// (default), only permissions that can be assigned to user roles are
+/// returned.
     pub fn include_scopes(mut self, value: bool) -> Self {
         self.include_scopes = Some(value);
         self
@@ -44,8 +41,8 @@ pub struct ListRoleUsersOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// User attribute to order results by. Sort order is **ascending** by default.
-    /// Sort order is **descending** if the field is prefixed by a negative sign,
-    /// for example `sort=-name`. Options: `name`, `email`, `status`.
+/// Sort order is **descending** if the field is prefixed by a negative sign,
+/// for example `sort=-name`. Options: `name`, `email`, `status`.
     pub sort: Option<String>,
     /// Filter all users by the given string. Defaults to no filtering.
     pub filter: Option<String>,
@@ -63,8 +60,8 @@ impl ListRoleUsersOptionalParams {
         self
     }
     /// User attribute to order results by. Sort order is **ascending** by default.
-    /// Sort order is **descending** if the field is prefixed by a negative sign,
-    /// for example `sort=-name`. Options: `name`, `email`, `status`.
+/// Sort order is **descending** if the field is prefixed by a negative sign,
+/// for example `sort=-name`. Options: `name`, `email`, `status`.
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -85,8 +82,8 @@ pub struct ListRolesOptionalParams {
     /// Specific page number to return.
     pub page_number: Option<i64>,
     /// Sort roles depending on the given field. Sort order is **ascending** by default.
-    /// Sort order is **descending** if the field is prefixed by a negative sign, for example:
-    /// `sort=-name`.
+/// Sort order is **descending** if the field is prefixed by a negative sign, for example:
+/// `sort=-name`.
     pub sort: Option<crate::datadogV2::model::RolesSort>,
     /// Filter all roles by the given string.
     pub filter: Option<String>,
@@ -106,8 +103,8 @@ impl ListRolesOptionalParams {
         self
     }
     /// Sort roles depending on the given field. Sort order is **ascending** by default.
-    /// Sort order is **descending** if the field is prefixed by a negative sign, for example:
-    /// `sort=-name`.
+/// Sort order is **descending** if the field is prefixed by a negative sign, for example:
+/// `sort=-name`.
     pub fn sort(mut self, value: crate::datadogV2::model::RolesSort) -> Self {
         self.sort = Some(value);
         self
@@ -124,6 +121,9 @@ impl ListRolesOptionalParams {
     }
 }
 
+
+
+
 /// AddPermissionToRoleError is a struct for typed errors of method [`RolesAPI::add_permission_to_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -131,6 +131,7 @@ pub enum AddPermissionToRoleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// AddUserToRoleError is a struct for typed errors of method [`RolesAPI::add_user_to_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -140,6 +141,7 @@ pub enum AddUserToRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CloneRoleError is a struct for typed errors of method [`RolesAPI::clone_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -147,6 +149,7 @@ pub enum CloneRoleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateRoleError is a struct for typed errors of method [`RolesAPI::create_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -156,6 +159,7 @@ pub enum CreateRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteRoleError is a struct for typed errors of method [`RolesAPI::delete_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -163,6 +167,7 @@ pub enum DeleteRoleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRoleError is a struct for typed errors of method [`RolesAPI::get_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -172,6 +177,7 @@ pub enum GetRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListPermissionsError is a struct for typed errors of method [`RolesAPI::list_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -179,6 +185,7 @@ pub enum ListPermissionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListRolePermissionsError is a struct for typed errors of method [`RolesAPI::list_role_permissions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -188,6 +195,7 @@ pub enum ListRolePermissionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRoleTemplatesError is a struct for typed errors of method [`RolesAPI::list_role_templates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -195,6 +203,7 @@ pub enum ListRoleTemplatesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListRoleUsersError is a struct for typed errors of method [`RolesAPI::list_role_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -204,6 +213,7 @@ pub enum ListRoleUsersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRolesError is a struct for typed errors of method [`RolesAPI::list_roles`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -211,6 +221,7 @@ pub enum ListRolesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// RemovePermissionFromRoleError is a struct for typed errors of method [`RolesAPI::remove_permission_from_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -220,6 +231,7 @@ pub enum RemovePermissionFromRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RemoveUserFromRoleError is a struct for typed errors of method [`RolesAPI::remove_user_from_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -228,6 +240,7 @@ pub enum RemoveUserFromRoleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateRoleError is a struct for typed errors of method [`RolesAPI::update_role`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -235,6 +248,7 @@ pub enum UpdateRoleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Roles API is used to create and manage Datadog roles, what
 /// [global permissions](<https://docs.datadoghq.com/account_management/rbac/>)
@@ -268,7 +282,8 @@ impl RolesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -313,65 +328,51 @@ impl RolesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Adds a permission to a role.
-    pub async fn add_permission_to_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<
-        crate::datadogV2::model::PermissionsResponse,
-        datadog::Error<AddPermissionToRoleError>,
-    > {
-        match self
-            .add_permission_to_role_with_http_info(role_id, body)
-            .await
-        {
+    pub async fn add_permission_to_role(&self, role_id: String, body: crate::datadogV2::model::RelationshipToPermission) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<AddPermissionToRoleError>> {
+        match self.add_permission_to_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Adds a permission to a role.
-    pub async fn add_permission_to_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>,
-        datadog::Error<AddPermissionToRoleError>,
-    > {
+    pub async fn add_permission_to_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RelationshipToPermission) -> Result<datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>, datadog::Error<AddPermissionToRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_permission_to_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -384,23 +385,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -408,7 +402,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -418,7 +415,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -440,7 +440,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -457,76 +457,60 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AddPermissionToRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddPermissionToRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Adds a user to a role.
-    pub async fn add_user_to_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<AddUserToRoleError>> {
+    pub async fn add_user_to_role(&self, role_id: String, body: crate::datadogV2::model::RelationshipToUser) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<AddUserToRoleError>> {
         match self.add_user_to_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Adds a user to a role.
-    pub async fn add_user_to_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsersResponse>,
-        datadog::Error<AddUserToRoleError>,
-    > {
+    pub async fn add_user_to_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RelationshipToUser) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsersResponse>, datadog::Error<AddUserToRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_user_to_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -539,23 +523,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -563,7 +540,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -573,7 +553,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -595,7 +578,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -613,73 +596,59 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AddUserToRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AddUserToRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Clone an existing role
-    pub async fn clone_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RoleCloneRequest,
-    ) -> Result<crate::datadogV2::model::RoleResponse, datadog::Error<CloneRoleError>> {
+    pub async fn clone_role(&self, role_id: String, body: crate::datadogV2::model::RoleCloneRequest) -> Result<crate::datadogV2::model::RoleResponse, datadog::Error<CloneRoleError>> {
         match self.clone_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Clone an existing role
-    pub async fn clone_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RoleCloneRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RoleResponse>,
-        datadog::Error<CloneRoleError>,
-    > {
+    pub async fn clone_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RoleCloneRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RoleResponse>, datadog::Error<CloneRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.clone_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/clone",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -692,23 +661,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -716,7 +678,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -726,7 +691,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -748,7 +716,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -766,77 +734,65 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::RoleResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CloneRoleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new role for your organization.
-    ///
-    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
-    /// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
-    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
-    pub async fn create_role(
-        &self,
-        body: crate::datadogV2::model::RoleCreateRequest,
-    ) -> Result<crate::datadogV2::model::RoleCreateResponse, datadog::Error<CreateRoleError>> {
+///
+/// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+/// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
+/// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+    pub async fn create_role(&self, body: crate::datadogV2::model::RoleCreateRequest) -> Result<crate::datadogV2::model::RoleCreateResponse, datadog::Error<CreateRoleError>> {
         match self.create_role_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new role for your organization.
-    ///
-    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
-    /// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
-    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
-    pub async fn create_role_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RoleCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RoleCreateResponse>,
-        datadog::Error<CreateRoleError>,
-    > {
+///
+/// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+/// such as Dashboards Read and Monitors Read, are added to every new role by default, even if they are omitted from
+/// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+    pub async fn create_role_with_http_info(&self, body: crate::datadogV2::model::RoleCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RoleCreateResponse>, datadog::Error<CreateRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -849,23 +805,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -873,7 +822,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -883,7 +835,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -905,7 +860,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -922,61 +877,53 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RoleCreateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RoleCreateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateRoleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disables a role.
-    pub async fn delete_role(
-        &self,
-        role_id: String,
-    ) -> Result<(), datadog::Error<DeleteRoleError>> {
+    pub async fn delete_role(&self, role_id: String) -> Result<(), datadog::Error<DeleteRoleError>> {
         match self.delete_role_with_http_info(role_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disables a role.
-    pub async fn delete_role_with_http_info(
-        &self,
-        role_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRoleError>> {
+    pub async fn delete_role_with_http_info(&self, role_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -989,22 +936,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1023,58 +964,49 @@ impl RolesAPI {
             })
         } else {
             let local_entity: Option<DeleteRoleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a role in the organization specified by the role’s `role_id`.
-    pub async fn get_role(
-        &self,
-        role_id: String,
-    ) -> Result<crate::datadogV2::model::RoleResponse, datadog::Error<GetRoleError>> {
+    pub async fn get_role(&self, role_id: String) -> Result<crate::datadogV2::model::RoleResponse, datadog::Error<GetRoleError>> {
         match self.get_role_with_http_info(role_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a role in the organization specified by the role’s `role_id`.
-    pub async fn get_role_with_http_info(
-        &self,
-        role_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RoleResponse>,
-        datadog::Error<GetRoleError>,
-    > {
+    pub async fn get_role_with_http_info(&self, role_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RoleResponse>, datadog::Error<GetRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1087,22 +1019,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1115,57 +1041,41 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::RoleResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetRoleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a list of all permissions, including name, description, and ID.
-    pub async fn list_permissions(
-        &self,
-        params: ListPermissionsOptionalParams,
-    ) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<ListPermissionsError>>
-    {
-        match self.list_permissions_with_http_info(params).await {
+    pub async fn list_permissions(&self, params: ListPermissionsOptionalParams) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<ListPermissionsError>> {
+        match self.list_permissions_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a list of all permissions, including name, description, and ID.
-    pub async fn list_permissions_with_http_info(
-        &self,
-        params: ListPermissionsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>,
-        datadog::Error<ListPermissionsError>,
-    > {
+    pub async fn list_permissions_with_http_info(&self, params: ListPermissionsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>, datadog::Error<ListPermissionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_permissions";
 
+        
         // unbox and build optional parameters
         let include_scopes = params.include_scopes;
 
@@ -1173,19 +1083,19 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/permissions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include_scopes {
-            local_req_builder =
-                local_req_builder.query(&[("include_scopes", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_scopes", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1198,22 +1108,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1225,76 +1129,59 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListPermissionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListPermissionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a list of all permissions for a single role.
-    pub async fn list_role_permissions(
-        &self,
-        role_id: String,
-    ) -> Result<
-        crate::datadogV2::model::PermissionsResponse,
-        datadog::Error<ListRolePermissionsError>,
-    > {
+    pub async fn list_role_permissions(&self, role_id: String) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<ListRolePermissionsError>> {
         match self.list_role_permissions_with_http_info(role_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a list of all permissions for a single role.
-    pub async fn list_role_permissions_with_http_info(
-        &self,
-        role_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>,
-        datadog::Error<ListRolePermissionsError>,
-    > {
+    pub async fn list_role_permissions_with_http_info(&self, role_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>, datadog::Error<ListRolePermissionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_role_permissions";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1307,22 +1194,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1334,56 +1215,38 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRolePermissionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRolePermissionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all role templates
-    pub async fn list_role_templates(
-        &self,
-    ) -> Result<crate::datadogV2::model::RoleTemplateArray, datadog::Error<ListRoleTemplatesError>>
-    {
+    pub async fn list_role_templates(&self) -> Result<crate::datadogV2::model::RoleTemplateArray, datadog::Error<ListRoleTemplatesError>> {
         match self.list_role_templates_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all role templates
-    pub async fn list_role_templates_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RoleTemplateArray>,
-        datadog::Error<ListRoleTemplatesError>,
-    > {
+    pub async fn list_role_templates_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::RoleTemplateArray>, datadog::Error<ListRoleTemplatesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_role_templates";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1395,18 +1258,22 @@ impl RolesAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1419,22 +1286,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1446,61 +1307,42 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RoleTemplateArray>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RoleTemplateArray>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRoleTemplatesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRoleTemplatesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Gets all users of a role.
-    pub async fn list_role_users(
-        &self,
-        role_id: String,
-        params: ListRoleUsersOptionalParams,
-    ) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<ListRoleUsersError>> {
-        match self.list_role_users_with_http_info(role_id, params).await {
+    pub async fn list_role_users(&self, role_id: String, params: ListRoleUsersOptionalParams) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<ListRoleUsersError>> {
+        match self.list_role_users_with_http_info(role_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Gets all users of a role.
-    pub async fn list_role_users_with_http_info(
-        &self,
-        role_id: String,
-        params: ListRoleUsersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsersResponse>,
-        datadog::Error<ListRoleUsersError>,
-    > {
+    pub async fn list_role_users_with_http_info(&self, role_id: String, params: ListRoleUsersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsersResponse>, datadog::Error<ListRoleUsersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_role_users";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -1511,32 +1353,30 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1549,22 +1389,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1577,57 +1411,41 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRoleUsersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRoleUsersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns all roles, including their names and their unique identifiers.
-    pub async fn list_roles(
-        &self,
-        params: ListRolesOptionalParams,
-    ) -> Result<crate::datadogV2::model::RolesResponse, datadog::Error<ListRolesError>> {
-        match self.list_roles_with_http_info(params).await {
+    pub async fn list_roles(&self, params: ListRolesOptionalParams) -> Result<crate::datadogV2::model::RolesResponse, datadog::Error<ListRolesError>> {
+        match self.list_roles_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns all roles, including their names and their unique identifiers.
-    pub async fn list_roles_with_http_info(
-        &self,
-        params: ListRolesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RolesResponse>,
-        datadog::Error<ListRolesError>,
-    > {
+    pub async fn list_roles_with_http_info(&self, params: ListRolesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RolesResponse>, datadog::Error<ListRolesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_roles";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -1639,35 +1457,31 @@ impl RolesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/roles",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1680,22 +1494,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1708,78 +1516,59 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::RolesResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListRolesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Removes a permission from a role.
-    pub async fn remove_permission_from_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<
-        crate::datadogV2::model::PermissionsResponse,
-        datadog::Error<RemovePermissionFromRoleError>,
-    > {
-        match self
-            .remove_permission_from_role_with_http_info(role_id, body)
-            .await
-        {
+    pub async fn remove_permission_from_role(&self, role_id: String, body: crate::datadogV2::model::RelationshipToPermission) -> Result<crate::datadogV2::model::PermissionsResponse, datadog::Error<RemovePermissionFromRoleError>> {
+        match self.remove_permission_from_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Removes a permission from a role.
-    pub async fn remove_permission_from_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToPermission,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>,
-        datadog::Error<RemovePermissionFromRoleError>,
-    > {
+    pub async fn remove_permission_from_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RelationshipToPermission) -> Result<datadog::ResponseContent<crate::datadogV2::model::PermissionsResponse>, datadog::Error<RemovePermissionFromRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_permission_from_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/permissions",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1792,23 +1581,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1816,7 +1598,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1826,7 +1611,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1848,7 +1636,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1865,80 +1653,60 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::PermissionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RemovePermissionFromRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemovePermissionFromRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Removes a user from a role.
-    pub async fn remove_user_from_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<RemoveUserFromRoleError>>
-    {
-        match self
-            .remove_user_from_role_with_http_info(role_id, body)
-            .await
-        {
+    pub async fn remove_user_from_role(&self, role_id: String, body: crate::datadogV2::model::RelationshipToUser) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<RemoveUserFromRoleError>> {
+        match self.remove_user_from_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Removes a user from a role.
-    pub async fn remove_user_from_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RelationshipToUser,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsersResponse>,
-        datadog::Error<RemoveUserFromRoleError>,
-    > {
+    pub async fn remove_user_from_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RelationshipToUser) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsersResponse>, datadog::Error<RemoveUserFromRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_user_from_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}/users",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1951,23 +1719,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1975,7 +1736,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1985,7 +1749,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2007,7 +1774,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2025,91 +1792,77 @@ impl RolesAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<RemoveUserFromRoleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RemoveUserFromRoleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Edit a role. Can only be used with application keys belonging to administrators.
-    ///
-    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
-    /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
-    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
-    ///
-    /// Omitting the `permissions` relationship from the request leaves the role's existing permissions
-    /// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
-    /// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
-    /// can only be excluded after Minimal Access Roles is enabled for the organization.
-    pub async fn update_role(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RoleUpdateRequest,
-    ) -> Result<crate::datadogV2::model::RoleUpdateResponse, datadog::Error<UpdateRoleError>> {
+///
+/// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+/// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
+/// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+///
+/// Omitting the `permissions` relationship from the request leaves the role's existing permissions
+/// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
+/// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
+/// can only be excluded after Minimal Access Roles is enabled for the organization.
+    pub async fn update_role(&self, role_id: String, body: crate::datadogV2::model::RoleUpdateRequest) -> Result<crate::datadogV2::model::RoleUpdateResponse, datadog::Error<UpdateRoleError>> {
         match self.update_role_with_http_info(role_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Edit a role. Can only be used with application keys belonging to administrators.
-    ///
-    /// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
-    /// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
-    /// the request. To exclude them, set `default_permissions_opt_out` to `true`.
-    ///
-    /// Omitting the `permissions` relationship from the request leaves the role's existing permissions
-    /// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
-    /// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
-    /// can only be excluded after Minimal Access Roles is enabled for the organization.
-    pub async fn update_role_with_http_info(
-        &self,
-        role_id: String,
-        body: crate::datadogV2::model::RoleUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RoleUpdateResponse>,
-        datadog::Error<UpdateRoleError>,
-    > {
+///
+/// [Restricted permissions](<https://docs.datadoghq.com/account_management/rbac/permissions/#restricted-permissions>),
+/// such as Dashboards Read and Monitors Read, remain on the role by default, even if they are omitted from
+/// the request. To exclude them, set `default_permissions_opt_out` to `true`.
+///
+/// Omitting the `permissions` relationship from the request leaves the role's existing permissions
+/// unchanged. Sending `"permissions": {"data": []}` removes all permissions except restricted default
+/// permissions, which remain unless `default_permissions_opt_out` is `true`. Some restricted permissions
+/// can only be excluded after Minimal Access Roles is enabled for the organization.
+    pub async fn update_role_with_http_info(&self, role_id: String, body: crate::datadogV2::model::RoleUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RoleUpdateResponse>, datadog::Error<UpdateRoleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_role";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/roles/{role_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            role_id = datadog::urlencode(role_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), role_id=
+            datadog::urlencode(role_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2122,23 +1875,16 @@ impl RolesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2146,7 +1892,10 @@ impl RolesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2156,7 +1905,10 @@ impl RolesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2178,7 +1930,7 @@ impl RolesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2195,25 +1947,17 @@ impl RolesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RoleUpdateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RoleUpdateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<UpdateRoleError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

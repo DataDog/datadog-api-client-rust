@@ -1,17 +1,17 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// An object related to an application key.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum ApplicationKeyResponseIncludedItem {
-    User(Box<crate::datadogV2::model::User>),
-    Role(Box<crate::datadogV2::model::Role>),
-    LeakedKey(Box<crate::datadogV2::model::LeakedKey>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	User(Box<crate::datadogV2::model::User>),
+	Role(Box<crate::datadogV2::model::Role>),
+	LeakedKey(Box<crate::datadogV2::model::LeakedKey>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for ApplicationKeyResponseIncludedItem {
@@ -20,28 +20,22 @@ impl<'de> Deserialize<'de> for ApplicationKeyResponseIncludedItem {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::User>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::User>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ApplicationKeyResponseIncludedItem::User(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Role>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::Role>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ApplicationKeyResponseIncludedItem::Role(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::LeakedKey>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::LeakedKey>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(ApplicationKeyResponseIncludedItem::LeakedKey(_v));
             }
         }
-
-        return Ok(ApplicationKeyResponseIncludedItem::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(ApplicationKeyResponseIncludedItem::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

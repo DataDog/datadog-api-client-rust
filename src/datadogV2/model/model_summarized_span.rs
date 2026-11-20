@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A node in the pruned trace tree.
 #[non_exhaustive]
@@ -48,7 +48,7 @@ pub struct SummarizedSpan {
     #[serde(rename = "spanID")]
     pub span_id: i64,
     /// The OpenTelemetry span kind, for example `INTERNAL`, `SERVER`, `CLIENT`,
-    /// `PRODUCER`, or `CONSUMER`.
+/// `PRODUCER`, or `CONSUMER`.
     #[serde(rename = "span_kind")]
     pub span_kind: String,
     /// The start time of the span, in RFC3339 format.
@@ -58,26 +58,11 @@ pub struct SummarizedSpan {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SummarizedSpan {
-    pub fn new(
-        children: Vec<crate::datadogV2::model::SummarizedSpan>,
-        duration_seconds: f64,
-        end_time: chrono::DateTime<chrono::Utc>,
-        error: crate::datadogV2::model::APMSpanErrorFlag,
-        hidden_child_spans_count: i32,
-        meta: std::collections::BTreeMap<String, String>,
-        metrics: std::collections::BTreeMap<String, f64>,
-        name: String,
-        parent_id: i64,
-        resource: String,
-        service: String,
-        span_id: i64,
-        span_kind: String,
-        start_time: chrono::DateTime<chrono::Utc>,
-    ) -> SummarizedSpan {
+    pub fn new(children: Vec<crate::datadogV2::model::SummarizedSpan>, duration_seconds: f64, end_time: chrono::DateTime<chrono::Utc>, error: crate::datadogV2::model::APMSpanErrorFlag, hidden_child_spans_count: i32, meta: std::collections::BTreeMap<String, String>, metrics: std::collections::BTreeMap<String, f64>, name: String, parent_id: i64, resource: String, service: String, span_id: i64, span_kind: String, start_time: chrono::DateTime<chrono::Utc>) -> SummarizedSpan {
         SummarizedSpan {
             children,
             duration_seconds,
@@ -97,15 +82,14 @@ impl SummarizedSpan {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SummarizedSpan {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -138,82 +122,73 @@ impl<'de> Deserialize<'de> for SummarizedSpan {
                 let mut span_id: Option<i64> = None;
                 let mut span_kind: Option<String> = None;
                 let mut start_time: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "children" => {
                             children = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "durationSeconds" => {
-                            duration_seconds =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            duration_seconds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "endTime" => {
                             end_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "error" => {
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _error) = error {
                                 match _error {
-                                    crate::datadogV2::model::APMSpanErrorFlag::UnparsedObject(
-                                        _error,
-                                    ) => {
+                                    crate::datadogV2::model::APMSpanErrorFlag::UnparsedObject(_error) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "hidden_child_spans_count" => {
-                            hidden_child_spans_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            hidden_child_spans_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "meta" => {
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metrics" => {
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parentID" => {
                             parent_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource" => {
                             resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service" => {
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "spanID" => {
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_kind" => {
                             span_kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "startTime" => {
                             start_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let children = children.ok_or_else(|| M::Error::missing_field("children"))?;
-                let duration_seconds =
-                    duration_seconds.ok_or_else(|| M::Error::missing_field("duration_seconds"))?;
+                let duration_seconds = duration_seconds.ok_or_else(|| M::Error::missing_field("duration_seconds"))?;
                 let end_time = end_time.ok_or_else(|| M::Error::missing_field("end_time"))?;
                 let error = error.ok_or_else(|| M::Error::missing_field("error"))?;
-                let hidden_child_spans_count = hidden_child_spans_count
-                    .ok_or_else(|| M::Error::missing_field("hidden_child_spans_count"))?;
+                let hidden_child_spans_count = hidden_child_spans_count.ok_or_else(|| M::Error::missing_field("hidden_child_spans_count"))?;
                 let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
                 let metrics = metrics.ok_or_else(|| M::Error::missing_field("metrics"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

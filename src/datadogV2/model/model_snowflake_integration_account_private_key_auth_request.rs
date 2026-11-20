@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// RSA key pair authentication, the only method Snowflake integration accounts support. Generate an RSA key pair and assign the public key to the Snowflake user named in `settings.username`.
 #[non_exhaustive]
@@ -25,15 +25,11 @@ pub struct SnowflakeIntegrationAccountPrivateKeyAuthRequest {
     pub private_key_passphrase: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeIntegrationAccountPrivateKeyAuthRequest {
-    pub fn new(
-        auth_type: crate::datadogV2::model::SnowflakeIntegrationAccountPrivateKeyAuthType,
-        private_key: String,
-        private_key_name: String,
-    ) -> SnowflakeIntegrationAccountPrivateKeyAuthRequest {
+    pub fn new(auth_type: crate::datadogV2::model::SnowflakeIntegrationAccountPrivateKeyAuthType, private_key: String, private_key_name: String) -> SnowflakeIntegrationAccountPrivateKeyAuthRequest {
         SnowflakeIntegrationAccountPrivateKeyAuthRequest {
             auth_type,
             private_key,
@@ -42,12 +38,15 @@ impl SnowflakeIntegrationAccountPrivateKeyAuthRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn private_key_passphrase(mut self, value: String) -> Self {
         self.private_key_passphrase = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountPrivateKeyAuthRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -66,9 +65,7 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountPrivateKeyAuthRequest 
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_type: Option<
-                    crate::datadogV2::model::SnowflakeIntegrationAccountPrivateKeyAuthType,
-                > = None;
+                let mut auth_type: Option<crate::datadogV2::model::SnowflakeIntegrationAccountPrivateKeyAuthType> = None;
                 let mut private_key: Option<String> = None;
                 let mut private_key_name: Option<String> = None;
                 let mut private_key_passphrase: Option<String> = None;
@@ -86,34 +83,27 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationAccountPrivateKeyAuthRequest 
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "private_key" => {
-                            private_key =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "private_key_name" => {
-                            private_key_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_key_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "private_key_passphrase" => {
                             if v.is_null() {
                                 continue;
                             }
-                            private_key_passphrase =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            private_key_passphrase = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;
-                let private_key =
-                    private_key.ok_or_else(|| M::Error::missing_field("private_key"))?;
-                let private_key_name =
-                    private_key_name.ok_or_else(|| M::Error::missing_field("private_key_name"))?;
+                let private_key = private_key.ok_or_else(|| M::Error::missing_field("private_key"))?;
+                let private_key_name = private_key_name.ok_or_else(|| M::Error::missing_field("private_key_name"))?;
 
                 let content = SnowflakeIntegrationAccountPrivateKeyAuthRequest {
                     auth_type,

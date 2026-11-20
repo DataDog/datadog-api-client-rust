@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MonitorFormulaAndFunctionEventAggregation {
-    COUNT,
-    CARDINALITY,
-    MEDIAN,
-    PC75,
-    PC90,
-    PC95,
-    PC98,
-    PC99,
-    SUM,
-    MIN,
-    MAX,
-    AVG,
+	COUNT,
+	CARDINALITY,
+	MEDIAN,
+	PC75,
+	PC90,
+	PC95,
+	PC98,
+	PC99,
+	SUM,
+	MIN,
+	MAX,
+	AVG,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -60,22 +61,8 @@ impl<'de> Deserialize<'de> for MonitorFormulaAndFunctionEventAggregation {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "count" => Self::COUNT,
-            "cardinality" => Self::CARDINALITY,
-            "median" => Self::MEDIAN,
-            "pc75" => Self::PC75,
-            "pc90" => Self::PC90,
-            "pc95" => Self::PC95,
-            "pc98" => Self::PC98,
-            "pc99" => Self::PC99,
-            "sum" => Self::SUM,
-            "min" => Self::MIN,
-            "max" => Self::MAX,
-            "avg" => Self::AVG,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"count" => Self::COUNT,"cardinality" => Self::CARDINALITY,"median" => Self::MEDIAN,"pc75" => Self::PC75,"pc90" => Self::PC90,"pc95" => Self::PC95,"pc98" => Self::PC98,"pc99" => Self::PC99,"sum" => Self::SUM,"min" => Self::MIN,"max" => Self::MAX,"avg" => Self::AVG,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

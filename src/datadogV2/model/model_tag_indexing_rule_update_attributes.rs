@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating a tag indexing rule. All fields are optional; omitted fields are unchanged.
 #[non_exhaustive]
@@ -36,7 +36,7 @@ pub struct TagIndexingRuleUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TagIndexingRuleUpdateAttributes {
@@ -53,50 +53,48 @@ impl TagIndexingRuleUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn exclude_tags_mode(mut self, value: bool) -> Self {
         self.exclude_tags_mode = Some(value);
         self
     }
-
+    
     pub fn ignored_metric_name_matches(mut self, value: Vec<String>) -> Self {
         self.ignored_metric_name_matches = Some(value);
         self
     }
-
+    
     pub fn metric_name_matches(mut self, value: Vec<String>) -> Self {
         self.metric_name_matches = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn options(mut self, value: crate::datadogV2::model::TagIndexingRuleOptions) -> Self {
         self.options = Some(value);
         self
     }
-
+    
     pub fn rule_order(mut self, value: i64) -> Self {
         self.rule_order = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for TagIndexingRuleUpdateAttributes {
     fn default() -> Self {
@@ -128,10 +126,7 @@ impl<'de> Deserialize<'de> for TagIndexingRuleUpdateAttributes {
                 let mut options: Option<crate::datadogV2::model::TagIndexingRuleOptions> = None;
                 let mut rule_order: Option<i64> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -140,52 +135,49 @@ impl<'de> Deserialize<'de> for TagIndexingRuleUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            exclude_tags_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exclude_tags_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ignored_metric_name_matches" => {
                             if v.is_null() {
                                 continue;
                             }
-                            ignored_metric_name_matches =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ignored_metric_name_matches = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_name_matches" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_name_matches =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_name_matches = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "options" => {
                             if v.is_null() {
                                 continue;
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_order" => {
                             if v.is_null() {
                                 continue;
                             }
                             rule_order = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

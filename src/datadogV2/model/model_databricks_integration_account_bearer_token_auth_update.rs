@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Bearer token authentication. The credential is a single opaque secret, a Databricks personal access token, with no accompanying non-secret identifier. The method is deprecated: Databricks accepts it only on accounts that already use it, and never on creation. Only the fields provided are changed; omit `token` to keep the stored one.
 #[non_exhaustive]
@@ -19,25 +19,26 @@ pub struct DatabricksIntegrationAccountBearerTokenAuthUpdate {
     pub token: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DatabricksIntegrationAccountBearerTokenAuthUpdate {
-    pub fn new(
-        auth_type: crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType,
-    ) -> DatabricksIntegrationAccountBearerTokenAuthUpdate {
+    pub fn new(auth_type: crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType) -> DatabricksIntegrationAccountBearerTokenAuthUpdate {
         DatabricksIntegrationAccountBearerTokenAuthUpdate {
             auth_type,
             token: None,
             _unparsed: false,
         }
     }
-
+    
     pub fn token(mut self, value: String) -> Self {
         self.token = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for DatabricksIntegrationAccountBearerTokenAuthUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -56,9 +57,7 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountBearerTokenAuthUpdate
             where
                 M: MapAccess<'a>,
             {
-                let mut auth_type: Option<
-                    crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType,
-                > = None;
+                let mut auth_type: Option<crate::datadogV2::model::DatabricksIntegrationAccountBearerTokenAuthType> = None;
                 let mut token: Option<String> = None;
                 let mut _unparsed = false;
 
@@ -74,18 +73,16 @@ impl<'de> Deserialize<'de> for DatabricksIntegrationAccountBearerTokenAuthUpdate
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "token" => {
                             if v.is_null() {
                                 continue;
                             }
                             token = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let auth_type = auth_type.ok_or_else(|| M::Error::missing_field("auth_type"))?;

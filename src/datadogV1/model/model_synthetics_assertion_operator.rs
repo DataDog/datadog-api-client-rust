@@ -2,26 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SyntheticsAssertionOperator {
-    CONTAINS,
-    DOES_NOT_CONTAIN,
-    IS,
-    IS_NOT,
-    LESS_THAN,
-    LESS_THAN_OR_EQUAL,
-    MORE_THAN,
-    MORE_THAN_OR_EQUAL,
-    MATCHES,
-    DOES_NOT_MATCH,
-    VALIDATES,
-    IS_IN_MORE_DAYS_THAN,
-    IS_IN_LESS_DAYS_THAN,
-    DOES_NOT_EXIST,
-    IS_UNDEFINED,
+	CONTAINS,
+	DOES_NOT_CONTAIN,
+	IS,
+	IS_NOT,
+	LESS_THAN,
+	LESS_THAN_OR_EQUAL,
+	MORE_THAN,
+	MORE_THAN_OR_EQUAL,
+	MATCHES,
+	DOES_NOT_MATCH,
+	VALIDATES,
+	IS_IN_MORE_DAYS_THAN,
+	IS_IN_LESS_DAYS_THAN,
+	DOES_NOT_EXIST,
+	IS_UNDEFINED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -66,25 +67,8 @@ impl<'de> Deserialize<'de> for SyntheticsAssertionOperator {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "contains" => Self::CONTAINS,
-            "doesNotContain" => Self::DOES_NOT_CONTAIN,
-            "is" => Self::IS,
-            "isNot" => Self::IS_NOT,
-            "lessThan" => Self::LESS_THAN,
-            "lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,
-            "moreThan" => Self::MORE_THAN,
-            "moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,
-            "matches" => Self::MATCHES,
-            "doesNotMatch" => Self::DOES_NOT_MATCH,
-            "validates" => Self::VALIDATES,
-            "isInMoreThan" => Self::IS_IN_MORE_DAYS_THAN,
-            "isInLessThan" => Self::IS_IN_LESS_DAYS_THAN,
-            "doesNotExist" => Self::DOES_NOT_EXIST,
-            "isUndefined" => Self::IS_UNDEFINED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"contains" => Self::CONTAINS,"doesNotContain" => Self::DOES_NOT_CONTAIN,"is" => Self::IS,"isNot" => Self::IS_NOT,"lessThan" => Self::LESS_THAN,"lessThanOrEqual" => Self::LESS_THAN_OR_EQUAL,"moreThan" => Self::MORE_THAN,"moreThanOrEqual" => Self::MORE_THAN_OR_EQUAL,"matches" => Self::MATCHES,"doesNotMatch" => Self::DOES_NOT_MATCH,"validates" => Self::VALIDATES,"isInMoreThan" => Self::IS_IN_MORE_DAYS_THAN,"isInLessThan" => Self::IS_IN_LESS_DAYS_THAN,"doesNotExist" => Self::DOES_NOT_EXIST,"isUndefined" => Self::IS_UNDEFINED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

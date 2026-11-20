@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ExportLLMObsDatasetOptionalParams is a struct for passing parameters to the method [`AgentObservabilityAPI::export_llm_obs_dataset`]
 #[non_exhaustive]
@@ -226,8 +223,8 @@ pub struct ListLLMObsExperimentsOptionalParams {
     /// Filter by logical experiment name. This is the `name` field set when creating an experiment through `POST /experiments`. Returns all experiment runs that share the same name, enabling cross-commit and cross-branch comparisons.
     pub filter_experiment: Option<String>,
     /// Filter by JSONB metadata containment. Provide a JSON object string where
-    /// experiments whose metadata contains all specified key-value pairs are returned.
-    /// For example: `{"commit":"abc123","branch":"main"}`.
+/// experiments whose metadata contains all specified key-value pairs are returned.
+/// For example: `{"commit":"abc123","branch":"main"}`.
     pub filter_metadata: Option<String>,
     /// Filter experiments by the ID of their parent (baseline) experiment. Returns all experiments that were run against the given baseline. Can be specified multiple times.
     pub filter_parent_experiment_id: Option<String>,
@@ -240,7 +237,7 @@ pub struct ListLLMObsExperimentsOptionalParams {
     /// Use the pagination cursor returned in `meta.after` to retrieve the next page of results.
     pub page_cursor: Option<String>,
     /// Maximum number of results to return per page. Values above 5000 are clamped
-    /// to 5000. Defaults to 5000.
+/// to 5000. Defaults to 5000.
     pub page_limit: Option<i64>,
 }
 
@@ -271,8 +268,8 @@ impl ListLLMObsExperimentsOptionalParams {
         self
     }
     /// Filter by JSONB metadata containment. Provide a JSON object string where
-    /// experiments whose metadata contains all specified key-value pairs are returned.
-    /// For example: `{"commit":"abc123","branch":"main"}`.
+/// experiments whose metadata contains all specified key-value pairs are returned.
+/// For example: `{"commit":"abc123","branch":"main"}`.
     pub fn filter_metadata(mut self, value: String) -> Self {
         self.filter_metadata = Some(value);
         self
@@ -303,7 +300,7 @@ impl ListLLMObsExperimentsOptionalParams {
         self
     }
     /// Maximum number of results to return per page. Values above 5000 are clamped
-    /// to 5000. Defaults to 5000.
+/// to 5000. Defaults to 5000.
     pub fn page_limit(mut self, value: i64) -> Self {
         self.page_limit = Some(value);
         self
@@ -356,7 +353,7 @@ pub struct ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams {
     /// The ID of a specific patterns run. Defaults to the most recent completed run.
     pub run_id: Option<String>,
     /// When true, enrich each clustered point with span metrics such as status,
-    /// duration, token counts, estimated cost, and evaluations.
+/// duration, token counts, estimated cost, and evaluations.
     pub include_metrics: Option<bool>,
 }
 
@@ -367,7 +364,7 @@ impl ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams {
         self
     }
     /// When true, enrich each clustered point with span metrics such as status,
-    /// duration, token counts, estimated cost, and evaluations.
+/// duration, token counts, estimated cost, and evaluations.
     pub fn include_metrics(mut self, value: bool) -> Self {
         self.include_metrics = Some(value);
         self
@@ -564,6 +561,9 @@ impl UploadLLMObsDatasetRecordsFileOptionalParams {
     }
 }
 
+
+
+
 /// AggregateLLMObsExperimentationError is a struct for typed errors of method [`AgentObservabilityAPI::aggregate_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -572,6 +572,7 @@ pub enum AggregateLLMObsExperimentationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// BatchUpdateLLMObsDatasetError is a struct for typed errors of method [`AgentObservabilityAPI::batch_update_llm_obs_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -582,6 +583,7 @@ pub enum BatchUpdateLLMObsDatasetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CloneLLMObsDatasetError is a struct for typed errors of method [`AgentObservabilityAPI::clone_llm_obs_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -590,6 +592,7 @@ pub enum CloneLLMObsDatasetError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateLLMObsAnnotationQueueError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_annotation_queue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -600,6 +603,7 @@ pub enum CreateLLMObsAnnotationQueueError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateLLMObsAnnotationQueueInteractionsError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_annotation_queue_interactions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -608,6 +612,7 @@ pub enum CreateLLMObsAnnotationQueueInteractionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateLLMObsDatasetError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -618,6 +623,7 @@ pub enum CreateLLMObsDatasetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateLLMObsDatasetRecordsError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_dataset_records`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -626,6 +632,7 @@ pub enum CreateLLMObsDatasetRecordsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateLLMObsExperimentError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -636,6 +643,7 @@ pub enum CreateLLMObsExperimentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateLLMObsExperimentEventsError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_experiment_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -644,6 +652,7 @@ pub enum CreateLLMObsExperimentEventsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateLLMObsIntegrationInferenceError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_integration_inference`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -654,6 +663,7 @@ pub enum CreateLLMObsIntegrationInferenceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateLLMObsProjectError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -662,6 +672,7 @@ pub enum CreateLLMObsProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateLLMObsPromptError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_prompt`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -672,6 +683,7 @@ pub enum CreateLLMObsPromptError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateLLMObsPromptVersionError is a struct for typed errors of method [`AgentObservabilityAPI::create_llm_obs_prompt_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -680,6 +692,7 @@ pub enum CreateLLMObsPromptVersionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteLLMObsAnnotationQueueError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_annotation_queue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -690,6 +703,7 @@ pub enum DeleteLLMObsAnnotationQueueError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteLLMObsAnnotationQueueInteractionsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_annotation_queue_interactions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -698,6 +712,7 @@ pub enum DeleteLLMObsAnnotationQueueInteractionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteLLMObsAnnotationsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_annotations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -708,6 +723,7 @@ pub enum DeleteLLMObsAnnotationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteLLMObsCustomEvalConfigError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_custom_eval_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -716,6 +732,7 @@ pub enum DeleteLLMObsCustomEvalConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteLLMObsDatasetRecordsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_dataset_records`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -726,6 +743,7 @@ pub enum DeleteLLMObsDatasetRecordsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteLLMObsDatasetsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_datasets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -734,6 +752,7 @@ pub enum DeleteLLMObsDatasetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteLLMObsExperimentsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_experiments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -744,6 +763,7 @@ pub enum DeleteLLMObsExperimentsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteLLMObsPatternsConfigError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_patterns_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -752,6 +772,7 @@ pub enum DeleteLLMObsPatternsConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteLLMObsProjectsError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_projects`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -762,6 +783,7 @@ pub enum DeleteLLMObsProjectsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteLLMObsPromptError is a struct for typed errors of method [`AgentObservabilityAPI::delete_llm_obs_prompt`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -770,6 +792,7 @@ pub enum DeleteLLMObsPromptError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ExportLLMObsDatasetError is a struct for typed errors of method [`AgentObservabilityAPI::export_llm_obs_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -780,6 +803,7 @@ pub enum ExportLLMObsDatasetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetLLMObsAnnotatedInteractionError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_annotated_interaction`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -788,6 +812,7 @@ pub enum GetLLMObsAnnotatedInteractionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetLLMObsAnnotatedInteractionsError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_annotated_interactions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -798,6 +823,7 @@ pub enum GetLLMObsAnnotatedInteractionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetLLMObsAnnotatedInteractionsByTraceIDsError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_annotated_interactions_by_trace_i_ds`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -806,6 +832,7 @@ pub enum GetLLMObsAnnotatedInteractionsByTraceIDsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetLLMObsAnnotationQueueLabelSchemaError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_annotation_queue_label_schema`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -816,6 +843,7 @@ pub enum GetLLMObsAnnotationQueueLabelSchemaError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetLLMObsCustomEvalConfigError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_custom_eval_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -824,6 +852,7 @@ pub enum GetLLMObsCustomEvalConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetLLMObsDatasetDraftStateError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_dataset_draft_state`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -834,6 +863,7 @@ pub enum GetLLMObsDatasetDraftStateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetLLMObsPatternsConfigError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_patterns_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -842,6 +872,7 @@ pub enum GetLLMObsPatternsConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetLLMObsPatternsRunStatusError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_patterns_run_status`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -852,6 +883,7 @@ pub enum GetLLMObsPatternsRunStatusError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetLLMObsPromptError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_prompt`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -860,6 +892,7 @@ pub enum GetLLMObsPromptError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetLLMObsPromptVersionError is a struct for typed errors of method [`AgentObservabilityAPI::get_llm_obs_prompt_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -870,6 +903,7 @@ pub enum GetLLMObsPromptVersionError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsAnnotationQueuesError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_annotation_queues`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -878,6 +912,7 @@ pub enum ListLLMObsAnnotationQueuesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsCustomEvalConfigsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_custom_eval_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -888,6 +923,7 @@ pub enum ListLLMObsCustomEvalConfigsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsDatasetRecordsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_dataset_records`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -896,6 +932,7 @@ pub enum ListLLMObsDatasetRecordsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsDatasetVersionsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_dataset_versions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -906,6 +943,7 @@ pub enum ListLLMObsDatasetVersionsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsDatasetsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_datasets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -914,6 +952,7 @@ pub enum ListLLMObsDatasetsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsExperimentEventsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_experiment_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -924,6 +963,7 @@ pub enum ListLLMObsExperimentEventsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsExperimentEventsV1Error is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_experiment_events_v1`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -932,6 +972,7 @@ pub enum ListLLMObsExperimentEventsV1Error {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsExperimentEventsV2Error is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_experiment_events_v2`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -942,6 +983,7 @@ pub enum ListLLMObsExperimentEventsV2Error {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsExperimentsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_experiments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -950,6 +992,7 @@ pub enum ListLLMObsExperimentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsIntegrationAccountsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_integration_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -960,6 +1003,7 @@ pub enum ListLLMObsIntegrationAccountsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsIntegrationModelsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_integration_models`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -968,6 +1012,7 @@ pub enum ListLLMObsIntegrationModelsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsPatternsClusteredPointsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_clustered_points`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -978,6 +1023,7 @@ pub enum ListLLMObsPatternsClusteredPointsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsPatternsConfigsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -986,6 +1032,7 @@ pub enum ListLLMObsPatternsConfigsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsPatternsRunsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_runs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -996,6 +1043,7 @@ pub enum ListLLMObsPatternsRunsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsPatternsTemplatesError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_templates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1003,6 +1051,7 @@ pub enum ListLLMObsPatternsTemplatesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsPatternsTopicsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_topics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1013,6 +1062,7 @@ pub enum ListLLMObsPatternsTopicsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsPatternsTopicsWithClusteredPointsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_patterns_topics_with_clustered_points`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1021,6 +1071,7 @@ pub enum ListLLMObsPatternsTopicsWithClusteredPointsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsProjectsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_projects`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1031,6 +1082,7 @@ pub enum ListLLMObsProjectsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsPromptVersionsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_prompt_versions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1039,6 +1091,7 @@ pub enum ListLLMObsPromptVersionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListLLMObsPromptsError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_prompts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1049,6 +1102,7 @@ pub enum ListLLMObsPromptsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListLLMObsSpansError is a struct for typed errors of method [`AgentObservabilityAPI::list_llm_obs_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1057,6 +1111,7 @@ pub enum ListLLMObsSpansError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// LockLLMObsDatasetDraftStateError is a struct for typed errors of method [`AgentObservabilityAPI::lock_llm_obs_dataset_draft_state`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1067,6 +1122,7 @@ pub enum LockLLMObsDatasetDraftStateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// RestoreLLMObsDatasetVersionError is a struct for typed errors of method [`AgentObservabilityAPI::restore_llm_obs_dataset_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1075,6 +1131,7 @@ pub enum RestoreLLMObsDatasetVersionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// SearchLLMObsExperimentationError is a struct for typed errors of method [`AgentObservabilityAPI::search_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1085,6 +1142,7 @@ pub enum SearchLLMObsExperimentationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SearchLLMObsSpansError is a struct for typed errors of method [`AgentObservabilityAPI::search_llm_obs_spans`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1093,6 +1151,7 @@ pub enum SearchLLMObsSpansError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// SimpleSearchLLMObsExperimentationError is a struct for typed errors of method [`AgentObservabilityAPI::simple_search_llm_obs_experimentation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1103,6 +1162,7 @@ pub enum SimpleSearchLLMObsExperimentationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// TriggerLLMObsPatternsError is a struct for typed errors of method [`AgentObservabilityAPI::trigger_llm_obs_patterns`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1111,6 +1171,7 @@ pub enum TriggerLLMObsPatternsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UnlockLLMObsDatasetDraftStateError is a struct for typed errors of method [`AgentObservabilityAPI::unlock_llm_obs_dataset_draft_state`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1121,6 +1182,7 @@ pub enum UnlockLLMObsDatasetDraftStateError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateLLMObsAnnotationQueueError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_annotation_queue`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1129,6 +1191,7 @@ pub enum UpdateLLMObsAnnotationQueueError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateLLMObsAnnotationQueueLabelSchemaError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_annotation_queue_label_schema`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1139,6 +1202,7 @@ pub enum UpdateLLMObsAnnotationQueueLabelSchemaError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateLLMObsCustomEvalConfigError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_custom_eval_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1147,6 +1211,7 @@ pub enum UpdateLLMObsCustomEvalConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateLLMObsDatasetError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_dataset`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1157,6 +1222,7 @@ pub enum UpdateLLMObsDatasetError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateLLMObsDatasetRecordsError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_dataset_records`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1165,6 +1231,7 @@ pub enum UpdateLLMObsDatasetRecordsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateLLMObsExperimentError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_experiment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1175,6 +1242,7 @@ pub enum UpdateLLMObsExperimentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateLLMObsProjectError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_project`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1183,6 +1251,7 @@ pub enum UpdateLLMObsProjectError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateLLMObsPromptError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_prompt`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1193,6 +1262,7 @@ pub enum UpdateLLMObsPromptError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateLLMObsPromptVersionError is a struct for typed errors of method [`AgentObservabilityAPI::update_llm_obs_prompt_version`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1201,6 +1271,7 @@ pub enum UpdateLLMObsPromptVersionError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UploadLLMObsDatasetRecordsFileError is a struct for typed errors of method [`AgentObservabilityAPI::upload_llm_obs_dataset_records_file`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1211,6 +1282,7 @@ pub enum UploadLLMObsDatasetRecordsFileError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertLLMObsAnnotationsError is a struct for typed errors of method [`AgentObservabilityAPI::upsert_llm_obs_annotations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1220,6 +1292,7 @@ pub enum UpsertLLMObsAnnotationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertLLMObsPatternsConfigError is a struct for typed errors of method [`AgentObservabilityAPI::upsert_llm_obs_patterns_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1228,6 +1301,7 @@ pub enum UpsertLLMObsPatternsConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage Agent Observability spans, data, projects, datasets, dataset records, experiments, prompts, and annotations.
 #[derive(Debug, Clone)]
@@ -1251,7 +1325,8 @@ impl AgentObservabilityAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -1296,52 +1371,35 @@ impl AgentObservabilityAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Execute an analytics aggregation over Agent Observability experimentation data.
-    /// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
-    ///
-    /// At least one `compute` definition and one `index` must be provided.
-    pub async fn aggregate_llm_obs_experimentation(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationAnalyticsRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse,
-        datadog::Error<AggregateLLMObsExperimentationError>,
-    > {
-        match self
-            .aggregate_llm_obs_experimentation_with_http_info(body)
-            .await
-        {
+/// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
+///
+/// At least one `compute` definition and one `index` must be provided.
+    pub async fn aggregate_llm_obs_experimentation(&self, body: crate::datadogV2::model::LLMObsExperimentationAnalyticsRequest) -> Result<crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse, datadog::Error<AggregateLLMObsExperimentationError>> {
+        match self.aggregate_llm_obs_experimentation_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Execute an analytics aggregation over Agent Observability experimentation data.
-    /// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
-    ///
-    /// At least one `compute` definition and one `index` must be provided.
-    pub async fn aggregate_llm_obs_experimentation_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationAnalyticsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse>,
-        datadog::Error<AggregateLLMObsExperimentationError>,
-    > {
+/// Use this endpoint to compute metrics (for example average eval scores) grouped by fields such as `span_id` or `experiment_id`.
+///
+/// At least one `compute` definition and one `index` must be provided.
+    pub async fn aggregate_llm_obs_experimentation_with_http_info(&self, body: crate::datadogV2::model::LLMObsExperimentationAnalyticsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse>, datadog::Error<AggregateLLMObsExperimentationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.aggregate_llm_obs_experimentation";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1353,19 +1411,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/analytics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1378,23 +1440,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1402,7 +1457,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1412,7 +1470,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1434,7 +1495,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1451,68 +1512,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentationAnalyticsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AggregateLLMObsExperimentationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<AggregateLLMObsExperimentationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Insert, update, and delete records in a single dataset operation. By default, a new dataset version is created when the batch is applied.
-    pub async fn batch_update_llm_obs_dataset(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-        datadog::Error<BatchUpdateLLMObsDatasetError>,
-    > {
-        match self
-            .batch_update_llm_obs_dataset_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn batch_update_llm_obs_dataset(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest) -> Result<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse, datadog::Error<BatchUpdateLLMObsDatasetError>> {
+        match self.batch_update_llm_obs_dataset_with_http_info(project_id, dataset_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Insert, update, and delete records in a single dataset operation. By default, a new dataset version is created when the batch is applied.
-    pub async fn batch_update_llm_obs_dataset_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>,
-        datadog::Error<BatchUpdateLLMObsDatasetError>,
-    > {
+    pub async fn batch_update_llm_obs_dataset_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetBatchUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>, datadog::Error<BatchUpdateLLMObsDatasetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.batch_update_llm_obs_dataset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1524,21 +1555,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/batch_update",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1551,23 +1588,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1575,7 +1605,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1585,7 +1618,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1607,7 +1643,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1624,68 +1660,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<BatchUpdateLLMObsDatasetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BatchUpdateLLMObsDatasetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Clone a dataset, copying its current records into a new dataset within the same project.
-    pub async fn clone_llm_obs_dataset(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetCloneRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetResponse,
-        datadog::Error<CloneLLMObsDatasetError>,
-    > {
-        match self
-            .clone_llm_obs_dataset_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn clone_llm_obs_dataset(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetCloneRequest) -> Result<crate::datadogV2::model::LLMObsDatasetResponse, datadog::Error<CloneLLMObsDatasetError>> {
+        match self.clone_llm_obs_dataset_with_http_info(project_id, dataset_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Clone a dataset, copying its current records into a new dataset within the same project.
-    pub async fn clone_llm_obs_dataset_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetCloneRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>,
-        datadog::Error<CloneLLMObsDatasetError>,
-    > {
+    pub async fn clone_llm_obs_dataset_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetCloneRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>, datadog::Error<CloneLLMObsDatasetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.clone_llm_obs_dataset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1697,21 +1703,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/clone",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1724,23 +1736,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1748,7 +1753,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1758,7 +1766,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1780,7 +1791,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1797,71 +1808,46 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CloneLLMObsDatasetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CloneLLMObsDatasetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create an annotation queue. The `name` and `project_id` fields are required.
-    /// An optional `annotation_schema` can be provided to define the labels for the queue.
-    /// Optional access-control fields can restrict annotation access to reviewers or assignees.
-    /// Fields such as `created_by`, `owned_by`, `created_at`, `modified_by`,
-    /// and `modified_at` are inferred by the backend.
-    pub async fn create_llm_obs_annotation_queue(
-        &self,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueueResponse,
-        datadog::Error<CreateLLMObsAnnotationQueueError>,
-    > {
-        match self
-            .create_llm_obs_annotation_queue_with_http_info(body)
-            .await
-        {
+/// An optional `annotation_schema` can be provided to define the labels for the queue.
+/// Optional access-control fields can restrict annotation access to reviewers or assignees.
+/// Fields such as `created_by`, `owned_by`, `created_at`, `modified_by`,
+/// and `modified_at` are inferred by the backend.
+    pub async fn create_llm_obs_annotation_queue(&self, body: crate::datadogV2::model::LLMObsAnnotationQueueRequest) -> Result<crate::datadogV2::model::LLMObsAnnotationQueueResponse, datadog::Error<CreateLLMObsAnnotationQueueError>> {
+        match self.create_llm_obs_annotation_queue_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create an annotation queue. The `name` and `project_id` fields are required.
-    /// An optional `annotation_schema` can be provided to define the labels for the queue.
-    /// Optional access-control fields can restrict annotation access to reviewers or assignees.
-    /// Fields such as `created_by`, `owned_by`, `created_at`, `modified_by`,
-    /// and `modified_at` are inferred by the backend.
-    pub async fn create_llm_obs_annotation_queue_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueResponse>,
-        datadog::Error<CreateLLMObsAnnotationQueueError>,
-    > {
+/// An optional `annotation_schema` can be provided to define the labels for the queue.
+/// Optional access-control fields can restrict annotation access to reviewers or assignees.
+/// Fields such as `created_by`, `owned_by`, `created_at`, `modified_by`,
+/// and `modified_at` are inferred by the backend.
+    pub async fn create_llm_obs_annotation_queue_with_http_info(&self, body: crate::datadogV2::model::LLMObsAnnotationQueueRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueResponse>, datadog::Error<CreateLLMObsAnnotationQueueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_annotation_queue";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1873,19 +1859,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1898,23 +1888,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1922,7 +1905,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1932,7 +1918,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1954,7 +1943,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1971,111 +1960,86 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsAnnotationQueueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsAnnotationQueueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add one or more interactions to an annotation queue. At least one
-    /// interaction must be provided. Each interaction has a `type`:
-    ///
-    /// - `trace`, `experiment_trace`, `session`: `content_id` references the
-    ///   upstream entity; the server fetches the actual content.
-    /// - `display_block`: omit `content_id` and provide the rendered content
-    ///   in `display_block`. The server generates `content_id` as a
-    ///   deterministic hash of the block list.
-    ///
-    /// Items of different types can be mixed in a single request.
-    pub async fn create_llm_obs_annotation_queue_interactions(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueInteractionsRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse,
-        datadog::Error<CreateLLMObsAnnotationQueueInteractionsError>,
-    > {
-        match self
-            .create_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body)
-            .await
-        {
+/// interaction must be provided. Each interaction has a `type`:
+///
+/// - `trace`, `experiment_trace`, `session`: `content_id` references the
+///   upstream entity; the server fetches the actual content.
+/// - `display_block`: omit `content_id` and provide the rendered content
+///   in `display_block`. The server generates `content_id` as a
+///   deterministic hash of the block list.
+///
+/// Items of different types can be mixed in a single request.
+    pub async fn create_llm_obs_annotation_queue_interactions(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueInteractionsRequest) -> Result<crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse, datadog::Error<CreateLLMObsAnnotationQueueInteractionsError>> {
+        match self.create_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add one or more interactions to an annotation queue. At least one
-    /// interaction must be provided. Each interaction has a `type`:
-    ///
-    /// - `trace`, `experiment_trace`, `session`: `content_id` references the
-    ///   upstream entity; the server fetches the actual content.
-    /// - `display_block`: omit `content_id` and provide the rendered content
-    ///   in `display_block`. The server generates `content_id` as a
-    ///   deterministic hash of the block list.
-    ///
-    /// Items of different types can be mixed in a single request.
-    pub async fn create_llm_obs_annotation_queue_interactions_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueInteractionsRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse,
-        >,
-        datadog::Error<CreateLLMObsAnnotationQueueInteractionsError>,
-    > {
+/// interaction must be provided. Each interaction has a `type`:
+///
+/// - `trace`, `experiment_trace`, `session`: `content_id` references the
+///   upstream entity; the server fetches the actual content.
+/// - `display_block`: omit `content_id` and provide the rendered content
+///   in `display_block`. The server generates `content_id` as a
+///   deterministic hash of the block list.
+///
+/// Items of different types can be mixed in a single request.
+    pub async fn create_llm_obs_annotation_queue_interactions_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueInteractionsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse>, datadog::Error<CreateLLMObsAnnotationQueueInteractionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_annotation_queue_interactions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_llm_obs_annotation_queue_interactions' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_llm_obs_annotation_queue_interactions' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/interactions",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2088,23 +2052,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2112,7 +2069,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2122,7 +2082,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2144,7 +2107,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2161,66 +2124,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueInteractionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsAnnotationQueueInteractionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsAnnotationQueueInteractionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new Agent Observability dataset within the specified project.
-    pub async fn create_llm_obs_dataset(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetResponse,
-        datadog::Error<CreateLLMObsDatasetError>,
-    > {
-        match self
-            .create_llm_obs_dataset_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn create_llm_obs_dataset(&self, project_id: String, body: crate::datadogV2::model::LLMObsDatasetRequest) -> Result<crate::datadogV2::model::LLMObsDatasetResponse, datadog::Error<CreateLLMObsDatasetError>> {
+        match self.create_llm_obs_dataset_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new Agent Observability dataset within the specified project.
-    pub async fn create_llm_obs_dataset_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>,
-        datadog::Error<CreateLLMObsDatasetError>,
-    > {
+    pub async fn create_llm_obs_dataset_with_http_info(&self, project_id: String, body: crate::datadogV2::model::LLMObsDatasetRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>, datadog::Error<CreateLLMObsDatasetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_dataset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2232,20 +2167,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2258,23 +2198,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2282,7 +2215,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2292,7 +2228,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2314,7 +2253,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2331,67 +2270,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsDatasetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsDatasetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Append one or more records to an Agent Observability dataset.
-    pub async fn create_llm_obs_dataset_records(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRecordsRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-        datadog::Error<CreateLLMObsDatasetRecordsError>,
-    > {
-        match self
-            .create_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn create_llm_obs_dataset_records(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRecordsRequest) -> Result<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse, datadog::Error<CreateLLMObsDatasetRecordsError>> {
+        match self.create_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Append one or more records to an Agent Observability dataset.
-    pub async fn create_llm_obs_dataset_records_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRecordsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>,
-        datadog::Error<CreateLLMObsDatasetRecordsError>,
-    > {
+    pub async fn create_llm_obs_dataset_records_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRecordsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>, datadog::Error<CreateLLMObsDatasetRecordsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_dataset_records";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2403,21 +2313,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2430,23 +2346,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2454,7 +2363,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2464,7 +2376,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2486,7 +2401,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2503,61 +2418,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsDatasetRecordsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsDatasetRecordsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new Agent Observability experiment.
-    pub async fn create_llm_obs_experiment(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentResponse,
-        datadog::Error<CreateLLMObsExperimentError>,
-    > {
+    pub async fn create_llm_obs_experiment(&self, body: crate::datadogV2::model::LLMObsExperimentRequest) -> Result<crate::datadogV2::model::LLMObsExperimentResponse, datadog::Error<CreateLLMObsExperimentError>> {
         match self.create_llm_obs_experiment_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new Agent Observability experiment.
-    pub async fn create_llm_obs_experiment_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentResponse>,
-        datadog::Error<CreateLLMObsExperimentError>,
-    > {
+    pub async fn create_llm_obs_experiment_with_http_info(&self, body: crate::datadogV2::model::LLMObsExperimentRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentResponse>, datadog::Error<CreateLLMObsExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_experiment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2569,19 +2461,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2594,23 +2490,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2618,7 +2507,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2628,7 +2520,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2650,7 +2545,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2667,52 +2562,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Push spans and metrics for an Agent Observability experiment.
-    pub async fn create_llm_obs_experiment_events(
-        &self,
-        experiment_id: String,
-        body: crate::datadogV2::model::LLMObsExperimentEventsRequest,
-    ) -> Result<(), datadog::Error<CreateLLMObsExperimentEventsError>> {
-        match self
-            .create_llm_obs_experiment_events_with_http_info(experiment_id, body)
-            .await
-        {
+    pub async fn create_llm_obs_experiment_events(&self, experiment_id: String, body: crate::datadogV2::model::LLMObsExperimentEventsRequest) -> Result<(), datadog::Error<CreateLLMObsExperimentEventsError>> {
+        match self.create_llm_obs_experiment_events_with_http_info(experiment_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Push spans and metrics for an Agent Observability experiment.
-    pub async fn create_llm_obs_experiment_events_with_http_info(
-        &self,
-        experiment_id: String,
-        body: crate::datadogV2::model::LLMObsExperimentEventsRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateLLMObsExperimentEventsError>>
-    {
+    pub async fn create_llm_obs_experiment_events_with_http_info(&self, experiment_id: String, body: crate::datadogV2::model::LLMObsExperimentEventsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateLLMObsExperimentEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_experiment_events";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2724,20 +2599,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2750,23 +2630,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2774,7 +2647,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2784,7 +2660,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2806,7 +2685,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2829,81 +2708,61 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateLLMObsExperimentEventsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsExperimentEventsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Run an LLM inference request through the specified integration and account, returning the model response and token usage.
-    pub async fn create_llm_obs_integration_inference(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-        account_id: String,
-        body: crate::datadogV2::model::LLMObsIntegrationInferenceRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsIntegrationInferenceResponse,
-        datadog::Error<CreateLLMObsIntegrationInferenceError>,
-    > {
-        match self
-            .create_llm_obs_integration_inference_with_http_info(integration, account_id, body)
-            .await
-        {
+    pub async fn create_llm_obs_integration_inference(&self, integration: crate::datadogV2::model::LLMObsIntegrationName, account_id: String, body: crate::datadogV2::model::LLMObsIntegrationInferenceRequest) -> Result<crate::datadogV2::model::LLMObsIntegrationInferenceResponse, datadog::Error<CreateLLMObsIntegrationInferenceError>> {
+        match self.create_llm_obs_integration_inference_with_http_info(integration, account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Run an LLM inference request through the specified integration and account, returning the model response and token usage.
-    pub async fn create_llm_obs_integration_inference_with_http_info(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-        account_id: String,
-        body: crate::datadogV2::model::LLMObsIntegrationInferenceRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsIntegrationInferenceResponse>,
-        datadog::Error<CreateLLMObsIntegrationInferenceError>,
-    > {
+    pub async fn create_llm_obs_integration_inference_with_http_info(&self, integration: crate::datadogV2::model::LLMObsIntegrationName, account_id: String, body: crate::datadogV2::model::LLMObsIntegrationInferenceRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsIntegrationInferenceResponse>, datadog::Error<CreateLLMObsIntegrationInferenceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_integration_inference";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_llm_obs_integration_inference' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.create_llm_obs_integration_inference' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/{account_id}/inference",
-            local_configuration.get_operation_host(local_operation_id),
-            integration = datadog::urlencode(integration.to_string()),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration=
+            datadog::urlencode(integration.to_string())
+            , account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2916,23 +2775,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2940,7 +2792,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2950,7 +2805,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2972,7 +2830,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2989,60 +2847,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsIntegrationInferenceResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsIntegrationInferenceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsIntegrationInferenceError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsIntegrationInferenceError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new Agent Observability project. Returns the existing project if a name conflict occurs.
-    pub async fn create_llm_obs_project(
-        &self,
-        body: crate::datadogV2::model::LLMObsProjectRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsProjectResponse,
-        datadog::Error<CreateLLMObsProjectError>,
-    > {
+    pub async fn create_llm_obs_project(&self, body: crate::datadogV2::model::LLMObsProjectRequest) -> Result<crate::datadogV2::model::LLMObsProjectResponse, datadog::Error<CreateLLMObsProjectError>> {
         match self.create_llm_obs_project_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new Agent Observability project. Returns the existing project if a name conflict occurs.
-    pub async fn create_llm_obs_project_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsProjectRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectResponse>,
-        datadog::Error<CreateLLMObsProjectError>,
-    > {
+    pub async fn create_llm_obs_project_with_http_info(&self, body: crate::datadogV2::model::LLMObsProjectRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectResponse>, datadog::Error<CreateLLMObsProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_project";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3054,19 +2890,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3079,23 +2919,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3103,7 +2936,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3113,7 +2949,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3135,7 +2974,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3152,64 +2991,42 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
-    ///
-    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    pub async fn create_llm_obs_prompt(
-        &self,
-        body: crate::datadogV2::model::LLMObsCreatePromptRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsCreatePromptResponse,
-        datadog::Error<CreateLLMObsPromptError>,
-    > {
+///
+/// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+    pub async fn create_llm_obs_prompt(&self, body: crate::datadogV2::model::LLMObsCreatePromptRequest) -> Result<crate::datadogV2::model::LLMObsCreatePromptResponse, datadog::Error<CreateLLMObsPromptError>> {
         match self.create_llm_obs_prompt_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new prompt (and its first version) in the Agent Observability prompt registry.
-    ///
-    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    pub async fn create_llm_obs_prompt_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsCreatePromptRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsCreatePromptResponse>,
-        datadog::Error<CreateLLMObsPromptError>,
-    > {
+///
+/// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+    pub async fn create_llm_obs_prompt_with_http_info(&self, body: crate::datadogV2::model::LLMObsCreatePromptRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsCreatePromptResponse>, datadog::Error<CreateLLMObsPromptError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_prompt";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3221,19 +3038,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3246,23 +3067,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3270,7 +3084,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3280,7 +3097,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3302,7 +3122,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3319,69 +3139,42 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsCreatePromptResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsCreatePromptResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsPromptError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsPromptError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new version of an existing Agent Observability prompt.
-    ///
-    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    pub async fn create_llm_obs_prompt_version(
-        &self,
-        prompt_id: String,
-        body: crate::datadogV2::model::LLMObsCreatePromptVersionRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptVersionResponse,
-        datadog::Error<CreateLLMObsPromptVersionError>,
-    > {
-        match self
-            .create_llm_obs_prompt_version_with_http_info(prompt_id, body)
-            .await
-        {
+///
+/// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+    pub async fn create_llm_obs_prompt_version(&self, prompt_id: String, body: crate::datadogV2::model::LLMObsCreatePromptVersionRequest) -> Result<crate::datadogV2::model::LLMObsPromptVersionResponse, datadog::Error<CreateLLMObsPromptVersionError>> {
+        match self.create_llm_obs_prompt_version_with_http_info(prompt_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new version of an existing Agent Observability prompt.
-    ///
-    /// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
-    pub async fn create_llm_obs_prompt_version_with_http_info(
-        &self,
-        prompt_id: String,
-        body: crate::datadogV2::model::LLMObsCreatePromptVersionRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>,
-        datadog::Error<CreateLLMObsPromptVersionError>,
-    > {
+///
+/// > **Preview**: Prompt composition is available in Preview. To request access, contact [Datadog Support](<https://docs.datadoghq.com/help/>) or your Customer Success Manager.
+    pub async fn create_llm_obs_prompt_version_with_http_info(&self, prompt_id: String, body: crate::datadogV2::model::LLMObsCreatePromptVersionRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>, datadog::Error<CreateLLMObsPromptVersionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_llm_obs_prompt_version";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3393,20 +3186,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3419,23 +3217,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3443,7 +3234,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3453,7 +3247,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3475,7 +3272,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3492,50 +3289,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateLLMObsPromptVersionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateLLMObsPromptVersionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an annotation queue by its ID.
-    pub async fn delete_llm_obs_annotation_queue(
-        &self,
-        queue_id: String,
-    ) -> Result<(), datadog::Error<DeleteLLMObsAnnotationQueueError>> {
-        match self
-            .delete_llm_obs_annotation_queue_with_http_info(queue_id)
-            .await
-        {
+    pub async fn delete_llm_obs_annotation_queue(&self, queue_id: String) -> Result<(), datadog::Error<DeleteLLMObsAnnotationQueueError>> {
+        match self.delete_llm_obs_annotation_queue_with_http_info(queue_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an annotation queue by its ID.
-    pub async fn delete_llm_obs_annotation_queue_with_http_info(
-        &self,
-        queue_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsAnnotationQueueError>>
-    {
+    pub async fn delete_llm_obs_annotation_queue_with_http_info(&self, queue_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsAnnotationQueueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_annotation_queue";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3547,19 +3326,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3572,22 +3356,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3605,67 +3383,53 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsAnnotationQueueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsAnnotationQueueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more interactions from an annotation queue.
-    pub async fn delete_llm_obs_annotation_queue_interactions(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsRequest,
-    ) -> Result<(), datadog::Error<DeleteLLMObsAnnotationQueueInteractionsError>> {
-        match self
-            .delete_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body)
-            .await
-        {
+    pub async fn delete_llm_obs_annotation_queue_interactions(&self, queue_id: String, body: crate::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsRequest) -> Result<(), datadog::Error<DeleteLLMObsAnnotationQueueInteractionsError>> {
+        match self.delete_llm_obs_annotation_queue_interactions_with_http_info(queue_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more interactions from an annotation queue.
-    pub async fn delete_llm_obs_annotation_queue_interactions_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsRequest,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteLLMObsAnnotationQueueInteractionsError>,
-    > {
+    pub async fn delete_llm_obs_annotation_queue_interactions_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsDeleteAnnotationQueueInteractionsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsAnnotationQueueInteractionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_annotation_queue_interactions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_llm_obs_annotation_queue_interactions' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.delete_llm_obs_annotation_queue_interactions' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/interactions/delete",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3678,23 +3442,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3702,7 +3459,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3712,7 +3472,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3734,7 +3497,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3757,52 +3520,29 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsAnnotationQueueInteractionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsAnnotationQueueInteractionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more annotations from an annotation queue.
-    pub async fn delete_llm_obs_annotations(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteAnnotationsRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDeleteAnnotationsResponse,
-        datadog::Error<DeleteLLMObsAnnotationsError>,
-    > {
-        match self
-            .delete_llm_obs_annotations_with_http_info(queue_id, body)
-            .await
-        {
+    pub async fn delete_llm_obs_annotations(&self, queue_id: String, body: crate::datadogV2::model::LLMObsDeleteAnnotationsRequest) -> Result<crate::datadogV2::model::LLMObsDeleteAnnotationsResponse, datadog::Error<DeleteLLMObsAnnotationsError>> {
+        match self.delete_llm_obs_annotations_with_http_info(queue_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more annotations from an annotation queue.
-    pub async fn delete_llm_obs_annotations_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteAnnotationsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDeleteAnnotationsResponse>,
-        datadog::Error<DeleteLLMObsAnnotationsError>,
-    > {
+    pub async fn delete_llm_obs_annotations_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsDeleteAnnotationsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDeleteAnnotationsResponse>, datadog::Error<DeleteLLMObsAnnotationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_annotations";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3814,20 +3554,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotations/delete",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3840,23 +3585,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3864,7 +3602,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3874,7 +3615,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3896,7 +3640,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3913,50 +3657,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDeleteAnnotationsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDeleteAnnotationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteLLMObsAnnotationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsAnnotationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a custom Agent Observability evaluator configuration by its name.
-    pub async fn delete_llm_obs_custom_eval_config(
-        &self,
-        eval_name: String,
-    ) -> Result<(), datadog::Error<DeleteLLMObsCustomEvalConfigError>> {
-        match self
-            .delete_llm_obs_custom_eval_config_with_http_info(eval_name)
-            .await
-        {
+    pub async fn delete_llm_obs_custom_eval_config(&self, eval_name: String) -> Result<(), datadog::Error<DeleteLLMObsCustomEvalConfigError>> {
+        match self.delete_llm_obs_custom_eval_config_with_http_info(eval_name).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a custom Agent Observability evaluator configuration by its name.
-    pub async fn delete_llm_obs_custom_eval_config_with_http_info(
-        &self,
-        eval_name: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsCustomEvalConfigError>>
-    {
+    pub async fn delete_llm_obs_custom_eval_config_with_http_info(&self, eval_name: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsCustomEvalConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_custom_eval_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3968,19 +3694,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            eval_name = datadog::urlencode(eval_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), eval_name=
+            datadog::urlencode(eval_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3993,22 +3724,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4026,40 +3751,23 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsCustomEvalConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsCustomEvalConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more records from an Agent Observability dataset.
-    pub async fn delete_llm_obs_dataset_records(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteDatasetRecordsRequest,
-    ) -> Result<(), datadog::Error<DeleteLLMObsDatasetRecordsError>> {
-        match self
-            .delete_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn delete_llm_obs_dataset_records(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDeleteDatasetRecordsRequest) -> Result<(), datadog::Error<DeleteLLMObsDatasetRecordsError>> {
+        match self.delete_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more records from an Agent Observability dataset.
-    pub async fn delete_llm_obs_dataset_records_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteDatasetRecordsRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetRecordsError>> {
+    pub async fn delete_llm_obs_dataset_records_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDeleteDatasetRecordsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetRecordsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_dataset_records";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4071,21 +3779,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records/delete",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4098,23 +3812,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4122,7 +3829,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4132,7 +3842,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4154,7 +3867,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4177,38 +3890,23 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsDatasetRecordsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsDatasetRecordsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more Agent Observability datasets within the specified project.
-    pub async fn delete_llm_obs_datasets(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteDatasetsRequest,
-    ) -> Result<(), datadog::Error<DeleteLLMObsDatasetsError>> {
-        match self
-            .delete_llm_obs_datasets_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn delete_llm_obs_datasets(&self, project_id: String, body: crate::datadogV2::model::LLMObsDeleteDatasetsRequest) -> Result<(), datadog::Error<DeleteLLMObsDatasetsError>> {
+        match self.delete_llm_obs_datasets_with_http_info(project_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more Agent Observability datasets within the specified project.
-    pub async fn delete_llm_obs_datasets_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsDeleteDatasetsRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetsError>> {
+    pub async fn delete_llm_obs_datasets_with_http_info(&self, project_id: String, body: crate::datadogV2::model::LLMObsDeleteDatasetsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsDatasetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_datasets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4220,20 +3918,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/delete",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4246,23 +3949,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4270,7 +3966,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4280,7 +3979,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4302,7 +4004,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4325,33 +4027,23 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsDatasetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsDatasetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more Agent Observability experiments.
-    pub async fn delete_llm_obs_experiments(
-        &self,
-        body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest,
-    ) -> Result<(), datadog::Error<DeleteLLMObsExperimentsError>> {
+    pub async fn delete_llm_obs_experiments(&self, body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest) -> Result<(), datadog::Error<DeleteLLMObsExperimentsError>> {
         match self.delete_llm_obs_experiments_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more Agent Observability experiments.
-    pub async fn delete_llm_obs_experiments_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsExperimentsError>> {
+    pub async fn delete_llm_obs_experiments_with_http_info(&self, body: crate::datadogV2::model::LLMObsDeleteExperimentsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsExperimentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_experiments";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4363,19 +4055,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/delete",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4388,23 +4084,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4412,7 +4101,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4422,7 +4114,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4444,7 +4139,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4467,36 +4162,23 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsExperimentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsExperimentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a patterns configuration by its ID.
-    pub async fn delete_llm_obs_patterns_config(
-        &self,
-        config_id: String,
-    ) -> Result<(), datadog::Error<DeleteLLMObsPatternsConfigError>> {
-        match self
-            .delete_llm_obs_patterns_config_with_http_info(config_id)
-            .await
-        {
+    pub async fn delete_llm_obs_patterns_config(&self, config_id: String) -> Result<(), datadog::Error<DeleteLLMObsPatternsConfigError>> {
+        match self.delete_llm_obs_patterns_config_with_http_info(config_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a patterns configuration by its ID.
-    pub async fn delete_llm_obs_patterns_config_with_http_info(
-        &self,
-        config_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsPatternsConfigError>> {
+    pub async fn delete_llm_obs_patterns_config_with_http_info(&self, config_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsPatternsConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_patterns_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4508,19 +4190,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs/{config_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            config_id = datadog::urlencode(config_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), config_id=
+            datadog::urlencode(config_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4533,22 +4220,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4566,33 +4247,23 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsPatternsConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsPatternsConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete one or more Agent Observability projects.
-    pub async fn delete_llm_obs_projects(
-        &self,
-        body: crate::datadogV2::model::LLMObsDeleteProjectsRequest,
-    ) -> Result<(), datadog::Error<DeleteLLMObsProjectsError>> {
+    pub async fn delete_llm_obs_projects(&self, body: crate::datadogV2::model::LLMObsDeleteProjectsRequest) -> Result<(), datadog::Error<DeleteLLMObsProjectsError>> {
         match self.delete_llm_obs_projects_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete one or more Agent Observability projects.
-    pub async fn delete_llm_obs_projects_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsDeleteProjectsRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsProjectsError>> {
+    pub async fn delete_llm_obs_projects_with_http_info(&self, body: crate::datadogV2::model::LLMObsDeleteProjectsRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteLLMObsProjectsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_projects";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4604,19 +4275,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects/delete",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4629,23 +4304,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4653,7 +4321,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4663,7 +4334,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4685,7 +4359,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4708,47 +4382,29 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteLLMObsProjectsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsProjectsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Soft-delete an Agent Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
-    pub async fn delete_llm_obs_prompt(
-        &self,
-        prompt_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDeletedPromptResponse,
-        datadog::Error<DeleteLLMObsPromptError>,
-    > {
+    pub async fn delete_llm_obs_prompt(&self, prompt_id: String) -> Result<crate::datadogV2::model::LLMObsDeletedPromptResponse, datadog::Error<DeleteLLMObsPromptError>> {
         match self.delete_llm_obs_prompt_with_http_info(prompt_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Soft-delete an Agent Observability prompt. The prompt's version rows are retained, but they are no longer accessible through the public prompt registry endpoints.
-    pub async fn delete_llm_obs_prompt_with_http_info(
-        &self,
-        prompt_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDeletedPromptResponse>,
-        datadog::Error<DeleteLLMObsPromptError>,
-    > {
+    pub async fn delete_llm_obs_prompt_with_http_info(&self, prompt_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDeletedPromptResponse>, datadog::Error<DeleteLLMObsPromptError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_llm_obs_prompt";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4760,19 +4416,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4785,22 +4446,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4812,61 +4467,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDeletedPromptResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDeletedPromptResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DeleteLLMObsPromptError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteLLMObsPromptError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Download the contents of a dataset as a CSV file. The download is streamed and includes one row per dataset record.
-    pub async fn export_llm_obs_dataset(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: ExportLLMObsDatasetOptionalParams,
-    ) -> Result<String, datadog::Error<ExportLLMObsDatasetError>> {
-        match self
-            .export_llm_obs_dataset_with_http_info(project_id, dataset_id, params)
-            .await
-        {
+    pub async fn export_llm_obs_dataset(&self, project_id: String, dataset_id: String, params: ExportLLMObsDatasetOptionalParams) -> Result<String, datadog::Error<ExportLLMObsDatasetError>> {
+        match self.export_llm_obs_dataset_with_http_info(project_id, dataset_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Download the contents of a dataset as a CSV file. The download is streamed and includes one row per dataset record.
-    pub async fn export_llm_obs_dataset_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: ExportLLMObsDatasetOptionalParams,
-    ) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportLLMObsDatasetError>> {
+    pub async fn export_llm_obs_dataset_with_http_info(&self, project_id: String, dataset_id: String, params: ExportLLMObsDatasetOptionalParams) -> Result<datadog::ResponseContent<String>, datadog::Error<ExportLLMObsDatasetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.export_llm_obs_dataset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -4878,6 +4510,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let format = params.format;
         let version = params.version;
@@ -4886,25 +4519,26 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/export",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = format {
-            local_req_builder =
-                local_req_builder.query(&[("format", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("format", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = version {
-            local_req_builder =
-                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("version", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4917,22 +4551,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4950,55 +4578,30 @@ impl AgentObservabilityAPI {
                 entity: Some(local_content),
             })
         } else {
-            let local_entity: Option<ExportLLMObsDatasetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ExportLLMObsDatasetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve an interaction, its annotations, and a page of related events from an annotation queue.
-    pub async fn get_llm_obs_annotated_interaction(
-        &self,
-        queue_id: String,
-        interaction_id: String,
-        params: GetLLMObsAnnotatedInteractionOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotatedInteractionResponse,
-        datadog::Error<GetLLMObsAnnotatedInteractionError>,
-    > {
-        match self
-            .get_llm_obs_annotated_interaction_with_http_info(queue_id, interaction_id, params)
-            .await
-        {
+    pub async fn get_llm_obs_annotated_interaction(&self, queue_id: String, interaction_id: String, params: GetLLMObsAnnotatedInteractionOptionalParams) -> Result<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse, datadog::Error<GetLLMObsAnnotatedInteractionError>> {
+        match self.get_llm_obs_annotated_interaction_with_http_info(queue_id, interaction_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn get_llm_obs_annotated_interaction_with_pagination(
-        &self,
-        queue_id: String,
-        interaction_id: String,
-        mut params: GetLLMObsAnnotatedInteractionOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::LLMObsAnnotatedInteractionEvent,
-            datadog::Error<GetLLMObsAnnotatedInteractionError>,
-        >,
-    > + '_ {
+        &self,  queue_id: String,  interaction_id: String, mut params: GetLLMObsAnnotatedInteractionOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::LLMObsAnnotatedInteractionEvent, datadog::Error<GetLLMObsAnnotatedInteractionError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.limit.is_none() {
@@ -5024,16 +4627,9 @@ impl AgentObservabilityAPI {
         }
     }
 
+    
     /// Retrieve an interaction, its annotations, and a page of related events from an annotation queue.
-    pub async fn get_llm_obs_annotated_interaction_with_http_info(
-        &self,
-        queue_id: String,
-        interaction_id: String,
-        params: GetLLMObsAnnotatedInteractionOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>,
-        datadog::Error<GetLLMObsAnnotatedInteractionError>,
-    > {
+    pub async fn get_llm_obs_annotated_interaction_with_http_info(&self, queue_id: String, interaction_id: String, params: GetLLMObsAnnotatedInteractionOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>, datadog::Error<GetLLMObsAnnotatedInteractionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_annotated_interaction";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5045,6 +4641,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let limit = params.limit;
         let cursor = params.cursor;
@@ -5058,21 +4655,21 @@ impl AgentObservabilityAPI {
             , interaction_id=
             datadog::urlencode(interaction_id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = cursor {
-            local_req_builder =
-                local_req_builder.query(&[("cursor", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("cursor", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5085,22 +4682,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5112,63 +4703,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsAnnotatedInteractionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsAnnotatedInteractionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve all interactions (traces and sessions) and their annotations for a given annotation queue.
-    pub async fn get_llm_obs_annotated_interactions(
-        &self,
-        queue_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse,
-        datadog::Error<GetLLMObsAnnotatedInteractionsError>,
-    > {
-        match self
-            .get_llm_obs_annotated_interactions_with_http_info(queue_id)
-            .await
-        {
+    pub async fn get_llm_obs_annotated_interactions(&self, queue_id: String) -> Result<crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse, datadog::Error<GetLLMObsAnnotatedInteractionsError>> {
+        match self.get_llm_obs_annotated_interactions_with_http_info(queue_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve all interactions (traces and sessions) and their annotations for a given annotation queue.
-    pub async fn get_llm_obs_annotated_interactions_with_http_info(
-        &self,
-        queue_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse>,
-        datadog::Error<GetLLMObsAnnotatedInteractionsError>,
-    > {
+    pub async fn get_llm_obs_annotated_interactions_with_http_info(&self, queue_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse>, datadog::Error<GetLLMObsAnnotatedInteractionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_annotated_interactions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5180,19 +4746,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotated-interactions",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5205,22 +4776,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5232,82 +4797,52 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsAnnotatedInteractionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsAnnotatedInteractionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns annotated interactions across all annotation queues for the given content IDs.
-    /// Results include queue metadata (ID and name) for each interaction.
-    pub async fn get_llm_obs_annotated_interactions_by_trace_i_ds(
-        &self,
-        content_ids: Vec<String>,
-        params: GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse,
-        datadog::Error<GetLLMObsAnnotatedInteractionsByTraceIDsError>,
-    > {
-        match self
-            .get_llm_obs_annotated_interactions_by_trace_i_ds_with_http_info(content_ids, params)
-            .await
-        {
+/// Results include queue metadata (ID and name) for each interaction.
+    pub async fn get_llm_obs_annotated_interactions_by_trace_i_ds(&self, content_ids: Vec<String>, params: GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams) -> Result<crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse, datadog::Error<GetLLMObsAnnotatedInteractionsByTraceIDsError>> {
+        match self.get_llm_obs_annotated_interactions_by_trace_i_ds_with_http_info(content_ids,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns annotated interactions across all annotation queues for the given content IDs.
-    /// Results include queue metadata (ID and name) for each interaction.
-    pub async fn get_llm_obs_annotated_interactions_by_trace_i_ds_with_http_info(
-        &self,
-        content_ids: Vec<String>,
-        params: GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse,
-        >,
-        datadog::Error<GetLLMObsAnnotatedInteractionsByTraceIDsError>,
-    > {
+/// Results include queue metadata (ID and name) for each interaction.
+    pub async fn get_llm_obs_annotated_interactions_by_trace_i_ds_with_http_info(&self, content_ids: Vec<String>, params: GetLLMObsAnnotatedInteractionsByTraceIDsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse>, datadog::Error<GetLLMObsAnnotatedInteractionsByTraceIDsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_annotated_interactions_by_trace_i_ds";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg:
-                    "Operation 'v2.get_llm_obs_annotated_interactions_by_trace_i_ds' is not enabled"
-                        .to_string(),
+                msg: "Operation 'v2.get_llm_obs_annotated_interactions_by_trace_i_ds' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let offset = params.offset;
         let limit = params.limit;
@@ -5316,32 +4851,23 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotated-interactions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "contentIds",
-            &content_ids
-                .iter()
-                .map(|p| p.to_string())
-                .collect::<Vec<String>>()
-                .join(",")
-                .to_string(),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("contentIds", &content_ids.iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]);
         if let Some(ref local_query_param) = offset {
-            local_req_builder =
-                local_req_builder.query(&[("offset", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("offset", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = limit {
-            local_req_builder =
-                local_req_builder.query(&[("limit", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("limit", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5354,22 +4880,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5381,89 +4901,67 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotatedInteractionsByTraceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsAnnotatedInteractionsByTraceIDsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsAnnotatedInteractionsByTraceIDsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the label schema for a given annotation queue.
-    pub async fn get_llm_obs_annotation_queue_label_schema(
-        &self,
-        queue_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse,
-        datadog::Error<GetLLMObsAnnotationQueueLabelSchemaError>,
-    > {
-        match self
-            .get_llm_obs_annotation_queue_label_schema_with_http_info(queue_id)
-            .await
-        {
+    pub async fn get_llm_obs_annotation_queue_label_schema(&self, queue_id: String) -> Result<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse, datadog::Error<GetLLMObsAnnotationQueueLabelSchemaError>> {
+        match self.get_llm_obs_annotation_queue_label_schema_with_http_info(queue_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the label schema for a given annotation queue.
-    pub async fn get_llm_obs_annotation_queue_label_schema_with_http_info(
-        &self,
-        queue_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>,
-        datadog::Error<GetLLMObsAnnotationQueueLabelSchemaError>,
-    > {
+    pub async fn get_llm_obs_annotation_queue_label_schema_with_http_info(&self, queue_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>, datadog::Error<GetLLMObsAnnotationQueueLabelSchemaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_annotation_queue_label_schema";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_llm_obs_annotation_queue_label_schema' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.get_llm_obs_annotation_queue_label_schema' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/label-schema",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5476,22 +4974,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5503,64 +4995,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsAnnotationQueueLabelSchemaError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsAnnotationQueueLabelSchemaError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a custom Agent Observability evaluator configuration by its name.
-    pub async fn get_llm_obs_custom_eval_config(
-        &self,
-        eval_name: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsCustomEvalConfigResponse,
-        datadog::Error<GetLLMObsCustomEvalConfigError>,
-    > {
-        match self
-            .get_llm_obs_custom_eval_config_with_http_info(eval_name)
-            .await
-        {
+    pub async fn get_llm_obs_custom_eval_config(&self, eval_name: String) -> Result<crate::datadogV2::model::LLMObsCustomEvalConfigResponse, datadog::Error<GetLLMObsCustomEvalConfigError>> {
+        match self.get_llm_obs_custom_eval_config_with_http_info(eval_name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a custom Agent Observability evaluator configuration by its name.
-    pub async fn get_llm_obs_custom_eval_config_with_http_info(
-        &self,
-        eval_name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsCustomEvalConfigResponse>,
-        datadog::Error<GetLLMObsCustomEvalConfigError>,
-    > {
+    pub async fn get_llm_obs_custom_eval_config_with_http_info(&self, eval_name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsCustomEvalConfigResponse>, datadog::Error<GetLLMObsCustomEvalConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_custom_eval_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5572,19 +5038,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            eval_name = datadog::urlencode(eval_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), eval_name=
+            datadog::urlencode(eval_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5597,22 +5068,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5624,65 +5089,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsCustomEvalConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsCustomEvalConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsCustomEvalConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsCustomEvalConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the draft state of a dataset, including whether it is currently locked for editing and which user holds the lock.
-    pub async fn get_llm_obs_dataset_draft_state(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetDraftStateResponse,
-        datadog::Error<GetLLMObsDatasetDraftStateError>,
-    > {
-        match self
-            .get_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
-            .await
-        {
+    pub async fn get_llm_obs_dataset_draft_state(&self, project_id: String, dataset_id: String) -> Result<crate::datadogV2::model::LLMObsDatasetDraftStateResponse, datadog::Error<GetLLMObsDatasetDraftStateError>> {
+        match self.get_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the draft state of a dataset, including whether it is currently locked for editing and which user holds the lock.
-    pub async fn get_llm_obs_dataset_draft_state_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>,
-        datadog::Error<GetLLMObsDatasetDraftStateError>,
-    > {
+    pub async fn get_llm_obs_dataset_draft_state_with_http_info(&self, project_id: String, dataset_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>, datadog::Error<GetLLMObsDatasetDraftStateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_dataset_draft_state";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5694,20 +5132,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5720,22 +5164,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5747,58 +5185,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsDatasetDraftStateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsDatasetDraftStateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the patterns configuration for the organization.
-    pub async fn get_llm_obs_patterns_config(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsConfigResponse,
-        datadog::Error<GetLLMObsPatternsConfigError>,
-    > {
+    pub async fn get_llm_obs_patterns_config(&self) -> Result<crate::datadogV2::model::LLMObsPatternsConfigResponse, datadog::Error<GetLLMObsPatternsConfigError>> {
         match self.get_llm_obs_patterns_config_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the patterns configuration for the organization.
-    pub async fn get_llm_obs_patterns_config_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigResponse>,
-        datadog::Error<GetLLMObsPatternsConfigError>,
-    > {
+    pub async fn get_llm_obs_patterns_config_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigResponse>, datadog::Error<GetLLMObsPatternsConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_patterns_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5810,18 +5228,22 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs/latest",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5834,22 +5256,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5861,65 +5277,40 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsPatternsConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsPatternsConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the status and step-by-step progress of the current or most recent
-    /// patterns run for a configuration.
-    pub async fn get_llm_obs_patterns_run_status(
-        &self,
-        config_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsRunStatusResponse,
-        datadog::Error<GetLLMObsPatternsRunStatusError>,
-    > {
-        match self
-            .get_llm_obs_patterns_run_status_with_http_info(config_id)
-            .await
-        {
+/// patterns run for a configuration.
+    pub async fn get_llm_obs_patterns_run_status(&self, config_id: String) -> Result<crate::datadogV2::model::LLMObsPatternsRunStatusResponse, datadog::Error<GetLLMObsPatternsRunStatusError>> {
+        match self.get_llm_obs_patterns_run_status_with_http_info(config_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the status and step-by-step progress of the current or most recent
-    /// patterns run for a configuration.
-    pub async fn get_llm_obs_patterns_run_status_with_http_info(
-        &self,
-        config_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsRunStatusResponse>,
-        datadog::Error<GetLLMObsPatternsRunStatusError>,
-    > {
+/// patterns run for a configuration.
+    pub async fn get_llm_obs_patterns_run_status_with_http_info(&self, config_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsRunStatusResponse>, datadog::Error<GetLLMObsPatternsRunStatusError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_patterns_run_status";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -5931,20 +5322,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs/status",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -5957,22 +5351,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -5984,65 +5372,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsRunStatusResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsRunStatusResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsPatternsRunStatusError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsPatternsRunStatusError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the latest version of an Agent Observability prompt by prompt ID.
-    pub async fn get_llm_obs_prompt(
-        &self,
-        prompt_id: String,
-        params: GetLLMObsPromptOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptSDKResponse,
-        datadog::Error<GetLLMObsPromptError>,
-    > {
-        match self
-            .get_llm_obs_prompt_with_http_info(prompt_id, params)
-            .await
-        {
+    pub async fn get_llm_obs_prompt(&self, prompt_id: String, params: GetLLMObsPromptOptionalParams) -> Result<crate::datadogV2::model::LLMObsPromptSDKResponse, datadog::Error<GetLLMObsPromptError>> {
+        match self.get_llm_obs_prompt_with_http_info(prompt_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the latest version of an Agent Observability prompt by prompt ID.
-    pub async fn get_llm_obs_prompt_with_http_info(
-        &self,
-        prompt_id: String,
-        params: GetLLMObsPromptOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptSDKResponse>,
-        datadog::Error<GetLLMObsPromptError>,
-    > {
+    pub async fn get_llm_obs_prompt_with_http_info(&self, prompt_id: String, params: GetLLMObsPromptOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptSDKResponse>, datadog::Error<GetLLMObsPromptError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_prompt";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6054,6 +5415,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let label = params.label;
 
@@ -6061,20 +5423,21 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = label {
-            local_req_builder =
-                local_req_builder.query(&[("label", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("label", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6087,22 +5450,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6114,65 +5471,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptSDKResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptSDKResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsPromptError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsPromptError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the full template and configuration of a single, specific version of an Agent Observability prompt.
-    pub async fn get_llm_obs_prompt_version(
-        &self,
-        prompt_id: String,
-        version: i64,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptVersionResponse,
-        datadog::Error<GetLLMObsPromptVersionError>,
-    > {
-        match self
-            .get_llm_obs_prompt_version_with_http_info(prompt_id, version)
-            .await
-        {
+    pub async fn get_llm_obs_prompt_version(&self, prompt_id: String, version: i64) -> Result<crate::datadogV2::model::LLMObsPromptVersionResponse, datadog::Error<GetLLMObsPromptVersionError>> {
+        match self.get_llm_obs_prompt_version_with_http_info(prompt_id, version).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the full template and configuration of a single, specific version of an Agent Observability prompt.
-    pub async fn get_llm_obs_prompt_version_with_http_info(
-        &self,
-        prompt_id: String,
-        version: i64,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>,
-        datadog::Error<GetLLMObsPromptVersionError>,
-    > {
+    pub async fn get_llm_obs_prompt_version_with_http_info(&self, prompt_id: String, version: i64) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>, datadog::Error<GetLLMObsPromptVersionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_llm_obs_prompt_version";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6184,20 +5514,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions/{version}",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id),
-            version = version
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            , version=
+            version
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6210,22 +5546,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6237,65 +5567,40 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetLLMObsPromptVersionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetLLMObsPromptVersionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List annotation queues. Optionally filter by project ID or queue IDs. These parameters are mutually exclusive.
-    /// If neither is provided, all queues in the organization are returned.
-    pub async fn list_llm_obs_annotation_queues(
-        &self,
-        params: ListLLMObsAnnotationQueuesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueuesResponse,
-        datadog::Error<ListLLMObsAnnotationQueuesError>,
-    > {
-        match self
-            .list_llm_obs_annotation_queues_with_http_info(params)
-            .await
-        {
+/// If neither is provided, all queues in the organization are returned.
+    pub async fn list_llm_obs_annotation_queues(&self, params: ListLLMObsAnnotationQueuesOptionalParams) -> Result<crate::datadogV2::model::LLMObsAnnotationQueuesResponse, datadog::Error<ListLLMObsAnnotationQueuesError>> {
+        match self.list_llm_obs_annotation_queues_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List annotation queues. Optionally filter by project ID or queue IDs. These parameters are mutually exclusive.
-    /// If neither is provided, all queues in the organization are returned.
-    pub async fn list_llm_obs_annotation_queues_with_http_info(
-        &self,
-        params: ListLLMObsAnnotationQueuesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueuesResponse>,
-        datadog::Error<ListLLMObsAnnotationQueuesError>,
-    > {
+/// If neither is provided, all queues in the organization are returned.
+    pub async fn list_llm_obs_annotation_queues_with_http_info(&self, params: ListLLMObsAnnotationQueuesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueuesResponse>, datadog::Error<ListLLMObsAnnotationQueuesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_annotation_queues";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6307,6 +5612,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let project_id = params.project_id;
         let queue_ids = params.queue_ids;
@@ -6315,17 +5621,14 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = project_id {
-            local_req_builder =
-                local_req_builder.query(&[("projectId", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("projectId", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = queue_ids {
-            for param in local {
+        if let Some(ref local) = queue_ids {for param in local {
                 local_req_builder = local_req_builder.query(&[("queueIds", &param.to_string())]);
             }
         };
@@ -6333,6 +5636,8 @@ impl AgentObservabilityAPI {
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6345,22 +5650,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6372,58 +5671,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueuesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueuesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsAnnotationQueuesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsAnnotationQueuesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all custom Agent Observability evaluator configurations for the organization.
-    pub async fn list_llm_obs_custom_eval_configs(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsCustomEvalConfigListResponse,
-        datadog::Error<ListLLMObsCustomEvalConfigsError>,
-    > {
+    pub async fn list_llm_obs_custom_eval_configs(&self) -> Result<crate::datadogV2::model::LLMObsCustomEvalConfigListResponse, datadog::Error<ListLLMObsCustomEvalConfigsError>> {
         match self.list_llm_obs_custom_eval_configs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all custom Agent Observability evaluator configurations for the organization.
-    pub async fn list_llm_obs_custom_eval_configs_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsCustomEvalConfigListResponse>,
-        datadog::Error<ListLLMObsCustomEvalConfigsError>,
-    > {
+    pub async fn list_llm_obs_custom_eval_configs_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsCustomEvalConfigListResponse>, datadog::Error<ListLLMObsCustomEvalConfigsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_custom_eval_configs";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6435,18 +5714,22 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6459,22 +5742,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6486,67 +5763,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsCustomEvalConfigListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsCustomEvalConfigListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsCustomEvalConfigsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsCustomEvalConfigsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all records in an Agent Observability dataset, sorted by creation date, newest first.
-    pub async fn list_llm_obs_dataset_records(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: ListLLMObsDatasetRecordsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetRecordsListResponse,
-        datadog::Error<ListLLMObsDatasetRecordsError>,
-    > {
-        match self
-            .list_llm_obs_dataset_records_with_http_info(project_id, dataset_id, params)
-            .await
-        {
+    pub async fn list_llm_obs_dataset_records(&self, project_id: String, dataset_id: String, params: ListLLMObsDatasetRecordsOptionalParams) -> Result<crate::datadogV2::model::LLMObsDatasetRecordsListResponse, datadog::Error<ListLLMObsDatasetRecordsError>> {
+        match self.list_llm_obs_dataset_records_with_http_info(project_id, dataset_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all records in an Agent Observability dataset, sorted by creation date, newest first.
-    pub async fn list_llm_obs_dataset_records_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: ListLLMObsDatasetRecordsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsListResponse>,
-        datadog::Error<ListLLMObsDatasetRecordsError>,
-    > {
+    pub async fn list_llm_obs_dataset_records_with_http_info(&self, project_id: String, dataset_id: String, params: ListLLMObsDatasetRecordsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsListResponse>, datadog::Error<ListLLMObsDatasetRecordsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_dataset_records";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6558,6 +5806,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_version = params.filter_version;
         let page_cursor = params.page_cursor;
@@ -6567,29 +5816,29 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_version {
-            local_req_builder =
-                local_req_builder.query(&[("filter[version]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[version]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6602,22 +5851,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6629,65 +5872,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetRecordsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetRecordsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsDatasetRecordsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsDatasetRecordsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the active versions of a dataset. A version is created each time a dataset is referenced by an experiment run.
-    pub async fn list_llm_obs_dataset_versions(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetVersionsResponse,
-        datadog::Error<ListLLMObsDatasetVersionsError>,
-    > {
-        match self
-            .list_llm_obs_dataset_versions_with_http_info(project_id, dataset_id)
-            .await
-        {
+    pub async fn list_llm_obs_dataset_versions(&self, project_id: String, dataset_id: String) -> Result<crate::datadogV2::model::LLMObsDatasetVersionsResponse, datadog::Error<ListLLMObsDatasetVersionsError>> {
+        match self.list_llm_obs_dataset_versions_with_http_info(project_id, dataset_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the active versions of a dataset. A version is created each time a dataset is referenced by an experiment run.
-    pub async fn list_llm_obs_dataset_versions_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetVersionsResponse>,
-        datadog::Error<ListLLMObsDatasetVersionsError>,
-    > {
+    pub async fn list_llm_obs_dataset_versions_with_http_info(&self, project_id: String, dataset_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetVersionsResponse>, datadog::Error<ListLLMObsDatasetVersionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_dataset_versions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6699,20 +5915,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/versions",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6725,22 +5947,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6752,65 +5968,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetVersionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetVersionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsDatasetVersionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsDatasetVersionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Agent Observability datasets for a project, sorted by creation date, newest first.
-    pub async fn list_llm_obs_datasets(
-        &self,
-        project_id: String,
-        params: ListLLMObsDatasetsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetsResponse,
-        datadog::Error<ListLLMObsDatasetsError>,
-    > {
-        match self
-            .list_llm_obs_datasets_with_http_info(project_id, params)
-            .await
-        {
+    pub async fn list_llm_obs_datasets(&self, project_id: String, params: ListLLMObsDatasetsOptionalParams) -> Result<crate::datadogV2::model::LLMObsDatasetsResponse, datadog::Error<ListLLMObsDatasetsError>> {
+        match self.list_llm_obs_datasets_with_http_info(project_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Agent Observability datasets for a project, sorted by creation date, newest first.
-    pub async fn list_llm_obs_datasets_with_http_info(
-        &self,
-        project_id: String,
-        params: ListLLMObsDatasetsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetsResponse>,
-        datadog::Error<ListLLMObsDatasetsError>,
-    > {
+    pub async fn list_llm_obs_datasets_with_http_info(&self, project_id: String, params: ListLLMObsDatasetsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetsResponse>, datadog::Error<ListLLMObsDatasetsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_datasets";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6822,6 +6011,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_name = params.filter_name;
         let filter_id = params.filter_id;
@@ -6832,32 +6022,30 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -6870,22 +6058,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -6897,65 +6079,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsDatasetsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsDatasetsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve spans and experiment-level summary metrics for a given experiment with cursor-based pagination.
-    pub async fn list_llm_obs_experiment_events(
-        &self,
-        experiment_id: String,
-        params: ListLLMObsExperimentEventsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentEventsV2Response,
-        datadog::Error<ListLLMObsExperimentEventsError>,
-    > {
-        match self
-            .list_llm_obs_experiment_events_with_http_info(experiment_id, params)
-            .await
-        {
+    pub async fn list_llm_obs_experiment_events(&self, experiment_id: String, params: ListLLMObsExperimentEventsOptionalParams) -> Result<crate::datadogV2::model::LLMObsExperimentEventsV2Response, datadog::Error<ListLLMObsExperimentEventsError>> {
+        match self.list_llm_obs_experiment_events_with_http_info(experiment_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve spans and experiment-level summary metrics for a given experiment with cursor-based pagination.
-    pub async fn list_llm_obs_experiment_events_with_http_info(
-        &self,
-        experiment_id: String,
-        params: ListLLMObsExperimentEventsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentEventsV2Response>,
-        datadog::Error<ListLLMObsExperimentEventsError>,
-    > {
+    pub async fn list_llm_obs_experiment_events_with_http_info(&self, experiment_id: String, params: ListLLMObsExperimentEventsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentEventsV2Response>, datadog::Error<ListLLMObsExperimentEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_experiment_events";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -6967,6 +6122,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_cursor = params.page_cursor;
@@ -6975,24 +6131,24 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v3/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7005,22 +6161,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7032,63 +6182,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentEventsV2Response>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentEventsV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsExperimentEventsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsExperimentEventsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve spans with their evaluation metrics for a given experiment. Returns spans only, with no summary metrics and no pagination. Deprecated in favor of `ListLLMObsExperimentEventsV3`.
-    pub async fn list_llm_obs_experiment_events_v1(
-        &self,
-        experiment_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentSpansResponse,
-        datadog::Error<ListLLMObsExperimentEventsV1Error>,
-    > {
-        match self
-            .list_llm_obs_experiment_events_v1_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn list_llm_obs_experiment_events_v1(&self, experiment_id: String) -> Result<crate::datadogV2::model::LLMObsExperimentSpansResponse, datadog::Error<ListLLMObsExperimentEventsV1Error>> {
+        match self.list_llm_obs_experiment_events_v1_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve spans with their evaluation metrics for a given experiment. Returns spans only, with no summary metrics and no pagination. Deprecated in favor of `ListLLMObsExperimentEventsV3`.
-    pub async fn list_llm_obs_experiment_events_v1_with_http_info(
-        &self,
-        experiment_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentSpansResponse>,
-        datadog::Error<ListLLMObsExperimentEventsV1Error>,
-    > {
+    pub async fn list_llm_obs_experiment_events_v1_with_http_info(&self, experiment_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentSpansResponse>, datadog::Error<ListLLMObsExperimentEventsV1Error>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_experiment_events_v1";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7100,19 +6225,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7125,22 +6255,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7152,63 +6276,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentSpansResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentSpansResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsExperimentEventsV1Error> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsExperimentEventsV1Error> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve spans and experiment-level summary metrics for a given experiment. Returns the full events payload without pagination. Deprecated: use `ListLLMObsExperimentEventsV3` instead.
-    pub async fn list_llm_obs_experiment_events_v2(
-        &self,
-        experiment_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentEventsV2Response,
-        datadog::Error<ListLLMObsExperimentEventsV2Error>,
-    > {
-        match self
-            .list_llm_obs_experiment_events_v2_with_http_info(experiment_id)
-            .await
-        {
+    pub async fn list_llm_obs_experiment_events_v2(&self, experiment_id: String) -> Result<crate::datadogV2::model::LLMObsExperimentEventsV2Response, datadog::Error<ListLLMObsExperimentEventsV2Error>> {
+        match self.list_llm_obs_experiment_events_v2_with_http_info(experiment_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve spans and experiment-level summary metrics for a given experiment. Returns the full events payload without pagination. Deprecated: use `ListLLMObsExperimentEventsV3` instead.
-    pub async fn list_llm_obs_experiment_events_v2_with_http_info(
-        &self,
-        experiment_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentEventsV2Response>,
-        datadog::Error<ListLLMObsExperimentEventsV2Error>,
-    > {
+    pub async fn list_llm_obs_experiment_events_v2_with_http_info(&self, experiment_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentEventsV2Response>, datadog::Error<ListLLMObsExperimentEventsV2Error>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_experiment_events_v2";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7220,19 +6319,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v2/experiments/{experiment_id}/events",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7245,22 +6349,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7272,60 +6370,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentEventsV2Response>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentEventsV2Response>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsExperimentEventsV2Error> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsExperimentEventsV2Error> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Agent Observability experiments sorted by creation date, newest first.
-    pub async fn list_llm_obs_experiments(
-        &self,
-        params: ListLLMObsExperimentsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentsResponse,
-        datadog::Error<ListLLMObsExperimentsError>,
-    > {
-        match self.list_llm_obs_experiments_with_http_info(params).await {
+    pub async fn list_llm_obs_experiments(&self, params: ListLLMObsExperimentsOptionalParams) -> Result<crate::datadogV2::model::LLMObsExperimentsResponse, datadog::Error<ListLLMObsExperimentsError>> {
+        match self.list_llm_obs_experiments_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Agent Observability experiments sorted by creation date, newest first.
-    pub async fn list_llm_obs_experiments_with_http_info(
-        &self,
-        params: ListLLMObsExperimentsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentsResponse>,
-        datadog::Error<ListLLMObsExperimentsError>,
-    > {
+    pub async fn list_llm_obs_experiments_with_http_info(&self, params: ListLLMObsExperimentsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentsResponse>, datadog::Error<ListLLMObsExperimentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_experiments";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7337,6 +6413,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_project_id = params.filter_project_id;
         let filter_dataset_id = params.filter_dataset_id;
@@ -7355,65 +6432,52 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_project_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[project_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[project_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_dataset_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[dataset_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[dataset_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_experiment {
-            local_req_builder =
-                local_req_builder.query(&[("filter[experiment]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[experiment]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_metadata {
-            local_req_builder =
-                local_req_builder.query(&[("filter[metadata]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[metadata]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_parent_experiment_id {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[parent_experiment_id]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[parent_experiment_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_is_deleted {
-            local_req_builder =
-                local_req_builder.query(&[("filter[is_deleted]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[is_deleted]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_user_data {
-            local_req_builder =
-                local_req_builder.query(&[("include[user_data]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include[user_data]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_dataset_names {
-            local_req_builder = local_req_builder
-                .query(&[("include[dataset_names]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include[dataset_names]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7426,22 +6490,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7453,63 +6511,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsExperimentsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsExperimentsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the list of configured accounts for the specified LLM provider integration.
-    pub async fn list_llm_obs_integration_accounts(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-    ) -> Result<
-        Vec<crate::datadogV2::model::LLMObsIntegrationAccount>,
-        datadog::Error<ListLLMObsIntegrationAccountsError>,
-    > {
-        match self
-            .list_llm_obs_integration_accounts_with_http_info(integration)
-            .await
-        {
+    pub async fn list_llm_obs_integration_accounts(&self, integration: crate::datadogV2::model::LLMObsIntegrationName) -> Result<Vec<crate::datadogV2::model::LLMObsIntegrationAccount>, datadog::Error<ListLLMObsIntegrationAccountsError>> {
+        match self.list_llm_obs_integration_accounts_with_http_info(integration).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the list of configured accounts for the specified LLM provider integration.
-    pub async fn list_llm_obs_integration_accounts_with_http_info(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-    ) -> Result<
-        datadog::ResponseContent<Vec<crate::datadogV2::model::LLMObsIntegrationAccount>>,
-        datadog::Error<ListLLMObsIntegrationAccountsError>,
-    > {
+    pub async fn list_llm_obs_integration_accounts_with_http_info(&self, integration: crate::datadogV2::model::LLMObsIntegrationName) -> Result<datadog::ResponseContent<Vec<crate::datadogV2::model::LLMObsIntegrationAccount>>, datadog::Error<ListLLMObsIntegrationAccountsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_integration_accounts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7521,19 +6554,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/accounts",
-            local_configuration.get_operation_host(local_operation_id),
-            integration = datadog::urlencode(integration.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration=
+            datadog::urlencode(integration.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7546,22 +6584,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7573,65 +6605,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<crate::datadogV2::model::LLMObsIntegrationAccount>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<Vec<crate::datadogV2::model::LLMObsIntegrationAccount>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsIntegrationAccountsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsIntegrationAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve the list of models available for the specified LLM provider integration and account.
-    pub async fn list_llm_obs_integration_models(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-        account_id: String,
-    ) -> Result<
-        Vec<crate::datadogV2::model::LLMObsIntegrationModel>,
-        datadog::Error<ListLLMObsIntegrationModelsError>,
-    > {
-        match self
-            .list_llm_obs_integration_models_with_http_info(integration, account_id)
-            .await
-        {
+    pub async fn list_llm_obs_integration_models(&self, integration: crate::datadogV2::model::LLMObsIntegrationName, account_id: String) -> Result<Vec<crate::datadogV2::model::LLMObsIntegrationModel>, datadog::Error<ListLLMObsIntegrationModelsError>> {
+        match self.list_llm_obs_integration_models_with_http_info(integration, account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve the list of models available for the specified LLM provider integration and account.
-    pub async fn list_llm_obs_integration_models_with_http_info(
-        &self,
-        integration: crate::datadogV2::model::LLMObsIntegrationName,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<Vec<crate::datadogV2::model::LLMObsIntegrationModel>>,
-        datadog::Error<ListLLMObsIntegrationModelsError>,
-    > {
+    pub async fn list_llm_obs_integration_models_with_http_info(&self, integration: crate::datadogV2::model::LLMObsIntegrationName, account_id: String) -> Result<datadog::ResponseContent<Vec<crate::datadogV2::model::LLMObsIntegrationModel>>, datadog::Error<ListLLMObsIntegrationModelsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_integration_models";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7643,20 +6648,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/integrations/{integration}/{account_id}/models",
-            local_configuration.get_operation_host(local_operation_id),
-            integration = datadog::urlencode(integration.to_string()),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), integration=
+            datadog::urlencode(integration.to_string())
+            , account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7669,22 +6680,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7696,79 +6701,52 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<Vec<crate::datadogV2::model::LLMObsIntegrationModel>>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<Vec<crate::datadogV2::model::LLMObsIntegrationModel>>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsIntegrationModelsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsIntegrationModelsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the data points grouped into a topic. For a parent topic, points from all
-    /// of its leaf topics are returned.
-    pub async fn list_llm_obs_patterns_clustered_points(
-        &self,
-        topic_id: String,
-        params: ListLLMObsPatternsClusteredPointsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse,
-        datadog::Error<ListLLMObsPatternsClusteredPointsError>,
-    > {
-        match self
-            .list_llm_obs_patterns_clustered_points_with_http_info(topic_id, params)
-            .await
-        {
+/// of its leaf topics are returned.
+    pub async fn list_llm_obs_patterns_clustered_points(&self, topic_id: String, params: ListLLMObsPatternsClusteredPointsOptionalParams) -> Result<crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse, datadog::Error<ListLLMObsPatternsClusteredPointsError>> {
+        match self.list_llm_obs_patterns_clustered_points_with_http_info(topic_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the data points grouped into a topic. For a parent topic, points from all
-    /// of its leaf topics are returned.
-    pub async fn list_llm_obs_patterns_clustered_points_with_http_info(
-        &self,
-        topic_id: String,
-        params: ListLLMObsPatternsClusteredPointsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse>,
-        datadog::Error<ListLLMObsPatternsClusteredPointsError>,
-    > {
+/// of its leaf topics are returned.
+    pub async fn list_llm_obs_patterns_clustered_points_with_http_info(&self, topic_id: String, params: ListLLMObsPatternsClusteredPointsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse>, datadog::Error<ListLLMObsPatternsClusteredPointsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_clustered_points";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_llm_obs_patterns_clustered_points' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.list_llm_obs_patterns_clustered_points' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_token = params.page_token;
@@ -7777,24 +6755,23 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-clustered-points",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("topic_id", &topic_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("topic_id", &topic_id.to_string() )]);
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page_size", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page_size", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_token {
-            local_req_builder =
-                local_req_builder.query(&[("page_token", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page_token", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7807,22 +6784,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7834,59 +6805,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsClusteredPointsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsClusteredPointsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsClusteredPointsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all patterns configurations for the organization.
-    pub async fn list_llm_obs_patterns_configs(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsConfigsResponse,
-        datadog::Error<ListLLMObsPatternsConfigsError>,
-    > {
+    pub async fn list_llm_obs_patterns_configs(&self) -> Result<crate::datadogV2::model::LLMObsPatternsConfigsResponse, datadog::Error<ListLLMObsPatternsConfigsError>> {
         match self.list_llm_obs_patterns_configs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all patterns configurations for the organization.
-    pub async fn list_llm_obs_patterns_configs_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigsResponse>,
-        datadog::Error<ListLLMObsPatternsConfigsError>,
-    > {
+    pub async fn list_llm_obs_patterns_configs_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigsResponse>, datadog::Error<ListLLMObsPatternsConfigsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_configs";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -7898,18 +6848,22 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -7922,22 +6876,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -7949,63 +6897,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsConfigsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsConfigsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the completed patterns runs for a configuration.
-    pub async fn list_llm_obs_patterns_runs(
-        &self,
-        config_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsRunsResponse,
-        datadog::Error<ListLLMObsPatternsRunsError>,
-    > {
-        match self
-            .list_llm_obs_patterns_runs_with_http_info(config_id)
-            .await
-        {
+    pub async fn list_llm_obs_patterns_runs(&self, config_id: String) -> Result<crate::datadogV2::model::LLMObsPatternsRunsResponse, datadog::Error<ListLLMObsPatternsRunsError>> {
+        match self.list_llm_obs_patterns_runs_with_http_info(config_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the completed patterns runs for a configuration.
-    pub async fn list_llm_obs_patterns_runs_with_http_info(
-        &self,
-        config_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsRunsResponse>,
-        datadog::Error<ListLLMObsPatternsRunsError>,
-    > {
+    pub async fn list_llm_obs_patterns_runs_with_http_info(&self, config_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsRunsResponse>, datadog::Error<ListLLMObsPatternsRunsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_runs";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8017,20 +6940,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8043,22 +6969,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8070,58 +6990,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsRunsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsRunsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsRunsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsRunsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all enabled patterns templates.
-    pub async fn list_llm_obs_patterns_templates(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsTemplatesResponse,
-        datadog::Error<ListLLMObsPatternsTemplatesError>,
-    > {
+    pub async fn list_llm_obs_patterns_templates(&self) -> Result<crate::datadogV2::model::LLMObsPatternsTemplatesResponse, datadog::Error<ListLLMObsPatternsTemplatesError>> {
         match self.list_llm_obs_patterns_templates_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all enabled patterns templates.
-    pub async fn list_llm_obs_patterns_templates_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTemplatesResponse>,
-        datadog::Error<ListLLMObsPatternsTemplatesError>,
-    > {
+    pub async fn list_llm_obs_patterns_templates_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTemplatesResponse>, datadog::Error<ListLLMObsPatternsTemplatesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_templates";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8133,18 +7033,22 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-templates",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8157,22 +7061,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8184,67 +7082,40 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTemplatesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTemplatesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsTemplatesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsTemplatesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the topics discovered by a patterns run. When no run is specified,
-    /// the most recent completed run is used.
-    pub async fn list_llm_obs_patterns_topics(
-        &self,
-        config_id: String,
-        params: ListLLMObsPatternsTopicsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsTopicsResponse,
-        datadog::Error<ListLLMObsPatternsTopicsError>,
-    > {
-        match self
-            .list_llm_obs_patterns_topics_with_http_info(config_id, params)
-            .await
-        {
+/// the most recent completed run is used.
+    pub async fn list_llm_obs_patterns_topics(&self, config_id: String, params: ListLLMObsPatternsTopicsOptionalParams) -> Result<crate::datadogV2::model::LLMObsPatternsTopicsResponse, datadog::Error<ListLLMObsPatternsTopicsError>> {
+        match self.list_llm_obs_patterns_topics_with_http_info(config_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the topics discovered by a patterns run. When no run is specified,
-    /// the most recent completed run is used.
-    pub async fn list_llm_obs_patterns_topics_with_http_info(
-        &self,
-        config_id: String,
-        params: ListLLMObsPatternsTopicsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTopicsResponse>,
-        datadog::Error<ListLLMObsPatternsTopicsError>,
-    > {
+/// the most recent completed run is used.
+    pub async fn list_llm_obs_patterns_topics_with_http_info(&self, config_id: String, params: ListLLMObsPatternsTopicsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTopicsResponse>, datadog::Error<ListLLMObsPatternsTopicsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_topics";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8256,6 +7127,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let run_id = params.run_id;
 
@@ -8263,20 +7135,20 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-topics",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string() )]);
         if let Some(ref local_query_param) = run_id {
-            local_req_builder =
-                local_req_builder.query(&[("run_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("run_id", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8289,22 +7161,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8316,71 +7182,42 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTopicsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTopicsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsTopicsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsTopicsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the topics discovered by a patterns run, with the clustered points attached
-    /// inline to each leaf topic. When no run is specified, the most recent completed
-    /// run is used.
-    pub async fn list_llm_obs_patterns_topics_with_clustered_points(
-        &self,
-        config_id: String,
-        params: ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse,
-        datadog::Error<ListLLMObsPatternsTopicsWithClusteredPointsError>,
-    > {
-        match self
-            .list_llm_obs_patterns_topics_with_clustered_points_with_http_info(config_id, params)
-            .await
-        {
+/// inline to each leaf topic. When no run is specified, the most recent completed
+/// run is used.
+    pub async fn list_llm_obs_patterns_topics_with_clustered_points(&self, config_id: String, params: ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams) -> Result<crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse, datadog::Error<ListLLMObsPatternsTopicsWithClusteredPointsError>> {
+        match self.list_llm_obs_patterns_topics_with_clustered_points_with_http_info(config_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the topics discovered by a patterns run, with the clustered points attached
-    /// inline to each leaf topic. When no run is specified, the most recent completed
-    /// run is used.
-    pub async fn list_llm_obs_patterns_topics_with_clustered_points_with_http_info(
-        &self,
-        config_id: String,
-        params: ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse,
-        >,
-        datadog::Error<ListLLMObsPatternsTopicsWithClusteredPointsError>,
-    > {
+/// inline to each leaf topic. When no run is specified, the most recent completed
+/// run is used.
+    pub async fn list_llm_obs_patterns_topics_with_clustered_points_with_http_info(&self, config_id: String, params: ListLLMObsPatternsTopicsWithClusteredPointsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse>, datadog::Error<ListLLMObsPatternsTopicsWithClusteredPointsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_patterns_topics_with_clustered_points";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8392,6 +7229,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let run_id = params.run_id;
         let include_metrics = params.include_metrics;
@@ -8400,24 +7238,23 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-topics/with-cluster-points",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("config_id", &config_id.to_string() )]);
         if let Some(ref local_query_param) = run_id {
-            local_req_builder =
-                local_req_builder.query(&[("run_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("run_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_metrics {
-            local_req_builder =
-                local_req_builder.query(&[("include_metrics", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_metrics", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8430,22 +7267,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8457,61 +7288,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTopicsWithClusteredPointsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPatternsTopicsWithClusteredPointsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPatternsTopicsWithClusteredPointsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Agent Observability projects sorted by creation date, newest first.
-    pub async fn list_llm_obs_projects(
-        &self,
-        params: ListLLMObsProjectsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsProjectsResponse,
-        datadog::Error<ListLLMObsProjectsError>,
-    > {
-        match self.list_llm_obs_projects_with_http_info(params).await {
+    pub async fn list_llm_obs_projects(&self, params: ListLLMObsProjectsOptionalParams) -> Result<crate::datadogV2::model::LLMObsProjectsResponse, datadog::Error<ListLLMObsProjectsError>> {
+        match self.list_llm_obs_projects_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Agent Observability projects sorted by creation date, newest first.
-    pub async fn list_llm_obs_projects_with_http_info(
-        &self,
-        params: ListLLMObsProjectsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectsResponse>,
-        datadog::Error<ListLLMObsProjectsError>,
-    > {
+    pub async fn list_llm_obs_projects_with_http_info(&self, params: ListLLMObsProjectsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectsResponse>, datadog::Error<ListLLMObsProjectsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_projects";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8523,6 +7331,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_id = params.filter_id;
         let filter_name = params.filter_name;
@@ -8533,31 +7342,28 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8570,22 +7376,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8597,63 +7397,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsProjectsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsProjectsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all versions of an Agent Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
-    pub async fn list_llm_obs_prompt_versions(
-        &self,
-        prompt_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptVersionsResponse,
-        datadog::Error<ListLLMObsPromptVersionsError>,
-    > {
-        match self
-            .list_llm_obs_prompt_versions_with_http_info(prompt_id)
-            .await
-        {
+    pub async fn list_llm_obs_prompt_versions(&self, prompt_id: String) -> Result<crate::datadogV2::model::LLMObsPromptVersionsResponse, datadog::Error<ListLLMObsPromptVersionsError>> {
+        match self.list_llm_obs_prompt_versions_with_http_info(prompt_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all versions of an Agent Observability prompt, ordered newest to oldest. If the prompt does not exist, is not registered, or is archived, the response contains an empty list.
-    pub async fn list_llm_obs_prompt_versions_with_http_info(
-        &self,
-        prompt_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionsResponse>,
-        datadog::Error<ListLLMObsPromptVersionsError>,
-    > {
+    pub async fn list_llm_obs_prompt_versions_with_http_info(&self, prompt_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionsResponse>, datadog::Error<ListLLMObsPromptVersionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_prompt_versions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8665,19 +7440,24 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8690,22 +7470,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8717,60 +7491,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPromptVersionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPromptVersionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all Agent Observability prompts in the prompt registry for the organization.
-    pub async fn list_llm_obs_prompts(
-        &self,
-        params: ListLLMObsPromptsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptsResponse,
-        datadog::Error<ListLLMObsPromptsError>,
-    > {
-        match self.list_llm_obs_prompts_with_http_info(params).await {
+    pub async fn list_llm_obs_prompts(&self, params: ListLLMObsPromptsOptionalParams) -> Result<crate::datadogV2::model::LLMObsPromptsResponse, datadog::Error<ListLLMObsPromptsError>> {
+        match self.list_llm_obs_prompts_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all Agent Observability prompts in the prompt registry for the organization.
-    pub async fn list_llm_obs_prompts_with_http_info(
-        &self,
-        params: ListLLMObsPromptsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptsResponse>,
-        datadog::Error<ListLLMObsPromptsError>,
-    > {
+    pub async fn list_llm_obs_prompts_with_http_info(&self, params: ListLLMObsPromptsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptsResponse>, datadog::Error<ListLLMObsPromptsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_prompts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8782,6 +7534,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_prompt_id = params.filter_prompt_id;
 
@@ -8789,19 +7542,19 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_prompt_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[prompt_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[prompt_id]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8814,22 +7567,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -8841,58 +7588,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsPromptsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsPromptsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List Agent Observability spans matching the specified filters.
-    pub async fn list_llm_obs_spans(
-        &self,
-        params: ListLLMObsSpansOptionalParams,
-    ) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<ListLLMObsSpansError>>
-    {
-        match self.list_llm_obs_spans_with_http_info(params).await {
+    pub async fn list_llm_obs_spans(&self, params: ListLLMObsSpansOptionalParams) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<ListLLMObsSpansError>> {
+        match self.list_llm_obs_spans_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List Agent Observability spans matching the specified filters.
-    pub async fn list_llm_obs_spans_with_http_info(
-        &self,
-        params: ListLLMObsSpansOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>,
-        datadog::Error<ListLLMObsSpansError>,
-    > {
+    pub async fn list_llm_obs_spans_with_http_info(&self, params: ListLLMObsSpansOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>, datadog::Error<ListLLMObsSpansError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_llm_obs_spans";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -8904,6 +7631,7 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_from = params.filter_from;
         let filter_to = params.filter_to;
@@ -8922,63 +7650,52 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/spans/events",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_span_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[span_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[span_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_trace_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[trace_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[trace_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_span_kind {
-            local_req_builder =
-                local_req_builder.query(&[("filter[span_kind]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[span_kind]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_span_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[span_name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[span_name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_ml_app {
-            local_req_builder =
-                local_req_builder.query(&[("filter[ml_app]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[ml_app]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_attachments {
-            local_req_builder =
-                local_req_builder.query(&[("include_attachments", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_attachments", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -8991,22 +7708,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9018,65 +7729,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListLLMObsSpansError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListLLMObsSpansError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Acquire the draft lock on a dataset for the calling user. The lock prevents other users from concurrently editing the dataset draft.
-    pub async fn lock_llm_obs_dataset_draft_state(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetDraftStateResponse,
-        datadog::Error<LockLLMObsDatasetDraftStateError>,
-    > {
-        match self
-            .lock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
-            .await
-        {
+    pub async fn lock_llm_obs_dataset_draft_state(&self, project_id: String, dataset_id: String) -> Result<crate::datadogV2::model::LLMObsDatasetDraftStateResponse, datadog::Error<LockLLMObsDatasetDraftStateError>> {
+        match self.lock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Acquire the draft lock on a dataset for the calling user. The lock prevents other users from concurrently editing the dataset draft.
-    pub async fn lock_llm_obs_dataset_draft_state_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>,
-        datadog::Error<LockLLMObsDatasetDraftStateError>,
-    > {
+    pub async fn lock_llm_obs_dataset_draft_state_with_http_info(&self, project_id: String, dataset_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>, datadog::Error<LockLLMObsDatasetDraftStateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.lock_llm_obs_dataset_draft_state";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9088,20 +7772,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/lock",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9114,22 +7804,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -9141,54 +7825,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetDraftStateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<LockLLMObsDatasetDraftStateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<LockLLMObsDatasetDraftStateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Restore a dataset to a previous version. The dataset's current version is bumped, and its records are replaced with the records from the specified prior version.
-    pub async fn restore_llm_obs_dataset_version(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest,
-    ) -> Result<(), datadog::Error<RestoreLLMObsDatasetVersionError>> {
-        match self
-            .restore_llm_obs_dataset_version_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn restore_llm_obs_dataset_version(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest) -> Result<(), datadog::Error<RestoreLLMObsDatasetVersionError>> {
+        match self.restore_llm_obs_dataset_version_with_http_info(project_id, dataset_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Restore a dataset to a previous version. The dataset's current version is bumped, and its records are replaced with the records from the specified prior version.
-    pub async fn restore_llm_obs_dataset_version_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RestoreLLMObsDatasetVersionError>>
-    {
+    pub async fn restore_llm_obs_dataset_version_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRestoreVersionRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<RestoreLLMObsDatasetVersionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.restore_llm_obs_dataset_version";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9200,21 +7862,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/restore",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9227,23 +7895,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9251,7 +7912,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9261,7 +7925,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9283,7 +7950,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9306,58 +7973,37 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RestoreLLMObsDatasetVersionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<RestoreLLMObsDatasetVersionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search across Agent Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
-    ///
-    /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
-    ///
-    /// Returns `200 OK` when all results fit in a single page. Returns `206 Partial Content` with a cursor in `meta.after` when additional pages are available.
-    pub async fn search_llm_obs_experimentation(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationSearchRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentationSearchResponse,
-        datadog::Error<SearchLLMObsExperimentationError>,
-    > {
-        match self
-            .search_llm_obs_experimentation_with_http_info(body)
-            .await
-        {
+///
+/// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
+///
+/// Returns `200 OK` when all results fit in a single page. Returns `206 Partial Content` with a cursor in `meta.after` when additional pages are available.
+    pub async fn search_llm_obs_experimentation(&self, body: crate::datadogV2::model::LLMObsExperimentationSearchRequest) -> Result<crate::datadogV2::model::LLMObsExperimentationSearchResponse, datadog::Error<SearchLLMObsExperimentationError>> {
+        match self.search_llm_obs_experimentation_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Search across Agent Observability experimentation entities — projects, datasets, dataset records, experiments, and experiment runs — using cursor-based pagination.
-    ///
-    /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
-    ///
-    /// Returns `200 OK` when all results fit in a single page. Returns `206 Partial Content` with a cursor in `meta.after` when additional pages are available.
-    pub async fn search_llm_obs_experimentation_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationSearchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentationSearchResponse>,
-        datadog::Error<SearchLLMObsExperimentationError>,
-    > {
+///
+/// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
+///
+/// Returns `200 OK` when all results fit in a single page. Returns `206 Partial Content` with a cursor in `meta.after` when additional pages are available.
+    pub async fn search_llm_obs_experimentation_with_http_info(&self, body: crate::datadogV2::model::LLMObsExperimentationSearchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentationSearchResponse>, datadog::Error<SearchLLMObsExperimentationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_llm_obs_experimentation";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9369,19 +8015,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9394,23 +8044,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9418,7 +8061,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9428,7 +8074,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9450,7 +8099,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9467,58 +8116,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentationSearchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentationSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SearchLLMObsExperimentationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SearchLLMObsExperimentationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search Agent Observability spans using structured filters in the request body.
-    pub async fn search_llm_obs_spans(
-        &self,
-        body: crate::datadogV2::model::LLMObsSearchSpansRequest,
-    ) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<SearchLLMObsSpansError>>
-    {
+    pub async fn search_llm_obs_spans(&self, body: crate::datadogV2::model::LLMObsSearchSpansRequest) -> Result<crate::datadogV2::model::LLMObsSpansResponse, datadog::Error<SearchLLMObsSpansError>> {
         match self.search_llm_obs_spans_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Search Agent Observability spans using structured filters in the request body.
-    pub async fn search_llm_obs_spans_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsSearchSpansRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>,
-        datadog::Error<SearchLLMObsSpansError>,
-    > {
+    pub async fn search_llm_obs_spans_with_http_info(&self, body: crate::datadogV2::model::LLMObsSearchSpansRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsSpansResponse>, datadog::Error<SearchLLMObsSpansError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_llm_obs_spans";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9530,19 +8159,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/spans/events/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9555,23 +8188,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9579,7 +8205,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9589,7 +8218,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9611,7 +8243,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9628,96 +8260,72 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsSpansResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SearchLLMObsSpansError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SearchLLMObsSpansError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search across Agent Observability experimentation entities using offset-based (page-number) pagination.
-    /// Use this endpoint when you need total page count or want to navigate to a specific page number.
-    ///
-    /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
-    pub async fn simple_search_llm_obs_experimentation(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationSimpleSearchRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse,
-        datadog::Error<SimpleSearchLLMObsExperimentationError>,
-    > {
-        match self
-            .simple_search_llm_obs_experimentation_with_http_info(body)
-            .await
-        {
+/// Use this endpoint when you need total page count or want to navigate to a specific page number.
+///
+/// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
+    pub async fn simple_search_llm_obs_experimentation(&self, body: crate::datadogV2::model::LLMObsExperimentationSimpleSearchRequest) -> Result<crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse, datadog::Error<SimpleSearchLLMObsExperimentationError>> {
+        match self.simple_search_llm_obs_experimentation_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Search across Agent Observability experimentation entities using offset-based (page-number) pagination.
-    /// Use this endpoint when you need total page count or want to navigate to a specific page number.
-    ///
-    /// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
-    pub async fn simple_search_llm_obs_experimentation_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsExperimentationSimpleSearchRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse,
-        >,
-        datadog::Error<SimpleSearchLLMObsExperimentationError>,
-    > {
+/// Use this endpoint when you need total page count or want to navigate to a specific page number.
+///
+/// The `filter.scope` field controls which entity types are returned. At least one valid scope must be provided.
+    pub async fn simple_search_llm_obs_experimentation_with_http_info(&self, body: crate::datadogV2::model::LLMObsExperimentationSimpleSearchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse>, datadog::Error<SimpleSearchLLMObsExperimentationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.simple_search_llm_obs_experimentation";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.simple_search_llm_obs_experimentation' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.simple_search_llm_obs_experimentation' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experimentation/simple-search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9730,23 +8338,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9754,7 +8355,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9764,7 +8368,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9786,7 +8393,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9803,61 +8410,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentationSimpleSearchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SimpleSearchLLMObsExperimentationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SimpleSearchLLMObsExperimentationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Start a patterns run for a given configuration. The run executes asynchronously.
-    pub async fn trigger_llm_obs_patterns(
-        &self,
-        body: crate::datadogV2::model::LLMObsPatternsTriggerRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsTriggerResponse,
-        datadog::Error<TriggerLLMObsPatternsError>,
-    > {
+    pub async fn trigger_llm_obs_patterns(&self, body: crate::datadogV2::model::LLMObsPatternsTriggerRequest) -> Result<crate::datadogV2::model::LLMObsPatternsTriggerResponse, datadog::Error<TriggerLLMObsPatternsError>> {
         match self.trigger_llm_obs_patterns_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Start a patterns run for a given configuration. The run executes asynchronously.
-    pub async fn trigger_llm_obs_patterns_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsPatternsTriggerRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTriggerResponse>,
-        datadog::Error<TriggerLLMObsPatternsError>,
-    > {
+    pub async fn trigger_llm_obs_patterns_with_http_info(&self, body: crate::datadogV2::model::LLMObsPatternsTriggerRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsTriggerResponse>, datadog::Error<TriggerLLMObsPatternsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.trigger_llm_obs_patterns";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -9869,19 +8453,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-runs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -9894,23 +8482,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -9918,7 +8499,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9928,7 +8512,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -9950,7 +8537,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -9967,52 +8554,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTriggerResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsTriggerResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<TriggerLLMObsPatternsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<TriggerLLMObsPatternsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Release the draft lock on a dataset held by the calling user, allowing other users to edit the dataset draft.
-    pub async fn unlock_llm_obs_dataset_draft_state(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<(), datadog::Error<UnlockLLMObsDatasetDraftStateError>> {
-        match self
-            .unlock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id)
-            .await
-        {
+    pub async fn unlock_llm_obs_dataset_draft_state(&self, project_id: String, dataset_id: String) -> Result<(), datadog::Error<UnlockLLMObsDatasetDraftStateError>> {
+        match self.unlock_llm_obs_dataset_draft_state_with_http_info(project_id, dataset_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Release the draft lock on a dataset held by the calling user, allowing other users to edit the dataset draft.
-    pub async fn unlock_llm_obs_dataset_draft_state_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlockLLMObsDatasetDraftStateError>>
-    {
+    pub async fn unlock_llm_obs_dataset_draft_state_with_http_info(&self, project_id: String, dataset_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<UnlockLLMObsDatasetDraftStateError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.unlock_llm_obs_dataset_draft_state";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10024,20 +8591,26 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/draft_state/unlock",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10050,22 +8623,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -10083,56 +8650,33 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UnlockLLMObsDatasetDraftStateError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UnlockLLMObsDatasetDraftStateError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update an annotation queue. The `name`, `description`,
-    /// `annotation_schema`, `reviewer_emails`, `restrict_to_reviewers`, and
-    /// `restrict_to_assignees` fields can be updated.
-    pub async fn update_llm_obs_annotation_queue(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueueResponse,
-        datadog::Error<UpdateLLMObsAnnotationQueueError>,
-    > {
-        match self
-            .update_llm_obs_annotation_queue_with_http_info(queue_id, body)
-            .await
-        {
+/// `annotation_schema`, `reviewer_emails`, `restrict_to_reviewers`, and
+/// `restrict_to_assignees` fields can be updated.
+    pub async fn update_llm_obs_annotation_queue(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueUpdateRequest) -> Result<crate::datadogV2::model::LLMObsAnnotationQueueResponse, datadog::Error<UpdateLLMObsAnnotationQueueError>> {
+        match self.update_llm_obs_annotation_queue_with_http_info(queue_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update an annotation queue. The `name`, `description`,
-    /// `annotation_schema`, `reviewer_emails`, `restrict_to_reviewers`, and
-    /// `restrict_to_assignees` fields can be updated.
-    pub async fn update_llm_obs_annotation_queue_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueResponse>,
-        datadog::Error<UpdateLLMObsAnnotationQueueError>,
-    > {
+/// `annotation_schema`, `reviewer_emails`, `restrict_to_reviewers`, and
+/// `restrict_to_assignees` fields can be updated.
+    pub async fn update_llm_obs_annotation_queue_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueResponse>, datadog::Error<UpdateLLMObsAnnotationQueueError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_annotation_queue";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10144,20 +8688,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10170,23 +8719,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10194,7 +8736,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10204,7 +8749,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10226,7 +8774,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10243,97 +8791,74 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsAnnotationQueueError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsAnnotationQueueError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or replace the label schema for a given annotation queue.
-    /// The label schema defines the labels annotators can apply to interactions in the queue.
-    /// Label names must be unique within the queue and match the pattern `^[a-zA-Z0-9_-]+$`.
-    /// Each label must have a valid type: score, categorical, boolean, or text.
-    pub async fn update_llm_obs_annotation_queue_label_schema(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse,
-        datadog::Error<UpdateLLMObsAnnotationQueueLabelSchemaError>,
-    > {
-        match self
-            .update_llm_obs_annotation_queue_label_schema_with_http_info(queue_id, body)
-            .await
-        {
+/// The label schema defines the labels annotators can apply to interactions in the queue.
+/// Label names must be unique within the queue and match the pattern `^[a-zA-Z0-9_-]+$`.
+/// Each label must have a valid type: score, categorical, boolean, or text.
+    pub async fn update_llm_obs_annotation_queue_label_schema(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaUpdateRequest) -> Result<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse, datadog::Error<UpdateLLMObsAnnotationQueueLabelSchemaError>> {
+        match self.update_llm_obs_annotation_queue_label_schema_with_http_info(queue_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or replace the label schema for a given annotation queue.
-    /// The label schema defines the labels annotators can apply to interactions in the queue.
-    /// Label names must be unique within the queue and match the pattern `^[a-zA-Z0-9_-]+$`.
-    /// Each label must have a valid type: score, categorical, boolean, or text.
-    pub async fn update_llm_obs_annotation_queue_label_schema_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>,
-        datadog::Error<UpdateLLMObsAnnotationQueueLabelSchemaError>,
-    > {
+/// The label schema defines the labels annotators can apply to interactions in the queue.
+/// Label names must be unique within the queue and match the pattern `^[a-zA-Z0-9_-]+$`.
+/// Each label must have a valid type: score, categorical, boolean, or text.
+    pub async fn update_llm_obs_annotation_queue_label_schema_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>, datadog::Error<UpdateLLMObsAnnotationQueueLabelSchemaError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_annotation_queue_label_schema";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.update_llm_obs_annotation_queue_label_schema' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.update_llm_obs_annotation_queue_label_schema' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/label-schema",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10346,23 +8871,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10370,7 +8888,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10380,7 +8901,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10402,7 +8926,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10419,53 +8943,32 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationQueueLabelSchemaResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsAnnotationQueueLabelSchemaError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsAnnotationQueueLabelSchemaError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update a custom Agent Observability evaluator configuration by its name.
-    pub async fn update_llm_obs_custom_eval_config(
-        &self,
-        eval_name: String,
-        body: crate::datadogV2::model::LLMObsCustomEvalConfigUpdateRequest,
-    ) -> Result<(), datadog::Error<UpdateLLMObsCustomEvalConfigError>> {
-        match self
-            .update_llm_obs_custom_eval_config_with_http_info(eval_name, body)
-            .await
-        {
+    pub async fn update_llm_obs_custom_eval_config(&self, eval_name: String, body: crate::datadogV2::model::LLMObsCustomEvalConfigUpdateRequest) -> Result<(), datadog::Error<UpdateLLMObsCustomEvalConfigError>> {
+        match self.update_llm_obs_custom_eval_config_with_http_info(eval_name, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update a custom Agent Observability evaluator configuration by its name.
-    pub async fn update_llm_obs_custom_eval_config_with_http_info(
-        &self,
-        eval_name: String,
-        body: crate::datadogV2::model::LLMObsCustomEvalConfigUpdateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateLLMObsCustomEvalConfigError>>
-    {
+    pub async fn update_llm_obs_custom_eval_config_with_http_info(&self, eval_name: String, body: crate::datadogV2::model::LLMObsCustomEvalConfigUpdateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateLLMObsCustomEvalConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_custom_eval_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10477,20 +8980,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/unstable/llm-obs/config/evaluators/custom/{eval_name}",
-            local_configuration.get_operation_host(local_operation_id),
-            eval_name = datadog::urlencode(eval_name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), eval_name=
+            datadog::urlencode(eval_name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10503,23 +9011,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10527,7 +9028,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10537,7 +9041,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10559,7 +9066,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10582,54 +9089,29 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateLLMObsCustomEvalConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsCustomEvalConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update an existing Agent Observability dataset within the specified project.
-    pub async fn update_llm_obs_dataset(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetResponse,
-        datadog::Error<UpdateLLMObsDatasetError>,
-    > {
-        match self
-            .update_llm_obs_dataset_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn update_llm_obs_dataset(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetUpdateRequest) -> Result<crate::datadogV2::model::LLMObsDatasetResponse, datadog::Error<UpdateLLMObsDatasetError>> {
+        match self.update_llm_obs_dataset_with_http_info(project_id, dataset_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update an existing Agent Observability dataset within the specified project.
-    pub async fn update_llm_obs_dataset_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>,
-        datadog::Error<UpdateLLMObsDatasetError>,
-    > {
+    pub async fn update_llm_obs_dataset_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetResponse>, datadog::Error<UpdateLLMObsDatasetError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_dataset";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10641,21 +9123,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10668,23 +9156,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10692,7 +9173,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10702,7 +9186,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10724,7 +9211,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10741,67 +9228,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsDatasetError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsDatasetError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update one or more existing records in an Agent Observability dataset.
-    pub async fn update_llm_obs_dataset_records(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRecordsUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-        datadog::Error<UpdateLLMObsDatasetRecordsError>,
-    > {
-        match self
-            .update_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body)
-            .await
-        {
+    pub async fn update_llm_obs_dataset_records(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRecordsUpdateRequest) -> Result<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse, datadog::Error<UpdateLLMObsDatasetRecordsError>> {
+        match self.update_llm_obs_dataset_records_with_http_info(project_id, dataset_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update one or more existing records in an Agent Observability dataset.
-    pub async fn update_llm_obs_dataset_records_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        body: crate::datadogV2::model::LLMObsDatasetRecordsUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>,
-        datadog::Error<UpdateLLMObsDatasetRecordsError>,
-    > {
+    pub async fn update_llm_obs_dataset_records_with_http_info(&self, project_id: String, dataset_id: String, body: crate::datadogV2::model::LLMObsDatasetRecordsUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>, datadog::Error<UpdateLLMObsDatasetRecordsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_dataset_records";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10813,21 +9271,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/{project_id}/datasets/{dataset_id}/records",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -10840,23 +9304,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -10864,7 +9321,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10874,7 +9334,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -10896,7 +9359,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -10913,66 +9376,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsDatasetRecordsMutationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsDatasetRecordsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsDatasetRecordsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update an existing Agent Observability experiment.
-    pub async fn update_llm_obs_experiment(
-        &self,
-        experiment_id: String,
-        body: crate::datadogV2::model::LLMObsExperimentUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsExperimentResponse,
-        datadog::Error<UpdateLLMObsExperimentError>,
-    > {
-        match self
-            .update_llm_obs_experiment_with_http_info(experiment_id, body)
-            .await
-        {
+    pub async fn update_llm_obs_experiment(&self, experiment_id: String, body: crate::datadogV2::model::LLMObsExperimentUpdateRequest) -> Result<crate::datadogV2::model::LLMObsExperimentResponse, datadog::Error<UpdateLLMObsExperimentError>> {
+        match self.update_llm_obs_experiment_with_http_info(experiment_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update an existing Agent Observability experiment.
-    pub async fn update_llm_obs_experiment_with_http_info(
-        &self,
-        experiment_id: String,
-        body: crate::datadogV2::model::LLMObsExperimentUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentResponse>,
-        datadog::Error<UpdateLLMObsExperimentError>,
-    > {
+    pub async fn update_llm_obs_experiment_with_http_info(&self, experiment_id: String, body: crate::datadogV2::model::LLMObsExperimentUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsExperimentResponse>, datadog::Error<UpdateLLMObsExperimentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_experiment";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -10984,20 +9419,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/experiments/{experiment_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            experiment_id = datadog::urlencode(experiment_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), experiment_id=
+            datadog::urlencode(experiment_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11010,23 +9450,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11034,7 +9467,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11044,7 +9480,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11066,7 +9505,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11083,65 +9522,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsExperimentResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsExperimentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsExperimentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Partially update an existing Agent Observability project.
-    pub async fn update_llm_obs_project(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsProjectUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsProjectResponse,
-        datadog::Error<UpdateLLMObsProjectError>,
-    > {
-        match self
-            .update_llm_obs_project_with_http_info(project_id, body)
-            .await
-        {
+    pub async fn update_llm_obs_project(&self, project_id: String, body: crate::datadogV2::model::LLMObsProjectUpdateRequest) -> Result<crate::datadogV2::model::LLMObsProjectResponse, datadog::Error<UpdateLLMObsProjectError>> {
+        match self.update_llm_obs_project_with_http_info(project_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Partially update an existing Agent Observability project.
-    pub async fn update_llm_obs_project_with_http_info(
-        &self,
-        project_id: String,
-        body: crate::datadogV2::model::LLMObsProjectUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectResponse>,
-        datadog::Error<UpdateLLMObsProjectError>,
-    > {
+    pub async fn update_llm_obs_project_with_http_info(&self, project_id: String, body: crate::datadogV2::model::LLMObsProjectUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsProjectResponse>, datadog::Error<UpdateLLMObsProjectError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_project";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11153,20 +9565,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/projects/{project_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11179,23 +9596,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11203,7 +9613,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11213,7 +9626,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11235,7 +9651,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11252,65 +9668,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsProjectResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsProjectError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsProjectError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the title, the description, or both, for an Agent Observability prompt.
-    pub async fn update_llm_obs_prompt(
-        &self,
-        prompt_id: String,
-        body: crate::datadogV2::model::LLMObsUpdatePromptRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptResponse,
-        datadog::Error<UpdateLLMObsPromptError>,
-    > {
-        match self
-            .update_llm_obs_prompt_with_http_info(prompt_id, body)
-            .await
-        {
+    pub async fn update_llm_obs_prompt(&self, prompt_id: String, body: crate::datadogV2::model::LLMObsUpdatePromptRequest) -> Result<crate::datadogV2::model::LLMObsPromptResponse, datadog::Error<UpdateLLMObsPromptError>> {
+        match self.update_llm_obs_prompt_with_http_info(prompt_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the title, the description, or both, for an Agent Observability prompt.
-    pub async fn update_llm_obs_prompt_with_http_info(
-        &self,
-        prompt_id: String,
-        body: crate::datadogV2::model::LLMObsUpdatePromptRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptResponse>,
-        datadog::Error<UpdateLLMObsPromptError>,
-    > {
+    pub async fn update_llm_obs_prompt_with_http_info(&self, prompt_id: String, body: crate::datadogV2::model::LLMObsUpdatePromptRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptResponse>, datadog::Error<UpdateLLMObsPromptError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_prompt";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11322,20 +9711,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11348,23 +9742,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11372,7 +9759,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11382,7 +9772,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11404,7 +9797,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11421,67 +9814,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsPromptError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsPromptError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the description, the feature-flag environments, or both, for a specific version of an Agent Observability prompt.
-    pub async fn update_llm_obs_prompt_version(
-        &self,
-        prompt_id: String,
-        version: i64,
-        body: crate::datadogV2::model::LLMObsUpdatePromptVersionRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPromptVersionResponse,
-        datadog::Error<UpdateLLMObsPromptVersionError>,
-    > {
-        match self
-            .update_llm_obs_prompt_version_with_http_info(prompt_id, version, body)
-            .await
-        {
+    pub async fn update_llm_obs_prompt_version(&self, prompt_id: String, version: i64, body: crate::datadogV2::model::LLMObsUpdatePromptVersionRequest) -> Result<crate::datadogV2::model::LLMObsPromptVersionResponse, datadog::Error<UpdateLLMObsPromptVersionError>> {
+        match self.update_llm_obs_prompt_version_with_http_info(prompt_id, version, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the description, the feature-flag environments, or both, for a specific version of an Agent Observability prompt.
-    pub async fn update_llm_obs_prompt_version_with_http_info(
-        &self,
-        prompt_id: String,
-        version: i64,
-        body: crate::datadogV2::model::LLMObsUpdatePromptVersionRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>,
-        datadog::Error<UpdateLLMObsPromptVersionError>,
-    > {
+    pub async fn update_llm_obs_prompt_version_with_http_info(&self, prompt_id: String, version: i64, body: crate::datadogV2::model::LLMObsUpdatePromptVersionRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPromptVersionResponse>, datadog::Error<UpdateLLMObsPromptVersionError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_llm_obs_prompt_version";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11493,21 +9857,27 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/prompts/{prompt_id}/versions/{version}",
-            local_configuration.get_operation_host(local_operation_id),
-            prompt_id = datadog::urlencode(prompt_id),
-            version = version
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), prompt_id=
+            datadog::urlencode(prompt_id)
+            , version=
+            version
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11520,23 +9890,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11544,7 +9907,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11554,7 +9920,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11576,7 +9945,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11593,78 +9962,56 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPromptVersionResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateLLMObsPromptVersionError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateLLMObsPromptVersionError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Upload records to a dataset from a file. The request is a `multipart/form-data` upload containing a single `file` part.
-    /// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
-    ///
-    /// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
-    ///   - `progress`: incremental record counts written so far.
-    ///   - `completed`: terminal event with a JSON body containing `records_created`.
-    ///   - `error`: terminal event with a JSON body containing an error `message`.
-    pub async fn upload_llm_obs_dataset_records_file(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: UploadLLMObsDatasetRecordsFileOptionalParams,
-    ) -> Result<(), datadog::Error<UploadLLMObsDatasetRecordsFileError>> {
-        match self
-            .upload_llm_obs_dataset_records_file_with_http_info(project_id, dataset_id, params)
-            .await
-        {
+/// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
+///
+/// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
+///   - `progress`: incremental record counts written so far.
+///   - `completed`: terminal event with a JSON body containing `records_created`.
+///   - `error`: terminal event with a JSON body containing an error `message`.
+    pub async fn upload_llm_obs_dataset_records_file(&self, project_id: String, dataset_id: String, params: UploadLLMObsDatasetRecordsFileOptionalParams) -> Result<(), datadog::Error<UploadLLMObsDatasetRecordsFileError>> {
+        match self.upload_llm_obs_dataset_records_file_with_http_info(project_id, dataset_id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Upload records to a dataset from a file. The request is a `multipart/form-data` upload containing a single `file` part.
-    /// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
-    ///
-    /// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
-    ///   - `progress`: incremental record counts written so far.
-    ///   - `completed`: terminal event with a JSON body containing `records_created`.
-    ///   - `error`: terminal event with a JSON body containing an error `message`.
-    pub async fn upload_llm_obs_dataset_records_file_with_http_info(
-        &self,
-        project_id: String,
-        dataset_id: String,
-        params: UploadLLMObsDatasetRecordsFileOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UploadLLMObsDatasetRecordsFileError>>
-    {
+/// Currently only CSV is supported. The CSV must include an `input` column. Optional columns are `id`, `expected_output`, `metadata`, and `tags`.
+///
+/// The response is a Server-Sent Events stream (`text/event-stream`) emitting progress updates while records are processed. The stream emits the following named events:
+///   - `progress`: incremental record counts written so far.
+///   - `completed`: terminal event with a JSON body containing `records_created`.
+///   - `error`: terminal event with a JSON body containing an error `message`.
+    pub async fn upload_llm_obs_dataset_records_file_with_http_info(&self, project_id: String, dataset_id: String, params: UploadLLMObsDatasetRecordsFileOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<UploadLLMObsDatasetRecordsFileError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upload_llm_obs_dataset_records_file";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
             warn!("Using unstable operation {local_operation_id}");
         } else {
             let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.upload_llm_obs_dataset_records_file' is not enabled"
-                    .to_string(),
+                msg: "Operation 'v2.upload_llm_obs_dataset_records_file' is not enabled".to_string(),
             };
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let file = params.file;
         let deduplicate = params.deduplicate;
@@ -11676,38 +10023,34 @@ impl AgentObservabilityAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v2/{project_id}/datasets/{dataset_id}/records/upload",
-            local_configuration.get_operation_host(local_operation_id),
-            project_id = datadog::urlencode(project_id),
-            dataset_id = datadog::urlencode(dataset_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), project_id=
+            datadog::urlencode(project_id)
+            , dataset_id=
+            datadog::urlencode(dataset_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = deduplicate {
-            local_req_builder =
-                local_req_builder.query(&[("deduplicate", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("deduplicate", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = overwrite {
-            local_req_builder =
-                local_req_builder.query(&[("overwrite", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("overwrite", &local_query_param.to_string() )]);
         };
-        if let Some(ref local) = tags {
-            for param in local {
+        if let Some(ref local) = tags {for param in local {
                 local_req_builder = local_req_builder.query(&[("tags", &param.to_string())]);
             }
         };
         if let Some(ref local_query_param) = include_user_data {
-            local_req_builder =
-                local_req_builder.query(&[("include[user_data]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include[user_data]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
-        headers.insert(
-            "Content-Type",
-            HeaderValue::from_static("multipart/form-data"),
-        );
+        headers.insert("Content-Type", HeaderValue::from_static("multipart/form-data"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11720,23 +10063,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build form parameters
         if let Some(file) = file {
             let mut local_form = form_data_builder::FormData::new(Vec::new());
@@ -11757,7 +10093,7 @@ impl AgentObservabilityAPI {
             match form_result {
                 Ok(form) => local_req_builder = local_req_builder.body(form),
                 Err(e) => return Err(crate::datadog::Error::Io(e)),
-            };
+            };    
         };
 
         local_req_builder = local_req_builder.headers(headers);
@@ -11776,64 +10112,41 @@ impl AgentObservabilityAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UploadLLMObsDatasetRecordsFileError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UploadLLMObsDatasetRecordsFileError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update annotations on interactions in a queue. Each annotation is matched
-    /// by `interaction_id` and the requesting user's identity.
-    /// Use the optional `annotator` field to name an external person or automated system that produced the labels
-    /// without changing the authenticated creator, modifier, permissions, or per-user matching behavior.
-    /// Results and errors in the response are linked to request items by `interaction_id`.
-    /// Errors for individual items are returned in the `errors` field without blocking the rest of the batch.
-    /// Requests where every item is denied by queue access rules return `403`.
-    pub async fn upsert_llm_obs_annotations(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationsRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsAnnotationsResponse,
-        datadog::Error<UpsertLLMObsAnnotationsError>,
-    > {
-        match self
-            .upsert_llm_obs_annotations_with_http_info(queue_id, body)
-            .await
-        {
+/// by `interaction_id` and the requesting user's identity.
+/// Use the optional `annotator` field to name an external person or automated system that produced the labels
+/// without changing the authenticated creator, modifier, permissions, or per-user matching behavior.
+/// Results and errors in the response are linked to request items by `interaction_id`.
+/// Errors for individual items are returned in the `errors` field without blocking the rest of the batch.
+/// Requests where every item is denied by queue access rules return `403`.
+    pub async fn upsert_llm_obs_annotations(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationsRequest) -> Result<crate::datadogV2::model::LLMObsAnnotationsResponse, datadog::Error<UpsertLLMObsAnnotationsError>> {
+        match self.upsert_llm_obs_annotations_with_http_info(queue_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update annotations on interactions in a queue. Each annotation is matched
-    /// by `interaction_id` and the requesting user's identity.
-    /// Use the optional `annotator` field to name an external person or automated system that produced the labels
-    /// without changing the authenticated creator, modifier, permissions, or per-user matching behavior.
-    /// Results and errors in the response are linked to request items by `interaction_id`.
-    /// Errors for individual items are returned in the `errors` field without blocking the rest of the batch.
-    /// Requests where every item is denied by queue access rules return `403`.
-    pub async fn upsert_llm_obs_annotations_with_http_info(
-        &self,
-        queue_id: String,
-        body: crate::datadogV2::model::LLMObsAnnotationsRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationsResponse>,
-        datadog::Error<UpsertLLMObsAnnotationsError>,
-    > {
+/// by `interaction_id` and the requesting user's identity.
+/// Use the optional `annotator` field to name an external person or automated system that produced the labels
+/// without changing the authenticated creator, modifier, permissions, or per-user matching behavior.
+/// Results and errors in the response are linked to request items by `interaction_id`.
+/// Errors for individual items are returned in the `errors` field without blocking the rest of the batch.
+/// Requests where every item is denied by queue access rules return `403`.
+    pub async fn upsert_llm_obs_annotations_with_http_info(&self, queue_id: String, body: crate::datadogV2::model::LLMObsAnnotationsRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsAnnotationsResponse>, datadog::Error<UpsertLLMObsAnnotationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_llm_obs_annotations";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -11845,20 +10158,25 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/annotation-queues/{queue_id}/annotations",
-            local_configuration.get_operation_host(local_operation_id),
-            queue_id = datadog::urlencode(queue_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), queue_id=
+            datadog::urlencode(queue_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -11871,23 +10189,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -11895,7 +10206,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11905,7 +10219,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -11927,7 +10244,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -11944,63 +10261,38 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsAnnotationsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertLLMObsAnnotationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertLLMObsAnnotationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new patterns configuration, or update an existing one when a configuration ID is provided.
-    pub async fn upsert_llm_obs_patterns_config(
-        &self,
-        body: crate::datadogV2::model::LLMObsPatternsConfigUpsertRequest,
-    ) -> Result<
-        crate::datadogV2::model::LLMObsPatternsConfigResponse,
-        datadog::Error<UpsertLLMObsPatternsConfigError>,
-    > {
-        match self
-            .upsert_llm_obs_patterns_config_with_http_info(body)
-            .await
-        {
+    pub async fn upsert_llm_obs_patterns_config(&self, body: crate::datadogV2::model::LLMObsPatternsConfigUpsertRequest) -> Result<crate::datadogV2::model::LLMObsPatternsConfigResponse, datadog::Error<UpsertLLMObsPatternsConfigError>> {
+        match self.upsert_llm_obs_patterns_config_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new patterns configuration, or update an existing one when a configuration ID is provided.
-    pub async fn upsert_llm_obs_patterns_config_with_http_info(
-        &self,
-        body: crate::datadogV2::model::LLMObsPatternsConfigUpsertRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigResponse>,
-        datadog::Error<UpsertLLMObsPatternsConfigError>,
-    > {
+    pub async fn upsert_llm_obs_patterns_config_with_http_info(&self, body: crate::datadogV2::model::LLMObsPatternsConfigUpsertRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::LLMObsPatternsConfigResponse>, datadog::Error<UpsertLLMObsPatternsConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_llm_obs_patterns_config";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -12012,19 +10304,23 @@ impl AgentObservabilityAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/llm-obs/v1/topic-discovery-configs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -12037,23 +10333,16 @@ impl AgentObservabilityAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -12061,7 +10350,10 @@ impl AgentObservabilityAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12071,7 +10363,10 @@ impl AgentObservabilityAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -12093,7 +10388,7 @@ impl AgentObservabilityAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -12110,26 +10405,17 @@ impl AgentObservabilityAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::LLMObsPatternsConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertLLMObsPatternsConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertLLMObsPatternsConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes accepted when creating an Archive Search.
 #[non_exhaustive]
@@ -27,7 +27,7 @@ pub struct ArchiveSearchCreateRequestAttributes {
     #[serde(rename = "query")]
     pub query: String,
     /// Rehydration settings. Include this object to index the matched logs into a retained historical view.
-    /// Omit it to run an Archive Search that only scans the archive.
+/// Omit it to run an Archive Search that only scans the archive.
     #[serde(rename = "rehydration")]
     pub rehydration: Option<crate::datadogV2::model::ArchiveSearchCreateRehydration>,
     /// End of the time range to search, as an ISO 8601 timestamp. Must be after `from`.
@@ -37,17 +37,11 @@ pub struct ArchiveSearchCreateRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ArchiveSearchCreateRequestAttributes {
-    pub fn new(
-        archive_id: String,
-        from: chrono::DateTime<chrono::Utc>,
-        name: String,
-        query: String,
-        to: chrono::DateTime<chrono::Utc>,
-    ) -> ArchiveSearchCreateRequestAttributes {
+    pub fn new(archive_id: String, from: chrono::DateTime<chrono::Utc>, name: String, query: String, to: chrono::DateTime<chrono::Utc>) -> ArchiveSearchCreateRequestAttributes {
         ArchiveSearchCreateRequestAttributes {
             archive_id,
             description: None,
@@ -60,28 +54,24 @@ impl ArchiveSearchCreateRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn rehydration(
-        mut self,
-        value: crate::datadogV2::model::ArchiveSearchCreateRehydration,
-    ) -> Self {
+    
+    pub fn rehydration(mut self, value: crate::datadogV2::model::ArchiveSearchCreateRehydration) -> Self {
         self.rehydration = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArchiveSearchCreateRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -105,52 +95,45 @@ impl<'de> Deserialize<'de> for ArchiveSearchCreateRequestAttributes {
                 let mut from: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
-                let mut rehydration: Option<
-                    crate::datadogV2::model::ArchiveSearchCreateRehydration,
-                > = None;
+                let mut rehydration: Option<crate::datadogV2::model::ArchiveSearchCreateRehydration> = None;
                 let mut to: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "archive_id" => {
                             archive_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rehydration" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rehydration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rehydration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "to" => {
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let archive_id = archive_id.ok_or_else(|| M::Error::missing_field("archive_id"))?;

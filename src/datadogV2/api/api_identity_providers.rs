@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListIdentityProviderUsersOptionalParams is a struct for passing parameters to the method [`IdentityProvidersAPI::list_identity_provider_users`]
 #[non_exhaustive]
@@ -27,8 +24,8 @@ pub struct ListIdentityProviderUsersOptionalParams {
     /// Filter users by the given string. Defaults to no filtering.
     pub filter: Option<String>,
     /// Filter on status attribute.
-    /// Comma-separated list, with possible values `Active`, `Pending`, and `Disabled`.
-    /// Defaults to no filtering.
+/// Comma-separated list, with possible values `Active`, `Pending`, and `Disabled`.
+/// Defaults to no filtering.
     pub filter_status: Option<String>,
 }
 
@@ -59,13 +56,16 @@ impl ListIdentityProviderUsersOptionalParams {
         self
     }
     /// Filter on status attribute.
-    /// Comma-separated list, with possible values `Active`, `Pending`, and `Disabled`.
-    /// Defaults to no filtering.
+/// Comma-separated list, with possible values `Active`, `Pending`, and `Disabled`.
+/// Defaults to no filtering.
     pub fn filter_status(mut self, value: String) -> Self {
         self.filter_status = Some(value);
         self
     }
 }
+
+
+
 
 /// ListIdentityProviderUsersError is a struct for typed errors of method [`IdentityProvidersAPI::list_identity_provider_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -76,6 +76,7 @@ pub enum ListIdentityProviderUsersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListIdentityProvidersError is a struct for typed errors of method [`IdentityProvidersAPI::list_identity_providers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -85,6 +86,7 @@ pub enum ListIdentityProvidersError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateIdentityProviderError is a struct for typed errors of method [`IdentityProvidersAPI::update_identity_provider`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -93,6 +95,7 @@ pub enum UpdateIdentityProviderError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage identity providers and user authentication method overrides.
 #[derive(Debug, Clone)]
@@ -116,7 +119,8 @@ impl IdentityProvidersAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -161,50 +165,31 @@ impl IdentityProvidersAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get all users in the organization whose login method has been overridden
-    /// to use the specified identity provider.
-    pub async fn list_identity_provider_users(
-        &self,
-        idp_id: String,
-        params: ListIdentityProviderUsersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UsersResponse,
-        datadog::Error<ListIdentityProviderUsersError>,
-    > {
-        match self
-            .list_identity_provider_users_with_http_info(idp_id, params)
-            .await
-        {
+/// to use the specified identity provider.
+    pub async fn list_identity_provider_users(&self, idp_id: String, params: ListIdentityProviderUsersOptionalParams) -> Result<crate::datadogV2::model::UsersResponse, datadog::Error<ListIdentityProviderUsersError>> {
+        match self.list_identity_provider_users_with_http_info(idp_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_identity_provider_users_with_pagination(
-        &self,
-        idp_id: String,
-        mut params: ListIdentityProviderUsersOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::User,
-            datadog::Error<ListIdentityProviderUsersError>,
-        >,
-    > + '_ {
+        &self,  idp_id: String, mut params: ListIdentityProviderUsersOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::User, datadog::Error<ListIdentityProviderUsersError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -232,19 +217,14 @@ impl IdentityProvidersAPI {
         }
     }
 
+    
     /// Get all users in the organization whose login method has been overridden
-    /// to use the specified identity provider.
-    pub async fn list_identity_provider_users_with_http_info(
-        &self,
-        idp_id: String,
-        params: ListIdentityProviderUsersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UsersResponse>,
-        datadog::Error<ListIdentityProviderUsersError>,
-    > {
+/// to use the specified identity provider.
+    pub async fn list_identity_provider_users_with_http_info(&self, idp_id: String, params: ListIdentityProviderUsersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UsersResponse>, datadog::Error<ListIdentityProviderUsersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_identity_provider_users";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -257,40 +237,36 @@ impl IdentityProvidersAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers/{idp_id}/users",
-            local_configuration.get_operation_host(local_operation_id),
-            idp_id = datadog::urlencode(idp_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), idp_id=
+            datadog::urlencode(idp_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort_dir {
-            local_req_builder =
-                local_req_builder.query(&[("sort_dir", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort_dir", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_status {
-            local_req_builder =
-                local_req_builder.query(&[("filter[status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[status]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -303,22 +279,16 @@ impl IdentityProvidersAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -331,70 +301,56 @@ impl IdentityProvidersAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::UsersResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIdentityProviderUsersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIdentityProviderUsersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get all identity providers available for the current organization.
-    pub async fn list_identity_providers(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::IdentityProvidersResponse,
-        datadog::Error<ListIdentityProvidersError>,
-    > {
+    pub async fn list_identity_providers(&self) -> Result<crate::datadogV2::model::IdentityProvidersResponse, datadog::Error<ListIdentityProvidersError>> {
         match self.list_identity_providers_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get all identity providers available for the current organization.
-    pub async fn list_identity_providers_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IdentityProvidersResponse>,
-        datadog::Error<ListIdentityProvidersError>,
-    > {
+    pub async fn list_identity_providers_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::IdentityProvidersResponse>, datadog::Error<ListIdentityProvidersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_identity_providers";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -407,22 +363,16 @@ impl IdentityProvidersAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -434,82 +384,60 @@ impl IdentityProvidersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IdentityProvidersResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IdentityProvidersResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListIdentityProvidersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListIdentityProvidersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable or disable an identity provider for the current organization.
-    pub async fn update_identity_provider(
-        &self,
-        idp_id: String,
-        body: crate::datadogV2::model::IdentityProviderUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::IdentityProviderResponse,
-        datadog::Error<UpdateIdentityProviderError>,
-    > {
-        match self
-            .update_identity_provider_with_http_info(idp_id, body)
-            .await
-        {
+    pub async fn update_identity_provider(&self, idp_id: String, body: crate::datadogV2::model::IdentityProviderUpdateRequest) -> Result<crate::datadogV2::model::IdentityProviderResponse, datadog::Error<UpdateIdentityProviderError>> {
+        match self.update_identity_provider_with_http_info(idp_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable or disable an identity provider for the current organization.
-    pub async fn update_identity_provider_with_http_info(
-        &self,
-        idp_id: String,
-        body: crate::datadogV2::model::IdentityProviderUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::IdentityProviderResponse>,
-        datadog::Error<UpdateIdentityProviderError>,
-    > {
+    pub async fn update_identity_provider_with_http_info(&self, idp_id: String, body: crate::datadogV2::model::IdentityProviderUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::IdentityProviderResponse>, datadog::Error<UpdateIdentityProviderError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_identity_provider";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/identity_providers/{idp_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            idp_id = datadog::urlencode(idp_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), idp_id=
+            datadog::urlencode(idp_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -522,23 +450,16 @@ impl IdentityProvidersAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -546,7 +467,10 @@ impl IdentityProvidersAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -556,7 +480,10 @@ impl IdentityProvidersAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -578,7 +505,7 @@ impl IdentityProvidersAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -595,26 +522,17 @@ impl IdentityProvidersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::IdentityProviderResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::IdentityProviderResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateIdentityProviderError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateIdentityProviderError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

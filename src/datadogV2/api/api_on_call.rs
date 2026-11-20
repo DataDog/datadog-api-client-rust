@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// CreateOnCallEscalationPolicyOptionalParams is a struct for passing parameters to the method [`OnCallAPI::create_on_call_escalation_policy`]
 #[non_exhaustive]
@@ -449,6 +446,9 @@ impl UpdateUserNotificationRuleOptionalParams {
     }
 }
 
+
+
+
 /// CreateOnCallEscalationPolicyError is a struct for typed errors of method [`OnCallAPI::create_on_call_escalation_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -456,6 +456,7 @@ pub enum CreateOnCallEscalationPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateOnCallPageCommentError is a struct for typed errors of method [`OnCallAPI::create_on_call_page_comment`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -466,6 +467,7 @@ pub enum CreateOnCallPageCommentError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOnCallScheduleError is a struct for typed errors of method [`OnCallAPI::create_on_call_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -473,6 +475,7 @@ pub enum CreateOnCallScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateScheduleOverridesError is a struct for typed errors of method [`OnCallAPI::create_schedule_overrides`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -482,6 +485,7 @@ pub enum CreateScheduleOverridesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateUserNotificationChannelError is a struct for typed errors of method [`OnCallAPI::create_user_notification_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -489,6 +493,7 @@ pub enum CreateUserNotificationChannelError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateUserNotificationRuleError is a struct for typed errors of method [`OnCallAPI::create_user_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -498,6 +503,7 @@ pub enum CreateUserNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOnCallEscalationPolicyError is a struct for typed errors of method [`OnCallAPI::delete_on_call_escalation_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -505,6 +511,7 @@ pub enum DeleteOnCallEscalationPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOnCallScheduleError is a struct for typed errors of method [`OnCallAPI::delete_on_call_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -514,6 +521,7 @@ pub enum DeleteOnCallScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteScheduleOverrideError is a struct for typed errors of method [`OnCallAPI::delete_schedule_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -521,6 +529,7 @@ pub enum DeleteScheduleOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteUserNotificationChannelError is a struct for typed errors of method [`OnCallAPI::delete_user_notification_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -530,6 +539,7 @@ pub enum DeleteUserNotificationChannelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteUserNotificationRuleError is a struct for typed errors of method [`OnCallAPI::delete_user_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -538,6 +548,7 @@ pub enum DeleteUserNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOnCallEscalationPolicyError is a struct for typed errors of method [`OnCallAPI::get_on_call_escalation_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -545,6 +556,7 @@ pub enum GetOnCallEscalationPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOnCallPageError is a struct for typed errors of method [`OnCallAPI::get_on_call_page`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -555,6 +567,7 @@ pub enum GetOnCallPageError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOnCallScheduleError is a struct for typed errors of method [`OnCallAPI::get_on_call_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -562,6 +575,7 @@ pub enum GetOnCallScheduleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOnCallTeamRoutingRulesError is a struct for typed errors of method [`OnCallAPI::get_on_call_team_routing_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -571,6 +585,7 @@ pub enum GetOnCallTeamRoutingRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetScheduleOnCallRespondersError is a struct for typed errors of method [`OnCallAPI::get_schedule_on_call_responders`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -578,6 +593,7 @@ pub enum GetScheduleOnCallRespondersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetScheduleOnCallUserError is a struct for typed errors of method [`OnCallAPI::get_schedule_on_call_user`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -587,6 +603,7 @@ pub enum GetScheduleOnCallUserError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetTeamOnCallUsersError is a struct for typed errors of method [`OnCallAPI::get_team_on_call_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -594,6 +611,7 @@ pub enum GetTeamOnCallUsersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetUserNotificationChannelError is a struct for typed errors of method [`OnCallAPI::get_user_notification_channel`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -603,6 +621,7 @@ pub enum GetUserNotificationChannelError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetUserNotificationRuleError is a struct for typed errors of method [`OnCallAPI::get_user_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -611,6 +630,7 @@ pub enum GetUserNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOnCallEscalationPoliciesError is a struct for typed errors of method [`OnCallAPI::list_on_call_escalation_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -618,6 +638,7 @@ pub enum ListOnCallEscalationPoliciesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOnCallPagesError is a struct for typed errors of method [`OnCallAPI::list_on_call_pages`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -628,6 +649,7 @@ pub enum ListOnCallPagesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOnCallSchedulesError is a struct for typed errors of method [`OnCallAPI::list_on_call_schedules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -635,6 +657,7 @@ pub enum ListOnCallSchedulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListScheduleOverridesError is a struct for typed errors of method [`OnCallAPI::list_schedule_overrides`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -644,6 +667,7 @@ pub enum ListScheduleOverridesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListUserNotificationChannelsError is a struct for typed errors of method [`OnCallAPI::list_user_notification_channels`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -651,6 +675,7 @@ pub enum ListUserNotificationChannelsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListUserNotificationRulesError is a struct for typed errors of method [`OnCallAPI::list_user_notification_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -660,6 +685,7 @@ pub enum ListUserNotificationRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SetOnCallTeamRoutingRulesError is a struct for typed errors of method [`OnCallAPI::set_on_call_team_routing_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -667,6 +693,7 @@ pub enum SetOnCallTeamRoutingRulesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateOnCallEscalationPolicyError is a struct for typed errors of method [`OnCallAPI::update_on_call_escalation_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -676,6 +703,7 @@ pub enum UpdateOnCallEscalationPolicyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOnCallScheduleError is a struct for typed errors of method [`OnCallAPI::update_on_call_schedule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -684,6 +712,7 @@ pub enum UpdateOnCallScheduleError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateUserNotificationRuleError is a struct for typed errors of method [`OnCallAPI::update_user_notification_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -691,6 +720,7 @@ pub enum UpdateUserNotificationRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure your [Datadog On-Call](<https://docs.datadoghq.com/service_management/on-call/>)
 /// directly through the Datadog API.
@@ -715,7 +745,8 @@ impl OnCallAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -760,51 +791,33 @@ impl OnCallAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new On-Call escalation policy
-    pub async fn create_on_call_escalation_policy(
-        &self,
-        body: crate::datadogV2::model::EscalationPolicyCreateRequest,
-        params: CreateOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::EscalationPolicy,
-        datadog::Error<CreateOnCallEscalationPolicyError>,
-    > {
-        match self
-            .create_on_call_escalation_policy_with_http_info(body, params)
-            .await
-        {
+    pub async fn create_on_call_escalation_policy(&self, body: crate::datadogV2::model::EscalationPolicyCreateRequest, params: CreateOnCallEscalationPolicyOptionalParams) -> Result<crate::datadogV2::model::EscalationPolicy, datadog::Error<CreateOnCallEscalationPolicyError>> {
+        match self.create_on_call_escalation_policy_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new On-Call escalation policy
-    pub async fn create_on_call_escalation_policy_with_http_info(
-        &self,
-        body: crate::datadogV2::model::EscalationPolicyCreateRequest,
-        params: CreateOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>,
-        datadog::Error<CreateOnCallEscalationPolicyError>,
-    > {
+    pub async fn create_on_call_escalation_policy_with_http_info(&self, body: crate::datadogV2::model::EscalationPolicyCreateRequest, params: CreateOnCallEscalationPolicyOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>, datadog::Error<CreateOnCallEscalationPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_on_call_escalation_policy";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -812,20 +825,20 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -838,23 +851,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -862,7 +868,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -872,7 +881,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -894,7 +906,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -911,67 +923,54 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOnCallEscalationPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOnCallEscalationPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a comment to the timeline of an On-Call Page.
-    pub async fn create_on_call_page_comment(
-        &self,
-        page_id: String,
-        body: crate::datadogV2::model::CreateOnCallPageCommentRequest,
-    ) -> Result<(), datadog::Error<CreateOnCallPageCommentError>> {
-        match self
-            .create_on_call_page_comment_with_http_info(page_id, body)
-            .await
-        {
+    pub async fn create_on_call_page_comment(&self, page_id: String, body: crate::datadogV2::model::CreateOnCallPageCommentRequest) -> Result<(), datadog::Error<CreateOnCallPageCommentError>> {
+        match self.create_on_call_page_comment_with_http_info(page_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a comment to the timeline of an On-Call Page.
-    pub async fn create_on_call_page_comment_with_http_info(
-        &self,
-        page_id: String,
-        body: crate::datadogV2::model::CreateOnCallPageCommentRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateOnCallPageCommentError>> {
+    pub async fn create_on_call_page_comment_with_http_info(&self, page_id: String, body: crate::datadogV2::model::CreateOnCallPageCommentRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateOnCallPageCommentError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_on_call_page_comment";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages/{page_id}/comments",
-            local_configuration.get_operation_host(local_operation_id),
-            page_id = datadog::urlencode(page_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), page_id=
+            datadog::urlencode(page_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -984,23 +983,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1008,7 +1000,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1018,7 +1013,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1040,7 +1038,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1063,52 +1061,33 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateOnCallPageCommentError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOnCallPageCommentError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new On-Call schedule
-    pub async fn create_on_call_schedule(
-        &self,
-        body: crate::datadogV2::model::ScheduleCreateRequest,
-        params: CreateOnCallScheduleOptionalParams,
-    ) -> Result<crate::datadogV2::model::Schedule, datadog::Error<CreateOnCallScheduleError>> {
-        match self
-            .create_on_call_schedule_with_http_info(body, params)
-            .await
-        {
+    pub async fn create_on_call_schedule(&self, body: crate::datadogV2::model::ScheduleCreateRequest, params: CreateOnCallScheduleOptionalParams) -> Result<crate::datadogV2::model::Schedule, datadog::Error<CreateOnCallScheduleError>> {
+        match self.create_on_call_schedule_with_http_info(body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new On-Call schedule
-    pub async fn create_on_call_schedule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::ScheduleCreateRequest,
-        params: CreateOnCallScheduleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Schedule>,
-        datadog::Error<CreateOnCallScheduleError>,
-    > {
+    pub async fn create_on_call_schedule_with_http_info(&self, body: crate::datadogV2::model::ScheduleCreateRequest, params: CreateOnCallScheduleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Schedule>, datadog::Error<CreateOnCallScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_on_call_schedule";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1116,20 +1095,20 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1142,23 +1121,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1166,7 +1138,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1176,7 +1151,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1198,7 +1176,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1216,67 +1194,41 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Schedule>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOnCallScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOnCallScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create one or more overrides for the specified On-Call schedule.
-    pub async fn create_schedule_overrides(
-        &self,
-        schedule_id: String,
-        body: crate::datadogV2::model::CreateOverridesRequest,
-        params: CreateScheduleOverridesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OverrideCreateResponse,
-        datadog::Error<CreateScheduleOverridesError>,
-    > {
-        match self
-            .create_schedule_overrides_with_http_info(schedule_id, body, params)
-            .await
-        {
+    pub async fn create_schedule_overrides(&self, schedule_id: String, body: crate::datadogV2::model::CreateOverridesRequest, params: CreateScheduleOverridesOptionalParams) -> Result<crate::datadogV2::model::OverrideCreateResponse, datadog::Error<CreateScheduleOverridesError>> {
+        match self.create_schedule_overrides_with_http_info(schedule_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create one or more overrides for the specified On-Call schedule.
-    pub async fn create_schedule_overrides_with_http_info(
-        &self,
-        schedule_id: String,
-        body: crate::datadogV2::model::CreateOverridesRequest,
-        params: CreateScheduleOverridesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OverrideCreateResponse>,
-        datadog::Error<CreateScheduleOverridesError>,
-    > {
+    pub async fn create_schedule_overrides_with_http_info(&self, schedule_id: String, body: crate::datadogV2::model::CreateOverridesRequest, params: CreateScheduleOverridesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OverrideCreateResponse>, datadog::Error<CreateScheduleOverridesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_schedule_overrides";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -1284,21 +1236,22 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/overrides",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1311,23 +1264,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1335,7 +1281,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1345,7 +1294,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1367,7 +1319,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1384,82 +1336,60 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OverrideCreateResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OverrideCreateResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateScheduleOverridesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateScheduleOverridesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn create_user_notification_channel(
-        &self,
-        user_id: String,
-        body: crate::datadogV2::model::CreateUserNotificationChannelRequest,
-    ) -> Result<
-        crate::datadogV2::model::NotificationChannel,
-        datadog::Error<CreateUserNotificationChannelError>,
-    > {
-        match self
-            .create_user_notification_channel_with_http_info(user_id, body)
-            .await
-        {
+    pub async fn create_user_notification_channel(&self, user_id: String, body: crate::datadogV2::model::CreateUserNotificationChannelRequest) -> Result<crate::datadogV2::model::NotificationChannel, datadog::Error<CreateUserNotificationChannelError>> {
+        match self.create_user_notification_channel_with_http_info(user_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn create_user_notification_channel_with_http_info(
-        &self,
-        user_id: String,
-        body: crate::datadogV2::model::CreateUserNotificationChannelRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::NotificationChannel>,
-        datadog::Error<CreateUserNotificationChannelError>,
-    > {
+    pub async fn create_user_notification_channel_with_http_info(&self, user_id: String, body: crate::datadogV2::model::CreateUserNotificationChannelRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::NotificationChannel>, datadog::Error<CreateUserNotificationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_user_notification_channel";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1472,23 +1402,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1496,7 +1419,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1506,7 +1432,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1528,7 +1457,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1545,82 +1474,60 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::NotificationChannel>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::NotificationChannel>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateUserNotificationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateUserNotificationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn create_user_notification_rule(
-        &self,
-        user_id: String,
-        body: crate::datadogV2::model::CreateOnCallNotificationRuleRequest,
-    ) -> Result<
-        crate::datadogV2::model::OnCallNotificationRule,
-        datadog::Error<CreateUserNotificationRuleError>,
-    > {
-        match self
-            .create_user_notification_rule_with_http_info(user_id, body)
-            .await
-        {
+    pub async fn create_user_notification_rule(&self, user_id: String, body: crate::datadogV2::model::CreateOnCallNotificationRuleRequest) -> Result<crate::datadogV2::model::OnCallNotificationRule, datadog::Error<CreateUserNotificationRuleError>> {
+        match self.create_user_notification_rule_with_http_info(user_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn create_user_notification_rule_with_http_info(
-        &self,
-        user_id: String,
-        body: crate::datadogV2::model::CreateOnCallNotificationRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>,
-        datadog::Error<CreateUserNotificationRuleError>,
-    > {
+    pub async fn create_user_notification_rule_with_http_info(&self, user_id: String, body: crate::datadogV2::model::CreateOnCallNotificationRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>, datadog::Error<CreateUserNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_user_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1633,23 +1540,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1657,7 +1557,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1667,7 +1570,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1689,7 +1595,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1706,66 +1612,53 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateUserNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateUserNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an On-Call escalation policy
-    pub async fn delete_on_call_escalation_policy(
-        &self,
-        policy_id: String,
-    ) -> Result<(), datadog::Error<DeleteOnCallEscalationPolicyError>> {
-        match self
-            .delete_on_call_escalation_policy_with_http_info(policy_id)
-            .await
-        {
+    pub async fn delete_on_call_escalation_policy(&self, policy_id: String) -> Result<(), datadog::Error<DeleteOnCallEscalationPolicyError>> {
+        match self.delete_on_call_escalation_policy_with_http_info(policy_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an On-Call escalation policy
-    pub async fn delete_on_call_escalation_policy_with_http_info(
-        &self,
-        policy_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallEscalationPolicyError>>
-    {
+    pub async fn delete_on_call_escalation_policy_with_http_info(&self, policy_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallEscalationPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_on_call_escalation_policy";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), policy_id=
+            datadog::urlencode(policy_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1778,22 +1671,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1811,52 +1698,44 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOnCallEscalationPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOnCallEscalationPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an On-Call schedule
-    pub async fn delete_on_call_schedule(
-        &self,
-        schedule_id: String,
-    ) -> Result<(), datadog::Error<DeleteOnCallScheduleError>> {
-        match self
-            .delete_on_call_schedule_with_http_info(schedule_id)
-            .await
-        {
+    pub async fn delete_on_call_schedule(&self, schedule_id: String) -> Result<(), datadog::Error<DeleteOnCallScheduleError>> {
+        match self.delete_on_call_schedule_with_http_info(schedule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an On-Call schedule
-    pub async fn delete_on_call_schedule_with_http_info(
-        &self,
-        schedule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallScheduleError>> {
+    pub async fn delete_on_call_schedule_with_http_info(&self, schedule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOnCallScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_on_call_schedule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1869,22 +1748,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1902,55 +1775,46 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOnCallScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOnCallScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an override from the specified On-Call schedule.
-    pub async fn delete_schedule_override(
-        &self,
-        schedule_id: String,
-        override_id: String,
-    ) -> Result<(), datadog::Error<DeleteScheduleOverrideError>> {
-        match self
-            .delete_schedule_override_with_http_info(schedule_id, override_id)
-            .await
-        {
+    pub async fn delete_schedule_override(&self, schedule_id: String, override_id: String) -> Result<(), datadog::Error<DeleteScheduleOverrideError>> {
+        match self.delete_schedule_override_with_http_info(schedule_id, override_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an override from the specified On-Call schedule.
-    pub async fn delete_schedule_override_with_http_info(
-        &self,
-        schedule_id: String,
-        override_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScheduleOverrideError>> {
+    pub async fn delete_schedule_override_with_http_info(&self, schedule_id: String, override_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScheduleOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_schedule_override";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/overrides/{override_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id),
-            override_id = datadog::urlencode(override_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            , override_id=
+            datadog::urlencode(override_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1963,22 +1827,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1996,56 +1854,46 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteScheduleOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteScheduleOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn delete_user_notification_channel(
-        &self,
-        user_id: String,
-        channel_id: String,
-    ) -> Result<(), datadog::Error<DeleteUserNotificationChannelError>> {
-        match self
-            .delete_user_notification_channel_with_http_info(user_id, channel_id)
-            .await
-        {
+    pub async fn delete_user_notification_channel(&self, user_id: String, channel_id: String) -> Result<(), datadog::Error<DeleteUserNotificationChannelError>> {
+        match self.delete_user_notification_channel_with_http_info(user_id, channel_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn delete_user_notification_channel_with_http_info(
-        &self,
-        user_id: String,
-        channel_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationChannelError>>
-    {
+    pub async fn delete_user_notification_channel_with_http_info(&self, user_id: String, channel_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_user_notification_channel";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels/{channel_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id),
-            channel_id = datadog::urlencode(channel_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            , channel_id=
+            datadog::urlencode(channel_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2058,22 +1906,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2091,55 +1933,46 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteUserNotificationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteUserNotificationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn delete_user_notification_rule(
-        &self,
-        user_id: String,
-        rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteUserNotificationRuleError>> {
-        match self
-            .delete_user_notification_rule_with_http_info(user_id, rule_id)
-            .await
-        {
+    pub async fn delete_user_notification_rule(&self, user_id: String, rule_id: String) -> Result<(), datadog::Error<DeleteUserNotificationRuleError>> {
+        match self.delete_user_notification_rule_with_http_info(user_id, rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn delete_user_notification_rule_with_http_info(
-        &self,
-        user_id: String,
-        rule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationRuleError>> {
+    pub async fn delete_user_notification_rule_with_http_info(&self, user_id: String, rule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteUserNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_user_notification_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2152,22 +1985,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2185,55 +2012,33 @@ impl OnCallAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteUserNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteUserNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an On-Call escalation policy
-    pub async fn get_on_call_escalation_policy(
-        &self,
-        policy_id: String,
-        params: GetOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::EscalationPolicy,
-        datadog::Error<GetOnCallEscalationPolicyError>,
-    > {
-        match self
-            .get_on_call_escalation_policy_with_http_info(policy_id, params)
-            .await
-        {
+    pub async fn get_on_call_escalation_policy(&self, policy_id: String, params: GetOnCallEscalationPolicyOptionalParams) -> Result<crate::datadogV2::model::EscalationPolicy, datadog::Error<GetOnCallEscalationPolicyError>> {
+        match self.get_on_call_escalation_policy_with_http_info(policy_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an On-Call escalation policy
-    pub async fn get_on_call_escalation_policy_with_http_info(
-        &self,
-        policy_id: String,
-        params: GetOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>,
-        datadog::Error<GetOnCallEscalationPolicyError>,
-    > {
+    pub async fn get_on_call_escalation_policy_with_http_info(&self, policy_id: String, params: GetOnCallEscalationPolicyOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>, datadog::Error<GetOnCallEscalationPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_on_call_escalation_policy";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -2241,20 +2046,21 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), policy_id=
+            datadog::urlencode(policy_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2267,22 +2073,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2294,73 +2094,59 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOnCallEscalationPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOnCallEscalationPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the details of an On-Call Page.
-    pub async fn get_on_call_page(
-        &self,
-        page_id: String,
-    ) -> Result<crate::datadogV2::model::OnCallPageResponse, datadog::Error<GetOnCallPageError>>
-    {
+    pub async fn get_on_call_page(&self, page_id: String) -> Result<crate::datadogV2::model::OnCallPageResponse, datadog::Error<GetOnCallPageError>> {
         match self.get_on_call_page_with_http_info(page_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the details of an On-Call Page.
-    pub async fn get_on_call_page_with_http_info(
-        &self,
-        page_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OnCallPageResponse>,
-        datadog::Error<GetOnCallPageError>,
-    > {
+    pub async fn get_on_call_page_with_http_info(&self, page_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::OnCallPageResponse>, datadog::Error<GetOnCallPageError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_on_call_page";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages/{page_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            page_id = datadog::urlencode(page_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), page_id=
+            datadog::urlencode(page_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2373,22 +2159,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2400,65 +2180,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OnCallPageResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OnCallPageResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOnCallPageError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOnCallPageError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get an On-Call schedule
-    pub async fn get_on_call_schedule(
-        &self,
-        schedule_id: String,
-        params: GetOnCallScheduleOptionalParams,
-    ) -> Result<crate::datadogV2::model::Schedule, datadog::Error<GetOnCallScheduleError>> {
-        match self
-            .get_on_call_schedule_with_http_info(schedule_id, params)
-            .await
-        {
+    pub async fn get_on_call_schedule(&self, schedule_id: String, params: GetOnCallScheduleOptionalParams) -> Result<crate::datadogV2::model::Schedule, datadog::Error<GetOnCallScheduleError>> {
+        match self.get_on_call_schedule_with_http_info(schedule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get an On-Call schedule
-    pub async fn get_on_call_schedule_with_http_info(
-        &self,
-        schedule_id: String,
-        params: GetOnCallScheduleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Schedule>,
-        datadog::Error<GetOnCallScheduleError>,
-    > {
+    pub async fn get_on_call_schedule_with_http_info(&self, schedule_id: String, params: GetOnCallScheduleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Schedule>, datadog::Error<GetOnCallScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_on_call_schedule";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -2466,20 +2223,21 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2492,22 +2250,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2520,65 +2272,41 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Schedule>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOnCallScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOnCallScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a team's On-Call routing rules
-    pub async fn get_on_call_team_routing_rules(
-        &self,
-        team_id: String,
-        params: GetOnCallTeamRoutingRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamRoutingRules,
-        datadog::Error<GetOnCallTeamRoutingRulesError>,
-    > {
-        match self
-            .get_on_call_team_routing_rules_with_http_info(team_id, params)
-            .await
-        {
+    pub async fn get_on_call_team_routing_rules(&self, team_id: String, params: GetOnCallTeamRoutingRulesOptionalParams) -> Result<crate::datadogV2::model::TeamRoutingRules, datadog::Error<GetOnCallTeamRoutingRulesError>> {
+        match self.get_on_call_team_routing_rules_with_http_info(team_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a team's On-Call routing rules
-    pub async fn get_on_call_team_routing_rules_with_http_info(
-        &self,
-        team_id: String,
-        params: GetOnCallTeamRoutingRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>,
-        datadog::Error<GetOnCallTeamRoutingRulesError>,
-    > {
+    pub async fn get_on_call_team_routing_rules_with_http_info(&self, team_id: String, params: GetOnCallTeamRoutingRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>, datadog::Error<GetOnCallTeamRoutingRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_on_call_team_routing_rules";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -2586,20 +2314,21 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/routing-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2612,22 +2341,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2639,67 +2362,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOnCallTeamRoutingRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOnCallTeamRoutingRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves the on-call responders for the specified schedule, grouped by position (previous, current, next), at a given time. Supports schedules with multiple concurrent on-call responders at a position, by returning a list of shifts per position.
-    pub async fn get_schedule_on_call_responders(
-        &self,
-        schedule_id: String,
-        params: GetScheduleOnCallRespondersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ScheduleOnCallResponders,
-        datadog::Error<GetScheduleOnCallRespondersError>,
-    > {
-        match self
-            .get_schedule_on_call_responders_with_http_info(schedule_id, params)
-            .await
-        {
+    pub async fn get_schedule_on_call_responders(&self, schedule_id: String, params: GetScheduleOnCallRespondersOptionalParams) -> Result<crate::datadogV2::model::ScheduleOnCallResponders, datadog::Error<GetScheduleOnCallRespondersError>> {
+        match self.get_schedule_on_call_responders_with_http_info(schedule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves the on-call responders for the specified schedule, grouped by position (previous, current, next), at a given time. Supports schedules with multiple concurrent on-call responders at a position, by returning a list of shifts per position.
-    pub async fn get_schedule_on_call_responders_with_http_info(
-        &self,
-        schedule_id: String,
-        params: GetScheduleOnCallRespondersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ScheduleOnCallResponders>,
-        datadog::Error<GetScheduleOnCallRespondersError>,
-    > {
+    pub async fn get_schedule_on_call_responders_with_http_info(&self, schedule_id: String, params: GetScheduleOnCallRespondersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ScheduleOnCallResponders>, datadog::Error<GetScheduleOnCallRespondersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_schedule_on_call_responders";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let filter_position = params.filter_position;
@@ -2709,28 +2407,27 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/responders",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_position {
-            local_req_builder =
-                local_req_builder.query(&[("filter[position]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[position]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_at_ts {
-            local_req_builder =
-                local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2743,22 +2440,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2770,65 +2461,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ScheduleOnCallResponders>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ScheduleOnCallResponders>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetScheduleOnCallRespondersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetScheduleOnCallRespondersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieves the user who is on-call for the specified schedule at a given time. This endpoint does not support schedules with multiple concurrent on-call responders at a position. Deprecated. Use `Get on-call responders for a schedule` instead.
-    pub async fn get_schedule_on_call_user(
-        &self,
-        schedule_id: String,
-        params: GetScheduleOnCallUserOptionalParams,
-    ) -> Result<crate::datadogV2::model::Shift, datadog::Error<GetScheduleOnCallUserError>> {
-        match self
-            .get_schedule_on_call_user_with_http_info(schedule_id, params)
-            .await
-        {
+    pub async fn get_schedule_on_call_user(&self, schedule_id: String, params: GetScheduleOnCallUserOptionalParams) -> Result<crate::datadogV2::model::Shift, datadog::Error<GetScheduleOnCallUserError>> {
+        match self.get_schedule_on_call_user_with_http_info(schedule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieves the user who is on-call for the specified schedule at a given time. This endpoint does not support schedules with multiple concurrent on-call responders at a position. Deprecated. Use `Get on-call responders for a schedule` instead.
-    pub async fn get_schedule_on_call_user_with_http_info(
-        &self,
-        schedule_id: String,
-        params: GetScheduleOnCallUserOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Shift>,
-        datadog::Error<GetScheduleOnCallUserError>,
-    > {
+    pub async fn get_schedule_on_call_user_with_http_info(&self, schedule_id: String, params: GetScheduleOnCallUserOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Shift>, datadog::Error<GetScheduleOnCallUserError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_schedule_on_call_user";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let filter_at_ts = params.filter_at_ts;
@@ -2837,24 +2505,24 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/on-call",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_at_ts {
-            local_req_builder =
-                local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[at_ts]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2867,22 +2535,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2895,65 +2557,41 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Shift>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetScheduleOnCallUserError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetScheduleOnCallUserError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a team's on-call users at a given time
-    pub async fn get_team_on_call_users(
-        &self,
-        team_id: String,
-        params: GetTeamOnCallUsersOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamOnCallResponders,
-        datadog::Error<GetTeamOnCallUsersError>,
-    > {
-        match self
-            .get_team_on_call_users_with_http_info(team_id, params)
-            .await
-        {
+    pub async fn get_team_on_call_users(&self, team_id: String, params: GetTeamOnCallUsersOptionalParams) -> Result<crate::datadogV2::model::TeamOnCallResponders, datadog::Error<GetTeamOnCallUsersError>> {
+        match self.get_team_on_call_users_with_http_info(team_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a team's on-call users at a given time
-    pub async fn get_team_on_call_users_with_http_info(
-        &self,
-        team_id: String,
-        params: GetTeamOnCallUsersOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamOnCallResponders>,
-        datadog::Error<GetTeamOnCallUsersError>,
-    > {
+    pub async fn get_team_on_call_users_with_http_info(&self, team_id: String, params: GetTeamOnCallUsersOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamOnCallResponders>, datadog::Error<GetTeamOnCallUsersError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_team_on_call_users";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -2961,20 +2599,21 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/on-call",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2987,22 +2626,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3014,82 +2647,61 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamOnCallResponders>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamOnCallResponders>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTeamOnCallUsersError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTeamOnCallUsersError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn get_user_notification_channel(
-        &self,
-        user_id: String,
-        channel_id: String,
-    ) -> Result<
-        crate::datadogV2::model::NotificationChannel,
-        datadog::Error<GetUserNotificationChannelError>,
-    > {
-        match self
-            .get_user_notification_channel_with_http_info(user_id, channel_id)
-            .await
-        {
+    pub async fn get_user_notification_channel(&self, user_id: String, channel_id: String) -> Result<crate::datadogV2::model::NotificationChannel, datadog::Error<GetUserNotificationChannelError>> {
+        match self.get_user_notification_channel_with_http_info(user_id, channel_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a notification channel for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn get_user_notification_channel_with_http_info(
-        &self,
-        user_id: String,
-        channel_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::NotificationChannel>,
-        datadog::Error<GetUserNotificationChannelError>,
-    > {
+    pub async fn get_user_notification_channel_with_http_info(&self, user_id: String, channel_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::NotificationChannel>, datadog::Error<GetUserNotificationChannelError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_user_notification_channel";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels/{channel_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id),
-            channel_id = datadog::urlencode(channel_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            , channel_id=
+            datadog::urlencode(channel_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3102,22 +2714,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3129,70 +2735,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::NotificationChannel>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::NotificationChannel>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUserNotificationChannelError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUserNotificationChannelError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn get_user_notification_rule(
-        &self,
-        user_id: String,
-        rule_id: String,
-        params: GetUserNotificationRuleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OnCallNotificationRule,
-        datadog::Error<GetUserNotificationRuleError>,
-    > {
-        match self
-            .get_user_notification_rule_with_http_info(user_id, rule_id, params)
-            .await
-        {
+    pub async fn get_user_notification_rule(&self, user_id: String, rule_id: String, params: GetUserNotificationRuleOptionalParams) -> Result<crate::datadogV2::model::OnCallNotificationRule, datadog::Error<GetUserNotificationRuleError>> {
+        match self.get_user_notification_rule_with_http_info(user_id, rule_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn get_user_notification_rule_with_http_info(
-        &self,
-        user_id: String,
-        rule_id: String,
-        params: GetUserNotificationRuleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>,
-        datadog::Error<GetUserNotificationRuleError>,
-    > {
+    pub async fn get_user_notification_rule_with_http_info(&self, user_id: String, rule_id: String, params: GetUserNotificationRuleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>, datadog::Error<GetUserNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_user_notification_rule";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -3200,21 +2778,23 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3227,22 +2807,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3254,64 +2828,39 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetUserNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetUserNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a paginated list of On-Call escalation policies, sorted by name.
-    pub async fn list_on_call_escalation_policies(
-        &self,
-        params: ListOnCallEscalationPoliciesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::EscalationPolicies,
-        datadog::Error<ListOnCallEscalationPoliciesError>,
-    > {
-        match self
-            .list_on_call_escalation_policies_with_http_info(params)
-            .await
-        {
+    pub async fn list_on_call_escalation_policies(&self, params: ListOnCallEscalationPoliciesOptionalParams) -> Result<crate::datadogV2::model::EscalationPolicies, datadog::Error<ListOnCallEscalationPoliciesError>> {
+        match self.list_on_call_escalation_policies_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_on_call_escalation_policies_with_pagination(
-        &self,
-        mut params: ListOnCallEscalationPoliciesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::EscalationPolicyListItem,
-            datadog::Error<ListOnCallEscalationPoliciesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListOnCallEscalationPoliciesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::EscalationPolicyListItem, datadog::Error<ListOnCallEscalationPoliciesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 20;
             if params.page_size.is_none() {
@@ -3338,17 +2887,13 @@ impl OnCallAPI {
         }
     }
 
+    
     /// Retrieve a paginated list of On-Call escalation policies, sorted by name.
-    pub async fn list_on_call_escalation_policies_with_http_info(
-        &self,
-        params: ListOnCallEscalationPoliciesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EscalationPolicies>,
-        datadog::Error<ListOnCallEscalationPoliciesError>,
-    > {
+    pub async fn list_on_call_escalation_policies_with_http_info(&self, params: ListOnCallEscalationPoliciesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EscalationPolicies>, datadog::Error<ListOnCallEscalationPoliciesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_on_call_escalation_policies";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -3364,51 +2909,43 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_team_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[team_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[team_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[user_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[user_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_schedule_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[schedule_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[schedule_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tags_any {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tags_any]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tags_any]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3421,22 +2958,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3448,59 +2979,39 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicies>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicies>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOnCallEscalationPoliciesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOnCallEscalationPoliciesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a paginated list of On-Call Pages, optionally filtered by a search query and sorted by a field.
-    pub async fn list_on_call_pages(
-        &self,
-        params: ListOnCallPagesOptionalParams,
-    ) -> Result<crate::datadogV2::model::OnCallPagesResponse, datadog::Error<ListOnCallPagesError>>
-    {
-        match self.list_on_call_pages_with_http_info(params).await {
+    pub async fn list_on_call_pages(&self, params: ListOnCallPagesOptionalParams) -> Result<crate::datadogV2::model::OnCallPagesResponse, datadog::Error<ListOnCallPagesError>> {
+        match self.list_on_call_pages_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_on_call_pages_with_pagination(
-        &self,
-        mut params: ListOnCallPagesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::OnCallPageData,
-            datadog::Error<ListOnCallPagesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListOnCallPagesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::OnCallPageData, datadog::Error<ListOnCallPagesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 100;
             if params.page_size.is_none() {
@@ -3527,17 +3038,13 @@ impl OnCallAPI {
         }
     }
 
+    
     /// Retrieve a paginated list of On-Call Pages, optionally filtered by a search query and sorted by a field.
-    pub async fn list_on_call_pages_with_http_info(
-        &self,
-        params: ListOnCallPagesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OnCallPagesResponse>,
-        datadog::Error<ListOnCallPagesError>,
-    > {
+    pub async fn list_on_call_pages_with_http_info(&self, params: ListOnCallPagesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OnCallPagesResponse>, datadog::Error<ListOnCallPagesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_on_call_pages";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -3548,31 +3055,28 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/pages",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3585,22 +3089,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3612,58 +3110,39 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OnCallPagesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OnCallPagesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOnCallPagesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOnCallPagesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a list of On-Call schedules.
-    pub async fn list_on_call_schedules(
-        &self,
-        params: ListOnCallSchedulesOptionalParams,
-    ) -> Result<crate::datadogV2::model::Schedules, datadog::Error<ListOnCallSchedulesError>> {
-        match self.list_on_call_schedules_with_http_info(params).await {
+    pub async fn list_on_call_schedules(&self, params: ListOnCallSchedulesOptionalParams) -> Result<crate::datadogV2::model::Schedules, datadog::Error<ListOnCallSchedulesError>> {
+        match self.list_on_call_schedules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_on_call_schedules_with_pagination(
-        &self,
-        mut params: ListOnCallSchedulesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::ScheduleListItem,
-            datadog::Error<ListOnCallSchedulesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListOnCallSchedulesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ScheduleListItem, datadog::Error<ListOnCallSchedulesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -3691,17 +3170,13 @@ impl OnCallAPI {
         }
     }
 
+    
     /// Retrieve a list of On-Call schedules.
-    pub async fn list_on_call_schedules_with_http_info(
-        &self,
-        params: ListOnCallSchedulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Schedules>,
-        datadog::Error<ListOnCallSchedulesError>,
-    > {
+    pub async fn list_on_call_schedules_with_http_info(&self, params: ListOnCallSchedulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Schedules>, datadog::Error<ListOnCallSchedulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_on_call_schedules";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -3712,31 +3187,28 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3749,22 +3221,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3777,65 +3243,38 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Schedules>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOnCallSchedulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOnCallSchedulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a list of overrides for the specified On-Call schedule within a given time range.
-    pub async fn list_schedule_overrides(
-        &self,
-        schedule_id: String,
-        filter_start: chrono::DateTime<chrono::Utc>,
-        filter_end: chrono::DateTime<chrono::Utc>,
-        params: ListScheduleOverridesOptionalParams,
-    ) -> Result<crate::datadogV2::model::Overrides, datadog::Error<ListScheduleOverridesError>>
-    {
-        match self
-            .list_schedule_overrides_with_http_info(schedule_id, filter_start, filter_end, params)
-            .await
-        {
+    pub async fn list_schedule_overrides(&self, schedule_id: String, filter_start: chrono::DateTime<chrono::Utc>, filter_end: chrono::DateTime<chrono::Utc>, params: ListScheduleOverridesOptionalParams) -> Result<crate::datadogV2::model::Overrides, datadog::Error<ListScheduleOverridesError>> {
+        match self.list_schedule_overrides_with_http_info(schedule_id, filter_start, filter_end,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_schedule_overrides_with_pagination(
-        &self,
-        schedule_id: String,
-        filter_start: chrono::DateTime<chrono::Utc>,
-        filter_end: chrono::DateTime<chrono::Utc>,
-        mut params: ListScheduleOverridesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::OverrideData,
-            datadog::Error<ListScheduleOverridesError>,
-        >,
-    > + '_ {
+        &self,  schedule_id: String,  filter_start: chrono::DateTime<chrono::Utc>,  filter_end: chrono::DateTime<chrono::Utc>, mut params: ListScheduleOverridesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::OverrideData, datadog::Error<ListScheduleOverridesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -3862,20 +3301,13 @@ impl OnCallAPI {
         }
     }
 
+    
     /// Retrieve a list of overrides for the specified On-Call schedule within a given time range.
-    pub async fn list_schedule_overrides_with_http_info(
-        &self,
-        schedule_id: String,
-        filter_start: chrono::DateTime<chrono::Utc>,
-        filter_end: chrono::DateTime<chrono::Utc>,
-        params: ListScheduleOverridesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Overrides>,
-        datadog::Error<ListScheduleOverridesError>,
-    > {
+    pub async fn list_schedule_overrides_with_http_info(&self, schedule_id: String, filter_start: chrono::DateTime<chrono::Utc>, filter_end: chrono::DateTime<chrono::Utc>, params: ListScheduleOverridesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Overrides>, datadog::Error<ListScheduleOverridesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_schedule_overrides";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let page_size = params.page_size;
@@ -3885,36 +3317,29 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}/overrides",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[(
-            "filter[start]",
-            &filter_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
-        local_req_builder = local_req_builder.query(&[(
-            "filter[end]",
-            &filter_end.to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
-        )]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[start]", &filter_start.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
+        local_req_builder = local_req_builder.query(&[("filter[end]", &filter_end.to_rfc3339_opts(chrono::SecondsFormat::Millis, true))]);
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3927,22 +3352,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3955,76 +3374,58 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Overrides>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScheduleOverridesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScheduleOverridesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the notification channels for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn list_user_notification_channels(
-        &self,
-        user_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ListNotificationChannelsResponse,
-        datadog::Error<ListUserNotificationChannelsError>,
-    > {
-        match self
-            .list_user_notification_channels_with_http_info(user_id)
-            .await
-        {
+    pub async fn list_user_notification_channels(&self, user_id: String) -> Result<crate::datadogV2::model::ListNotificationChannelsResponse, datadog::Error<ListUserNotificationChannelsError>> {
+        match self.list_user_notification_channels_with_http_info(user_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the notification channels for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn list_user_notification_channels_with_http_info(
-        &self,
-        user_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListNotificationChannelsResponse>,
-        datadog::Error<ListUserNotificationChannelsError>,
-    > {
+    pub async fn list_user_notification_channels_with_http_info(&self, user_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListNotificationChannelsResponse>, datadog::Error<ListUserNotificationChannelsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_user_notification_channels";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-channels",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4037,22 +3438,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4064,68 +3459,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListNotificationChannelsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListNotificationChannelsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListUserNotificationChannelsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListUserNotificationChannelsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List the notification rules for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn list_user_notification_rules(
-        &self,
-        user_id: String,
-        params: ListUserNotificationRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListOnCallNotificationRulesResponse,
-        datadog::Error<ListUserNotificationRulesError>,
-    > {
-        match self
-            .list_user_notification_rules_with_http_info(user_id, params)
-            .await
-        {
+    pub async fn list_user_notification_rules(&self, user_id: String, params: ListUserNotificationRulesOptionalParams) -> Result<crate::datadogV2::model::ListOnCallNotificationRulesResponse, datadog::Error<ListUserNotificationRulesError>> {
+        match self.list_user_notification_rules_with_http_info(user_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List the notification rules for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn list_user_notification_rules_with_http_info(
-        &self,
-        user_id: String,
-        params: ListUserNotificationRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListOnCallNotificationRulesResponse>,
-        datadog::Error<ListUserNotificationRulesError>,
-    > {
+    pub async fn list_user_notification_rules_with_http_info(&self, user_id: String, params: ListUserNotificationRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListOnCallNotificationRulesResponse>, datadog::Error<ListUserNotificationRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_user_notification_rules";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4133,20 +3502,21 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4159,22 +3529,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -4186,70 +3550,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListOnCallNotificationRulesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListOnCallNotificationRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListUserNotificationRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListUserNotificationRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Set a team's On-Call routing rules
-    pub async fn set_on_call_team_routing_rules(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamRoutingRulesRequest,
-        params: SetOnCallTeamRoutingRulesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::TeamRoutingRules,
-        datadog::Error<SetOnCallTeamRoutingRulesError>,
-    > {
-        match self
-            .set_on_call_team_routing_rules_with_http_info(team_id, body, params)
-            .await
-        {
+    pub async fn set_on_call_team_routing_rules(&self, team_id: String, body: crate::datadogV2::model::TeamRoutingRulesRequest, params: SetOnCallTeamRoutingRulesOptionalParams) -> Result<crate::datadogV2::model::TeamRoutingRules, datadog::Error<SetOnCallTeamRoutingRulesError>> {
+        match self.set_on_call_team_routing_rules_with_http_info(team_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Set a team's On-Call routing rules
-    pub async fn set_on_call_team_routing_rules_with_http_info(
-        &self,
-        team_id: String,
-        body: crate::datadogV2::model::TeamRoutingRulesRequest,
-        params: SetOnCallTeamRoutingRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>,
-        datadog::Error<SetOnCallTeamRoutingRulesError>,
-    > {
+    pub async fn set_on_call_team_routing_rules_with_http_info(&self, team_id: String, body: crate::datadogV2::model::TeamRoutingRulesRequest, params: SetOnCallTeamRoutingRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::TeamRoutingRules>, datadog::Error<SetOnCallTeamRoutingRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.set_on_call_team_routing_rules";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4257,21 +3593,22 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/teams/{team_id}/routing-rules",
-            local_configuration.get_operation_host(local_operation_id),
-            team_id = datadog::urlencode(team_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), team_id=
+            datadog::urlencode(team_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4284,23 +3621,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4308,7 +3638,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4318,7 +3651,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4340,7 +3676,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4357,69 +3693,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TeamRoutingRules>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<SetOnCallTeamRoutingRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<SetOnCallTeamRoutingRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an On-Call escalation policy
-    pub async fn update_on_call_escalation_policy(
-        &self,
-        policy_id: String,
-        body: crate::datadogV2::model::EscalationPolicyUpdateRequest,
-        params: UpdateOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::EscalationPolicy,
-        datadog::Error<UpdateOnCallEscalationPolicyError>,
-    > {
-        match self
-            .update_on_call_escalation_policy_with_http_info(policy_id, body, params)
-            .await
-        {
+    pub async fn update_on_call_escalation_policy(&self, policy_id: String, body: crate::datadogV2::model::EscalationPolicyUpdateRequest, params: UpdateOnCallEscalationPolicyOptionalParams) -> Result<crate::datadogV2::model::EscalationPolicy, datadog::Error<UpdateOnCallEscalationPolicyError>> {
+        match self.update_on_call_escalation_policy_with_http_info(policy_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an On-Call escalation policy
-    pub async fn update_on_call_escalation_policy_with_http_info(
-        &self,
-        policy_id: String,
-        body: crate::datadogV2::model::EscalationPolicyUpdateRequest,
-        params: UpdateOnCallEscalationPolicyOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>,
-        datadog::Error<UpdateOnCallEscalationPolicyError>,
-    > {
+    pub async fn update_on_call_escalation_policy_with_http_info(&self, policy_id: String, body: crate::datadogV2::model::EscalationPolicyUpdateRequest, params: UpdateOnCallEscalationPolicyOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EscalationPolicy>, datadog::Error<UpdateOnCallEscalationPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_on_call_escalation_policy";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4427,21 +3736,22 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/escalation-policies/{policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            policy_id = datadog::urlencode(policy_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), policy_id=
+            datadog::urlencode(policy_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4454,23 +3764,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4478,7 +3781,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4488,7 +3794,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4510,7 +3819,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4527,66 +3836,42 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EscalationPolicy>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOnCallEscalationPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOnCallEscalationPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a new On-Call schedule
-    pub async fn update_on_call_schedule(
-        &self,
-        schedule_id: String,
-        body: crate::datadogV2::model::ScheduleUpdateRequest,
-        params: UpdateOnCallScheduleOptionalParams,
-    ) -> Result<crate::datadogV2::model::Schedule, datadog::Error<UpdateOnCallScheduleError>> {
-        match self
-            .update_on_call_schedule_with_http_info(schedule_id, body, params)
-            .await
-        {
+    pub async fn update_on_call_schedule(&self, schedule_id: String, body: crate::datadogV2::model::ScheduleUpdateRequest, params: UpdateOnCallScheduleOptionalParams) -> Result<crate::datadogV2::model::Schedule, datadog::Error<UpdateOnCallScheduleError>> {
+        match self.update_on_call_schedule_with_http_info(schedule_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a new On-Call schedule
-    pub async fn update_on_call_schedule_with_http_info(
-        &self,
-        schedule_id: String,
-        body: crate::datadogV2::model::ScheduleUpdateRequest,
-        params: UpdateOnCallScheduleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::Schedule>,
-        datadog::Error<UpdateOnCallScheduleError>,
-    > {
+    pub async fn update_on_call_schedule_with_http_info(&self, schedule_id: String, body: crate::datadogV2::model::ScheduleUpdateRequest, params: UpdateOnCallScheduleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::Schedule>, datadog::Error<UpdateOnCallScheduleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_on_call_schedule";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4594,21 +3879,22 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/schedules/{schedule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            schedule_id = datadog::urlencode(schedule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), schedule_id=
+            datadog::urlencode(schedule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4621,23 +3907,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4645,7 +3924,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4655,7 +3937,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4677,7 +3962,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4695,69 +3980,41 @@ impl OnCallAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::Schedule>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOnCallScheduleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOnCallScheduleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn update_user_notification_rule(
-        &self,
-        user_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::UpdateOnCallNotificationRuleRequest,
-        params: UpdateUserNotificationRuleOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OnCallNotificationRule,
-        datadog::Error<UpdateUserNotificationRuleError>,
-    > {
-        match self
-            .update_user_notification_rule_with_http_info(user_id, rule_id, body, params)
-            .await
-        {
+    pub async fn update_user_notification_rule(&self, user_id: String, rule_id: String, body: crate::datadogV2::model::UpdateOnCallNotificationRuleRequest, params: UpdateUserNotificationRuleOptionalParams) -> Result<crate::datadogV2::model::OnCallNotificationRule, datadog::Error<UpdateUserNotificationRuleError>> {
+        match self.update_user_notification_rule_with_http_info(user_id, rule_id, body,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a notification rule for a user. The authenticated user must be the target user or have the `on_call_admin` permission
-    pub async fn update_user_notification_rule_with_http_info(
-        &self,
-        user_id: String,
-        rule_id: String,
-        body: crate::datadogV2::model::UpdateOnCallNotificationRuleRequest,
-        params: UpdateUserNotificationRuleOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>,
-        datadog::Error<UpdateUserNotificationRuleError>,
-    > {
+    pub async fn update_user_notification_rule_with_http_info(&self, user_id: String, rule_id: String, body: crate::datadogV2::model::UpdateOnCallNotificationRuleRequest, params: UpdateUserNotificationRuleOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OnCallNotificationRule>, datadog::Error<UpdateUserNotificationRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_user_notification_rule";
 
+        
         // unbox and build optional parameters
         let include = params.include;
 
@@ -4765,22 +4022,24 @@ impl OnCallAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/on-call/users/{user_id}/notification-rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            user_id = datadog::urlencode(user_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), user_id=
+            datadog::urlencode(user_id)
+            , rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -4793,23 +4052,16 @@ impl OnCallAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -4817,7 +4069,10 @@ impl OnCallAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4827,7 +4082,10 @@ impl OnCallAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -4849,7 +4107,7 @@ impl OnCallAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -4866,26 +4124,17 @@ impl OnCallAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OnCallNotificationRule>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateUserNotificationRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateUserNotificationRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,16 +1,16 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// A color string, or two color strings for the light and dark themes, in that order.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum HeatgridColor {
-    String(String),
-    HeatgridThemeColors(Vec<String>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	String(String),
+	HeatgridThemeColors(Vec<String>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for HeatgridColor {
@@ -19,15 +19,13 @@ impl<'de> Deserialize<'de> for HeatgridColor {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
-            return Ok(HeatgridColor::String(_v));
-        }
-        if let Ok(_v) = serde_json::from_value::<Vec<String>>(value.clone()) {
-            return Ok(HeatgridColor::HeatgridThemeColors(_v));
-        }
-
-        return Ok(HeatgridColor::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+		if let Ok(_v) = serde_json::from_value::<String>(value.clone()) {
+			return Ok(HeatgridColor::String(_v))
+		}
+		if let Ok(_v) = serde_json::from_value::<Vec<String>>(value.clone()) {
+			return Ok(HeatgridColor::HeatgridThemeColors(_v))
+		}
+	
+        return Ok(HeatgridColor::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

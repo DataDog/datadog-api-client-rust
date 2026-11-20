@@ -1,23 +1,20 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetOrgAuthorizedClientOptionalParams is a struct for passing parameters to the method [`OrgAuthorizedClientsAPI::get_org_authorized_client`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetOrgAuthorizedClientOptionalParams {
     /// Comma-separated list of related resources to include.
-    /// Options: `oauth2_client`, `oauth2_client.app`, `oauth2_client.scopes`, `user_authorized_clients.user`.
+/// Options: `oauth2_client`, `oauth2_client.app`, `oauth2_client.scopes`, `user_authorized_clients.user`.
     pub include: Option<String>,
     /// Filter included user authorized clients by disabled status.
     pub filter_user_authorized_clients_disabled: Option<String>,
@@ -27,7 +24,7 @@ pub struct GetOrgAuthorizedClientOptionalParams {
 
 impl GetOrgAuthorizedClientOptionalParams {
     /// Comma-separated list of related resources to include.
-    /// Options: `oauth2_client`, `oauth2_client.app`, `oauth2_client.scopes`, `user_authorized_clients.user`.
+/// Options: `oauth2_client`, `oauth2_client.app`, `oauth2_client.scopes`, `user_authorized_clients.user`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
@@ -76,10 +73,7 @@ impl ListOrgAuthorizedClientUserAuthorizationsOptionalParams {
         self
     }
     /// Field to sort results by. Options: `user.name`, `user.email`, `oauth2_client.name`.
-    pub fn sort(
-        mut self,
-        value: crate::datadogV2::model::OrgAuthorizedClientUserAuthorizationsSort,
-    ) -> Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::OrgAuthorizedClientUserAuthorizationsSort) -> Self {
         self.sort = Some(value);
         self
     }
@@ -122,7 +116,7 @@ pub struct ListOrgAuthorizedClientsOptionalParams {
     /// Filter results by the org-level disabled status.
     pub filter_disabled: Option<String>,
     /// Comma-separated list of related resources to include.
-    /// Options: `oauth2_client`, `oauth2_client.app`, `user_authorized_clients.user`.
+/// Options: `oauth2_client`, `oauth2_client.app`, `user_authorized_clients.user`.
     pub include: Option<String>,
 }
 
@@ -158,12 +152,15 @@ impl ListOrgAuthorizedClientsOptionalParams {
         self
     }
     /// Comma-separated list of related resources to include.
-    /// Options: `oauth2_client`, `oauth2_client.app`, `user_authorized_clients.user`.
+/// Options: `oauth2_client`, `oauth2_client.app`, `user_authorized_clients.user`.
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
         self
     }
 }
+
+
+
 
 /// DeleteOrgAuthorizedClientError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::delete_org_authorized_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -174,6 +171,7 @@ pub enum DeleteOrgAuthorizedClientError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOrgAuthorizedClientAllUserAuthorizationsError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::delete_org_authorized_client_all_user_authorizations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -182,6 +180,7 @@ pub enum DeleteOrgAuthorizedClientAllUserAuthorizationsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOrgAuthorizedClientUserAuthorizationError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::delete_org_authorized_client_user_authorization`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -192,6 +191,7 @@ pub enum DeleteOrgAuthorizedClientUserAuthorizationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOrgAuthorizedClientError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::get_org_authorized_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -200,6 +200,7 @@ pub enum GetOrgAuthorizedClientError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOrgAuthorizedClientUserAuthorizationsError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::list_org_authorized_client_user_authorizations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -210,6 +211,7 @@ pub enum ListOrgAuthorizedClientUserAuthorizationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOrgAuthorizedClientsError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::list_org_authorized_clients`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -219,6 +221,7 @@ pub enum ListOrgAuthorizedClientsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOrgAuthorizedClientError is a struct for typed errors of method [`OrgAuthorizedClientsAPI::update_org_authorized_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -227,6 +230,7 @@ pub enum UpdateOrgAuthorizedClientError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage OAuth2 client authorizations at the organization level.
 #[derive(Debug, Clone)]
@@ -250,7 +254,8 @@ impl OrgAuthorizedClientsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -295,48 +300,44 @@ impl OrgAuthorizedClientsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Disable an OAuth2 client authorization for the current organization, revoking access for all users.
-    pub async fn delete_org_authorized_client(
-        &self,
-        org_authorized_client_id: String,
-    ) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientError>> {
-        match self
-            .delete_org_authorized_client_with_http_info(org_authorized_client_id)
-            .await
-        {
+    pub async fn delete_org_authorized_client(&self, org_authorized_client_id: String) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientError>> {
+        match self.delete_org_authorized_client_with_http_info(org_authorized_client_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable an OAuth2 client authorization for the current organization, revoking access for all users.
-    pub async fn delete_org_authorized_client_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgAuthorizedClientError>> {
+    pub async fn delete_org_authorized_client_with_http_info(&self, org_authorized_client_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgAuthorizedClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_authorized_client";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
+            datadog::urlencode(org_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -349,22 +350,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -382,61 +377,46 @@ impl OrgAuthorizedClientsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgAuthorizedClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgAuthorizedClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disable all authorizations for a specific user for the specified OAuth2 client in the current organization.
-    pub async fn delete_org_authorized_client_all_user_authorizations(
-        &self,
-        org_authorized_client_id: String,
-        user_id: String,
-    ) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientAllUserAuthorizationsError>> {
-        match self
-            .delete_org_authorized_client_all_user_authorizations_with_http_info(
-                org_authorized_client_id,
-                user_id,
-            )
-            .await
-        {
+    pub async fn delete_org_authorized_client_all_user_authorizations(&self, org_authorized_client_id: String, user_id: String) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientAllUserAuthorizationsError>> {
+        match self.delete_org_authorized_client_all_user_authorizations_with_http_info(org_authorized_client_id, user_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable all authorizations for a specific user for the specified OAuth2 client in the current organization.
-    pub async fn delete_org_authorized_client_all_user_authorizations_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-        user_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteOrgAuthorizedClientAllUserAuthorizationsError>,
-    > {
+    pub async fn delete_org_authorized_client_all_user_authorizations_with_http_info(&self, org_authorized_client_id: String, user_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgAuthorizedClientAllUserAuthorizationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_authorized_client_all_user_authorizations";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}/user/{user_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_authorized_client_id = datadog::urlencode(org_authorized_client_id),
-            user_id = datadog::urlencode(user_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
+            datadog::urlencode(org_authorized_client_id)
+            , user_id=
+            datadog::urlencode(user_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -449,22 +429,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -482,46 +456,27 @@ impl OrgAuthorizedClientsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgAuthorizedClientAllUserAuthorizationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgAuthorizedClientAllUserAuthorizationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Disable a specific user authorization for the specified OAuth2 client in the current organization.
-    pub async fn delete_org_authorized_client_user_authorization(
-        &self,
-        org_authorized_client_id: String,
-        user_authorized_client_id: String,
-    ) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientUserAuthorizationError>> {
-        match self
-            .delete_org_authorized_client_user_authorization_with_http_info(
-                org_authorized_client_id,
-                user_authorized_client_id,
-            )
-            .await
-        {
+    pub async fn delete_org_authorized_client_user_authorization(&self, org_authorized_client_id: String, user_authorized_client_id: String) -> Result<(), datadog::Error<DeleteOrgAuthorizedClientUserAuthorizationError>> {
+        match self.delete_org_authorized_client_user_authorization_with_http_info(org_authorized_client_id, user_authorized_client_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable a specific user authorization for the specified OAuth2 client in the current organization.
-    pub async fn delete_org_authorized_client_user_authorization_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-        user_authorized_client_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteOrgAuthorizedClientUserAuthorizationError>,
-    > {
+    pub async fn delete_org_authorized_client_user_authorization_with_http_info(&self, org_authorized_client_id: String, user_authorized_client_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgAuthorizedClientUserAuthorizationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_authorized_client_user_authorization";
+
+        
 
         let local_client = &self.client;
 
@@ -532,12 +487,15 @@ impl OrgAuthorizedClientsAPI {
             , user_authorized_client_id=
             datadog::urlencode(user_authorized_client_id)
             );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -550,22 +508,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -583,92 +535,63 @@ impl OrgAuthorizedClientsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgAuthorizedClientUserAuthorizationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgAuthorizedClientUserAuthorizationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a single OAuth2 client authorized for the current organization.
-    pub async fn get_org_authorized_client(
-        &self,
-        org_authorized_client_id: String,
-        params: GetOrgAuthorizedClientOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OrgAuthorizedClientResponse,
-        datadog::Error<GetOrgAuthorizedClientError>,
-    > {
-        match self
-            .get_org_authorized_client_with_http_info(org_authorized_client_id, params)
-            .await
-        {
+    pub async fn get_org_authorized_client(&self, org_authorized_client_id: String, params: GetOrgAuthorizedClientOptionalParams) -> Result<crate::datadogV2::model::OrgAuthorizedClientResponse, datadog::Error<GetOrgAuthorizedClientError>> {
+        match self.get_org_authorized_client_with_http_info(org_authorized_client_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a single OAuth2 client authorized for the current organization.
-    pub async fn get_org_authorized_client_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-        params: GetOrgAuthorizedClientOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientResponse>,
-        datadog::Error<GetOrgAuthorizedClientError>,
-    > {
+    pub async fn get_org_authorized_client_with_http_info(&self, org_authorized_client_id: String, params: GetOrgAuthorizedClientOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientResponse>, datadog::Error<GetOrgAuthorizedClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_authorized_client";
 
+        
         // unbox and build optional parameters
         let include = params.include;
-        let filter_user_authorized_clients_disabled =
-            params.filter_user_authorized_clients_disabled;
-        let filter_user_authorized_clients_user_disabled =
-            params.filter_user_authorized_clients_user_disabled;
+        let filter_user_authorized_clients_disabled = params.filter_user_authorized_clients_disabled;
+        let filter_user_authorized_clients_user_disabled = params.filter_user_authorized_clients_user_disabled;
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
+            datadog::urlencode(org_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_authorized_clients_disabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[user_authorized_clients][disabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[user_authorized_clients][disabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_authorized_clients_user_disabled {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[user_authorized_clients][user][disabled]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[user_authorized_clients][user][disabled]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -681,22 +604,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -708,69 +625,39 @@ impl OrgAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOrgAuthorizedClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOrgAuthorizedClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of user authorizations for the specified OAuth2 client in the current organization.
-    pub async fn list_org_authorized_client_user_authorizations(
-        &self,
-        org_authorized_client_id: String,
-        params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::UserAuthorizedClientsResponse,
-        datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>,
-    > {
-        match self
-            .list_org_authorized_client_user_authorizations_with_http_info(
-                org_authorized_client_id,
-                params,
-            )
-            .await
-        {
+    pub async fn list_org_authorized_client_user_authorizations(&self, org_authorized_client_id: String, params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams) -> Result<crate::datadogV2::model::UserAuthorizedClientsResponse, datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>> {
+        match self.list_org_authorized_client_user_authorizations_with_http_info(org_authorized_client_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_org_authorized_client_user_authorizations_with_pagination(
-        &self,
-        org_authorized_client_id: String,
-        mut params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::UserAuthorizedClientData,
-            datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>,
-        >,
-    > + '_ {
+        &self,  org_authorized_client_id: String, mut params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::UserAuthorizedClientData, datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -797,18 +684,13 @@ impl OrgAuthorizedClientsAPI {
         }
     }
 
+    
     /// Get a list of user authorizations for the specified OAuth2 client in the current organization.
-    pub async fn list_org_authorized_client_user_authorizations_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-        params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientsResponse>,
-        datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>,
-    > {
+    pub async fn list_org_authorized_client_user_authorizations_with_http_info(&self, org_authorized_client_id: String, params: ListOrgAuthorizedClientUserAuthorizationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::UserAuthorizedClientsResponse>, datadog::Error<ListOrgAuthorizedClientUserAuthorizationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_authorized_client_user_authorizations";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -822,44 +704,39 @@ impl OrgAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}/user_authorized_clients",
-            local_configuration.get_operation_host(local_operation_id),
-            org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
+            datadog::urlencode(org_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_disabled {
-            local_req_builder =
-                local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[user][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[user][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_email {
-            local_req_builder =
-                local_req_builder.query(&[("filter[user][email]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[user][email]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_user_disabled {
-            local_req_builder = local_req_builder
-                .query(&[("filter[user][disabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[user][disabled]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -872,22 +749,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -899,64 +770,39 @@ impl OrgAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UserAuthorizedClientsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgAuthorizedClientUserAuthorizationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgAuthorizedClientUserAuthorizationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a list of all OAuth2 clients authorized for the current organization.
-    pub async fn list_org_authorized_clients(
-        &self,
-        params: ListOrgAuthorizedClientsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OrgAuthorizedClientsResponse,
-        datadog::Error<ListOrgAuthorizedClientsError>,
-    > {
-        match self
-            .list_org_authorized_clients_with_http_info(params)
-            .await
-        {
+    pub async fn list_org_authorized_clients(&self, params: ListOrgAuthorizedClientsOptionalParams) -> Result<crate::datadogV2::model::OrgAuthorizedClientsResponse, datadog::Error<ListOrgAuthorizedClientsError>> {
+        match self.list_org_authorized_clients_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_org_authorized_clients_with_pagination(
-        &self,
-        mut params: ListOrgAuthorizedClientsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::OrgAuthorizedClientData,
-            datadog::Error<ListOrgAuthorizedClientsError>,
-        >,
-    > + '_ {
+        &self, mut params: ListOrgAuthorizedClientsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::OrgAuthorizedClientData, datadog::Error<ListOrgAuthorizedClientsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -983,17 +829,13 @@ impl OrgAuthorizedClientsAPI {
         }
     }
 
+    
     /// Get a list of all OAuth2 clients authorized for the current organization.
-    pub async fn list_org_authorized_clients_with_http_info(
-        &self,
-        params: ListOrgAuthorizedClientsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientsResponse>,
-        datadog::Error<ListOrgAuthorizedClientsError>,
-    > {
+    pub async fn list_org_authorized_clients_with_http_info(&self, params: ListOrgAuthorizedClientsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientsResponse>, datadog::Error<ListOrgAuthorizedClientsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_authorized_clients";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -1007,45 +849,37 @@ impl OrgAuthorizedClientsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter {
-            local_req_builder =
-                local_req_builder.query(&[("filter", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_oauth2_client_name {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[oauth2_client][name]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[oauth2_client][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_disabled {
-            local_req_builder =
-                local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[disabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1058,22 +892,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1085,82 +913,60 @@ impl OrgAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgAuthorizedClientsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgAuthorizedClientsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable or disable an OAuth2 client authorization for the current organization.
-    pub async fn update_org_authorized_client(
-        &self,
-        org_authorized_client_id: String,
-        body: crate::datadogV2::model::OrgAuthorizedClientUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgAuthorizedClientResponse,
-        datadog::Error<UpdateOrgAuthorizedClientError>,
-    > {
-        match self
-            .update_org_authorized_client_with_http_info(org_authorized_client_id, body)
-            .await
-        {
+    pub async fn update_org_authorized_client(&self, org_authorized_client_id: String, body: crate::datadogV2::model::OrgAuthorizedClientUpdateRequest) -> Result<crate::datadogV2::model::OrgAuthorizedClientResponse, datadog::Error<UpdateOrgAuthorizedClientError>> {
+        match self.update_org_authorized_client_with_http_info(org_authorized_client_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable or disable an OAuth2 client authorization for the current organization.
-    pub async fn update_org_authorized_client_with_http_info(
-        &self,
-        org_authorized_client_id: String,
-        body: crate::datadogV2::model::OrgAuthorizedClientUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientResponse>,
-        datadog::Error<UpdateOrgAuthorizedClientError>,
-    > {
+    pub async fn update_org_authorized_client_with_http_info(&self, org_authorized_client_id: String, body: crate::datadogV2::model::OrgAuthorizedClientUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgAuthorizedClientResponse>, datadog::Error<UpdateOrgAuthorizedClientError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_org_authorized_client";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_authorized_clients/{org_authorized_client_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_authorized_client_id = datadog::urlencode(org_authorized_client_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_authorized_client_id=
+            datadog::urlencode(org_authorized_client_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1173,23 +979,16 @@ impl OrgAuthorizedClientsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1197,7 +996,10 @@ impl OrgAuthorizedClientsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1207,7 +1009,10 @@ impl OrgAuthorizedClientsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1229,7 +1034,7 @@ impl OrgAuthorizedClientsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1246,26 +1051,17 @@ impl OrgAuthorizedClientsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgAuthorizedClientResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOrgAuthorizedClientError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOrgAuthorizedClientError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

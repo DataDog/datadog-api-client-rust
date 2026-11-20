@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SLOReportStatus {
-    IN_PROGRESS,
-    COMPLETED,
-    COMPLETED_WITH_ERRORS,
-    FAILED,
+	IN_PROGRESS,
+	COMPLETED,
+	COMPLETED_WITH_ERRORS,
+	FAILED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for SLOReportStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "in_progress" => Self::IN_PROGRESS,
-            "completed" => Self::COMPLETED,
-            "completed_with_errors" => Self::COMPLETED_WITH_ERRORS,
-            "failed" => Self::FAILED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"in_progress" => Self::IN_PROGRESS,"completed" => Self::COMPLETED,"completed_with_errors" => Self::COMPLETED_WITH_ERRORS,"failed" => Self::FAILED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

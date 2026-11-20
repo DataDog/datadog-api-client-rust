@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an Agent Observability span.
 #[non_exhaustive]
@@ -16,9 +16,7 @@ pub struct LLMObsSpanAttributes {
     pub duration: f64,
     /// Evaluation metrics keyed by evaluator name.
     #[serde(rename = "evaluation")]
-    pub evaluation: Option<
-        std::collections::BTreeMap<String, crate::datadogV2::model::LLMObsSpanEvaluationMetric>,
-    >,
+    pub evaluation: Option<std::collections::BTreeMap<String, crate::datadogV2::model::LLMObsSpanEvaluationMetric>>,
     /// Input or output content of an Agent Observability span.
     #[serde(rename = "input")]
     pub input: Option<crate::datadogV2::model::LLMObsSpanIO>,
@@ -74,20 +72,11 @@ pub struct LLMObsSpanAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsSpanAttributes {
-    pub fn new(
-        duration: f64,
-        ml_app: String,
-        name: String,
-        span_id: String,
-        span_kind: String,
-        start_ns: i64,
-        status: String,
-        trace_id: String,
-    ) -> LLMObsSpanAttributes {
+    pub fn new(duration: f64, ml_app: String, name: String, span_id: String, span_kind: String, start_ns: i64, status: String, trace_id: String) -> LLMObsSpanAttributes {
         LLMObsSpanAttributes {
             duration,
             evaluation: None,
@@ -112,82 +101,69 @@ impl LLMObsSpanAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn evaluation(
-        mut self,
-        value: std::collections::BTreeMap<
-            String,
-            crate::datadogV2::model::LLMObsSpanEvaluationMetric,
-        >,
-    ) -> Self {
+    
+    pub fn evaluation(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::LLMObsSpanEvaluationMetric>) -> Self {
         self.evaluation = Some(value);
         self
     }
-
+    
     pub fn input(mut self, value: crate::datadogV2::model::LLMObsSpanIO) -> Self {
         self.input = Some(value);
         self
     }
-
+    
     pub fn intent(mut self, value: String) -> Self {
         self.intent = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn metrics(mut self, value: std::collections::BTreeMap<String, f64>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     pub fn model_name(mut self, value: String) -> Self {
         self.model_name = Some(value);
         self
     }
-
+    
     pub fn model_provider(mut self, value: String) -> Self {
         self.model_provider = Some(value);
         self
     }
-
+    
     pub fn output(mut self, value: crate::datadogV2::model::LLMObsSpanIO) -> Self {
         self.output = Some(value);
         self
     }
-
+    
     pub fn parent_id(mut self, value: String) -> Self {
         self.parent_id = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
-    pub fn tool_definitions(
-        mut self,
-        value: Vec<crate::datadogV2::model::LLMObsSpanToolDefinition>,
-    ) -> Self {
+    
+    pub fn tool_definitions(mut self, value: Vec<crate::datadogV2::model::LLMObsSpanToolDefinition>) -> Self {
         self.tool_definitions = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsSpanAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -207,16 +183,10 @@ impl<'de> Deserialize<'de> for LLMObsSpanAttributes {
                 M: MapAccess<'a>,
             {
                 let mut duration: Option<f64> = None;
-                let mut evaluation: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV2::model::LLMObsSpanEvaluationMetric,
-                    >,
-                > = None;
+                let mut evaluation: Option<std::collections::BTreeMap<String, crate::datadogV2::model::LLMObsSpanEvaluationMetric>> = None;
                 let mut input: Option<crate::datadogV2::model::LLMObsSpanIO> = None;
                 let mut intent: Option<String> = None;
-                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut metadata: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut metrics: Option<std::collections::BTreeMap<String, f64>> = None;
                 let mut ml_app: Option<String> = None;
                 let mut model_name: Option<String> = None;
@@ -229,115 +199,108 @@ impl<'de> Deserialize<'de> for LLMObsSpanAttributes {
                 let mut start_ns: Option<i64> = None;
                 let mut status: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
-                let mut tool_definitions: Option<
-                    Vec<crate::datadogV2::model::LLMObsSpanToolDefinition>,
-                > = None;
+                let mut tool_definitions: Option<Vec<crate::datadogV2::model::LLMObsSpanToolDefinition>> = None;
                 let mut trace_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "duration" => {
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "evaluation" => {
                             if v.is_null() {
                                 continue;
                             }
                             evaluation = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "input" => {
                             if v.is_null() {
                                 continue;
                             }
                             input = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "intent" => {
                             if v.is_null() {
                                 continue;
                             }
                             intent = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metrics" => {
                             if v.is_null() {
                                 continue;
                             }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "ml_app" => {
                             ml_app = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             model_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model_provider" => {
                             if v.is_null() {
                                 continue;
                             }
-                            model_provider =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "output" => {
                             if v.is_null() {
                                 continue;
                             }
                             output = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "parent_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             parent_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_id" => {
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_kind" => {
                             span_kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start_ns" => {
                             start_ns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tool_definitions" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tool_definitions =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tool_definitions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trace_id" => {
                             trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let duration = duration.ok_or_else(|| M::Error::missing_field("duration"))?;

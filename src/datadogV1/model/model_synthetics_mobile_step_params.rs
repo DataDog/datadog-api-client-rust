@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The parameters of a mobile step.
 #[non_exhaustive]
@@ -54,7 +54,7 @@ pub struct SyntheticsMobileStepParams {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsMobileStepParams {
@@ -77,95 +77,78 @@ impl SyntheticsMobileStepParams {
             _unparsed: false,
         }
     }
-
+    
     pub fn check(mut self, value: crate::datadogV1::model::SyntheticsCheckType) -> Self {
         self.check = Some(value);
         self
     }
-
+    
     pub fn delay(mut self, value: i64) -> Self {
         self.delay = Some(value);
         self
     }
-
-    pub fn direction(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileStepParamsDirection,
-    ) -> Self {
+    
+    pub fn direction(mut self, value: crate::datadogV1::model::SyntheticsMobileStepParamsDirection) -> Self {
         self.direction = Some(value);
         self
     }
-
-    pub fn element(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileStepParamsElement,
-    ) -> Self {
+    
+    pub fn element(mut self, value: crate::datadogV1::model::SyntheticsMobileStepParamsElement) -> Self {
         self.element = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn max_scrolls(mut self, value: i64) -> Self {
         self.max_scrolls = Some(value);
         self
     }
-
-    pub fn positions(
-        mut self,
-        value: Vec<crate::datadogV1::model::SyntheticsMobileStepParamsPositionsItems>,
-    ) -> Self {
+    
+    pub fn positions(mut self, value: Vec<crate::datadogV1::model::SyntheticsMobileStepParamsPositionsItems>) -> Self {
         self.positions = Some(value);
         self
     }
-
+    
     pub fn subtest_public_id(mut self, value: String) -> Self {
         self.subtest_public_id = Some(value);
         self
     }
-
-    pub fn value(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileStepParamsValue,
-    ) -> Self {
+    
+    pub fn value(mut self, value: crate::datadogV1::model::SyntheticsMobileStepParamsValue) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn variable(
-        mut self,
-        value: crate::datadogV1::model::SyntheticsMobileStepParamsVariable,
-    ) -> Self {
+    
+    pub fn variable(mut self, value: crate::datadogV1::model::SyntheticsMobileStepParamsVariable) -> Self {
         self.variable = Some(value);
         self
     }
-
+    
     pub fn with_enter(mut self, value: bool) -> Self {
         self.with_enter = Some(value);
         self
     }
-
+    
     pub fn x(mut self, value: f64) -> Self {
         self.x = Some(value);
         self
     }
-
+    
     pub fn y(mut self, value: f64) -> Self {
         self.y = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsMobileStepParams {
     fn default() -> Self {
@@ -192,30 +175,18 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
             {
                 let mut check: Option<crate::datadogV1::model::SyntheticsCheckType> = None;
                 let mut delay: Option<i64> = None;
-                let mut direction: Option<
-                    crate::datadogV1::model::SyntheticsMobileStepParamsDirection,
-                > = None;
-                let mut element: Option<
-                    crate::datadogV1::model::SyntheticsMobileStepParamsElement,
-                > = None;
+                let mut direction: Option<crate::datadogV1::model::SyntheticsMobileStepParamsDirection> = None;
+                let mut element: Option<crate::datadogV1::model::SyntheticsMobileStepParamsElement> = None;
                 let mut enabled: Option<bool> = None;
                 let mut max_scrolls: Option<i64> = None;
-                let mut positions: Option<
-                    Vec<crate::datadogV1::model::SyntheticsMobileStepParamsPositionsItems>,
-                > = None;
+                let mut positions: Option<Vec<crate::datadogV1::model::SyntheticsMobileStepParamsPositionsItems>> = None;
                 let mut subtest_public_id: Option<String> = None;
-                let mut value: Option<crate::datadogV1::model::SyntheticsMobileStepParamsValue> =
-                    None;
-                let mut variable: Option<
-                    crate::datadogV1::model::SyntheticsMobileStepParamsVariable,
-                > = None;
+                let mut value: Option<crate::datadogV1::model::SyntheticsMobileStepParamsValue> = None;
+                let mut variable: Option<crate::datadogV1::model::SyntheticsMobileStepParamsVariable> = None;
                 let mut with_enter: Option<bool> = None;
                 let mut x: Option<f64> = None;
                 let mut y: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -233,13 +204,13 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "delay" => {
                             if v.is_null() {
                                 continue;
                             }
                             delay = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "direction" => {
                             if v.is_null() {
                                 continue;
@@ -253,39 +224,37 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "element" => {
                             if v.is_null() {
                                 continue;
                             }
                             element = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "maxScrolls" => {
                             if v.is_null() {
                                 continue;
                             }
-                            max_scrolls =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_scrolls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "positions" => {
                             if v.is_null() {
                                 continue;
                             }
                             positions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subtestPublicId" => {
                             if v.is_null() {
                                 continue;
                             }
-                            subtest_public_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subtest_public_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
@@ -299,36 +268,36 @@ impl<'de> Deserialize<'de> for SyntheticsMobileStepParams {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "variable" => {
                             if v.is_null() {
                                 continue;
                             }
                             variable = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "withEnter" => {
                             if v.is_null() {
                                 continue;
                             }
                             with_enter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "x" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             x = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "y" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             y = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

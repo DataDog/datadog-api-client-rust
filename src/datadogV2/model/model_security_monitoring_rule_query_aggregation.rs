@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleQueryAggregation {
-    COUNT,
-    CARDINALITY,
-    SUM,
-    MAX,
-    NEW_VALUE,
-    GEO_DATA,
-    EVENT_COUNT,
-    NONE,
+	COUNT,
+	CARDINALITY,
+	SUM,
+	MAX,
+	NEW_VALUE,
+	GEO_DATA,
+	EVENT_COUNT,
+	NONE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleQueryAggregation {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "count" => Self::COUNT,
-            "cardinality" => Self::CARDINALITY,
-            "sum" => Self::SUM,
-            "max" => Self::MAX,
-            "new_value" => Self::NEW_VALUE,
-            "geo_data" => Self::GEO_DATA,
-            "event_count" => Self::EVENT_COUNT,
-            "none" => Self::NONE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"count" => Self::COUNT,"cardinality" => Self::CARDINALITY,"sum" => Self::SUM,"max" => Self::MAX,"new_value" => Self::NEW_VALUE,"geo_data" => Self::GEO_DATA,"event_count" => Self::EVENT_COUNT,"none" => Self::NONE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

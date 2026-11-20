@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A step result from a browser, mobile, or multistep API test.
 #[non_exhaustive]
@@ -144,7 +144,7 @@ pub struct SyntheticsTestResultStep {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsTestResultStep {
@@ -197,278 +197,228 @@ impl SyntheticsTestResultStep {
             _unparsed: false,
         }
     }
-
+    
     pub fn allow_failure(mut self, value: bool) -> Self {
         self.allow_failure = Some(value);
         self
     }
-
-    pub fn api_test(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn api_test(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.api_test = Some(value);
         self
     }
-
-    pub fn assertion_result(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultStepAssertionResult,
-    ) -> Self {
+    
+    pub fn assertion_result(mut self, value: crate::datadogV2::model::SyntheticsTestResultStepAssertionResult) -> Self {
         self.assertion_result = Some(value);
         self
     }
-
-    pub fn assertions(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-    ) -> Self {
+    
+    pub fn assertions(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>) -> Self {
         self.assertions = Some(value);
         self
     }
-
+    
     pub fn blocked_requests_urls(mut self, value: Vec<String>) -> Self {
         self.blocked_requests_urls = Some(value);
         self
     }
-
+    
     pub fn bounds(mut self, value: crate::datadogV2::model::SyntheticsTestResultBounds) -> Self {
         self.bounds = Some(value);
         self
     }
-
-    pub fn browser_errors(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultBrowserError>,
-    ) -> Self {
+    
+    pub fn browser_errors(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultBrowserError>) -> Self {
         self.browser_errors = Some(value);
         self
     }
-
-    pub fn bucket_keys(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultBucketKeys,
-    ) -> Self {
+    
+    pub fn bucket_keys(mut self, value: crate::datadogV2::model::SyntheticsTestResultBucketKeys) -> Self {
         self.bucket_keys = Some(value);
         self
     }
-
-    pub fn cdn_resources(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultCdnResource>,
-    ) -> Self {
+    
+    pub fn cdn_resources(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultCdnResource>) -> Self {
         self.cdn_resources = Some(value);
         self
     }
-
+    
     pub fn click_type(mut self, value: String) -> Self {
         self.click_type = Some(value);
         self
     }
-
+    
     pub fn compressed_json_descriptor(mut self, value: String) -> Self {
         self.compressed_json_descriptor = Some(value);
         self
     }
-
+    
     pub fn config(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.config = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn duration(mut self, value: f64) -> Self {
         self.duration = Some(value);
         self
     }
-
+    
     pub fn element_description(mut self, value: String) -> Self {
         self.element_description = Some(value);
         self
     }
-
-    pub fn element_updates(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultStepElementUpdates,
-    ) -> Self {
+    
+    pub fn element_updates(mut self, value: crate::datadogV2::model::SyntheticsTestResultStepElementUpdates) -> Self {
         self.element_updates = Some(value);
         self
     }
-
-    pub fn extracted_value(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultVariable,
-    ) -> Self {
+    
+    pub fn extracted_value(mut self, value: crate::datadogV2::model::SyntheticsTestResultVariable) -> Self {
         self.extracted_value = Some(value);
         self
     }
-
+    
     pub fn failure(mut self, value: crate::datadogV2::model::SyntheticsTestResultFailure) -> Self {
         self.failure = Some(value);
         self
     }
-
-    pub fn http_results(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-    ) -> Self {
+    
+    pub fn http_results(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>) -> Self {
         self.http_results = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn is_critical(mut self, value: bool) -> Self {
         self.is_critical = Some(value);
         self
     }
-
+    
     pub fn javascript_custom_assertion_code(mut self, value: bool) -> Self {
         self.javascript_custom_assertion_code = Some(value);
         self
     }
-
+    
     pub fn locate_element_duration(mut self, value: f64) -> Self {
         self.locate_element_duration = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn request(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultRequestInfo,
-    ) -> Self {
+    
+    pub fn request(mut self, value: crate::datadogV2::model::SyntheticsTestResultRequestInfo) -> Self {
         self.request = Some(value);
         self
     }
-
-    pub fn response(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-    ) -> Self {
+    
+    pub fn response(mut self, value: crate::datadogV2::model::SyntheticsTestResultResponseInfo) -> Self {
         self.response = Some(value);
         self
     }
-
-    pub fn retries(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultStep>,
-    ) -> Self {
+    
+    pub fn retries(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultStep>) -> Self {
         self.retries = Some(value);
         self
     }
-
+    
     pub fn retry_count(mut self, value: i64) -> Self {
         self.retry_count = Some(value);
         self
     }
-
-    pub fn rum_context(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultRumContext,
-    ) -> Self {
+    
+    pub fn rum_context(mut self, value: crate::datadogV2::model::SyntheticsTestResultRumContext) -> Self {
         self.rum_context = Some(value);
         self
     }
-
+    
     pub fn started_at(mut self, value: i64) -> Self {
         self.started_at = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn sub_step(mut self, value: crate::datadogV2::model::SyntheticsTestResultSubStep) -> Self {
         self.sub_step = Some(value);
         self
     }
-
+    
     pub fn sub_test(mut self, value: crate::datadogV2::model::SyntheticsTestResultSubTest) -> Self {
         self.sub_test = Some(value);
         self
     }
-
+    
     pub fn subtype(mut self, value: String) -> Self {
         self.subtype = Some(value);
         self
     }
-
+    
     pub fn tabs(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultTab>) -> Self {
         self.tabs = Some(value);
         self
     }
-
+    
     pub fn timings(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.timings = Some(value);
         self
     }
-
+    
     pub fn tunnel(mut self, value: bool) -> Self {
         self.tunnel = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: String) -> Self {
         self.type_ = Some(value);
         self
     }
-
+    
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }
-
+    
     pub fn value(mut self, value: serde_json::Value) -> Self {
         self.value = Some(value);
         self
     }
-
-    pub fn variables(
-        mut self,
-        value: crate::datadogV2::model::SyntheticsTestResultVariables,
-    ) -> Self {
+    
+    pub fn variables(mut self, value: crate::datadogV2::model::SyntheticsTestResultVariables) -> Self {
         self.variables = Some(value);
         self
     }
-
-    pub fn vitals_metrics(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultVitalsMetrics>,
-    ) -> Self {
+    
+    pub fn vitals_metrics(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultVitalsMetrics>) -> Self {
         self.vitals_metrics = Some(value);
         self
     }
-
-    pub fn warnings(
-        mut self,
-        value: Vec<crate::datadogV2::model::SyntheticsTestResultWarning>,
-    ) -> Self {
+    
+    pub fn warnings(mut self, value: Vec<crate::datadogV2::model::SyntheticsTestResultWarning>) -> Self {
         self.warnings = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsTestResultStep {
     fn default() -> Self {
@@ -494,85 +444,49 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultStep {
                 M: MapAccess<'a>,
             {
                 let mut allow_failure: Option<bool> = None;
-                let mut api_test: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut assertion_result: Option<
-                    crate::datadogV2::model::SyntheticsTestResultStepAssertionResult,
-                > = None;
-                let mut assertions: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-                > = None;
+                let mut api_test: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut assertion_result: Option<crate::datadogV2::model::SyntheticsTestResultStepAssertionResult> = None;
+                let mut assertions: Option<Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>> = None;
                 let mut blocked_requests_urls: Option<Vec<String>> = None;
                 let mut bounds: Option<crate::datadogV2::model::SyntheticsTestResultBounds> = None;
-                let mut browser_errors: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultBrowserError>,
-                > = None;
-                let mut bucket_keys: Option<
-                    crate::datadogV2::model::SyntheticsTestResultBucketKeys,
-                > = None;
-                let mut cdn_resources: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultCdnResource>,
-                > = None;
+                let mut browser_errors: Option<Vec<crate::datadogV2::model::SyntheticsTestResultBrowserError>> = None;
+                let mut bucket_keys: Option<crate::datadogV2::model::SyntheticsTestResultBucketKeys> = None;
+                let mut cdn_resources: Option<Vec<crate::datadogV2::model::SyntheticsTestResultCdnResource>> = None;
                 let mut click_type: Option<String> = None;
                 let mut compressed_json_descriptor: Option<String> = None;
-                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut config: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut description: Option<String> = None;
                 let mut duration: Option<f64> = None;
                 let mut element_description: Option<String> = None;
-                let mut element_updates: Option<
-                    crate::datadogV2::model::SyntheticsTestResultStepElementUpdates,
-                > = None;
-                let mut extracted_value: Option<
-                    crate::datadogV2::model::SyntheticsTestResultVariable,
-                > = None;
-                let mut failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure> =
-                    None;
-                let mut http_results: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>,
-                > = None;
+                let mut element_updates: Option<crate::datadogV2::model::SyntheticsTestResultStepElementUpdates> = None;
+                let mut extracted_value: Option<crate::datadogV2::model::SyntheticsTestResultVariable> = None;
+                let mut failure: Option<crate::datadogV2::model::SyntheticsTestResultFailure> = None;
+                let mut http_results: Option<Vec<crate::datadogV2::model::SyntheticsTestResultAssertionResult>> = None;
                 let mut id: Option<String> = None;
                 let mut is_critical: Option<bool> = None;
                 let mut javascript_custom_assertion_code: Option<bool> = None;
                 let mut locate_element_duration: Option<f64> = None;
                 let mut name: Option<String> = None;
-                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> =
-                    None;
-                let mut response: Option<
-                    crate::datadogV2::model::SyntheticsTestResultResponseInfo,
-                > = None;
-                let mut retries: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>> =
-                    None;
+                let mut request: Option<crate::datadogV2::model::SyntheticsTestResultRequestInfo> = None;
+                let mut response: Option<crate::datadogV2::model::SyntheticsTestResultResponseInfo> = None;
+                let mut retries: Option<Vec<crate::datadogV2::model::SyntheticsTestResultStep>> = None;
                 let mut retry_count: Option<i64> = None;
-                let mut rum_context: Option<
-                    crate::datadogV2::model::SyntheticsTestResultRumContext,
-                > = None;
+                let mut rum_context: Option<crate::datadogV2::model::SyntheticsTestResultRumContext> = None;
                 let mut started_at: Option<i64> = None;
                 let mut status: Option<String> = None;
-                let mut sub_step: Option<crate::datadogV2::model::SyntheticsTestResultSubStep> =
-                    None;
-                let mut sub_test: Option<crate::datadogV2::model::SyntheticsTestResultSubTest> =
-                    None;
+                let mut sub_step: Option<crate::datadogV2::model::SyntheticsTestResultSubStep> = None;
+                let mut sub_test: Option<crate::datadogV2::model::SyntheticsTestResultSubTest> = None;
                 let mut subtype: Option<String> = None;
                 let mut tabs: Option<Vec<crate::datadogV2::model::SyntheticsTestResultTab>> = None;
-                let mut timings: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut timings: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut tunnel: Option<bool> = None;
                 let mut type_: Option<String> = None;
                 let mut url: Option<String> = None;
                 let mut value: Option<serde_json::Value> = None;
-                let mut variables: Option<crate::datadogV2::model::SyntheticsTestResultVariables> =
-                    None;
-                let mut vitals_metrics: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultVitalsMetrics>,
-                > = None;
-                let mut warnings: Option<
-                    Vec<crate::datadogV2::model::SyntheticsTestResultWarning>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut variables: Option<crate::datadogV2::model::SyntheticsTestResultVariables> = None;
+                let mut vitals_metrics: Option<Vec<crate::datadogV2::model::SyntheticsTestResultVitalsMetrics>> = None;
+                let mut warnings: Option<Vec<crate::datadogV2::model::SyntheticsTestResultWarning>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -581,283 +495,265 @@ impl<'de> Deserialize<'de> for SyntheticsTestResultStep {
                             if v.is_null() {
                                 continue;
                             }
-                            allow_failure =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            allow_failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "api_test" => {
                             if v.is_null() {
                                 continue;
                             }
                             api_test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "assertion_result" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assertion_result =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assertion_result = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assertions" => {
                             if v.is_null() {
                                 continue;
                             }
                             assertions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "blocked_requests_urls" => {
                             if v.is_null() {
                                 continue;
                             }
-                            blocked_requests_urls =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            blocked_requests_urls = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bounds" => {
                             if v.is_null() {
                                 continue;
                             }
                             bounds = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "browser_errors" => {
                             if v.is_null() {
                                 continue;
                             }
-                            browser_errors =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_keys" => {
                             if v.is_null() {
                                 continue;
                             }
-                            bucket_keys =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_keys = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cdn_resources" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cdn_resources =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cdn_resources = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "click_type" => {
                             if v.is_null() {
                                 continue;
                             }
                             click_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "compressed_json_descriptor" => {
                             if v.is_null() {
                                 continue;
                             }
-                            compressed_json_descriptor =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            compressed_json_descriptor = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "config" => {
                             if v.is_null() {
                                 continue;
                             }
                             config = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "duration" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "element_description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            element_description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            element_description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "element_updates" => {
                             if v.is_null() {
                                 continue;
                             }
-                            element_updates =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            element_updates = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "extracted_value" => {
                             if v.is_null() {
                                 continue;
                             }
-                            extracted_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            extracted_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "failure" => {
                             if v.is_null() {
                                 continue;
                             }
                             failure = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "http_results" => {
                             if v.is_null() {
                                 continue;
                             }
-                            http_results =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            http_results = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_critical" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_critical =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_critical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "javascript_custom_assertion_code" => {
                             if v.is_null() {
                                 continue;
                             }
-                            javascript_custom_assertion_code =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            javascript_custom_assertion_code = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "locate_element_duration" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            locate_element_duration =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            locate_element_duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "request" => {
                             if v.is_null() {
                                 continue;
                             }
                             request = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "response" => {
                             if v.is_null() {
                                 continue;
                             }
                             response = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retries" => {
                             if v.is_null() {
                                 continue;
                             }
                             retries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "retry_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            retry_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            retry_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_context" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rum_context =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_context = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "started_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             started_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sub_step" => {
                             if v.is_null() {
                                 continue;
                             }
                             sub_step = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "sub_test" => {
                             if v.is_null() {
                                 continue;
                             }
                             sub_test = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "subtype" => {
                             if v.is_null() {
                                 continue;
                             }
                             subtype = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tabs" => {
                             if v.is_null() {
                                 continue;
                             }
                             tabs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timings" => {
                             if v.is_null() {
                                 continue;
                             }
                             timings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tunnel" => {
                             if v.is_null() {
                                 continue;
                             }
                             tunnel = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
                             }
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "url" => {
                             if v.is_null() {
                                 continue;
                             }
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "value" => {
                             if v.is_null() {
                                 continue;
                             }
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "variables" => {
                             if v.is_null() {
                                 continue;
                             }
                             variables = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "vitals_metrics" => {
                             if v.is_null() {
                                 continue;
                             }
-                            vitals_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vitals_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "warnings" => {
                             if v.is_null() {
                                 continue;
                             }
                             warnings = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IssuesSearchRequestDataAttributesPersona {
-    ALL,
-    BROWSER,
-    MOBILE,
-    BACKEND,
-    AGENT,
+	ALL,
+	BROWSER,
+	MOBILE,
+	BACKEND,
+	AGENT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for IssuesSearchRequestDataAttributesPersona {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "ALL" => Self::ALL,
-            "BROWSER" => Self::BROWSER,
-            "MOBILE" => Self::MOBILE,
-            "BACKEND" => Self::BACKEND,
-            "AGENT" => Self::AGENT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"ALL" => Self::ALL,"BROWSER" => Self::BROWSER,"MOBILE" => Self::MOBILE,"BACKEND" => Self::BACKEND,"AGENT" => Self::AGENT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

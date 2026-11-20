@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Live consumption of one AI Gateway rate limit.
 #[non_exhaustive]
@@ -33,17 +33,11 @@ pub struct AiGatewayRateLimitUsageAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayRateLimitUsageAttributes {
-    pub fn new(
-        input_tokens: i64,
-        limited_requests: i64,
-        output_tokens: i64,
-        requests: i64,
-        would_limit_requests: i64,
-    ) -> AiGatewayRateLimitUsageAttributes {
+    pub fn new(input_tokens: i64, limited_requests: i64, output_tokens: i64, requests: i64, would_limit_requests: i64) -> AiGatewayRateLimitUsageAttributes {
         AiGatewayRateLimitUsageAttributes {
             cost_microcents: None,
             input_tokens,
@@ -55,20 +49,19 @@ impl AiGatewayRateLimitUsageAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn cost_microcents(mut self, value: i64) -> Self {
         self.cost_microcents = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -93,10 +86,7 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
                 let mut output_tokens: Option<i64> = None;
                 let mut requests: Option<i64> = None;
                 let mut would_limit_requests: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -105,44 +95,35 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitUsageAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            cost_microcents =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cost_microcents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "input_tokens" => {
-                            input_tokens =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            input_tokens = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "limited_requests" => {
-                            limited_requests =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            limited_requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "output_tokens" => {
-                            output_tokens =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            output_tokens = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requests" => {
                             requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "would_limit_requests" => {
-                            would_limit_requests =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            would_limit_requests = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let input_tokens =
-                    input_tokens.ok_or_else(|| M::Error::missing_field("input_tokens"))?;
-                let limited_requests =
-                    limited_requests.ok_or_else(|| M::Error::missing_field("limited_requests"))?;
-                let output_tokens =
-                    output_tokens.ok_or_else(|| M::Error::missing_field("output_tokens"))?;
+                let input_tokens = input_tokens.ok_or_else(|| M::Error::missing_field("input_tokens"))?;
+                let limited_requests = limited_requests.ok_or_else(|| M::Error::missing_field("limited_requests"))?;
+                let output_tokens = output_tokens.ok_or_else(|| M::Error::missing_field("output_tokens"))?;
                 let requests = requests.ok_or_else(|| M::Error::missing_field("requests"))?;
-                let would_limit_requests = would_limit_requests
-                    .ok_or_else(|| M::Error::missing_field("would_limit_requests"))?;
+                let would_limit_requests = would_limit_requests.ok_or_else(|| M::Error::missing_field("would_limit_requests"))?;
 
                 let content = AiGatewayRateLimitUsageAttributes {
                     cost_microcents,

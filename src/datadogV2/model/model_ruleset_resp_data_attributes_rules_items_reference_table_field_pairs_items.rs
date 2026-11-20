@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems` object.
 #[non_exhaustive]
@@ -21,14 +21,11 @@ pub struct RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
-    pub fn new(
-        input_column: String,
-        output_key: String,
-    ) -> RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
+    pub fn new(input_column: String, output_key: String) -> RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
         RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
             input_column,
             output_key,
@@ -36,15 +33,14 @@ impl RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -65,30 +61,25 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsReferenceTable
             {
                 let mut input_column: Option<String> = None;
                 let mut output_key: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "input_column" => {
-                            input_column =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            input_column = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "output_key" => {
                             output_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let input_column =
-                    input_column.ok_or_else(|| M::Error::missing_field("input_column"))?;
+                let input_column = input_column.ok_or_else(|| M::Error::missing_field("input_column"))?;
                 let output_key = output_key.ok_or_else(|| M::Error::missing_field("output_key"))?;
 
                 let content = RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItems {
@@ -102,8 +93,6 @@ impl<'de> Deserialize<'de> for RulesetRespDataAttributesRulesItemsReferenceTable
             }
         }
 
-        deserializer.deserialize_any(
-            RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItemsVisitor,
-        )
+        deserializer.deserialize_any(RulesetRespDataAttributesRulesItemsReferenceTableFieldPairsItemsVisitor)
     }
 }

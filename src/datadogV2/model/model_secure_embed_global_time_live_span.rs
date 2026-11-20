@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecureEmbedGlobalTimeLiveSpan {
-    PAST_FIFTEEN_MINUTES,
-    PAST_ONE_HOUR,
-    PAST_FOUR_HOURS,
-    PAST_ONE_DAY,
-    PAST_TWO_DAYS,
-    PAST_ONE_WEEK,
-    PAST_ONE_MONTH,
-    PAST_THREE_MONTHS,
+	PAST_FIFTEEN_MINUTES,
+	PAST_ONE_HOUR,
+	PAST_FOUR_HOURS,
+	PAST_ONE_DAY,
+	PAST_TWO_DAYS,
+	PAST_ONE_WEEK,
+	PAST_ONE_MONTH,
+	PAST_THREE_MONTHS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for SecureEmbedGlobalTimeLiveSpan {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "15m" => Self::PAST_FIFTEEN_MINUTES,
-            "1h" => Self::PAST_ONE_HOUR,
-            "4h" => Self::PAST_FOUR_HOURS,
-            "1d" => Self::PAST_ONE_DAY,
-            "2d" => Self::PAST_TWO_DAYS,
-            "1w" => Self::PAST_ONE_WEEK,
-            "1mo" => Self::PAST_ONE_MONTH,
-            "3mo" => Self::PAST_THREE_MONTHS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"15m" => Self::PAST_FIFTEEN_MINUTES,"1h" => Self::PAST_ONE_HOUR,"4h" => Self::PAST_FOUR_HOURS,"1d" => Self::PAST_ONE_DAY,"2d" => Self::PAST_TWO_DAYS,"1w" => Self::PAST_ONE_WEEK,"1mo" => Self::PAST_ONE_MONTH,"3mo" => Self::PAST_THREE_MONTHS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

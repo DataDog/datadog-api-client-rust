@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A one-time downtime definition.
 #[non_exhaustive]
@@ -12,16 +12,16 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeScheduleOneTimeCreateUpdateRequest {
     /// ISO-8601 Datetime to end the downtime. Must include a UTC offset of zero. If not provided, the
-    /// downtime continues forever.
+/// downtime continues forever.
     #[serde(rename = "end", default, with = "::serde_with::rust::double_option")]
     pub end: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// ISO-8601 Datetime to start the downtime. Must include a UTC offset of zero. If not provided, the
-    /// downtime starts the moment it is created.
+/// downtime starts the moment it is created.
     #[serde(rename = "start", default, with = "::serde_with::rust::double_option")]
     pub start: Option<Option<chrono::DateTime<chrono::Utc>>>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DowntimeScheduleOneTimeCreateUpdateRequest {
@@ -32,17 +32,19 @@ impl DowntimeScheduleOneTimeCreateUpdateRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn end(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.end = Some(value);
         self
     }
-
+    
     pub fn start(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.start = Some(value);
         self
     }
+    
 }
+
 
 impl Default for DowntimeScheduleOneTimeCreateUpdateRequest {
     fn default() -> Self {
@@ -75,15 +77,13 @@ impl<'de> Deserialize<'de> for DowntimeScheduleOneTimeCreateUpdateRequest {
                     match k.as_str() {
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

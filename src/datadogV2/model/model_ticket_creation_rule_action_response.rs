@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The action to take when the ticket creation rule matches a finding.
 #[non_exhaustive]
@@ -18,10 +18,10 @@ pub struct TicketCreationRuleActionResponse {
     #[serde(rename = "auto_disabled_reason")]
     pub auto_disabled_reason: Option<String>,
     /// Target-specific fields of the ticket to create.
-    ///
-    /// For `target: jira`, the custom fields of the Jira issue. For the list of available fields, see [Jira documentation](<https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issues/#api-rest-api-2-issue-createmeta-projectidorkey-issuetypes-issuetypeid-get>).
-    ///
-    /// For `target: linear`, the optional keys `linear_project_id` (string, the identifier of the Linear project the issue is created in) and `linear_label_ids` (array of strings, the identifiers of the Linear labels applied to the issue).
+///
+/// For `target: jira`, the custom fields of the Jira issue. For the list of available fields, see [Jira documentation](<https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issues/#api-rest-api-2-issue-createmeta-projectidorkey-issuetypes-issuetypeid-get>).
+///
+/// For `target: linear`, the optional keys `linear_project_id` (string, the identifier of the Linear project the issue is created in) and `linear_label_ids` (array of strings, the identifiers of the Linear labels applied to the issue).
     #[serde(rename = "fields")]
     pub fields: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// The maximum number of tickets the rule may create per day. If exceeded, one final ticket will be created, explaining the limit was hit and link back to the responsible rule.
@@ -37,15 +37,11 @@ pub struct TicketCreationRuleActionResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TicketCreationRuleActionResponse {
-    pub fn new(
-        max_tickets_per_day: i64,
-        project_id: uuid::Uuid,
-        target: crate::datadogV2::model::TicketCreationTarget,
-    ) -> TicketCreationRuleActionResponse {
+    pub fn new(max_tickets_per_day: i64, project_id: uuid::Uuid, target: crate::datadogV2::model::TicketCreationTarget) -> TicketCreationRuleActionResponse {
         TicketCreationRuleActionResponse {
             assignee_id: None,
             auto_disabled_reason: None,
@@ -57,30 +53,29 @@ impl TicketCreationRuleActionResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn assignee_id(mut self, value: uuid::Uuid) -> Self {
         self.assignee_id = Some(value);
         self
     }
-
+    
     pub fn auto_disabled_reason(mut self, value: String) -> Self {
         self.auto_disabled_reason = Some(value);
         self
     }
-
+    
     pub fn fields(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.fields = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TicketCreationRuleActionResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -101,15 +96,11 @@ impl<'de> Deserialize<'de> for TicketCreationRuleActionResponse {
             {
                 let mut assignee_id: Option<uuid::Uuid> = None;
                 let mut auto_disabled_reason: Option<String> = None;
-                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut max_tickets_per_day: Option<i64> = None;
                 let mut project_id: Option<uuid::Uuid> = None;
                 let mut target: Option<crate::datadogV2::model::TicketCreationTarget> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -118,29 +109,26 @@ impl<'de> Deserialize<'de> for TicketCreationRuleActionResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            assignee_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignee_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "auto_disabled_reason" => {
                             if v.is_null() {
                                 continue;
                             }
-                            auto_disabled_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            auto_disabled_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fields" => {
                             if v.is_null() {
                                 continue;
                             }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "max_tickets_per_day" => {
-                            max_tickets_per_day =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            max_tickets_per_day = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "target" => {
                             target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _target) = target {
@@ -151,16 +139,15 @@ impl<'de> Deserialize<'de> for TicketCreationRuleActionResponse {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let max_tickets_per_day = max_tickets_per_day
-                    .ok_or_else(|| M::Error::missing_field("max_tickets_per_day"))?;
+                let max_tickets_per_day = max_tickets_per_day.ok_or_else(|| M::Error::missing_field("max_tickets_per_day"))?;
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
                 let target = target.ok_or_else(|| M::Error::missing_field("target"))?;
 

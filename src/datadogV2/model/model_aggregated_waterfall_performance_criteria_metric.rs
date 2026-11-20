@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AggregatedWaterfallPerformanceCriteriaMetric {
-    LOADING_TIME,
-    LARGEST_CONTENTFUL_PAINT,
-    FIRST_CONTENTFUL_PAINT,
-    INTERACTION_TO_NEXT_PAINT,
+	LOADING_TIME,
+	LARGEST_CONTENTFUL_PAINT,
+	FIRST_CONTENTFUL_PAINT,
+	INTERACTION_TO_NEXT_PAINT,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for AggregatedWaterfallPerformanceCriteriaMetric {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "loading_time" => Self::LOADING_TIME,
-            "largest_contentful_paint" => Self::LARGEST_CONTENTFUL_PAINT,
-            "first_contentful_paint" => Self::FIRST_CONTENTFUL_PAINT,
-            "interaction_to_next_paint" => Self::INTERACTION_TO_NEXT_PAINT,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"loading_time" => Self::LOADING_TIME,"largest_contentful_paint" => Self::LARGEST_CONTENTFUL_PAINT,"first_contentful_paint" => Self::FIRST_CONTENTFUL_PAINT,"interaction_to_next_paint" => Self::INTERACTION_TO_NEXT_PAINT,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

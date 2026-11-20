@@ -1,9 +1,9 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 
 /// GetSegmentsOptionalParams is a struct for passing parameters to the method [`RumReplaySessionsAPI::get_segments`]
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct GetSegmentsOptionalParams {
     /// Maximum size in bytes for the segment list.
     pub max_list_size: Option<i64>,
     /// Token of the next page from the `X-Paging` header of the previous response.
-    /// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
+/// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
     pub paging: Option<String>,
 }
 
@@ -37,12 +37,15 @@ impl GetSegmentsOptionalParams {
         self
     }
     /// Token of the next page from the `X-Paging` header of the previous response.
-    /// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
+/// Send it without changes, URL-encoded in the query string. Omit it to get the first page.
     pub fn paging(mut self, value: String) -> Self {
         self.paging = Some(value);
         self
     }
 }
+
+
+
 
 /// GetSegmentsError is a struct for typed errors of method [`RumReplaySessionsAPI::get_segments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -51,6 +54,7 @@ pub enum GetSegmentsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Retrieve segments for RUM replay sessions.
 /// Access session replay data stored in event platform or blob storage.
@@ -75,7 +79,8 @@ impl RumReplaySessionsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -120,39 +125,27 @@ impl RumReplaySessionsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get segments for a view.
-    pub async fn get_segments(
-        &self,
-        view_id: String,
-        session_id: String,
-        params: GetSegmentsOptionalParams,
-    ) -> Result<(), datadog::Error<GetSegmentsError>> {
-        match self
-            .get_segments_with_http_info(view_id, session_id, params)
-            .await
-        {
+    pub async fn get_segments(&self, view_id: String, session_id: String, params: GetSegmentsOptionalParams) -> Result<(), datadog::Error<GetSegmentsError>> {
+        match self.get_segments_with_http_info(view_id, session_id,  params).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get segments for a view.
-    pub async fn get_segments_with_http_info(
-        &self,
-        view_id: String,
-        session_id: String,
-        params: GetSegmentsOptionalParams,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<GetSegmentsError>> {
+    pub async fn get_segments_with_http_info(&self, view_id: String, session_id: String, params: GetSegmentsOptionalParams) -> Result<datadog::ResponseContent<()>, datadog::Error<GetSegmentsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_segments";
 
+        
         // unbox and build optional parameters
         let source = params.source;
         let ts = params.ts;
@@ -163,32 +156,32 @@ impl RumReplaySessionsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/replay/sessions/{session_id}/views/{view_id}/segments",
-            local_configuration.get_operation_host(local_operation_id),
-            view_id = datadog::urlencode(view_id),
-            session_id = datadog::urlencode(session_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), view_id=
+            datadog::urlencode(view_id)
+            , session_id=
+            datadog::urlencode(session_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = source {
-            local_req_builder =
-                local_req_builder.query(&[("source", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("source", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = ts {
-            local_req_builder = local_req_builder.query(&[("ts", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("ts", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = max_list_size {
-            local_req_builder =
-                local_req_builder.query(&[("max_list_size", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("max_list_size", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = paging {
-            local_req_builder =
-                local_req_builder.query(&[("paging", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("paging", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -201,22 +194,16 @@ impl RumReplaySessionsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -235,11 +222,7 @@ impl RumReplaySessionsAPI {
             })
         } else {
             let local_entity: Option<GetSegmentsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

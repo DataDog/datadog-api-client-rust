@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Twilio Alert resource logs, which detail the errors and warnings raised when Twilio makes a webhook request to your server or when your application calls the Twilio REST API. This is the one kind of data the integration collects by default.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct TwilioAlertsLogsIntegrationDataflowRequest {
     pub enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TwilioAlertsLogsIntegrationDataflowRequest {
@@ -26,12 +26,14 @@ impl TwilioAlertsLogsIntegrationDataflowRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for TwilioAlertsLogsIntegrationDataflowRequest {
     fn default() -> Self {
@@ -66,16 +68,17 @@ impl<'de> Deserialize<'de> for TwilioAlertsLogsIntegrationDataflowRequest {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
-                let content = TwilioAlertsLogsIntegrationDataflowRequest { enabled, _unparsed };
+                let content = TwilioAlertsLogsIntegrationDataflowRequest {
+                    enabled,
+                    _unparsed,
+                };
 
                 Ok(content)
             }

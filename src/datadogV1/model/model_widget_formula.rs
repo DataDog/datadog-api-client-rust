@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Formula to be used in a widget query.
 #[non_exhaustive]
@@ -19,8 +19,7 @@ pub struct WidgetFormula {
     pub cell_display_mode: Option<crate::datadogV1::model::TableWidgetCellDisplayMode>,
     /// Cell display mode options for the widget formula. (only if `cell_display_mode` is set to `trend`).
     #[serde(rename = "cell_display_mode_options")]
-    pub cell_display_mode_options:
-        Option<crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions>,
+    pub cell_display_mode_options: Option<crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions>,
     /// List of conditional formats.
     #[serde(rename = "conditional_formats")]
     pub conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>>,
@@ -40,7 +39,7 @@ pub struct WidgetFormula {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl WidgetFormula {
@@ -58,59 +57,49 @@ impl WidgetFormula {
             _unparsed: false,
         }
     }
-
+    
     pub fn alias(mut self, value: String) -> Self {
         self.alias = Some(value);
         self
     }
-
-    pub fn cell_display_mode(
-        mut self,
-        value: crate::datadogV1::model::TableWidgetCellDisplayMode,
-    ) -> Self {
+    
+    pub fn cell_display_mode(mut self, value: crate::datadogV1::model::TableWidgetCellDisplayMode) -> Self {
         self.cell_display_mode = Some(value);
         self
     }
-
-    pub fn cell_display_mode_options(
-        mut self,
-        value: crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions,
-    ) -> Self {
+    
+    pub fn cell_display_mode_options(mut self, value: crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions) -> Self {
         self.cell_display_mode_options = Some(value);
         self
     }
-
-    pub fn conditional_formats(
-        mut self,
-        value: Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-    ) -> Self {
+    
+    pub fn conditional_formats(mut self, value: Vec<crate::datadogV1::model::WidgetConditionalFormat>) -> Self {
         self.conditional_formats = Some(value);
         self
     }
-
+    
     pub fn limit(mut self, value: crate::datadogV1::model::WidgetFormulaLimit) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn number_format(mut self, value: crate::datadogV1::model::WidgetNumberFormat) -> Self {
         self.number_format = Some(value);
         self
     }
-
+    
     pub fn style(mut self, value: crate::datadogV1::model::WidgetFormulaStyle) -> Self {
         self.style = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for WidgetFormula {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -130,23 +119,14 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                 M: MapAccess<'a>,
             {
                 let mut alias: Option<String> = None;
-                let mut cell_display_mode: Option<
-                    crate::datadogV1::model::TableWidgetCellDisplayMode,
-                > = None;
-                let mut cell_display_mode_options: Option<
-                    crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions,
-                > = None;
-                let mut conditional_formats: Option<
-                    Vec<crate::datadogV1::model::WidgetConditionalFormat>,
-                > = None;
+                let mut cell_display_mode: Option<crate::datadogV1::model::TableWidgetCellDisplayMode> = None;
+                let mut cell_display_mode_options: Option<crate::datadogV1::model::WidgetFormulaCellDisplayModeOptions> = None;
+                let mut conditional_formats: Option<Vec<crate::datadogV1::model::WidgetConditionalFormat>> = None;
                 let mut formula: Option<String> = None;
                 let mut limit: Option<crate::datadogV1::model::WidgetFormulaLimit> = None;
                 let mut number_format: Option<crate::datadogV1::model::WidgetNumberFormat> = None;
                 let mut style: Option<crate::datadogV1::model::WidgetFormulaStyle> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -156,13 +136,12 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                                 continue;
                             }
                             alias = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cell_display_mode" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cell_display_mode =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            cell_display_mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _cell_display_mode) = cell_display_mode {
                                 match _cell_display_mode {
                                     crate::datadogV1::model::TableWidgetCellDisplayMode::UnparsedObject(_cell_display_mode) => {
@@ -171,48 +150,45 @@ impl<'de> Deserialize<'de> for WidgetFormula {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "cell_display_mode_options" => {
                             if v.is_null() {
                                 continue;
                             }
-                            cell_display_mode_options =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cell_display_mode_options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conditional_formats" => {
                             if v.is_null() {
                                 continue;
                             }
-                            conditional_formats =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            conditional_formats = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "formula" => {
                             formula = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "number_format" => {
                             if v.is_null() {
                                 continue;
                             }
-                            number_format =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            number_format = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "style" => {
                             if v.is_null() {
                                 continue;
                             }
                             style = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let formula = formula.ok_or_else(|| M::Error::missing_field("formula"))?;

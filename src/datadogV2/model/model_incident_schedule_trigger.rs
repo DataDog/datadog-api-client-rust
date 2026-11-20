@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Trigger a workflow on a schedule for an incident.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct IncidentScheduleTrigger {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentScheduleTrigger {
@@ -37,25 +37,24 @@ impl IncidentScheduleTrigger {
             _unparsed: false,
         }
     }
-
+    
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
-
+    
     pub fn tag_condition(mut self, value: crate::datadogV2::model::IncidentCondition) -> Self {
         self.tag_condition = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,10 +76,7 @@ impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
                 let mut incident_type: Option<String> = None;
                 let mut rrule: Option<String> = None;
                 let mut tag_condition: Option<crate::datadogV2::model::IncidentCondition> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -89,24 +85,22 @@ impl<'de> Deserialize<'de> for IncidentScheduleTrigger {
                             if v.is_null() {
                                 continue;
                             }
-                            incident_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rrule" => {
                             rrule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tagCondition" => {
                             if v.is_null() {
                                 continue;
                             }
-                            tag_condition =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            tag_condition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let rrule = rrule.ok_or_else(|| M::Error::missing_field("rrule"))?;

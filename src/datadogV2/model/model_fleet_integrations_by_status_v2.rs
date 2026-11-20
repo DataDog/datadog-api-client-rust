@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Integrations organized by their status.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct FleetIntegrationsByStatusV2 {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FleetIntegrationsByStatusV2 {
@@ -45,55 +45,38 @@ impl FleetIntegrationsByStatusV2 {
             _unparsed: false,
         }
     }
-
-    pub fn configuration_files(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetConfigurationFileV2>,
-    ) -> Self {
+    
+    pub fn configuration_files(mut self, value: Vec<crate::datadogV2::model::FleetConfigurationFileV2>) -> Self {
         self.configuration_files = Some(value);
         self
     }
-
-    pub fn error_integrations(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-    ) -> Self {
+    
+    pub fn error_integrations(mut self, value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>) -> Self {
         self.error_integrations = Some(value);
         self
     }
-
-    pub fn missing_integrations(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetDetectedIntegration>,
-    ) -> Self {
+    
+    pub fn missing_integrations(mut self, value: Vec<crate::datadogV2::model::FleetDetectedIntegration>) -> Self {
         self.missing_integrations = Some(value);
         self
     }
-
-    pub fn warning_integrations(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-    ) -> Self {
+    
+    pub fn warning_integrations(mut self, value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>) -> Self {
         self.warning_integrations = Some(value);
         self
     }
-
-    pub fn working_integrations(
-        mut self,
-        value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-    ) -> Self {
+    
+    pub fn working_integrations(mut self, value: Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>) -> Self {
         self.working_integrations = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for FleetIntegrationsByStatusV2 {
     fn default() -> Self {
@@ -118,25 +101,12 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
             where
                 M: MapAccess<'a>,
             {
-                let mut configuration_files: Option<
-                    Vec<crate::datadogV2::model::FleetConfigurationFileV2>,
-                > = None;
-                let mut error_integrations: Option<
-                    Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-                > = None;
-                let mut missing_integrations: Option<
-                    Vec<crate::datadogV2::model::FleetDetectedIntegration>,
-                > = None;
-                let mut warning_integrations: Option<
-                    Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-                > = None;
-                let mut working_integrations: Option<
-                    Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut configuration_files: Option<Vec<crate::datadogV2::model::FleetConfigurationFileV2>> = None;
+                let mut error_integrations: Option<Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>> = None;
+                let mut missing_integrations: Option<Vec<crate::datadogV2::model::FleetDetectedIntegration>> = None;
+                let mut warning_integrations: Option<Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>> = None;
+                let mut working_integrations: Option<Vec<crate::datadogV2::model::FleetIntegrationDetailsV2>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -145,42 +115,37 @@ impl<'de> Deserialize<'de> for FleetIntegrationsByStatusV2 {
                             if v.is_null() {
                                 continue;
                             }
-                            configuration_files =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            configuration_files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            error_integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "missing_integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            missing_integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            missing_integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "warning_integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            warning_integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            warning_integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "working_integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            working_integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            working_integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

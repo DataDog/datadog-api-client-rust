@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListRUMArchiveConfigsOptionalParams is a struct for passing parameters to the method [`RUMManagedArchivesAPI::list_rum_archive_configs`]
 #[non_exhaustive]
@@ -33,6 +30,9 @@ impl ListRUMArchiveConfigsOptionalParams {
     }
 }
 
+
+
+
 /// DeleteRUMArchiveConfigError is a struct for typed errors of method [`RUMManagedArchivesAPI::delete_rum_archive_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -41,6 +41,7 @@ pub enum DeleteRUMArchiveConfigError {
     RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRUMArchiveConfigError is a struct for typed errors of method [`RUMManagedArchivesAPI::get_rum_archive_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -51,6 +52,7 @@ pub enum GetRUMArchiveConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRUMArchiveConfigsError is a struct for typed errors of method [`RUMManagedArchivesAPI::list_rum_archive_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -60,6 +62,7 @@ pub enum ListRUMArchiveConfigsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateRUMArchiveConfigError is a struct for typed errors of method [`RUMManagedArchivesAPI::update_rum_archive_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -68,6 +71,7 @@ pub enum UpdateRUMArchiveConfigError {
     RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Configure Managed Archives for RUM applications. Your organization must have Managed Archives enabled.
 ///
@@ -93,7 +97,8 @@ impl RUMManagedArchivesAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -138,45 +143,44 @@ impl RUMManagedArchivesAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete the archive configuration for a RUM application. Archived and recovered session data is not deleted.
-    pub async fn delete_rum_archive_config(
-        &self,
-        app_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteRUMArchiveConfigError>> {
+    pub async fn delete_rum_archive_config(&self, app_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteRUMArchiveConfigError>> {
         match self.delete_rum_archive_config_with_http_info(app_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the archive configuration for a RUM application. Archived and recovered session data is not deleted.
-    pub async fn delete_rum_archive_config_with_http_info(
-        &self,
-        app_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMArchiveConfigError>> {
+    pub async fn delete_rum_archive_config_with_http_info(&self, app_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMArchiveConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_archive_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/archive/{app_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_id = datadog::urlencode(app_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_id=
+            datadog::urlencode(app_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -189,22 +193,16 @@ impl RUMManagedArchivesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -222,63 +220,50 @@ impl RUMManagedArchivesAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRUMArchiveConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRUMArchiveConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the archive configuration for a RUM application.
-    pub async fn get_rum_archive_config(
-        &self,
-        app_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigResponse,
-        datadog::Error<GetRUMArchiveConfigError>,
-    > {
+    pub async fn get_rum_archive_config(&self, app_id: uuid::Uuid) -> Result<crate::datadogV2::model::RumArchiveConfigResponse, datadog::Error<GetRUMArchiveConfigError>> {
         match self.get_rum_archive_config_with_http_info(app_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the archive configuration for a RUM application.
-    pub async fn get_rum_archive_config_with_http_info(
-        &self,
-        app_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>,
-        datadog::Error<GetRUMArchiveConfigError>,
-    > {
+    pub async fn get_rum_archive_config_with_http_info(&self, app_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>, datadog::Error<GetRUMArchiveConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_archive_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/archive/{app_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_id = datadog::urlencode(app_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_id=
+            datadog::urlencode(app_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -291,22 +276,16 @@ impl RUMManagedArchivesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -318,63 +297,42 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRUMArchiveConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRUMArchiveConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of archive configurations for your organization.
-    pub async fn list_rum_archive_configs(
-        &self,
-        params: ListRUMArchiveConfigsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigListResponse,
-        datadog::Error<ListRUMArchiveConfigsError>,
-    > {
-        match self.list_rum_archive_configs_with_http_info(params).await {
+    pub async fn list_rum_archive_configs(&self, params: ListRUMArchiveConfigsOptionalParams) -> Result<crate::datadogV2::model::RumArchiveConfigListResponse, datadog::Error<ListRUMArchiveConfigsError>> {
+        match self.list_rum_archive_configs_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of archive configurations for your organization.
-    pub async fn list_rum_archive_configs_with_http_info(
-        &self,
-        params: ListRUMArchiveConfigsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigListResponse>,
-        datadog::Error<ListRUMArchiveConfigsError>,
-    > {
+    pub async fn list_rum_archive_configs_with_http_info(&self, params: ListRUMArchiveConfigsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigListResponse>, datadog::Error<ListRUMArchiveConfigsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_archive_configs";
 
+        
         // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
@@ -383,23 +341,22 @@ impl RUMManagedArchivesAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/archive",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -412,22 +369,16 @@ impl RUMManagedArchivesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -439,82 +390,60 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRUMArchiveConfigsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRUMArchiveConfigsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create or update the archive configuration for a RUM application. The application ID in the path must match `data.id`. Disabling archiving does not delete archived sessions.
-    pub async fn update_rum_archive_config(
-        &self,
-        app_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumArchiveConfigUpsertRequest,
-    ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigResponse,
-        datadog::Error<UpdateRUMArchiveConfigError>,
-    > {
-        match self
-            .update_rum_archive_config_with_http_info(app_id, body)
-            .await
-        {
+    pub async fn update_rum_archive_config(&self, app_id: uuid::Uuid, body: crate::datadogV2::model::RumArchiveConfigUpsertRequest) -> Result<crate::datadogV2::model::RumArchiveConfigResponse, datadog::Error<UpdateRUMArchiveConfigError>> {
+        match self.update_rum_archive_config_with_http_info(app_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create or update the archive configuration for a RUM application. The application ID in the path must match `data.id`. Disabling archiving does not delete archived sessions.
-    pub async fn update_rum_archive_config_with_http_info(
-        &self,
-        app_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumArchiveConfigUpsertRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>,
-        datadog::Error<UpdateRUMArchiveConfigError>,
-    > {
+    pub async fn update_rum_archive_config_with_http_info(&self, app_id: uuid::Uuid, body: crate::datadogV2::model::RumArchiveConfigUpsertRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>, datadog::Error<UpdateRUMArchiveConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_archive_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/config/archive/{app_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            app_id = datadog::urlencode(app_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), app_id=
+            datadog::urlencode(app_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -527,23 +456,16 @@ impl RUMManagedArchivesAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -551,7 +473,10 @@ impl RUMManagedArchivesAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -561,7 +486,10 @@ impl RUMManagedArchivesAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -583,7 +511,7 @@ impl RUMManagedArchivesAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -600,26 +528,17 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRUMArchiveConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateRUMArchiveConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

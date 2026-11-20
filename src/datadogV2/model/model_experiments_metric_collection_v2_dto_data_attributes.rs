@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Details of the metric collection.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct ExperimentsMetricCollectionV2DTODataAttributes {
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Text that explains the metric collection.
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "description", default, with = "::serde_with::rust::double_option")]
     pub description: Option<Option<String>>,
     /// Whether the collection is used for guardrail metrics.
     #[serde(rename = "is_guardrail")]
@@ -29,9 +25,7 @@ pub struct ExperimentsMetricCollectionV2DTODataAttributes {
     pub metric_count: Option<i64>,
     /// Metrics included in this collection.
     #[serde(rename = "metrics")]
-    pub metrics: Option<
-        Vec<crate::datadogV2::model::ExperimentsMetricCollectionV2DTODataAttributesMetricsItems>,
-    >,
+    pub metrics: Option<Vec<crate::datadogV2::model::ExperimentsMetricCollectionV2DTODataAttributesMetricsItems>>,
     /// Display name of the metric collection.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -42,7 +36,7 @@ pub struct ExperimentsMetricCollectionV2DTODataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsMetricCollectionV2DTODataAttributes {
@@ -59,55 +53,48 @@ impl ExperimentsMetricCollectionV2DTODataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn is_guardrail(mut self, value: bool) -> Self {
         self.is_guardrail = Some(value);
         self
     }
-
+    
     pub fn metric_count(mut self, value: i64) -> Self {
         self.metric_count = Some(value);
         self
     }
-
-    pub fn metrics(
-        mut self,
-        value: Vec<
-            crate::datadogV2::model::ExperimentsMetricCollectionV2DTODataAttributesMetricsItems,
-        >,
-    ) -> Self {
+    
+    pub fn metrics(mut self, value: Vec<crate::datadogV2::model::ExperimentsMetricCollectionV2DTODataAttributesMetricsItems>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsMetricCollectionV2DTODataAttributes {
     fn default() -> Self {
@@ -139,10 +126,7 @@ impl<'de> Deserialize<'de> for ExperimentsMetricCollectionV2DTODataAttributes {
                 let mut metrics: Option<Vec<crate::datadogV2::model::ExperimentsMetricCollectionV2DTODataAttributesMetricsItems>> = None;
                 let mut name: Option<String> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -152,48 +136,45 @@ impl<'de> Deserialize<'de> for ExperimentsMetricCollectionV2DTODataAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_guardrail" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_guardrail =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_guardrail = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_count" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics" => {
                             if v.is_null() {
                                 continue;
                             }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

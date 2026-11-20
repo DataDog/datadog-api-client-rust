@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Resolved routing target in a policy response.
 #[non_exhaustive]
@@ -21,17 +21,13 @@ pub struct AiGatewayPolicyTarget {
     #[serde(rename = "priority")]
     pub priority: i64,
     /// Provider slug. Omitted for dynamic resolution or when its provider is hidden.
-    #[serde(
-        rename = "provider",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "provider", default, with = "::serde_with::rust::double_option")]
     pub provider: Option<Option<String>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayPolicyTarget {
@@ -45,25 +41,24 @@ impl AiGatewayPolicyTarget {
             _unparsed: false,
         }
     }
-
+    
     pub fn model(mut self, value: String) -> Self {
         self.model = Some(value);
         self
     }
-
+    
     pub fn provider(mut self, value: Option<String>) -> Self {
         self.provider = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayPolicyTarget {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -86,34 +81,31 @@ impl<'de> Deserialize<'de> for AiGatewayPolicyTarget {
                 let mut model: Option<String> = None;
                 let mut priority: Option<i64> = None;
                 let mut provider: Option<Option<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model" => {
                             if v.is_null() {
                                 continue;
                             }
                             model = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "priority" => {
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider" => {
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

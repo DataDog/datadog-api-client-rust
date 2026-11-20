@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A filter applied to a step, or a range of steps, of the journey graph.
 #[non_exhaustive]
@@ -18,8 +18,8 @@ pub struct ProductAnalyticsJourneySearchGraphFilter {
     #[serde(rename = "operator")]
     pub operator: crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterOperator,
     /// A reference to a step, or a range of steps, in the journey.
-    /// Use a `node` target to name a single step, or a `path` target to name the range
-    /// between two steps.
+/// Use a `node` target to name a single step, or a `path` target to name the range
+/// between two steps.
     #[serde(rename = "target")]
     pub target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget>,
     /// Value compared against the metric. Durations are expressed in milliseconds.
@@ -29,15 +29,11 @@ pub struct ProductAnalyticsJourneySearchGraphFilter {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsJourneySearchGraphFilter {
-    pub fn new(
-        name: crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterName,
-        operator: crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterOperator,
-        value: i64,
-    ) -> ProductAnalyticsJourneySearchGraphFilter {
+    pub fn new(name: crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterName, operator: crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterOperator, value: i64) -> ProductAnalyticsJourneySearchGraphFilter {
         ProductAnalyticsJourneySearchGraphFilter {
             name,
             operator,
@@ -47,20 +43,19 @@ impl ProductAnalyticsJourneySearchGraphFilter {
             _unparsed: false,
         }
     }
-
+    
     pub fn target(mut self, value: crate::datadogV2::model::ProductAnalyticsJourneyTarget) -> Self {
         self.target = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilter {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,19 +74,11 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilter {
             where
                 M: MapAccess<'a>,
             {
-                let mut name: Option<
-                    crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterName,
-                > = None;
-                let mut operator: Option<
-                    crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterOperator,
-                > = None;
-                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> =
-                    None;
+                let mut name: Option<crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterName> = None;
+                let mut operator: Option<crate::datadogV2::model::ProductAnalyticsJourneySearchGraphFilterOperator> = None;
+                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> = None;
                 let mut value: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -106,7 +93,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilter {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "operator" => {
                             operator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _operator) = operator {
@@ -117,7 +104,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilter {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
@@ -131,15 +118,15 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneySearchGraphFilter {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "value" => {
                             value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;

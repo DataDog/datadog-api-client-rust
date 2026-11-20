@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OrgGroupMembershipSortOption {
-    NAME,
-    MINUS_NAME,
-    UUID,
-    MINUS_UUID,
+	NAME,
+	MINUS_NAME,
+	UUID,
+	MINUS_UUID,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for OrgGroupMembershipSortOption {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "-name" => Self::MINUS_NAME,
-            "uuid" => Self::UUID,
-            "-uuid" => Self::MINUS_UUID,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"-name" => Self::MINUS_NAME,"uuid" => Self::UUID,"-uuid" => Self::MINUS_UUID,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

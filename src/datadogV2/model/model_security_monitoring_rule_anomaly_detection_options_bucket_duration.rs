@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration {
-    FIVE_MINUTES,
-    TEN_MINUTES,
-    FIFTEEN_MINUTES,
-    THIRTY_MINUTES,
-    ONE_HOUR,
-    THREE_HOURS,
+	FIVE_MINUTES,
+	TEN_MINUTES,
+	FIFTEEN_MINUTES,
+	THIRTY_MINUTES,
+	ONE_HOUR,
+	THREE_HOURS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -39,16 +40,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptionsBuck
         D: Deserializer<'de>,
     {
         let s: i32 = i32::deserialize(deserializer)?;
-        Ok(match s {
-            300 => Self::FIVE_MINUTES,
-            600 => Self::TEN_MINUTES,
-            900 => Self::FIFTEEN_MINUTES,
-            1800 => Self::THIRTY_MINUTES,
-            3600 => Self::ONE_HOUR,
-            10800 => Self::THREE_HOURS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::Number(s.into()),
-            }),
+        Ok(match s {300 => Self::FIVE_MINUTES,600 => Self::TEN_MINUTES,900 => Self::FIFTEEN_MINUTES,1800 => Self::THIRTY_MINUTES,3600 => Self::ONE_HOUR,10800 => Self::THREE_HOURS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::Number(s.into()) }),
         })
     }
 }

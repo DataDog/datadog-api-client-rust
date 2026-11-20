@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data Datadog collects from Snowflake, keyed by dataflow id.
 #[non_exhaustive]
@@ -57,79 +57,53 @@ impl SnowflakeIntegrationDataflowsResponse {
             _unparsed: false,
         }
     }
-
-    pub fn snowflake_account_usage_metrics(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeAccountUsageMetricsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_account_usage_metrics(mut self, value: crate::datadogV2::model::SnowflakeAccountUsageMetricsIntegrationDataflowResponse) -> Self {
         self.snowflake_account_usage_metrics = Some(value);
         self
     }
-
-    pub fn snowflake_cloud_cost_metrics(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeCloudCostMetricsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_cloud_cost_metrics(mut self, value: crate::datadogV2::model::SnowflakeCloudCostMetricsIntegrationDataflowResponse) -> Self {
         self.snowflake_cloud_cost_metrics = Some(value);
         self
     }
-
-    pub fn snowflake_data_observability_quality_monitoring(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeDataObservabilityQualityMonitoringIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_data_observability_quality_monitoring(mut self, value: crate::datadogV2::model::SnowflakeDataObservabilityQualityMonitoringIntegrationDataflowResponse) -> Self {
         self.snowflake_data_observability_quality_monitoring = Some(value);
         self
     }
-
-    pub fn snowflake_event_table_logs(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeEventTableLogsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_event_table_logs(mut self, value: crate::datadogV2::model::SnowflakeEventTableLogsIntegrationDataflowResponse) -> Self {
         self.snowflake_event_table_logs = Some(value);
         self
     }
-
-    pub fn snowflake_organization_usage_metrics(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeOrganizationUsageMetricsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_organization_usage_metrics(mut self, value: crate::datadogV2::model::SnowflakeOrganizationUsageMetricsIntegrationDataflowResponse) -> Self {
         self.snowflake_organization_usage_metrics = Some(value);
         self
     }
-
-    pub fn snowflake_query_history_logs(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeQueryHistoryLogsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_query_history_logs(mut self, value: crate::datadogV2::model::SnowflakeQueryHistoryLogsIntegrationDataflowResponse) -> Self {
         self.snowflake_query_history_logs = Some(value);
         self
     }
-
-    pub fn snowflake_security_logs(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_security_logs(mut self, value: crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowResponse) -> Self {
         self.snowflake_security_logs = Some(value);
         self
     }
-
-    pub fn snowflake_task_history_logs(
-        mut self,
-        value: crate::datadogV2::model::SnowflakeTaskHistoryLogsIntegrationDataflowResponse,
-    ) -> Self {
+    
+    pub fn snowflake_task_history_logs(mut self, value: crate::datadogV2::model::SnowflakeTaskHistoryLogsIntegrationDataflowResponse) -> Self {
         self.snowflake_task_history_logs = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SnowflakeIntegrationDataflowsResponse {
     fn default() -> Self {
@@ -155,27 +129,14 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationDataflowsResponse {
                 M: MapAccess<'a>,
             {
                 let mut snowflake_account_usage_metrics: Option<crate::datadogV2::model::SnowflakeAccountUsageMetricsIntegrationDataflowResponse> = None;
-                let mut snowflake_cloud_cost_metrics: Option<
-                    crate::datadogV2::model::SnowflakeCloudCostMetricsIntegrationDataflowResponse,
-                > = None;
+                let mut snowflake_cloud_cost_metrics: Option<crate::datadogV2::model::SnowflakeCloudCostMetricsIntegrationDataflowResponse> = None;
                 let mut snowflake_data_observability_quality_monitoring: Option<crate::datadogV2::model::SnowflakeDataObservabilityQualityMonitoringIntegrationDataflowResponse> = None;
-                let mut snowflake_event_table_logs: Option<
-                    crate::datadogV2::model::SnowflakeEventTableLogsIntegrationDataflowResponse,
-                > = None;
+                let mut snowflake_event_table_logs: Option<crate::datadogV2::model::SnowflakeEventTableLogsIntegrationDataflowResponse> = None;
                 let mut snowflake_organization_usage_metrics: Option<crate::datadogV2::model::SnowflakeOrganizationUsageMetricsIntegrationDataflowResponse> = None;
-                let mut snowflake_query_history_logs: Option<
-                    crate::datadogV2::model::SnowflakeQueryHistoryLogsIntegrationDataflowResponse,
-                > = None;
-                let mut snowflake_security_logs: Option<
-                    crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowResponse,
-                > = None;
-                let mut snowflake_task_history_logs: Option<
-                    crate::datadogV2::model::SnowflakeTaskHistoryLogsIntegrationDataflowResponse,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut snowflake_query_history_logs: Option<crate::datadogV2::model::SnowflakeQueryHistoryLogsIntegrationDataflowResponse> = None;
+                let mut snowflake_security_logs: Option<crate::datadogV2::model::SnowflakeSecurityLogsIntegrationDataflowResponse> = None;
+                let mut snowflake_task_history_logs: Option<crate::datadogV2::model::SnowflakeTaskHistoryLogsIntegrationDataflowResponse> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -184,63 +145,55 @@ impl<'de> Deserialize<'de> for SnowflakeIntegrationDataflowsResponse {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_account_usage_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_account_usage_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-cloud-cost-metrics" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_cloud_cost_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_cloud_cost_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-data-observability-quality-monitoring" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_data_observability_quality_monitoring =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_data_observability_quality_monitoring = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-event-table-logs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_event_table_logs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_event_table_logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-organization-usage-metrics" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_organization_usage_metrics =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_organization_usage_metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-query-history-logs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_query_history_logs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_query_history_logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-security-logs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_security_logs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_security_logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snowflake-task-history-logs" => {
                             if v.is_null() {
                                 continue;
                             }
-                            snowflake_task_history_logs =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snowflake_task_history_logs = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

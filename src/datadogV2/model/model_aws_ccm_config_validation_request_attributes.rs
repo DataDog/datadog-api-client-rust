@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for an AWS CCM config validation request.
 #[non_exhaustive]
@@ -30,16 +30,11 @@ pub struct AWSCcmConfigValidationRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AWSCcmConfigValidationRequestAttributes {
-    pub fn new(
-        account_id: String,
-        bucket_name: String,
-        bucket_region: String,
-        report_name: String,
-    ) -> AWSCcmConfigValidationRequestAttributes {
+    pub fn new(account_id: String, bucket_name: String, bucket_region: String, report_name: String) -> AWSCcmConfigValidationRequestAttributes {
         AWSCcmConfigValidationRequestAttributes {
             account_id,
             bucket_name,
@@ -50,20 +45,19 @@ impl AWSCcmConfigValidationRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn report_prefix(mut self, value: String) -> Self {
         self.report_prefix = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AWSCcmConfigValidationRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -87,50 +81,40 @@ impl<'de> Deserialize<'de> for AWSCcmConfigValidationRequestAttributes {
                 let mut bucket_region: Option<String> = None;
                 let mut report_name: Option<String> = None;
                 let mut report_prefix: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "account_id" => {
                             account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "bucket_name" => {
-                            bucket_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bucket_region" => {
-                            bucket_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bucket_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "report_name" => {
-                            report_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            report_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "report_prefix" => {
                             if v.is_null() {
                                 continue;
                             }
-                            report_prefix =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            report_prefix = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let account_id = account_id.ok_or_else(|| M::Error::missing_field("account_id"))?;
-                let bucket_name =
-                    bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
-                let bucket_region =
-                    bucket_region.ok_or_else(|| M::Error::missing_field("bucket_region"))?;
-                let report_name =
-                    report_name.ok_or_else(|| M::Error::missing_field("report_name"))?;
+                let bucket_name = bucket_name.ok_or_else(|| M::Error::missing_field("bucket_name"))?;
+                let bucket_region = bucket_region.ok_or_else(|| M::Error::missing_field("bucket_region"))?;
+                let report_name = report_name.ok_or_else(|| M::Error::missing_field("report_name"))?;
 
                 let content = AWSCcmConfigValidationRequestAttributes {
                     account_id,

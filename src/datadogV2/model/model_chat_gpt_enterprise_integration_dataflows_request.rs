@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Data Datadog collects from ChatGPT Enterprise, keyed by dataflow ID. Each dataflow turns on a distinct type of collection. Set `enabled` to start or stop a dataflow. The default for each dataflow applies when the account is created. On update, omitted fields keep their current values. Every dataflow requires a ChatGPT Enterprise workspace with access to the OpenAI Costs API. If you enable a dataflow without this access, Datadog stores the setting but collects no data.
 #[non_exhaustive]
@@ -13,15 +13,13 @@ use std::fmt::{self, Formatter};
 pub struct ChatGPTEnterpriseIntegrationDataflowsRequest {
     /// Activity, token consumption, credits, and estimated usage costs across ChatGPT Chat, ChatGPT Work, and Codex, shown in Agent Console with breakdowns by product, model, and user where OpenAI provides them. Data already available from OpenAI appears within 1 hour after you enable this dataflow.
     #[serde(rename = "chatgpt-enterprise-agent-console")]
-    pub chatgpt_enterprise_agent_console:
-        Option<crate::datadogV2::model::ChatGPTEnterpriseAgentConsoleIntegrationDataflowRequest>,
+    pub chatgpt_enterprise_agent_console: Option<crate::datadogV2::model::ChatGPTEnterpriseAgentConsoleIntegrationDataflowRequest>,
     /// ChatGPT Enterprise costs from the OpenAI Costs API, which you can analyze in [Cloud Cost Management](<https://docs.datadoghq.com/cloud_cost_management/>). These costs are excluded from Cloud Cost Management spend-monitored billing. Reported costs are estimates, not final invoice amounts.
     #[serde(rename = "chatgpt-enterprise-cloud-cost-data")]
-    pub chatgpt_enterprise_cloud_cost_data:
-        Option<crate::datadogV2::model::ChatGPTEnterpriseCloudCostDataIntegrationDataflowRequest>,
+    pub chatgpt_enterprise_cloud_cost_data: Option<crate::datadogV2::model::ChatGPTEnterpriseCloudCostDataIntegrationDataflowRequest>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ChatGPTEnterpriseIntegrationDataflowsRequest {
@@ -32,23 +30,19 @@ impl ChatGPTEnterpriseIntegrationDataflowsRequest {
             _unparsed: false,
         }
     }
-
-    pub fn chatgpt_enterprise_agent_console(
-        mut self,
-        value: crate::datadogV2::model::ChatGPTEnterpriseAgentConsoleIntegrationDataflowRequest,
-    ) -> Self {
+    
+    pub fn chatgpt_enterprise_agent_console(mut self, value: crate::datadogV2::model::ChatGPTEnterpriseAgentConsoleIntegrationDataflowRequest) -> Self {
         self.chatgpt_enterprise_agent_console = Some(value);
         self
     }
-
-    pub fn chatgpt_enterprise_cloud_cost_data(
-        mut self,
-        value: crate::datadogV2::model::ChatGPTEnterpriseCloudCostDataIntegrationDataflowRequest,
-    ) -> Self {
+    
+    pub fn chatgpt_enterprise_cloud_cost_data(mut self, value: crate::datadogV2::model::ChatGPTEnterpriseCloudCostDataIntegrationDataflowRequest) -> Self {
         self.chatgpt_enterprise_cloud_cost_data = Some(value);
         self
     }
+    
 }
+
 
 impl Default for ChatGPTEnterpriseIntegrationDataflowsRequest {
     fn default() -> Self {
@@ -83,21 +77,17 @@ impl<'de> Deserialize<'de> for ChatGPTEnterpriseIntegrationDataflowsRequest {
                             if v.is_null() {
                                 continue;
                             }
-                            chatgpt_enterprise_agent_console =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            chatgpt_enterprise_agent_console = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "chatgpt-enterprise-cloud-cost-data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            chatgpt_enterprise_cloud_cost_data =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            chatgpt_enterprise_cloud_cost_data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 

@@ -1,22 +1,22 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// An individual timeseries query to one of the basic Datadog data sources.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum TimeseriesQuery {
-    MetricsTimeseriesQuery(Box<crate::datadogV2::model::MetricsTimeseriesQuery>),
-    EventsTimeseriesQuery(Box<crate::datadogV2::model::EventsTimeseriesQuery>),
-    ApmResourceStatsQuery(Box<crate::datadogV2::model::ApmResourceStatsQuery>),
-    ApmMetricsQuery(Box<crate::datadogV2::model::ApmMetricsQuery>),
-    ApmDependencyStatsQuery(Box<crate::datadogV2::model::ApmDependencyStatsQuery>),
-    SloQuery(Box<crate::datadogV2::model::SloQuery>),
-    ProcessTimeseriesQuery(Box<crate::datadogV2::model::ProcessTimeseriesQuery>),
-    ContainerTimeseriesQuery(Box<crate::datadogV2::model::ContainerTimeseriesQuery>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	MetricsTimeseriesQuery(Box<crate::datadogV2::model::MetricsTimeseriesQuery>),
+	EventsTimeseriesQuery(Box<crate::datadogV2::model::EventsTimeseriesQuery>),
+	ApmResourceStatsQuery(Box<crate::datadogV2::model::ApmResourceStatsQuery>),
+	ApmMetricsQuery(Box<crate::datadogV2::model::ApmMetricsQuery>),
+	ApmDependencyStatsQuery(Box<crate::datadogV2::model::ApmDependencyStatsQuery>),
+	SloQuery(Box<crate::datadogV2::model::SloQuery>),
+	ProcessTimeseriesQuery(Box<crate::datadogV2::model::ProcessTimeseriesQuery>),
+	ContainerTimeseriesQuery(Box<crate::datadogV2::model::ContainerTimeseriesQuery>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for TimeseriesQuery {
@@ -25,67 +25,47 @@ impl<'de> Deserialize<'de> for TimeseriesQuery {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::MetricsTimeseriesQuery>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::MetricsTimeseriesQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::MetricsTimeseriesQuery(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::EventsTimeseriesQuery>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::EventsTimeseriesQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::EventsTimeseriesQuery(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ApmResourceStatsQuery>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ApmResourceStatsQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::ApmResourceStatsQuery(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::ApmMetricsQuery>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ApmMetricsQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::ApmMetricsQuery(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ApmDependencyStatsQuery>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ApmDependencyStatsQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::ApmDependencyStatsQuery(_v));
             }
         }
-        if let Ok(_v) =
-            serde_json::from_value::<Box<crate::datadogV2::model::SloQuery>>(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::SloQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::SloQuery(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProcessTimeseriesQuery>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ProcessTimeseriesQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::ProcessTimeseriesQuery(_v));
             }
         }
-        if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::ContainerTimeseriesQuery>,
-        >(value.clone())
-        {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::ContainerTimeseriesQuery>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(TimeseriesQuery::ContainerTimeseriesQuery(_v));
             }
         }
-
-        return Ok(TimeseriesQuery::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(TimeseriesQuery::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

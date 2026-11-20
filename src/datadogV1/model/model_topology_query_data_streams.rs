@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Query to the data streams topology data source.
 #[non_exhaustive]
@@ -21,19 +21,16 @@ pub struct TopologyQueryDataStreams {
     #[serde(rename = "query_string")]
     pub query_string: Option<String>,
     /// (deprecated) Name of the service. Use `query_string` instead.
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "service")]
     pub service: Option<String>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TopologyQueryDataStreams {
-    pub fn new(
-        data_source: crate::datadogV1::model::TopologyQueryDataStreamsDataSource,
-        filters: Vec<String>,
-    ) -> TopologyQueryDataStreams {
+    pub fn new(data_source: crate::datadogV1::model::TopologyQueryDataStreamsDataSource, filters: Vec<String>) -> TopologyQueryDataStreams {
         #[allow(deprecated)]
         TopologyQueryDataStreams {
             data_source,
@@ -43,19 +40,22 @@ impl TopologyQueryDataStreams {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn query_string(mut self, value: String) -> Self {
         self.query_string = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn service(mut self, value: String) -> Self {
         self.service = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -74,9 +74,7 @@ impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
             where
                 M: MapAccess<'a>,
             {
-                let mut data_source: Option<
-                    crate::datadogV1::model::TopologyQueryDataStreamsDataSource,
-                > = None;
+                let mut data_source: Option<crate::datadogV1::model::TopologyQueryDataStreamsDataSource> = None;
                 let mut filters: Option<Vec<String>> = None;
                 let mut query_string: Option<String> = None;
                 let mut service: Option<String> = None;
@@ -85,8 +83,7 @@ impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data_source" => {
-                            data_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            data_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _data_source) = data_source {
                                 match _data_source {
                                     crate::datadogV1::model::TopologyQueryDataStreamsDataSource::UnparsedObject(_data_source) => {
@@ -95,32 +92,28 @@ impl<'de> Deserialize<'de> for TopologyQueryDataStreams {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "filters" => {
                             filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query_string" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_string =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_string = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "service" => {
                             if v.is_null() {
                                 continue;
                             }
                             service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
-                let data_source =
-                    data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
+                let data_source = data_source.ok_or_else(|| M::Error::missing_field("data_source"))?;
                 let filters = filters.ok_or_else(|| M::Error::missing_field("filters"))?;
 
                 #[allow(deprecated)]

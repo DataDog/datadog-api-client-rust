@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CsmAgentlessHostResourceType {
-    AWS_EC2_INSTANCE,
-    AZURE_VIRTUAL_MACHINE_INSTANCE,
-    GCP_COMPUTE_INSTANCE,
-    OCI_INSTANCE,
+	AWS_EC2_INSTANCE,
+	AZURE_VIRTUAL_MACHINE_INSTANCE,
+	GCP_COMPUTE_INSTANCE,
+	OCI_INSTANCE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for CsmAgentlessHostResourceType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "aws_ec2_instance" => Self::AWS_EC2_INSTANCE,
-            "azure_virtual_machine_instance" => Self::AZURE_VIRTUAL_MACHINE_INSTANCE,
-            "gcp_compute_instance" => Self::GCP_COMPUTE_INSTANCE,
-            "oci_instance" => Self::OCI_INSTANCE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"aws_ec2_instance" => Self::AWS_EC2_INSTANCE,"azure_virtual_machine_instance" => Self::AZURE_VIRTUAL_MACHINE_INSTANCE,"gcp_compute_instance" => Self::GCP_COMPUTE_INSTANCE,"oci_instance" => Self::OCI_INSTANCE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

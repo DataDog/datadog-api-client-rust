@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Model catalog entry configuration and metadata.
 #[non_exhaustive]
@@ -42,27 +42,18 @@ pub struct AiGatewayModelCatalogEntryAttributes {
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
     /// The Datadog side of a model's zero data retention eligibility. The customer side is the provider's
-    /// `zdr_eligible` setting.
+/// `zdr_eligible` setting.
     #[serde(rename = "zdr")]
     pub zdr: Option<crate::datadogV2::model::AiGatewayModelZdr>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayModelCatalogEntryAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        enabled: bool,
-        model_id_canonical: String,
-        model_id_wire: String,
-        provider_id: i64,
-        source: crate::datadogV2::model::AiGatewayModelSource,
-        supported_operations: Vec<crate::datadogV2::model::AiGatewaySupportedOperation>,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> AiGatewayModelCatalogEntryAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, enabled: bool, model_id_canonical: String, model_id_wire: String, provider_id: i64, source: crate::datadogV2::model::AiGatewayModelSource, supported_operations: Vec<crate::datadogV2::model::AiGatewaySupportedOperation>, updated_at: chrono::DateTime<chrono::Utc>) -> AiGatewayModelCatalogEntryAttributes {
         AiGatewayModelCatalogEntryAttributes {
             created_at,
             enabled,
@@ -79,33 +70,29 @@ impl AiGatewayModelCatalogEntryAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn metadata(mut self, value: crate::datadogV2::model::AiGatewayModelMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
-
-    pub fn pricing(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayModelPricingAttributes,
-    ) -> Self {
+    
+    pub fn pricing(mut self, value: crate::datadogV2::model::AiGatewayModelPricingAttributes) -> Self {
         self.pricing = Some(value);
         self
     }
-
+    
     pub fn zdr(mut self, value: crate::datadogV2::model::AiGatewayModelZdr) -> Self {
         self.zdr = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -129,53 +116,44 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                 let mut metadata: Option<crate::datadogV2::model::AiGatewayModelMetadata> = None;
                 let mut model_id_canonical: Option<String> = None;
                 let mut model_id_wire: Option<String> = None;
-                let mut pricing: Option<crate::datadogV2::model::AiGatewayModelPricingAttributes> =
-                    None;
+                let mut pricing: Option<crate::datadogV2::model::AiGatewayModelPricingAttributes> = None;
                 let mut provider_id: Option<i64> = None;
                 let mut source: Option<crate::datadogV2::model::AiGatewayModelSource> = None;
-                let mut supported_operations: Option<
-                    Vec<crate::datadogV2::model::AiGatewaySupportedOperation>,
-                > = None;
+                let mut supported_operations: Option<Vec<crate::datadogV2::model::AiGatewaySupportedOperation>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut zdr: Option<crate::datadogV2::model::AiGatewayModelZdr> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "model_id_canonical" => {
-                            model_id_canonical =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_id_canonical = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "model_id_wire" => {
-                            model_id_wire =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            model_id_wire = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "pricing" => {
                             if v.is_null() {
                                 continue;
                             }
                             pricing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "provider_id" => {
-                            provider_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            provider_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
@@ -186,38 +164,33 @@ impl<'de> Deserialize<'de> for AiGatewayModelCatalogEntryAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "supported_operations" => {
-                            supported_operations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            supported_operations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "zdr" => {
                             if v.is_null() {
                                 continue;
                             }
                             zdr = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let model_id_canonical = model_id_canonical
-                    .ok_or_else(|| M::Error::missing_field("model_id_canonical"))?;
-                let model_id_wire =
-                    model_id_wire.ok_or_else(|| M::Error::missing_field("model_id_wire"))?;
-                let provider_id =
-                    provider_id.ok_or_else(|| M::Error::missing_field("provider_id"))?;
+                let model_id_canonical = model_id_canonical.ok_or_else(|| M::Error::missing_field("model_id_canonical"))?;
+                let model_id_wire = model_id_wire.ok_or_else(|| M::Error::missing_field("model_id_wire"))?;
+                let provider_id = provider_id.ok_or_else(|| M::Error::missing_field("provider_id"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
-                let supported_operations = supported_operations
-                    .ok_or_else(|| M::Error::missing_field("supported_operations"))?;
+                let supported_operations = supported_operations.ok_or_else(|| M::Error::missing_field("supported_operations"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = AiGatewayModelCatalogEntryAttributes {

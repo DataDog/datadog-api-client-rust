@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes describing a WAF exclusion filter.
 #[non_exhaustive]
@@ -37,8 +37,7 @@ pub struct ApplicationSecurityWafExclusionFilterAttributes {
     pub path_glob: Option<String>,
     /// The WAF rules targeted by the exclusion filter.
     #[serde(rename = "rules_target")]
-    pub rules_target:
-        Option<Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>>,
+    pub rules_target: Option<Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>>,
     /// The services where the exclusion filter is deployed.
     #[serde(rename = "scope")]
     pub scope: Option<Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterScope>>,
@@ -49,7 +48,7 @@ pub struct ApplicationSecurityWafExclusionFilterAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ApplicationSecurityWafExclusionFilterAttributes {
@@ -70,82 +69,68 @@ impl ApplicationSecurityWafExclusionFilterAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
         self
     }
-
+    
     pub fn event_query(mut self, value: String) -> Self {
         self.event_query = Some(value);
         self
     }
-
+    
     pub fn ip_list(mut self, value: Vec<String>) -> Self {
         self.ip_list = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterMetadata,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterMetadata) -> Self {
         self.metadata = Some(value);
         self
     }
-
-    pub fn on_match(
-        mut self,
-        value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterOnMatch,
-    ) -> Self {
+    
+    pub fn on_match(mut self, value: crate::datadogV2::model::ApplicationSecurityWafExclusionFilterOnMatch) -> Self {
         self.on_match = Some(value);
         self
     }
-
+    
     pub fn parameters(mut self, value: Vec<String>) -> Self {
         self.parameters = Some(value);
         self
     }
-
+    
     pub fn path_glob(mut self, value: String) -> Self {
         self.path_glob = Some(value);
         self
     }
-
-    pub fn rules_target(
-        mut self,
-        value: Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>,
-    ) -> Self {
+    
+    pub fn rules_target(mut self, value: Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>) -> Self {
         self.rules_target = Some(value);
         self
     }
-
-    pub fn scope(
-        mut self,
-        value: Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterScope>,
-    ) -> Self {
+    
+    pub fn scope(mut self, value: Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterScope>) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn search_query(mut self, value: String) -> Self {
         self.search_query = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ApplicationSecurityWafExclusionFilterAttributes {
     fn default() -> Self {
@@ -174,25 +159,14 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterAttributes {
                 let mut enabled: Option<bool> = None;
                 let mut event_query: Option<String> = None;
                 let mut ip_list: Option<Vec<String>> = None;
-                let mut metadata: Option<
-                    crate::datadogV2::model::ApplicationSecurityWafExclusionFilterMetadata,
-                > = None;
-                let mut on_match: Option<
-                    crate::datadogV2::model::ApplicationSecurityWafExclusionFilterOnMatch,
-                > = None;
+                let mut metadata: Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterMetadata> = None;
+                let mut on_match: Option<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterOnMatch> = None;
                 let mut parameters: Option<Vec<String>> = None;
                 let mut path_glob: Option<String> = None;
-                let mut rules_target: Option<
-                    Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>,
-                > = None;
-                let mut scope: Option<
-                    Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterScope>,
-                > = None;
+                let mut rules_target: Option<Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterRulesTarget>> = None;
+                let mut scope: Option<Vec<crate::datadogV2::model::ApplicationSecurityWafExclusionFilterScope>> = None;
                 let mut search_query: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -201,34 +175,32 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "event_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ip_list" => {
                             if v.is_null() {
                                 continue;
                             }
                             ip_list = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "on_match" => {
                             if v.is_null() {
                                 continue;
@@ -242,44 +214,42 @@ impl<'de> Deserialize<'de> for ApplicationSecurityWafExclusionFilterAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "parameters" => {
                             if v.is_null() {
                                 continue;
                             }
                             parameters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "path_glob" => {
                             if v.is_null() {
                                 continue;
                             }
                             path_glob = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rules_target" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rules_target =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rules_target = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "search_query" => {
                             if v.is_null() {
                                 continue;
                             }
-                            search_query =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            search_query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

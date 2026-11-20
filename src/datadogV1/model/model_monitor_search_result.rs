@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Holds search results.
 #[non_exhaustive]
@@ -21,11 +21,7 @@ pub struct MonitorSearchResult {
     #[serde(rename = "id")]
     pub id: Option<i64>,
     /// Latest timestamp the monitor triggered.
-    #[serde(
-        rename = "last_triggered_ts",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "last_triggered_ts", default, with = "::serde_with::rust::double_option")]
     pub last_triggered_ts: Option<Option<i64>>,
     /// Metrics used by the monitor.
     #[serde(rename = "metrics")]
@@ -46,9 +42,9 @@ pub struct MonitorSearchResult {
     #[serde(rename = "query")]
     pub query: Option<String>,
     /// The scope(s) to which the downtime applies, for example `host:app2`.
-    /// Provide multiple scopes as a comma-separated list, for example `env:dev,env:prod`.
-    /// The resulting downtime applies to sources that matches ALL provided scopes
-    /// (that is `env:dev AND env:prod`), NOT any of them.
+/// Provide multiple scopes as a comma-separated list, for example `env:dev,env:prod`.
+/// The resulting downtime applies to sources that matches ALL provided scopes
+/// (that is `env:dev AND env:prod`), NOT any of them.
     #[serde(rename = "scopes")]
     pub scopes: Option<Vec<String>>,
     /// The different states your monitor can be in.
@@ -64,7 +60,7 @@ pub struct MonitorSearchResult {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorSearchResult {
@@ -88,88 +84,83 @@ impl MonitorSearchResult {
             _unparsed: false,
         }
     }
-
+    
     pub fn classification(mut self, value: String) -> Self {
         self.classification = Some(value);
         self
     }
-
+    
     pub fn creator(mut self, value: crate::datadogV1::model::Creator) -> Self {
         self.creator = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: i64) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     pub fn last_triggered_ts(mut self, value: Option<i64>) -> Self {
         self.last_triggered_ts = Some(value);
         self
     }
-
+    
     pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn notifications(
-        mut self,
-        value: Vec<crate::datadogV1::model::MonitorSearchResultNotification>,
-    ) -> Self {
+    
+    pub fn notifications(mut self, value: Vec<crate::datadogV1::model::MonitorSearchResultNotification>) -> Self {
         self.notifications = Some(value);
         self
     }
-
+    
     pub fn org_id(mut self, value: i64) -> Self {
         self.org_id = Some(value);
         self
     }
-
+    
     pub fn quality_issues(mut self, value: Vec<String>) -> Self {
         self.quality_issues = Some(value);
         self
     }
-
+    
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
-
+    
     pub fn scopes(mut self, value: Vec<String>) -> Self {
         self.scopes = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV1::model::MonitorOverallStates) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn type_(mut self, value: crate::datadogV1::model::MonitorType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonitorSearchResult {
     fn default() -> Self {
@@ -200,9 +191,7 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                 let mut last_triggered_ts: Option<Option<i64>> = None;
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
-                let mut notifications: Option<
-                    Vec<crate::datadogV1::model::MonitorSearchResultNotification>,
-                > = None;
+                let mut notifications: Option<Vec<crate::datadogV1::model::MonitorSearchResultNotification>> = None;
                 let mut org_id: Option<i64> = None;
                 let mut quality_issues: Option<Vec<String>> = None;
                 let mut query: Option<String> = None;
@@ -210,10 +199,7 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                 let mut status: Option<crate::datadogV1::model::MonitorOverallStates> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut type_: Option<crate::datadogV1::model::MonitorType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -222,69 +208,65 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                             if v.is_null() {
                                 continue;
                             }
-                            classification =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            classification = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "creator" => {
                             if v.is_null() {
                                 continue;
                             }
                             creator = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_triggered_ts" => {
-                            last_triggered_ts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_triggered_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metrics" => {
                             if v.is_null() {
                                 continue;
                             }
                             metrics = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "notifications" => {
                             if v.is_null() {
                                 continue;
                             }
-                            notifications =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            notifications = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "org_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             org_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "quality_issues" => {
                             if v.is_null() {
                                 continue;
                             }
-                            quality_issues =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            quality_issues = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query" => {
                             if v.is_null() {
                                 continue;
                             }
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scopes" => {
                             if v.is_null() {
                                 continue;
                             }
                             scopes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -298,13 +280,13 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -312,20 +294,18 @@ impl<'de> Deserialize<'de> for MonitorSearchResult {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV1::model::MonitorType::UnparsedObject(
-                                        _type_,
-                                    ) => {
+                                    crate::datadogV1::model::MonitorType::UnparsedObject(_type_) => {
                                         _unparsed = true;
-                                    }
+                                    },
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

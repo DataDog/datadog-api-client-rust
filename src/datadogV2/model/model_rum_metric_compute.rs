@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The compute rule to compute the RUM-based metric. It is set at creation and only `include_percentiles` can be updated afterward.
 #[non_exhaustive]
@@ -12,28 +12,26 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RumMetricCompute {
     /// The type of aggregation to use.
-    /// `count` counts the matching events. `distribution` aggregates the values found at `path`.
+/// `count` counts the matching events. `distribution` aggregates the values found at `path`.
     #[serde(rename = "aggregation_type")]
     pub aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType,
     /// Toggle to include or exclude percentile aggregations (p50, p75, p90, p95, p99) for distribution metrics.
-    /// Required when `aggregation_type` is `distribution`, and must be omitted otherwise.
+/// Required when `aggregation_type` is `distribution`, and must be omitted otherwise.
     #[serde(rename = "include_percentiles")]
     pub include_percentiles: Option<bool>,
     /// The path of the numeric RUM event attribute the metric aggregates on.
-    /// Only valid when `aggregation_type` is `distribution`.
+/// Only valid when `aggregation_type` is `distribution`.
     #[serde(rename = "path")]
     pub path: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RumMetricCompute {
-    pub fn new(
-        aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType,
-    ) -> RumMetricCompute {
+    pub fn new(aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType) -> RumMetricCompute {
         RumMetricCompute {
             aggregation_type,
             include_percentiles: None,
@@ -42,25 +40,24 @@ impl RumMetricCompute {
             _unparsed: false,
         }
     }
-
+    
     pub fn include_percentiles(mut self, value: bool) -> Self {
         self.include_percentiles = Some(value);
         self
     }
-
+    
     pub fn path(mut self, value: String) -> Self {
         self.path = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RumMetricCompute {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -79,22 +76,16 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
             where
                 M: MapAccess<'a>,
             {
-                let mut aggregation_type: Option<
-                    crate::datadogV2::model::RumMetricComputeAggregationType,
-                > = None;
+                let mut aggregation_type: Option<crate::datadogV2::model::RumMetricComputeAggregationType> = None;
                 let mut include_percentiles: Option<bool> = None;
                 let mut path: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "aggregation_type" => {
-                            aggregation_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            aggregation_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation_type) = aggregation_type {
                                 match _aggregation_type {
                                     crate::datadogV2::model::RumMetricComputeAggregationType::UnparsedObject(_aggregation_type) => {
@@ -103,29 +94,27 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "include_percentiles" => {
                             if v.is_null() {
                                 continue;
                             }
-                            include_percentiles =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            include_percentiles = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "path" => {
                             if v.is_null() {
                                 continue;
                             }
                             path = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let aggregation_type =
-                    aggregation_type.ok_or_else(|| M::Error::missing_field("aggregation_type"))?;
+                let aggregation_type = aggregation_type.ok_or_else(|| M::Error::missing_field("aggregation_type"))?;
 
                 let content = RumMetricCompute {
                     aggregation_type,

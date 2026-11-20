@@ -1,14 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// DeleteSyncConfigError is a struct for typed errors of method [`StorageManagementAPI::delete_sync_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum DeleteSyncConfigError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpsertSyncConfigError is a struct for typed errors of method [`StorageManagementAPI::upsert_sync_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -27,6 +28,7 @@ pub enum UpsertSyncConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Enable Storage Management for S3 buckets, GCS buckets, and Azure containers. Each configuration registers the destination that holds inventory reports for the storage being monitored.
 #[derive(Debug, Clone)]
@@ -50,7 +52,8 @@ impl StorageManagementAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -95,45 +98,44 @@ impl StorageManagementAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Delete a Storage Management configuration by its unique identifier. Deleting a configuration stops inventory file synchronization for the associated cloud account.
-    pub async fn delete_sync_config(
-        &self,
-        id: String,
-    ) -> Result<(), datadog::Error<DeleteSyncConfigError>> {
+    pub async fn delete_sync_config(&self, id: String) -> Result<(), datadog::Error<DeleteSyncConfigError>> {
         match self.delete_sync_config_with_http_info(id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Storage Management configuration by its unique identifier. Deleting a configuration stops inventory file synchronization for the associated cloud account.
-    pub async fn delete_sync_config_with_http_info(
-        &self,
-        id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSyncConfigError>> {
+    pub async fn delete_sync_config_with_http_info(&self, id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteSyncConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_sync_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloudinventoryservice/syncconfigs/{id}",
-            local_configuration.get_operation_host(local_operation_id),
-            id = datadog::urlencode(id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), id=
+            datadog::urlencode(id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -146,22 +148,16 @@ impl StorageManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -179,63 +175,49 @@ impl StorageManagementAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteSyncConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteSyncConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set `data.id` to the cloud provider (`aws`, `gcp`, or `azure`) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
-    pub async fn upsert_sync_config(
-        &self,
-        body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
-    ) -> Result<
-        crate::datadogV2::model::CloudInventorySyncConfigResponse,
-        datadog::Error<UpsertSyncConfigError>,
-    > {
+    pub async fn upsert_sync_config(&self, body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest) -> Result<crate::datadogV2::model::CloudInventorySyncConfigResponse, datadog::Error<UpsertSyncConfigError>> {
         match self.upsert_sync_config_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Enable Storage Management for an S3 bucket, GCS bucket, or Azure container by registering the destination that holds its inventory reports. Set `data.id` to the cloud provider (`aws`, `gcp`, or `azure`) and provide the matching settings under data.attributes. Calling this endpoint with the same provider replaces the existing configuration.
-    pub async fn upsert_sync_config_with_http_info(
-        &self,
-        body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CloudInventorySyncConfigResponse>,
-        datadog::Error<UpsertSyncConfigError>,
-    > {
+    pub async fn upsert_sync_config_with_http_info(&self, body: crate::datadogV2::model::UpsertCloudInventorySyncConfigRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CloudInventorySyncConfigResponse>, datadog::Error<UpsertSyncConfigError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.upsert_sync_config";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/cloudinventoryservice/syncconfigs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -248,23 +230,16 @@ impl StorageManagementAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -272,7 +247,10 @@ impl StorageManagementAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -282,7 +260,10 @@ impl StorageManagementAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -304,7 +285,7 @@ impl StorageManagementAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -321,26 +302,17 @@ impl StorageManagementAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CloudInventorySyncConfigResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CloudInventorySyncConfigResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpsertSyncConfigError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpsertSyncConfigError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

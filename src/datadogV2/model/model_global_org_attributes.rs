@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of an organization associated with the authenticated user.
 #[non_exhaustive]
@@ -15,11 +15,7 @@ pub struct GlobalOrgAttributes {
     #[serde(rename = "org")]
     pub org: crate::datadogV2::model::GlobalOrg,
     /// The login URL used to switch into the organization, if available.
-    #[serde(
-        rename = "redirect_url",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "redirect_url", default, with = "::serde_with::rust::double_option")]
     pub redirect_url: Option<Option<String>>,
     /// The source region of the organization.
     #[serde(rename = "source_region")]
@@ -31,15 +27,11 @@ pub struct GlobalOrgAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GlobalOrgAttributes {
-    pub fn new(
-        org: crate::datadogV2::model::GlobalOrg,
-        source_region: String,
-        user: crate::datadogV2::model::GlobalOrgUser,
-    ) -> GlobalOrgAttributes {
+    pub fn new(org: crate::datadogV2::model::GlobalOrg, source_region: String, user: crate::datadogV2::model::GlobalOrgUser) -> GlobalOrgAttributes {
         GlobalOrgAttributes {
             org,
             redirect_url: None,
@@ -49,20 +41,19 @@ impl GlobalOrgAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn redirect_url(mut self, value: Option<String>) -> Self {
         self.redirect_url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GlobalOrgAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -85,38 +76,32 @@ impl<'de> Deserialize<'de> for GlobalOrgAttributes {
                 let mut redirect_url: Option<Option<String>> = None;
                 let mut source_region: Option<String> = None;
                 let mut user: Option<crate::datadogV2::model::GlobalOrgUser> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "org" => {
                             org = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "redirect_url" => {
-                            redirect_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            redirect_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source_region" => {
-                            source_region =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            source_region = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "user" => {
                             user = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let org = org.ok_or_else(|| M::Error::missing_field("org"))?;
-                let source_region =
-                    source_region.ok_or_else(|| M::Error::missing_field("source_region"))?;
+                let source_region = source_region.ok_or_else(|| M::Error::missing_field("source_region"))?;
                 let user = user.ok_or_else(|| M::Error::missing_field("user"))?;
 
                 let content = GlobalOrgAttributes {

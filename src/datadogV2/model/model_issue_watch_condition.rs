@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Condition that triggers the watch action. The fields that are set depend on `kind`:
 /// `OCCURRENCES` uses `threshold`, `CARDINALITY` uses `threshold` and `projection`,
@@ -14,7 +14,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IssueWatchCondition {
     /// Time that must elapse from when the watch started, as a Go duration string, such as `24h`, or `168h` for a
-    /// week.
+/// week.
     #[serde(rename = "duration")]
     pub duration: Option<String>,
     /// Kind of watch condition.
@@ -24,20 +24,20 @@ pub struct IssueWatchCondition {
     #[serde(rename = "operands")]
     pub operands: Option<Vec<crate::datadogV2::model::IssueWatchCondition>>,
     /// Attributes whose distinct values `CARDINALITY` counts, in search syntax: `@` for attributes, such as
-    /// `@usr.id` or `@account.id`, and no prefix for tags and reserved fields, such as `org_id` or `service`.
-    /// Only use attributes that the issue's errors carry: a condition on an attribute they don't carry is never
-    /// met.
+/// `@usr.id` or `@account.id`, and no prefix for tags and reserved fields, such as `org_id` or `service`.
+/// Only use attributes that the issue's errors carry: a condition on an attribute they don't carry is never
+/// met.
     #[serde(rename = "projection")]
     pub projection: Option<Vec<String>>,
     /// Number of new occurrences, or of distinct values for `CARDINALITY`, that meets the condition, counted from
-    /// when the watch started.
+/// when the watch started.
     #[serde(rename = "threshold")]
     pub threshold: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssueWatchCondition {
@@ -52,35 +52,34 @@ impl IssueWatchCondition {
             _unparsed: false,
         }
     }
-
+    
     pub fn duration(mut self, value: String) -> Self {
         self.duration = Some(value);
         self
     }
-
+    
     pub fn operands(mut self, value: Vec<crate::datadogV2::model::IssueWatchCondition>) -> Self {
         self.operands = Some(value);
         self
     }
-
+    
     pub fn projection(mut self, value: Vec<String>) -> Self {
         self.projection = Some(value);
         self
     }
-
+    
     pub fn threshold(mut self, value: i64) -> Self {
         self.threshold = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IssueWatchCondition {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -104,10 +103,7 @@ impl<'de> Deserialize<'de> for IssueWatchCondition {
                 let mut operands: Option<Vec<crate::datadogV2::model::IssueWatchCondition>> = None;
                 let mut projection: Option<Vec<String>> = None;
                 let mut threshold: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -117,7 +113,7 @@ impl<'de> Deserialize<'de> for IssueWatchCondition {
                                 continue;
                             }
                             duration = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "kind" => {
                             kind = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _kind) = kind {
@@ -128,30 +124,30 @@ impl<'de> Deserialize<'de> for IssueWatchCondition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "operands" => {
                             if v.is_null() {
                                 continue;
                             }
                             operands = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "projection" => {
                             if v.is_null() {
                                 continue;
                             }
                             projection = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "threshold" => {
                             if v.is_null() {
                                 continue;
                             }
                             threshold = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let kind = kind.ok_or_else(|| M::Error::missing_field("kind"))?;

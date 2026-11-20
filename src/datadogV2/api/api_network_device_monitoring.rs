@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetInterfacesOptionalParams is a struct for passing parameters to the method [`NetworkDeviceMonitoringAPI::get_interfaces`]
 #[non_exhaustive]
@@ -65,6 +62,9 @@ impl ListDevicesOptionalParams {
     }
 }
 
+
+
+
 /// GetDeviceError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::get_device`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -74,6 +74,7 @@ pub enum GetDeviceError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetInterfacesError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::get_interfaces`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -81,6 +82,7 @@ pub enum GetInterfacesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListDeviceUserTagsError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::list_device_user_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -91,6 +93,7 @@ pub enum ListDeviceUserTagsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListDevicesError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::list_devices`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -99,6 +102,7 @@ pub enum ListDevicesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListInterfaceUserTagsError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::list_interface_user_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,6 +113,7 @@ pub enum ListInterfaceUserTagsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateDeviceUserTagsError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::update_device_user_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -118,6 +123,7 @@ pub enum UpdateDeviceUserTagsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateInterfaceUserTagsError is a struct for typed errors of method [`NetworkDeviceMonitoringAPI::update_interface_user_tags`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -126,6 +132,7 @@ pub enum UpdateInterfaceUserTagsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Network Device Monitoring API allows you to fetch devices and interfaces and their attributes. See the [Network Device Monitoring page](<https://docs.datadoghq.com/network_monitoring/>) for more information.
 #[derive(Debug, Clone)]
@@ -149,7 +156,8 @@ impl NetworkDeviceMonitoringAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -194,56 +202,50 @@ impl NetworkDeviceMonitoringAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Get the device details.
-    pub async fn get_device(
-        &self,
-        device_id: String,
-    ) -> Result<crate::datadogV2::model::GetDeviceResponse, datadog::Error<GetDeviceError>> {
+    pub async fn get_device(&self, device_id: String) -> Result<crate::datadogV2::model::GetDeviceResponse, datadog::Error<GetDeviceError>> {
         match self.get_device_with_http_info(device_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the device details.
-    pub async fn get_device_with_http_info(
-        &self,
-        device_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GetDeviceResponse>,
-        datadog::Error<GetDeviceError>,
-    > {
+    pub async fn get_device_with_http_info(&self, device_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::GetDeviceResponse>, datadog::Error<GetDeviceError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_device";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/devices/{device_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            device_id = datadog::urlencode(device_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), device_id=
+            datadog::urlencode(device_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -256,22 +258,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -283,61 +279,42 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GetDeviceResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GetDeviceResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetDeviceError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of interfaces of the device.
-    pub async fn get_interfaces(
-        &self,
-        device_id: String,
-        params: GetInterfacesOptionalParams,
-    ) -> Result<crate::datadogV2::model::GetInterfacesResponse, datadog::Error<GetInterfacesError>>
-    {
-        match self.get_interfaces_with_http_info(device_id, params).await {
+    pub async fn get_interfaces(&self, device_id: String, params: GetInterfacesOptionalParams) -> Result<crate::datadogV2::model::GetInterfacesResponse, datadog::Error<GetInterfacesError>> {
+        match self.get_interfaces_with_http_info(device_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of interfaces of the device.
-    pub async fn get_interfaces_with_http_info(
-        &self,
-        device_id: String,
-        params: GetInterfacesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::GetInterfacesResponse>,
-        datadog::Error<GetInterfacesError>,
-    > {
+    pub async fn get_interfaces_with_http_info(&self, device_id: String, params: GetInterfacesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::GetInterfacesResponse>, datadog::Error<GetInterfacesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_interfaces";
 
+        
         // unbox and build optional parameters
         let get_ip_addresses = params.get_ip_addresses;
 
@@ -345,20 +322,20 @@ impl NetworkDeviceMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/interfaces",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("device_id", &device_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("device_id", &device_id.to_string() )]);
         if let Some(ref local_query_param) = get_ip_addresses {
-            local_req_builder =
-                local_req_builder.query(&[("get_ip_addresses", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("get_ip_addresses", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -371,22 +348,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -398,74 +369,59 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::GetInterfacesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::GetInterfacesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetInterfacesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetInterfacesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of tags for a device.
-    pub async fn list_device_user_tags(
-        &self,
-        device_id: String,
-    ) -> Result<crate::datadogV2::model::ListTagsResponse, datadog::Error<ListDeviceUserTagsError>>
-    {
+    pub async fn list_device_user_tags(&self, device_id: String) -> Result<crate::datadogV2::model::ListTagsResponse, datadog::Error<ListDeviceUserTagsError>> {
         match self.list_device_user_tags_with_http_info(device_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the list of tags for a device.
-    pub async fn list_device_user_tags_with_http_info(
-        &self,
-        device_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListTagsResponse>,
-        datadog::Error<ListDeviceUserTagsError>,
-    > {
+    pub async fn list_device_user_tags_with_http_info(&self, device_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListTagsResponse>, datadog::Error<ListDeviceUserTagsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_device_user_tags";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/devices/{device_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            device_id = datadog::urlencode(device_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), device_id=
+            datadog::urlencode(device_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -478,22 +434,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -505,55 +455,39 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListTagsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListTagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListDeviceUserTagsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListDeviceUserTagsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the list of devices.
-    pub async fn list_devices(
-        &self,
-        params: ListDevicesOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListDevicesResponse, datadog::Error<ListDevicesError>>
-    {
-        match self.list_devices_with_http_info(params).await {
+    pub async fn list_devices(&self, params: ListDevicesOptionalParams) -> Result<crate::datadogV2::model::ListDevicesResponse, datadog::Error<ListDevicesError>> {
+        match self.list_devices_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_devices_with_pagination(
-        &self,
-        mut params: ListDevicesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::DevicesListData, datadog::Error<ListDevicesError>>,
-    > + '_ {
+        &self, mut params: ListDevicesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::DevicesListData, datadog::Error<ListDevicesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 50;
             if params.page_size.is_none() {
@@ -581,17 +515,13 @@ impl NetworkDeviceMonitoringAPI {
         }
     }
 
+    
     /// Get the list of devices.
-    pub async fn list_devices_with_http_info(
-        &self,
-        params: ListDevicesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListDevicesResponse>,
-        datadog::Error<ListDevicesError>,
-    > {
+    pub async fn list_devices_with_http_info(&self, params: ListDevicesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListDevicesResponse>, datadog::Error<ListDevicesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_devices";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_number = params.page_number;
@@ -602,31 +532,28 @@ impl NetworkDeviceMonitoringAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/devices",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_tag {
-            local_req_builder =
-                local_req_builder.query(&[("filter[tag]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[tag]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -639,22 +566,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -666,78 +587,59 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListDevicesResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListDevicesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListDevicesError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns the tags associated with the specified interface.
-    pub async fn list_interface_user_tags(
-        &self,
-        interface_id: String,
-    ) -> Result<
-        crate::datadogV2::model::ListInterfaceTagsResponse,
-        datadog::Error<ListInterfaceUserTagsError>,
-    > {
-        match self
-            .list_interface_user_tags_with_http_info(interface_id)
-            .await
-        {
+    pub async fn list_interface_user_tags(&self, interface_id: String) -> Result<crate::datadogV2::model::ListInterfaceTagsResponse, datadog::Error<ListInterfaceUserTagsError>> {
+        match self.list_interface_user_tags_with_http_info(interface_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns the tags associated with the specified interface.
-    pub async fn list_interface_user_tags_with_http_info(
-        &self,
-        interface_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListInterfaceTagsResponse>,
-        datadog::Error<ListInterfaceUserTagsError>,
-    > {
+    pub async fn list_interface_user_tags_with_http_info(&self, interface_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListInterfaceTagsResponse>, datadog::Error<ListInterfaceUserTagsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_interface_user_tags";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/interfaces/{interface_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            interface_id = datadog::urlencode(interface_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), interface_id=
+            datadog::urlencode(interface_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -750,22 +652,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -777,82 +673,62 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListInterfaceTagsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListInterfaceTagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListInterfaceUserTagsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListInterfaceUserTagsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the tags for a device.
-    /// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
-    pub async fn update_device_user_tags(
-        &self,
-        device_id: String,
-        body: crate::datadogV2::model::ListTagsResponse,
-    ) -> Result<crate::datadogV2::model::ListTagsResponse, datadog::Error<UpdateDeviceUserTagsError>>
-    {
-        match self
-            .update_device_user_tags_with_http_info(device_id, body)
-            .await
-        {
+/// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
+    pub async fn update_device_user_tags(&self, device_id: String, body: crate::datadogV2::model::ListTagsResponse) -> Result<crate::datadogV2::model::ListTagsResponse, datadog::Error<UpdateDeviceUserTagsError>> {
+        match self.update_device_user_tags_with_http_info(device_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the tags for a device.
-    /// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
-    pub async fn update_device_user_tags_with_http_info(
-        &self,
-        device_id: String,
-        body: crate::datadogV2::model::ListTagsResponse,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListTagsResponse>,
-        datadog::Error<UpdateDeviceUserTagsError>,
-    > {
+/// A device supports up to 20 user tags by default. To request a higher limit for your organization, [contact Support](<https://docs.datadoghq.com/help/>).
+    pub async fn update_device_user_tags_with_http_info(&self, device_id: String, body: crate::datadogV2::model::ListTagsResponse) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListTagsResponse>, datadog::Error<UpdateDeviceUserTagsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_device_user_tags";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/devices/{device_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            device_id = datadog::urlencode(device_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), device_id=
+            datadog::urlencode(device_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -865,23 +741,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -889,7 +758,10 @@ impl NetworkDeviceMonitoringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -899,7 +771,10 @@ impl NetworkDeviceMonitoringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -921,7 +796,7 @@ impl NetworkDeviceMonitoringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -938,81 +813,60 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListTagsResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListTagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateDeviceUserTagsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateDeviceUserTagsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates the tags associated with the specified interface.
-    pub async fn update_interface_user_tags(
-        &self,
-        interface_id: String,
-        body: crate::datadogV2::model::ListInterfaceTagsResponse,
-    ) -> Result<
-        crate::datadogV2::model::ListInterfaceTagsResponse,
-        datadog::Error<UpdateInterfaceUserTagsError>,
-    > {
-        match self
-            .update_interface_user_tags_with_http_info(interface_id, body)
-            .await
-        {
+    pub async fn update_interface_user_tags(&self, interface_id: String, body: crate::datadogV2::model::ListInterfaceTagsResponse) -> Result<crate::datadogV2::model::ListInterfaceTagsResponse, datadog::Error<UpdateInterfaceUserTagsError>> {
+        match self.update_interface_user_tags_with_http_info(interface_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates the tags associated with the specified interface.
-    pub async fn update_interface_user_tags_with_http_info(
-        &self,
-        interface_id: String,
-        body: crate::datadogV2::model::ListInterfaceTagsResponse,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListInterfaceTagsResponse>,
-        datadog::Error<UpdateInterfaceUserTagsError>,
-    > {
+    pub async fn update_interface_user_tags_with_http_info(&self, interface_id: String, body: crate::datadogV2::model::ListInterfaceTagsResponse) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListInterfaceTagsResponse>, datadog::Error<UpdateInterfaceUserTagsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_interface_user_tags";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/ndm/tags/interfaces/{interface_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            interface_id = datadog::urlencode(interface_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), interface_id=
+            datadog::urlencode(interface_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1025,23 +879,16 @@ impl NetworkDeviceMonitoringAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1049,7 +896,10 @@ impl NetworkDeviceMonitoringAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1059,7 +909,10 @@ impl NetworkDeviceMonitoringAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1081,7 +934,7 @@ impl NetworkDeviceMonitoringAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1098,26 +951,17 @@ impl NetworkDeviceMonitoringAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListInterfaceTagsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListInterfaceTagsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateInterfaceUserTagsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateInterfaceUserTagsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

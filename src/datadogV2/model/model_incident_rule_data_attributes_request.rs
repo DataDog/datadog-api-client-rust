@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for creating an incident rule.
 #[non_exhaustive]
@@ -27,11 +27,7 @@ pub struct IncidentRuleDataAttributesRequest {
     #[serde(rename = "execution_type")]
     pub execution_type: crate::datadogV2::model::IncidentRuleExecutionType,
     /// The UUID of the incident type this rule applies to.
-    #[serde(
-        rename = "incident_type_uuid",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "incident_type_uuid", default, with = "::serde_with::rust::double_option")]
     pub incident_type_uuid: Option<Option<uuid::Uuid>>,
     /// Whether any condition (OR logic) should match instead of all (AND logic).
     #[serde(rename = "match_any_condition")]
@@ -49,18 +45,11 @@ pub struct IncidentRuleDataAttributesRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IncidentRuleDataAttributesRequest {
-    pub fn new(
-        condition: crate::datadogV2::model::IncidentRuleQueryCondition,
-        condition_table_type: i64,
-        enabled: bool,
-        execution_type: crate::datadogV2::model::IncidentRuleExecutionType,
-        task_id: crate::datadogV2::model::IncidentRuleTaskIDType,
-        task_payload: String,
-    ) -> IncidentRuleDataAttributesRequest {
+    pub fn new(condition: crate::datadogV2::model::IncidentRuleQueryCondition, condition_table_type: i64, enabled: bool, execution_type: crate::datadogV2::model::IncidentRuleExecutionType, task_id: crate::datadogV2::model::IncidentRuleTaskIDType, task_payload: String) -> IncidentRuleDataAttributesRequest {
         IncidentRuleDataAttributesRequest {
             condition,
             condition_table_type,
@@ -76,38 +65,34 @@ impl IncidentRuleDataAttributesRequest {
             _unparsed: false,
         }
     }
-
-    pub fn conditions(
-        mut self,
-        value: Vec<crate::datadogV2::model::IncidentRuleCondition>,
-    ) -> Self {
+    
+    pub fn conditions(mut self, value: Vec<crate::datadogV2::model::IncidentRuleCondition>) -> Self {
         self.conditions = Some(value);
         self
     }
-
+    
     pub fn incident_type_uuid(mut self, value: Option<uuid::Uuid>) -> Self {
         self.incident_type_uuid = Some(value);
         self
     }
-
+    
     pub fn match_any_condition(mut self, value: bool) -> Self {
         self.match_any_condition = Some(value);
         self
     }
-
+    
     pub fn trigger(mut self, value: crate::datadogV2::model::IncidentRuleTriggerType) -> Self {
         self.trigger = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for IncidentRuleDataAttributesRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -126,46 +111,38 @@ impl<'de> Deserialize<'de> for IncidentRuleDataAttributesRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut condition: Option<crate::datadogV2::model::IncidentRuleQueryCondition> =
-                    None;
+                let mut condition: Option<crate::datadogV2::model::IncidentRuleQueryCondition> = None;
                 let mut condition_table_type: Option<i64> = None;
-                let mut conditions: Option<Vec<crate::datadogV2::model::IncidentRuleCondition>> =
-                    None;
+                let mut conditions: Option<Vec<crate::datadogV2::model::IncidentRuleCondition>> = None;
                 let mut enabled: Option<bool> = None;
-                let mut execution_type: Option<crate::datadogV2::model::IncidentRuleExecutionType> =
-                    None;
+                let mut execution_type: Option<crate::datadogV2::model::IncidentRuleExecutionType> = None;
                 let mut incident_type_uuid: Option<Option<uuid::Uuid>> = None;
                 let mut match_any_condition: Option<bool> = None;
                 let mut task_id: Option<crate::datadogV2::model::IncidentRuleTaskIDType> = None;
                 let mut task_payload: Option<String> = None;
                 let mut trigger: Option<crate::datadogV2::model::IncidentRuleTriggerType> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "condition" => {
                             condition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "condition_table_type" => {
-                            condition_table_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            condition_table_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "conditions" => {
                             if v.is_null() {
                                 continue;
                             }
                             conditions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "execution_type" => {
-                            execution_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            execution_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _execution_type) = execution_type {
                                 match _execution_type {
                                     crate::datadogV2::model::IncidentRuleExecutionType::UnparsedObject(_execution_type) => {
@@ -174,18 +151,16 @@ impl<'de> Deserialize<'de> for IncidentRuleDataAttributesRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "incident_type_uuid" => {
-                            incident_type_uuid =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_type_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "match_any_condition" => {
                             if v.is_null() {
                                 continue;
                             }
-                            match_any_condition =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            match_any_condition = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "task_id" => {
                             task_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _task_id) = task_id {
@@ -196,11 +171,10 @@ impl<'de> Deserialize<'de> for IncidentRuleDataAttributesRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "task_payload" => {
-                            task_payload =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            task_payload = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trigger" => {
                             if v.is_null() {
                                 continue;
@@ -214,23 +188,20 @@ impl<'de> Deserialize<'de> for IncidentRuleDataAttributesRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let condition = condition.ok_or_else(|| M::Error::missing_field("condition"))?;
-                let condition_table_type = condition_table_type
-                    .ok_or_else(|| M::Error::missing_field("condition_table_type"))?;
+                let condition_table_type = condition_table_type.ok_or_else(|| M::Error::missing_field("condition_table_type"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let execution_type =
-                    execution_type.ok_or_else(|| M::Error::missing_field("execution_type"))?;
+                let execution_type = execution_type.ok_or_else(|| M::Error::missing_field("execution_type"))?;
                 let task_id = task_id.ok_or_else(|| M::Error::missing_field("task_id"))?;
-                let task_payload =
-                    task_payload.ok_or_else(|| M::Error::missing_field("task_payload"))?;
+                let task_payload = task_payload.ok_or_else(|| M::Error::missing_field("task_payload"))?;
 
                 let content = IncidentRuleDataAttributesRequest {
                     condition,

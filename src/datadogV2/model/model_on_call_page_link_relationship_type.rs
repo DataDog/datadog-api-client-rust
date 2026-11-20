@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum OnCallPageLinkRelationshipType {
-    RELATES_TO,
-    CAUSES,
-    BLOCKS,
-    DUPLICATES,
-    PARENT_OF,
-    SUCCESSOR_OF,
-    ESCALATES_TO,
-    PAGES,
+	RELATES_TO,
+	CAUSES,
+	BLOCKS,
+	DUPLICATES,
+	PARENT_OF,
+	SUCCESSOR_OF,
+	ESCALATES_TO,
+	PAGES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for OnCallPageLinkRelationshipType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "relates_to" => Self::RELATES_TO,
-            "causes" => Self::CAUSES,
-            "blocks" => Self::BLOCKS,
-            "duplicates" => Self::DUPLICATES,
-            "parent_of" => Self::PARENT_OF,
-            "successor_of" => Self::SUCCESSOR_OF,
-            "escalates_to" => Self::ESCALATES_TO,
-            "pages" => Self::PAGES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"relates_to" => Self::RELATES_TO,"causes" => Self::CAUSES,"blocks" => Self::BLOCKS,"duplicates" => Self::DUPLICATES,"parent_of" => Self::PARENT_OF,"successor_of" => Self::SUCCESSOR_OF,"escalates_to" => Self::ESCALATES_TO,"pages" => Self::PAGES,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

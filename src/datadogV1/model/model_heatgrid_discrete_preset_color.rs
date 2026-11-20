@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A preset discrete color palette.
 #[non_exhaustive]
@@ -22,15 +22,11 @@ pub struct HeatgridDiscretePresetColor {
     pub source: crate::datadogV1::model::HeatgridPresetColorSource,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl HeatgridDiscretePresetColor {
-    pub fn new(
-        mode: crate::datadogV1::model::HeatgridDiscreteMode,
-        preset_name: String,
-        source: crate::datadogV1::model::HeatgridPresetColorSource,
-    ) -> HeatgridDiscretePresetColor {
+    pub fn new(mode: crate::datadogV1::model::HeatgridDiscreteMode, preset_name: String, source: crate::datadogV1::model::HeatgridPresetColorSource) -> HeatgridDiscretePresetColor {
         HeatgridDiscretePresetColor {
             mode,
             preset_name,
@@ -38,7 +34,10 @@ impl HeatgridDiscretePresetColor {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for HeatgridDiscretePresetColor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -74,11 +73,10 @@ impl<'de> Deserialize<'de> for HeatgridDiscretePresetColor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "preset_name" => {
-                            preset_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            preset_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
@@ -89,17 +87,14 @@ impl<'de> Deserialize<'de> for HeatgridDiscretePresetColor {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
-                let preset_name =
-                    preset_name.ok_or_else(|| M::Error::missing_field("preset_name"))?;
+                let preset_name = preset_name.ok_or_else(|| M::Error::missing_field("preset_name"))?;
                 let source = source.ok_or_else(|| M::Error::missing_field("source"))?;
 
                 let content = HeatgridDiscretePresetColor {

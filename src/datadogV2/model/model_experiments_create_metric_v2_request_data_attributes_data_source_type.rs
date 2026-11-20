@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsCreateMetricV2RequestDataAttributesDataSourceType {
-    DATADOG,
-    DATADOG_REFERENCE_TABLE,
-    CUSTOMER_WAREHOUSE,
+	DATADOG,
+	DATADOG_REFERENCE_TABLE,
+	CUSTOMER_WAREHOUSE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for ExperimentsCreateMetricV2RequestDataAttributesDat
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "DATADOG" => Self::DATADOG,
-            "DATADOG_REFERENCE_TABLE" => Self::DATADOG_REFERENCE_TABLE,
-            "CUSTOMER_WAREHOUSE" => Self::CUSTOMER_WAREHOUSE,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"DATADOG" => Self::DATADOG,"DATADOG_REFERENCE_TABLE" => Self::DATADOG_REFERENCE_TABLE,"CUSTOMER_WAREHOUSE" => Self::CUSTOMER_WAREHOUSE,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

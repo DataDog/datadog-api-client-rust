@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Jira issue creation attributes
 #[non_exhaustive]
@@ -27,15 +27,11 @@ pub struct JiraIssueCreateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl JiraIssueCreateAttributes {
-    pub fn new(
-        issue_type_id: String,
-        jira_account_id: String,
-        project_id: String,
-    ) -> JiraIssueCreateAttributes {
+    pub fn new(issue_type_id: String, jira_account_id: String, project_id: String) -> JiraIssueCreateAttributes {
         JiraIssueCreateAttributes {
             fields: None,
             issue_type_id,
@@ -45,20 +41,19 @@ impl JiraIssueCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn fields(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.fields = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for JiraIssueCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -77,15 +72,11 @@ impl<'de> Deserialize<'de> for JiraIssueCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
+                let mut fields: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
                 let mut issue_type_id: Option<String> = None;
                 let mut jira_account_id: Option<String> = None;
                 let mut project_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -95,29 +86,25 @@ impl<'de> Deserialize<'de> for JiraIssueCreateAttributes {
                                 continue;
                             }
                             fields = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "issue_type_id" => {
-                            issue_type_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            issue_type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "jira_account_id" => {
-                            jira_account_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            jira_account_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "project_id" => {
                             project_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let issue_type_id =
-                    issue_type_id.ok_or_else(|| M::Error::missing_field("issue_type_id"))?;
-                let jira_account_id =
-                    jira_account_id.ok_or_else(|| M::Error::missing_field("jira_account_id"))?;
+                let issue_type_id = issue_type_id.ok_or_else(|| M::Error::missing_field("issue_type_id"))?;
+                let jira_account_id = jira_account_id.ok_or_else(|| M::Error::missing_field("jira_account_id"))?;
                 let project_id = project_id.ok_or_else(|| M::Error::missing_field("project_id"))?;
 
                 let content = JiraIssueCreateAttributes {

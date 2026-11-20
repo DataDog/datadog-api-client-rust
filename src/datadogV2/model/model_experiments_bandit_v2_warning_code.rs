@@ -2,21 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExperimentsBanditV2WarningCode {
-    DATADOG_FLAG_CONFIGURATION_OMITTED,
+	DATADOG_FLAG_CONFIGURATION_OMITTED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl ToString for ExperimentsBanditV2WarningCode {
     fn to_string(&self) -> String {
         match self {
-            Self::DATADOG_FLAG_CONFIGURATION_OMITTED => {
-                String::from("datadog_flag_configuration_omitted")
-            }
+            Self::DATADOG_FLAG_CONFIGURATION_OMITTED => String::from("datadog_flag_configuration_omitted"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,11 +39,8 @@ impl<'de> Deserialize<'de> for ExperimentsBanditV2WarningCode {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "datadog_flag_configuration_omitted" => Self::DATADOG_FLAG_CONFIGURATION_OMITTED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"datadog_flag_configuration_omitted" => Self::DATADOG_FLAG_CONFIGURATION_OMITTED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

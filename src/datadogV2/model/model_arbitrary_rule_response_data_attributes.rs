@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The definition of `ArbitraryRuleResponseDataAttributes` object.
 #[non_exhaustive]
@@ -13,8 +13,7 @@ use std::fmt::{self, Formatter};
 pub struct ArbitraryRuleResponseDataAttributes {
     /// The `attributes` `costs_to_allocate`.
     #[serde(rename = "costs_to_allocate")]
-    pub costs_to_allocate:
-        Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesCostsToAllocateItems>,
+    pub costs_to_allocate: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesCostsToAllocateItems>,
     /// The `attributes` `created`.
     #[serde(rename = "created")]
     pub created: chrono::DateTime<chrono::Utc>,
@@ -41,8 +40,7 @@ pub struct ArbitraryRuleResponseDataAttributes {
     pub rejected: Option<bool>,
     /// Rule category. Omitted for custom rules.
     #[serde(rename = "rule_category")]
-    pub rule_category:
-        Option<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory>,
+    pub rule_category: Option<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory>,
     /// The `attributes` `rule_name`.
     #[serde(rename = "rule_name")]
     pub rule_name: String,
@@ -68,25 +66,11 @@ pub struct ArbitraryRuleResponseDataAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ArbitraryRuleResponseDataAttributes {
-    pub fn new(
-        costs_to_allocate: Vec<
-            crate::datadogV2::model::ArbitraryRuleResponseDataAttributesCostsToAllocateItems,
-        >,
-        created: chrono::DateTime<chrono::Utc>,
-        enabled: bool,
-        last_modified_user_uuid: String,
-        order_id: i64,
-        provider: Vec<String>,
-        rule_name: String,
-        strategy: crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategy,
-        type_: String,
-        updated: chrono::DateTime<chrono::Utc>,
-        version: i32,
-    ) -> ArbitraryRuleResponseDataAttributes {
+    pub fn new(costs_to_allocate: Vec<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesCostsToAllocateItems>, created: chrono::DateTime<chrono::Utc>, enabled: bool, last_modified_user_uuid: String, order_id: i64, provider: Vec<String>, rule_name: String, strategy: crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategy, type_: String, updated: chrono::DateTime<chrono::Utc>, version: i32) -> ArbitraryRuleResponseDataAttributes {
         ArbitraryRuleResponseDataAttributes {
             costs_to_allocate,
             created,
@@ -109,48 +93,44 @@ impl ArbitraryRuleResponseDataAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn is_ootb(mut self, value: bool) -> Self {
         self.is_ootb = Some(value);
         self
     }
-
+    
     pub fn processing_status(mut self, value: String) -> Self {
         self.processing_status = Some(value);
         self
     }
-
+    
     pub fn rejected(mut self, value: bool) -> Self {
         self.rejected = Some(value);
         self
     }
-
-    pub fn rule_category(
-        mut self,
-        value: crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory,
-    ) -> Self {
+    
+    pub fn rule_category(mut self, value: crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory) -> Self {
         self.rule_category = Some(value);
         self
     }
-
+    
     pub fn valid_from_date(mut self, value: String) -> Self {
         self.valid_from_date = Some(value);
         self
     }
-
+    
     pub fn valid_through_date(mut self, value: String) -> Self {
         self.valid_through_date = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -178,71 +158,60 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                 let mut processing_status: Option<String> = None;
                 let mut provider: Option<Vec<String>> = None;
                 let mut rejected: Option<bool> = None;
-                let mut rule_category: Option<
-                    crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory,
-                > = None;
+                let mut rule_category: Option<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory> = None;
                 let mut rule_name: Option<String> = None;
-                let mut strategy: Option<
-                    crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategy,
-                > = None;
+                let mut strategy: Option<crate::datadogV2::model::ArbitraryRuleResponseDataAttributesStrategy> = None;
                 let mut type_: Option<String> = None;
                 let mut updated: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut valid_from_date: Option<String> = None;
                 let mut valid_through_date: Option<String> = None;
                 let mut version: Option<i32> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "costs_to_allocate" => {
-                            costs_to_allocate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            costs_to_allocate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created" => {
                             created = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_ootb" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_ootb = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_modified_user_uuid" => {
-                            last_modified_user_uuid =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_modified_user_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "order_id" => {
                             order_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "processing_status" => {
                             if v.is_null() {
                                 continue;
                             }
-                            processing_status =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            processing_status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "provider" => {
                             provider = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rejected" => {
                             if v.is_null() {
                                 continue;
                             }
                             rejected = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rule_category" => {
                             if v.is_null() {
                                 continue;
                             }
-                            rule_category =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            rule_category = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rule_category) = rule_category {
                                 match _rule_category {
                                     crate::datadogV2::model::ArbitraryRuleResponseDataAttributesRuleCategory::UnparsedObject(_rule_category) => {
@@ -251,49 +220,45 @@ impl<'de> Deserialize<'de> for ArbitraryRuleResponseDataAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "rule_name" => {
                             rule_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "strategy" => {
                             strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated" => {
                             updated = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "valid_from_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            valid_from_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_from_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "valid_through_date" => {
                             if v.is_null() {
                                 continue;
                             }
-                            valid_through_date =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            valid_through_date = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let costs_to_allocate = costs_to_allocate
-                    .ok_or_else(|| M::Error::missing_field("costs_to_allocate"))?;
+                let costs_to_allocate = costs_to_allocate.ok_or_else(|| M::Error::missing_field("costs_to_allocate"))?;
                 let created = created.ok_or_else(|| M::Error::missing_field("created"))?;
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
-                let last_modified_user_uuid = last_modified_user_uuid
-                    .ok_or_else(|| M::Error::missing_field("last_modified_user_uuid"))?;
+                let last_modified_user_uuid = last_modified_user_uuid.ok_or_else(|| M::Error::missing_field("last_modified_user_uuid"))?;
                 let order_id = order_id.ok_or_else(|| M::Error::missing_field("order_id"))?;
                 let provider = provider.ok_or_else(|| M::Error::missing_field("provider"))?;
                 let rule_name = rule_name.ok_or_else(|| M::Error::missing_field("rule_name"))?;

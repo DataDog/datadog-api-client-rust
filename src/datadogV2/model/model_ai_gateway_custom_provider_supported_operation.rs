@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayCustomProviderSupportedOperation {
-    OPENAI_CHAT_COMPLETIONS,
-    OPENAI_RESPONSES,
-    ANTHROPIC_MESSAGES,
+	OPENAI_CHAT_COMPLETIONS,
+	OPENAI_RESPONSES,
+	ANTHROPIC_MESSAGES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for AiGatewayCustomProviderSupportedOperation {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "OPENAI_CHAT_COMPLETIONS" => Self::OPENAI_CHAT_COMPLETIONS,
-            "OPENAI_RESPONSES" => Self::OPENAI_RESPONSES,
-            "ANTHROPIC_MESSAGES" => Self::ANTHROPIC_MESSAGES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"OPENAI_CHAT_COMPLETIONS" => Self::OPENAI_CHAT_COMPLETIONS,"OPENAI_RESPONSES" => Self::OPENAI_RESPONSES,"ANTHROPIC_MESSAGES" => Self::ANTHROPIC_MESSAGES,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

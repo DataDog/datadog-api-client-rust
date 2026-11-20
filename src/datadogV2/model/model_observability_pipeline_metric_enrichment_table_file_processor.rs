@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An `enrichment_table` processor that enriches metrics using a static CSV file.
 #[non_exhaustive]
@@ -21,7 +21,7 @@ pub struct ObservabilityPipelineMetricEnrichmentTableFileProcessor {
     #[serde(rename = "file")]
     pub file: crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableFile,
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component
-    /// (for example, as the `input` to downstream components).
+/// (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
     /// A Datadog search query used to determine which metrics this processor targets.
@@ -34,17 +34,11 @@ pub struct ObservabilityPipelineMetricEnrichmentTableFileProcessor {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ObservabilityPipelineMetricEnrichmentTableFileProcessor {
-    pub fn new(
-        enabled: bool,
-        file: crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableFile,
-        id: String,
-        include: String,
-        type_: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
-    ) -> ObservabilityPipelineMetricEnrichmentTableFileProcessor {
+    pub fn new(enabled: bool, file: crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableFile, id: String, include: String, type_: crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType) -> ObservabilityPipelineMetricEnrichmentTableFileProcessor {
         ObservabilityPipelineMetricEnrichmentTableFileProcessor {
             display_name: None,
             enabled,
@@ -56,20 +50,19 @@ impl ObservabilityPipelineMetricEnrichmentTableFileProcessor {
             _unparsed: false,
         }
     }
-
+    
     pub fn display_name(mut self, value: String) -> Self {
         self.display_name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ObservabilityPipelineMetricEnrichmentTableFileProcessor {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -90,18 +83,11 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMetricEnrichmentTableFilePro
             {
                 let mut display_name: Option<String> = None;
                 let mut enabled: Option<bool> = None;
-                let mut file: Option<
-                    crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableFile,
-                > = None;
+                let mut file: Option<crate::datadogV2::model::ObservabilityPipelineMetricEnrichmentTableFile> = None;
                 let mut id: Option<String> = None;
                 let mut include: Option<String> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ObservabilityPipelineEnrichmentTableProcessorType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -110,21 +96,20 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMetricEnrichmentTableFilePro
                             if v.is_null() {
                                 continue;
                             }
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "file" => {
                             file = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "include" => {
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -135,12 +120,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineMetricEnrichmentTableFilePro
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;

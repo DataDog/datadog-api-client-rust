@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsContentBlockType {
-    MARKDOWN,
-    HEADER,
-    TEXT,
-    JSON,
-    IMAGE,
-    UNIVIZ,
-    LLMOBS_TRACE,
-    FRONTEND,
+	MARKDOWN,
+	HEADER,
+	TEXT,
+	JSON,
+	IMAGE,
+	UNIVIZ,
+	LLMOBS_TRACE,
+	FRONTEND,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for LLMObsContentBlockType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "markdown" => Self::MARKDOWN,
-            "header" => Self::HEADER,
-            "text" => Self::TEXT,
-            "json" => Self::JSON,
-            "image" => Self::IMAGE,
-            "univiz" => Self::UNIVIZ,
-            "llmobs_trace" => Self::LLMOBS_TRACE,
-            "frontend" => Self::FRONTEND,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"markdown" => Self::MARKDOWN,"header" => Self::HEADER,"text" => Self::TEXT,"json" => Self::JSON,"image" => Self::IMAGE,"univiz" => Self::UNIVIZ,"llmobs_trace" => Self::LLMOBS_TRACE,"frontend" => Self::FRONTEND,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

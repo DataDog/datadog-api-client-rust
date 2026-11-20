@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Dashboard definition.
 #[non_exhaustive]
@@ -18,19 +18,15 @@ pub struct DashboardSummaryDefinition {
     #[serde(rename = "created_at")]
     pub created_at: Option<chrono::DateTime<chrono::Utc>>,
     /// Description of the dashboard.
-    #[serde(
-        rename = "description",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "description", default, with = "::serde_with::rust::double_option")]
     pub description: Option<Option<String>>,
     /// Dashboard identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Whether this dashboard is read-only. If True, only the author and admins can make changes to it.
-    ///
-    /// This property is deprecated; please use the [Restriction Policies API](<https://docs.datadoghq.com/api/latest/restriction-policies/>) instead to manage write authorization for individual dashboards.
-    #[deprecated]
+///
+/// This property is deprecated; please use the [Restriction Policies API](<https://docs.datadoghq.com/api/latest/restriction-policies/>) instead to manage write authorization for individual dashboards.
+	#[deprecated]
     #[serde(rename = "is_read_only")]
     pub is_read_only: Option<bool>,
     /// Layout type of the dashboard.
@@ -49,7 +45,7 @@ pub struct DashboardSummaryDefinition {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl DashboardSummaryDefinition {
@@ -69,69 +65,67 @@ impl DashboardSummaryDefinition {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn author_handle(mut self, value: String) -> Self {
         self.author_handle = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn is_read_only(mut self, value: bool) -> Self {
         self.is_read_only = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn layout_type(mut self, value: crate::datadogV1::model::DashboardLayoutType) -> Self {
         self.layout_type = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn title(mut self, value: String) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn url(mut self, value: String) -> Self {
         self.url = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for DashboardSummaryDefinition {
     fn default() -> Self {
@@ -165,10 +159,7 @@ impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
                 let mut modified_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut title: Option<String> = None;
                 let mut url: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -177,38 +168,34 @@ impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
                             if v.is_null() {
                                 continue;
                             }
-                            author_handle =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            author_handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_read_only" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_read_only =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_read_only = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "layout_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            layout_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            layout_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _layout_type) = layout_type {
                                 match _layout_type {
                                     crate::datadogV1::model::DashboardLayoutType::UnparsedObject(_layout_type) => {
@@ -217,31 +204,30 @@ impl<'de> Deserialize<'de> for DashboardSummaryDefinition {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "title" => {
                             if v.is_null() {
                                 continue;
                             }
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "url" => {
                             if v.is_null() {
                                 continue;
                             }
                             url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

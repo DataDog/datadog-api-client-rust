@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 
 /// GetRuleBasedViewOptionalParams is a struct for passing parameters to the method [`ComplianceAPI::get_rule_based_view`]
 #[non_exhaustive]
@@ -57,6 +57,9 @@ impl GetRuleBasedViewOptionalParams {
     }
 }
 
+
+
+
 /// GetRuleBasedViewError is a struct for typed errors of method [`ComplianceAPI::get_rule_based_view`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -65,6 +68,7 @@ pub enum GetRuleBasedViewError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Datadog Cloud Security Misconfigurations provides aggregated views of
 /// compliance rules and findings across your cloud resources, helping you assess
@@ -91,7 +95,8 @@ impl ComplianceAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -136,49 +141,35 @@ impl ComplianceAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// **This endpoint is deprecated.** Use the [Security Monitoring - Search Security Findings](<https://docs.datadoghq.com/api/latest/security-monitoring/search-security-findings/>) endpoint instead.
-    ///
-    /// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
-    /// Supports filtering by compliance framework, framework version, and additional query filters.
-    pub async fn get_rule_based_view(
-        &self,
-        to: i64,
-        params: GetRuleBasedViewOptionalParams,
-    ) -> Result<crate::datadogV2::model::RuleBasedViewResponse, datadog::Error<GetRuleBasedViewError>>
-    {
-        match self.get_rule_based_view_with_http_info(to, params).await {
+///
+/// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
+/// Supports filtering by compliance framework, framework version, and additional query filters.
+    pub async fn get_rule_based_view(&self, to: i64, params: GetRuleBasedViewOptionalParams) -> Result<crate::datadogV2::model::RuleBasedViewResponse, datadog::Error<GetRuleBasedViewError>> {
+        match self.get_rule_based_view_with_http_info(to,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// **This endpoint is deprecated.** Use the [Security Monitoring - Search Security Findings](<https://docs.datadoghq.com/api/latest/security-monitoring/search-security-findings/>) endpoint instead.
-    ///
-    /// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
-    /// Supports filtering by compliance framework, framework version, and additional query filters.
-    pub async fn get_rule_based_view_with_http_info(
-        &self,
-        to: i64,
-        params: GetRuleBasedViewOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RuleBasedViewResponse>,
-        datadog::Error<GetRuleBasedViewError>,
-    > {
+///
+/// Get an aggregated view of compliance rules with their pass, fail, and muted finding counts.
+/// Supports filtering by compliance framework, framework version, and additional query filters.
+    pub async fn get_rule_based_view_with_http_info(&self, to: i64, params: GetRuleBasedViewOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RuleBasedViewResponse>, datadog::Error<GetRuleBasedViewError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rule_based_view";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -190,11 +181,11 @@ impl ComplianceAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let framework = params.framework;
         let version = params.version;
-        let query_findings_without_framework_version =
-            params.query_findings_without_framework_version;
+        let query_findings_without_framework_version = params.query_findings_without_framework_version;
         let include_rules_without_findings = params.include_rules_without_findings;
         let is_custom = params.is_custom;
         let query = params.query;
@@ -203,44 +194,35 @@ impl ComplianceAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/compliance_findings/rule_based_view",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder = local_req_builder.query(&[("to", &to.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("to", &to.to_string() )]);
         if let Some(ref local_query_param) = framework {
-            local_req_builder =
-                local_req_builder.query(&[("framework", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("framework", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = version {
-            local_req_builder =
-                local_req_builder.query(&[("version", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("version", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query_findings_without_framework_version {
-            local_req_builder = local_req_builder.query(&[(
-                "query_findings_without_framework_version",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("query_findings_without_framework_version", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_rules_without_findings {
-            local_req_builder = local_req_builder.query(&[(
-                "include_rules_without_findings",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("include_rules_without_findings", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = is_custom {
-            local_req_builder =
-                local_req_builder.query(&[("is_custom", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("is_custom", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -253,22 +235,16 @@ impl ComplianceAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -280,26 +256,17 @@ impl ComplianceAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RuleBasedViewResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RuleBasedViewResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRuleBasedViewError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRuleBasedViewError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Fields in Usage Summary by tag(s).
 #[non_exhaustive]
@@ -186,19 +186,19 @@ pub struct MonthlyUsageAttributionValues {
     #[serde(rename = "error_tracking_usage")]
     pub error_tracking_usage: Option<f64>,
     /// The percentage of estimated indexed spans usage by tag(s) (To be deprecated on February 1st, 2027).
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "estimated_indexed_spans_percentage")]
     pub estimated_indexed_spans_percentage: Option<f64>,
     /// The estimated indexed spans usage by tag(s) (To be deprecated on February 1st, 2027).
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "estimated_indexed_spans_usage")]
     pub estimated_indexed_spans_usage: Option<f64>,
     /// The percentage of estimated ingested spans usage by tag(s) (To be deprecated on February 1st, 2027).
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "estimated_ingested_spans_percentage")]
     pub estimated_ingested_spans_percentage: Option<f64>,
     /// The estimated ingested spans usage by tag(s) (To be deprecated on February 1st, 2027).
-    #[deprecated]
+	#[deprecated]
     #[serde(rename = "estimated_ingested_spans_usage")]
     pub estimated_ingested_spans_usage: Option<f64>,
     /// The percentage of Fargate usage by tags.
@@ -529,7 +529,7 @@ pub struct MonthlyUsageAttributionValues {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonthlyUsageAttributionValues {
@@ -710,1035 +710,1033 @@ impl MonthlyUsageAttributionValues {
             _unparsed: false,
         }
     }
-
+    
     #[allow(deprecated)]
     pub fn api_percentage(mut self, value: f64) -> Self {
         self.api_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn api_usage(mut self, value: f64) -> Self {
         self.api_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_fargate_percentage(mut self, value: f64) -> Self {
         self.apm_fargate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_fargate_usage(mut self, value: f64) -> Self {
         self.apm_fargate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_host_percentage(mut self, value: f64) -> Self {
         self.apm_host_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_host_usage(mut self, value: f64) -> Self {
         self.apm_host_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_usm_percentage(mut self, value: f64) -> Self {
         self.apm_usm_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn apm_usm_usage(mut self, value: f64) -> Self {
         self.apm_usm_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn appsec_fargate_percentage(mut self, value: f64) -> Self {
         self.appsec_fargate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn appsec_fargate_usage(mut self, value: f64) -> Self {
         self.appsec_fargate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn appsec_percentage(mut self, value: f64) -> Self {
         self.appsec_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn appsec_usage(mut self, value: f64) -> Self {
         self.appsec_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn asm_serverless_traced_invocations_percentage(mut self, value: f64) -> Self {
         self.asm_serverless_traced_invocations_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn asm_serverless_traced_invocations_usage(mut self, value: f64) -> Self {
         self.asm_serverless_traced_invocations_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn bits_ai_investigations_percentage(mut self, value: f64) -> Self {
         self.bits_ai_investigations_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn bits_ai_investigations_usage(mut self, value: f64) -> Self {
         self.bits_ai_investigations_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn browser_percentage(mut self, value: f64) -> Self {
         self.browser_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn browser_usage(mut self, value: f64) -> Self {
         self.browser_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_code_coverage_committers_percentage(mut self, value: f64) -> Self {
         self.ci_code_coverage_committers_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_code_coverage_committers_usage(mut self, value: f64) -> Self {
         self.ci_code_coverage_committers_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_pipeline_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.ci_pipeline_indexed_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_pipeline_indexed_spans_usage(mut self, value: f64) -> Self {
         self.ci_pipeline_indexed_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_test_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.ci_test_indexed_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_test_indexed_spans_usage(mut self, value: f64) -> Self {
         self.ci_test_indexed_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_visibility_itr_percentage(mut self, value: f64) -> Self {
         self.ci_visibility_itr_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ci_visibility_itr_usage(mut self, value: f64) -> Self {
         self.ci_visibility_itr_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cloud_siem_percentage(mut self, value: f64) -> Self {
         self.cloud_siem_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cloud_siem_usage(mut self, value: f64) -> Self {
         self.cloud_siem_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn code_security_host_percentage(mut self, value: f64) -> Self {
         self.code_security_host_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn code_security_host_usage(mut self, value: f64) -> Self {
         self.code_security_host_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn container_excl_agent_percentage(mut self, value: f64) -> Self {
         self.container_excl_agent_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn container_excl_agent_usage(mut self, value: f64) -> Self {
         self.container_excl_agent_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn container_percentage(mut self, value: f64) -> Self {
         self.container_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn container_usage(mut self, value: f64) -> Self {
         self.container_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cspm_containers_percentage(mut self, value: f64) -> Self {
         self.cspm_containers_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cspm_containers_usage(mut self, value: f64) -> Self {
         self.cspm_containers_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cspm_hosts_percentage(mut self, value: f64) -> Self {
         self.cspm_hosts_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cspm_hosts_usage(mut self, value: f64) -> Self {
         self.cspm_hosts_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_event_percentage(mut self, value: f64) -> Self {
         self.custom_event_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_event_usage(mut self, value: f64) -> Self {
         self.custom_event_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_ingested_timeseries_percentage(mut self, value: f64) -> Self {
         self.custom_ingested_timeseries_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_ingested_timeseries_usage(mut self, value: f64) -> Self {
         self.custom_ingested_timeseries_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_timeseries_percentage(mut self, value: f64) -> Self {
         self.custom_timeseries_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn custom_timeseries_usage(mut self, value: f64) -> Self {
         self.custom_timeseries_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_containers_percentage(mut self, value: f64) -> Self {
         self.cws_containers_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_containers_usage(mut self, value: f64) -> Self {
         self.cws_containers_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_fargate_task_percentage(mut self, value: f64) -> Self {
         self.cws_fargate_task_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_fargate_task_usage(mut self, value: f64) -> Self {
         self.cws_fargate_task_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_hosts_percentage(mut self, value: f64) -> Self {
         self.cws_hosts_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn cws_hosts_usage(mut self, value: f64) -> Self {
         self.cws_hosts_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn data_jobs_monitoring_usage(mut self, value: f64) -> Self {
         self.data_jobs_monitoring_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn data_stream_monitoring_usage(mut self, value: f64) -> Self {
         self.data_stream_monitoring_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dbm_hosts_percentage(mut self, value: f64) -> Self {
         self.dbm_hosts_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dbm_hosts_usage(mut self, value: f64) -> Self {
         self.dbm_hosts_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dbm_queries_percentage(mut self, value: f64) -> Self {
         self.dbm_queries_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn dbm_queries_usage(mut self, value: f64) -> Self {
         self.dbm_queries_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn error_tracking_percentage(mut self, value: f64) -> Self {
         self.error_tracking_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn error_tracking_usage(mut self, value: f64) -> Self {
         self.error_tracking_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn estimated_indexed_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_indexed_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn estimated_indexed_spans_usage(mut self, value: f64) -> Self {
         self.estimated_indexed_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn estimated_ingested_spans_percentage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn estimated_ingested_spans_usage(mut self, value: f64) -> Self {
         self.estimated_ingested_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn fargate_percentage(mut self, value: f64) -> Self {
         self.fargate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn fargate_usage(mut self, value: f64) -> Self {
         self.fargate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn flex_logs_starter_percentage(mut self, value: f64) -> Self {
         self.flex_logs_starter_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn flex_logs_starter_usage(mut self, value: f64) -> Self {
         self.flex_logs_starter_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn flex_stored_logs_percentage(mut self, value: f64) -> Self {
         self.flex_stored_logs_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn flex_stored_logs_usage(mut self, value: f64) -> Self {
         self.flex_stored_logs_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn functions_percentage(mut self, value: f64) -> Self {
         self.functions_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn functions_usage(mut self, value: f64) -> Self {
         self.functions_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn incident_management_monthly_active_users_percentage(mut self, value: f64) -> Self {
         self.incident_management_monthly_active_users_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn incident_management_monthly_active_users_usage(mut self, value: f64) -> Self {
         self.incident_management_monthly_active_users_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn indexed_spans_percentage(mut self, value: f64) -> Self {
         self.indexed_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn indexed_spans_usage(mut self, value: f64) -> Self {
         self.indexed_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn infra_host_basic_percentage(mut self, value: f64) -> Self {
         self.infra_host_basic_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn infra_host_basic_usage(mut self, value: f64) -> Self {
         self.infra_host_basic_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn infra_host_percentage(mut self, value: f64) -> Self {
         self.infra_host_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn infra_host_usage(mut self, value: f64) -> Self {
         self.infra_host_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ingested_logs_bytes_percentage(mut self, value: f64) -> Self {
         self.ingested_logs_bytes_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ingested_logs_bytes_usage(mut self, value: f64) -> Self {
         self.ingested_logs_bytes_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ingested_spans_bytes_percentage(mut self, value: f64) -> Self {
         self.ingested_spans_bytes_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ingested_spans_bytes_usage(mut self, value: f64) -> Self {
         self.ingested_spans_bytes_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn invocations_percentage(mut self, value: f64) -> Self {
         self.invocations_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn invocations_usage(mut self, value: f64) -> Self {
         self.invocations_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn lambda_traced_invocations_percentage(mut self, value: f64) -> Self {
         self.lambda_traced_invocations_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn lambda_traced_invocations_usage(mut self, value: f64) -> Self {
         self.lambda_traced_invocations_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn llm_observability_percentage(mut self, value: f64) -> Self {
         self.llm_observability_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn llm_observability_usage(mut self, value: f64) -> Self {
         self.llm_observability_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn llm_spans_percentage(mut self, value: f64) -> Self {
         self.llm_spans_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn llm_spans_usage(mut self, value: f64) -> Self {
         self.llm_spans_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_15day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_15day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_15day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_15day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_180day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_180day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_180day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_180day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_1day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_1day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_1day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_1day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_30day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_30day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_30day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_30day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_360day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_360day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_360day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_360day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_3day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_3day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_3day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_3day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_45day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_45day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_45day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_45day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_60day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_60day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_60day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_60day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_7day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_7day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_7day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_7day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_90day_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_90day_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_90day_usage(mut self, value: f64) -> Self {
         self.logs_indexed_90day_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_custom_retention_percentage(mut self, value: f64) -> Self {
         self.logs_indexed_custom_retention_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn logs_indexed_custom_retention_usage(mut self, value: f64) -> Self {
         self.logs_indexed_custom_retention_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn mobile_app_testing_percentage(mut self, value: f64) -> Self {
         self.mobile_app_testing_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn mobile_app_testing_usage(mut self, value: f64) -> Self {
         self.mobile_app_testing_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ndm_netflow_percentage(mut self, value: f64) -> Self {
         self.ndm_netflow_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn ndm_netflow_usage(mut self, value: f64) -> Self {
         self.ndm_netflow_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn network_device_wireless_percentage(mut self, value: f64) -> Self {
         self.network_device_wireless_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn network_device_wireless_usage(mut self, value: f64) -> Self {
         self.network_device_wireless_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn npm_host_percentage(mut self, value: f64) -> Self {
         self.npm_host_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn npm_host_usage(mut self, value: f64) -> Self {
         self.npm_host_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn obs_pipeline_bytes_percentage(mut self, value: f64) -> Self {
         self.obs_pipeline_bytes_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn obs_pipeline_bytes_usage(mut self, value: f64) -> Self {
         self.obs_pipeline_bytes_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn obs_pipelines_vcpu_percentage(mut self, value: f64) -> Self {
         self.obs_pipelines_vcpu_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn obs_pipelines_vcpu_usage(mut self, value: f64) -> Self {
         self.obs_pipelines_vcpu_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn online_archive_percentage(mut self, value: f64) -> Self {
         self.online_archive_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn online_archive_usage(mut self, value: f64) -> Self {
         self.online_archive_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn product_analytics_session_percentage(mut self, value: f64) -> Self {
         self.product_analytics_session_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn product_analytics_session_usage(mut self, value: f64) -> Self {
         self.product_analytics_session_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_container_percentage(mut self, value: f64) -> Self {
         self.profiled_container_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_container_usage(mut self, value: f64) -> Self {
         self.profiled_container_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_fargate_percentage(mut self, value: f64) -> Self {
         self.profiled_fargate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_fargate_usage(mut self, value: f64) -> Self {
         self.profiled_fargate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_host_percentage(mut self, value: f64) -> Self {
         self.profiled_host_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn profiled_host_usage(mut self, value: f64) -> Self {
         self.profiled_host_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn published_app_percentage(mut self, value: f64) -> Self {
         self.published_app_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn published_app_usage(mut self, value: f64) -> Self {
         self.published_app_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_browser_mobile_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_browser_mobile_sessions_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_browser_mobile_sessions_usage(mut self, value: f64) -> Self {
         self.rum_browser_mobile_sessions_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_ingested_percentage(mut self, value: f64) -> Self {
         self.rum_ingested_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_ingested_usage(mut self, value: f64) -> Self {
         self.rum_ingested_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_investigate_percentage(mut self, value: f64) -> Self {
         self.rum_investigate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_investigate_usage(mut self, value: f64) -> Self {
         self.rum_investigate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_replay_sessions_percentage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_replay_sessions_usage(mut self, value: f64) -> Self {
         self.rum_replay_sessions_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_session_replay_add_on_percentage(mut self, value: f64) -> Self {
         self.rum_session_replay_add_on_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn rum_session_replay_add_on_usage(mut self, value: f64) -> Self {
         self.rum_session_replay_add_on_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sca_fargate_percentage(mut self, value: f64) -> Self {
         self.sca_fargate_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sca_fargate_usage(mut self, value: f64) -> Self {
         self.sca_fargate_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sds_scanned_bytes_percentage(mut self, value: f64) -> Self {
         self.sds_scanned_bytes_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn sds_scanned_bytes_usage(mut self, value: f64) -> Self {
         self.sds_scanned_bytes_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn serverless_apps_apm_percentage(mut self, value: f64) -> Self {
         self.serverless_apps_apm_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn serverless_apps_apm_usage(mut self, value: f64) -> Self {
         self.serverless_apps_apm_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn serverless_apps_percentage(mut self, value: f64) -> Self {
         self.serverless_apps_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn serverless_apps_usage(mut self, value: f64) -> Self {
         self.serverless_apps_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_12mo_retention_percentage(mut self, value: f64) -> Self {
         self.siem_12mo_retention_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_12mo_retention_usage(mut self, value: f64) -> Self {
         self.siem_12mo_retention_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_6mo_retention_percentage(mut self, value: f64) -> Self {
         self.siem_6mo_retention_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_6mo_retention_usage(mut self, value: f64) -> Self {
         self.siem_6mo_retention_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_analyzed_logs_add_on_percentage(mut self, value: f64) -> Self {
         self.siem_analyzed_logs_add_on_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_analyzed_logs_add_on_usage(mut self, value: f64) -> Self {
         self.siem_analyzed_logs_add_on_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_ingested_bytes_percentage(mut self, value: f64) -> Self {
         self.siem_ingested_bytes_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn siem_ingested_bytes_usage(mut self, value: f64) -> Self {
         self.siem_ingested_bytes_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn snmp_percentage(mut self, value: f64) -> Self {
         self.snmp_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn snmp_usage(mut self, value: f64) -> Self {
         self.snmp_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn universal_service_monitoring_percentage(mut self, value: f64) -> Self {
         self.universal_service_monitoring_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn universal_service_monitoring_usage(mut self, value: f64) -> Self {
         self.universal_service_monitoring_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn vuln_management_hosts_percentage(mut self, value: f64) -> Self {
         self.vuln_management_hosts_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn vuln_management_hosts_usage(mut self, value: f64) -> Self {
         self.vuln_management_hosts_usage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn workflow_executions_percentage(mut self, value: f64) -> Self {
         self.workflow_executions_percentage = Some(value);
         self
     }
-
+    
     #[allow(deprecated)]
     pub fn workflow_executions_usage(mut self, value: f64) -> Self {
         self.workflow_executions_usage = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonthlyUsageAttributionValues {
     fn default() -> Self {
@@ -1933,10 +1931,7 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                 let mut vuln_management_hosts_usage: Option<f64> = None;
                 let mut workflow_executions_percentage: Option<f64> = None;
                 let mut workflow_executions_usage: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -1945,1195 +1940,1027 @@ impl<'de> Deserialize<'de> for MonthlyUsageAttributionValues {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            api_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            api_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "api_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             api_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "apm_fargate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_fargate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_fargate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_fargate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_fargate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_fargate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_host_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_host_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_host_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_host_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_host_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_host_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_usm_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_usm_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_usm_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "apm_usm_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            apm_usm_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            apm_usm_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "appsec_fargate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            appsec_fargate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            appsec_fargate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "appsec_fargate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            appsec_fargate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            appsec_fargate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "appsec_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            appsec_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            appsec_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "appsec_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            appsec_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            appsec_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "asm_serverless_traced_invocations_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            asm_serverless_traced_invocations_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            asm_serverless_traced_invocations_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "asm_serverless_traced_invocations_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            asm_serverless_traced_invocations_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            asm_serverless_traced_invocations_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bits_ai_investigations_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            bits_ai_investigations_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bits_ai_investigations_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "bits_ai_investigations_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            bits_ai_investigations_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            bits_ai_investigations_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "browser_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            browser_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "browser_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            browser_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            browser_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_code_coverage_committers_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_code_coverage_committers_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_code_coverage_committers_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_code_coverage_committers_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_code_coverage_committers_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_code_coverage_committers_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_indexed_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_pipeline_indexed_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_indexed_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_pipeline_indexed_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_pipeline_indexed_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_pipeline_indexed_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_test_indexed_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_test_indexed_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_test_indexed_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_test_indexed_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_test_indexed_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_test_indexed_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_visibility_itr_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_visibility_itr_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_visibility_itr_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ci_visibility_itr_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ci_visibility_itr_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ci_visibility_itr_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_siem_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cloud_siem_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_siem_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cloud_siem_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cloud_siem_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cloud_siem_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code_security_host_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            code_security_host_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_security_host_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "code_security_host_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            code_security_host_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_security_host_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_excl_agent_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            container_excl_agent_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_excl_agent_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_excl_agent_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            container_excl_agent_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_excl_agent_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            container_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "container_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            container_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            container_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_containers_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cspm_containers_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_containers_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_containers_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cspm_containers_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_containers_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_hosts_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cspm_hosts_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_hosts_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cspm_hosts_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cspm_hosts_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cspm_hosts_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_event_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_event_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_event_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_event_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_event_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_event_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_ingested_timeseries_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_ingested_timeseries_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_ingested_timeseries_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_ingested_timeseries_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_ingested_timeseries_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_ingested_timeseries_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_timeseries_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_timeseries_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_timeseries_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "custom_timeseries_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            custom_timeseries_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            custom_timeseries_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_containers_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_containers_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_containers_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_containers_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_containers_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_containers_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_fargate_task_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_fargate_task_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_fargate_task_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_fargate_task_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_fargate_task_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_fargate_task_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_hosts_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_hosts_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_hosts_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cws_hosts_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            cws_hosts_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cws_hosts_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_jobs_monitoring_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            data_jobs_monitoring_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_jobs_monitoring_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "data_stream_monitoring_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            data_stream_monitoring_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            data_stream_monitoring_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_hosts_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            dbm_hosts_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_hosts_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_hosts_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            dbm_hosts_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_hosts_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_queries_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            dbm_queries_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_queries_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "dbm_queries_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            dbm_queries_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            dbm_queries_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            error_tracking_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "error_tracking_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            error_tracking_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            error_tracking_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_indexed_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            estimated_indexed_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_indexed_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_indexed_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            estimated_indexed_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_indexed_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_ingested_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            estimated_ingested_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_ingested_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "estimated_ingested_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            estimated_ingested_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            estimated_ingested_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            fargate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "fargate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            fargate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            fargate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_starter_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            flex_logs_starter_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_starter_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_logs_starter_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            flex_logs_starter_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_logs_starter_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_stored_logs_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            flex_stored_logs_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_stored_logs_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "flex_stored_logs_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            flex_stored_logs_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            flex_stored_logs_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "functions_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            functions_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            functions_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "functions_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            functions_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            functions_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_management_monthly_active_users_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            incident_management_monthly_active_users_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_management_monthly_active_users_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "incident_management_monthly_active_users_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            incident_management_monthly_active_users_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            incident_management_monthly_active_users_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "indexed_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            indexed_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indexed_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "indexed_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            indexed_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            indexed_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_basic_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            infra_host_basic_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_basic_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_basic_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            infra_host_basic_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_basic_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            infra_host_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "infra_host_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            infra_host_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            infra_host_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_logs_bytes_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ingested_logs_bytes_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_logs_bytes_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_logs_bytes_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ingested_logs_bytes_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_logs_bytes_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_spans_bytes_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ingested_spans_bytes_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_spans_bytes_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ingested_spans_bytes_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ingested_spans_bytes_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ingested_spans_bytes_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "invocations_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            invocations_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            invocations_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "invocations_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            invocations_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            invocations_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lambda_traced_invocations_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            lambda_traced_invocations_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lambda_traced_invocations_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "lambda_traced_invocations_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            lambda_traced_invocations_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            lambda_traced_invocations_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            llm_observability_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_observability_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_observability_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            llm_observability_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_observability_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_spans_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            llm_spans_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_spans_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "llm_spans_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            llm_spans_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            llm_spans_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_15day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_15day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_15day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_15day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_15day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_15day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_180day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_180day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_180day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_180day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_180day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_180day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_1day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_1day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_1day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_1day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_1day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_1day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_30day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_30day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_30day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_30day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_30day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_30day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_360day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_360day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_360day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_360day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_360day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_360day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_3day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_3day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_3day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_3day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_3day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_3day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_45day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_45day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_45day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_45day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_45day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_45day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_60day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_60day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_60day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_60day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_60day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_60day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_7day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_7day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_7day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_7day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_7day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_7day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_90day_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_90day_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_90day_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_90day_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_90day_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_90day_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_custom_retention_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_custom_retention_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_custom_retention_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "logs_indexed_custom_retention_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            logs_indexed_custom_retention_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            logs_indexed_custom_retention_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_app_testing_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            mobile_app_testing_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_app_testing_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mobile_app_testing_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            mobile_app_testing_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mobile_app_testing_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ndm_netflow_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ndm_netflow_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ndm_netflow_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "ndm_netflow_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            ndm_netflow_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            ndm_netflow_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "network_device_wireless_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            network_device_wireless_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_device_wireless_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "network_device_wireless_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            network_device_wireless_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            network_device_wireless_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            npm_host_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_host_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "npm_host_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            npm_host_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            npm_host_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "obs_pipeline_bytes_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            obs_pipeline_bytes_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            obs_pipeline_bytes_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "obs_pipeline_bytes_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            obs_pipeline_bytes_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            obs_pipeline_bytes_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "obs_pipelines_vcpu_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            obs_pipelines_vcpu_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            obs_pipelines_vcpu_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "obs_pipelines_vcpu_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            obs_pipelines_vcpu_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            obs_pipelines_vcpu_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            online_archive_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            online_archive_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "online_archive_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            online_archive_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            online_archive_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "product_analytics_session_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            product_analytics_session_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_analytics_session_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "product_analytics_session_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            product_analytics_session_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            product_analytics_session_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_container_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_container_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_container_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_container_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_container_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_container_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_fargate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_fargate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_fargate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_fargate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_fargate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_fargate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_host_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_host_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_host_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "profiled_host_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            profiled_host_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            profiled_host_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "published_app_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            published_app_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            published_app_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "published_app_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            published_app_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            published_app_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_mobile_sessions_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_browser_mobile_sessions_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_mobile_sessions_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_browser_mobile_sessions_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_browser_mobile_sessions_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_browser_mobile_sessions_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_ingested_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_ingested_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_ingested_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_ingested_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_ingested_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_ingested_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_investigate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_investigate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_investigate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_investigate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_investigate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_investigate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_replay_sessions_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_replay_sessions_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_replay_sessions_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_replay_sessions_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_replay_sessions_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_replay_sessions_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_session_replay_add_on_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_session_replay_add_on_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_session_replay_add_on_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "rum_session_replay_add_on_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            rum_session_replay_add_on_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            rum_session_replay_add_on_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sca_fargate_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            sca_fargate_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sca_fargate_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sca_fargate_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            sca_fargate_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sca_fargate_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_scanned_bytes_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            sds_scanned_bytes_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_scanned_bytes_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sds_scanned_bytes_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            sds_scanned_bytes_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            sds_scanned_bytes_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_apm_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            serverless_apps_apm_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_apm_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_apm_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            serverless_apps_apm_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_apm_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            serverless_apps_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "serverless_apps_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            serverless_apps_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            serverless_apps_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_12mo_retention_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_12mo_retention_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_12mo_retention_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_12mo_retention_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_12mo_retention_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_12mo_retention_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_6mo_retention_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_6mo_retention_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_6mo_retention_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_6mo_retention_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_6mo_retention_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_6mo_retention_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_analyzed_logs_add_on_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_analyzed_logs_add_on_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_analyzed_logs_add_on_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_analyzed_logs_add_on_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_analyzed_logs_add_on_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_analyzed_logs_add_on_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_ingested_bytes_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_ingested_bytes_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_ingested_bytes_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "siem_ingested_bytes_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            siem_ingested_bytes_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            siem_ingested_bytes_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snmp_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            snmp_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            snmp_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "snmp_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             snmp_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "universal_service_monitoring_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            universal_service_monitoring_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            universal_service_monitoring_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "universal_service_monitoring_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            universal_service_monitoring_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            universal_service_monitoring_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_management_hosts_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            vuln_management_hosts_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_management_hosts_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "vuln_management_hosts_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            vuln_management_hosts_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            vuln_management_hosts_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "workflow_executions_percentage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            workflow_executions_percentage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workflow_executions_percentage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "workflow_executions_usage" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            workflow_executions_usage =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            workflow_executions_usage = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

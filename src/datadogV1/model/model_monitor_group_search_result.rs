@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A single monitor group search result.
 #[non_exhaustive]
@@ -21,11 +21,7 @@ pub struct MonitorGroupSearchResult {
     #[serde(rename = "last_nodata_ts")]
     pub last_nodata_ts: Option<i64>,
     /// Latest timestamp the monitor group triggered.
-    #[serde(
-        rename = "last_triggered_ts",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "last_triggered_ts", default, with = "::serde_with::rust::double_option")]
     pub last_triggered_ts: Option<Option<i64>>,
     /// The ID of the monitor.
     #[serde(rename = "monitor_id")]
@@ -40,7 +36,7 @@ pub struct MonitorGroupSearchResult {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MonitorGroupSearchResult {
@@ -57,50 +53,48 @@ impl MonitorGroupSearchResult {
             _unparsed: false,
         }
     }
-
+    
     pub fn group(mut self, value: String) -> Self {
         self.group = Some(value);
         self
     }
-
+    
     pub fn group_tags(mut self, value: Vec<String>) -> Self {
         self.group_tags = Some(value);
         self
     }
-
+    
     pub fn last_nodata_ts(mut self, value: i64) -> Self {
         self.last_nodata_ts = Some(value);
         self
     }
-
+    
     pub fn last_triggered_ts(mut self, value: Option<i64>) -> Self {
         self.last_triggered_ts = Some(value);
         self
     }
-
+    
     pub fn monitor_id(mut self, value: i64) -> Self {
         self.monitor_id = Some(value);
         self
     }
-
+    
     pub fn monitor_name(mut self, value: String) -> Self {
         self.monitor_name = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: crate::datadogV1::model::MonitorOverallStates) -> Self {
         self.status = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for MonitorGroupSearchResult {
     fn default() -> Self {
@@ -132,10 +126,7 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResult {
                 let mut monitor_id: Option<i64> = None;
                 let mut monitor_name: Option<String> = None;
                 let mut status: Option<crate::datadogV1::model::MonitorOverallStates> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -145,37 +136,34 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResult {
                                 continue;
                             }
                             group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "group_tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             group_tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_nodata_ts" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_nodata_ts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_nodata_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "last_triggered_ts" => {
-                            last_triggered_ts =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_triggered_ts = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "monitor_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             monitor_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "monitor_name" => {
                             if v.is_null() {
                                 continue;
                             }
-                            monitor_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            monitor_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
@@ -189,12 +177,12 @@ impl<'de> Deserialize<'de> for MonitorGroupSearchResult {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -2,26 +2,27 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum WidgetType {
-    BAR_CHART,
-    CHANGE,
-    CLOUD_COST_SUMMARY,
-    COHORT,
-    FUNNEL,
-    GEOMAP,
-    LIST_STREAM,
-    QUERY_TABLE,
-    QUERY_VALUE,
-    RETENTION_CURVE,
-    SANKEY,
-    SUNBURST,
-    TIMESERIES,
-    TOPLIST,
-    TREEMAP,
+	BAR_CHART,
+	CHANGE,
+	CLOUD_COST_SUMMARY,
+	COHORT,
+	FUNNEL,
+	GEOMAP,
+	LIST_STREAM,
+	QUERY_TABLE,
+	QUERY_VALUE,
+	RETENTION_CURVE,
+	SANKEY,
+	SUNBURST,
+	TIMESERIES,
+	TOPLIST,
+	TREEMAP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -66,25 +67,8 @@ impl<'de> Deserialize<'de> for WidgetType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "bar_chart" => Self::BAR_CHART,
-            "change" => Self::CHANGE,
-            "cloud_cost_summary" => Self::CLOUD_COST_SUMMARY,
-            "cohort" => Self::COHORT,
-            "funnel" => Self::FUNNEL,
-            "geomap" => Self::GEOMAP,
-            "list_stream" => Self::LIST_STREAM,
-            "query_table" => Self::QUERY_TABLE,
-            "query_value" => Self::QUERY_VALUE,
-            "retention_curve" => Self::RETENTION_CURVE,
-            "sankey" => Self::SANKEY,
-            "sunburst" => Self::SUNBURST,
-            "timeseries" => Self::TIMESERIES,
-            "toplist" => Self::TOPLIST,
-            "treemap" => Self::TREEMAP,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"bar_chart" => Self::BAR_CHART,"change" => Self::CHANGE,"cloud_cost_summary" => Self::CLOUD_COST_SUMMARY,"cohort" => Self::COHORT,"funnel" => Self::FUNNEL,"geomap" => Self::GEOMAP,"list_stream" => Self::LIST_STREAM,"query_table" => Self::QUERY_TABLE,"query_value" => Self::QUERY_VALUE,"retention_curve" => Self::RETENTION_CURVE,"sankey" => Self::SANKEY,"sunburst" => Self::SUNBURST,"timeseries" => Self::TIMESERIES,"toplist" => Self::TOPLIST,"treemap" => Self::TREEMAP,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

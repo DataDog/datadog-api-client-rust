@@ -2,16 +2,17 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CIAppPipelineEventPipelineStatus {
-    SUCCESS,
-    ERROR,
-    CANCELED,
-    SKIPPED,
-    BLOCKED,
+	SUCCESS,
+	ERROR,
+	CANCELED,
+	SKIPPED,
+	BLOCKED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -46,15 +47,8 @@ impl<'de> Deserialize<'de> for CIAppPipelineEventPipelineStatus {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "success" => Self::SUCCESS,
-            "error" => Self::ERROR,
-            "canceled" => Self::CANCELED,
-            "skipped" => Self::SKIPPED,
-            "blocked" => Self::BLOCKED,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"success" => Self::SUCCESS,"error" => Self::ERROR,"canceled" => Self::CANCELED,"skipped" => Self::SKIPPED,"blocked" => Self::BLOCKED,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

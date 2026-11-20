@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Aggregate state across budget instance counters.
 #[non_exhaustive]
@@ -39,19 +39,11 @@ pub struct AiGatewayBudgetInstancesSummaryAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AiGatewayBudgetInstancesSummaryAttributes {
-    pub fn new(
-        budget_id: uuid::Uuid,
-        exceeded_capacity_count: i64,
-        instance_count: i64,
-        over_warning_threshold_count: i64,
-        restricted_details: bool,
-        total_spend_microcents: i64,
-        window_start: chrono::DateTime<chrono::Utc>,
-    ) -> AiGatewayBudgetInstancesSummaryAttributes {
+    pub fn new(budget_id: uuid::Uuid, exceeded_capacity_count: i64, instance_count: i64, over_warning_threshold_count: i64, restricted_details: bool, total_spend_microcents: i64, window_start: chrono::DateTime<chrono::Utc>) -> AiGatewayBudgetInstancesSummaryAttributes {
         AiGatewayBudgetInstancesSummaryAttributes {
             budget_id,
             exceeded_capacity_count,
@@ -65,20 +57,19 @@ impl AiGatewayBudgetInstancesSummaryAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn total_capacity_microcents(mut self, value: i64) -> Self {
         self.total_capacity_microcents = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for AiGatewayBudgetInstancesSummaryAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -105,68 +96,52 @@ impl<'de> Deserialize<'de> for AiGatewayBudgetInstancesSummaryAttributes {
                 let mut total_capacity_microcents: Option<i64> = None;
                 let mut total_spend_microcents: Option<i64> = None;
                 let mut window_start: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "budget_id" => {
                             budget_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "exceeded_capacity_count" => {
-                            exceeded_capacity_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exceeded_capacity_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "instance_count" => {
-                            instance_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            instance_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "over_warning_threshold_count" => {
-                            over_warning_threshold_count =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            over_warning_threshold_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "restricted_details" => {
-                            restricted_details =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            restricted_details = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total_capacity_microcents" => {
                             if v.is_null() {
                                 continue;
                             }
-                            total_capacity_microcents =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_capacity_microcents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "total_spend_microcents" => {
-                            total_spend_microcents =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            total_spend_microcents = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "window_start" => {
-                            window_start =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            window_start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let budget_id = budget_id.ok_or_else(|| M::Error::missing_field("budget_id"))?;
-                let exceeded_capacity_count = exceeded_capacity_count
-                    .ok_or_else(|| M::Error::missing_field("exceeded_capacity_count"))?;
-                let instance_count =
-                    instance_count.ok_or_else(|| M::Error::missing_field("instance_count"))?;
-                let over_warning_threshold_count = over_warning_threshold_count
-                    .ok_or_else(|| M::Error::missing_field("over_warning_threshold_count"))?;
-                let restricted_details = restricted_details
-                    .ok_or_else(|| M::Error::missing_field("restricted_details"))?;
-                let total_spend_microcents = total_spend_microcents
-                    .ok_or_else(|| M::Error::missing_field("total_spend_microcents"))?;
-                let window_start =
-                    window_start.ok_or_else(|| M::Error::missing_field("window_start"))?;
+                let exceeded_capacity_count = exceeded_capacity_count.ok_or_else(|| M::Error::missing_field("exceeded_capacity_count"))?;
+                let instance_count = instance_count.ok_or_else(|| M::Error::missing_field("instance_count"))?;
+                let over_warning_threshold_count = over_warning_threshold_count.ok_or_else(|| M::Error::missing_field("over_warning_threshold_count"))?;
+                let restricted_details = restricted_details.ok_or_else(|| M::Error::missing_field("restricted_details"))?;
+                let total_spend_microcents = total_spend_microcents.ok_or_else(|| M::Error::missing_field("total_spend_microcents"))?;
+                let window_start = window_start.ok_or_else(|| M::Error::missing_field("window_start"))?;
 
                 let content = AiGatewayBudgetInstancesSummaryAttributes {
                     budget_id,

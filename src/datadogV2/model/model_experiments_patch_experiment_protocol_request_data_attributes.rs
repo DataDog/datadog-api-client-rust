@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Partial protocol update. Omitted attributes remain unchanged. Published protocols accept only name, description, and migration_metadata; archived protocols reject updates.
 #[non_exhaustive]
@@ -109,141 +109,118 @@ impl ExperimentsPatchExperimentProtocolRequestDataAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn analysis_plan(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsPatchProtocolAnalysisPlanInput>,
-    ) -> Self {
+    
+    pub fn analysis_plan(mut self, value: Option<crate::datadogV2::model::ExperimentsPatchProtocolAnalysisPlanInput>) -> Self {
         self.analysis_plan = Some(value);
         self
     }
-
-    pub fn assignment_source_default_properties(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>>,
-    ) -> Self {
+    
+    pub fn assignment_source_default_properties(mut self, value: Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>>) -> Self {
         self.assignment_source_default_properties = Some(value);
         self
     }
-
+    
     pub fn assignment_source_id(mut self, value: Option<String>) -> Self {
         self.assignment_source_id = Some(value);
         self
     }
-
+    
     pub fn default_duration_days(mut self, value: Option<i64>) -> Self {
         self.default_duration_days = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: Option<String>) -> Self {
         self.description = Some(value);
         self
     }
-
-    pub fn enforcement(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsPatchProtocolEnforcementInput>,
-    ) -> Self {
+    
+    pub fn enforcement(mut self, value: Option<crate::datadogV2::model::ExperimentsPatchProtocolEnforcementInput>) -> Self {
         self.enforcement = Some(value);
         self
     }
-
+    
     pub fn environment_id(mut self, value: Option<String>) -> Self {
         self.environment_id = Some(value);
         self
     }
-
-    pub fn exposure_schedule(
-        mut self,
-        value: Option<crate::datadogV2::model::ExperimentsPatchProtocolExposureScheduleInput>,
-    ) -> Self {
+    
+    pub fn exposure_schedule(mut self, value: Option<crate::datadogV2::model::ExperimentsPatchProtocolExposureScheduleInput>) -> Self {
         self.exposure_schedule = Some(value);
         self
     }
-
+    
     pub fn is_duration_required_to_start(mut self, value: Option<bool>) -> Self {
         self.is_duration_required_to_start = Some(value);
         self
     }
-
+    
     pub fn is_equal_split_enforced(mut self, value: Option<bool>) -> Self {
         self.is_equal_split_enforced = Some(value);
         self
     }
-
+    
     pub fn is_metric_limit_enabled(mut self, value: Option<bool>) -> Self {
         self.is_metric_limit_enabled = Some(value);
         self
     }
-
+    
     pub fn is_minimum_duration_enabled(mut self, value: Option<bool>) -> Self {
         self.is_minimum_duration_enabled = Some(value);
         self
     }
-
-    pub fn metric_groups(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::ExperimentsProtocolMetricGroupInput>>,
-    ) -> Self {
+    
+    pub fn metric_groups(mut self, value: Option<Vec<crate::datadogV2::model::ExperimentsProtocolMetricGroupInput>>) -> Self {
         self.metric_groups = Some(value);
         self
     }
-
+    
     pub fn metric_limit(mut self, value: Option<i64>) -> Self {
         self.metric_limit = Some(value);
         self
     }
-
-    pub fn migration_metadata(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn migration_metadata(mut self, value: Option<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
+    
     pub fn minimum_duration_unit(mut self, value: Option<String>) -> Self {
         self.minimum_duration_unit = Some(value);
         self
     }
-
+    
     pub fn minimum_duration_value(mut self, value: Option<i64>) -> Self {
         self.minimum_duration_value = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn primary_metric_id(mut self, value: Option<String>) -> Self {
         self.primary_metric_id = Some(value);
         self
     }
-
+    
     pub fn subject_type_id(mut self, value: Option<String>) -> Self {
         self.subject_type_id = Some(value);
         self
     }
-
-    pub fn targeting_rules(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::ExperimentsProtocolTargetingRuleInput>>,
-    ) -> Self {
+    
+    pub fn targeting_rules(mut self, value: Option<Vec<crate::datadogV2::model::ExperimentsProtocolTargetingRuleInput>>) -> Self {
         self.targeting_rules = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ExperimentsPatchExperimentProtocolRequestDataAttributes {
     fn default() -> Self {
@@ -268,135 +245,100 @@ impl<'de> Deserialize<'de> for ExperimentsPatchExperimentProtocolRequestDataAttr
             where
                 M: MapAccess<'a>,
             {
-                let mut analysis_plan: Option<
-                    Option<crate::datadogV2::model::ExperimentsPatchProtocolAnalysisPlanInput>,
-                > = None;
+                let mut analysis_plan: Option<Option<crate::datadogV2::model::ExperimentsPatchProtocolAnalysisPlanInput>> = None;
                 let mut assignment_source_default_properties: Option<Option<Vec<crate::datadogV2::model::ExperimentsPublicProtocolResponseDataAttributesAssignmentSourceDefaultPropertiesItems>>> = None;
                 let mut assignment_source_id: Option<Option<String>> = None;
                 let mut default_duration_days: Option<Option<i64>> = None;
                 let mut description: Option<Option<String>> = None;
-                let mut enforcement: Option<
-                    Option<crate::datadogV2::model::ExperimentsPatchProtocolEnforcementInput>,
-                > = None;
+                let mut enforcement: Option<Option<crate::datadogV2::model::ExperimentsPatchProtocolEnforcementInput>> = None;
                 let mut environment_id: Option<Option<String>> = None;
-                let mut exposure_schedule: Option<
-                    Option<crate::datadogV2::model::ExperimentsPatchProtocolExposureScheduleInput>,
-                > = None;
+                let mut exposure_schedule: Option<Option<crate::datadogV2::model::ExperimentsPatchProtocolExposureScheduleInput>> = None;
                 let mut is_duration_required_to_start: Option<Option<bool>> = None;
                 let mut is_equal_split_enforced: Option<Option<bool>> = None;
                 let mut is_metric_limit_enabled: Option<Option<bool>> = None;
                 let mut is_minimum_duration_enabled: Option<Option<bool>> = None;
-                let mut metric_groups: Option<
-                    Option<Vec<crate::datadogV2::model::ExperimentsProtocolMetricGroupInput>>,
-                > = None;
+                let mut metric_groups: Option<Option<Vec<crate::datadogV2::model::ExperimentsProtocolMetricGroupInput>>> = None;
                 let mut metric_limit: Option<Option<i64>> = None;
-                let mut migration_metadata: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut migration_metadata: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut minimum_duration_unit: Option<Option<String>> = None;
                 let mut minimum_duration_value: Option<Option<i64>> = None;
                 let mut name: Option<Option<String>> = None;
                 let mut primary_metric_id: Option<Option<String>> = None;
                 let mut subject_type_id: Option<Option<String>> = None;
-                let mut targeting_rules: Option<
-                    Option<Vec<crate::datadogV2::model::ExperimentsProtocolTargetingRuleInput>>,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut targeting_rules: Option<Option<Vec<crate::datadogV2::model::ExperimentsProtocolTargetingRuleInput>>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "analysis_plan" => {
-                            analysis_plan =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            analysis_plan = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignment_source_default_properties" => {
-                            assignment_source_default_properties =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_source_default_properties = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignment_source_id" => {
-                            assignment_source_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assignment_source_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "default_duration_days" => {
-                            default_duration_days =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            default_duration_days = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "description" => {
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "enforcement" => {
-                            enforcement =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            enforcement = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "environment_id" => {
-                            environment_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            environment_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exposure_schedule" => {
-                            exposure_schedule =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exposure_schedule = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_duration_required_to_start" => {
-                            is_duration_required_to_start =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_duration_required_to_start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_equal_split_enforced" => {
-                            is_equal_split_enforced =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_equal_split_enforced = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_metric_limit_enabled" => {
-                            is_metric_limit_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_metric_limit_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_minimum_duration_enabled" => {
-                            is_minimum_duration_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_minimum_duration_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_groups" => {
-                            metric_groups =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_limit" => {
-                            metric_limit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "migration_metadata" => {
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "minimum_duration_unit" => {
-                            minimum_duration_unit =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimum_duration_unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "minimum_duration_value" => {
-                            minimum_duration_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            minimum_duration_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "primary_metric_id" => {
-                            primary_metric_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            primary_metric_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "subject_type_id" => {
-                            subject_type_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            subject_type_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "targeting_rules" => {
-                            targeting_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            targeting_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

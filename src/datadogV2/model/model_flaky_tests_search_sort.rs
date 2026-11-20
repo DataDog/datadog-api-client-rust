@@ -2,23 +2,24 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum FlakyTestsSearchSort {
-    FQN_ASCENDING,
-    FQN_DESCENDING,
-    FIRST_FLAKED_ASCENDING,
-    FIRST_FLAKED_DESCENDING,
-    LAST_FLAKED_ASCENDING,
-    LAST_FLAKED_DESCENDING,
-    FAILURE_RATE_ASCENDING,
-    FAILURE_RATE_DESCENDING,
-    PIPELINES_FAILED_ASCENDING,
-    PIPELINES_FAILED_DESCENDING,
-    PIPELINES_DURATION_LOST_ASCENDING,
-    PIPELINES_DURATION_LOST_DESCENDING,
+	FQN_ASCENDING,
+	FQN_DESCENDING,
+	FIRST_FLAKED_ASCENDING,
+	FIRST_FLAKED_DESCENDING,
+	LAST_FLAKED_ASCENDING,
+	LAST_FLAKED_DESCENDING,
+	FAILURE_RATE_ASCENDING,
+	FAILURE_RATE_DESCENDING,
+	PIPELINES_FAILED_ASCENDING,
+	PIPELINES_FAILED_DESCENDING,
+	PIPELINES_DURATION_LOST_ASCENDING,
+	PIPELINES_DURATION_LOST_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -60,22 +61,8 @@ impl<'de> Deserialize<'de> for FlakyTestsSearchSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "fqn" => Self::FQN_ASCENDING,
-            "-fqn" => Self::FQN_DESCENDING,
-            "first_flaked" => Self::FIRST_FLAKED_ASCENDING,
-            "-first_flaked" => Self::FIRST_FLAKED_DESCENDING,
-            "last_flaked" => Self::LAST_FLAKED_ASCENDING,
-            "-last_flaked" => Self::LAST_FLAKED_DESCENDING,
-            "failure_rate" => Self::FAILURE_RATE_ASCENDING,
-            "-failure_rate" => Self::FAILURE_RATE_DESCENDING,
-            "pipelines_failed" => Self::PIPELINES_FAILED_ASCENDING,
-            "-pipelines_failed" => Self::PIPELINES_FAILED_DESCENDING,
-            "pipelines_duration_lost" => Self::PIPELINES_DURATION_LOST_ASCENDING,
-            "-pipelines_duration_lost" => Self::PIPELINES_DURATION_LOST_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"fqn" => Self::FQN_ASCENDING,"-fqn" => Self::FQN_DESCENDING,"first_flaked" => Self::FIRST_FLAKED_ASCENDING,"-first_flaked" => Self::FIRST_FLAKED_DESCENDING,"last_flaked" => Self::LAST_FLAKED_ASCENDING,"-last_flaked" => Self::LAST_FLAKED_DESCENDING,"failure_rate" => Self::FAILURE_RATE_ASCENDING,"-failure_rate" => Self::FAILURE_RATE_DESCENDING,"pipelines_failed" => Self::PIPELINES_FAILED_ASCENDING,"-pipelines_failed" => Self::PIPELINES_FAILED_DESCENDING,"pipelines_duration_lost" => Self::PIPELINES_DURATION_LOST_ASCENDING,"-pipelines_duration_lost" => Self::PIPELINES_DURATION_LOST_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

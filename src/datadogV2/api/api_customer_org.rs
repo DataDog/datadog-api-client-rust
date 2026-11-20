@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// DisableCustomerOrgError is a struct for typed errors of method [`CustomerOrgAPI::disable_customer_org`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,6 +19,7 @@ pub enum DisableCustomerOrgError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Programmatic management of a customer's Datadog organization. Use this API to perform
 /// self-service organization lifecycle actions such as disabling the authenticated org.
@@ -43,7 +44,8 @@ impl CustomerOrgAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -88,75 +90,61 @@ impl CustomerOrgAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Disable the Datadog organization associated with the authenticated user or API key.
-    /// The request body uses JSON:API format. If `org_uuid` is supplied, it must match
-    /// the authenticated org or the request is rejected. Successful calls disable the org
-    /// and return the resulting state from the downstream service. Requires the
-    /// `org_management` permission.
-    ///
-    /// **Limitations**:
-    ///
-    /// - **Organization age**: Only organizations created within the last 10 days can be disabled
-    ///   through this endpoint. This restriction is a safeguard against accidentally disabling
-    ///   long-running organizations. Attempting to disable an older organization returns a `403 Forbidden`.
-    /// - **Feature flag**: The feature flag `org_disable_self_service_enabled` must be enabled for the
-    ///   target organization or one of its ancestor organizations. Contact
-    ///   [Datadog support](<https://docs.datadoghq.com/help/>) to enable this for your organization.
-    ///   Requests for organizations without this flag return a `403 Forbidden`.
-    /// - **Already-disabled organizations**: If the target organization is already disabled, the request
-    ///   returns a `409 Conflict`.
-    pub async fn disable_customer_org(
-        &self,
-        body: crate::datadogV2::model::CustomerOrgDisableRequest,
-    ) -> Result<
-        crate::datadogV2::model::CustomerOrgDisableResponse,
-        datadog::Error<DisableCustomerOrgError>,
-    > {
+/// The request body uses JSON:API format. If `org_uuid` is supplied, it must match
+/// the authenticated org or the request is rejected. Successful calls disable the org
+/// and return the resulting state from the downstream service. Requires the
+/// `org_management` permission.
+///
+/// **Limitations**:
+///
+/// - **Organization age**: Only organizations created within the last 10 days can be disabled
+///   through this endpoint. This restriction is a safeguard against accidentally disabling
+///   long-running organizations. Attempting to disable an older organization returns a `403 Forbidden`.
+/// - **Feature flag**: The feature flag `org_disable_self_service_enabled` must be enabled for the
+///   target organization or one of its ancestor organizations. Contact
+///   [Datadog support](<https://docs.datadoghq.com/help/>) to enable this for your organization.
+///   Requests for organizations without this flag return a `403 Forbidden`.
+/// - **Already-disabled organizations**: If the target organization is already disabled, the request
+///   returns a `409 Conflict`.
+    pub async fn disable_customer_org(&self, body: crate::datadogV2::model::CustomerOrgDisableRequest) -> Result<crate::datadogV2::model::CustomerOrgDisableResponse, datadog::Error<DisableCustomerOrgError>> {
         match self.disable_customer_org_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Disable the Datadog organization associated with the authenticated user or API key.
-    /// The request body uses JSON:API format. If `org_uuid` is supplied, it must match
-    /// the authenticated org or the request is rejected. Successful calls disable the org
-    /// and return the resulting state from the downstream service. Requires the
-    /// `org_management` permission.
-    ///
-    /// **Limitations**:
-    ///
-    /// - **Organization age**: Only organizations created within the last 10 days can be disabled
-    ///   through this endpoint. This restriction is a safeguard against accidentally disabling
-    ///   long-running organizations. Attempting to disable an older organization returns a `403 Forbidden`.
-    /// - **Feature flag**: The feature flag `org_disable_self_service_enabled` must be enabled for the
-    ///   target organization or one of its ancestor organizations. Contact
-    ///   [Datadog support](<https://docs.datadoghq.com/help/>) to enable this for your organization.
-    ///   Requests for organizations without this flag return a `403 Forbidden`.
-    /// - **Already-disabled organizations**: If the target organization is already disabled, the request
-    ///   returns a `409 Conflict`.
-    pub async fn disable_customer_org_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CustomerOrgDisableRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CustomerOrgDisableResponse>,
-        datadog::Error<DisableCustomerOrgError>,
-    > {
+/// The request body uses JSON:API format. If `org_uuid` is supplied, it must match
+/// the authenticated org or the request is rejected. Successful calls disable the org
+/// and return the resulting state from the downstream service. Requires the
+/// `org_management` permission.
+///
+/// **Limitations**:
+///
+/// - **Organization age**: Only organizations created within the last 10 days can be disabled
+///   through this endpoint. This restriction is a safeguard against accidentally disabling
+///   long-running organizations. Attempting to disable an older organization returns a `403 Forbidden`.
+/// - **Feature flag**: The feature flag `org_disable_self_service_enabled` must be enabled for the
+///   target organization or one of its ancestor organizations. Contact
+///   [Datadog support](<https://docs.datadoghq.com/help/>) to enable this for your organization.
+///   Requests for organizations without this flag return a `403 Forbidden`.
+/// - **Already-disabled organizations**: If the target organization is already disabled, the request
+///   returns a `409 Conflict`.
+    pub async fn disable_customer_org_with_http_info(&self, body: crate::datadogV2::model::CustomerOrgDisableRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CustomerOrgDisableResponse>, datadog::Error<DisableCustomerOrgError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.disable_customer_org";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -168,19 +156,23 @@ impl CustomerOrgAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org/disable",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -193,23 +185,16 @@ impl CustomerOrgAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -217,7 +202,10 @@ impl CustomerOrgAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -227,7 +215,10 @@ impl CustomerOrgAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -249,7 +240,7 @@ impl CustomerOrgAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -266,26 +257,17 @@ impl CustomerOrgAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CustomerOrgDisableResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CustomerOrgDisableResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<DisableCustomerOrgError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DisableCustomerOrgError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

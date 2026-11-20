@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A custom static analysis rule within a ruleset, as supplied in a create or update
 /// request. Nested rules are sent flat, without a `data`/`type`/`attributes` envelope.
@@ -25,25 +25,21 @@ pub struct CustomRule {
     #[serde(rename = "id")]
     pub id: String,
     /// A revision of a custom static analysis rule as embedded in a rule supplied by a create
-    /// or update request. Nested revisions are sent flat, without a `data`/`type`/`attributes`
-    /// envelope. `id`, `version_id`, `checksum`, `created_at` and `created_by` are server-assigned
-    /// and read-only; they are declared so that a ruleset previously read back can be supplied
-    /// unchanged.
+/// or update request. Nested revisions are sent flat, without a `data`/`type`/`attributes`
+/// envelope. `id`, `version_id`, `checksum`, `created_at` and `created_by` are server-assigned
+/// and read-only; they are declared so that a ruleset previously read back can be supplied
+/// unchanged.
     #[serde(rename = "last_revision")]
     pub last_revision: Option<crate::datadogV2::model::CustomRuleRevisionInput>,
     /// Rule name
     #[serde(rename = "name")]
     pub name: String,
     /// Revision history of the rule.
-    #[serde(
-        rename = "revisions",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "revisions", default, with = "::serde_with::rust::double_option")]
     pub revisions: Option<Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CustomRule {
@@ -58,33 +54,30 @@ impl CustomRule {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn created_by(mut self, value: String) -> Self {
         self.created_by = Some(value);
         self
     }
-
-    pub fn last_revision(
-        mut self,
-        value: crate::datadogV2::model::CustomRuleRevisionInput,
-    ) -> Self {
+    
+    pub fn last_revision(mut self, value: crate::datadogV2::model::CustomRuleRevisionInput) -> Self {
         self.last_revision = Some(value);
         self
     }
-
-    pub fn revisions(
-        mut self,
-        value: Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>,
-    ) -> Self {
+    
+    pub fn revisions(mut self, value: Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>) -> Self {
         self.revisions = Some(value);
         self
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for CustomRule {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -106,12 +99,9 @@ impl<'de> Deserialize<'de> for CustomRule {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevisionInput> =
-                    None;
+                let mut last_revision: Option<crate::datadogV2::model::CustomRuleRevisionInput> = None;
                 let mut name: Option<String> = None;
-                let mut revisions: Option<
-                    Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>,
-                > = None;
+                let mut revisions: Option<Option<Vec<crate::datadogV2::model::CustomRuleRevisionInput>>> = None;
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -121,34 +111,31 @@ impl<'de> Deserialize<'de> for CustomRule {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_revision" => {
                             if v.is_null() {
                                 continue;
                             }
-                            last_revision =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_revision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "revisions" => {
                             revisions = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

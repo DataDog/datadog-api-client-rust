@@ -2,15 +2,16 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ExecutionPolicyIntegration {
-    INTEGRATION_KUBERNETES,
-    INTEGRATION_SCRIPT,
-    INTEGRATION_REMOTE_ACTION,
-    INTEGRATION_SLACK,
+	INTEGRATION_KUBERNETES,
+	INTEGRATION_SCRIPT,
+	INTEGRATION_REMOTE_ACTION,
+	INTEGRATION_SLACK,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -44,14 +45,8 @@ impl<'de> Deserialize<'de> for ExecutionPolicyIntegration {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "INTEGRATION_KUBERNETES" => Self::INTEGRATION_KUBERNETES,
-            "INTEGRATION_SCRIPT" => Self::INTEGRATION_SCRIPT,
-            "INTEGRATION_REMOTE_ACTION" => Self::INTEGRATION_REMOTE_ACTION,
-            "INTEGRATION_SLACK" => Self::INTEGRATION_SLACK,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"INTEGRATION_KUBERNETES" => Self::INTEGRATION_KUBERNETES,"INTEGRATION_SCRIPT" => Self::INTEGRATION_SCRIPT,"INTEGRATION_REMOTE_ACTION" => Self::INTEGRATION_REMOTE_ACTION,"INTEGRATION_SLACK" => Self::INTEGRATION_SLACK,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

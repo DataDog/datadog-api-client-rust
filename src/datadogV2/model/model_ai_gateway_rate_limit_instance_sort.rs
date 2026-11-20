@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewayRateLimitInstanceSort {
-    UTILIZATION_DESC,
-    LAST_SEEN_DESC,
-    KEY_ASC,
+	UTILIZATION_DESC,
+	LAST_SEEN_DESC,
+	KEY_ASC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for AiGatewayRateLimitInstanceSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "utilization_desc" => Self::UTILIZATION_DESC,
-            "last_seen_desc" => Self::LAST_SEEN_DESC,
-            "key_asc" => Self::KEY_ASC,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"utilization_desc" => Self::UTILIZATION_DESC,"last_seen_desc" => Self::LAST_SEEN_DESC,"key_asc" => Self::KEY_ASC,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

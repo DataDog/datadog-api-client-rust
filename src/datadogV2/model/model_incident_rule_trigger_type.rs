@@ -2,14 +2,15 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum IncidentRuleTriggerType {
-    INCIDENT_SAVED_TRIGGER,
-    INCIDENT_CREATED_TRIGGER,
-    INCIDENT_MODIFIED_TRIGGER,
+	INCIDENT_SAVED_TRIGGER,
+	INCIDENT_CREATED_TRIGGER,
+	INCIDENT_MODIFIED_TRIGGER,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -42,13 +43,8 @@ impl<'de> Deserialize<'de> for IncidentRuleTriggerType {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "incident_saved_trigger" => Self::INCIDENT_SAVED_TRIGGER,
-            "incident_created_trigger" => Self::INCIDENT_CREATED_TRIGGER,
-            "incident_modified_trigger" => Self::INCIDENT_MODIFIED_TRIGGER,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"incident_saved_trigger" => Self::INCIDENT_SAVED_TRIGGER,"incident_created_trigger" => Self::INCIDENT_CREATED_TRIGGER,"incident_modified_trigger" => Self::INCIDENT_MODIFIED_TRIGGER,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

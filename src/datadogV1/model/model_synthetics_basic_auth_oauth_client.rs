@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object to handle `oauth client` authentication when performing the test.
 #[non_exhaustive]
@@ -31,8 +31,7 @@ pub struct SyntheticsBasicAuthOauthClient {
     pub scope: Option<String>,
     /// Type of token to use when performing the authentication.
     #[serde(rename = "tokenApiAuthentication")]
-    pub token_api_authentication:
-        crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
+    pub token_api_authentication: crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
     /// The type of basic authentication to use when performing the test.
     #[serde(rename = "type")]
     pub type_: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
@@ -40,17 +39,11 @@ pub struct SyntheticsBasicAuthOauthClient {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsBasicAuthOauthClient {
-    pub fn new(
-        access_token_url: String,
-        client_id: String,
-        client_secret: String,
-        token_api_authentication: crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
-        type_: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType,
-    ) -> SyntheticsBasicAuthOauthClient {
+    pub fn new(access_token_url: String, client_id: String, client_secret: String, token_api_authentication: crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication, type_: crate::datadogV1::model::SyntheticsBasicAuthOauthClientType) -> SyntheticsBasicAuthOauthClient {
         SyntheticsBasicAuthOauthClient {
             access_token_url,
             audience: None,
@@ -64,30 +57,29 @@ impl SyntheticsBasicAuthOauthClient {
             _unparsed: false,
         }
     }
-
+    
     pub fn audience(mut self, value: String) -> Self {
         self.audience = Some(value);
         self
     }
-
+    
     pub fn resource(mut self, value: String) -> Self {
         self.resource = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -112,51 +104,42 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
                 let mut client_secret: Option<String> = None;
                 let mut resource: Option<String> = None;
                 let mut scope: Option<String> = None;
-                let mut token_api_authentication: Option<
-                    crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication,
-                > = None;
-                let mut type_: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthClientType> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut token_api_authentication: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication> = None;
+                let mut type_: Option<crate::datadogV1::model::SyntheticsBasicAuthOauthClientType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "accessTokenUrl" => {
-                            access_token_url =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            access_token_url = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "audience" => {
                             if v.is_null() {
                                 continue;
                             }
                             audience = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "clientId" => {
                             client_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "clientSecret" => {
-                            client_secret =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            client_secret = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource" => {
                             if v.is_null() {
                                 continue;
                             }
                             resource = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tokenApiAuthentication" => {
-                            token_api_authentication =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            token_api_authentication = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _token_api_authentication) = token_api_authentication {
                                 match _token_api_authentication {
                                     crate::datadogV1::model::SyntheticsBasicAuthOauthTokenApiAuthentication::UnparsedObject(_token_api_authentication) => {
@@ -165,7 +148,7 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -176,21 +159,18 @@ impl<'de> Deserialize<'de> for SyntheticsBasicAuthOauthClient {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let access_token_url =
-                    access_token_url.ok_or_else(|| M::Error::missing_field("access_token_url"))?;
+                let access_token_url = access_token_url.ok_or_else(|| M::Error::missing_field("access_token_url"))?;
                 let client_id = client_id.ok_or_else(|| M::Error::missing_field("client_id"))?;
-                let client_secret =
-                    client_secret.ok_or_else(|| M::Error::missing_field("client_secret"))?;
-                let token_api_authentication = token_api_authentication
-                    .ok_or_else(|| M::Error::missing_field("token_api_authentication"))?;
+                let client_secret = client_secret.ok_or_else(|| M::Error::missing_field("client_secret"))?;
+                let token_api_authentication = token_api_authentication.ok_or_else(|| M::Error::missing_field("token_api_authentication"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
                 let content = SyntheticsBasicAuthOauthClient {

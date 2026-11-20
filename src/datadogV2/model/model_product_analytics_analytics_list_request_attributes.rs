@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for an analytics list request.
 #[non_exhaustive]
@@ -15,9 +15,9 @@ pub struct ProductAnalyticsAnalyticsListRequestAttributes {
     #[serde(rename = "from")]
     pub from: i64,
     /// The analytics list query definition. It selects the events to return with `query`, then
-    /// chooses the columns on each event row, the sort applied to those rows, and a row limit.
-    /// Unlike the scalar and timeseries queries, a list query returns raw event rows rather than
-    /// aggregates, so it takes no compute or group-by rule.
+/// chooses the columns on each event row, the sort applied to those rows, and a row limit.
+/// Unlike the scalar and timeseries queries, a list query returns raw event rows rather than
+/// aggregates, so it takes no compute or group-by rule.
     #[serde(rename = "query")]
     pub query: crate::datadogV2::model::ProductAnalyticsAnalyticsListQuery,
     /// End time in epoch milliseconds.
@@ -27,15 +27,11 @@ pub struct ProductAnalyticsAnalyticsListRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsAnalyticsListRequestAttributes {
-    pub fn new(
-        from: i64,
-        query: crate::datadogV2::model::ProductAnalyticsAnalyticsListQuery,
-        to: i64,
-    ) -> ProductAnalyticsAnalyticsListRequestAttributes {
+    pub fn new(from: i64, query: crate::datadogV2::model::ProductAnalyticsAnalyticsListQuery, to: i64) -> ProductAnalyticsAnalyticsListRequestAttributes {
         ProductAnalyticsAnalyticsListRequestAttributes {
             from,
             query,
@@ -44,15 +40,14 @@ impl ProductAnalyticsAnalyticsListRequestAttributes {
             _unparsed: false,
         }
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsAnalyticsListRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -72,31 +67,27 @@ impl<'de> Deserialize<'de> for ProductAnalyticsAnalyticsListRequestAttributes {
                 M: MapAccess<'a>,
             {
                 let mut from: Option<i64> = None;
-                let mut query: Option<crate::datadogV2::model::ProductAnalyticsAnalyticsListQuery> =
-                    None;
+                let mut query: Option<crate::datadogV2::model::ProductAnalyticsAnalyticsListQuery> = None;
                 let mut to: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "from" => {
                             from = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "query" => {
                             query = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "to" => {
                             to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let from = from.ok_or_else(|| M::Error::missing_field("from"))?;

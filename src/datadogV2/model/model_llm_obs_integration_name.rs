@@ -2,17 +2,18 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum LLMObsIntegrationName {
-    OPENAI,
-    AMAZON_BEDROCK,
-    ANTHROPIC,
-    AZURE_OPENAI,
-    VERTEX_AI,
-    LLMPROXY,
+	OPENAI,
+	AMAZON_BEDROCK,
+	ANTHROPIC,
+	AZURE_OPENAI,
+	VERTEX_AI,
+	LLMPROXY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -48,16 +49,8 @@ impl<'de> Deserialize<'de> for LLMObsIntegrationName {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "openai" => Self::OPENAI,
-            "amazon_bedrock" => Self::AMAZON_BEDROCK,
-            "anthropic" => Self::ANTHROPIC,
-            "azure_openai" => Self::AZURE_OPENAI,
-            "vertex_ai" => Self::VERTEX_AI,
-            "llmproxy" => Self::LLMPROXY,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"openai" => Self::OPENAI,"amazon_bedrock" => Self::AMAZON_BEDROCK,"anthropic" => Self::ANTHROPIC,"azure_openai" => Self::AZURE_OPENAI,"vertex_ai" => Self::VERTEX_AI,"llmproxy" => Self::LLMPROXY,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

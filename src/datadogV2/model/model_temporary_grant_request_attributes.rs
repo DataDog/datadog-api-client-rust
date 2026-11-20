@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Request history and the linked grant state. List and detail reads include grant_state for approved requests. Decision responses record the decision. Read the request for current grant state.
 #[non_exhaustive]
@@ -48,20 +48,11 @@ pub struct TemporaryGrantRequestAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl TemporaryGrantRequestAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        entity_key: String,
-        expires_at: chrono::DateTime<chrono::Utc>,
-        justification: String,
-        quota_namespace: String,
-        requested_by_user_id: uuid::Uuid,
-        status: crate::datadogV2::model::TemporaryGrantRequestStatus,
-        total: i64,
-    ) -> TemporaryGrantRequestAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, entity_key: String, expires_at: chrono::DateTime<chrono::Utc>, justification: String, quota_namespace: String, requested_by_user_id: uuid::Uuid, status: crate::datadogV2::model::TemporaryGrantRequestStatus, total: i64) -> TemporaryGrantRequestAttributes {
         TemporaryGrantRequestAttributes {
             created_at,
             decided_at: None,
@@ -78,33 +69,29 @@ impl TemporaryGrantRequestAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn decided_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.decided_at = Some(value);
         self
     }
-
+    
     pub fn decided_by_user_id(mut self, value: uuid::Uuid) -> Self {
         self.decided_by_user_id = Some(value);
         self
     }
-
-    pub fn grant_state(
-        mut self,
-        value: crate::datadogV2::model::TemporaryGrantRequestGrantState,
-    ) -> Self {
+    
+    pub fn grant_state(mut self, value: crate::datadogV2::model::TemporaryGrantRequestGrantState) -> Self {
         self.grant_state = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for TemporaryGrantRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -128,50 +115,43 @@ impl<'de> Deserialize<'de> for TemporaryGrantRequestAttributes {
                 let mut decided_by_user_id: Option<uuid::Uuid> = None;
                 let mut entity_key: Option<String> = None;
                 let mut expires_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut grant_state: Option<
-                    crate::datadogV2::model::TemporaryGrantRequestGrantState,
-                > = None;
+                let mut grant_state: Option<crate::datadogV2::model::TemporaryGrantRequestGrantState> = None;
                 let mut justification: Option<String> = None;
                 let mut quota_namespace: Option<String> = None;
                 let mut requested_by_user_id: Option<uuid::Uuid> = None;
                 let mut status: Option<crate::datadogV2::model::TemporaryGrantRequestStatus> = None;
                 let mut total: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "decided_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             decided_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "decided_by_user_id" => {
                             if v.is_null() {
                                 continue;
                             }
-                            decided_by_user_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            decided_by_user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "entity_key" => {
                             entity_key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "expires_at" => {
                             expires_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "grant_state" => {
                             if v.is_null() {
                                 continue;
                             }
-                            grant_state =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            grant_state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _grant_state) = grant_state {
                                 match _grant_state {
                                     crate::datadogV2::model::TemporaryGrantRequestGrantState::UnparsedObject(_grant_state) => {
@@ -180,19 +160,16 @@ impl<'de> Deserialize<'de> for TemporaryGrantRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "justification" => {
-                            justification =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            justification = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "quota_namespace" => {
-                            quota_namespace =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            quota_namespace = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "requested_by_user_id" => {
-                            requested_by_user_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            requested_by_user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
@@ -203,26 +180,23 @@ impl<'de> Deserialize<'de> for TemporaryGrantRequestAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "total" => {
                             total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let entity_key = entity_key.ok_or_else(|| M::Error::missing_field("entity_key"))?;
                 let expires_at = expires_at.ok_or_else(|| M::Error::missing_field("expires_at"))?;
-                let justification =
-                    justification.ok_or_else(|| M::Error::missing_field("justification"))?;
-                let quota_namespace =
-                    quota_namespace.ok_or_else(|| M::Error::missing_field("quota_namespace"))?;
-                let requested_by_user_id = requested_by_user_id
-                    .ok_or_else(|| M::Error::missing_field("requested_by_user_id"))?;
+                let justification = justification.ok_or_else(|| M::Error::missing_field("justification"))?;
+                let quota_namespace = quota_namespace.ok_or_else(|| M::Error::missing_field("quota_namespace"))?;
+                let requested_by_user_id = requested_by_user_id.ok_or_else(|| M::Error::missing_field("requested_by_user_id"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let total = total.ok_or_else(|| M::Error::missing_field("total"))?;
 

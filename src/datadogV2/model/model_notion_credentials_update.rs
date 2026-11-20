@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserializer, Deserialize, Serialize};
 
 /// The definition of the `NotionCredentialsUpdate` object.
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
 pub enum NotionCredentialsUpdate {
-    NotionAPIKeyUpdate(Box<crate::datadogV2::model::NotionAPIKeyUpdate>),
-    UnparsedObject(crate::datadog::UnparsedObject),
+	NotionAPIKeyUpdate(Box<crate::datadogV2::model::NotionAPIKeyUpdate>),
+	UnparsedObject(crate::datadog::UnparsedObject),
 }
 
 impl<'de> Deserialize<'de> for NotionCredentialsUpdate {
@@ -18,16 +18,12 @@ impl<'de> Deserialize<'de> for NotionCredentialsUpdate {
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
-        if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::NotionAPIKeyUpdate>>(
-            value.clone(),
-        ) {
-            if !_v._unparsed {
+		if let Ok(_v) = serde_json::from_value::<Box<crate::datadogV2::model::NotionAPIKeyUpdate>>(value.clone()) {
+			if !_v._unparsed {
                 return Ok(NotionCredentialsUpdate::NotionAPIKeyUpdate(_v));
             }
         }
-
-        return Ok(NotionCredentialsUpdate::UnparsedObject(
-            crate::datadog::UnparsedObject { value },
-        ));
+	
+        return Ok(NotionCredentialsUpdate::UnparsedObject(crate::datadog::UnparsedObject { value }));
     }
 }

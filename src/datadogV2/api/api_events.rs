@@ -1,16 +1,13 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListEventsOptionalParams is a struct for passing parameters to the method [`EventsAPI::list_events`]
 #[non_exhaustive]
@@ -77,6 +74,9 @@ impl SearchEventsOptionalParams {
     }
 }
 
+
+
+
 /// CreateEventError is a struct for typed errors of method [`EventsAPI::create_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -86,6 +86,7 @@ pub enum CreateEventError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetEventError is a struct for typed errors of method [`EventsAPI::get_event`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -93,6 +94,7 @@ pub enum GetEventError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListEventsError is a struct for typed errors of method [`EventsAPI::list_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -102,6 +104,7 @@ pub enum ListEventsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// SearchEventsError is a struct for typed errors of method [`EventsAPI::search_events`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -109,6 +112,7 @@ pub enum SearchEventsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// The Event Management API allows you to programmatically post events to the Events Explorer and fetch events from the Events Explorer. See the [Event Management page](<https://docs.datadoghq.com/service_management/events/>) for more information.
 ///
@@ -134,7 +138,8 @@ impl EventsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -179,69 +184,61 @@ impl EventsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// This endpoint allows you to publish events.
-    ///
-    /// **Note:** To utilize this endpoint with our client libraries, please ensure you are using the latest version released on or after July 1, 2025. Earlier versions do not support this functionality.
-    ///
-    /// **Important:** Upgrade to the latest client library version to use the updated endpoint at `<https://event-management-intake.{site}/api/v2/events`.> Older client library versions of the Post an event (v2) API send requests to a deprecated endpoint (`<https://api.{site}/api/v2/events`>).
-    ///
-    /// Supported event categories are `change` and `alert`. For more information about change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>).
-    pub async fn create_event(
-        &self,
-        body: crate::datadogV2::model::EventCreateRequestPayload,
-    ) -> Result<crate::datadogV2::model::EventCreateResponsePayload, datadog::Error<CreateEventError>>
-    {
+///
+/// **Note:** To utilize this endpoint with our client libraries, please ensure you are using the latest version released on or after July 1, 2025. Earlier versions do not support this functionality.
+///
+/// **Important:** Upgrade to the latest client library version to use the updated endpoint at `<https://event-management-intake.{site}/api/v2/events`.> Older client library versions of the Post an event (v2) API send requests to a deprecated endpoint (`<https://api.{site}/api/v2/events`>).
+///
+/// Supported event categories are `change` and `alert`. For more information about change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>).
+    pub async fn create_event(&self, body: crate::datadogV2::model::EventCreateRequestPayload) -> Result<crate::datadogV2::model::EventCreateResponsePayload, datadog::Error<CreateEventError>> {
         match self.create_event_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// This endpoint allows you to publish events.
-    ///
-    /// **Note:** To utilize this endpoint with our client libraries, please ensure you are using the latest version released on or after July 1, 2025. Earlier versions do not support this functionality.
-    ///
-    /// **Important:** Upgrade to the latest client library version to use the updated endpoint at `<https://event-management-intake.{site}/api/v2/events`.> Older client library versions of the Post an event (v2) API send requests to a deprecated endpoint (`<https://api.{site}/api/v2/events`>).
-    ///
-    /// Supported event categories are `change` and `alert`. For more information about change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>).
-    pub async fn create_event_with_http_info(
-        &self,
-        body: crate::datadogV2::model::EventCreateRequestPayload,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EventCreateResponsePayload>,
-        datadog::Error<CreateEventError>,
-    > {
+///
+/// **Note:** To utilize this endpoint with our client libraries, please ensure you are using the latest version released on or after July 1, 2025. Earlier versions do not support this functionality.
+///
+/// **Important:** Upgrade to the latest client library version to use the updated endpoint at `<https://event-management-intake.{site}/api/v2/events`.> Older client library versions of the Post an event (v2) API send requests to a deprecated endpoint (`<https://api.{site}/api/v2/events`>).
+///
+/// Supported event categories are `change` and `alert`. For more information about change events, see [Change Tracking](<https://docs.datadoghq.com/change_tracking>).
+    pub async fn create_event_with_http_info(&self, body: crate::datadogV2::model::EventCreateRequestPayload) -> Result<datadog::ResponseContent<crate::datadogV2::model::EventCreateResponsePayload>, datadog::Error<CreateEventError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_event";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/events",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -254,23 +251,16 @@ impl EventsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -278,7 +268,10 @@ impl EventsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -288,7 +281,10 @@ impl EventsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -310,7 +306,7 @@ impl EventsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -327,72 +323,59 @@ impl EventsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EventCreateResponsePayload>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EventCreateResponsePayload>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<CreateEventError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get the details of an event by `event_id`.
-    pub async fn get_event(
-        &self,
-        event_id: String,
-    ) -> Result<crate::datadogV2::model::V2EventResponse, datadog::Error<GetEventError>> {
+    pub async fn get_event(&self, event_id: String) -> Result<crate::datadogV2::model::V2EventResponse, datadog::Error<GetEventError>> {
         match self.get_event_with_http_info(event_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get the details of an event by `event_id`.
-    pub async fn get_event_with_http_info(
-        &self,
-        event_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::V2EventResponse>,
-        datadog::Error<GetEventError>,
-    > {
+    pub async fn get_event_with_http_info(&self, event_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::V2EventResponse>, datadog::Error<GetEventError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_event";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/events/{event_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            event_id = datadog::urlencode(event_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), event_id=
+            datadog::urlencode(event_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -405,22 +388,16 @@ impl EventsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -433,54 +410,41 @@ impl EventsAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<crate::datadogV2::model::V2EventResponse>(&local_content) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetEventError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
-    ///
-    /// Use this endpoint to see your latest events.
-    pub async fn list_events(
-        &self,
-        params: ListEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::EventsListResponse, datadog::Error<ListEventsError>> {
-        match self.list_events_with_http_info(params).await {
+/// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
+///
+/// Use this endpoint to see your latest events.
+    pub async fn list_events(&self, params: ListEventsOptionalParams) -> Result<crate::datadogV2::model::EventsListResponse, datadog::Error<ListEventsError>> {
+        match self.list_events_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_events_with_pagination(
-        &self,
-        mut params: ListEventsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::EventResponse, datadog::Error<ListEventsError>>,
-    > + '_ {
+        &self, mut params: ListEventsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::EventResponse, datadog::Error<ListEventsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.page_limit.is_none() {
@@ -509,20 +473,16 @@ impl EventsAPI {
         }
     }
 
+    
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
-    ///
-    /// Use this endpoint to see your latest events.
-    pub async fn list_events_with_http_info(
-        &self,
-        params: ListEventsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EventsListResponse>,
-        datadog::Error<ListEventsError>,
-    > {
+/// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
+///
+/// Use this endpoint to see your latest events.
+    pub async fn list_events_with_http_info(&self, params: ListEventsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EventsListResponse>, datadog::Error<ListEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_events";
 
+        
         // unbox and build optional parameters
         let filter_query = params.filter_query;
         let filter_from = params.filter_from;
@@ -535,39 +495,34 @@ impl EventsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/events",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_query {
-            local_req_builder =
-                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[query]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_from {
-            local_req_builder =
-                local_req_builder.query(&[("filter[from]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[from]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_to {
-            local_req_builder =
-                local_req_builder.query(&[("filter[to]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[to]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_cursor {
-            local_req_builder =
-                local_req_builder.query(&[("page[cursor]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[cursor]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -580,22 +535,16 @@ impl EventsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -607,58 +556,42 @@ impl EventsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EventsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EventsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<ListEventsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
-    ///
-    /// Use this endpoint to build complex events filtering and search.
-    pub async fn search_events(
-        &self,
-        params: SearchEventsOptionalParams,
-    ) -> Result<crate::datadogV2::model::EventsListResponse, datadog::Error<SearchEventsError>>
-    {
-        match self.search_events_with_http_info(params).await {
+/// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
+///
+/// Use this endpoint to build complex events filtering and search.
+    pub async fn search_events(&self, params: SearchEventsOptionalParams) -> Result<crate::datadogV2::model::EventsListResponse, datadog::Error<SearchEventsError>> {
+        match self.search_events_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn search_events_with_pagination(
-        &self,
-        mut params: SearchEventsOptionalParams,
-    ) -> impl Stream<
-        Item = Result<crate::datadogV2::model::EventResponse, datadog::Error<SearchEventsError>>,
-    > + '_ {
+        &self, mut params: SearchEventsOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::EventResponse, datadog::Error<SearchEventsError>>> + '_
+    {
         try_stream! {
             let mut page_size: i32 = 10;
             if params.body.is_none() {
@@ -693,20 +626,16 @@ impl EventsAPI {
         }
     }
 
+    
     /// List endpoint returns events that match an events search query.
-    /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
-    ///
-    /// Use this endpoint to build complex events filtering and search.
-    pub async fn search_events_with_http_info(
-        &self,
-        params: SearchEventsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::EventsListResponse>,
-        datadog::Error<SearchEventsError>,
-    > {
+/// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
+///
+/// Use this endpoint to build complex events filtering and search.
+    pub async fn search_events_with_http_info(&self, params: SearchEventsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::EventsListResponse>, datadog::Error<SearchEventsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.search_events";
 
+        
         // unbox and build optional parameters
         let body = params.body;
 
@@ -714,15 +643,17 @@ impl EventsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/events/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -735,23 +666,16 @@ impl EventsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -759,7 +683,10 @@ impl EventsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -769,7 +696,10 @@ impl EventsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -791,7 +721,7 @@ impl EventsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -808,25 +738,17 @@ impl EventsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::EventsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::EventsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<SearchEventsError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

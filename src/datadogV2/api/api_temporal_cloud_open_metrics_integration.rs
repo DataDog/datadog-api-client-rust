@@ -1,15 +1,15 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
+
+
+
 
 /// CreateTemporalCloudOpenMetricsIntegrationAccountError is a struct for typed errors of method [`TemporalCloudOpenMetricsIntegrationAPI::create_temporal_cloud_open_metrics_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -20,6 +20,7 @@ pub enum CreateTemporalCloudOpenMetricsIntegrationAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteTemporalCloudOpenMetricsIntegrationAccountError is a struct for typed errors of method [`TemporalCloudOpenMetricsIntegrationAPI::delete_temporal_cloud_open_metrics_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -28,6 +29,7 @@ pub enum DeleteTemporalCloudOpenMetricsIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetTemporalCloudOpenMetricsIntegrationAccountError is a struct for typed errors of method [`TemporalCloudOpenMetricsIntegrationAPI::get_temporal_cloud_open_metrics_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,6 +40,7 @@ pub enum GetTemporalCloudOpenMetricsIntegrationAccountError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListTemporalCloudOpenMetricsIntegrationAccountsError is a struct for typed errors of method [`TemporalCloudOpenMetricsIntegrationAPI::list_temporal_cloud_open_metrics_integration_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -47,6 +50,7 @@ pub enum ListTemporalCloudOpenMetricsIntegrationAccountsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateTemporalCloudOpenMetricsIntegrationAccountError is a struct for typed errors of method [`TemporalCloudOpenMetricsIntegrationAPI::update_temporal_cloud_open_metrics_integration_account`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -55,6 +59,7 @@ pub enum UpdateTemporalCloudOpenMetricsIntegrationAccountError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage your Datadog Temporal Cloud OpenMetrics integration accounts and account resources
 /// directly through the Datadog API. See the
@@ -81,7 +86,8 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -126,48 +132,29 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a Temporal Cloud OpenMetrics integration account.
-    pub async fn create_temporal_cloud_open_metrics_integration_account(
-        &self,
-        body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        datadog::Error<CreateTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
-        match self
-            .create_temporal_cloud_open_metrics_integration_account_with_http_info(body)
-            .await
-        {
+    pub async fn create_temporal_cloud_open_metrics_integration_account(&self, body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountCreateRequest) -> Result<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse, datadog::Error<CreateTemporalCloudOpenMetricsIntegrationAccountError>> {
+        match self.create_temporal_cloud_open_metrics_integration_account_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a Temporal Cloud OpenMetrics integration account.
-    pub async fn create_temporal_cloud_open_metrics_integration_account_with_http_info(
-        &self,
-        body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        >,
-        datadog::Error<CreateTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
+    pub async fn create_temporal_cloud_open_metrics_integration_account_with_http_info(&self, body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>, datadog::Error<CreateTemporalCloudOpenMetricsIntegrationAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_temporal_cloud_open_metrics_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -179,19 +166,23 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration-interfaces/temporal-cloud-openmetrics/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -204,23 +195,16 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -228,7 +212,10 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -238,7 +225,10 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -260,7 +250,7 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -277,53 +267,32 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateTemporalCloudOpenMetricsIntegrationAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateTemporalCloudOpenMetricsIntegrationAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a Temporal Cloud OpenMetrics integration account.
-    pub async fn delete_temporal_cloud_open_metrics_integration_account(
-        &self,
-        account_id: String,
-    ) -> Result<(), datadog::Error<DeleteTemporalCloudOpenMetricsIntegrationAccountError>> {
-        match self
-            .delete_temporal_cloud_open_metrics_integration_account_with_http_info(account_id)
-            .await
-        {
+    pub async fn delete_temporal_cloud_open_metrics_integration_account(&self, account_id: String) -> Result<(), datadog::Error<DeleteTemporalCloudOpenMetricsIntegrationAccountError>> {
+        match self.delete_temporal_cloud_open_metrics_integration_account_with_http_info(account_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a Temporal Cloud OpenMetrics integration account.
-    pub async fn delete_temporal_cloud_open_metrics_integration_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<()>,
-        datadog::Error<DeleteTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
+    pub async fn delete_temporal_cloud_open_metrics_integration_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteTemporalCloudOpenMetricsIntegrationAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_temporal_cloud_open_metrics_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -335,19 +304,24 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration-interfaces/temporal-cloud-openmetrics/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -360,22 +334,16 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -393,52 +361,29 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteTemporalCloudOpenMetricsIntegrationAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteTemporalCloudOpenMetricsIntegrationAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a Temporal Cloud OpenMetrics integration account.
-    pub async fn get_temporal_cloud_open_metrics_integration_account(
-        &self,
-        account_id: String,
-    ) -> Result<
-        crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        datadog::Error<GetTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
-        match self
-            .get_temporal_cloud_open_metrics_integration_account_with_http_info(account_id)
-            .await
-        {
+    pub async fn get_temporal_cloud_open_metrics_integration_account(&self, account_id: String) -> Result<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse, datadog::Error<GetTemporalCloudOpenMetricsIntegrationAccountError>> {
+        match self.get_temporal_cloud_open_metrics_integration_account_with_http_info(account_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a Temporal Cloud OpenMetrics integration account.
-    pub async fn get_temporal_cloud_open_metrics_integration_account_with_http_info(
-        &self,
-        account_id: String,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        >,
-        datadog::Error<GetTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
+    pub async fn get_temporal_cloud_open_metrics_integration_account_with_http_info(&self, account_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>, datadog::Error<GetTemporalCloudOpenMetricsIntegrationAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_temporal_cloud_open_metrics_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -450,19 +395,24 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration-interfaces/temporal-cloud-openmetrics/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -475,22 +425,16 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -502,64 +446,38 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetTemporalCloudOpenMetricsIntegrationAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetTemporalCloudOpenMetricsIntegrationAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List Temporal Cloud OpenMetrics integration accounts.
-    pub async fn list_temporal_cloud_open_metrics_integration_accounts(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse,
-        datadog::Error<ListTemporalCloudOpenMetricsIntegrationAccountsError>,
-    > {
-        match self
-            .list_temporal_cloud_open_metrics_integration_accounts_with_http_info()
-            .await
-        {
+    pub async fn list_temporal_cloud_open_metrics_integration_accounts(&self) -> Result<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse, datadog::Error<ListTemporalCloudOpenMetricsIntegrationAccountsError>> {
+        match self.list_temporal_cloud_open_metrics_integration_accounts_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List Temporal Cloud OpenMetrics integration accounts.
-    pub async fn list_temporal_cloud_open_metrics_integration_accounts_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse,
-        >,
-        datadog::Error<ListTemporalCloudOpenMetricsIntegrationAccountsError>,
-    > {
+    pub async fn list_temporal_cloud_open_metrics_integration_accounts_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse>, datadog::Error<ListTemporalCloudOpenMetricsIntegrationAccountsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_temporal_cloud_open_metrics_integration_accounts";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -571,18 +489,22 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration-interfaces/temporal-cloud-openmetrics/accounts",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -595,22 +517,16 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -622,68 +538,38 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListTemporalCloudOpenMetricsIntegrationAccountsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListTemporalCloudOpenMetricsIntegrationAccountsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update a Temporal Cloud OpenMetrics integration account. Only the fields provided are changed.
-    pub async fn update_temporal_cloud_open_metrics_integration_account(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        datadog::Error<UpdateTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
-        match self
-            .update_temporal_cloud_open_metrics_integration_account_with_http_info(account_id, body)
-            .await
-        {
+    pub async fn update_temporal_cloud_open_metrics_integration_account(&self, account_id: String, body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountUpdateRequest) -> Result<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse, datadog::Error<UpdateTemporalCloudOpenMetricsIntegrationAccountError>> {
+        match self.update_temporal_cloud_open_metrics_integration_account_with_http_info(account_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update a Temporal Cloud OpenMetrics integration account. Only the fields provided are changed.
-    pub async fn update_temporal_cloud_open_metrics_integration_account_with_http_info(
-        &self,
-        account_id: String,
-        body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<
-            crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-        >,
-        datadog::Error<UpdateTemporalCloudOpenMetricsIntegrationAccountError>,
-    > {
+    pub async fn update_temporal_cloud_open_metrics_integration_account_with_http_info(&self, account_id: String, body: crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>, datadog::Error<UpdateTemporalCloudOpenMetricsIntegrationAccountError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_temporal_cloud_open_metrics_integration_account";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -695,20 +581,25 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/integration-interfaces/temporal-cloud-openmetrics/accounts/{account_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            account_id = datadog::urlencode(account_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), account_id=
+            datadog::urlencode(account_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -721,23 +612,16 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -745,7 +629,10 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -755,7 +642,10 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -777,7 +667,7 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -794,27 +684,17 @@ impl TemporalCloudOpenMetricsIntegrationAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::TemporalCloudOpenMetricsIntegrationAccountResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateTemporalCloudOpenMetricsIntegrationAccountError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateTemporalCloudOpenMetricsIntegrationAccountError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes of user object returned by the API.
 #[non_exhaustive]
@@ -27,11 +27,7 @@ pub struct UserAttributes {
     #[serde(rename = "icon")]
     pub icon: Option<String>,
     /// The ISO 8601 timestamp of the user's most recent login, or null if the user has never logged in.
-    #[serde(
-        rename = "last_login_time",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "last_login_time", default, with = "::serde_with::rust::double_option")]
     pub last_login_time: Option<Option<chrono::DateTime<chrono::Utc>>>,
     /// Whether multi-factor authentication (MFA) is enabled for the user's account.
     #[serde(rename = "mfa_enabled")]
@@ -43,7 +39,7 @@ pub struct UserAttributes {
     #[serde(rename = "name", default, with = "::serde_with::rust::double_option")]
     pub name: Option<Option<String>>,
     /// Whether this is a service account rather than a human user.
-    /// Service accounts are used for programmatic API access.
+/// Service accounts are used for programmatic API access.
     #[serde(rename = "service_account")]
     pub service_account: Option<bool>,
     /// The current status of the user account (for example, `Active`, `Pending`, or `Disabled`).
@@ -62,7 +58,7 @@ pub struct UserAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl UserAttributes {
@@ -86,85 +82,83 @@ impl UserAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn disabled(mut self, value: bool) -> Self {
         self.disabled = Some(value);
         self
     }
-
+    
     pub fn email(mut self, value: String) -> Self {
         self.email = Some(value);
         self
     }
-
+    
     pub fn handle(mut self, value: String) -> Self {
         self.handle = Some(value);
         self
     }
-
+    
     pub fn icon(mut self, value: String) -> Self {
         self.icon = Some(value);
         self
     }
-
+    
     pub fn last_login_time(mut self, value: Option<chrono::DateTime<chrono::Utc>>) -> Self {
         self.last_login_time = Some(value);
         self
     }
-
+    
     pub fn mfa_enabled(mut self, value: bool) -> Self {
         self.mfa_enabled = Some(value);
         self
     }
-
+    
     pub fn modified_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.modified_at = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn service_account(mut self, value: bool) -> Self {
         self.service_account = Some(value);
         self
     }
-
+    
     pub fn status(mut self, value: String) -> Self {
         self.status = Some(value);
         self
     }
-
+    
     pub fn title(mut self, value: Option<String>) -> Self {
         self.title = Some(value);
         self
     }
-
+    
     pub fn uuid(mut self, value: String) -> Self {
         self.uuid = Some(value);
         self
     }
-
+    
     pub fn verified(mut self, value: bool) -> Self {
         self.verified = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for UserAttributes {
     fn default() -> Self {
@@ -203,10 +197,7 @@ impl<'de> Deserialize<'de> for UserAttributes {
                 let mut title: Option<Option<String>> = None;
                 let mut uuid: Option<String> = None;
                 let mut verified: Option<bool> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -216,85 +207,81 @@ impl<'de> Deserialize<'de> for UserAttributes {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "disabled" => {
                             if v.is_null() {
                                 continue;
                             }
                             disabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "email" => {
                             if v.is_null() {
                                 continue;
                             }
                             email = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "handle" => {
                             if v.is_null() {
                                 continue;
                             }
                             handle = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "icon" => {
                             if v.is_null() {
                                 continue;
                             }
                             icon = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "last_login_time" => {
-                            last_login_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            last_login_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mfa_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mfa_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mfa_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "modified_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            modified_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            modified_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "service_account" => {
                             if v.is_null() {
                                 continue;
                             }
-                            service_account =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            service_account = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "status" => {
                             if v.is_null() {
                                 continue;
                             }
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "title" => {
                             title = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "uuid" => {
                             if v.is_null() {
                                 continue;
                             }
                             uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "verified" => {
                             if v.is_null() {
                                 continue;
                             }
                             verified = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

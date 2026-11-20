@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Segments journey results by the values of a facet.
 #[non_exhaustive]
@@ -27,8 +27,8 @@ pub struct ProductAnalyticsGraphQueryGroupBy {
     #[serde(rename = "source")]
     pub source: Option<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBySource>,
     /// A reference to a step, or a range of steps, in the journey.
-    /// Use a `node` target to name a single step, or a `path` target to name the range
-    /// between two steps.
+/// Use a `node` target to name a single step, or a `path` target to name the range
+/// between two steps.
     #[serde(rename = "target")]
     pub target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget>,
     /// Restricts the results to these facet values.
@@ -38,7 +38,7 @@ pub struct ProductAnalyticsGraphQueryGroupBy {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsGraphQueryGroupBy {
@@ -55,48 +55,44 @@ impl ProductAnalyticsGraphQueryGroupBy {
             _unparsed: false,
         }
     }
-
+    
     pub fn limit(mut self, value: i64) -> Self {
         self.limit = Some(value);
         self
     }
-
+    
     pub fn should_exclude_missing(mut self, value: bool) -> Self {
         self.should_exclude_missing = Some(value);
         self
     }
-
+    
     pub fn sort(mut self, value: crate::datadogV2::model::ProductAnalyticsGroupBySort) -> Self {
         self.sort = Some(value);
         self
     }
-
-    pub fn source(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBySource,
-    ) -> Self {
+    
+    pub fn source(mut self, value: crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBySource) -> Self {
         self.source = Some(value);
         self
     }
-
+    
     pub fn target(mut self, value: crate::datadogV2::model::ProductAnalyticsJourneyTarget) -> Self {
         self.target = Some(value);
         self
     }
-
+    
     pub fn value_filters(mut self, value: Vec<String>) -> Self {
         self.value_filters = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ProductAnalyticsGraphQueryGroupBy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -119,42 +115,35 @@ impl<'de> Deserialize<'de> for ProductAnalyticsGraphQueryGroupBy {
                 let mut limit: Option<i64> = None;
                 let mut should_exclude_missing: Option<bool> = None;
                 let mut sort: Option<crate::datadogV2::model::ProductAnalyticsGroupBySort> = None;
-                let mut source: Option<
-                    crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBySource,
-                > = None;
-                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> =
-                    None;
+                let mut source: Option<crate::datadogV2::model::ProductAnalyticsGraphQueryGroupBySource> = None;
+                let mut target: Option<crate::datadogV2::model::ProductAnalyticsJourneyTarget> = None;
                 let mut value_filters: Option<Vec<String>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "facet" => {
                             facet = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "limit" => {
                             if v.is_null() {
                                 continue;
                             }
                             limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "should_exclude_missing" => {
                             if v.is_null() {
                                 continue;
                             }
-                            should_exclude_missing =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            should_exclude_missing = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "sort" => {
                             if v.is_null() {
                                 continue;
                             }
                             sort = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "source" => {
                             if v.is_null() {
                                 continue;
@@ -168,7 +157,7 @@ impl<'de> Deserialize<'de> for ProductAnalyticsGraphQueryGroupBy {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "target" => {
                             if v.is_null() {
                                 continue;
@@ -182,19 +171,18 @@ impl<'de> Deserialize<'de> for ProductAnalyticsGraphQueryGroupBy {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "value_filters" => {
                             if v.is_null() {
                                 continue;
                             }
-                            value_filters =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            value_filters = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let facet = facet.ok_or_else(|| M::Error::missing_field("facet"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Response containing a list of Agent Observability spans.
 #[non_exhaustive]
@@ -24,14 +24,11 @@ pub struct LLMObsSpansResponse {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsSpansResponse {
-    pub fn new(
-        data: Vec<crate::datadogV2::model::LLMObsSpanData>,
-        meta: crate::datadogV2::model::LLMObsSpansResponseMeta,
-    ) -> LLMObsSpansResponse {
+    pub fn new(data: Vec<crate::datadogV2::model::LLMObsSpanData>, meta: crate::datadogV2::model::LLMObsSpansResponseMeta) -> LLMObsSpansResponse {
         LLMObsSpansResponse {
             data,
             links: None,
@@ -40,20 +37,19 @@ impl LLMObsSpansResponse {
             _unparsed: false,
         }
     }
-
+    
     pub fn links(mut self, value: crate::datadogV2::model::LLMObsSpansResponseLinks) -> Self {
         self.links = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for LLMObsSpansResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -75,31 +71,28 @@ impl<'de> Deserialize<'de> for LLMObsSpansResponse {
                 let mut data: Option<Vec<crate::datadogV2::model::LLMObsSpanData>> = None;
                 let mut links: Option<crate::datadogV2::model::LLMObsSpansResponseLinks> = None;
                 let mut meta: Option<crate::datadogV2::model::LLMObsSpansResponseMeta> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "data" => {
                             data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "links" => {
                             if v.is_null() {
                                 continue;
                             }
                             links = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "meta" => {
                             meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;

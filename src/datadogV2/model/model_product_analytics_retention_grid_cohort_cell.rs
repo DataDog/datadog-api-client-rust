@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// One cell of the retention grid, holding the result for a single cohort over a single return period.
 /// Aggregated rows omit the time and count fields.
@@ -19,18 +19,10 @@ pub struct ProductAnalyticsRetentionGridCohortCell {
     #[serde(rename = "cell_rate")]
     pub cell_rate: Option<f64>,
     /// Change in the metric relative to the cohort baseline.
-    #[serde(
-        rename = "cell_relative_value_change",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "cell_relative_value_change", default, with = "::serde_with::rust::double_option")]
     pub cell_relative_value_change: Option<Option<f64>>,
     /// Value of the computed metric, when a metric other than the retention rate is requested.
-    #[serde(
-        rename = "cell_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "cell_value", default, with = "::serde_with::rust::double_option")]
     pub cell_value: Option<Option<f64>>,
     /// Whether the return period is still open, so the numbers are not yet final.
     #[serde(rename = "is_partial_data")]
@@ -51,7 +43,7 @@ pub struct ProductAnalyticsRetentionGridCohortCell {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ProductAnalyticsRetentionGridCohortCell {
@@ -70,63 +62,58 @@ impl ProductAnalyticsRetentionGridCohortCell {
             _unparsed: false,
         }
     }
-
+    
     pub fn cell_count(mut self, value: i64) -> Self {
         self.cell_count = Some(value);
         self
     }
-
+    
     pub fn cell_rate(mut self, value: f64) -> Self {
         self.cell_rate = Some(value);
         self
     }
-
+    
     pub fn cell_relative_value_change(mut self, value: Option<f64>) -> Self {
         self.cell_relative_value_change = Some(value);
         self
     }
-
+    
     pub fn cell_value(mut self, value: Option<f64>) -> Self {
         self.cell_value = Some(value);
         self
     }
-
+    
     pub fn is_partial_data(mut self, value: bool) -> Self {
         self.is_partial_data = Some(value);
         self
     }
-
+    
     pub fn return_period_end_time(mut self, value: i64) -> Self {
         self.return_period_end_time = Some(value);
         self
     }
-
+    
     pub fn return_period_index(mut self, value: i64) -> Self {
         self.return_period_index = Some(value);
         self
     }
-
+    
     pub fn return_period_start_time(mut self, value: i64) -> Self {
         self.return_period_start_time = Some(value);
         self
     }
-
-    pub fn type_(
-        mut self,
-        value: crate::datadogV2::model::ProductAnalyticsRetentionGridCohortType,
-    ) -> Self {
+    
+    pub fn type_(mut self, value: crate::datadogV2::model::ProductAnalyticsRetentionGridCohortType) -> Self {
         self.type_ = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for ProductAnalyticsRetentionGridCohortCell {
     fn default() -> Self {
@@ -159,13 +146,8 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionGridCohortCell {
                 let mut return_period_end_time: Option<i64> = None;
                 let mut return_period_index: Option<i64> = None;
                 let mut return_period_start_time: Option<i64> = None;
-                let mut type_: Option<
-                    crate::datadogV2::model::ProductAnalyticsRetentionGridCohortType,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut type_: Option<crate::datadogV2::model::ProductAnalyticsRetentionGridCohortType> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -175,54 +157,49 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionGridCohortCell {
                                 continue;
                             }
                             cell_count = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cell_rate" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             cell_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "cell_relative_value_change" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            cell_relative_value_change =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            cell_relative_value_change = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "cell_value" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
                             cell_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_partial_data" => {
                             if v.is_null() {
                                 continue;
                             }
-                            is_partial_data =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            is_partial_data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "return_period_end_time" => {
                             if v.is_null() {
                                 continue;
                             }
-                            return_period_end_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            return_period_end_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "return_period_index" => {
                             if v.is_null() {
                                 continue;
                             }
-                            return_period_index =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            return_period_index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "return_period_start_time" => {
                             if v.is_null() {
                                 continue;
                             }
-                            return_period_start_time =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            return_period_start_time = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "type" => {
                             if v.is_null() {
                                 continue;
@@ -236,12 +213,12 @@ impl<'de> Deserialize<'de> for ProductAnalyticsRetentionGridCohortCell {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

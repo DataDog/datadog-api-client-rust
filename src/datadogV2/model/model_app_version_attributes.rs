@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes describing an app version.
 #[non_exhaustive]
@@ -42,7 +42,7 @@ pub struct AppVersionAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl AppVersionAttributes {
@@ -61,60 +61,58 @@ impl AppVersionAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn app_id(mut self, value: uuid::Uuid) -> Self {
         self.app_id = Some(value);
         self
     }
-
+    
     pub fn created_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.created_at = Some(value);
         self
     }
-
+    
     pub fn has_ever_been_published(mut self, value: bool) -> Self {
         self.has_ever_been_published = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
-
+    
     pub fn updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.updated_at = Some(value);
         self
     }
-
+    
     pub fn user_id(mut self, value: i64) -> Self {
         self.user_id = Some(value);
         self
     }
-
+    
     pub fn user_name(mut self, value: String) -> Self {
         self.user_name = Some(value);
         self
     }
-
+    
     pub fn user_uuid(mut self, value: uuid::Uuid) -> Self {
         self.user_uuid = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for AppVersionAttributes {
     fn default() -> Self {
@@ -148,10 +146,7 @@ impl<'de> Deserialize<'de> for AppVersionAttributes {
                 let mut user_name: Option<String> = None;
                 let mut user_uuid: Option<uuid::Uuid> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -161,61 +156,60 @@ impl<'de> Deserialize<'de> for AppVersionAttributes {
                                 continue;
                             }
                             app_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "has_ever_been_published" => {
                             if v.is_null() {
                                 continue;
                             }
-                            has_ever_been_published =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            has_ever_been_published = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             if v.is_null() {
                                 continue;
                             }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "updated_at" => {
                             if v.is_null() {
                                 continue;
                             }
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_name" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "user_uuid" => {
                             if v.is_null() {
                                 continue;
                             }
                             user_uuid = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

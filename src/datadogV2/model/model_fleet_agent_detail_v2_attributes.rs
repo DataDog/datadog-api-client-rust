@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for the v2 agent detail response.
 #[non_exhaustive]
@@ -24,13 +24,11 @@ pub struct FleetAgentDetailV2Attributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl FleetAgentDetailV2Attributes {
-    pub fn new(
-        agent_infos: crate::datadogV2::model::FleetAgentInfoDetailsV2,
-    ) -> FleetAgentDetailV2Attributes {
+    pub fn new(agent_infos: crate::datadogV2::model::FleetAgentInfoDetailsV2) -> FleetAgentDetailV2Attributes {
         FleetAgentDetailV2Attributes {
             agent_infos,
             configuration_files: None,
@@ -39,31 +37,24 @@ impl FleetAgentDetailV2Attributes {
             _unparsed: false,
         }
     }
-
-    pub fn configuration_files(
-        mut self,
-        value: crate::datadogV2::model::FleetAgentConfigurationFilesV2,
-    ) -> Self {
+    
+    pub fn configuration_files(mut self, value: crate::datadogV2::model::FleetAgentConfigurationFilesV2) -> Self {
         self.configuration_files = Some(value);
         self
     }
-
-    pub fn integrations(
-        mut self,
-        value: crate::datadogV2::model::FleetIntegrationsByStatusV2,
-    ) -> Self {
+    
+    pub fn integrations(mut self, value: crate::datadogV2::model::FleetIntegrationsByStatusV2) -> Self {
         self.integrations = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for FleetAgentDetailV2Attributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -82,48 +73,37 @@ impl<'de> Deserialize<'de> for FleetAgentDetailV2Attributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut agent_infos: Option<crate::datadogV2::model::FleetAgentInfoDetailsV2> =
-                    None;
-                let mut configuration_files: Option<
-                    crate::datadogV2::model::FleetAgentConfigurationFilesV2,
-                > = None;
-                let mut integrations: Option<crate::datadogV2::model::FleetIntegrationsByStatusV2> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut agent_infos: Option<crate::datadogV2::model::FleetAgentInfoDetailsV2> = None;
+                let mut configuration_files: Option<crate::datadogV2::model::FleetAgentConfigurationFilesV2> = None;
+                let mut integrations: Option<crate::datadogV2::model::FleetIntegrationsByStatusV2> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "agent_infos" => {
-                            agent_infos =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            agent_infos = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "configuration_files" => {
                             if v.is_null() {
                                 continue;
                             }
-                            configuration_files =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            configuration_files = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "integrations" => {
                             if v.is_null() {
                                 continue;
                             }
-                            integrations =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            integrations = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let agent_infos =
-                    agent_infos.ok_or_else(|| M::Error::missing_field("agent_infos"))?;
+                let agent_infos = agent_infos.ok_or_else(|| M::Error::missing_field("agent_infos"))?;
 
                 let content = FleetAgentDetailV2Attributes {
                     agent_infos,

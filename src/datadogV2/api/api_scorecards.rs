@@ -1,17 +1,14 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
+use reqwest::header::{HeaderMap, HeaderValue};
 use async_stream::try_stream;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use futures_core::stream::Stream;
 use log::warn;
-use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// GetScorecardCampaignOptionalParams is a struct for passing parameters to the method [`ScorecardsAPI::get_scorecard_campaign`]
 #[non_exhaustive]
@@ -354,6 +351,9 @@ impl ListScorecardsOptionalParams {
     }
 }
 
+
+
+
 /// CreateScorecardCampaignError is a struct for typed errors of method [`ScorecardsAPI::create_scorecard_campaign`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -363,6 +363,7 @@ pub enum CreateScorecardCampaignError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateScorecardOutcomesBatchError is a struct for typed errors of method [`ScorecardsAPI::create_scorecard_outcomes_batch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -371,6 +372,7 @@ pub enum CreateScorecardOutcomesBatchError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateScorecardRuleError is a struct for typed errors of method [`ScorecardsAPI::create_scorecard_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -378,6 +380,7 @@ pub enum CreateScorecardRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteScorecardCampaignError is a struct for typed errors of method [`ScorecardsAPI::delete_scorecard_campaign`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -388,6 +391,7 @@ pub enum DeleteScorecardCampaignError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteScorecardRuleError is a struct for typed errors of method [`ScorecardsAPI::delete_scorecard_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -395,6 +399,7 @@ pub enum DeleteScorecardRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetScorecardCampaignError is a struct for typed errors of method [`ScorecardsAPI::get_scorecard_campaign`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -405,6 +410,7 @@ pub enum GetScorecardCampaignError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListScorecardCampaignsError is a struct for typed errors of method [`ScorecardsAPI::list_scorecard_campaigns`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -414,6 +420,7 @@ pub enum ListScorecardCampaignsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListScorecardOutcomesError is a struct for typed errors of method [`ScorecardsAPI::list_scorecard_outcomes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -421,6 +428,7 @@ pub enum ListScorecardOutcomesError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListScorecardRulesError is a struct for typed errors of method [`ScorecardsAPI::list_scorecard_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -430,6 +438,7 @@ pub enum ListScorecardRulesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListScorecardScoresError is a struct for typed errors of method [`ScorecardsAPI::list_scorecard_scores`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -437,6 +446,7 @@ pub enum ListScorecardScoresError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListScorecardsError is a struct for typed errors of method [`ScorecardsAPI::list_scorecards`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -447,6 +457,7 @@ pub enum ListScorecardsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateScorecardCampaignError is a struct for typed errors of method [`ScorecardsAPI::update_scorecard_campaign`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -456,6 +467,7 @@ pub enum UpdateScorecardCampaignError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateScorecardOutcomesError is a struct for typed errors of method [`ScorecardsAPI::update_scorecard_outcomes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -464,6 +476,7 @@ pub enum UpdateScorecardOutcomesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateScorecardRuleError is a struct for typed errors of method [`ScorecardsAPI::update_scorecard_rule`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -471,6 +484,7 @@ pub enum UpdateScorecardRuleError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// API to create and update scorecard rules and outcomes. See [Scorecards](<https://docs.datadoghq.com/service_catalog/scorecards>) for more information.
 #[derive(Debug, Clone)]
@@ -494,7 +508,8 @@ impl ScorecardsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -539,59 +554,49 @@ impl ScorecardsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Creates a new scorecard campaign.
-    pub async fn create_scorecard_campaign(
-        &self,
-        body: crate::datadogV2::model::CreateCampaignRequest,
-    ) -> Result<
-        crate::datadogV2::model::CampaignResponse,
-        datadog::Error<CreateScorecardCampaignError>,
-    > {
+    pub async fn create_scorecard_campaign(&self, body: crate::datadogV2::model::CreateCampaignRequest) -> Result<crate::datadogV2::model::CampaignResponse, datadog::Error<CreateScorecardCampaignError>> {
         match self.create_scorecard_campaign_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new scorecard campaign.
-    pub async fn create_scorecard_campaign_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateCampaignRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>,
-        datadog::Error<CreateScorecardCampaignError>,
-    > {
+    pub async fn create_scorecard_campaign_with_http_info(&self, body: crate::datadogV2::model::CreateCampaignRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>, datadog::Error<CreateScorecardCampaignError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_scorecard_campaign";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -604,23 +609,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -628,7 +626,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -638,7 +639,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -660,7 +664,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -677,62 +681,38 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateScorecardCampaignError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateScorecardCampaignError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Sets multiple service-rule outcomes in a single batched request.
-    pub async fn create_scorecard_outcomes_batch(
-        &self,
-        body: crate::datadogV2::model::OutcomesBatchRequest,
-    ) -> Result<
-        crate::datadogV2::model::OutcomesBatchResponse,
-        datadog::Error<CreateScorecardOutcomesBatchError>,
-    > {
-        match self
-            .create_scorecard_outcomes_batch_with_http_info(body)
-            .await
-        {
+    pub async fn create_scorecard_outcomes_batch(&self, body: crate::datadogV2::model::OutcomesBatchRequest) -> Result<crate::datadogV2::model::OutcomesBatchResponse, datadog::Error<CreateScorecardOutcomesBatchError>> {
+        match self.create_scorecard_outcomes_batch_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Sets multiple service-rule outcomes in a single batched request.
-    pub async fn create_scorecard_outcomes_batch_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OutcomesBatchRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OutcomesBatchResponse>,
-        datadog::Error<CreateScorecardOutcomesBatchError>,
-    > {
+    pub async fn create_scorecard_outcomes_batch_with_http_info(&self, body: crate::datadogV2::model::OutcomesBatchRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OutcomesBatchResponse>, datadog::Error<CreateScorecardOutcomesBatchError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_scorecard_outcomes_batch";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -744,19 +724,23 @@ impl ScorecardsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes/batch",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -769,23 +753,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -793,7 +770,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -803,7 +783,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -825,7 +808,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -842,74 +825,58 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OutcomesBatchResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OutcomesBatchResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateScorecardOutcomesBatchError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateScorecardOutcomesBatchError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Creates a new rule.
-    pub async fn create_scorecard_rule(
-        &self,
-        body: crate::datadogV2::model::CreateRuleRequest,
-    ) -> Result<crate::datadogV2::model::CreateRuleResponse, datadog::Error<CreateScorecardRuleError>>
-    {
+    pub async fn create_scorecard_rule(&self, body: crate::datadogV2::model::CreateRuleRequest) -> Result<crate::datadogV2::model::CreateRuleResponse, datadog::Error<CreateScorecardRuleError>> {
         match self.create_scorecard_rule_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Creates a new rule.
-    pub async fn create_scorecard_rule_with_http_info(
-        &self,
-        body: crate::datadogV2::model::CreateRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CreateRuleResponse>,
-        datadog::Error<CreateScorecardRuleError>,
-    > {
+    pub async fn create_scorecard_rule_with_http_info(&self, body: crate::datadogV2::model::CreateRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CreateRuleResponse>, datadog::Error<CreateScorecardRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_scorecard_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -922,23 +889,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -946,7 +906,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -956,7 +919,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -978,7 +944,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -995,65 +961,53 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CreateRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CreateRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateScorecardRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateScorecardRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a single campaign by ID or key.
-    pub async fn delete_scorecard_campaign(
-        &self,
-        campaign_id: String,
-    ) -> Result<(), datadog::Error<DeleteScorecardCampaignError>> {
-        match self
-            .delete_scorecard_campaign_with_http_info(campaign_id)
-            .await
-        {
+    pub async fn delete_scorecard_campaign(&self, campaign_id: String) -> Result<(), datadog::Error<DeleteScorecardCampaignError>> {
+        match self.delete_scorecard_campaign_with_http_info(campaign_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a single campaign by ID or key.
-    pub async fn delete_scorecard_campaign_with_http_info(
-        &self,
-        campaign_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardCampaignError>> {
+    pub async fn delete_scorecard_campaign_with_http_info(&self, campaign_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardCampaignError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_scorecard_campaign";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            campaign_id = datadog::urlencode(campaign_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), campaign_id=
+            datadog::urlencode(campaign_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1066,22 +1020,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1099,49 +1047,44 @@ impl ScorecardsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteScorecardCampaignError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteScorecardCampaignError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Deletes a single rule.
-    pub async fn delete_scorecard_rule(
-        &self,
-        rule_id: String,
-    ) -> Result<(), datadog::Error<DeleteScorecardRuleError>> {
+    pub async fn delete_scorecard_rule(&self, rule_id: String) -> Result<(), datadog::Error<DeleteScorecardRuleError>> {
         match self.delete_scorecard_rule_with_http_info(rule_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Deletes a single rule.
-    pub async fn delete_scorecard_rule_with_http_info(
-        &self,
-        rule_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardRuleError>> {
+    pub async fn delete_scorecard_rule_with_http_info(&self, rule_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteScorecardRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_scorecard_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1154,22 +1097,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1187,53 +1124,33 @@ impl ScorecardsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteScorecardRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteScorecardRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches a single campaign by ID or key.
-    pub async fn get_scorecard_campaign(
-        &self,
-        campaign_id: String,
-        params: GetScorecardCampaignOptionalParams,
-    ) -> Result<crate::datadogV2::model::CampaignResponse, datadog::Error<GetScorecardCampaignError>>
-    {
-        match self
-            .get_scorecard_campaign_with_http_info(campaign_id, params)
-            .await
-        {
+    pub async fn get_scorecard_campaign(&self, campaign_id: String, params: GetScorecardCampaignOptionalParams) -> Result<crate::datadogV2::model::CampaignResponse, datadog::Error<GetScorecardCampaignError>> {
+        match self.get_scorecard_campaign_with_http_info(campaign_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches a single campaign by ID or key.
-    pub async fn get_scorecard_campaign_with_http_info(
-        &self,
-        campaign_id: String,
-        params: GetScorecardCampaignOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>,
-        datadog::Error<GetScorecardCampaignError>,
-    > {
+    pub async fn get_scorecard_campaign_with_http_info(&self, campaign_id: String, params: GetScorecardCampaignOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>, datadog::Error<GetScorecardCampaignError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_scorecard_campaign";
 
+        
         // unbox and build optional parameters
         let include = params.include;
         let include_meta = params.include_meta;
@@ -1242,24 +1159,24 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            campaign_id = datadog::urlencode(campaign_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), campaign_id=
+            datadog::urlencode(campaign_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include_meta {
-            local_req_builder =
-                local_req_builder.query(&[("include_meta", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include_meta", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1272,22 +1189,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1299,62 +1210,42 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetScorecardCampaignError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetScorecardCampaignError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches all scorecard campaigns.
-    pub async fn list_scorecard_campaigns(
-        &self,
-        params: ListScorecardCampaignsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListCampaignsResponse,
-        datadog::Error<ListScorecardCampaignsError>,
-    > {
-        match self.list_scorecard_campaigns_with_http_info(params).await {
+    pub async fn list_scorecard_campaigns(&self, params: ListScorecardCampaignsOptionalParams) -> Result<crate::datadogV2::model::ListCampaignsResponse, datadog::Error<ListScorecardCampaignsError>> {
+        match self.list_scorecard_campaigns_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches all scorecard campaigns.
-    pub async fn list_scorecard_campaigns_with_http_info(
-        &self,
-        params: ListScorecardCampaignsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListCampaignsResponse>,
-        datadog::Error<ListScorecardCampaignsError>,
-    > {
+    pub async fn list_scorecard_campaigns_with_http_info(&self, params: ListScorecardCampaignsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListCampaignsResponse>, datadog::Error<ListScorecardCampaignsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_scorecard_campaigns";
 
+        
         // unbox and build optional parameters
         let page_limit = params.page_limit;
         let page_offset = params.page_offset;
@@ -1366,35 +1257,31 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_campaign_name {
-            local_req_builder = local_req_builder
-                .query(&[("filter[campaign][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[campaign][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_campaign_status {
-            local_req_builder = local_req_builder
-                .query(&[("filter[campaign][status]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[campaign][status]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_campaign_owner {
-            local_req_builder = local_req_builder
-                .query(&[("filter[campaign][owner]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[campaign][owner]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1407,22 +1294,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1434,59 +1315,39 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListCampaignsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListCampaignsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScorecardCampaignsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScorecardCampaignsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches all rule outcomes.
-    pub async fn list_scorecard_outcomes(
-        &self,
-        params: ListScorecardOutcomesOptionalParams,
-    ) -> Result<crate::datadogV2::model::OutcomesResponse, datadog::Error<ListScorecardOutcomesError>>
-    {
-        match self.list_scorecard_outcomes_with_http_info(params).await {
+    pub async fn list_scorecard_outcomes(&self, params: ListScorecardOutcomesOptionalParams) -> Result<crate::datadogV2::model::OutcomesResponse, datadog::Error<ListScorecardOutcomesError>> {
+        match self.list_scorecard_outcomes_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_scorecard_outcomes_with_pagination(
-        &self,
-        mut params: ListScorecardOutcomesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::OutcomesResponseDataItem,
-            datadog::Error<ListScorecardOutcomesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListScorecardOutcomesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::OutcomesResponseDataItem, datadog::Error<ListScorecardOutcomesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -1515,17 +1376,13 @@ impl ScorecardsAPI {
         }
     }
 
+    
     /// Fetches all rule outcomes.
-    pub async fn list_scorecard_outcomes_with_http_info(
-        &self,
-        params: ListScorecardOutcomesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OutcomesResponse>,
-        datadog::Error<ListScorecardOutcomesError>,
-    > {
+    pub async fn list_scorecard_outcomes_with_http_info(&self, params: ListScorecardOutcomesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OutcomesResponse>, datadog::Error<ListScorecardOutcomesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_scorecard_outcomes";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_offset = params.page_offset;
@@ -1542,57 +1399,46 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = fields_outcome {
-            local_req_builder =
-                local_req_builder.query(&[("fields[outcome]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("fields[outcome]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = fields_rule {
-            local_req_builder =
-                local_req_builder.query(&[("fields[rule]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("fields[rule]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_outcome_service_name {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[outcome][service_name]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[outcome][service_name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_outcome_state {
-            local_req_builder = local_req_builder
-                .query(&[("filter[outcome][state]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[outcome][state]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_enabled {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][enabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1605,22 +1451,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1632,58 +1472,39 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OutcomesResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OutcomesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScorecardOutcomesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScorecardOutcomesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetch all rules.
-    pub async fn list_scorecard_rules(
-        &self,
-        params: ListScorecardRulesOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListRulesResponse, datadog::Error<ListScorecardRulesError>>
-    {
-        match self.list_scorecard_rules_with_http_info(params).await {
+    pub async fn list_scorecard_rules(&self, params: ListScorecardRulesOptionalParams) -> Result<crate::datadogV2::model::ListRulesResponse, datadog::Error<ListScorecardRulesError>> {
+        match self.list_scorecard_rules_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
     pub fn list_scorecard_rules_with_pagination(
-        &self,
-        mut params: ListScorecardRulesOptionalParams,
-    ) -> impl Stream<
-        Item = Result<
-            crate::datadogV2::model::ListRulesResponseDataItem,
-            datadog::Error<ListScorecardRulesError>,
-        >,
-    > + '_ {
+        &self, mut params: ListScorecardRulesOptionalParams
+    ) -> impl Stream<Item = Result<crate::datadogV2::model::ListRulesResponseDataItem, datadog::Error<ListScorecardRulesError>>> + '_
+    {
         try_stream! {
             let mut page_size: i64 = 10;
             if params.page_size.is_none() {
@@ -1712,17 +1533,13 @@ impl ScorecardsAPI {
         }
     }
 
+    
     /// Fetch all rules.
-    pub async fn list_scorecard_rules_with_http_info(
-        &self,
-        params: ListScorecardRulesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListRulesResponse>,
-        datadog::Error<ListScorecardRulesError>,
-    > {
+    pub async fn list_scorecard_rules_with_http_info(&self, params: ListScorecardRulesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListRulesResponse>, datadog::Error<ListScorecardRulesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_scorecard_rules";
 
+        
         // unbox and build optional parameters
         let page_size = params.page_size;
         let page_offset = params.page_offset;
@@ -1739,55 +1556,46 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = include {
-            local_req_builder =
-                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("include", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_enabled {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][enabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_custom {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][custom]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][custom]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_description {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][description]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][description]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = fields_rule {
-            local_req_builder =
-                local_req_builder.query(&[("fields[rule]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("fields[rule]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = fields_scorecard {
-            local_req_builder =
-                local_req_builder.query(&[("fields[scorecard]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("fields[scorecard]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1800,22 +1608,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1827,67 +1629,42 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListRulesResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListRulesResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScorecardRulesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScorecardRulesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Returns a list of scorecard scores for each aggregation type, with score breakdowns.
-    pub async fn list_scorecard_scores(
-        &self,
-        aggregation: crate::datadogV2::model::ScorecardScoresAggregation,
-        params: ListScorecardScoresOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::ListScorecardScoresResponse,
-        datadog::Error<ListScorecardScoresError>,
-    > {
-        match self
-            .list_scorecard_scores_with_http_info(aggregation, params)
-            .await
-        {
+    pub async fn list_scorecard_scores(&self, aggregation: crate::datadogV2::model::ScorecardScoresAggregation, params: ListScorecardScoresOptionalParams) -> Result<crate::datadogV2::model::ListScorecardScoresResponse, datadog::Error<ListScorecardScoresError>> {
+        match self.list_scorecard_scores_with_http_info(aggregation,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Returns a list of scorecard scores for each aggregation type, with score breakdowns.
-    pub async fn list_scorecard_scores_with_http_info(
-        &self,
-        aggregation: crate::datadogV2::model::ScorecardScoresAggregation,
-        params: ListScorecardScoresOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListScorecardScoresResponse>,
-        datadog::Error<ListScorecardScoresError>,
-    > {
+    pub async fn list_scorecard_scores_with_http_info(&self, aggregation: crate::datadogV2::model::ScorecardScoresAggregation, params: ListScorecardScoresOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListScorecardScoresResponse>, datadog::Error<ListScorecardScoresError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_scorecard_scores";
 
+        
         // unbox and build optional parameters
         let filter_rule_id = params.filter_rule_id;
         let filter_rule_name = params.filter_rule_name;
@@ -1903,52 +1680,45 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/scores/{aggregation}",
-            local_configuration.get_operation_host(local_operation_id),
-            aggregation = datadog::urlencode(aggregation.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), aggregation=
+            datadog::urlencode(aggregation.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_rule_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_level {
-            local_req_builder =
-                local_req_builder.query(&[("filter[rule][level]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][level]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_scorecard_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][scorecard_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][scorecard_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_is_custom {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][is_custom]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][is_custom]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_rule_is_enabled {
-            local_req_builder = local_req_builder
-                .query(&[("filter[rule][is_enabled]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[rule][is_enabled]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1961,22 +1731,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1988,61 +1752,42 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListScorecardScoresResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListScorecardScoresResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScorecardScoresError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScorecardScoresError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Fetches all scorecards.
-    pub async fn list_scorecards(
-        &self,
-        params: ListScorecardsOptionalParams,
-    ) -> Result<crate::datadogV2::model::ListScorecardsResponse, datadog::Error<ListScorecardsError>>
-    {
-        match self.list_scorecards_with_http_info(params).await {
+    pub async fn list_scorecards(&self, params: ListScorecardsOptionalParams) -> Result<crate::datadogV2::model::ListScorecardsResponse, datadog::Error<ListScorecardsError>> {
+        match self.list_scorecards_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Fetches all scorecards.
-    pub async fn list_scorecards_with_http_info(
-        &self,
-        params: ListScorecardsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::ListScorecardsResponse>,
-        datadog::Error<ListScorecardsError>,
-    > {
+    pub async fn list_scorecards_with_http_info(&self, params: ListScorecardsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::ListScorecardsResponse>, datadog::Error<ListScorecardsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_scorecards";
 
+        
         // unbox and build optional parameters
         let page_offset = params.page_offset;
         let page_size = params.page_size;
@@ -2054,37 +1799,31 @@ impl ScorecardsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/scorecards",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_scorecard_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[scorecard][id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[scorecard][id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_scorecard_name {
-            local_req_builder = local_req_builder
-                .query(&[("filter[scorecard][name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[scorecard][name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_scorecard_description {
-            local_req_builder = local_req_builder.query(&[(
-                "filter[scorecard][description]",
-                &local_query_param.to_string(),
-            )]);
+            local_req_builder = local_req_builder.query(&[("filter[scorecard][description]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2097,22 +1836,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2124,82 +1857,60 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::ListScorecardsResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::ListScorecardsResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListScorecardsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListScorecardsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing campaign.
-    pub async fn update_scorecard_campaign(
-        &self,
-        campaign_id: String,
-        body: crate::datadogV2::model::UpdateCampaignRequest,
-    ) -> Result<
-        crate::datadogV2::model::CampaignResponse,
-        datadog::Error<UpdateScorecardCampaignError>,
-    > {
-        match self
-            .update_scorecard_campaign_with_http_info(campaign_id, body)
-            .await
-        {
+    pub async fn update_scorecard_campaign(&self, campaign_id: String, body: crate::datadogV2::model::UpdateCampaignRequest) -> Result<crate::datadogV2::model::CampaignResponse, datadog::Error<UpdateScorecardCampaignError>> {
+        match self.update_scorecard_campaign_with_http_info(campaign_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing campaign.
-    pub async fn update_scorecard_campaign_with_http_info(
-        &self,
-        campaign_id: String,
-        body: crate::datadogV2::model::UpdateCampaignRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>,
-        datadog::Error<UpdateScorecardCampaignError>,
-    > {
+    pub async fn update_scorecard_campaign_with_http_info(&self, campaign_id: String, body: crate::datadogV2::model::UpdateCampaignRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::CampaignResponse>, datadog::Error<UpdateScorecardCampaignError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_scorecard_campaign";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/campaigns/{campaign_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            campaign_id = datadog::urlencode(campaign_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), campaign_id=
+            datadog::urlencode(campaign_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2212,23 +1923,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2236,7 +1940,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2246,7 +1953,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2268,7 +1978,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2285,61 +1995,52 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::CampaignResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateScorecardCampaignError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateScorecardCampaignError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates multiple scorecard rule outcomes in a single batched request.
-    pub async fn update_scorecard_outcomes(
-        &self,
-        body: crate::datadogV2::model::UpdateOutcomesAsyncRequest,
-    ) -> Result<(), datadog::Error<UpdateScorecardOutcomesError>> {
+    pub async fn update_scorecard_outcomes(&self, body: crate::datadogV2::model::UpdateOutcomesAsyncRequest) -> Result<(), datadog::Error<UpdateScorecardOutcomesError>> {
         match self.update_scorecard_outcomes_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates multiple scorecard rule outcomes in a single batched request.
-    pub async fn update_scorecard_outcomes_with_http_info(
-        &self,
-        body: crate::datadogV2::model::UpdateOutcomesAsyncRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateScorecardOutcomesError>> {
+    pub async fn update_scorecard_outcomes_with_http_info(&self, body: crate::datadogV2::model::UpdateOutcomesAsyncRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<UpdateScorecardOutcomesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_scorecard_outcomes";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/outcomes",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2352,23 +2053,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2376,7 +2070,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2386,7 +2083,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2408,7 +2108,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2431,67 +2131,51 @@ impl ScorecardsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<UpdateScorecardOutcomesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateScorecardOutcomesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Updates an existing rule.
-    pub async fn update_scorecard_rule(
-        &self,
-        rule_id: String,
-        body: crate::datadogV2::model::UpdateRuleRequest,
-    ) -> Result<crate::datadogV2::model::UpdateRuleResponse, datadog::Error<UpdateScorecardRuleError>>
-    {
-        match self
-            .update_scorecard_rule_with_http_info(rule_id, body)
-            .await
-        {
+    pub async fn update_scorecard_rule(&self, rule_id: String, body: crate::datadogV2::model::UpdateRuleRequest) -> Result<crate::datadogV2::model::UpdateRuleResponse, datadog::Error<UpdateScorecardRuleError>> {
+        match self.update_scorecard_rule_with_http_info(rule_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Updates an existing rule.
-    pub async fn update_scorecard_rule_with_http_info(
-        &self,
-        rule_id: String,
-        body: crate::datadogV2::model::UpdateRuleRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::UpdateRuleResponse>,
-        datadog::Error<UpdateScorecardRuleError>,
-    > {
+    pub async fn update_scorecard_rule_with_http_info(&self, rule_id: String, body: crate::datadogV2::model::UpdateRuleRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::UpdateRuleResponse>, datadog::Error<UpdateScorecardRuleError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_scorecard_rule";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/scorecard/rules/{rule_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rule_id = datadog::urlencode(rule_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rule_id=
+            datadog::urlencode(rule_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2504,23 +2188,16 @@ impl ScorecardsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -2528,7 +2205,10 @@ impl ScorecardsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2538,7 +2218,10 @@ impl ScorecardsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -2560,7 +2243,7 @@ impl ScorecardsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -2577,26 +2260,17 @@ impl ScorecardsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::UpdateRuleResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::UpdateRuleResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateScorecardRuleError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateScorecardRuleError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

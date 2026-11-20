@@ -1,14 +1,11 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListRUMOperationStrongLinksOptionalParams is a struct for passing parameters to the method [`RUMOperationsAPI::list_rum_operation_strong_links`]
 #[non_exhaustive]
@@ -105,6 +102,9 @@ impl ListRUMOperationsOptionalParams {
     }
 }
 
+
+
+
 /// CreateRUMOperationError is a struct for typed errors of method [`RUMOperationsAPI::create_rum_operation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -113,6 +113,7 @@ pub enum CreateRUMOperationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateRUMOperationStrongLinkError is a struct for typed errors of method [`RUMOperationsAPI::create_rum_operation_strong_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -123,6 +124,7 @@ pub enum CreateRUMOperationStrongLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteRUMOperationError is a struct for typed errors of method [`RUMOperationsAPI::delete_rum_operation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -131,6 +133,7 @@ pub enum DeleteRUMOperationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteRUMOperationStrongLinkError is a struct for typed errors of method [`RUMOperationsAPI::delete_rum_operation_strong_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -141,6 +144,7 @@ pub enum DeleteRUMOperationStrongLinkError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetRUMOperationError is a struct for typed errors of method [`RUMOperationsAPI::get_rum_operation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -149,6 +153,7 @@ pub enum GetRUMOperationError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetRUMOperationByNameError is a struct for typed errors of method [`RUMOperationsAPI::get_rum_operation_by_name`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -159,6 +164,7 @@ pub enum GetRUMOperationByNameError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListRUMOperationStrongLinksError is a struct for typed errors of method [`RUMOperationsAPI::list_rum_operation_strong_links`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -167,6 +173,7 @@ pub enum ListRUMOperationStrongLinksError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListRUMOperationsError is a struct for typed errors of method [`RUMOperationsAPI::list_rum_operations`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -177,6 +184,7 @@ pub enum ListRUMOperationsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateRUMOperationError is a struct for typed errors of method [`RUMOperationsAPI::update_rum_operation`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -186,6 +194,7 @@ pub enum UpdateRUMOperationError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateRUMOperationStrongLinkError is a struct for typed errors of method [`RUMOperationsAPI::update_rum_operation_strong_link`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -194,6 +203,7 @@ pub enum UpdateRUMOperationStrongLinkError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage [RUM Operations](<https://docs.datadoghq.com/real_user_monitoring/>), business
 /// transactions detected from RUM events through a configurable journey, and their links
@@ -220,7 +230,8 @@ impl RUMOperationsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -265,59 +276,49 @@ impl RUMOperationsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Create a new RUM operation, defining the journey used to detect it from RUM events.
-    pub async fn create_rum_operation(
-        &self,
-        body: crate::datadogV2::model::RUMOperationCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationResponse,
-        datadog::Error<CreateRUMOperationError>,
-    > {
+    pub async fn create_rum_operation(&self, body: crate::datadogV2::model::RUMOperationCreateRequest) -> Result<crate::datadogV2::model::RUMOperationResponse, datadog::Error<CreateRUMOperationError>> {
         match self.create_rum_operation_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new RUM operation, defining the journey used to detect it from RUM events.
-    pub async fn create_rum_operation_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RUMOperationCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>,
-        datadog::Error<CreateRUMOperationError>,
-    > {
+    pub async fn create_rum_operation_with_http_info(&self, body: crate::datadogV2::model::RUMOperationCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>, datadog::Error<CreateRUMOperationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_operation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -330,23 +331,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -354,7 +348,10 @@ impl RUMOperationsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -364,7 +361,10 @@ impl RUMOperationsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -386,7 +386,7 @@ impl RUMOperationsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -403,83 +403,62 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRUMOperationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateRUMOperationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a link between a RUM operation and a journey, confirming that the journey
-    /// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
-    /// if `operation_name` does not match an existing operation, a stub operation is created.
-    pub async fn create_rum_operation_strong_link(
-        &self,
-        body: crate::datadogV2::model::RUMOperationStrongLinkCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationStrongLinkResponse,
-        datadog::Error<CreateRUMOperationStrongLinkError>,
-    > {
-        match self
-            .create_rum_operation_strong_link_with_http_info(body)
-            .await
-        {
+/// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
+/// if `operation_name` does not match an existing operation, a stub operation is created.
+    pub async fn create_rum_operation_strong_link(&self, body: crate::datadogV2::model::RUMOperationStrongLinkCreateRequest) -> Result<crate::datadogV2::model::RUMOperationStrongLinkResponse, datadog::Error<CreateRUMOperationStrongLinkError>> {
+        match self.create_rum_operation_strong_link_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a link between a RUM operation and a journey, confirming that the journey
-    /// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
-    /// if `operation_name` does not match an existing operation, a stub operation is created.
-    pub async fn create_rum_operation_strong_link_with_http_info(
-        &self,
-        body: crate::datadogV2::model::RUMOperationStrongLinkCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinkResponse>,
-        datadog::Error<CreateRUMOperationStrongLinkError>,
-    > {
+/// belongs to the operation. The operation can be identified by `operation_id` or `operation_name`;
+/// if `operation_name` does not match an existing operation, a stub operation is created.
+    pub async fn create_rum_operation_strong_link_with_http_info(&self, body: crate::datadogV2::model::RUMOperationStrongLinkCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinkResponse>, datadog::Error<CreateRUMOperationStrongLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_operation_strong_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/strong_links",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -492,23 +471,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -516,7 +488,10 @@ impl RUMOperationsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -526,7 +501,10 @@ impl RUMOperationsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -548,7 +526,7 @@ impl RUMOperationsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -565,65 +543,53 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinkResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRUMOperationStrongLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateRUMOperationStrongLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a RUM operation.
-    pub async fn delete_rum_operation(
-        &self,
-        rum_operation_id: String,
-    ) -> Result<(), datadog::Error<DeleteRUMOperationError>> {
-        match self
-            .delete_rum_operation_with_http_info(rum_operation_id)
-            .await
-        {
+    pub async fn delete_rum_operation(&self, rum_operation_id: String) -> Result<(), datadog::Error<DeleteRUMOperationError>> {
+        match self.delete_rum_operation_with_http_info(rum_operation_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a RUM operation.
-    pub async fn delete_rum_operation_with_http_info(
-        &self,
-        rum_operation_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationError>> {
+    pub async fn delete_rum_operation_with_http_info(&self, rum_operation_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_operation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/{rum_operation_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rum_operation_id = datadog::urlencode(rum_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rum_operation_id=
+            datadog::urlencode(rum_operation_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -636,22 +602,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -669,56 +629,46 @@ impl RUMOperationsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRUMOperationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRUMOperationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete the link between a RUM operation and a journey.
-    pub async fn delete_rum_operation_strong_link(
-        &self,
-        rum_operation_id: String,
-        feature_id: String,
-    ) -> Result<(), datadog::Error<DeleteRUMOperationStrongLinkError>> {
-        match self
-            .delete_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id)
-            .await
-        {
+    pub async fn delete_rum_operation_strong_link(&self, rum_operation_id: String, feature_id: String) -> Result<(), datadog::Error<DeleteRUMOperationStrongLinkError>> {
+        match self.delete_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete the link between a RUM operation and a journey.
-    pub async fn delete_rum_operation_strong_link_with_http_info(
-        &self,
-        rum_operation_id: String,
-        feature_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationStrongLinkError>>
-    {
+    pub async fn delete_rum_operation_strong_link_with_http_info(&self, rum_operation_id: String, feature_id: String) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMOperationStrongLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_operation_strong_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{feature_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rum_operation_id = datadog::urlencode(rum_operation_id),
-            feature_id = datadog::urlencode(feature_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rum_operation_id=
+            datadog::urlencode(rum_operation_id)
+            , feature_id=
+            datadog::urlencode(feature_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -731,22 +681,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -764,64 +708,50 @@ impl RUMOperationsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRUMOperationStrongLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteRUMOperationStrongLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a specific RUM operation by its unique identifier.
-    pub async fn get_rum_operation(
-        &self,
-        rum_operation_id: String,
-    ) -> Result<crate::datadogV2::model::RUMOperationResponse, datadog::Error<GetRUMOperationError>>
-    {
-        match self
-            .get_rum_operation_with_http_info(rum_operation_id)
-            .await
-        {
+    pub async fn get_rum_operation(&self, rum_operation_id: String) -> Result<crate::datadogV2::model::RUMOperationResponse, datadog::Error<GetRUMOperationError>> {
+        match self.get_rum_operation_with_http_info(rum_operation_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a specific RUM operation by its unique identifier.
-    pub async fn get_rum_operation_with_http_info(
-        &self,
-        rum_operation_id: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>,
-        datadog::Error<GetRUMOperationError>,
-    > {
+    pub async fn get_rum_operation_with_http_info(&self, rum_operation_id: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>, datadog::Error<GetRUMOperationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_operation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/{rum_operation_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rum_operation_id = datadog::urlencode(rum_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rum_operation_id=
+            datadog::urlencode(rum_operation_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -834,22 +764,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -861,76 +785,59 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRUMOperationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRUMOperationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Retrieve a specific RUM operation by its unique name.
-    pub async fn get_rum_operation_by_name(
-        &self,
-        name: String,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationResponse,
-        datadog::Error<GetRUMOperationByNameError>,
-    > {
+    pub async fn get_rum_operation_by_name(&self, name: String) -> Result<crate::datadogV2::model::RUMOperationResponse, datadog::Error<GetRUMOperationByNameError>> {
         match self.get_rum_operation_by_name_with_http_info(name).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Retrieve a specific RUM operation by its unique name.
-    pub async fn get_rum_operation_by_name_with_http_info(
-        &self,
-        name: String,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>,
-        datadog::Error<GetRUMOperationByNameError>,
-    > {
+    pub async fn get_rum_operation_by_name_with_http_info(&self, name: String) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>, datadog::Error<GetRUMOperationByNameError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_operation_by_name";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/by-name/{name}",
-            local_configuration.get_operation_host(local_operation_id),
-            name = datadog::urlencode(name)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), name=
+            datadog::urlencode(name)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -943,22 +850,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -970,70 +871,46 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRUMOperationByNameError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetRUMOperationByNameError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List links between RUM operations and journeys. A link confirms that a journey
-    /// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
-    /// at least one is required.
-    pub async fn list_rum_operation_strong_links(
-        &self,
-        params: ListRUMOperationStrongLinksOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationStrongLinksListResponse,
-        datadog::Error<ListRUMOperationStrongLinksError>,
-    > {
-        match self
-            .list_rum_operation_strong_links_with_http_info(params)
-            .await
-        {
+/// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
+/// at least one is required.
+    pub async fn list_rum_operation_strong_links(&self, params: ListRUMOperationStrongLinksOptionalParams) -> Result<crate::datadogV2::model::RUMOperationStrongLinksListResponse, datadog::Error<ListRUMOperationStrongLinksError>> {
+        match self.list_rum_operation_strong_links_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List links between RUM operations and journeys. A link confirms that a journey
-    /// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
-    /// at least one is required.
-    pub async fn list_rum_operation_strong_links_with_http_info(
-        &self,
-        params: ListRUMOperationStrongLinksOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinksListResponse>,
-        datadog::Error<ListRUMOperationStrongLinksError>,
-    > {
+/// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
+/// at least one is required.
+    pub async fn list_rum_operation_strong_links_with_http_info(&self, params: ListRUMOperationStrongLinksOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinksListResponse>, datadog::Error<ListRUMOperationStrongLinksError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_operation_strong_links";
 
+        
         // unbox and build optional parameters
         let operation_id = params.operation_id;
         let feature_id = params.feature_id;
@@ -1044,31 +921,28 @@ impl RUMOperationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/strong_links",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = operation_id {
-            local_req_builder =
-                local_req_builder.query(&[("operation_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("operation_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = feature_id {
-            local_req_builder =
-                local_req_builder.query(&[("feature_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("feature_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1081,22 +955,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1108,65 +976,44 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinksListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinksListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRUMOperationStrongLinksError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRUMOperationStrongLinksError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Search RUM operations for your organization. Supports filtering by query, creator, team,
-    /// journey, and application.
-    pub async fn list_rum_operations(
-        &self,
-        params: ListRUMOperationsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationsListResponse,
-        datadog::Error<ListRUMOperationsError>,
-    > {
-        match self.list_rum_operations_with_http_info(params).await {
+/// journey, and application.
+    pub async fn list_rum_operations(&self, params: ListRUMOperationsOptionalParams) -> Result<crate::datadogV2::model::RUMOperationsListResponse, datadog::Error<ListRUMOperationsError>> {
+        match self.list_rum_operations_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Search RUM operations for your organization. Supports filtering by query, creator, team,
-    /// journey, and application.
-    pub async fn list_rum_operations_with_http_info(
-        &self,
-        params: ListRUMOperationsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationsListResponse>,
-        datadog::Error<ListRUMOperationsError>,
-    > {
+/// journey, and application.
+    pub async fn list_rum_operations_with_http_info(&self, params: ListRUMOperationsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationsListResponse>, datadog::Error<ListRUMOperationsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_operations";
 
+        
         // unbox and build optional parameters
         let query = params.query;
         let page_offset = params.page_offset;
@@ -1180,43 +1027,37 @@ impl RUMOperationsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/search",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = query {
-            local_req_builder =
-                local_req_builder.query(&[("query", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("query", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_offset {
-            local_req_builder =
-                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[offset]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_limit {
-            local_req_builder =
-                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[limit]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = creator {
-            local_req_builder =
-                local_req_builder.query(&[("creator", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("creator", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = team {
-            local_req_builder =
-                local_req_builder.query(&[("team", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("team", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = feature_id {
-            local_req_builder =
-                local_req_builder.query(&[("feature_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("feature_id", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = application_id {
-            local_req_builder =
-                local_req_builder.query(&[("application_id", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("application_id", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1229,22 +1070,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1256,84 +1091,62 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationsListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationsListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRUMOperationsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListRUMOperationsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing RUM operation. Fields omitted from the request body keep their existing value,
-    /// with the exception of `journey_rum`, which is required and fully replaced on every update.
-    pub async fn update_rum_operation(
-        &self,
-        rum_operation_id: String,
-        body: crate::datadogV2::model::RUMOperationUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationResponse,
-        datadog::Error<UpdateRUMOperationError>,
-    > {
-        match self
-            .update_rum_operation_with_http_info(rum_operation_id, body)
-            .await
-        {
+/// with the exception of `journey_rum`, which is required and fully replaced on every update.
+    pub async fn update_rum_operation(&self, rum_operation_id: String, body: crate::datadogV2::model::RUMOperationUpdateRequest) -> Result<crate::datadogV2::model::RUMOperationResponse, datadog::Error<UpdateRUMOperationError>> {
+        match self.update_rum_operation_with_http_info(rum_operation_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing RUM operation. Fields omitted from the request body keep their existing value,
-    /// with the exception of `journey_rum`, which is required and fully replaced on every update.
-    pub async fn update_rum_operation_with_http_info(
-        &self,
-        rum_operation_id: String,
-        body: crate::datadogV2::model::RUMOperationUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>,
-        datadog::Error<UpdateRUMOperationError>,
-    > {
+/// with the exception of `journey_rum`, which is required and fully replaced on every update.
+    pub async fn update_rum_operation_with_http_info(&self, rum_operation_id: String, body: crate::datadogV2::model::RUMOperationUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationResponse>, datadog::Error<UpdateRUMOperationError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_operation";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/{rum_operation_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rum_operation_id = datadog::urlencode(rum_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rum_operation_id=
+            datadog::urlencode(rum_operation_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1346,23 +1159,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1370,7 +1176,10 @@ impl RUMOperationsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1380,7 +1189,10 @@ impl RUMOperationsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1402,7 +1214,7 @@ impl RUMOperationsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1419,85 +1231,62 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRUMOperationError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateRUMOperationError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the status of a link between a RUM operation and a journey.
-    pub async fn update_rum_operation_strong_link(
-        &self,
-        rum_operation_id: String,
-        feature_id: String,
-        body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::RUMOperationStrongLinkResponse,
-        datadog::Error<UpdateRUMOperationStrongLinkError>,
-    > {
-        match self
-            .update_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id, body)
-            .await
-        {
+    pub async fn update_rum_operation_strong_link(&self, rum_operation_id: String, feature_id: String, body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest) -> Result<crate::datadogV2::model::RUMOperationStrongLinkResponse, datadog::Error<UpdateRUMOperationStrongLinkError>> {
+        match self.update_rum_operation_strong_link_with_http_info(rum_operation_id, feature_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the status of a link between a RUM operation and a journey.
-    pub async fn update_rum_operation_strong_link_with_http_info(
-        &self,
-        rum_operation_id: String,
-        feature_id: String,
-        body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinkResponse>,
-        datadog::Error<UpdateRUMOperationStrongLinkError>,
-    > {
+    pub async fn update_rum_operation_strong_link_with_http_info(&self, rum_operation_id: String, feature_id: String, body: crate::datadogV2::model::RUMOperationStrongLinkUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::RUMOperationStrongLinkResponse>, datadog::Error<UpdateRUMOperationStrongLinkError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_operation_strong_link";
+
+        
 
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/rum/operations/strong_links/{rum_operation_id}/{feature_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            rum_operation_id = datadog::urlencode(rum_operation_id),
-            feature_id = datadog::urlencode(feature_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), rum_operation_id=
+            datadog::urlencode(rum_operation_id)
+            , feature_id=
+            datadog::urlencode(feature_id)
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1510,23 +1299,16 @@ impl RUMOperationsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1534,7 +1316,10 @@ impl RUMOperationsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1544,7 +1329,10 @@ impl RUMOperationsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1566,7 +1354,7 @@ impl RUMOperationsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1583,26 +1371,17 @@ impl RUMOperationsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinkResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::RUMOperationStrongLinkResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRUMOperationStrongLinkError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateRUMOperationStrongLinkError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

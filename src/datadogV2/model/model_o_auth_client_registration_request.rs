@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Request payload for OAuth2 dynamic client registration as defined by RFC 7591.
 #[non_exhaustive]
@@ -18,7 +18,7 @@ pub struct OAuthClientRegistrationRequest {
     #[serde(rename = "client_uri")]
     pub client_uri: Option<String>,
     /// OAuth 2.0 grant types the client may use.
-    /// Defaults to `authorization_code` and `refresh_token` when omitted.
+/// Defaults to `authorization_code` and `refresh_token` when omitted.
     #[serde(rename = "grant_types")]
     pub grant_types: Option<Vec<crate::datadogV2::model::OAuthClientRegistrationGrantType>>,
     /// URL referencing the client's JSON Web Key Set.
@@ -49,7 +49,7 @@ pub struct OAuthClientRegistrationRequest {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl OAuthClientRegistrationRequest {
@@ -70,66 +70,59 @@ impl OAuthClientRegistrationRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn client_uri(mut self, value: String) -> Self {
         self.client_uri = Some(value);
         self
     }
-
-    pub fn grant_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::OAuthClientRegistrationGrantType>,
-    ) -> Self {
+    
+    pub fn grant_types(mut self, value: Vec<crate::datadogV2::model::OAuthClientRegistrationGrantType>) -> Self {
         self.grant_types = Some(value);
         self
     }
-
+    
     pub fn jwks_uri(mut self, value: String) -> Self {
         self.jwks_uri = Some(value);
         self
     }
-
+    
     pub fn logo_uri(mut self, value: String) -> Self {
         self.logo_uri = Some(value);
         self
     }
-
+    
     pub fn policy_uri(mut self, value: String) -> Self {
         self.policy_uri = Some(value);
         self
     }
-
-    pub fn response_types(
-        mut self,
-        value: Vec<crate::datadogV2::model::OAuthClientRegistrationResponseType>,
-    ) -> Self {
+    
+    pub fn response_types(mut self, value: Vec<crate::datadogV2::model::OAuthClientRegistrationResponseType>) -> Self {
         self.response_types = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: String) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn token_endpoint_auth_method(mut self, value: String) -> Self {
         self.token_endpoint_auth_method = Some(value);
         self
     }
-
+    
     pub fn tos_uri(mut self, value: String) -> Self {
         self.tos_uri = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for OAuthClientRegistrationRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -150,103 +143,89 @@ impl<'de> Deserialize<'de> for OAuthClientRegistrationRequest {
             {
                 let mut client_name: Option<String> = None;
                 let mut client_uri: Option<String> = None;
-                let mut grant_types: Option<
-                    Vec<crate::datadogV2::model::OAuthClientRegistrationGrantType>,
-                > = None;
+                let mut grant_types: Option<Vec<crate::datadogV2::model::OAuthClientRegistrationGrantType>> = None;
                 let mut jwks_uri: Option<String> = None;
                 let mut logo_uri: Option<String> = None;
                 let mut policy_uri: Option<String> = None;
                 let mut redirect_uris: Option<Vec<String>> = None;
-                let mut response_types: Option<
-                    Vec<crate::datadogV2::model::OAuthClientRegistrationResponseType>,
-                > = None;
+                let mut response_types: Option<Vec<crate::datadogV2::model::OAuthClientRegistrationResponseType>> = None;
                 let mut scope: Option<String> = None;
                 let mut token_endpoint_auth_method: Option<String> = None;
                 let mut tos_uri: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "client_name" => {
-                            client_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            client_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "client_uri" => {
                             if v.is_null() {
                                 continue;
                             }
                             client_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "grant_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            grant_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            grant_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "jwks_uri" => {
                             if v.is_null() {
                                 continue;
                             }
                             jwks_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "logo_uri" => {
                             if v.is_null() {
                                 continue;
                             }
                             logo_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "policy_uri" => {
                             if v.is_null() {
                                 continue;
                             }
                             policy_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "redirect_uris" => {
-                            redirect_uris =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            redirect_uris = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "response_types" => {
                             if v.is_null() {
                                 continue;
                             }
-                            response_types =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            response_types = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "token_endpoint_auth_method" => {
                             if v.is_null() {
                                 continue;
                             }
-                            token_endpoint_auth_method =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            token_endpoint_auth_method = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "tos_uri" => {
                             if v.is_null() {
                                 continue;
                             }
                             tos_uri = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let client_name =
-                    client_name.ok_or_else(|| M::Error::missing_field("client_name"))?;
-                let redirect_uris =
-                    redirect_uris.ok_or_else(|| M::Error::missing_field("redirect_uris"))?;
+                let client_name = client_name.ok_or_else(|| M::Error::missing_field("client_name"))?;
+                let redirect_uris = redirect_uris.ok_or_else(|| M::Error::missing_field("redirect_uris"))?;
 
                 let content = OAuthClientRegistrationRequest {
                     client_name,

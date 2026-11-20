@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Local file metadata for create requests using the upload ID.
 #[non_exhaustive]
@@ -16,7 +16,7 @@ pub struct CreateTableRequestDataAttributesFileMetadataLocalFile {
     pub upload_id: String,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl CreateTableRequestDataAttributesFileMetadataLocalFile {
@@ -26,7 +26,10 @@ impl CreateTableRequestDataAttributesFileMetadataLocalFile {
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for CreateTableRequestDataAttributesFileMetadataLocalFile {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -52,12 +55,10 @@ impl<'de> Deserialize<'de> for CreateTableRequestDataAttributesFileMetadataLocal
                     match k.as_str() {
                         "upload_id" => {
                             upload_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let upload_id = upload_id.ok_or_else(|| M::Error::missing_field("upload_id"))?;

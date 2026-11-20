@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A bucket values.
 #[non_exhaustive]
@@ -15,19 +15,17 @@ pub struct SpansAggregateBucketAttributes {
     #[serde(rename = "by")]
     pub by: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Map of compute ID (`c0`, `c1`, ... in request order) to the computed value, or to a list of
-    /// `{time, value}` points for a `timeseries` compute.
+/// `{time, value}` points for a `timeseries` compute.
     #[serde(rename = "compute")]
     pub compute: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Not returned by this endpoint. Read the values from `compute` instead.
     #[serde(rename = "computes")]
-    pub computes: Option<
-        std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>,
-    >,
+    pub computes: Option<std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SpansAggregateBucketAttributes {
@@ -40,36 +38,28 @@ impl SpansAggregateBucketAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn by(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.by = Some(value);
         self
     }
-
+    
     pub fn compute(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.compute = Some(value);
         self
     }
-
-    pub fn computes(
-        mut self,
-        value: std::collections::BTreeMap<
-            String,
-            crate::datadogV2::model::SpansAggregateBucketValue,
-        >,
-    ) -> Self {
+    
+    pub fn computes(mut self, value: std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>) -> Self {
         self.computes = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SpansAggregateBucketAttributes {
     fn default() -> Self {
@@ -95,18 +85,9 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketAttributes {
                 M: MapAccess<'a>,
             {
                 let mut by: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
-                let mut compute: Option<std::collections::BTreeMap<String, serde_json::Value>> =
-                    None;
-                let mut computes: Option<
-                    std::collections::BTreeMap<
-                        String,
-                        crate::datadogV2::model::SpansAggregateBucketValue,
-                    >,
-                > = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut compute: Option<std::collections::BTreeMap<String, serde_json::Value>> = None;
+                let mut computes: Option<std::collections::BTreeMap<String, crate::datadogV2::model::SpansAggregateBucketValue>> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -116,24 +97,24 @@ impl<'de> Deserialize<'de> for SpansAggregateBucketAttributes {
                                 continue;
                             }
                             by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "compute" => {
                             if v.is_null() {
                                 continue;
                             }
                             compute = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "computes" => {
                             if v.is_null() {
                                 continue;
                             }
                             computes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

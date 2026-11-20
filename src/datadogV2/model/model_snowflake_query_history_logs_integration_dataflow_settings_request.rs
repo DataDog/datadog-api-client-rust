@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the query history logs dataflow. Only the fields provided are changed.
 #[non_exhaustive]
@@ -19,7 +19,7 @@ pub struct SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequest {
     pub query_history_logs_interval_min: Option<i64>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequest {
@@ -30,17 +30,19 @@ impl SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn join_query_history_with_access_history_enabled(mut self, value: bool) -> Self {
         self.join_query_history_with_access_history_enabled = Some(value);
         self
     }
-
+    
     pub fn query_history_logs_interval_min(mut self, value: i64) -> Self {
         self.query_history_logs_interval_min = Some(value);
         self
     }
+    
 }
+
 
 impl Default for SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -75,21 +77,17 @@ impl<'de> Deserialize<'de> for SnowflakeQueryHistoryLogsIntegrationDataflowSetti
                             if v.is_null() {
                                 continue;
                             }
-                            join_query_history_with_access_history_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            join_query_history_with_access_history_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "query_history_logs_interval_min" => {
                             if v.is_null() {
                                 continue;
                             }
-                            query_history_logs_interval_min =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            query_history_logs_interval_min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -103,7 +101,6 @@ impl<'de> Deserialize<'de> for SnowflakeQueryHistoryLogsIntegrationDataflowSetti
             }
         }
 
-        deserializer
-            .deserialize_any(SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequestVisitor)
+        deserializer.deserialize_any(SnowflakeQueryHistoryLogsIntegrationDataflowSettingsRequestVisitor)
     }
 }

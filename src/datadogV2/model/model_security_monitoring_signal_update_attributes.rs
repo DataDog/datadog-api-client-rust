@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Attributes for updating the triage state or assignee of a security signal.
 #[non_exhaustive]
@@ -30,7 +30,7 @@ pub struct SecurityMonitoringSignalUpdateAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SecurityMonitoringSignalUpdateAttributes {
@@ -45,46 +45,38 @@ impl SecurityMonitoringSignalUpdateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn archive_comment(mut self, value: String) -> Self {
         self.archive_comment = Some(value);
         self
     }
-
-    pub fn archive_reason(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
-    ) -> Self {
+    
+    pub fn archive_reason(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason) -> Self {
         self.archive_reason = Some(value);
         self
     }
-
-    pub fn assignee(
-        mut self,
-        value: crate::datadogV2::model::SecurityMonitoringTriageUser,
-    ) -> Self {
+    
+    pub fn assignee(mut self, value: crate::datadogV2::model::SecurityMonitoringTriageUser) -> Self {
         self.assignee = Some(value);
         self
     }
-
+    
     pub fn state(mut self, value: crate::datadogV2::model::SecurityMonitoringSignalState) -> Self {
         self.state = Some(value);
         self
     }
-
+    
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SecurityMonitoringSignalUpdateAttributes {
     fn default() -> Self {
@@ -110,18 +102,11 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut archive_comment: Option<String> = None;
-                let mut archive_reason: Option<
-                    crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
-                > = None;
-                let mut assignee: Option<crate::datadogV2::model::SecurityMonitoringTriageUser> =
-                    None;
-                let mut state: Option<crate::datadogV2::model::SecurityMonitoringSignalState> =
-                    None;
+                let mut archive_reason: Option<crate::datadogV2::model::SecurityMonitoringSignalArchiveReason> = None;
+                let mut assignee: Option<crate::datadogV2::model::SecurityMonitoringTriageUser> = None;
+                let mut state: Option<crate::datadogV2::model::SecurityMonitoringSignalState> = None;
                 let mut version: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -130,15 +115,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalUpdateAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            archive_comment =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archive_comment = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "archive_reason" => {
                             if v.is_null() {
                                 continue;
                             }
-                            archive_reason =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            archive_reason = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _archive_reason) = archive_reason {
                                 match _archive_reason {
                                     crate::datadogV2::model::SecurityMonitoringSignalArchiveReason::UnparsedObject(_archive_reason) => {
@@ -147,13 +130,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "assignee" => {
                             if v.is_null() {
                                 continue;
                             }
                             assignee = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "state" => {
                             if v.is_null() {
                                 continue;
@@ -167,18 +150,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalUpdateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "version" => {
                             if v.is_null() {
                                 continue;
                             }
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

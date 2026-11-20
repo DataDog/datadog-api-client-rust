@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The description of a notebook cell create request.
 #[non_exhaustive]
@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct NotebookCellCreateRequest {
     /// The attributes of a notebook cell in create cell request. Valid cell types are `markdown`, `timeseries`, `toplist`, `heatmap`, `distribution`,
-    /// `log_stream`. [More information on each graph visualization type.](<https://docs.datadoghq.com/dashboards/widgets/>)
+/// `log_stream`. [More information on each graph visualization type.](<https://docs.datadoghq.com/dashboards/widgets/>)
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV1::model::NotebookCellCreateRequestAttributes,
     /// Type of the Notebook Cell resource.
@@ -20,21 +20,21 @@ pub struct NotebookCellCreateRequest {
     pub type_: crate::datadogV1::model::NotebookCellResourceType,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl NotebookCellCreateRequest {
-    pub fn new(
-        attributes: crate::datadogV1::model::NotebookCellCreateRequestAttributes,
-        type_: crate::datadogV1::model::NotebookCellResourceType,
-    ) -> NotebookCellCreateRequest {
+    pub fn new(attributes: crate::datadogV1::model::NotebookCellCreateRequestAttributes, type_: crate::datadogV1::model::NotebookCellResourceType) -> NotebookCellCreateRequest {
         NotebookCellCreateRequest {
             attributes,
             type_,
             _unparsed: false,
         }
     }
+    
 }
+
+
 
 impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -53,9 +53,7 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<
-                    crate::datadogV1::model::NotebookCellCreateRequestAttributes,
-                > = None;
+                let mut attributes: Option<crate::datadogV1::model::NotebookCellCreateRequestAttributes> = None;
                 let mut type_: Option<crate::datadogV1::model::NotebookCellResourceType> = None;
                 let mut _unparsed = false;
 
@@ -71,7 +69,7 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
@@ -82,12 +80,10 @@ impl<'de> Deserialize<'de> for NotebookCellCreateRequest {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;

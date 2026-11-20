@@ -2,19 +2,20 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum AiGatewaySupportedOperation {
-    ANTHROPIC_MESSAGES,
-    ANTHROPIC_COUNT_TOKENS,
-    OPENAI_CHAT_COMPLETIONS,
-    OPENAI_RESPONSES,
-    OPENAI_WEB_SEARCH,
-    OPENAI_EMBEDDINGS,
-    GEMINI_GENERATE_CONTENT,
-    GEMINI_RAW_PREDICTIONS,
+	ANTHROPIC_MESSAGES,
+	ANTHROPIC_COUNT_TOKENS,
+	OPENAI_CHAT_COMPLETIONS,
+	OPENAI_RESPONSES,
+	OPENAI_WEB_SEARCH,
+	OPENAI_EMBEDDINGS,
+	GEMINI_GENERATE_CONTENT,
+	GEMINI_RAW_PREDICTIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -52,18 +53,8 @@ impl<'de> Deserialize<'de> for AiGatewaySupportedOperation {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "ANTHROPIC_MESSAGES" => Self::ANTHROPIC_MESSAGES,
-            "ANTHROPIC_COUNT_TOKENS" => Self::ANTHROPIC_COUNT_TOKENS,
-            "OPENAI_CHAT_COMPLETIONS" => Self::OPENAI_CHAT_COMPLETIONS,
-            "OPENAI_RESPONSES" => Self::OPENAI_RESPONSES,
-            "OPENAI_WEB_SEARCH" => Self::OPENAI_WEB_SEARCH,
-            "OPENAI_EMBEDDINGS" => Self::OPENAI_EMBEDDINGS,
-            "GEMINI_GENERATE_CONTENT" => Self::GEMINI_GENERATE_CONTENT,
-            "GEMINI_RAW_PREDICTIONS" => Self::GEMINI_RAW_PREDICTIONS,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"ANTHROPIC_MESSAGES" => Self::ANTHROPIC_MESSAGES,"ANTHROPIC_COUNT_TOKENS" => Self::ANTHROPIC_COUNT_TOKENS,"OPENAI_CHAT_COMPLETIONS" => Self::OPENAI_CHAT_COMPLETIONS,"OPENAI_RESPONSES" => Self::OPENAI_RESPONSES,"OPENAI_WEB_SEARCH" => Self::OPENAI_WEB_SEARCH,"OPENAI_EMBEDDINGS" => Self::OPENAI_EMBEDDINGS,"GEMINI_GENERATE_CONTENT" => Self::GEMINI_GENERATE_CONTENT,"GEMINI_RAW_PREDICTIONS" => Self::GEMINI_RAW_PREDICTIONS,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

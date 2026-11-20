@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Settings of the event table dataflow. Each record type is collected independently so that you can control ingestion costs, and every record type is ingested into Datadog as logs tagged with its `record_type`. Only the fields provided are changed.
 #[non_exhaustive]
@@ -28,7 +28,7 @@ pub struct SnowflakeEventTableLogsIntegrationDataflowSettingsRequest {
     pub event_table_spans_enabled: Option<bool>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SnowflakeEventTableLogsIntegrationDataflowSettingsRequest {
@@ -42,32 +42,34 @@ impl SnowflakeEventTableLogsIntegrationDataflowSettingsRequest {
             _unparsed: false,
         }
     }
-
+    
     pub fn event_table_events_enabled(mut self, value: bool) -> Self {
         self.event_table_events_enabled = Some(value);
         self
     }
-
+    
     pub fn event_table_logs_enabled(mut self, value: bool) -> Self {
         self.event_table_logs_enabled = Some(value);
         self
     }
-
+    
     pub fn event_table_logs_interval_min(mut self, value: i64) -> Self {
         self.event_table_logs_interval_min = Some(value);
         self
     }
-
+    
     pub fn event_table_span_events_enabled(mut self, value: bool) -> Self {
         self.event_table_span_events_enabled = Some(value);
         self
     }
-
+    
     pub fn event_table_spans_enabled(mut self, value: bool) -> Self {
         self.event_table_spans_enabled = Some(value);
         self
     }
+    
 }
+
 
 impl Default for SnowflakeEventTableLogsIntegrationDataflowSettingsRequest {
     fn default() -> Self {
@@ -105,42 +107,35 @@ impl<'de> Deserialize<'de> for SnowflakeEventTableLogsIntegrationDataflowSetting
                             if v.is_null() {
                                 continue;
                             }
-                            event_table_events_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_table_events_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_table_logs_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_table_logs_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_table_logs_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_table_logs_interval_min" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_table_logs_interval_min =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_table_logs_interval_min = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_table_span_events_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_table_span_events_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_table_span_events_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "event_table_spans_enabled" => {
                             if v.is_null() {
                                 continue;
                             }
-                            event_table_spans_enabled =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            event_table_spans_enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         &_ => {
-                            return Err(serde::de::Error::custom(
-                                "Additional properties not allowed",
-                            ));
-                        }
+                            return Err(serde::de::Error::custom("Additional properties not allowed"));
+                        },
                     }
                 }
 
@@ -157,7 +152,6 @@ impl<'de> Deserialize<'de> for SnowflakeEventTableLogsIntegrationDataflowSetting
             }
         }
 
-        deserializer
-            .deserialize_any(SnowflakeEventTableLogsIntegrationDataflowSettingsRequestVisitor)
+        deserializer.deserialize_any(SnowflakeEventTableLogsIntegrationDataflowSettingsRequestVisitor)
     }
 }

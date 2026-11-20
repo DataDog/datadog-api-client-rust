@@ -2,20 +2,21 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SearchIssuesIncludeQueryParameterItem {
-    ISSUE,
-    ISSUE_ASSIGNEE,
-    ISSUE_BITS_INVESTIGATION,
-    ISSUE_CASE,
-    ISSUE_IMPACTED_SESSIONS,
-    ISSUE_IMPACTED_USERS,
-    ISSUE_PULL_REQUESTS,
-    ISSUE_TEAM_OWNERS,
-    ISSUE_WATCHES,
+	ISSUE,
+	ISSUE_ASSIGNEE,
+	ISSUE_BITS_INVESTIGATION,
+	ISSUE_CASE,
+	ISSUE_IMPACTED_SESSIONS,
+	ISSUE_IMPACTED_USERS,
+	ISSUE_PULL_REQUESTS,
+	ISSUE_TEAM_OWNERS,
+	ISSUE_WATCHES,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -54,19 +55,8 @@ impl<'de> Deserialize<'de> for SearchIssuesIncludeQueryParameterItem {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "issue" => Self::ISSUE,
-            "issue.assignee" => Self::ISSUE_ASSIGNEE,
-            "issue.bits_investigation" => Self::ISSUE_BITS_INVESTIGATION,
-            "issue.case" => Self::ISSUE_CASE,
-            "issue.impacted_sessions" => Self::ISSUE_IMPACTED_SESSIONS,
-            "issue.impacted_users" => Self::ISSUE_IMPACTED_USERS,
-            "issue.pull_requests" => Self::ISSUE_PULL_REQUESTS,
-            "issue.team_owners" => Self::ISSUE_TEAM_OWNERS,
-            "issue.watches" => Self::ISSUE_WATCHES,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"issue" => Self::ISSUE,"issue.assignee" => Self::ISSUE_ASSIGNEE,"issue.bits_investigation" => Self::ISSUE_BITS_INVESTIGATION,"issue.case" => Self::ISSUE_CASE,"issue.impacted_sessions" => Self::ISSUE_IMPACTED_SESSIONS,"issue.impacted_users" => Self::ISSUE_IMPACTED_USERS,"issue.pull_requests" => Self::ISSUE_PULL_REQUESTS,"issue.team_owners" => Self::ISSUE_TEAM_OWNERS,"issue.watches" => Self::ISSUE_WATCHES,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

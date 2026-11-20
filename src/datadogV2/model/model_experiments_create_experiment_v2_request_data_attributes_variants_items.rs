@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Variant selected for an experiment, with its identity and traffic allocation.
 #[non_exhaustive]
@@ -33,15 +33,11 @@ pub struct ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
-    pub fn new(
-        is_control: bool,
-        key: String,
-        weight: f64,
-    ) -> ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
+    pub fn new(is_control: bool, key: String, weight: f64) -> ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
         ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
             feature_flag_variant_id: None,
             is_active: None,
@@ -53,30 +49,29 @@ impl ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
             _unparsed: false,
         }
     }
-
+    
     pub fn feature_flag_variant_id(mut self, value: uuid::Uuid) -> Self {
         self.feature_flag_variant_id = Some(value);
         self
     }
-
+    
     pub fn is_active(mut self, value: bool) -> Self {
         self.is_active = Some(value);
         self
     }
-
+    
     pub fn name(mut self, value: Option<String>) -> Self {
         self.name = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttributesVariantsItems {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -101,10 +96,7 @@ impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttribute
                 let mut key: Option<String> = None;
                 let mut name: Option<Option<String>> = None;
                 let mut weight: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -113,32 +105,31 @@ impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttribute
                             if v.is_null() {
                                 continue;
                             }
-                            feature_flag_variant_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            feature_flag_variant_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "is_active" => {
                             if v.is_null() {
                                 continue;
                             }
                             is_active = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "is_control" => {
                             is_control = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "key" => {
                             key = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "weight" => {
                             weight = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let is_control = is_control.ok_or_else(|| M::Error::missing_field("is_control"))?;
@@ -160,7 +151,6 @@ impl<'de> Deserialize<'de> for ExperimentsCreateExperimentV2RequestDataAttribute
             }
         }
 
-        deserializer
-            .deserialize_any(ExperimentsCreateExperimentV2RequestDataAttributesVariantsItemsVisitor)
+        deserializer.deserialize_any(ExperimentsCreateExperimentV2RequestDataAttributesVariantsItemsVisitor)
     }
 }

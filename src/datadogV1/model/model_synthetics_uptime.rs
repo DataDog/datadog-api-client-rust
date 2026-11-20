@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object containing the uptime information.
 #[non_exhaustive]
@@ -18,10 +18,10 @@ pub struct SyntheticsUptime {
     #[serde(rename = "group")]
     pub group: Option<String>,
     /// The state transition history for the monitor, represented as an array of
-    /// pairs. Each pair is an array where the first element is the transition timestamp
-    /// in Unix epoch format (integer) and the second element is the state (integer).
-    /// For the state, an integer value of `0` indicates uptime, `1` indicates downtime,
-    /// and `2` indicates no data.
+/// pairs. Each pair is an array where the first element is the transition timestamp
+/// in Unix epoch format (integer) and the second element is the state (integer).
+/// For the state, an integer value of `0` indicates uptime, `1` indicates downtime,
+/// and `2` indicates no data.
     #[serde(rename = "history")]
     pub history: Option<Vec<Vec<f64>>>,
     /// The number of decimal places to which the SLI value is accurate for the given from-to timestamps.
@@ -34,7 +34,7 @@ pub struct SyntheticsUptime {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SyntheticsUptime {
@@ -49,43 +49,38 @@ impl SyntheticsUptime {
             _unparsed: false,
         }
     }
-
-    pub fn errors(
-        mut self,
-        value: Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>,
-    ) -> Self {
+    
+    pub fn errors(mut self, value: Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>) -> Self {
         self.errors = Some(value);
         self
     }
-
+    
     pub fn group(mut self, value: String) -> Self {
         self.group = Some(value);
         self
     }
-
+    
     pub fn history(mut self, value: Vec<Vec<f64>>) -> Self {
         self.history = Some(value);
         self
     }
-
+    
     pub fn span_precision(mut self, value: f64) -> Self {
         self.span_precision = Some(value);
         self
     }
-
+    
     pub fn uptime(mut self, value: f64) -> Self {
         self.uptime = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for SyntheticsUptime {
     fn default() -> Self {
@@ -110,54 +105,48 @@ impl<'de> Deserialize<'de> for SyntheticsUptime {
             where
                 M: MapAccess<'a>,
             {
-                let mut errors: Option<
-                    Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>,
-                > = None;
+                let mut errors: Option<Option<Vec<crate::datadogV1::model::SLOHistoryResponseErrorWithType>>> = None;
                 let mut group: Option<String> = None;
                 let mut history: Option<Vec<Vec<f64>>> = None;
                 let mut span_precision: Option<f64> = None;
                 let mut uptime: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "errors" => {
                             errors = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "group" => {
                             if v.is_null() {
                                 continue;
                             }
                             group = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "history" => {
                             if v.is_null() {
                                 continue;
                             }
                             history = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "span_precision" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
-                            span_precision =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            span_precision = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "uptime" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             uptime = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

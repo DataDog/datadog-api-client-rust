@@ -1,15 +1,12 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
+use serde::{Serialize, Deserialize};
 use crate::datadog;
-use flate2::{
-    write::{GzEncoder, ZlibEncoder},
-    Compression,
-};
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
-use serde::{Deserialize, Serialize};
+use log::warn;
 use std::io::Write;
+use flate2::{write::{GzEncoder, ZlibEncoder}, Compression};
 
 /// ListOrgGroupMembershipsOptionalParams is a struct for passing parameters to the method [`OrgGroupsAPI::list_org_group_memberships`]
 #[non_exhaustive]
@@ -78,10 +75,7 @@ impl ListOrgGroupPoliciesOptionalParams {
         self
     }
     /// Filter policies by policy type. Supported values are `org_config` and `role`.
-    pub fn filter_policy_type(
-        mut self,
-        value: crate::datadogV2::model::OrgGroupPolicyFilterPolicyTypeValue,
-    ) -> Self {
+    pub fn filter_policy_type(mut self, value: crate::datadogV2::model::OrgGroupPolicyFilterPolicyTypeValue) -> Self {
         self.filter_policy_type = Some(value);
         self
     }
@@ -133,10 +127,7 @@ impl ListOrgGroupPolicyOverridesOptionalParams {
         self
     }
     /// Field to sort overrides by. Supported values: `id`, `org_uuid`, `-id`, `-org_uuid`. Defaults to `id`.
-    pub fn sort(
-        mut self,
-        value: crate::datadogV2::model::OrgGroupPolicyOverrideSortOption,
-    ) -> Self {
+    pub fn sort(mut self, value: crate::datadogV2::model::OrgGroupPolicyOverrideSortOption) -> Self {
         self.sort = Some(value);
         self
     }
@@ -172,6 +163,9 @@ impl ListOrgGroupsOptionalParams {
     }
 }
 
+
+
+
 /// BulkUpdateOrgGroupMembershipsError is a struct for typed errors of method [`OrgGroupsAPI::bulk_update_org_group_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -180,6 +174,7 @@ pub enum BulkUpdateOrgGroupMembershipsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateOrgGroupError is a struct for typed errors of method [`OrgGroupsAPI::create_org_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -190,6 +185,7 @@ pub enum CreateOrgGroupError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOrgGroupMembershipsError is a struct for typed errors of method [`OrgGroupsAPI::create_org_group_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -198,6 +194,7 @@ pub enum CreateOrgGroupMembershipsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// CreateOrgGroupPolicyError is a struct for typed errors of method [`OrgGroupsAPI::create_org_group_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -208,6 +205,7 @@ pub enum CreateOrgGroupPolicyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// CreateOrgGroupPolicyOverrideError is a struct for typed errors of method [`OrgGroupsAPI::create_org_group_policy_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -216,6 +214,7 @@ pub enum CreateOrgGroupPolicyOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOrgGroupError is a struct for typed errors of method [`OrgGroupsAPI::delete_org_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -226,6 +225,7 @@ pub enum DeleteOrgGroupError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOrgGroupMembershipError is a struct for typed errors of method [`OrgGroupsAPI::delete_org_group_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -234,6 +234,7 @@ pub enum DeleteOrgGroupMembershipError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOrgGroupMembershipsError is a struct for typed errors of method [`OrgGroupsAPI::delete_org_group_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -244,6 +245,7 @@ pub enum DeleteOrgGroupMembershipsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// DeleteOrgGroupPolicyError is a struct for typed errors of method [`OrgGroupsAPI::delete_org_group_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -252,6 +254,7 @@ pub enum DeleteOrgGroupPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// DeleteOrgGroupPolicyOverrideError is a struct for typed errors of method [`OrgGroupsAPI::delete_org_group_policy_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -262,6 +265,7 @@ pub enum DeleteOrgGroupPolicyOverrideError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOrgGroupError is a struct for typed errors of method [`OrgGroupsAPI::get_org_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -270,6 +274,7 @@ pub enum GetOrgGroupError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOrgGroupMembershipError is a struct for typed errors of method [`OrgGroupsAPI::get_org_group_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -280,6 +285,7 @@ pub enum GetOrgGroupMembershipError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// GetOrgGroupPolicyError is a struct for typed errors of method [`OrgGroupsAPI::get_org_group_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -288,6 +294,7 @@ pub enum GetOrgGroupPolicyError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// GetOrgGroupPolicyOverrideError is a struct for typed errors of method [`OrgGroupsAPI::get_org_group_policy_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -298,6 +305,7 @@ pub enum GetOrgGroupPolicyOverrideError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOrgGroupMembershipsError is a struct for typed errors of method [`OrgGroupsAPI::list_org_group_memberships`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -306,6 +314,7 @@ pub enum ListOrgGroupMembershipsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOrgGroupPoliciesError is a struct for typed errors of method [`OrgGroupsAPI::list_org_group_policies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -316,6 +325,7 @@ pub enum ListOrgGroupPoliciesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOrgGroupPolicyConfigsError is a struct for typed errors of method [`OrgGroupsAPI::list_org_group_policy_configs`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -324,6 +334,7 @@ pub enum ListOrgGroupPolicyConfigsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOrgGroupPolicyOverridesError is a struct for typed errors of method [`OrgGroupsAPI::list_org_group_policy_overrides`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -334,6 +345,7 @@ pub enum ListOrgGroupPolicyOverridesError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// ListOrgGroupPolicySuggestionsError is a struct for typed errors of method [`OrgGroupsAPI::list_org_group_policy_suggestions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -342,6 +354,7 @@ pub enum ListOrgGroupPolicySuggestionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// ListOrgGroupsError is a struct for typed errors of method [`OrgGroupsAPI::list_org_groups`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -352,6 +365,7 @@ pub enum ListOrgGroupsError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOrgGroupError is a struct for typed errors of method [`OrgGroupsAPI::update_org_group`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -360,6 +374,7 @@ pub enum UpdateOrgGroupError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// UpdateOrgGroupMembershipError is a struct for typed errors of method [`OrgGroupsAPI::update_org_group_membership`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -370,6 +385,7 @@ pub enum UpdateOrgGroupMembershipError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOrgGroupPolicyError is a struct for typed errors of method [`OrgGroupsAPI::update_org_group_policy`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -379,6 +395,7 @@ pub enum UpdateOrgGroupPolicyError {
     UnknownValue(serde_json::Value),
 }
 
+
 /// UpdateOrgGroupPolicyOverrideError is a struct for typed errors of method [`OrgGroupsAPI::update_org_group_policy_override`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -387,6 +404,7 @@ pub enum UpdateOrgGroupPolicyOverrideError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
+
 
 /// Manage organization groups, memberships, policies, policy overrides, and policy configurations.
 #[derive(Debug, Clone)]
@@ -410,7 +428,8 @@ impl OrgGroupsAPI {
             let builder = config.apply_headers(reqwest::Client::builder());
             #[cfg(not(target_arch = "wasm32"))]
             let builder = if let Some(proxy_url) = &config.proxy_url {
-                builder.proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
+                builder
+                    .proxy(reqwest::Proxy::all(proxy_url).expect("Failed to parse proxy URL"))
             } else {
                 builder
             };
@@ -455,46 +474,29 @@ impl OrgGroupsAPI {
         Self { config, client }
     }
 
-    pub fn with_client_and_config(
-        config: datadog::Configuration,
-        client: reqwest_middleware::ClientWithMiddleware,
-    ) -> Self {
-        Self { config, client }
+    pub fn with_client_and_config(config: datadog::Configuration, client: reqwest_middleware::ClientWithMiddleware) -> Self {
+        Self {config, client}
     }
 
+    
+    
     /// Move a batch of organizations from one organization group to another. This is an atomic operation. Each request must include between 1 and 100 organizations. Each organization must be identified by a unique `org_uuid` and `org_site` pair, and must be in the same site as the requesting organization.
-    pub async fn bulk_update_org_group_memberships(
-        &self,
-        body: crate::datadogV2::model::OrgGroupMembershipBulkUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupMembershipListResponse,
-        datadog::Error<BulkUpdateOrgGroupMembershipsError>,
-    > {
-        match self
-            .bulk_update_org_group_memberships_with_http_info(body)
-            .await
-        {
+    pub async fn bulk_update_org_group_memberships(&self, body: crate::datadogV2::model::OrgGroupMembershipBulkUpdateRequest) -> Result<crate::datadogV2::model::OrgGroupMembershipListResponse, datadog::Error<BulkUpdateOrgGroupMembershipsError>> {
+        match self.bulk_update_org_group_memberships_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Move a batch of organizations from one organization group to another. This is an atomic operation. Each request must include between 1 and 100 organizations. Each organization must be identified by a unique `org_uuid` and `org_site` pair, and must be in the same site as the requesting organization.
-    pub async fn bulk_update_org_group_memberships_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OrgGroupMembershipBulkUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipListResponse>,
-        datadog::Error<BulkUpdateOrgGroupMembershipsError>,
-    > {
+    pub async fn bulk_update_org_group_memberships_with_http_info(&self, body: crate::datadogV2::model::OrgGroupMembershipBulkUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipListResponse>, datadog::Error<BulkUpdateOrgGroupMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.bulk_update_org_group_memberships";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -506,19 +508,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/bulk",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -531,23 +537,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -555,7 +554,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -565,7 +567,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -587,7 +592,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -604,58 +609,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<BulkUpdateOrgGroupMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<BulkUpdateOrgGroupMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new organization group.
-    pub async fn create_org_group(
-        &self,
-        body: crate::datadogV2::model::OrgGroupCreateRequest,
-    ) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<CreateOrgGroupError>>
-    {
+    pub async fn create_org_group(&self, body: crate::datadogV2::model::OrgGroupCreateRequest) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<CreateOrgGroupError>> {
         match self.create_org_group_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new organization group.
-    pub async fn create_org_group_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OrgGroupCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>,
-        datadog::Error<CreateOrgGroupError>,
-    > {
+    pub async fn create_org_group_with_http_info(&self, body: crate::datadogV2::model::OrgGroupCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>, datadog::Error<CreateOrgGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_org_group";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -667,19 +652,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -692,23 +681,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -716,7 +698,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -726,7 +711,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -748,7 +736,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -765,45 +753,32 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOrgGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOrgGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Add a batch of organizations to an existing organization group. This operation is not supported for organization groups with `group_type` set to `config_management`. This is an atomic operation: either all organizations are added or none are. Each request must include between 1 and 100 organizations. Each organization must be identified by a unique `org_uuid` and `org_site` pair, and must be in the same site as the requesting organization. The requesting organization must own the organization group.
-    pub async fn create_org_group_memberships(
-        &self,
-        body: crate::datadogV2::model::OrgGroupMembershipCreateRequest,
-    ) -> Result<(), datadog::Error<CreateOrgGroupMembershipsError>> {
+    pub async fn create_org_group_memberships(&self, body: crate::datadogV2::model::OrgGroupMembershipCreateRequest) -> Result<(), datadog::Error<CreateOrgGroupMembershipsError>> {
         match self.create_org_group_memberships_with_http_info(body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Add a batch of organizations to an existing organization group. This operation is not supported for organization groups with `group_type` set to `config_management`. This is an atomic operation: either all organizations are added or none are. Each request must include between 1 and 100 organizations. Each organization must be identified by a unique `org_uuid` and `org_site` pair, and must be in the same site as the requesting organization. The requesting organization must own the organization group.
-    pub async fn create_org_group_memberships_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OrgGroupMembershipCreateRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateOrgGroupMembershipsError>> {
+    pub async fn create_org_group_memberships_with_http_info(&self, body: crate::datadogV2::model::OrgGroupMembershipCreateRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<CreateOrgGroupMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_org_group_memberships";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -815,19 +790,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -840,23 +819,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -864,7 +836,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -874,7 +849,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -896,7 +874,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -919,47 +897,29 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<CreateOrgGroupMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOrgGroupMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new policy for an organization group.
-    pub async fn create_org_group_policy(
-        &self,
-        body: crate::datadogV2::model::OrgGroupPolicyCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyResponse,
-        datadog::Error<CreateOrgGroupPolicyError>,
-    > {
+    pub async fn create_org_group_policy(&self, body: crate::datadogV2::model::OrgGroupPolicyCreateRequest) -> Result<crate::datadogV2::model::OrgGroupPolicyResponse, datadog::Error<CreateOrgGroupPolicyError>> {
         match self.create_org_group_policy_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new policy for an organization group.
-    pub async fn create_org_group_policy_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OrgGroupPolicyCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>,
-        datadog::Error<CreateOrgGroupPolicyError>,
-    > {
+    pub async fn create_org_group_policy_with_http_info(&self, body: crate::datadogV2::model::OrgGroupPolicyCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>, datadog::Error<CreateOrgGroupPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_org_group_policy";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -971,19 +931,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -996,23 +960,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1020,7 +977,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1030,7 +990,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1052,7 +1015,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1069,63 +1032,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOrgGroupPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOrgGroupPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Create a new policy override for an organization within an org group.
-    pub async fn create_org_group_policy_override(
-        &self,
-        body: crate::datadogV2::model::OrgGroupPolicyOverrideCreateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyOverrideResponse,
-        datadog::Error<CreateOrgGroupPolicyOverrideError>,
-    > {
-        match self
-            .create_org_group_policy_override_with_http_info(body)
-            .await
-        {
+    pub async fn create_org_group_policy_override(&self, body: crate::datadogV2::model::OrgGroupPolicyOverrideCreateRequest) -> Result<crate::datadogV2::model::OrgGroupPolicyOverrideResponse, datadog::Error<CreateOrgGroupPolicyOverrideError>> {
+        match self.create_org_group_policy_override_with_http_info(body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Create a new policy override for an organization within an org group.
-    pub async fn create_org_group_policy_override_with_http_info(
-        &self,
-        body: crate::datadogV2::model::OrgGroupPolicyOverrideCreateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>,
-        datadog::Error<CreateOrgGroupPolicyOverrideError>,
-    > {
+    pub async fn create_org_group_policy_override_with_http_info(&self, body: crate::datadogV2::model::OrgGroupPolicyOverrideCreateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>, datadog::Error<CreateOrgGroupPolicyOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_org_group_policy_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1137,19 +1075,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1162,23 +1104,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1186,7 +1121,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1196,7 +1134,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1218,7 +1159,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1235,46 +1176,32 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateOrgGroupPolicyOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<CreateOrgGroupPolicyOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an organization group by its ID.
-    pub async fn delete_org_group(
-        &self,
-        org_group_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOrgGroupError>> {
+    pub async fn delete_org_group(&self, org_group_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOrgGroupError>> {
         match self.delete_org_group_with_http_info(org_group_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an organization group by its ID.
-    pub async fn delete_org_group_with_http_info(
-        &self,
-        org_group_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupError>> {
+    pub async fn delete_org_group_with_http_info(&self, org_group_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_group";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1286,19 +1213,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_id = datadog::urlencode(org_group_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_id=
+            datadog::urlencode(org_group_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1311,22 +1243,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1344,41 +1270,23 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Remove an organization from an organization group by deleting its membership. This operation is not supported for organization groups with `group_type` set to `config_management`. The organization group that the membership belongs to must be specified using `filter[org_group_id]`, and the requesting organization must own that organization group. Returns `404` if the membership does not exist, was already removed, or does not belong to the organization group.
-    pub async fn delete_org_group_membership(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-        filter_org_group_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOrgGroupMembershipError>> {
-        match self
-            .delete_org_group_membership_with_http_info(
-                org_group_membership_id,
-                filter_org_group_id,
-            )
-            .await
-        {
+    pub async fn delete_org_group_membership(&self, org_group_membership_id: uuid::Uuid, filter_org_group_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOrgGroupMembershipError>> {
+        match self.delete_org_group_membership_with_http_info(org_group_membership_id, filter_org_group_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Remove an organization from an organization group by deleting its membership. This operation is not supported for organization groups with `group_type` set to `config_management`. The organization group that the membership belongs to must be specified using `filter[org_group_id]`, and the requesting organization must own that organization group. Returns `404` if the membership does not exist, was already removed, or does not belong to the organization group.
-    pub async fn delete_org_group_membership_with_http_info(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-        filter_org_group_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupMembershipError>> {
+    pub async fn delete_org_group_membership_with_http_info(&self, org_group_membership_id: uuid::Uuid, filter_org_group_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_group_membership";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1390,22 +1298,25 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/{org_group_membership_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_membership_id = datadog::urlencode(org_group_membership_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_membership_id=
+            datadog::urlencode(org_group_membership_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1418,22 +1329,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1451,38 +1356,23 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgGroupMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgGroupMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete a batch of memberships from an organization group. This operation is not supported for organization groups with `group_type` set to `config_management`. The memberships to delete are provided as membership resource identifiers, and the organization group they belong to must be specified using `filter[org_group_id]`. Each request must include between 1 and 100 unique membership IDs, and the requesting organization must own the organization group. The request does not fail if a membership ID refers to a membership that has already been deleted, does not exist, or does not belong to the organization group.
-    pub async fn delete_org_group_memberships(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupMembershipBulkDeleteRequest,
-    ) -> Result<(), datadog::Error<DeleteOrgGroupMembershipsError>> {
-        match self
-            .delete_org_group_memberships_with_http_info(filter_org_group_id, body)
-            .await
-        {
+    pub async fn delete_org_group_memberships(&self, filter_org_group_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupMembershipBulkDeleteRequest) -> Result<(), datadog::Error<DeleteOrgGroupMembershipsError>> {
+        match self.delete_org_group_memberships_with_http_info(filter_org_group_id, body).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete a batch of memberships from an organization group. This operation is not supported for organization groups with `group_type` set to `config_management`. The memberships to delete are provided as membership resource identifiers, and the organization group they belong to must be specified using `filter[org_group_id]`. Each request must include between 1 and 100 unique membership IDs, and the requesting organization must own the organization group. The request does not fail if a membership ID refers to a membership that has already been deleted, does not exist, or does not belong to the organization group.
-    pub async fn delete_org_group_memberships_with_http_info(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupMembershipBulkDeleteRequest,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupMembershipsError>> {
+    pub async fn delete_org_group_memberships_with_http_info(&self, filter_org_group_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupMembershipBulkDeleteRequest) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_group_memberships";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1494,22 +1384,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/bulk_delete",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::POST, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::POST, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1522,23 +1414,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -1546,7 +1431,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1556,7 +1444,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -1578,7 +1469,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -1601,36 +1492,23 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgGroupMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgGroupMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an organization group policy by its ID.
-    pub async fn delete_org_group_policy(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOrgGroupPolicyError>> {
-        match self
-            .delete_org_group_policy_with_http_info(org_group_policy_id)
-            .await
-        {
+    pub async fn delete_org_group_policy(&self, org_group_policy_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOrgGroupPolicyError>> {
+        match self.delete_org_group_policy_with_http_info(org_group_policy_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an organization group policy by its ID.
-    pub async fn delete_org_group_policy_with_http_info(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyError>> {
+    pub async fn delete_org_group_policy_with_http_info(&self, org_group_policy_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_group_policy";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1642,19 +1520,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_id=
+            datadog::urlencode(org_group_policy_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1667,22 +1550,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1700,37 +1577,23 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgGroupPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgGroupPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Delete an organization group policy override by its ID.
-    pub async fn delete_org_group_policy_override(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-    ) -> Result<(), datadog::Error<DeleteOrgGroupPolicyOverrideError>> {
-        match self
-            .delete_org_group_policy_override_with_http_info(org_group_policy_override_id)
-            .await
-        {
+    pub async fn delete_org_group_policy_override(&self, org_group_policy_override_id: uuid::Uuid) -> Result<(), datadog::Error<DeleteOrgGroupPolicyOverrideError>> {
+        match self.delete_org_group_policy_override_with_http_info(org_group_policy_override_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
         }
     }
 
+    
     /// Delete an organization group policy override by its ID.
-    pub async fn delete_org_group_policy_override_with_http_info(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyOverrideError>>
-    {
+    pub async fn delete_org_group_policy_override_with_http_info(&self, org_group_policy_override_id: uuid::Uuid) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteOrgGroupPolicyOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_org_group_policy_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1742,20 +1605,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_override_id =
-                datadog::urlencode(org_group_policy_override_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_override_id=
+            datadog::urlencode(org_group_policy_override_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1768,22 +1635,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1801,44 +1662,29 @@ impl OrgGroupsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteOrgGroupPolicyOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<DeleteOrgGroupPolicyOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific organization group by its ID.
-    pub async fn get_org_group(
-        &self,
-        org_group_id: uuid::Uuid,
-    ) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<GetOrgGroupError>> {
+    pub async fn get_org_group(&self, org_group_id: uuid::Uuid) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<GetOrgGroupError>> {
         match self.get_org_group_with_http_info(org_group_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific organization group by its ID.
-    pub async fn get_org_group_with_http_info(
-        &self,
-        org_group_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>,
-        datadog::Error<GetOrgGroupError>,
-    > {
+    pub async fn get_org_group_with_http_info(&self, org_group_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>, datadog::Error<GetOrgGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_group";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1850,19 +1696,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_id = datadog::urlencode(org_group_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_id=
+            datadog::urlencode(org_group_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1875,22 +1726,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -1902,61 +1747,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
             let local_entity: Option<GetOrgGroupError> = serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific organization group membership by its ID.
-    pub async fn get_org_group_membership(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupMembershipResponse,
-        datadog::Error<GetOrgGroupMembershipError>,
-    > {
-        match self
-            .get_org_group_membership_with_http_info(org_group_membership_id)
-            .await
-        {
+    pub async fn get_org_group_membership(&self, org_group_membership_id: uuid::Uuid) -> Result<crate::datadogV2::model::OrgGroupMembershipResponse, datadog::Error<GetOrgGroupMembershipError>> {
+        match self.get_org_group_membership_with_http_info(org_group_membership_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific organization group membership by its ID.
-    pub async fn get_org_group_membership_with_http_info(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipResponse>,
-        datadog::Error<GetOrgGroupMembershipError>,
-    > {
+    pub async fn get_org_group_membership_with_http_info(&self, org_group_membership_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipResponse>, datadog::Error<GetOrgGroupMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_group_membership";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -1968,19 +1790,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/{org_group_membership_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_membership_id = datadog::urlencode(org_group_membership_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_membership_id=
+            datadog::urlencode(org_group_membership_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -1993,22 +1820,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2020,63 +1841,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOrgGroupMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOrgGroupMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific organization group policy by its ID.
-    pub async fn get_org_group_policy(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyResponse,
-        datadog::Error<GetOrgGroupPolicyError>,
-    > {
-        match self
-            .get_org_group_policy_with_http_info(org_group_policy_id)
-            .await
-        {
+    pub async fn get_org_group_policy(&self, org_group_policy_id: uuid::Uuid) -> Result<crate::datadogV2::model::OrgGroupPolicyResponse, datadog::Error<GetOrgGroupPolicyError>> {
+        match self.get_org_group_policy_with_http_info(org_group_policy_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific organization group policy by its ID.
-    pub async fn get_org_group_policy_with_http_info(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>,
-        datadog::Error<GetOrgGroupPolicyError>,
-    > {
+    pub async fn get_org_group_policy_with_http_info(&self, org_group_policy_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>, datadog::Error<GetOrgGroupPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_group_policy";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2088,19 +1884,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_id=
+            datadog::urlencode(org_group_policy_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2113,22 +1914,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2140,63 +1935,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOrgGroupPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOrgGroupPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Get a specific organization group policy override by its ID.
-    pub async fn get_org_group_policy_override(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyOverrideResponse,
-        datadog::Error<GetOrgGroupPolicyOverrideError>,
-    > {
-        match self
-            .get_org_group_policy_override_with_http_info(org_group_policy_override_id)
-            .await
-        {
+    pub async fn get_org_group_policy_override(&self, org_group_policy_override_id: uuid::Uuid) -> Result<crate::datadogV2::model::OrgGroupPolicyOverrideResponse, datadog::Error<GetOrgGroupPolicyOverrideError>> {
+        match self.get_org_group_policy_override_with_http_info(org_group_policy_override_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Get a specific organization group policy override by its ID.
-    pub async fn get_org_group_policy_override_with_http_info(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>,
-        datadog::Error<GetOrgGroupPolicyOverrideError>,
-    > {
+    pub async fn get_org_group_policy_override_with_http_info(&self, org_group_policy_override_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>, datadog::Error<GetOrgGroupPolicyOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_org_group_policy_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2208,20 +1978,24 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_override_id =
-                datadog::urlencode(org_group_policy_override_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_override_id=
+            datadog::urlencode(org_group_policy_override_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2234,22 +2008,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2261,60 +2029,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetOrgGroupPolicyOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<GetOrgGroupPolicyOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List organization group memberships. Filter by org group ID or org UUID. At least one of `filter[org_group_id]` or `filter[org_uuid]` must be provided. When filtering by org UUID, returns a single-item list with the membership for that org.
-    pub async fn list_org_group_memberships(
-        &self,
-        params: ListOrgGroupMembershipsOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupMembershipListResponse,
-        datadog::Error<ListOrgGroupMembershipsError>,
-    > {
-        match self.list_org_group_memberships_with_http_info(params).await {
+    pub async fn list_org_group_memberships(&self, params: ListOrgGroupMembershipsOptionalParams) -> Result<crate::datadogV2::model::OrgGroupMembershipListResponse, datadog::Error<ListOrgGroupMembershipsError>> {
+        match self.list_org_group_memberships_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List organization group memberships. Filter by org group ID or org UUID. At least one of `filter[org_group_id]` or `filter[org_uuid]` must be provided. When filtering by org UUID, returns a single-item list with the membership for that org.
-    pub async fn list_org_group_memberships_with_http_info(
-        &self,
-        params: ListOrgGroupMembershipsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipListResponse>,
-        datadog::Error<ListOrgGroupMembershipsError>,
-    > {
+    pub async fn list_org_group_memberships_with_http_info(&self, params: ListOrgGroupMembershipsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipListResponse>, datadog::Error<ListOrgGroupMembershipsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_group_memberships";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2326,6 +2072,7 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_org_group_id = params.filter_org_group_id;
         let filter_org_uuid = params.filter_org_uuid;
@@ -2337,35 +2084,31 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = filter_org_group_id {
-            local_req_builder = local_req_builder
-                .query(&[("filter[org_group_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_org_uuid {
-            local_req_builder =
-                local_req_builder.query(&[("filter[org_uuid]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[org_uuid]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2378,22 +2121,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2405,65 +2142,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupMembershipsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupMembershipsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List policies for an organization group. Requires a filter on org group ID.
-    pub async fn list_org_group_policies(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        params: ListOrgGroupPoliciesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyListResponse,
-        datadog::Error<ListOrgGroupPoliciesError>,
-    > {
-        match self
-            .list_org_group_policies_with_http_info(filter_org_group_id, params)
-            .await
-        {
+    pub async fn list_org_group_policies(&self, filter_org_group_id: uuid::Uuid, params: ListOrgGroupPoliciesOptionalParams) -> Result<crate::datadogV2::model::OrgGroupPolicyListResponse, datadog::Error<ListOrgGroupPoliciesError>> {
+        match self.list_org_group_policies_with_http_info(filter_org_group_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List policies for an organization group. Requires a filter on org group ID.
-    pub async fn list_org_group_policies_with_http_info(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        params: ListOrgGroupPoliciesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyListResponse>,
-        datadog::Error<ListOrgGroupPoliciesError>,
-    > {
+    pub async fn list_org_group_policies_with_http_info(&self, filter_org_group_id: uuid::Uuid, params: ListOrgGroupPoliciesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyListResponse>, datadog::Error<ListOrgGroupPoliciesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_group_policies";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2475,6 +2185,7 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_policy_name = params.filter_policy_name;
         let filter_policy_type = params.filter_policy_type;
@@ -2486,37 +2197,32 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string() )]);
         if let Some(ref local_query_param) = filter_policy_name {
-            local_req_builder =
-                local_req_builder.query(&[("filter[policy_name]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[policy_name]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = filter_policy_type {
-            local_req_builder =
-                local_req_builder.query(&[("filter[policy_type]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[policy_type]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2529,22 +2235,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2556,58 +2256,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupPoliciesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupPoliciesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all org configs that are eligible to be used as organization group policies.
-    pub async fn list_org_group_policy_configs(
-        &self,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyConfigListResponse,
-        datadog::Error<ListOrgGroupPolicyConfigsError>,
-    > {
+    pub async fn list_org_group_policy_configs(&self) -> Result<crate::datadogV2::model::OrgGroupPolicyConfigListResponse, datadog::Error<ListOrgGroupPolicyConfigsError>> {
         match self.list_org_group_policy_configs_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all org configs that are eligible to be used as organization group policies.
-    pub async fn list_org_group_policy_configs_with_http_info(
-        &self,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyConfigListResponse>,
-        datadog::Error<ListOrgGroupPolicyConfigsError>,
-    > {
+    pub async fn list_org_group_policy_configs_with_http_info(&self) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyConfigListResponse>, datadog::Error<ListOrgGroupPolicyConfigsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_group_policy_configs";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2619,18 +2299,22 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_configs",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2643,22 +2327,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2670,65 +2348,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyConfigListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyConfigListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupPolicyConfigsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupPolicyConfigsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List policy overrides for an organization group. Requires a filter on org group ID. Optionally filter by policy ID.
-    pub async fn list_org_group_policy_overrides(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        params: ListOrgGroupPolicyOverridesOptionalParams,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyOverrideListResponse,
-        datadog::Error<ListOrgGroupPolicyOverridesError>,
-    > {
-        match self
-            .list_org_group_policy_overrides_with_http_info(filter_org_group_id, params)
-            .await
-        {
+    pub async fn list_org_group_policy_overrides(&self, filter_org_group_id: uuid::Uuid, params: ListOrgGroupPolicyOverridesOptionalParams) -> Result<crate::datadogV2::model::OrgGroupPolicyOverrideListResponse, datadog::Error<ListOrgGroupPolicyOverridesError>> {
+        match self.list_org_group_policy_overrides_with_http_info(filter_org_group_id,  params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List policy overrides for an organization group. Requires a filter on org group ID. Optionally filter by policy ID.
-    pub async fn list_org_group_policy_overrides_with_http_info(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-        params: ListOrgGroupPolicyOverridesOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideListResponse>,
-        datadog::Error<ListOrgGroupPolicyOverridesError>,
-    > {
+    pub async fn list_org_group_policy_overrides_with_http_info(&self, filter_org_group_id: uuid::Uuid, params: ListOrgGroupPolicyOverridesOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideListResponse>, datadog::Error<ListOrgGroupPolicyOverridesError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_group_policy_overrides";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2740,6 +2391,7 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let filter_policy_id = params.filter_policy_id;
         let page_number = params.page_number;
@@ -2750,33 +2402,29 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string() )]);
         if let Some(ref local_query_param) = filter_policy_id {
-            local_req_builder =
-                local_req_builder.query(&[("filter[policy_id]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("filter[policy_id]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2789,22 +2437,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2816,63 +2458,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupPolicyOverridesError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupPolicyOverridesError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List suggested organization group policies. Requires a filter on org group ID.
-    pub async fn list_org_group_policy_suggestions(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicySuggestionListResponse,
-        datadog::Error<ListOrgGroupPolicySuggestionsError>,
-    > {
-        match self
-            .list_org_group_policy_suggestions_with_http_info(filter_org_group_id)
-            .await
-        {
+    pub async fn list_org_group_policy_suggestions(&self, filter_org_group_id: uuid::Uuid) -> Result<crate::datadogV2::model::OrgGroupPolicySuggestionListResponse, datadog::Error<ListOrgGroupPolicySuggestionsError>> {
+        match self.list_org_group_policy_suggestions_with_http_info(filter_org_group_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List suggested organization group policies. Requires a filter on org group ID.
-    pub async fn list_org_group_policy_suggestions_with_http_info(
-        &self,
-        filter_org_group_id: uuid::Uuid,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicySuggestionListResponse>,
-        datadog::Error<ListOrgGroupPolicySuggestionsError>,
-    > {
+    pub async fn list_org_group_policy_suggestions_with_http_info(&self, filter_org_group_id: uuid::Uuid) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicySuggestionListResponse>, datadog::Error<ListOrgGroupPolicySuggestionsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_group_policy_suggestions";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -2884,21 +2501,23 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_suggestions",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
-        local_req_builder =
-            local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string())]);
+        
+        local_req_builder = local_req_builder.query(&[("filter[org_group_id]", &filter_org_group_id.to_string() )]);
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -2911,22 +2530,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -2938,59 +2551,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<
-                crate::datadogV2::model::OrgGroupPolicySuggestionListResponse,
-            >(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicySuggestionListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupPolicySuggestionsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupPolicySuggestionsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// List all organization groups that the requesting organization has access to.
-    pub async fn list_org_groups(
-        &self,
-        params: ListOrgGroupsOptionalParams,
-    ) -> Result<crate::datadogV2::model::OrgGroupListResponse, datadog::Error<ListOrgGroupsError>>
-    {
-        match self.list_org_groups_with_http_info(params).await {
+    pub async fn list_org_groups(&self, params: ListOrgGroupsOptionalParams) -> Result<crate::datadogV2::model::OrgGroupListResponse, datadog::Error<ListOrgGroupsError>> {
+        match self.list_org_groups_with_http_info( params).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// List all organization groups that the requesting organization has access to.
-    pub async fn list_org_groups_with_http_info(
-        &self,
-        params: ListOrgGroupsOptionalParams,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupListResponse>,
-        datadog::Error<ListOrgGroupsError>,
-    > {
+    pub async fn list_org_groups_with_http_info(&self, params: ListOrgGroupsOptionalParams) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupListResponse>, datadog::Error<ListOrgGroupsError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_org_groups";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3002,6 +2594,7 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
         // unbox and build optional parameters
         let page_number = params.page_number;
         let page_size = params.page_size;
@@ -3011,27 +2604,25 @@ impl OrgGroupsAPI {
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups",
-            local_configuration.get_operation_host(local_operation_id)
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id));
+        let mut local_req_builder = local_client.request(reqwest::Method::GET, local_uri_str.as_str());
 
+        
         if let Some(ref local_query_param) = page_number {
-            local_req_builder =
-                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[number]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = page_size {
-            local_req_builder =
-                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("page[size]", &local_query_param.to_string() )]);
         };
         if let Some(ref local_query_param) = sort {
-            local_req_builder =
-                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+            local_req_builder = local_req_builder.query(&[("sort", &local_query_param.to_string() )]);
         };
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3044,22 +2635,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
+
+        
 
         local_req_builder = local_req_builder.headers(headers);
         let local_req = local_req_builder.build()?;
@@ -3071,63 +2656,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupListResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupListResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListOrgGroupsError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<ListOrgGroupsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update the name of an existing organization group.
-    pub async fn update_org_group(
-        &self,
-        org_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupUpdateRequest,
-    ) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<UpdateOrgGroupError>>
-    {
-        match self
-            .update_org_group_with_http_info(org_group_id, body)
-            .await
-        {
+    pub async fn update_org_group(&self, org_group_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupUpdateRequest) -> Result<crate::datadogV2::model::OrgGroupResponse, datadog::Error<UpdateOrgGroupError>> {
+        match self.update_org_group_with_http_info(org_group_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update the name of an existing organization group.
-    pub async fn update_org_group_with_http_info(
-        &self,
-        org_group_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>,
-        datadog::Error<UpdateOrgGroupError>,
-    > {
+    pub async fn update_org_group_with_http_info(&self, org_group_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupResponse>, datadog::Error<UpdateOrgGroupError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_org_group";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3139,20 +2699,25 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_groups/{org_group_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_id = datadog::urlencode(org_group_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_id=
+            datadog::urlencode(org_group_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3165,23 +2730,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3189,7 +2747,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3199,7 +2760,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3221,7 +2785,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3238,64 +2802,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content)
-            {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOrgGroupError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOrgGroupError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Move an organization to a different org group by updating its membership.
-    pub async fn update_org_group_membership(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupMembershipUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupMembershipResponse,
-        datadog::Error<UpdateOrgGroupMembershipError>,
-    > {
-        match self
-            .update_org_group_membership_with_http_info(org_group_membership_id, body)
-            .await
-        {
+    pub async fn update_org_group_membership(&self, org_group_membership_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupMembershipUpdateRequest) -> Result<crate::datadogV2::model::OrgGroupMembershipResponse, datadog::Error<UpdateOrgGroupMembershipError>> {
+        match self.update_org_group_membership_with_http_info(org_group_membership_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Move an organization to a different org group by updating its membership.
-    pub async fn update_org_group_membership_with_http_info(
-        &self,
-        org_group_membership_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupMembershipUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipResponse>,
-        datadog::Error<UpdateOrgGroupMembershipError>,
-    > {
+    pub async fn update_org_group_membership_with_http_info(&self, org_group_membership_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupMembershipUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupMembershipResponse>, datadog::Error<UpdateOrgGroupMembershipError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_org_group_membership";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3307,20 +2845,25 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_memberships/{org_group_membership_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_membership_id = datadog::urlencode(org_group_membership_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_membership_id=
+            datadog::urlencode(org_group_membership_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3333,23 +2876,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3357,7 +2893,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3367,7 +2906,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3389,7 +2931,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3406,65 +2948,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupMembershipResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOrgGroupMembershipError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOrgGroupMembershipError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing organization group policy.
-    pub async fn update_org_group_policy(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupPolicyUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyResponse,
-        datadog::Error<UpdateOrgGroupPolicyError>,
-    > {
-        match self
-            .update_org_group_policy_with_http_info(org_group_policy_id, body)
-            .await
-        {
+    pub async fn update_org_group_policy(&self, org_group_policy_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupPolicyUpdateRequest) -> Result<crate::datadogV2::model::OrgGroupPolicyResponse, datadog::Error<UpdateOrgGroupPolicyError>> {
+        match self.update_org_group_policy_with_http_info(org_group_policy_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing organization group policy.
-    pub async fn update_org_group_policy_with_http_info(
-        &self,
-        org_group_policy_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupPolicyUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>,
-        datadog::Error<UpdateOrgGroupPolicyError>,
-    > {
+    pub async fn update_org_group_policy_with_http_info(&self, org_group_policy_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupPolicyUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyResponse>, datadog::Error<UpdateOrgGroupPolicyError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_org_group_policy";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3476,20 +2991,25 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policies/{org_group_policy_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_id = datadog::urlencode(org_group_policy_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_id=
+            datadog::urlencode(org_group_policy_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3502,23 +3022,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3526,7 +3039,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3536,7 +3052,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3558,7 +3077,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3575,65 +3094,38 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOrgGroupPolicyError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOrgGroupPolicyError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }
-
+    
     /// Update an existing organization group policy override.
-    pub async fn update_org_group_policy_override(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupPolicyOverrideUpdateRequest,
-    ) -> Result<
-        crate::datadogV2::model::OrgGroupPolicyOverrideResponse,
-        datadog::Error<UpdateOrgGroupPolicyOverrideError>,
-    > {
-        match self
-            .update_org_group_policy_override_with_http_info(org_group_policy_override_id, body)
-            .await
-        {
+    pub async fn update_org_group_policy_override(&self, org_group_policy_override_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupPolicyOverrideUpdateRequest) -> Result<crate::datadogV2::model::OrgGroupPolicyOverrideResponse, datadog::Error<UpdateOrgGroupPolicyOverrideError>> {
+        match self.update_org_group_policy_override_with_http_info(org_group_policy_override_id, body).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
                     Ok(e)
                 } else {
-                    Err(datadog::Error::Serde(serde::de::Error::custom(
-                        "response content was None",
-                    )))
+                    Err(datadog::Error::Serde(serde::de::Error::custom("response content was None")))
                 }
-            }
+            },
             Err(err) => Err(err),
         }
     }
 
+    
     /// Update an existing organization group policy override.
-    pub async fn update_org_group_policy_override_with_http_info(
-        &self,
-        org_group_policy_override_id: uuid::Uuid,
-        body: crate::datadogV2::model::OrgGroupPolicyOverrideUpdateRequest,
-    ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>,
-        datadog::Error<UpdateOrgGroupPolicyOverrideError>,
-    > {
+    pub async fn update_org_group_policy_override_with_http_info(&self, org_group_policy_override_id: uuid::Uuid, body: crate::datadogV2::model::OrgGroupPolicyOverrideUpdateRequest) -> Result<datadog::ResponseContent<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>, datadog::Error<UpdateOrgGroupPolicyOverrideError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_org_group_policy_override";
         if local_configuration.is_unstable_operation_enabled(local_operation_id) {
@@ -3645,21 +3137,25 @@ impl OrgGroupsAPI {
             return Err(datadog::Error::UnstableOperationDisabledError(local_error));
         }
 
+        
+
         let local_client = &self.client;
 
         let local_uri_str = format!(
             "{}/api/v2/org_group_policy_overrides/{org_group_policy_override_id}",
-            local_configuration.get_operation_host(local_operation_id),
-            org_group_policy_override_id =
-                datadog::urlencode(org_group_policy_override_id.to_string())
-        );
-        let mut local_req_builder =
-            local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+            local_configuration.get_operation_host(local_operation_id), org_group_policy_override_id=
+            datadog::urlencode(org_group_policy_override_id.to_string())
+            );
+        let mut local_req_builder = local_client.request(reqwest::Method::PATCH, local_uri_str.as_str());
+
+        
 
         // build headers
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", HeaderValue::from_static("application/json"));
         headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        
 
         // build user agent
         match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
@@ -3672,23 +3168,16 @@ impl OrgGroupsAPI {
                 )
             }
         };
-
+        
         // build auth
         if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
-            headers.insert(
-                "DD-API-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-API-KEY header"),
-            );
+            headers.insert("DD-API-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-API-KEY header"));
         };
         if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
-            headers.insert(
-                "DD-APPLICATION-KEY",
-                HeaderValue::from_str(local_key.key.as_str())
-                    .expect("failed to parse DD-APPLICATION-KEY header"),
-            );
+            headers.insert("DD-APPLICATION-KEY", HeaderValue::from_str(local_key.key.as_str()).expect("failed to parse DD-APPLICATION-KEY header"));
         };
 
+        
         // build body parameters
         let output = Vec::new();
         let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
@@ -3696,7 +3185,10 @@ impl OrgGroupsAPI {
             if let Some(content_encoding) = headers.get("Content-Encoding") {
                 match content_encoding.to_str().unwrap_or_default() {
                     "gzip" => {
-                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = GzEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3706,7 +3198,10 @@ impl OrgGroupsAPI {
                         }
                     }
                     "deflate" => {
-                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let mut enc = ZlibEncoder::new(
+                            Vec::new(),
+                            Compression::default(),
+                        );
                         let _ = enc.write_all(ser.into_inner().as_slice());
                         match enc.finish() {
                             Ok(buf) => {
@@ -3728,7 +3223,7 @@ impl OrgGroupsAPI {
                     }
                     _ => {
                         local_req_builder = local_req_builder.body(ser.into_inner());
-                    }
+                    },
                 }
             } else {
                 local_req_builder = local_req_builder.body(ser.into_inner());
@@ -3745,26 +3240,17 @@ impl OrgGroupsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(
-                &local_content,
-            ) {
-                Ok(e) => {
-                    return Ok(datadog::ResponseContent {
-                        status: local_status,
-                        content: local_content,
-                        entity: Some(e),
-                    })
-                }
+            match serde_json::from_str::<crate::datadogV2::model::OrgGroupPolicyOverrideResponse>(&local_content) {
+                Ok(e) => return Ok(datadog::ResponseContent {
+                    status: local_status,
+                    content: local_content,
+                    entity: Some(e),
+                }),
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateOrgGroupPolicyOverrideError> =
-                serde_json::from_str(&local_content).ok();
-            let local_error = datadog::ResponseContent {
-                status: local_status,
-                content: local_content,
-                entity: local_entity,
-            };
+            let local_entity: Option<UpdateOrgGroupPolicyOverrideError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent { status: local_status, content: local_content, entity: local_entity };
             Err(datadog::Error::ResponseError(local_error))
         }
     }

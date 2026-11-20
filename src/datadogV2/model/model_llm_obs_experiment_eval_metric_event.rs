@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// An evaluation metric event associated with an experiment span.
 #[non_exhaustive]
@@ -15,18 +15,10 @@ pub struct LLMObsExperimentEvalMetricEvent {
     #[serde(rename = "assessment")]
     pub assessment: Option<crate::datadogV2::model::LLMObsMetricAssessment>,
     /// Boolean value. Present when `metric_type` is `boolean`.
-    #[serde(
-        rename = "boolean_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "boolean_value", default, with = "::serde_with::rust::double_option")]
     pub boolean_value: Option<Option<bool>>,
     /// Categorical value. Present when `metric_type` is `categorical`.
-    #[serde(
-        rename = "categorical_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "categorical_value", default, with = "::serde_with::rust::double_option")]
     pub categorical_value: Option<Option<String>>,
     /// Source type of the evaluation.
     #[serde(rename = "eval_source_type")]
@@ -35,21 +27,13 @@ pub struct LLMObsExperimentEvalMetricEvent {
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// JSON value. Present when `metric_type` is `json`.
-    #[serde(
-        rename = "json_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "json_value", default, with = "::serde_with::rust::double_option")]
     pub json_value: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Label or name for the metric.
     #[serde(rename = "label")]
     pub label: Option<String>,
     /// Arbitrary metadata associated with the metric.
-    #[serde(
-        rename = "metadata",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "metadata", default, with = "::serde_with::rust::double_option")]
     pub metadata: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>>,
     /// Source of the metric. Either `custom` (user-submitted) or `summary` (experiment-level aggregate).
     #[serde(rename = "metric_source")]
@@ -58,18 +42,10 @@ pub struct LLMObsExperimentEvalMetricEvent {
     #[serde(rename = "metric_type")]
     pub metric_type: Option<crate::datadogV2::model::LLMObsMetricScoreType>,
     /// Human-readable reasoning for the metric value.
-    #[serde(
-        rename = "reasoning",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "reasoning", default, with = "::serde_with::rust::double_option")]
     pub reasoning: Option<Option<String>>,
     /// Numeric score. Present when `metric_type` is `score`.
-    #[serde(
-        rename = "score_value",
-        default,
-        with = "::serde_with::rust::double_option"
-    )]
+    #[serde(rename = "score_value", default, with = "::serde_with::rust::double_option")]
     pub score_value: Option<Option<f64>>,
     /// Span ID this metric is associated with.
     #[serde(rename = "span_id")]
@@ -87,7 +63,7 @@ pub struct LLMObsExperimentEvalMetricEvent {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl LLMObsExperimentEvalMetricEvent {
@@ -113,101 +89,93 @@ impl LLMObsExperimentEvalMetricEvent {
             _unparsed: false,
         }
     }
-
+    
     pub fn assessment(mut self, value: crate::datadogV2::model::LLMObsMetricAssessment) -> Self {
         self.assessment = Some(value);
         self
     }
-
+    
     pub fn boolean_value(mut self, value: Option<bool>) -> Self {
         self.boolean_value = Some(value);
         self
     }
-
+    
     pub fn categorical_value(mut self, value: Option<String>) -> Self {
         self.categorical_value = Some(value);
         self
     }
-
+    
     pub fn eval_source_type(mut self, value: String) -> Self {
         self.eval_source_type = Some(value);
         self
     }
-
+    
     pub fn id(mut self, value: String) -> Self {
         self.id = Some(value);
         self
     }
-
-    pub fn json_value(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn json_value(mut self, value: Option<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.json_value = Some(value);
         self
     }
-
+    
     pub fn label(mut self, value: String) -> Self {
         self.label = Some(value);
         self
     }
-
-    pub fn metadata(
-        mut self,
-        value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
-    ) -> Self {
+    
+    pub fn metadata(mut self, value: Option<std::collections::BTreeMap<String, serde_json::Value>>) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn metric_source(mut self, value: String) -> Self {
         self.metric_source = Some(value);
         self
     }
-
+    
     pub fn metric_type(mut self, value: crate::datadogV2::model::LLMObsMetricScoreType) -> Self {
         self.metric_type = Some(value);
         self
     }
-
+    
     pub fn reasoning(mut self, value: Option<String>) -> Self {
         self.reasoning = Some(value);
         self
     }
-
+    
     pub fn score_value(mut self, value: Option<f64>) -> Self {
         self.score_value = Some(value);
         self
     }
-
+    
     pub fn span_id(mut self, value: String) -> Self {
         self.span_id = Some(value);
         self
     }
-
+    
     pub fn tags(mut self, value: Vec<String>) -> Self {
         self.tags = Some(value);
         self
     }
-
+    
     pub fn timestamp_ms(mut self, value: i64) -> Self {
         self.timestamp_ms = Some(value);
         self
     }
-
+    
     pub fn trace_id(mut self, value: String) -> Self {
         self.trace_id = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for LLMObsExperimentEvalMetricEvent {
     fn default() -> Self {
@@ -237,13 +205,9 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                 let mut categorical_value: Option<Option<String>> = None;
                 let mut eval_source_type: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut json_value: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut json_value: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut label: Option<String> = None;
-                let mut metadata: Option<
-                    Option<std::collections::BTreeMap<String, serde_json::Value>>,
-                > = None;
+                let mut metadata: Option<Option<std::collections::BTreeMap<String, serde_json::Value>>> = None;
                 let mut metric_source: Option<String> = None;
                 let mut metric_type: Option<crate::datadogV2::model::LLMObsMetricScoreType> = None;
                 let mut reasoning: Option<Option<String>> = None;
@@ -252,10 +216,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp_ms: Option<i64> = None;
                 let mut trace_id: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -273,53 +234,48 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "boolean_value" => {
-                            boolean_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            boolean_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "categorical_value" => {
-                            categorical_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            categorical_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "eval_source_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            eval_source_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            eval_source_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "id" => {
                             if v.is_null() {
                                 continue;
                             }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "json_value" => {
                             json_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "label" => {
                             if v.is_null() {
                                 continue;
                             }
                             label = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metadata" => {
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "metric_source" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            metric_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metric_type" => {
                             if v.is_null() {
                                 continue;
                             }
-                            metric_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            metric_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _metric_type) = metric_type {
                                 match _metric_type {
                                     crate::datadogV2::model::LLMObsMetricScoreType::UnparsedObject(_metric_type) => {
@@ -328,47 +284,45 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "reasoning" => {
                             reasoning = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "score_value" => {
                             if v.as_str() == Some("") {
                                 continue;
                             }
-                            score_value =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            score_value = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "span_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             span_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "tags" => {
                             if v.is_null() {
                                 continue;
                             }
                             tags = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "timestamp_ms" => {
                             if v.is_null() {
                                 continue;
                             }
-                            timestamp_ms =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            timestamp_ms = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "trace_id" => {
                             if v.is_null() {
                                 continue;
                             }
                             trace_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

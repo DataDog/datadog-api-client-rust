@@ -2,25 +2,26 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Serialize, Deserialize, Serializer, Deserializer};
+
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SecurityMonitoringRuleSort {
-    NAME,
-    CREATION_DATE,
-    UPDATE_DATE,
-    ENABLED,
-    TYPE,
-    HIGHEST_SEVERITY,
-    SOURCE,
-    NAME_DESCENDING,
-    CREATION_DATE_DESCENDING,
-    UPDATE_DATE_DESCENDING,
-    ENABLED_DESCENDING,
-    TYPE_DESCENDING,
-    HIGHEST_SEVERITY_DESCENDING,
-    SOURCE_DESCENDING,
+	NAME,
+	CREATION_DATE,
+	UPDATE_DATE,
+	ENABLED,
+	TYPE,
+	HIGHEST_SEVERITY,
+	SOURCE,
+	NAME_DESCENDING,
+	CREATION_DATE_DESCENDING,
+	UPDATE_DATE_DESCENDING,
+	ENABLED_DESCENDING,
+	TYPE_DESCENDING,
+	HIGHEST_SEVERITY_DESCENDING,
+	SOURCE_DESCENDING,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -64,24 +65,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleSort {
         D: Deserializer<'de>,
     {
         let s: String = String::deserialize(deserializer)?;
-        Ok(match s.as_str() {
-            "name" => Self::NAME,
-            "creation_date" => Self::CREATION_DATE,
-            "update_date" => Self::UPDATE_DATE,
-            "enabled" => Self::ENABLED,
-            "type" => Self::TYPE,
-            "highest_severity" => Self::HIGHEST_SEVERITY,
-            "source" => Self::SOURCE,
-            "-name" => Self::NAME_DESCENDING,
-            "-creation_date" => Self::CREATION_DATE_DESCENDING,
-            "-update_date" => Self::UPDATE_DATE_DESCENDING,
-            "-enabled" => Self::ENABLED_DESCENDING,
-            "-type" => Self::TYPE_DESCENDING,
-            "-highest_severity" => Self::HIGHEST_SEVERITY_DESCENDING,
-            "-source" => Self::SOURCE_DESCENDING,
-            _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
-                value: serde_json::Value::String(s.into()),
-            }),
+        Ok(match s.as_str() {"name" => Self::NAME,"creation_date" => Self::CREATION_DATE,"update_date" => Self::UPDATE_DATE,"enabled" => Self::ENABLED,"type" => Self::TYPE,"highest_severity" => Self::HIGHEST_SEVERITY,"source" => Self::SOURCE,"-name" => Self::NAME_DESCENDING,"-creation_date" => Self::CREATION_DATE_DESCENDING,"-update_date" => Self::UPDATE_DATE_DESCENDING,"-enabled" => Self::ENABLED_DESCENDING,"-type" => Self::TYPE_DESCENDING,"-highest_severity" => Self::HIGHEST_SEVERITY_DESCENDING,"-source" => Self::SOURCE_DESCENDING,
+            _ => Self::UnparsedObject(crate::datadog::UnparsedObject { value: serde_json::Value::String(s.into()) }),
         })
     }
 }

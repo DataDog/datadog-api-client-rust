@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Object describing a downtime that matches this monitor.
 #[non_exhaustive]
@@ -18,8 +18,8 @@ pub struct MatchingDowntime {
     #[serde(rename = "id")]
     pub id: i64,
     /// The scope(s) to which the downtime applies. Must be in `key:value` format. For example, `host:app2`.
-    /// Provide multiple scopes as a comma-separated list like `env:dev,env:prod`.
-    /// The resulting downtime applies to sources that matches ALL provided scopes (`env:dev` **AND** `env:prod`).
+/// Provide multiple scopes as a comma-separated list like `env:dev,env:prod`.
+/// The resulting downtime applies to sources that matches ALL provided scopes (`env:dev` **AND** `env:prod`).
     #[serde(rename = "scope")]
     pub scope: Option<Vec<String>>,
     /// POSIX timestamp to start the downtime.
@@ -29,7 +29,7 @@ pub struct MatchingDowntime {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl MatchingDowntime {
@@ -43,30 +43,29 @@ impl MatchingDowntime {
             _unparsed: false,
         }
     }
-
+    
     pub fn end(mut self, value: Option<i64>) -> Self {
         self.end = Some(value);
         self
     }
-
+    
     pub fn scope(mut self, value: Vec<String>) -> Self {
         self.scope = Some(value);
         self
     }
-
+    
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for MatchingDowntime {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -89,37 +88,34 @@ impl<'de> Deserialize<'de> for MatchingDowntime {
                 let mut id: Option<i64> = None;
                 let mut scope: Option<Vec<String>> = None;
                 let mut start: Option<i64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "end" => {
                             end = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "id" => {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "scope" => {
                             if v.is_null() {
                                 continue;
                             }
                             scope = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "start" => {
                             if v.is_null() {
                                 continue;
                             }
                             start = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// Saved filter details, including the full targeting rules and conditions.
 #[non_exhaustive]
@@ -42,18 +42,11 @@ pub struct SavedFilterAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl SavedFilterAttributes {
-    pub fn new(
-        created_at: chrono::DateTime<chrono::Utc>,
-        created_by: String,
-        creation_type: crate::datadogV2::model::SavedFilterCreationType,
-        name: String,
-        targeting_rules: Vec<crate::datadogV2::model::SavedFilterTargetingRule>,
-        updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> SavedFilterAttributes {
+    pub fn new(created_at: chrono::DateTime<chrono::Utc>, created_by: String, creation_type: crate::datadogV2::model::SavedFilterCreationType, name: String, targeting_rules: Vec<crate::datadogV2::model::SavedFilterTargetingRule>, updated_at: chrono::DateTime<chrono::Utc>) -> SavedFilterAttributes {
         SavedFilterAttributes {
             archived_at: None,
             created_at,
@@ -68,30 +61,29 @@ impl SavedFilterAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn archived_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.archived_at = Some(value);
         self
     }
-
+    
     pub fn description(mut self, value: String) -> Self {
         self.description = Some(value);
         self
     }
-
+    
     pub fn migration_metadata(mut self, value: serde_json::Value) -> Self {
         self.migration_metadata = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for SavedFilterAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -113,19 +105,13 @@ impl<'de> Deserialize<'de> for SavedFilterAttributes {
                 let mut archived_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut created_by: Option<String> = None;
-                let mut creation_type: Option<crate::datadogV2::model::SavedFilterCreationType> =
-                    None;
+                let mut creation_type: Option<crate::datadogV2::model::SavedFilterCreationType> = None;
                 let mut description: Option<String> = None;
                 let mut migration_metadata: Option<serde_json::Value> = None;
                 let mut name: Option<String> = None;
-                let mut targeting_rules: Option<
-                    Vec<crate::datadogV2::model::SavedFilterTargetingRule>,
-                > = None;
+                let mut targeting_rules: Option<Vec<crate::datadogV2::model::SavedFilterTargetingRule>> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -134,18 +120,16 @@ impl<'de> Deserialize<'de> for SavedFilterAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            archived_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            archived_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "created_by" => {
                             created_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "creation_type" => {
-                            creation_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            creation_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _creation_type) = creation_type {
                                 match _creation_type {
                                     crate::datadogV2::model::SavedFilterCreationType::UnparsedObject(_creation_type) => {
@@ -154,45 +138,40 @@ impl<'de> Deserialize<'de> for SavedFilterAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "description" => {
                             if v.is_null() {
                                 continue;
                             }
-                            description =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            description = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "migration_metadata" => {
                             if v.is_null() {
                                 continue;
                             }
-                            migration_metadata =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            migration_metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "targeting_rules" => {
-                            targeting_rules =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            targeting_rules = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "updated_at" => {
                             updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
                 let created_by = created_by.ok_or_else(|| M::Error::missing_field("created_by"))?;
-                let creation_type =
-                    creation_type.ok_or_else(|| M::Error::missing_field("creation_type"))?;
+                let creation_type = creation_type.ok_or_else(|| M::Error::missing_field("creation_type"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let targeting_rules =
-                    targeting_rules.ok_or_else(|| M::Error::missing_field("targeting_rules"))?;
+                let targeting_rules = targeting_rules.ok_or_else(|| M::Error::missing_field("targeting_rules"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
                 let content = SavedFilterAttributes {

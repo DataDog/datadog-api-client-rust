@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// A stack frame.
 #[non_exhaustive]
@@ -24,7 +24,7 @@ pub struct IssueSampleStackFrame {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl IssueSampleStackFrame {
@@ -37,33 +37,28 @@ impl IssueSampleStackFrame {
             _unparsed: false,
         }
     }
-
+    
     pub fn code_snippet(mut self, value: crate::datadogV2::model::IssueSampleCodeSnippet) -> Self {
         self.code_snippet = Some(value);
         self
     }
-
-    pub fn git_file_location(
-        mut self,
-        value: crate::datadogV2::model::IssueSampleGitFileLocation,
-    ) -> Self {
+    
+    pub fn git_file_location(mut self, value: crate::datadogV2::model::IssueSampleGitFileLocation) -> Self {
         self.git_file_location = Some(value);
         self
     }
-
+    
     pub fn text(mut self, value: String) -> Self {
         self.text = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
 
 impl Default for IssueSampleStackFrame {
     fn default() -> Self {
@@ -88,16 +83,10 @@ impl<'de> Deserialize<'de> for IssueSampleStackFrame {
             where
                 M: MapAccess<'a>,
             {
-                let mut code_snippet: Option<crate::datadogV2::model::IssueSampleCodeSnippet> =
-                    None;
-                let mut git_file_location: Option<
-                    crate::datadogV2::model::IssueSampleGitFileLocation,
-                > = None;
+                let mut code_snippet: Option<crate::datadogV2::model::IssueSampleCodeSnippet> = None;
+                let mut git_file_location: Option<crate::datadogV2::model::IssueSampleGitFileLocation> = None;
                 let mut text: Option<String> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -106,27 +95,25 @@ impl<'de> Deserialize<'de> for IssueSampleStackFrame {
                             if v.is_null() {
                                 continue;
                             }
-                            code_snippet =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            code_snippet = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "git_file_location" => {
                             if v.is_null() {
                                 continue;
                             }
-                            git_file_location =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            git_file_location = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "text" => {
                             if v.is_null() {
                                 continue;
                             }
                             text = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
 

@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The attributes of a governance control detection.
 #[non_exhaustive]
@@ -60,20 +60,11 @@ pub struct GovernanceControlDetectionAttributes {
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl GovernanceControlDetectionAttributes {
-    pub fn new(
-        assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
-        created_at: chrono::DateTime<chrono::Utc>,
-        detection_type: String,
-        display_name: String,
-        priority: i64,
-        resource_id: String,
-        resource_type: String,
-        state: crate::datadogV2::model::GovernanceControlDetectionState,
-    ) -> GovernanceControlDetectionAttributes {
+    pub fn new(assignment_source: crate::datadogV2::model::GovernanceControlDetectionAssignmentSource, created_at: chrono::DateTime<chrono::Utc>, detection_type: String, display_name: String, priority: i64, resource_id: String, resource_type: String, state: crate::datadogV2::model::GovernanceControlDetectionState) -> GovernanceControlDetectionAttributes {
         GovernanceControlDetectionAttributes {
             assigned_team: None,
             assigned_to: None,
@@ -94,50 +85,49 @@ impl GovernanceControlDetectionAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn assigned_team(mut self, value: String) -> Self {
         self.assigned_team = Some(value);
         self
     }
-
+    
     pub fn assigned_to(mut self, value: String) -> Self {
         self.assigned_to = Some(value);
         self
     }
-
+    
     pub fn exception_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.exception_at = Some(value);
         self
     }
-
+    
     pub fn exception_by(mut self, value: String) -> Self {
         self.exception_by = Some(value);
         self
     }
-
+    
     pub fn metadata(mut self, value: serde_json::Value) -> Self {
         self.metadata = Some(value);
         self
     }
-
+    
     pub fn mitigate_after(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.mitigate_after = Some(value);
         self
     }
-
+    
     pub fn mitigated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
         self.mitigated_at = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -158,9 +148,7 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
             {
                 let mut assigned_team: Option<String> = None;
                 let mut assigned_to: Option<String> = None;
-                let mut assignment_source: Option<
-                    crate::datadogV2::model::GovernanceControlDetectionAssignmentSource,
-                > = None;
+                let mut assignment_source: Option<crate::datadogV2::model::GovernanceControlDetectionAssignmentSource> = None;
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut detection_type: Option<String> = None;
                 let mut display_name: Option<String> = None;
@@ -172,12 +160,8 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                 let mut priority: Option<i64> = None;
                 let mut resource_id: Option<String> = None;
                 let mut resource_type: Option<String> = None;
-                let mut state: Option<crate::datadogV2::model::GovernanceControlDetectionState> =
-                    None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                let mut state: Option<crate::datadogV2::model::GovernanceControlDetectionState> = None;
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
@@ -186,19 +170,16 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                             if v.is_null() {
                                 continue;
                             }
-                            assigned_team =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assigned_team = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assigned_to" => {
                             if v.is_null() {
                                 continue;
                             }
-                            assigned_to =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            assigned_to = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "assignment_source" => {
-                            assignment_source =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            assignment_source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _assignment_source) = assignment_source {
                                 match _assignment_source {
                                     crate::datadogV2::model::GovernanceControlDetectionAssignmentSource::UnparsedObject(_assignment_source) => {
@@ -207,63 +188,55 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "detection_type" => {
-                            detection_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            detection_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "display_name" => {
-                            display_name =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            display_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exception_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exception_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exception_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "exception_by" => {
                             if v.is_null() {
                                 continue;
                             }
-                            exception_by =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            exception_by = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "metadata" => {
                             if v.is_null() {
                                 continue;
                             }
                             metadata = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "mitigate_after" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mitigate_after =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mitigate_after = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "mitigated_at" => {
                             if v.is_null() {
                                 continue;
                             }
-                            mitigated_at =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            mitigated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "priority" => {
                             priority = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "resource_id" => {
-                            resource_id =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "resource_type" => {
-                            resource_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                            resource_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        },
                         "state" => {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _state) = state {
@@ -274,26 +247,21 @@ impl<'de> Deserialize<'de> for GovernanceControlDetectionAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
-                let assignment_source = assignment_source
-                    .ok_or_else(|| M::Error::missing_field("assignment_source"))?;
+                let assignment_source = assignment_source.ok_or_else(|| M::Error::missing_field("assignment_source"))?;
                 let created_at = created_at.ok_or_else(|| M::Error::missing_field("created_at"))?;
-                let detection_type =
-                    detection_type.ok_or_else(|| M::Error::missing_field("detection_type"))?;
-                let display_name =
-                    display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
+                let detection_type = detection_type.ok_or_else(|| M::Error::missing_field("detection_type"))?;
+                let display_name = display_name.ok_or_else(|| M::Error::missing_field("display_name"))?;
                 let priority = priority.ok_or_else(|| M::Error::missing_field("priority"))?;
-                let resource_id =
-                    resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
-                let resource_type =
-                    resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
+                let resource_id = resource_id.ok_or_else(|| M::Error::missing_field("resource_id"))?;
+                let resource_type = resource_type.ok_or_else(|| M::Error::missing_field("resource_type"))?;
                 let state = state.ok_or_else(|| M::Error::missing_field("state"))?;
 
                 let content = GovernanceControlDetectionAttributes {

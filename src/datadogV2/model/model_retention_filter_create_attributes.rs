@@ -1,10 +1,10 @@
 // Unless explicitly stated otherwise all files in this repository are licensed under the Apache-2.0 License.
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
-use serde::de::{Error, MapAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize};
-use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
+use serde::{Deserializer, Deserialize, Serialize};
+use serde::de::{Error, MapAccess, Visitor};
+use serde_with::skip_serializing_none;
 
 /// The object describing the configuration of the retention filter to create/update.
 #[non_exhaustive]
@@ -24,28 +24,22 @@ pub struct RetentionFilterCreateAttributes {
     #[serde(rename = "name")]
     pub name: String,
     /// Sample rate to apply to spans going through this retention filter.
-    /// A value of 1.0 keeps all spans matching the query.
+/// A value of 1.0 keeps all spans matching the query.
     #[serde(rename = "rate")]
     pub rate: f64,
     /// Sample rate to apply to traces containing spans going through this retention filter.
-    /// A value of 1.0 keeps all traces with spans matching the query.
+/// A value of 1.0 keeps all traces with spans matching the query.
     #[serde(rename = "trace_rate")]
     pub trace_rate: Option<f64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
     #[serde(default)]
-    pub(crate) _unparsed: bool,
+    pub(crate) _unparsed: bool
 }
 
 impl RetentionFilterCreateAttributes {
-    pub fn new(
-        enabled: bool,
-        filter: crate::datadogV2::model::SpansFilterCreate,
-        filter_type: crate::datadogV2::model::RetentionFilterType,
-        name: String,
-        rate: f64,
-    ) -> RetentionFilterCreateAttributes {
+    pub fn new(enabled: bool, filter: crate::datadogV2::model::SpansFilterCreate, filter_type: crate::datadogV2::model::RetentionFilterType, name: String, rate: f64) -> RetentionFilterCreateAttributes {
         RetentionFilterCreateAttributes {
             enabled,
             filter,
@@ -57,20 +51,19 @@ impl RetentionFilterCreateAttributes {
             _unparsed: false,
         }
     }
-
+    
     pub fn trace_rate(mut self, value: f64) -> Self {
         self.trace_rate = Some(value);
         self
     }
-
-    pub fn additional_properties(
-        mut self,
-        value: std::collections::BTreeMap<String, serde_json::Value>,
-    ) -> Self {
+    
+    pub fn additional_properties(mut self, value: std::collections::BTreeMap<String, serde_json::Value>) -> Self {
         self.additional_properties = value;
         self
     }
 }
+
+
 
 impl<'de> Deserialize<'de> for RetentionFilterCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
@@ -95,23 +88,19 @@ impl<'de> Deserialize<'de> for RetentionFilterCreateAttributes {
                 let mut name: Option<String> = None;
                 let mut rate: Option<f64> = None;
                 let mut trace_rate: Option<f64> = None;
-                let mut additional_properties: std::collections::BTreeMap<
-                    String,
-                    serde_json::Value,
-                > = std::collections::BTreeMap::new();
+                    let mut additional_properties: std::collections::BTreeMap<String, serde_json::Value> = std::collections::BTreeMap::new();
                 let mut _unparsed = false;
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "enabled" => {
                             enabled = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "filter" => {
                             filter = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "filter_type" => {
-                            filter_type =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            filter_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _filter_type) = filter_type {
                                 match _filter_type {
                                     crate::datadogV2::model::RetentionFilterType::UnparsedObject(_filter_type) => {
@@ -120,30 +109,29 @@ impl<'de> Deserialize<'de> for RetentionFilterCreateAttributes {
                                     _ => {}
                                 }
                             }
-                        }
+                        },
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "rate" => {
                             rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         "trace_rate" => {
                             if v.is_null() || v.as_str() == Some("") {
                                 continue;
                             }
                             trace_rate = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
+                        },
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
                             }
-                        }
+                        },
                     }
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let filter = filter.ok_or_else(|| M::Error::missing_field("filter"))?;
-                let filter_type =
-                    filter_type.ok_or_else(|| M::Error::missing_field("filter_type"))?;
+                let filter_type = filter_type.ok_or_else(|| M::Error::missing_field("filter_type"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let rate = rate.ok_or_else(|| M::Error::missing_field("rate"))?;
 
