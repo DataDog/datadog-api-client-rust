@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The information returned after successfully creating a page.
+/// The information returned after successfully creating a Page.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreatePageResponseData {
-    /// The unique ID of the created page.
+    /// The unique ID of the created Page.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// The type of resource used when creating an On-Call Page.
