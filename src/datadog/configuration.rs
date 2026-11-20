@@ -913,6 +913,26 @@ impl Default for Configuration {
             ("v2.update_incident_user_defined_role".to_owned(), false),
             ("v2.update_timestamp_override".to_owned(), false),
             (
+                "v2.create_anthropic_usage_and_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_anthropic_usage_and_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_anthropic_usage_and_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.list_anthropic_usage_and_costs_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_anthropic_usage_and_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
                 "v2.create_chat_gpt_enterprise_integration_account".to_owned(),
                 false,
             ),

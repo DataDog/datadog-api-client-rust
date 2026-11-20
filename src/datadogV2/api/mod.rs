@@ -10,6 +10,7 @@ pub mod api_agentless_scanning;
 pub mod api_ai_gateway;
 pub mod api_ai_guard;
 pub mod api_annotations;
+pub mod api_anthropic_usage_and_costs_integration;
 pub mod api_api_management;
 pub mod api_apm;
 pub mod api_apm_retention_filters;

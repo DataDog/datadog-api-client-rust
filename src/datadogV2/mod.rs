@@ -11,6 +11,7 @@ pub use self::api::api_agentless_scanning;
 pub use self::api::api_ai_gateway;
 pub use self::api::api_ai_guard;
 pub use self::api::api_annotations;
+pub use self::api::api_anthropic_usage_and_costs_integration;
 pub use self::api::api_api_management;
 pub use self::api::api_apm;
 pub use self::api::api_apm_retention_filters;
