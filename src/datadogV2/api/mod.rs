@@ -102,6 +102,7 @@ pub mod api_okta_integration;
 pub mod api_on_call;
 pub mod api_on_call_paging;
 pub mod api_open_ai_codex_integration;
+pub mod api_open_ai_llm_evaluations_integration;
 pub mod api_opsgenie_integration;
 pub mod api_org_authorized_clients;
 pub mod api_org_connections;

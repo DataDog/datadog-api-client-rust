@@ -103,6 +103,7 @@ pub use self::api::api_okta_integration;
 pub use self::api::api_on_call;
 pub use self::api::api_on_call_paging;
 pub use self::api::api_open_ai_codex_integration;
+pub use self::api::api_open_ai_llm_evaluations_integration;
 pub use self::api::api_opsgenie_integration;
 pub use self::api::api_org_authorized_clients;
 pub use self::api::api_org_connections;
