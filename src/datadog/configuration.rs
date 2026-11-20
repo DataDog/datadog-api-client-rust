@@ -933,6 +933,26 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.create_claude_compliance_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_claude_compliance_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.get_claude_compliance_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.list_claude_compliance_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_claude_compliance_integration_account".to_owned(),
+                false,
+            ),
+            (
                 "v2.create_core_weave_cloud_integration_account".to_owned(),
                 false,
             ),
