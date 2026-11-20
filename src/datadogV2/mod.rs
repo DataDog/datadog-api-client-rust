@@ -32,6 +32,7 @@ pub use self::api::api_ci_visibility_git_hub_accounts;
 pub use self::api::api_ci_visibility_logs;
 pub use self::api::api_ci_visibility_pipelines;
 pub use self::api::api_ci_visibility_tests;
+pub use self::api::api_claude_compliance_integration;
 pub use self::api::api_cloud_authentication;
 pub use self::api::api_cloud_cost_management;
 pub use self::api::api_cloud_network_monitoring;

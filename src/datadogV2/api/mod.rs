@@ -31,6 +31,7 @@ pub mod api_ci_visibility_git_hub_accounts;
 pub mod api_ci_visibility_logs;
 pub mod api_ci_visibility_pipelines;
 pub mod api_ci_visibility_tests;
+pub mod api_claude_compliance_integration;
 pub mod api_cloud_authentication;
 pub mod api_cloud_cost_management;
 pub mod api_cloud_network_monitoring;
