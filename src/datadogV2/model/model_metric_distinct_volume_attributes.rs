@@ -11,9 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricDistinctVolumeAttributes {
-    /// Distinct volume for the given metric.
-    #[serde(rename = "distinct_volume")]
-    pub distinct_volume: Option<i64>,
+    /// Distinct volume for the given metric. This value is `null` for standard metrics in organizations on
+    /// Metric Name Pricing.
+    #[serde(
+        rename = "distinct_volume",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub distinct_volume: Option<Option<i64>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,7 +35,7 @@ impl MetricDistinctVolumeAttributes {
         }
     }
 
-    pub fn distinct_volume(mut self, value: i64) -> Self {
+    pub fn distinct_volume(mut self, value: Option<i64>) -> Self {
         self.distinct_volume = Some(value);
         self
     }
@@ -67,7 +72,7 @@ impl<'de> Deserialize<'de> for MetricDistinctVolumeAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut distinct_volume: Option<i64> = None;
+                let mut distinct_volume: Option<Option<i64>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,9 +82,6 @@ impl<'de> Deserialize<'de> for MetricDistinctVolumeAttributes {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "distinct_volume" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             distinct_volume =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
