@@ -1757,6 +1757,78 @@ impl ListVulnerableAssetsOptionalParams {
     }
 }
 
+/// SearchRemediationGroupsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_remediation_groups`]
+#[non_exhaustive]
+#[derive(Clone, Default, Debug)]
+pub struct SearchRemediationGroupsOptionalParams {
+    /// Returns only groups whose grouping definition covers this `@finding_type` value. To match more than one
+    /// finding type, repeat the parameter.
+    pub filter_finding_type: Option<Vec<crate::datadogV2::model::RemediationGroupFindingType>>,
+    /// Returns only groups with at least one open finding that matches the query. Use the security findings
+    /// search syntax with attributes from the
+    /// [security findings schema](<https://docs.datadoghq.com/security/guide/findings-schema/>), prefixed by `@`.
+    /// For example, `@severity:(critical OR high)` returns groups with at least one critical or high finding.
+    /// The group's counts still include every finding in the group. The query can be at most 2048 bytes after
+    /// JSON encoding, and the parameter can appear only once.
+    pub filter_query: Option<String>,
+    /// Comma-separated list of sort fields. Prefix a field with `-` to sort in descending order.
+    /// `findings.by_severity` sorts by the critical count, then high, medium, low, info, none, and unknown.
+    /// `findings.total` sorts by the total finding count. By default, groups are sorted by critical count,
+    /// then high count, then total finding count, all in descending order.
+    pub sort: Option<String>,
+    /// Number of groups in a page.
+    pub page_size: Option<i64>,
+    /// Page to return, starting at 1.
+    pub page_number: Option<i64>,
+    /// Adds each group's case to `included`. `case` is the only supported value.
+    pub include: Option<crate::datadogV2::model::RemediationGroupInclude>,
+}
+
+impl SearchRemediationGroupsOptionalParams {
+    /// Returns only groups whose grouping definition covers this `@finding_type` value. To match more than one
+    /// finding type, repeat the parameter.
+    pub fn filter_finding_type(
+        mut self,
+        value: Vec<crate::datadogV2::model::RemediationGroupFindingType>,
+    ) -> Self {
+        self.filter_finding_type = Some(value);
+        self
+    }
+    /// Returns only groups with at least one open finding that matches the query. Use the security findings
+    /// search syntax with attributes from the
+    /// [security findings schema](<https://docs.datadoghq.com/security/guide/findings-schema/>), prefixed by `@`.
+    /// For example, `@severity:(critical OR high)` returns groups with at least one critical or high finding.
+    /// The group's counts still include every finding in the group. The query can be at most 2048 bytes after
+    /// JSON encoding, and the parameter can appear only once.
+    pub fn filter_query(mut self, value: String) -> Self {
+        self.filter_query = Some(value);
+        self
+    }
+    /// Comma-separated list of sort fields. Prefix a field with `-` to sort in descending order.
+    /// `findings.by_severity` sorts by the critical count, then high, medium, low, info, none, and unknown.
+    /// `findings.total` sorts by the total finding count. By default, groups are sorted by critical count,
+    /// then high count, then total finding count, all in descending order.
+    pub fn sort(mut self, value: String) -> Self {
+        self.sort = Some(value);
+        self
+    }
+    /// Number of groups in a page.
+    pub fn page_size(mut self, value: i64) -> Self {
+        self.page_size = Some(value);
+        self
+    }
+    /// Page to return, starting at 1.
+    pub fn page_number(mut self, value: i64) -> Self {
+        self.page_number = Some(value);
+        self
+    }
+    /// Adds each group's case to `included`. `case` is the only supported value.
+    pub fn include(mut self, value: crate::datadogV2::model::RemediationGroupInclude) -> Self {
+        self.include = Some(value);
+        self
+    }
+}
+
 /// SearchSecurityMonitoringHistsignalsOptionalParams is a struct for passing parameters to the method [`SecurityMonitoringAPI::search_security_monitoring_histsignals`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
@@ -3117,6 +3189,15 @@ pub enum RestoreSecurityMonitoringRuleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RunHistoricalJobError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// SearchRemediationGroupsError is a struct for typed errors of method [`SecurityMonitoringAPI::search_remediation_groups`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SearchRemediationGroupsError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -26397,6 +26478,228 @@ impl SecurityMonitoringAPI {
             };
         } else {
             let local_entity: Option<RunHistoricalJobError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Search the remediation groups of your organization. A remediation group gathers the open security findings
+    /// that one change fixes, such as updating a package in a repository or upgrading an image.
+    ///
+    /// Each group comes from a grouping definition, which sets the finding type it covers and the kind object the
+    /// group returns:
+    ///
+    /// | Grouping definition    | Finding type                       | Kind object      |
+    /// | ---------------------- | ---------------------------------- | ---------------- |
+    /// | `sca.package_update`   | `library_vulnerability`            | `package_update` |
+    /// | `cloudvm.image_update` | `host_and_container_vulnerability` | `image_update`   |
+    ///
+    /// Groups are computed from the attributes of security findings, described in the
+    /// [security findings schema](<https://docs.datadoghq.com/security/guide/findings-schema/>). The description of
+    /// each kind object lists the findings its grouping definition reads and the attribute each field comes from.
+    ///
+    /// The search includes all open findings, regardless of when they were first detected.
+    ///
+    /// This endpoint requires the `cases_read` permission and either the `security_monitoring_findings_read` or
+    /// `appsec_vm_read` permission.
+    pub async fn search_remediation_groups(
+        &self,
+        params: SearchRemediationGroupsOptionalParams,
+    ) -> Result<
+        crate::datadogV2::model::SearchRemediationGroupsResponse,
+        datadog::Error<SearchRemediationGroupsError>,
+    > {
+        match self.search_remediation_groups_with_http_info(params).await {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    pub fn search_remediation_groups_with_pagination(
+        &self,
+        mut params: SearchRemediationGroupsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::RemediationGroupData,
+            datadog::Error<SearchRemediationGroupsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(1);
+            }
+            loop {
+                let resp = self.search_remediation_groups(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
+        }
+    }
+
+    /// Search the remediation groups of your organization. A remediation group gathers the open security findings
+    /// that one change fixes, such as updating a package in a repository or upgrading an image.
+    ///
+    /// Each group comes from a grouping definition, which sets the finding type it covers and the kind object the
+    /// group returns:
+    ///
+    /// | Grouping definition    | Finding type                       | Kind object      |
+    /// | ---------------------- | ---------------------------------- | ---------------- |
+    /// | `sca.package_update`   | `library_vulnerability`            | `package_update` |
+    /// | `cloudvm.image_update` | `host_and_container_vulnerability` | `image_update`   |
+    ///
+    /// Groups are computed from the attributes of security findings, described in the
+    /// [security findings schema](<https://docs.datadoghq.com/security/guide/findings-schema/>). The description of
+    /// each kind object lists the findings its grouping definition reads and the attribute each field comes from.
+    ///
+    /// The search includes all open findings, regardless of when they were first detected.
+    ///
+    /// This endpoint requires the `cases_read` permission and either the `security_monitoring_findings_read` or
+    /// `appsec_vm_read` permission.
+    pub async fn search_remediation_groups_with_http_info(
+        &self,
+        params: SearchRemediationGroupsOptionalParams,
+    ) -> Result<
+        datadog::ResponseContent<crate::datadogV2::model::SearchRemediationGroupsResponse>,
+        datadog::Error<SearchRemediationGroupsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.search_remediation_groups";
+        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
+            warn!("Using unstable operation {local_operation_id}");
+        } else {
+            let local_error = datadog::UnstableOperationDisabledError {
+                msg: "Operation 'v2.search_remediation_groups' is not enabled".to_string(),
+            };
+            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
+        }
+
+        // unbox and build optional parameters
+        let filter_finding_type = params.filter_finding_type;
+        let filter_query = params.filter_query;
+        let sort = params.sort;
+        let page_size = params.page_size;
+        let page_number = params.page_number;
+        let include = params.include;
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/security/remediation_groups",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        if let Some(ref local) = filter_finding_type {
+            for param in local {
+                local_req_builder =
+                    local_req_builder.query(&[("filter[finding_type]", &param.to_string())]);
+            }
+        };
+        if let Some(ref local_query_param) = filter_query {
+            local_req_builder =
+                local_req_builder.query(&[("filter[query]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = sort {
+            local_req_builder =
+                local_req_builder.query(&[("sort", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_size {
+            local_req_builder =
+                local_req_builder.query(&[("page[size]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_number {
+            local_req_builder =
+                local_req_builder.query(&[("page[number]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = include {
+            local_req_builder =
+                local_req_builder.query(&[("include", &local_query_param.to_string())]);
+        };
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<crate::datadogV2::model::SearchRemediationGroupsResponse>(
+                &local_content,
+            ) {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<SearchRemediationGroupsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

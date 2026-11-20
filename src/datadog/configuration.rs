@@ -602,6 +602,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.run_historical_job".to_owned(), false),
+            ("v2.search_remediation_groups".to_owned(), false),
             (
                 "v2.search_security_monitoring_histsignals".to_owned(),
                 false,
