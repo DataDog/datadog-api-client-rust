@@ -16,11 +16,11 @@ use std::io::Write;
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListEventsOptionalParams {
-    /// Search query following events syntax.
+    /// Search query following events syntax. Attributes take `@` (`@evt.category:alert`); tags and reserved fields don't (`service:web`).
     pub filter_query: Option<String>,
-    /// Minimum timestamp for requested events, in milliseconds.
+    /// Minimum time for requested events, as date math (`now-1h`), ISO 8601 or a timestamp in milliseconds. Defaults to `now-15m`.
     pub filter_from: Option<String>,
-    /// Maximum timestamp for requested events, in milliseconds.
+    /// Maximum time for requested events, as date math, ISO 8601 or a timestamp in milliseconds. Defaults to `now`.
     pub filter_to: Option<String>,
     /// Order of events in results.
     pub sort: Option<crate::datadogV2::model::EventsSort>,
@@ -31,17 +31,17 @@ pub struct ListEventsOptionalParams {
 }
 
 impl ListEventsOptionalParams {
-    /// Search query following events syntax.
+    /// Search query following events syntax. Attributes take `@` (`@evt.category:alert`); tags and reserved fields don't (`service:web`).
     pub fn filter_query(mut self, value: String) -> Self {
         self.filter_query = Some(value);
         self
     }
-    /// Minimum timestamp for requested events, in milliseconds.
+    /// Minimum time for requested events, as date math (`now-1h`), ISO 8601 or a timestamp in milliseconds. Defaults to `now-15m`.
     pub fn filter_from(mut self, value: String) -> Self {
         self.filter_from = Some(value);
         self
     }
-    /// Maximum timestamp for requested events, in milliseconds.
+    /// Maximum time for requested events, as date math, ISO 8601 or a timestamp in milliseconds. Defaults to `now`.
     pub fn filter_to(mut self, value: String) -> Self {
         self.filter_to = Some(value);
         self
@@ -457,6 +457,16 @@ impl EventsAPI {
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest events.
+    ///
+    /// Query syntax: attributes take `@` (`@evt.integration_id:kubernetes`, `@evt.category:alert`), while tags and
+    /// reserved fields don't (`kube_cluster_name:gizmo`, `service:web`, `source:oom_kill`). A name that needs `@`
+    /// matches nothing without it. To filter by integration, prefer `@evt.integration_id`, whose values use hyphens
+    /// (`oom-kill`), over `source`, whose values use underscores (`oom_kill`). Bare words search the event text, and
+    /// quoted phrases, `OR`, `-` negation and value wildcards work; wildcards in attribute names, such as `@*.name`, don't.
+    ///
+    /// Without `from`, only the last 15 minutes are searched, so widen the window before concluding that no event exists.
+    /// Each event's own fields are under `data[].attributes.attributes`, for example `evt.integration_id`, `evt.category`,
+    /// `title` and `service`. To fetch one event with `GetEvent`, use its `evt.id` or `evt.uid`, not the top-level `id`.
     pub async fn list_events(
         &self,
         params: ListEventsOptionalParams,
@@ -513,6 +523,16 @@ impl EventsAPI {
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to see your latest events.
+    ///
+    /// Query syntax: attributes take `@` (`@evt.integration_id:kubernetes`, `@evt.category:alert`), while tags and
+    /// reserved fields don't (`kube_cluster_name:gizmo`, `service:web`, `source:oom_kill`). A name that needs `@`
+    /// matches nothing without it. To filter by integration, prefer `@evt.integration_id`, whose values use hyphens
+    /// (`oom-kill`), over `source`, whose values use underscores (`oom_kill`). Bare words search the event text, and
+    /// quoted phrases, `OR`, `-` negation and value wildcards work; wildcards in attribute names, such as `@*.name`, don't.
+    ///
+    /// Without `from`, only the last 15 minutes are searched, so widen the window before concluding that no event exists.
+    /// Each event's own fields are under `data[].attributes.attributes`, for example `evt.integration_id`, `evt.category`,
+    /// `title` and `service`. To fetch one event with `GetEvent`, use its `evt.id` or `evt.uid`, not the top-level `id`.
     pub async fn list_events_with_http_info(
         &self,
         params: ListEventsOptionalParams,
@@ -634,6 +654,16 @@ impl EventsAPI {
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
+    ///
+    /// Query syntax: attributes take `@` (`@evt.integration_id:kubernetes`, `@evt.category:alert`), while tags and
+    /// reserved fields don't (`kube_cluster_name:gizmo`, `service:web`, `source:oom_kill`). A name that needs `@`
+    /// matches nothing without it. To filter by integration, prefer `@evt.integration_id`, whose values use hyphens
+    /// (`oom-kill`), over `source`, whose values use underscores (`oom_kill`). Bare words search the event text, and
+    /// quoted phrases, `OR`, `-` negation and value wildcards work; wildcards in attribute names, such as `@*.name`, don't.
+    ///
+    /// Without `from`, only the last 15 minutes are searched, so widen the window before concluding that no event exists.
+    /// Each event's own fields are under `data[].attributes.attributes`, for example `evt.integration_id`, `evt.category`,
+    /// `title` and `service`. To fetch one event with `GetEvent`, use its `evt.id` or `evt.uid`, not the top-level `id`.
     pub async fn search_events(
         &self,
         params: SearchEventsOptionalParams,
@@ -697,6 +727,16 @@ impl EventsAPI {
     /// [Results are paginated similarly to logs](<https://docs.datadoghq.com/logs/guide/collect-multiple-logs-with-pagination>).
     ///
     /// Use this endpoint to build complex events filtering and search.
+    ///
+    /// Query syntax: attributes take `@` (`@evt.integration_id:kubernetes`, `@evt.category:alert`), while tags and
+    /// reserved fields don't (`kube_cluster_name:gizmo`, `service:web`, `source:oom_kill`). A name that needs `@`
+    /// matches nothing without it. To filter by integration, prefer `@evt.integration_id`, whose values use hyphens
+    /// (`oom-kill`), over `source`, whose values use underscores (`oom_kill`). Bare words search the event text, and
+    /// quoted phrases, `OR`, `-` negation and value wildcards work; wildcards in attribute names, such as `@*.name`, don't.
+    ///
+    /// Without `from`, only the last 15 minutes are searched, so widen the window before concluding that no event exists.
+    /// Each event's own fields are under `data[].attributes.attributes`, for example `evt.integration_id`, `evt.category`,
+    /// `title` and `service`. To fetch one event with `GetEvent`, use its `evt.id` or `evt.uid`, not the top-level `id`.
     pub async fn search_events_with_http_info(
         &self,
         params: SearchEventsOptionalParams,
