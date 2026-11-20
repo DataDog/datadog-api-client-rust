@@ -23,6 +23,9 @@ pub struct ObservabilityPipelineCustomProcessorRemap {
     /// A descriptive name for this remap rule.
     #[serde(rename = "name")]
     pub name: String,
+    /// A sample event used to test the VRL script in the pipeline editor.
+    #[serde(rename = "sample")]
+    pub sample: Option<String>,
     /// The VRL script source code that defines the processing logic.
     #[serde(rename = "source")]
     pub source: String,
@@ -45,6 +48,7 @@ impl ObservabilityPipelineCustomProcessorRemap {
             enabled: None,
             include,
             name,
+            sample: None,
             source,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -53,6 +57,11 @@ impl ObservabilityPipelineCustomProcessorRemap {
 
     pub fn enabled(mut self, value: bool) -> Self {
         self.enabled = Some(value);
+        self
+    }
+
+    pub fn sample(mut self, value: String) -> Self {
+        self.sample = Some(value);
         self
     }
 
@@ -86,6 +95,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessorRemap {
                 let mut enabled: Option<bool> = None;
                 let mut include: Option<String> = None;
                 let mut name: Option<String> = None;
+                let mut sample: Option<String> = None;
                 let mut source: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -111,6 +121,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessorRemap {
                         "name" => {
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "sample" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            sample = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -132,6 +148,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineCustomProcessorRemap {
                     enabled,
                     include,
                     name,
+                    sample,
                     source,
                     additional_properties,
                     _unparsed,

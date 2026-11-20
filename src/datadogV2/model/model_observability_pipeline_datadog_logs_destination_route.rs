@@ -17,6 +17,9 @@ pub struct ObservabilityPipelineDatadogLogsDestinationRoute {
     /// A Datadog search query that determines which logs are forwarded using this route.
     #[serde(rename = "include")]
     pub include: Option<String>,
+    /// A human-readable name for this route.
+    #[serde(rename = "name")]
+    pub name: Option<String>,
     /// Unique identifier for this route within the destination.
     #[serde(rename = "route_id")]
     pub route_id: Option<String>,
@@ -35,6 +38,7 @@ impl ObservabilityPipelineDatadogLogsDestinationRoute {
         ObservabilityPipelineDatadogLogsDestinationRoute {
             api_key_key: None,
             include: None,
+            name: None,
             route_id: None,
             site: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,6 +53,11 @@ impl ObservabilityPipelineDatadogLogsDestinationRoute {
 
     pub fn include(mut self, value: String) -> Self {
         self.include = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
         self
     }
 
@@ -96,6 +105,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestinationRoute 
             {
                 let mut api_key_key: Option<String> = None;
                 let mut include: Option<String> = None;
+                let mut name: Option<String> = None;
                 let mut route_id: Option<String> = None;
                 let mut site: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -118,6 +128,12 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestinationRoute 
                                 continue;
                             }
                             include = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "route_id" => {
                             if v.is_null() {
@@ -142,6 +158,7 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineDatadogLogsDestinationRoute 
                 let content = ObservabilityPipelineDatadogLogsDestinationRoute {
                     api_key_key,
                     include,
+                    name,
                     route_id,
                     site,
                     additional_properties,
