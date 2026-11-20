@@ -20,6 +20,9 @@ pub enum ObservabilityPipelineConfigSourceItem {
     ObservabilityPipelineAmazonS3Source(
         Box<crate::datadogV2::model::ObservabilityPipelineAmazonS3Source>,
     ),
+    ObservabilityPipelineCrowdStrikeFdrSource(
+        Box<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeFdrSource>,
+    ),
     ObservabilityPipelineFluentBitSource(
         Box<crate::datadogV2::model::ObservabilityPipelineFluentBitSource>,
     ),
@@ -114,6 +117,14 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfigSourceItem {
                 return Ok(
                     ObservabilityPipelineConfigSourceItem::ObservabilityPipelineAmazonS3Source(_v),
                 );
+            }
+        }
+        if let Ok(_v) = serde_json::from_value::<
+            Box<crate::datadogV2::model::ObservabilityPipelineCrowdStrikeFdrSource>,
+        >(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(ObservabilityPipelineConfigSourceItem::ObservabilityPipelineCrowdStrikeFdrSource(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
