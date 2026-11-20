@@ -14,7 +14,7 @@ pub struct SessionIdData {
     /// Unique identifier of the RUM replay session.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Rum replay session resource type.
+    /// RUM replay session resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ViewershipHistorySessionDataType,
     #[serde(flatten)]

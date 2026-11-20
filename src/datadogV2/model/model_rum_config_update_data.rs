@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumConfigUpdateData {
+pub struct RUMConfigUpdateData {
     /// Attributes of the RUM configuration to update.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumConfigUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMConfigUpdateAttributes,
     /// The type of the resource. The value should always be `rum_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumConfigType,
+    pub type_: crate::datadogV2::model::RUMConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumConfigUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumConfigUpdateData {
+impl RUMConfigUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumConfigUpdateAttributes,
-        type_: crate::datadogV2::model::RumConfigType,
-    ) -> RumConfigUpdateData {
-        RumConfigUpdateData {
+        attributes: crate::datadogV2::model::RUMConfigUpdateAttributes,
+        type_: crate::datadogV2::model::RUMConfigType,
+    ) -> RUMConfigUpdateData {
+        RUMConfigUpdateData {
             attributes,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumConfigUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigUpdateData {
+impl<'de> Deserialize<'de> for RUMConfigUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumConfigUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumConfigUpdateDataVisitor {
-            type Value = RumConfigUpdateData;
+        struct RUMConfigUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMConfigUpdateDataVisitor {
+            type Value = RUMConfigUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,9 +63,9 @@ impl<'de> Deserialize<'de> for RumConfigUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumConfigUpdateAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMConfigUpdateAttributes> =
                     None;
-                let mut type_: Option<crate::datadogV2::model::RumConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,7 +81,7 @@ impl<'de> Deserialize<'de> for RumConfigUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumConfigType::UnparsedObject(
+                                    crate::datadogV2::model::RUMConfigType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -100,7 +100,7 @@ impl<'de> Deserialize<'de> for RumConfigUpdateData {
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumConfigUpdateData {
+                let content = RUMConfigUpdateData {
                     attributes,
                     type_,
                     additional_properties,
@@ -111,6 +111,6 @@ impl<'de> Deserialize<'de> for RumConfigUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumConfigUpdateDataVisitor)
+        deserializer.deserialize_any(RUMConfigUpdateDataVisitor)
     }
 }

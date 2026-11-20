@@ -1,7 +1,7 @@
 // Get user facet info returns "Successful response with facet information"
 // response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_audience_management::RumAudienceManagementAPI;
+use datadog_api_client::datadogV2::api_rum_audience_management::RUMAudienceManagementAPI;
 use datadog_api_client::datadogV2::model::FacetInfoRequest;
 use datadog_api_client::datadogV2::model::FacetInfoRequestData;
 use datadog_api_client::datadogV2::model::FacetInfoRequestDataAttributes;
@@ -27,7 +27,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.get_user_facet_info", true);
-    let api = RumAudienceManagementAPI::with_config(configuration);
+    let api = RUMAudienceManagementAPI::with_config(configuration);
     let resp = api.get_user_facet_info(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

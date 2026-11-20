@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionAttributes {
+pub struct RUMArchiveSessionAttributes {
     /// Session account id, or null when unavailable.
     #[serialize_always]
     #[serde(rename = "account_id")]
@@ -29,7 +29,7 @@ pub struct RumArchiveSessionAttributes {
     /// Session recovery state. A missing recovery record can be represented as null. Optional request_id and recovered_at are omitted when unavailable.
     #[serialize_always]
     #[serde(rename = "recovery_status")]
-    pub recovery_status: Option<crate::datadogV2::model::RumArchiveSessionRecoveryStatus>,
+    pub recovery_status: Option<crate::datadogV2::model::RUMArchiveSessionRecoveryStatus>,
     /// Service name.
     #[serde(rename = "service")]
     pub service: String,
@@ -54,20 +54,20 @@ pub struct RumArchiveSessionAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionAttributes {
+impl RUMArchiveSessionAttributes {
     pub fn new(
         account_id: Option<String>,
         anonymous_id: Option<String>,
         application_id: uuid::Uuid,
         country: Option<String>,
-        recovery_status: Option<crate::datadogV2::model::RumArchiveSessionRecoveryStatus>,
+        recovery_status: Option<crate::datadogV2::model::RUMArchiveSessionRecoveryStatus>,
         service: String,
         session_id: String,
         timestamp: i64,
         user_id: Option<String>,
         version: Option<String>,
-    ) -> RumArchiveSessionAttributes {
-        RumArchiveSessionAttributes {
+    ) -> RUMArchiveSessionAttributes {
+        RUMArchiveSessionAttributes {
             account_id,
             anonymous_id,
             application_id,
@@ -92,14 +92,14 @@ impl RumArchiveSessionAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionAttributes {
+impl<'de> Deserialize<'de> for RUMArchiveSessionAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionAttributesVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionAttributesVisitor {
-            type Value = RumArchiveSessionAttributes;
+        struct RUMArchiveSessionAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionAttributesVisitor {
+            type Value = RUMArchiveSessionAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -114,7 +114,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionAttributes {
                 let mut application_id: Option<uuid::Uuid> = None;
                 let mut country: Option<Option<String>> = None;
                 let mut recovery_status: Option<
-                    Option<crate::datadogV2::model::RumArchiveSessionRecoveryStatus>,
+                    Option<crate::datadogV2::model::RUMArchiveSessionRecoveryStatus>,
                 > = None;
                 let mut service: Option<String> = None;
                 let mut session_id: Option<String> = None;
@@ -183,7 +183,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionAttributes {
                 let user_id = user_id.ok_or_else(|| M::Error::missing_field("user_id"))?;
                 let version = version.ok_or_else(|| M::Error::missing_field("version"))?;
 
-                let content = RumArchiveSessionAttributes {
+                let content = RUMArchiveSessionAttributes {
                     account_id,
                     anonymous_id,
                     application_id,
@@ -202,6 +202,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionAttributesVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionAttributesVisitor)
     }
 }

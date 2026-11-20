@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumCrossProductSamplingCreate {
+pub struct RUMCrossProductSamplingCreate {
     /// Whether the cross-product retention filter for APM traces is enabled.
     #[serde(rename = "trace_enabled")]
     pub trace_enabled: Option<bool>,
@@ -24,9 +24,9 @@ pub struct RumCrossProductSamplingCreate {
     pub(crate) _unparsed: bool,
 }
 
-impl RumCrossProductSamplingCreate {
-    pub fn new(trace_sample_rate: f64) -> RumCrossProductSamplingCreate {
-        RumCrossProductSamplingCreate {
+impl RUMCrossProductSamplingCreate {
+    pub fn new(trace_sample_rate: f64) -> RUMCrossProductSamplingCreate {
+        RUMCrossProductSamplingCreate {
             trace_enabled: None,
             trace_sample_rate,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,14 +48,14 @@ impl RumCrossProductSamplingCreate {
     }
 }
 
-impl<'de> Deserialize<'de> for RumCrossProductSamplingCreate {
+impl<'de> Deserialize<'de> for RUMCrossProductSamplingCreate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumCrossProductSamplingCreateVisitor;
-        impl<'a> Visitor<'a> for RumCrossProductSamplingCreateVisitor {
-            type Value = RumCrossProductSamplingCreate;
+        struct RUMCrossProductSamplingCreateVisitor;
+        impl<'a> Visitor<'a> for RUMCrossProductSamplingCreateVisitor {
+            type Value = RUMCrossProductSamplingCreate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -96,7 +96,7 @@ impl<'de> Deserialize<'de> for RumCrossProductSamplingCreate {
                 let trace_sample_rate = trace_sample_rate
                     .ok_or_else(|| M::Error::missing_field("trace_sample_rate"))?;
 
-                let content = RumCrossProductSamplingCreate {
+                let content = RUMCrossProductSamplingCreate {
                     trace_enabled,
                     trace_sample_rate,
                     additional_properties,
@@ -107,6 +107,6 @@ impl<'de> Deserialize<'de> for RumCrossProductSamplingCreate {
             }
         }
 
-        deserializer.deserialize_any(RumCrossProductSamplingCreateVisitor)
+        deserializer.deserialize_any(RUMCrossProductSamplingCreateVisitor)
     }
 }

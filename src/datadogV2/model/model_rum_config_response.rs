@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumConfigResponse {
+pub struct RUMConfigResponse {
     /// The RUM configuration data.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumConfigData,
+    pub data: crate::datadogV2::model::RUMConfigData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumConfigResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumConfigResponse {
-    pub fn new(data: crate::datadogV2::model::RumConfigData) -> RumConfigResponse {
-        RumConfigResponse {
+impl RUMConfigResponse {
+    pub fn new(data: crate::datadogV2::model::RUMConfigData) -> RUMConfigResponse {
+        RUMConfigResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumConfigResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigResponse {
+impl<'de> Deserialize<'de> for RUMConfigResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumConfigResponseVisitor;
-        impl<'a> Visitor<'a> for RumConfigResponseVisitor {
-            type Value = RumConfigResponse;
+        struct RUMConfigResponseVisitor;
+        impl<'a> Visitor<'a> for RUMConfigResponseVisitor {
+            type Value = RUMConfigResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumConfigResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumConfigData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMConfigData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumConfigResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumConfigResponse {
+                let content = RUMConfigResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumConfigResponse {
             }
         }
 
-        deserializer.deserialize_any(RumConfigResponseVisitor)
+        deserializer.deserialize_any(RUMConfigResponseVisitor)
     }
 }

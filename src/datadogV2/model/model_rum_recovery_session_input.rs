@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoverySessionInput {
+pub struct RUMRecoverySessionInput {
     /// Application UUID.
     #[serde(rename = "application_id")]
     pub application_id: uuid::Uuid,
@@ -24,9 +24,9 @@ pub struct RumRecoverySessionInput {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoverySessionInput {
-    pub fn new(application_id: uuid::Uuid, session_id: uuid::Uuid) -> RumRecoverySessionInput {
-        RumRecoverySessionInput {
+impl RUMRecoverySessionInput {
+    pub fn new(application_id: uuid::Uuid, session_id: uuid::Uuid) -> RUMRecoverySessionInput {
+        RUMRecoverySessionInput {
             application_id,
             session_id,
             additional_properties: std::collections::BTreeMap::new(),
@@ -43,14 +43,14 @@ impl RumRecoverySessionInput {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoverySessionInput {
+impl<'de> Deserialize<'de> for RUMRecoverySessionInput {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoverySessionInputVisitor;
-        impl<'a> Visitor<'a> for RumRecoverySessionInputVisitor {
-            type Value = RumRecoverySessionInput;
+        struct RUMRecoverySessionInputVisitor;
+        impl<'a> Visitor<'a> for RUMRecoverySessionInputVisitor {
+            type Value = RUMRecoverySessionInput;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -88,7 +88,7 @@ impl<'de> Deserialize<'de> for RumRecoverySessionInput {
                     application_id.ok_or_else(|| M::Error::missing_field("application_id"))?;
                 let session_id = session_id.ok_or_else(|| M::Error::missing_field("session_id"))?;
 
-                let content = RumRecoverySessionInput {
+                let content = RUMRecoverySessionInput {
                     application_id,
                     session_id,
                     additional_properties,
@@ -99,6 +99,6 @@ impl<'de> Deserialize<'de> for RumRecoverySessionInput {
             }
         }
 
-        deserializer.deserialize_any(RumRecoverySessionInputVisitor)
+        deserializer.deserialize_any(RUMRecoverySessionInputVisitor)
     }
 }

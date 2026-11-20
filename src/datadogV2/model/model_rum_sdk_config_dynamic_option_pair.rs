@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigDynamicOptionPair {
+pub struct RUMSdkConfigDynamicOptionPair {
     /// The key name for this dynamic configuration pair.
     #[serde(rename = "key")]
     pub key: String,
     /// A dynamic configuration option that extracts a value at runtime using a specified strategy.
     #[serde(rename = "value")]
-    pub value: crate::datadogV2::model::RumSdkConfigDynamicOption,
+    pub value: crate::datadogV2::model::RUMSdkConfigDynamicOption,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumSdkConfigDynamicOptionPair {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigDynamicOptionPair {
+impl RUMSdkConfigDynamicOptionPair {
     pub fn new(
         key: String,
-        value: crate::datadogV2::model::RumSdkConfigDynamicOption,
-    ) -> RumSdkConfigDynamicOptionPair {
-        RumSdkConfigDynamicOptionPair {
+        value: crate::datadogV2::model::RUMSdkConfigDynamicOption,
+    ) -> RUMSdkConfigDynamicOptionPair {
+        RUMSdkConfigDynamicOptionPair {
             key,
             value,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumSdkConfigDynamicOptionPair {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigDynamicOptionPair {
+impl<'de> Deserialize<'de> for RUMSdkConfigDynamicOptionPair {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigDynamicOptionPairVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigDynamicOptionPairVisitor {
-            type Value = RumSdkConfigDynamicOptionPair;
+        struct RUMSdkConfigDynamicOptionPairVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigDynamicOptionPairVisitor {
+            type Value = RUMSdkConfigDynamicOptionPair;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOptionPair {
                 M: MapAccess<'a>,
             {
                 let mut key: Option<String> = None;
-                let mut value: Option<crate::datadogV2::model::RumSdkConfigDynamicOption> = None;
+                let mut value: Option<crate::datadogV2::model::RUMSdkConfigDynamicOption> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOptionPair {
                 let key = key.ok_or_else(|| M::Error::missing_field("key"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = RumSdkConfigDynamicOptionPair {
+                let content = RUMSdkConfigDynamicOptionPair {
                     key,
                     value,
                     additional_properties,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOptionPair {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigDynamicOptionPairVisitor)
+        deserializer.deserialize_any(RUMSdkConfigDynamicOptionPairVisitor)
     }
 }

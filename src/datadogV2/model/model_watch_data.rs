@@ -17,7 +17,7 @@ pub struct WatchData {
     /// Unique identifier of the watch record.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Rum replay watch resource type.
+    /// RUM replay watch resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::WatchDataType,
     #[serde(flatten)]

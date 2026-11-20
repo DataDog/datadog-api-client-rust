@@ -1,7 +1,7 @@
 // Query event filtered users returns "Successful response with filtered user
 // data" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_audience_management::RumAudienceManagementAPI;
+use datadog_api_client::datadogV2::api_rum_audience_management::RUMAudienceManagementAPI;
 use datadog_api_client::datadogV2::model::QueryEventFilteredUsersRequest;
 use datadog_api_client::datadogV2::model::QueryEventFilteredUsersRequestData;
 use datadog_api_client::datadogV2::model::QueryEventFilteredUsersRequestDataAttributes;
@@ -50,7 +50,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.query_event_filtered_users", true);
-    let api = RumAudienceManagementAPI::with_config(configuration);
+    let api = RUMAudienceManagementAPI::with_config(configuration);
     let resp = api.query_event_filtered_users(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

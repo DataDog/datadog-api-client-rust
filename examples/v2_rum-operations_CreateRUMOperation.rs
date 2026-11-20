@@ -7,7 +7,7 @@ use datadog_api_client::datadogV2::model::RUMOperationJourneyCompositeRule;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyCompositeRuleKind;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyNode;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyPredicate;
-use datadog_api_client::datadogV2::model::RUMOperationJourneyRum;
+use datadog_api_client::datadogV2::model::RUMOperationJourneyRUM;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyStep;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyStepType;
 use datadog_api_client::datadogV2::model::RUMOperationRequestAttributes;
@@ -18,7 +18,7 @@ use uuid::Uuid;
 async fn main() {
     let body = RUMOperationCreateRequest::new(RUMOperationCreateRequestData::new(
         RUMOperationRequestAttributes::new(
-            RUMOperationJourneyRum::new(Some(vec![RUMOperationJourneyStep::new(
+            RUMOperationJourneyRUM::new(Some(vec![RUMOperationJourneyStep::new(
                 RUMOperationJourneyStepType::START,
             )
             .composite(

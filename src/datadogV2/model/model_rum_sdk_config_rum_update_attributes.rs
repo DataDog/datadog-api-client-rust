@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigRumUpdateAttributes {
+pub struct RUMSdkConfigRUMUpdateAttributes {
     /// A list of URL configurations for distributed tracing.
     #[serde(rename = "allowed_tracing_urls")]
-    pub allowed_tracing_urls: Option<Vec<crate::datadogV2::model::RumSdkConfigTracingUrlConfig>>,
+    pub allowed_tracing_urls: Option<Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlConfig>>,
     /// A list of origin patterns allowed for cross-origin session tracking.
     #[serde(rename = "allowed_tracking_origins")]
-    pub allowed_tracking_origins: Option<Vec<crate::datadogV2::model::RumSdkConfigMatchOption>>,
+    pub allowed_tracking_origins: Option<Vec<crate::datadogV2::model::RUMSdkConfigMatchOption>>,
     /// A list of dynamic option key-value pairs.
     #[serde(rename = "context")]
-    pub context: Option<Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>>,
+    pub context: Option<Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>>,
     /// The default privacy masking level applied to all RUM data.
     #[serde(rename = "default_privacy_level")]
     pub default_privacy_level: String,
@@ -46,10 +46,10 @@ pub struct RumSdkConfigRumUpdateAttributes {
     pub track_session_across_subdomains: Option<bool>,
     /// A list of dynamic option key-value pairs.
     #[serde(rename = "user")]
-    pub user: Option<Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>>,
+    pub user: Option<Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>>,
     /// A dynamic configuration option that extracts a value at runtime using a specified strategy.
     #[serde(rename = "version")]
-    pub version: Option<crate::datadogV2::model::RumSdkConfigDynamicOption>,
+    pub version: Option<crate::datadogV2::model::RUMSdkConfigDynamicOption>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -57,14 +57,14 @@ pub struct RumSdkConfigRumUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigRumUpdateAttributes {
+impl RUMSdkConfigRUMUpdateAttributes {
     pub fn new(
         default_privacy_level: String,
         enable_privacy_for_action_name: bool,
         session_replay_sample_rate: i64,
         session_sample_rate: i64,
-    ) -> RumSdkConfigRumUpdateAttributes {
-        RumSdkConfigRumUpdateAttributes {
+    ) -> RUMSdkConfigRUMUpdateAttributes {
+        RUMSdkConfigRUMUpdateAttributes {
             allowed_tracing_urls: None,
             allowed_tracking_origins: None,
             context: None,
@@ -85,7 +85,7 @@ impl RumSdkConfigRumUpdateAttributes {
 
     pub fn allowed_tracing_urls(
         mut self,
-        value: Vec<crate::datadogV2::model::RumSdkConfigTracingUrlConfig>,
+        value: Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlConfig>,
     ) -> Self {
         self.allowed_tracing_urls = Some(value);
         self
@@ -93,7 +93,7 @@ impl RumSdkConfigRumUpdateAttributes {
 
     pub fn allowed_tracking_origins(
         mut self,
-        value: Vec<crate::datadogV2::model::RumSdkConfigMatchOption>,
+        value: Vec<crate::datadogV2::model::RUMSdkConfigMatchOption>,
     ) -> Self {
         self.allowed_tracking_origins = Some(value);
         self
@@ -101,7 +101,7 @@ impl RumSdkConfigRumUpdateAttributes {
 
     pub fn context(
         mut self,
-        value: Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>,
+        value: Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>,
     ) -> Self {
         self.context = Some(value);
         self
@@ -129,13 +129,13 @@ impl RumSdkConfigRumUpdateAttributes {
 
     pub fn user(
         mut self,
-        value: Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>,
+        value: Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>,
     ) -> Self {
         self.user = Some(value);
         self
     }
 
-    pub fn version(mut self, value: crate::datadogV2::model::RumSdkConfigDynamicOption) -> Self {
+    pub fn version(mut self, value: crate::datadogV2::model::RUMSdkConfigDynamicOption) -> Self {
         self.version = Some(value);
         self
     }
@@ -149,14 +149,14 @@ impl RumSdkConfigRumUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigRumUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMSdkConfigRUMUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigRumUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigRumUpdateAttributesVisitor {
-            type Value = RumSdkConfigRumUpdateAttributes;
+        struct RUMSdkConfigRUMUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigRUMUpdateAttributesVisitor {
+            type Value = RUMSdkConfigRUMUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -167,13 +167,13 @@ impl<'de> Deserialize<'de> for RumSdkConfigRumUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut allowed_tracing_urls: Option<
-                    Vec<crate::datadogV2::model::RumSdkConfigTracingUrlConfig>,
+                    Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlConfig>,
                 > = None;
                 let mut allowed_tracking_origins: Option<
-                    Vec<crate::datadogV2::model::RumSdkConfigMatchOption>,
+                    Vec<crate::datadogV2::model::RUMSdkConfigMatchOption>,
                 > = None;
                 let mut context: Option<
-                    Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>,
+                    Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>,
                 > = None;
                 let mut default_privacy_level: Option<String> = None;
                 let mut enable_privacy_for_action_name: Option<bool> = None;
@@ -183,9 +183,9 @@ impl<'de> Deserialize<'de> for RumSdkConfigRumUpdateAttributes {
                 let mut session_sample_rate: Option<i64> = None;
                 let mut trace_sample_rate: Option<i64> = None;
                 let mut track_session_across_subdomains: Option<bool> = None;
-                let mut user: Option<Vec<crate::datadogV2::model::RumSdkConfigDynamicOptionPair>> =
+                let mut user: Option<Vec<crate::datadogV2::model::RUMSdkConfigDynamicOptionPair>> =
                     None;
-                let mut version: Option<crate::datadogV2::model::RumSdkConfigDynamicOption> = None;
+                let mut version: Option<crate::datadogV2::model::RUMSdkConfigDynamicOption> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -284,7 +284,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigRumUpdateAttributes {
                 let session_sample_rate = session_sample_rate
                     .ok_or_else(|| M::Error::missing_field("session_sample_rate"))?;
 
-                let content = RumSdkConfigRumUpdateAttributes {
+                let content = RUMSdkConfigRUMUpdateAttributes {
                     allowed_tracing_urls,
                     allowed_tracking_origins,
                     context,
@@ -306,6 +306,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigRumUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigRumUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMSdkConfigRUMUpdateAttributesVisitor)
     }
 }

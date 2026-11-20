@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionFilterEventType {
+pub enum RUMRetentionFilterEventType {
     SESSION,
     VIEW,
     ACTION,
@@ -17,7 +17,7 @@ pub enum RumRetentionFilterEventType {
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionFilterEventType {
+impl ToString for RUMRetentionFilterEventType {
     fn to_string(&self) -> String {
         match self {
             Self::SESSION => String::from("session"),
@@ -32,7 +32,7 @@ impl ToString for RumRetentionFilterEventType {
     }
 }
 
-impl Serialize for RumRetentionFilterEventType {
+impl Serialize for RUMRetentionFilterEventType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -44,7 +44,7 @@ impl Serialize for RumRetentionFilterEventType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterEventType {
+impl<'de> Deserialize<'de> for RUMRetentionFilterEventType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

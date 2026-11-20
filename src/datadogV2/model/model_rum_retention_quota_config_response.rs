@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionQuotaConfigResponse {
+pub struct RUMRetentionQuotaConfigResponse {
     /// The RUM retention quota configuration object.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumRetentionQuotaConfigData,
+    pub data: crate::datadogV2::model::RUMRetentionQuotaConfigData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumRetentionQuotaConfigResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionQuotaConfigResponse {
+impl RUMRetentionQuotaConfigResponse {
     pub fn new(
-        data: crate::datadogV2::model::RumRetentionQuotaConfigData,
-    ) -> RumRetentionQuotaConfigResponse {
-        RumRetentionQuotaConfigResponse {
+        data: crate::datadogV2::model::RUMRetentionQuotaConfigData,
+    ) -> RUMRetentionQuotaConfigResponse {
+        RUMRetentionQuotaConfigResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumRetentionQuotaConfigResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaConfigResponse {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaConfigResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionQuotaConfigResponseVisitor;
-        impl<'a> Visitor<'a> for RumRetentionQuotaConfigResponseVisitor {
-            type Value = RumRetentionQuotaConfigResponse;
+        struct RUMRetentionQuotaConfigResponseVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionQuotaConfigResponseVisitor {
+            type Value = RUMRetentionQuotaConfigResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumRetentionQuotaConfigData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMRetentionQuotaConfigData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumRetentionQuotaConfigResponse {
+                let content = RUMRetentionQuotaConfigResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigResponse {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionQuotaConfigResponseVisitor)
+        deserializer.deserialize_any(RUMRetentionQuotaConfigResponseVisitor)
     }
 }

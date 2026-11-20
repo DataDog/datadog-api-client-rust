@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsMeta {
+pub struct RUMArchiveSessionsMeta {
     /// Search pagination.
     #[serde(rename = "page")]
-    pub page: crate::datadogV2::model::RumArchiveSessionsPage,
+    pub page: crate::datadogV2::model::RUMArchiveSessionsPage,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumArchiveSessionsMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsMeta {
-    pub fn new(page: crate::datadogV2::model::RumArchiveSessionsPage) -> RumArchiveSessionsMeta {
-        RumArchiveSessionsMeta {
+impl RUMArchiveSessionsMeta {
+    pub fn new(page: crate::datadogV2::model::RUMArchiveSessionsPage) -> RUMArchiveSessionsMeta {
+        RUMArchiveSessionsMeta {
             page,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumArchiveSessionsMeta {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsMeta {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsMetaVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsMetaVisitor {
-            type Value = RumArchiveSessionsMeta;
+        struct RUMArchiveSessionsMetaVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsMetaVisitor {
+            type Value = RUMArchiveSessionsMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut page: Option<crate::datadogV2::model::RumArchiveSessionsPage> = None;
+                let mut page: Option<crate::datadogV2::model::RUMArchiveSessionsPage> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsMeta {
                 }
                 let page = page.ok_or_else(|| M::Error::missing_field("page"))?;
 
-                let content = RumArchiveSessionsMeta {
+                let content = RUMArchiveSessionsMeta {
                     page,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsMeta {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsMetaVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsMetaVisitor)
     }
 }

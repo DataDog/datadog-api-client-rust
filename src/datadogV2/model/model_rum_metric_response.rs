@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricResponse {
+pub struct RUMMetricResponse {
     /// The RUM-based metric properties.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::RumMetricResponseData>,
+    pub data: Option<crate::datadogV2::model::RUMMetricResponseData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct RumMetricResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricResponse {
-    pub fn new() -> RumMetricResponse {
-        RumMetricResponse {
+impl RUMMetricResponse {
+    pub fn new() -> RUMMetricResponse {
+        RUMMetricResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::RumMetricResponseData) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RUMMetricResponseData) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl RumMetricResponse {
     }
 }
 
-impl Default for RumMetricResponse {
+impl Default for RUMMetricResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricResponse {
+impl<'de> Deserialize<'de> for RUMMetricResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricResponseVisitor;
-        impl<'a> Visitor<'a> for RumMetricResponseVisitor {
-            type Value = RumMetricResponse;
+        struct RUMMetricResponseVisitor;
+        impl<'a> Visitor<'a> for RUMMetricResponseVisitor {
+            type Value = RUMMetricResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for RumMetricResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumMetricResponseData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMMetricResponseData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumMetricResponse {
                     }
                 }
 
-                let content = RumMetricResponse {
+                let content = RUMMetricResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumMetricResponse {
             }
         }
 
-        deserializer.deserialize_any(RumMetricResponseVisitor)
+        deserializer.deserialize_any(RUMMetricResponseVisitor)
     }
 }

@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionFilterTrack {
+pub enum RUMRetentionFilterTrack {
     RUM,
     PRODUCT_ANALYTICS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionFilterTrack {
+impl ToString for RUMRetentionFilterTrack {
     fn to_string(&self) -> String {
         match self {
             Self::RUM => String::from("rum"),
@@ -22,7 +22,7 @@ impl ToString for RumRetentionFilterTrack {
     }
 }
 
-impl Serialize for RumRetentionFilterTrack {
+impl Serialize for RUMRetentionFilterTrack {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for RumRetentionFilterTrack {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterTrack {
+impl<'de> Deserialize<'de> for RUMRetentionFilterTrack {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

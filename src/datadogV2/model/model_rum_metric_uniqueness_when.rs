@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumMetricUniquenessWhen {
+pub enum RUMMetricUniquenessWhen {
     WHEN_MATCH,
     WHEN_END,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumMetricUniquenessWhen {
+impl ToString for RUMMetricUniquenessWhen {
     fn to_string(&self) -> String {
         match self {
             Self::WHEN_MATCH => String::from("match"),
@@ -22,7 +22,7 @@ impl ToString for RumMetricUniquenessWhen {
     }
 }
 
-impl Serialize for RumMetricUniquenessWhen {
+impl Serialize for RUMMetricUniquenessWhen {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for RumMetricUniquenessWhen {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricUniquenessWhen {
+impl<'de> Deserialize<'de> for RUMMetricUniquenessWhen {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

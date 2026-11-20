@@ -1,6 +1,6 @@
 // Update replay heatmap snapshot returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI;
+use datadog_api_client::datadogV2::api_rum_replay_heatmaps::RUMReplayHeatmapsAPI;
 use datadog_api_client::datadogV2::model::SnapshotUpdateRequest;
 use datadog_api_client::datadogV2::model::SnapshotUpdateRequestData;
 use datadog_api_client::datadogV2::model::SnapshotUpdateRequestDataAttributes;
@@ -18,7 +18,7 @@ async fn main() {
             .id("00000000-0000-0000-0000-000000000001".to_string()),
     );
     let configuration = datadog::Configuration::new();
-    let api = RumReplayHeatmapsAPI::with_config(configuration);
+    let api = RUMReplayHeatmapsAPI::with_config(configuration);
     let resp = api
         .update_replay_heatmap_snapshot("00000000-0000-0000-0000-000000000001".to_string(), body)
         .await;

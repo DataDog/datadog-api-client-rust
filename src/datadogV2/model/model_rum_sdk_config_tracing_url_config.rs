@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigTracingUrlConfig {
+pub struct RUMSdkConfigTracingUrlConfig {
     /// A match option used for URL or origin pattern matching.
     #[serde(rename = "match")]
-    pub match_: crate::datadogV2::model::RumSdkConfigMatchOption,
+    pub match_: crate::datadogV2::model::RUMSdkConfigMatchOption,
     /// The list of trace propagator types to use for this URL.
     #[serde(rename = "propagator_types")]
-    pub propagator_types: Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>,
+    pub propagator_types: Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlPropagatorType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumSdkConfigTracingUrlConfig {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigTracingUrlConfig {
+impl RUMSdkConfigTracingUrlConfig {
     pub fn new(
-        match_: crate::datadogV2::model::RumSdkConfigMatchOption,
-        propagator_types: Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>,
-    ) -> RumSdkConfigTracingUrlConfig {
-        RumSdkConfigTracingUrlConfig {
+        match_: crate::datadogV2::model::RUMSdkConfigMatchOption,
+        propagator_types: Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlPropagatorType>,
+    ) -> RUMSdkConfigTracingUrlConfig {
+        RUMSdkConfigTracingUrlConfig {
             match_,
             propagator_types,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumSdkConfigTracingUrlConfig {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
+impl<'de> Deserialize<'de> for RUMSdkConfigTracingUrlConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigTracingUrlConfigVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigTracingUrlConfigVisitor {
-            type Value = RumSdkConfigTracingUrlConfig;
+        struct RUMSdkConfigTracingUrlConfigVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigTracingUrlConfigVisitor {
+            type Value = RUMSdkConfigTracingUrlConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,9 +63,9 @@ impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut match_: Option<crate::datadogV2::model::RumSdkConfigMatchOption> = None;
+                let mut match_: Option<crate::datadogV2::model::RUMSdkConfigMatchOption> = None;
                 let mut propagator_types: Option<
-                    Vec<crate::datadogV2::model::RumSdkConfigTracingUrlPropagatorType>,
+                    Vec<crate::datadogV2::model::RUMSdkConfigTracingUrlPropagatorType>,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
                 let propagator_types =
                     propagator_types.ok_or_else(|| M::Error::missing_field("propagator_types"))?;
 
-                let content = RumSdkConfigTracingUrlConfig {
+                let content = RUMSdkConfigTracingUrlConfig {
                     match_,
                     propagator_types,
                     additional_properties,
@@ -104,6 +104,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlConfig {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigTracingUrlConfigVisitor)
+        deserializer.deserialize_any(RUMSdkConfigTracingUrlConfigVisitor)
     }
 }

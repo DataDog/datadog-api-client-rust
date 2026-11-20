@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryBatchCreateAttributes {
+pub struct RUMRecoveryBatchCreateAttributes {
     /// Optional client estimate. Creation validates and stores a fresh server estimate instead of this value.
     #[serde(rename = "estimated_count")]
     pub estimated_count: Option<i64>,
@@ -22,7 +22,7 @@ pub struct RumRecoveryBatchCreateAttributes {
     pub query: String,
     /// Query-based batch recovery.
     #[serde(rename = "request_type")]
-    pub request_type: crate::datadogV2::model::RumRecoveryBatchRequestType,
+    pub request_type: crate::datadogV2::model::RUMRecoveryBatchRequestType,
     /// End of the range in Unix milliseconds.
     #[serde(rename = "to")]
     pub to: i64,
@@ -33,14 +33,14 @@ pub struct RumRecoveryBatchCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryBatchCreateAttributes {
+impl RUMRecoveryBatchCreateAttributes {
     pub fn new(
         from: i64,
         query: String,
-        request_type: crate::datadogV2::model::RumRecoveryBatchRequestType,
+        request_type: crate::datadogV2::model::RUMRecoveryBatchRequestType,
         to: i64,
-    ) -> RumRecoveryBatchCreateAttributes {
-        RumRecoveryBatchCreateAttributes {
+    ) -> RUMRecoveryBatchCreateAttributes {
+        RUMRecoveryBatchCreateAttributes {
             estimated_count: None,
             from,
             query,
@@ -65,14 +65,14 @@ impl RumRecoveryBatchCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchCreateAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryBatchCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryBatchCreateAttributesVisitor {
-            type Value = RumRecoveryBatchCreateAttributes;
+        struct RUMRecoveryBatchCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryBatchCreateAttributesVisitor {
+            type Value = RUMRecoveryBatchCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -85,7 +85,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchCreateAttributes {
                 let mut estimated_count: Option<i64> = None;
                 let mut from: Option<i64> = None;
                 let mut query: Option<String> = None;
-                let mut request_type: Option<crate::datadogV2::model::RumRecoveryBatchRequestType> =
+                let mut request_type: Option<crate::datadogV2::model::RUMRecoveryBatchRequestType> =
                     None;
                 let mut to: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -114,7 +114,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchCreateAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _request_type) = request_type {
                                 match _request_type {
-                                    crate::datadogV2::model::RumRecoveryBatchRequestType::UnparsedObject(_request_type) => {
+                                    crate::datadogV2::model::RUMRecoveryBatchRequestType::UnparsedObject(_request_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -137,7 +137,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchCreateAttributes {
                     request_type.ok_or_else(|| M::Error::missing_field("request_type"))?;
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
-                let content = RumRecoveryBatchCreateAttributes {
+                let content = RUMRecoveryBatchCreateAttributes {
                     estimated_count,
                     from,
                     query,
@@ -151,6 +151,6 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryBatchCreateAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryBatchCreateAttributesVisitor)
     }
 }

@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionFilterEditionMode {
+pub enum RUMRetentionFilterEditionMode {
     UNKNOWN,
     COMPLETE,
     LIMITED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionFilterEditionMode {
+impl ToString for RUMRetentionFilterEditionMode {
     fn to_string(&self) -> String {
         match self {
             Self::UNKNOWN => String::from("unknown"),
@@ -24,7 +24,7 @@ impl ToString for RumRetentionFilterEditionMode {
     }
 }
 
-impl Serialize for RumRetentionFilterEditionMode {
+impl Serialize for RUMRetentionFilterEditionMode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,7 +36,7 @@ impl Serialize for RumRetentionFilterEditionMode {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterEditionMode {
+impl<'de> Deserialize<'de> for RUMRetentionFilterEditionMode {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

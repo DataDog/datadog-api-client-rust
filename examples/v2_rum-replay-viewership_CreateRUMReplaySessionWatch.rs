@@ -1,7 +1,7 @@
 // Create RUM replay session watch returns "Created" response
 use chrono::{DateTime, Utc};
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI;
+use datadog_api_client::datadogV2::api_rum_replay_viewership::RUMReplayViewershipAPI;
 use datadog_api_client::datadogV2::model::Watch;
 use datadog_api_client::datadogV2::model::WatchData;
 use datadog_api_client::datadogV2::model::WatchDataAttributes;
@@ -19,7 +19,7 @@ async fn main() {
         )),
     );
     let configuration = datadog::Configuration::new();
-    let api = RumReplayViewershipAPI::with_config(configuration);
+    let api = RUMReplayViewershipAPI::with_config(configuration);
     let resp = api
         .create_rum_replay_session_watch("00000000-0000-0000-0000-000000000001".to_string(), body)
         .await;

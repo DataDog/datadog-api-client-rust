@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCountRequest {
+pub struct RUMRecoveryCountRequest {
     /// JSON:API resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumRecoveryCountRequestData,
+    pub data: crate::datadogV2::model::RUMRecoveryCountRequestData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumRecoveryCountRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCountRequest {
+impl RUMRecoveryCountRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumRecoveryCountRequestData,
-    ) -> RumRecoveryCountRequest {
-        RumRecoveryCountRequest {
+        data: crate::datadogV2::model::RUMRecoveryCountRequestData,
+    ) -> RUMRecoveryCountRequest {
+        RUMRecoveryCountRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumRecoveryCountRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCountRequest {
+impl<'de> Deserialize<'de> for RUMRecoveryCountRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCountRequestVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCountRequestVisitor {
-            type Value = RumRecoveryCountRequest;
+        struct RUMRecoveryCountRequestVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCountRequestVisitor {
+            type Value = RUMRecoveryCountRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumRecoveryCountRequestData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMRecoveryCountRequestData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumRecoveryCountRequest {
+                let content = RUMRecoveryCountRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequest {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCountRequestVisitor)
+        deserializer.deserialize_any(RUMRecoveryCountRequestVisitor)
     }
 }

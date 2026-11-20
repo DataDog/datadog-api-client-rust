@@ -10,19 +10,19 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigData {
+pub struct RUMSdkConfigData {
     /// Attributes of the RUM SDK configuration.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumSdkConfigAttributes,
+    pub attributes: crate::datadogV2::model::RUMSdkConfigAttributes,
     /// The unique identifier of the RUM SDK configuration.
     #[serde(rename = "id")]
     pub id: String,
     /// Metadata associated with a RUM SDK configuration.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::RumSdkConfigMeta>,
+    pub meta: Option<crate::datadogV2::model::RUMSdkConfigMeta>,
     /// The type of the resource. The value should always be `rum_sdk_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumSdkConfigType,
+    pub type_: crate::datadogV2::model::RUMSdkConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,13 +30,13 @@ pub struct RumSdkConfigData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigData {
+impl RUMSdkConfigData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumSdkConfigAttributes,
+        attributes: crate::datadogV2::model::RUMSdkConfigAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumSdkConfigType,
-    ) -> RumSdkConfigData {
-        RumSdkConfigData {
+        type_: crate::datadogV2::model::RUMSdkConfigType,
+    ) -> RUMSdkConfigData {
+        RUMSdkConfigData {
             attributes,
             id,
             meta: None,
@@ -46,7 +46,7 @@ impl RumSdkConfigData {
         }
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::RumSdkConfigMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::RUMSdkConfigMeta) -> Self {
         self.meta = Some(value);
         self
     }
@@ -60,14 +60,14 @@ impl RumSdkConfigData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigData {
+impl<'de> Deserialize<'de> for RUMSdkConfigData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigDataVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigDataVisitor {
-            type Value = RumSdkConfigData;
+        struct RUMSdkConfigDataVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigDataVisitor {
+            type Value = RUMSdkConfigData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,10 +77,10 @@ impl<'de> Deserialize<'de> for RumSdkConfigData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumSdkConfigAttributes> = None;
+                let mut attributes: Option<crate::datadogV2::model::RUMSdkConfigAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut meta: Option<crate::datadogV2::model::RumSdkConfigMeta> = None;
-                let mut type_: Option<crate::datadogV2::model::RumSdkConfigType> = None;
+                let mut meta: Option<crate::datadogV2::model::RUMSdkConfigMeta> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMSdkConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -105,7 +105,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumSdkConfigType::UnparsedObject(
+                                    crate::datadogV2::model::RUMSdkConfigType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -125,7 +125,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumSdkConfigData {
+                let content = RUMSdkConfigData {
                     attributes,
                     id,
                     meta,
@@ -138,6 +138,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigData {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigDataVisitor)
+        deserializer.deserialize_any(RUMSdkConfigDataVisitor)
     }
 }

@@ -38,7 +38,7 @@ impl ListRUMArchiveConfigsOptionalParams {
 #[serde(untagged)]
 pub enum DeleteRUMArchiveConfigError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -47,7 +47,7 @@ pub enum DeleteRUMArchiveConfigError {
 #[serde(untagged)]
 pub enum GetRUMArchiveConfigError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -56,7 +56,7 @@ pub enum GetRUMArchiveConfigError {
 #[serde(untagged)]
 pub enum ListRUMArchiveConfigsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -65,7 +65,7 @@ pub enum ListRUMArchiveConfigsError {
 #[serde(untagged)]
 pub enum UpdateRUMArchiveConfigError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -238,7 +238,7 @@ impl RUMManagedArchivesAPI {
         &self,
         app_id: uuid::Uuid,
     ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigResponse,
+        crate::datadogV2::model::RUMArchiveConfigResponse,
         datadog::Error<GetRUMArchiveConfigError>,
     > {
         match self.get_rum_archive_config_with_http_info(app_id).await {
@@ -260,7 +260,7 @@ impl RUMManagedArchivesAPI {
         &self,
         app_id: uuid::Uuid,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMArchiveConfigResponse>,
         datadog::Error<GetRUMArchiveConfigError>,
     > {
         let local_configuration = &self.config;
@@ -318,7 +318,7 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMArchiveConfigResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -347,7 +347,7 @@ impl RUMManagedArchivesAPI {
         &self,
         params: ListRUMArchiveConfigsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigListResponse,
+        crate::datadogV2::model::RUMArchiveConfigListResponse,
         datadog::Error<ListRUMArchiveConfigsError>,
     > {
         match self.list_rum_archive_configs_with_http_info(params).await {
@@ -369,7 +369,7 @@ impl RUMManagedArchivesAPI {
         &self,
         params: ListRUMArchiveConfigsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigListResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMArchiveConfigListResponse>,
         datadog::Error<ListRUMArchiveConfigsError>,
     > {
         let local_configuration = &self.config;
@@ -439,7 +439,7 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigListResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMArchiveConfigListResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -467,9 +467,9 @@ impl RUMManagedArchivesAPI {
     pub async fn update_rum_archive_config(
         &self,
         app_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumArchiveConfigUpsertRequest,
+        body: crate::datadogV2::model::RUMArchiveConfigUpsertRequest,
     ) -> Result<
-        crate::datadogV2::model::RumArchiveConfigResponse,
+        crate::datadogV2::model::RUMArchiveConfigResponse,
         datadog::Error<UpdateRUMArchiveConfigError>,
     > {
         match self
@@ -493,9 +493,9 @@ impl RUMManagedArchivesAPI {
     pub async fn update_rum_archive_config_with_http_info(
         &self,
         app_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumArchiveConfigUpsertRequest,
+        body: crate::datadogV2::model::RUMArchiveConfigUpsertRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveConfigResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMArchiveConfigResponse>,
         datadog::Error<UpdateRUMArchiveConfigError>,
     > {
         let local_configuration = &self.config;
@@ -600,7 +600,7 @@ impl RUMManagedArchivesAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveConfigResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMArchiveConfigResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

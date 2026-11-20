@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCancelData {
+pub struct RUMRecoveryCancelData {
     /// Batch cancellation.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryCancelAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryCancelAttributes,
     /// Optional resource identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,11 +27,11 @@ pub struct RumRecoveryCancelData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCancelData {
+impl RUMRecoveryCancelData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryCancelAttributes,
-    ) -> RumRecoveryCancelData {
-        RumRecoveryCancelData {
+        attributes: crate::datadogV2::model::RUMRecoveryCancelAttributes,
+    ) -> RUMRecoveryCancelData {
+        RUMRecoveryCancelData {
             attributes,
             id: None,
             type_: None,
@@ -59,14 +59,14 @@ impl RumRecoveryCancelData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCancelData {
+impl<'de> Deserialize<'de> for RUMRecoveryCancelData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCancelDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCancelDataVisitor {
-            type Value = RumRecoveryCancelData;
+        struct RUMRecoveryCancelDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCancelDataVisitor {
+            type Value = RUMRecoveryCancelData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumRecoveryCancelAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMRecoveryCancelAttributes> =
                     None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<String> = None;
@@ -112,7 +112,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelData {
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = RumRecoveryCancelData {
+                let content = RUMRecoveryCancelData {
                     attributes,
                     id,
                     type_,
@@ -124,6 +124,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCancelDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryCancelDataVisitor)
     }
 }

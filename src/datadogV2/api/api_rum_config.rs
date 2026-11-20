@@ -11,26 +11,26 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateRumConfigError is a struct for typed errors of method [`RUMConfigAPI::create_rum_config`]
+/// CreateRUMConfigError is a struct for typed errors of method [`RUMConfigAPI::create_rum_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateRumConfigError {
+pub enum CreateRUMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetRumConfigError is a struct for typed errors of method [`RUMConfigAPI::get_rum_config`]
+/// GetRUMConfigError is a struct for typed errors of method [`RUMConfigAPI::get_rum_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetRumConfigError {
+pub enum GetRUMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRumConfigError is a struct for typed errors of method [`RUMConfigAPI::update_rum_config`]
+/// UpdateRUMConfigError is a struct for typed errors of method [`RUMConfigAPI::update_rum_config`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateRumConfigError {
+pub enum UpdateRUMConfigError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -114,8 +114,8 @@ impl RUMConfigAPI {
     /// Returns the RUM configuration object from the request body when the request is successful.
     pub async fn create_rum_config(
         &self,
-        body: crate::datadogV2::model::RumConfigCreateRequest,
-    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<CreateRumConfigError>>
+        body: crate::datadogV2::model::RUMConfigCreateRequest,
+    ) -> Result<crate::datadogV2::model::RUMConfigResponse, datadog::Error<CreateRUMConfigError>>
     {
         match self.create_rum_config_with_http_info(body).await {
             Ok(response_content) => {
@@ -135,10 +135,10 @@ impl RUMConfigAPI {
     /// Returns the RUM configuration object from the request body when the request is successful.
     pub async fn create_rum_config_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumConfigCreateRequest,
+        body: crate::datadogV2::model::RUMConfigCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
-        datadog::Error<CreateRumConfigError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMConfigResponse>,
+        datadog::Error<CreateRUMConfigError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_config";
@@ -249,7 +249,7 @@ impl RUMConfigAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMConfigResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -261,7 +261,7 @@ impl RUMConfigAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumConfigError> =
+            let local_entity: Option<CreateRUMConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -275,7 +275,7 @@ impl RUMConfigAPI {
     /// Get the RUM configuration for your organization.
     pub async fn get_rum_config(
         &self,
-    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<GetRumConfigError>> {
+    ) -> Result<crate::datadogV2::model::RUMConfigResponse, datadog::Error<GetRUMConfigError>> {
         match self.get_rum_config_with_http_info().await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -294,8 +294,8 @@ impl RUMConfigAPI {
     pub async fn get_rum_config_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
-        datadog::Error<GetRumConfigError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMConfigResponse>,
+        datadog::Error<GetRUMConfigError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_config";
@@ -359,7 +359,7 @@ impl RUMConfigAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMConfigResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -371,7 +371,7 @@ impl RUMConfigAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRumConfigError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetRUMConfigError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -385,8 +385,8 @@ impl RUMConfigAPI {
     /// Returns the RUM configuration object from the request body when the request is successful.
     pub async fn update_rum_config(
         &self,
-        body: crate::datadogV2::model::RumConfigUpdateRequest,
-    ) -> Result<crate::datadogV2::model::RumConfigResponse, datadog::Error<UpdateRumConfigError>>
+        body: crate::datadogV2::model::RUMConfigUpdateRequest,
+    ) -> Result<crate::datadogV2::model::RUMConfigResponse, datadog::Error<UpdateRUMConfigError>>
     {
         match self.update_rum_config_with_http_info(body).await {
             Ok(response_content) => {
@@ -406,10 +406,10 @@ impl RUMConfigAPI {
     /// Returns the RUM configuration object from the request body when the request is successful.
     pub async fn update_rum_config_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumConfigUpdateRequest,
+        body: crate::datadogV2::model::RUMConfigUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumConfigResponse>,
-        datadog::Error<UpdateRumConfigError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMConfigResponse>,
+        datadog::Error<UpdateRUMConfigError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_config";
@@ -520,7 +520,7 @@ impl RUMConfigAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumConfigResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMConfigResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -532,7 +532,7 @@ impl RUMConfigAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRumConfigError> =
+            let local_entity: Option<UpdateRUMConfigError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

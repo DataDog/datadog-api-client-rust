@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryBatchListMeta {
+pub struct RUMRecoveryBatchListMeta {
     /// Opaque next-page cursor. Omitted on the final page.
     #[serde(rename = "next_cursor")]
     pub next_cursor: Option<String>,
@@ -21,9 +21,9 @@ pub struct RumRecoveryBatchListMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryBatchListMeta {
-    pub fn new() -> RumRecoveryBatchListMeta {
-        RumRecoveryBatchListMeta {
+impl RUMRecoveryBatchListMeta {
+    pub fn new() -> RUMRecoveryBatchListMeta {
+        RUMRecoveryBatchListMeta {
             next_cursor: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -44,20 +44,20 @@ impl RumRecoveryBatchListMeta {
     }
 }
 
-impl Default for RumRecoveryBatchListMeta {
+impl Default for RUMRecoveryBatchListMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchListMeta {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchListMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryBatchListMetaVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryBatchListMetaVisitor {
-            type Value = RumRecoveryBatchListMeta;
+        struct RUMRecoveryBatchListMetaVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryBatchListMetaVisitor {
+            type Value = RUMRecoveryBatchListMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListMeta {
                     }
                 }
 
-                let content = RumRecoveryBatchListMeta {
+                let content = RUMRecoveryBatchListMeta {
                     next_cursor,
                     additional_properties,
                     _unparsed,
@@ -101,6 +101,6 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListMeta {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryBatchListMetaVisitor)
+        deserializer.deserialize_any(RUMRecoveryBatchListMetaVisitor)
     }
 }

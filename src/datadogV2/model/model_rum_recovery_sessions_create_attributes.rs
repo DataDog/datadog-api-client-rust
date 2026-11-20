@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoverySessionsCreateAttributes {
+pub struct RUMRecoverySessionsCreateAttributes {
     /// Targeted recovery. Omitted request_type defaults to sessions.
     #[serde(rename = "request_type")]
-    pub request_type: Option<crate::datadogV2::model::RumRecoverySessionsRequestType>,
+    pub request_type: Option<crate::datadogV2::model::RUMRecoverySessionsRequestType>,
     /// Sessions to recover.
     #[serde(rename = "sessions")]
-    pub sessions: Vec<crate::datadogV2::model::RumRecoverySessionInput>,
+    pub sessions: Vec<crate::datadogV2::model::RUMRecoverySessionInput>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,11 +24,11 @@ pub struct RumRecoverySessionsCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoverySessionsCreateAttributes {
+impl RUMRecoverySessionsCreateAttributes {
     pub fn new(
-        sessions: Vec<crate::datadogV2::model::RumRecoverySessionInput>,
-    ) -> RumRecoverySessionsCreateAttributes {
-        RumRecoverySessionsCreateAttributes {
+        sessions: Vec<crate::datadogV2::model::RUMRecoverySessionInput>,
+    ) -> RUMRecoverySessionsCreateAttributes {
+        RUMRecoverySessionsCreateAttributes {
             request_type: None,
             sessions,
             additional_properties: std::collections::BTreeMap::new(),
@@ -38,7 +38,7 @@ impl RumRecoverySessionsCreateAttributes {
 
     pub fn request_type(
         mut self,
-        value: crate::datadogV2::model::RumRecoverySessionsRequestType,
+        value: crate::datadogV2::model::RUMRecoverySessionsRequestType,
     ) -> Self {
         self.request_type = Some(value);
         self
@@ -53,14 +53,14 @@ impl RumRecoverySessionsCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoverySessionsCreateAttributes {
+impl<'de> Deserialize<'de> for RUMRecoverySessionsCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoverySessionsCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoverySessionsCreateAttributesVisitor {
-            type Value = RumRecoverySessionsCreateAttributes;
+        struct RUMRecoverySessionsCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoverySessionsCreateAttributesVisitor {
+            type Value = RUMRecoverySessionsCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,9 +71,9 @@ impl<'de> Deserialize<'de> for RumRecoverySessionsCreateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut request_type: Option<
-                    crate::datadogV2::model::RumRecoverySessionsRequestType,
+                    crate::datadogV2::model::RUMRecoverySessionsRequestType,
                 > = None;
-                let mut sessions: Option<Vec<crate::datadogV2::model::RumRecoverySessionInput>> =
+                let mut sessions: Option<Vec<crate::datadogV2::model::RUMRecoverySessionInput>> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRecoverySessionsCreateAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _request_type) = request_type {
                                 match _request_type {
-                                    crate::datadogV2::model::RumRecoverySessionsRequestType::UnparsedObject(_request_type) => {
+                                    crate::datadogV2::model::RUMRecoverySessionsRequestType::UnparsedObject(_request_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -110,7 +110,7 @@ impl<'de> Deserialize<'de> for RumRecoverySessionsCreateAttributes {
                 }
                 let sessions = sessions.ok_or_else(|| M::Error::missing_field("sessions"))?;
 
-                let content = RumRecoverySessionsCreateAttributes {
+                let content = RUMRecoverySessionsCreateAttributes {
                     request_type,
                     sessions,
                     additional_properties,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRecoverySessionsCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoverySessionsCreateAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoverySessionsCreateAttributesVisitor)
     }
 }

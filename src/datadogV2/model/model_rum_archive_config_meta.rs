@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigMeta {
+pub struct RUMArchiveConfigMeta {
     /// Page information.
     #[serde(rename = "page")]
-    pub page: crate::datadogV2::model::RumArchiveConfigPage,
+    pub page: crate::datadogV2::model::RUMArchiveConfigPage,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumArchiveConfigMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigMeta {
-    pub fn new(page: crate::datadogV2::model::RumArchiveConfigPage) -> RumArchiveConfigMeta {
-        RumArchiveConfigMeta {
+impl RUMArchiveConfigMeta {
+    pub fn new(page: crate::datadogV2::model::RUMArchiveConfigPage) -> RUMArchiveConfigMeta {
+        RUMArchiveConfigMeta {
             page,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumArchiveConfigMeta {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigMeta {
+impl<'de> Deserialize<'de> for RUMArchiveConfigMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigMetaVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigMetaVisitor {
-            type Value = RumArchiveConfigMeta;
+        struct RUMArchiveConfigMetaVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigMetaVisitor {
+            type Value = RUMArchiveConfigMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut page: Option<crate::datadogV2::model::RumArchiveConfigPage> = None;
+                let mut page: Option<crate::datadogV2::model::RUMArchiveConfigPage> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigMeta {
                 }
                 let page = page.ok_or_else(|| M::Error::missing_field("page"))?;
 
-                let content = RumArchiveConfigMeta {
+                let content = RUMArchiveConfigMeta {
                     page,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigMeta {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigMetaVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigMetaVisitor)
     }
 }

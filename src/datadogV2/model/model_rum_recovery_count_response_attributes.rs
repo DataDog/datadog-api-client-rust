@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCountResponseAttributes {
+pub struct RUMRecoveryCountResponseAttributes {
     /// Estimated distinct recoverable sessions not already retained in hot storage. The full estimate is returned without capping it at max_recoverable_sessions.
     #[serde(rename = "estimated_count")]
     pub estimated_count: i64,
@@ -24,12 +24,12 @@ pub struct RumRecoveryCountResponseAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCountResponseAttributes {
+impl RUMRecoveryCountResponseAttributes {
     pub fn new(
         estimated_count: i64,
         max_recoverable_sessions: i64,
-    ) -> RumRecoveryCountResponseAttributes {
-        RumRecoveryCountResponseAttributes {
+    ) -> RUMRecoveryCountResponseAttributes {
+        RUMRecoveryCountResponseAttributes {
             estimated_count,
             max_recoverable_sessions,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumRecoveryCountResponseAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCountResponseAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryCountResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCountResponseAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCountResponseAttributesVisitor {
-            type Value = RumRecoveryCountResponseAttributes;
+        struct RUMRecoveryCountResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCountResponseAttributesVisitor {
+            type Value = RUMRecoveryCountResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountResponseAttributes {
                 let max_recoverable_sessions = max_recoverable_sessions
                     .ok_or_else(|| M::Error::missing_field("max_recoverable_sessions"))?;
 
-                let content = RumRecoveryCountResponseAttributes {
+                let content = RUMRecoveryCountResponseAttributes {
                     estimated_count,
                     max_recoverable_sessions,
                     additional_properties,
@@ -104,6 +104,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCountResponseAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCountResponseAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryCountResponseAttributesVisitor)
     }
 }

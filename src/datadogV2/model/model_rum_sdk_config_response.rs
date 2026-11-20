@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigResponse {
+pub struct RUMSdkConfigResponse {
     /// The RUM SDK configuration data object.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumSdkConfigData,
+    pub data: crate::datadogV2::model::RUMSdkConfigData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumSdkConfigResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigResponse {
-    pub fn new(data: crate::datadogV2::model::RumSdkConfigData) -> RumSdkConfigResponse {
-        RumSdkConfigResponse {
+impl RUMSdkConfigResponse {
+    pub fn new(data: crate::datadogV2::model::RUMSdkConfigData) -> RUMSdkConfigResponse {
+        RUMSdkConfigResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumSdkConfigResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigResponse {
+impl<'de> Deserialize<'de> for RUMSdkConfigResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigResponseVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigResponseVisitor {
-            type Value = RumSdkConfigResponse;
+        struct RUMSdkConfigResponseVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigResponseVisitor {
+            type Value = RUMSdkConfigResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumSdkConfigData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMSdkConfigData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumSdkConfigResponse {
+                let content = RUMSdkConfigResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigResponse {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigResponseVisitor)
+        deserializer.deserialize_any(RUMSdkConfigResponseVisitor)
     }
 }

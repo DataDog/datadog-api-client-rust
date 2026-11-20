@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterCreateData {
+pub struct RUMRetentionFilterCreateData {
     /// The object describing attributes of a RUM retention filter to create.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRetentionFilterCreateAttributes,
+    pub attributes: crate::datadogV2::model::RUMRetentionFilterCreateAttributes,
     /// The type of the resource. The value should always be retention_filters.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRetentionFilterType,
+    pub type_: crate::datadogV2::model::RUMRetentionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumRetentionFilterCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterCreateData {
+impl RUMRetentionFilterCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRetentionFilterCreateAttributes,
-        type_: crate::datadogV2::model::RumRetentionFilterType,
-    ) -> RumRetentionFilterCreateData {
-        RumRetentionFilterCreateData {
+        attributes: crate::datadogV2::model::RUMRetentionFilterCreateAttributes,
+        type_: crate::datadogV2::model::RUMRetentionFilterType,
+    ) -> RUMRetentionFilterCreateData {
+        RUMRetentionFilterCreateData {
             attributes,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumRetentionFilterCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterCreateData {
+impl<'de> Deserialize<'de> for RUMRetentionFilterCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterCreateDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterCreateDataVisitor {
-            type Value = RumRetentionFilterCreateData;
+        struct RUMRetentionFilterCreateDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterCreateDataVisitor {
+            type Value = RUMRetentionFilterCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,9 +64,9 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRetentionFilterCreateAttributes,
+                    crate::datadogV2::model::RUMRetentionFilterCreateAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionFilterType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateData {
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRetentionFilterCreateData {
+                let content = RUMRetentionFilterCreateData {
                     attributes,
                     type_,
                     additional_properties,
@@ -110,6 +110,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterCreateDataVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterCreateDataVisitor)
     }
 }

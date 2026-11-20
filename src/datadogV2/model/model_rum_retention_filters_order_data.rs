@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFiltersOrderData {
+pub struct RUMRetentionFiltersOrderData {
     /// ID of retention filter in UUID.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource. The value should always be retention_filters.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRetentionFilterType,
+    pub type_: crate::datadogV2::model::RUMRetentionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumRetentionFiltersOrderData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFiltersOrderData {
+impl RUMRetentionFiltersOrderData {
     pub fn new(
         id: String,
-        type_: crate::datadogV2::model::RumRetentionFilterType,
-    ) -> RumRetentionFiltersOrderData {
-        RumRetentionFiltersOrderData {
+        type_: crate::datadogV2::model::RUMRetentionFilterType,
+    ) -> RUMRetentionFiltersOrderData {
+        RUMRetentionFiltersOrderData {
             id,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumRetentionFiltersOrderData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFiltersOrderData {
+impl<'de> Deserialize<'de> for RUMRetentionFiltersOrderData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFiltersOrderDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFiltersOrderDataVisitor {
-            type Value = RumRetentionFiltersOrderData;
+        struct RUMRetentionFiltersOrderDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFiltersOrderDataVisitor {
+            type Value = RUMRetentionFiltersOrderData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderData {
                 M: MapAccess<'a>,
             {
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionFilterType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -97,7 +97,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRetentionFiltersOrderData {
+                let content = RUMRetentionFiltersOrderData {
                     id,
                     type_,
                     additional_properties,
@@ -108,6 +108,6 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFiltersOrderDataVisitor)
+        deserializer.deserialize_any(RUMRetentionFiltersOrderDataVisitor)
     }
 }

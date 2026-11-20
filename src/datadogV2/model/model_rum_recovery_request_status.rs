@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRecoveryRequestStatus {
+pub enum RUMRecoveryRequestStatus {
     PENDING,
     PROCESSING,
     COMPLETED,
@@ -16,7 +16,7 @@ pub enum RumRecoveryRequestStatus {
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRecoveryRequestStatus {
+impl ToString for RUMRecoveryRequestStatus {
     fn to_string(&self) -> String {
         match self {
             Self::PENDING => String::from("PENDING"),
@@ -30,7 +30,7 @@ impl ToString for RumRecoveryRequestStatus {
     }
 }
 
-impl Serialize for RumRecoveryRequestStatus {
+impl Serialize for RUMRecoveryRequestStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -42,7 +42,7 @@ impl Serialize for RumRecoveryRequestStatus {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryRequestStatus {
+impl<'de> Deserialize<'de> for RUMRecoveryRequestStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

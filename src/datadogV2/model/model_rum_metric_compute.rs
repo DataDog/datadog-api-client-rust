@@ -10,11 +10,11 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricCompute {
+pub struct RUMMetricCompute {
     /// The type of aggregation to use.
     /// `count` counts the matching events. `distribution` aggregates the values found at `path`.
     #[serde(rename = "aggregation_type")]
-    pub aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType,
+    pub aggregation_type: crate::datadogV2::model::RUMMetricComputeAggregationType,
     /// Toggle to include or exclude percentile aggregations (p50, p75, p90, p95, p99) for distribution metrics.
     /// Required when `aggregation_type` is `distribution`, and must be omitted otherwise.
     #[serde(rename = "include_percentiles")]
@@ -30,11 +30,11 @@ pub struct RumMetricCompute {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricCompute {
+impl RUMMetricCompute {
     pub fn new(
-        aggregation_type: crate::datadogV2::model::RumMetricComputeAggregationType,
-    ) -> RumMetricCompute {
-        RumMetricCompute {
+        aggregation_type: crate::datadogV2::model::RUMMetricComputeAggregationType,
+    ) -> RUMMetricCompute {
+        RUMMetricCompute {
             aggregation_type,
             include_percentiles: None,
             path: None,
@@ -62,14 +62,14 @@ impl RumMetricCompute {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricCompute {
+impl<'de> Deserialize<'de> for RUMMetricCompute {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricComputeVisitor;
-        impl<'a> Visitor<'a> for RumMetricComputeVisitor {
-            type Value = RumMetricCompute;
+        struct RUMMetricComputeVisitor;
+        impl<'a> Visitor<'a> for RUMMetricComputeVisitor {
+            type Value = RUMMetricCompute;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
                 M: MapAccess<'a>,
             {
                 let mut aggregation_type: Option<
-                    crate::datadogV2::model::RumMetricComputeAggregationType,
+                    crate::datadogV2::model::RUMMetricComputeAggregationType,
                 > = None;
                 let mut include_percentiles: Option<bool> = None;
                 let mut path: Option<String> = None;
@@ -97,7 +97,7 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _aggregation_type) = aggregation_type {
                                 match _aggregation_type {
-                                    crate::datadogV2::model::RumMetricComputeAggregationType::UnparsedObject(_aggregation_type) => {
+                                    crate::datadogV2::model::RUMMetricComputeAggregationType::UnparsedObject(_aggregation_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -127,7 +127,7 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
                 let aggregation_type =
                     aggregation_type.ok_or_else(|| M::Error::missing_field("aggregation_type"))?;
 
-                let content = RumMetricCompute {
+                let content = RUMMetricCompute {
                     aggregation_type,
                     include_percentiles,
                     path,
@@ -139,6 +139,6 @@ impl<'de> Deserialize<'de> for RumMetricCompute {
             }
         }
 
-        deserializer.deserialize_any(RumMetricComputeVisitor)
+        deserializer.deserialize_any(RUMMetricComputeVisitor)
     }
 }
