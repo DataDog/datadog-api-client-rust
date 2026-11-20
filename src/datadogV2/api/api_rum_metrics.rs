@@ -10,60 +10,60 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateRumMetricError is a struct for typed errors of method [`RumMetricsAPI::create_rum_metric`]
+/// CreateRUMMetricError is a struct for typed errors of method [`RUMMetricsAPI::create_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateRumMetricError {
+pub enum CreateRUMMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRumMetricError is a struct for typed errors of method [`RumMetricsAPI::delete_rum_metric`]
+/// DeleteRUMMetricError is a struct for typed errors of method [`RUMMetricsAPI::delete_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteRumMetricError {
+pub enum DeleteRUMMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetRumMetricError is a struct for typed errors of method [`RumMetricsAPI::get_rum_metric`]
+/// GetRUMMetricError is a struct for typed errors of method [`RUMMetricsAPI::get_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetRumMetricError {
+pub enum GetRUMMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListRumMetricsError is a struct for typed errors of method [`RumMetricsAPI::list_rum_metrics`]
+/// ListRUMMetricsError is a struct for typed errors of method [`RUMMetricsAPI::list_rum_metrics`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListRumMetricsError {
+pub enum ListRUMMetricsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRumMetricError is a struct for typed errors of method [`RumMetricsAPI::update_rum_metric`]
+/// UpdateRUMMetricError is a struct for typed errors of method [`RUMMetricsAPI::update_rum_metric`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateRumMetricError {
+pub enum UpdateRUMMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
 /// Manage configuration of [RUM-based metrics](<https://app.datadoghq.com/rum/generate-metrics>) for your organization.
 #[derive(Debug, Clone)]
-pub struct RumMetricsAPI {
+pub struct RUMMetricsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumMetricsAPI {
+impl Default for RUMMetricsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumMetricsAPI {
+impl RUMMetricsAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -126,15 +126,15 @@ impl RumMetricsAPI {
 
     /// Create a metric based on your organization's RUM data.
     /// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
-    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
+    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRUMMetric`.
     /// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
     /// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
     /// Returns the created RUM-based metric when the request is successful.
     /// The request returns a `409 Conflict` error if a metric with the same name already exists.
     pub async fn create_rum_metric(
         &self,
-        body: crate::datadogV2::model::RumMetricCreateRequest,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<CreateRumMetricError>>
+        body: crate::datadogV2::model::RUMMetricCreateRequest,
+    ) -> Result<crate::datadogV2::model::RUMMetricResponse, datadog::Error<CreateRUMMetricError>>
     {
         match self.create_rum_metric_with_http_info(body).await {
             Ok(response_content) => {
@@ -152,17 +152,17 @@ impl RumMetricsAPI {
 
     /// Create a metric based on your organization's RUM data.
     /// The metric name is set in `data.id`, is unique within your organization, and cannot be changed after creation.
-    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRumMetric`.
+    /// The `event_type`, `compute`, and `uniqueness` settings cannot be changed after creation either. Only `filter`, `group_by`, and `compute.include_percentiles` can be changed with `UpdateRUMMetric`.
     /// `uniqueness` is required when `event_type` is `session` or `view`, and must be omitted for any other event type.
     /// When `aggregation_type` is `distribution`, `include_percentiles` is required. When it is `count`, `include_percentiles` and `path` must be omitted.
     /// Returns the created RUM-based metric when the request is successful.
     /// The request returns a `409 Conflict` error if a metric with the same name already exists.
     pub async fn create_rum_metric_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumMetricCreateRequest,
+        body: crate::datadogV2::model::RUMMetricCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<CreateRumMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMMetricResponse>,
+        datadog::Error<CreateRUMMetricError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_metric";
@@ -265,7 +265,7 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMMetricResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -277,7 +277,7 @@ impl RumMetricsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumMetricError> =
+            let local_entity: Option<CreateRUMMetricError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -293,7 +293,7 @@ impl RumMetricsAPI {
     pub async fn delete_rum_metric(
         &self,
         metric_id: String,
-    ) -> Result<(), datadog::Error<DeleteRumMetricError>> {
+    ) -> Result<(), datadog::Error<DeleteRUMMetricError>> {
         match self.delete_rum_metric_with_http_info(metric_id).await {
             Ok(_) => Ok(()),
             Err(err) => Err(err),
@@ -305,7 +305,7 @@ impl RumMetricsAPI {
     pub async fn delete_rum_metric_with_http_info(
         &self,
         metric_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumMetricError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMMetricError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_metric";
 
@@ -367,7 +367,7 @@ impl RumMetricsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumMetricError> =
+            let local_entity: Option<DeleteRUMMetricError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -379,11 +379,11 @@ impl RumMetricsAPI {
     }
 
     /// Get a specific RUM-based metric from your organization.
-    /// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
+    /// The `metric_id` is the metric name returned in `data.id` by `ListRUMMetrics` and `CreateRUMMetric`.
     pub async fn get_rum_metric(
         &self,
         metric_id: String,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<GetRumMetricError>> {
+    ) -> Result<crate::datadogV2::model::RUMMetricResponse, datadog::Error<GetRUMMetricError>> {
         match self.get_rum_metric_with_http_info(metric_id).await {
             Ok(response_content) => {
                 if let Some(e) = response_content.entity {
@@ -399,13 +399,13 @@ impl RumMetricsAPI {
     }
 
     /// Get a specific RUM-based metric from your organization.
-    /// The `metric_id` is the metric name returned in `data.id` by `ListRumMetrics` and `CreateRumMetric`.
+    /// The `metric_id` is the metric name returned in `data.id` by `ListRUMMetrics` and `CreateRUMMetric`.
     pub async fn get_rum_metric_with_http_info(
         &self,
         metric_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<GetRumMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMMetricResponse>,
+        datadog::Error<GetRUMMetricError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_metric";
@@ -462,7 +462,7 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMMetricResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -474,7 +474,7 @@ impl RumMetricsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRumMetricError> = serde_json::from_str(&local_content).ok();
+            let local_entity: Option<GetRUMMetricError> = serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
@@ -487,10 +487,10 @@ impl RumMetricsAPI {
     /// Get the list of all RUM-based metrics configured for your organization, with their definitions.
     /// The list is not paginated.
     /// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
-    /// To retrieve a single metric, use `GetRumMetric`.
+    /// To retrieve a single metric, use `GetRUMMetric`.
     pub async fn list_rum_metrics(
         &self,
-    ) -> Result<crate::datadogV2::model::RumMetricsResponse, datadog::Error<ListRumMetricsError>>
+    ) -> Result<crate::datadogV2::model::RUMMetricsResponse, datadog::Error<ListRUMMetricsError>>
     {
         match self.list_rum_metrics_with_http_info().await {
             Ok(response_content) => {
@@ -509,12 +509,12 @@ impl RumMetricsAPI {
     /// Get the list of all RUM-based metrics configured for your organization, with their definitions.
     /// The list is not paginated.
     /// Metrics whose stored definition cannot be converted to the RUM format are omitted from the list.
-    /// To retrieve a single metric, use `GetRumMetric`.
+    /// To retrieve a single metric, use `GetRUMMetric`.
     pub async fn list_rum_metrics_with_http_info(
         &self,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricsResponse>,
-        datadog::Error<ListRumMetricsError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMMetricsResponse>,
+        datadog::Error<ListRUMMetricsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_metrics";
@@ -570,7 +570,7 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricsResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMMetricsResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -583,7 +583,7 @@ impl RumMetricsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumMetricsError> =
+            let local_entity: Option<ListRUMMetricsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -603,8 +603,8 @@ impl RumMetricsAPI {
     pub async fn update_rum_metric(
         &self,
         metric_id: String,
-        body: crate::datadogV2::model::RumMetricUpdateRequest,
-    ) -> Result<crate::datadogV2::model::RumMetricResponse, datadog::Error<UpdateRumMetricError>>
+        body: crate::datadogV2::model::RUMMetricUpdateRequest,
+    ) -> Result<crate::datadogV2::model::RUMMetricResponse, datadog::Error<UpdateRUMMetricError>>
     {
         match self.update_rum_metric_with_http_info(metric_id, body).await {
             Ok(response_content) => {
@@ -629,10 +629,10 @@ impl RumMetricsAPI {
     pub async fn update_rum_metric_with_http_info(
         &self,
         metric_id: String,
-        body: crate::datadogV2::model::RumMetricUpdateRequest,
+        body: crate::datadogV2::model::RUMMetricUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumMetricResponse>,
-        datadog::Error<UpdateRumMetricError>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMMetricResponse>,
+        datadog::Error<UpdateRUMMetricError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_metric";
@@ -736,7 +736,7 @@ impl RumMetricsAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumMetricResponse>(&local_content)
+            match serde_json::from_str::<crate::datadogV2::model::RUMMetricResponse>(&local_content)
             {
                 Ok(e) => {
                     return Ok(datadog::ResponseContent {
@@ -748,7 +748,7 @@ impl RumMetricsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRumMetricError> =
+            let local_entity: Option<UpdateRUMMetricError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

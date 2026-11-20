@@ -10,14 +10,14 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterMeta {
+pub struct RUMRetentionFilterMeta {
     /// The types of changes the retention filter accepts. `complete` filters can be updated and deleted.
     /// `limited` filters are default retention filters that can't be deleted.
     #[serde(rename = "edition_mode")]
-    pub edition_mode: Option<crate::datadogV2::model::RumRetentionFilterEditionMode>,
+    pub edition_mode: Option<crate::datadogV2::model::RUMRetentionFilterEditionMode>,
     /// The source of the last update to the retention filter. The value is `unknown` if the request doesn't specify a source.
     #[serde(rename = "source")]
-    pub source: Option<crate::datadogV2::model::RumRetentionFilterMetaSource>,
+    pub source: Option<crate::datadogV2::model::RUMRetentionFilterMetaSource>,
     /// The time of the last update, as a Unix timestamp in milliseconds.
     #[serde(rename = "updated_at")]
     pub updated_at: Option<i64>,
@@ -31,9 +31,9 @@ pub struct RumRetentionFilterMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterMeta {
-    pub fn new() -> RumRetentionFilterMeta {
-        RumRetentionFilterMeta {
+impl RUMRetentionFilterMeta {
+    pub fn new() -> RUMRetentionFilterMeta {
+        RUMRetentionFilterMeta {
             edition_mode: None,
             source: None,
             updated_at: None,
@@ -45,13 +45,13 @@ impl RumRetentionFilterMeta {
 
     pub fn edition_mode(
         mut self,
-        value: crate::datadogV2::model::RumRetentionFilterEditionMode,
+        value: crate::datadogV2::model::RUMRetentionFilterEditionMode,
     ) -> Self {
         self.edition_mode = Some(value);
         self
     }
 
-    pub fn source(mut self, value: crate::datadogV2::model::RumRetentionFilterMetaSource) -> Self {
+    pub fn source(mut self, value: crate::datadogV2::model::RUMRetentionFilterMetaSource) -> Self {
         self.source = Some(value);
         self
     }
@@ -75,20 +75,20 @@ impl RumRetentionFilterMeta {
     }
 }
 
-impl Default for RumRetentionFilterMeta {
+impl Default for RUMRetentionFilterMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
+impl<'de> Deserialize<'de> for RUMRetentionFilterMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterMetaVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterMetaVisitor {
-            type Value = RumRetentionFilterMeta;
+        struct RUMRetentionFilterMetaVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterMetaVisitor {
+            type Value = RUMRetentionFilterMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -99,9 +99,9 @@ impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
                 M: MapAccess<'a>,
             {
                 let mut edition_mode: Option<
-                    crate::datadogV2::model::RumRetentionFilterEditionMode,
+                    crate::datadogV2::model::RUMRetentionFilterEditionMode,
                 > = None;
-                let mut source: Option<crate::datadogV2::model::RumRetentionFilterMetaSource> =
+                let mut source: Option<crate::datadogV2::model::RUMRetentionFilterMetaSource> =
                     None;
                 let mut updated_at: Option<i64> = None;
                 let mut updated_by_handle: Option<String> = None;
@@ -121,7 +121,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _edition_mode) = edition_mode {
                                 match _edition_mode {
-                                    crate::datadogV2::model::RumRetentionFilterEditionMode::UnparsedObject(_edition_mode) => {
+                                    crate::datadogV2::model::RUMRetentionFilterEditionMode::UnparsedObject(_edition_mode) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -135,7 +135,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _source) = source {
                                 match _source {
-                                    crate::datadogV2::model::RumRetentionFilterMetaSource::UnparsedObject(_source) => {
+                                    crate::datadogV2::model::RUMRetentionFilterMetaSource::UnparsedObject(_source) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -163,7 +163,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
                     }
                 }
 
-                let content = RumRetentionFilterMeta {
+                let content = RUMRetentionFilterMeta {
                     edition_mode,
                     source,
                     updated_at,
@@ -176,6 +176,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterMeta {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterMetaVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterMetaVisitor)
     }
 }

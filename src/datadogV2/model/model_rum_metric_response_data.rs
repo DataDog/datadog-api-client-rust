@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricResponseData {
+pub struct RUMMetricResponseData {
     /// The object describing a Datadog RUM-based metric.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RumMetricResponseAttributes>,
+    pub attributes: Option<crate::datadogV2::model::RUMMetricResponseAttributes>,
     /// The name of the RUM-based metric.
     /// On creation, it must be 1 to 200 characters long, contain only ASCII letters, digits, underscores, and periods, start with a letter, and not start with `rum.measure` or `rum.investigate`.
     /// It cannot be changed after creation.
@@ -21,7 +21,7 @@ pub struct RumMetricResponseData {
     pub id: Option<String>,
     /// The type of the resource. The value must be `rum_metrics`.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::RumMetricType>,
+    pub type_: Option<crate::datadogV2::model::RUMMetricType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,9 +29,9 @@ pub struct RumMetricResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricResponseData {
-    pub fn new() -> RumMetricResponseData {
-        RumMetricResponseData {
+impl RUMMetricResponseData {
+    pub fn new() -> RUMMetricResponseData {
+        RUMMetricResponseData {
             attributes: None,
             id: None,
             type_: None,
@@ -42,7 +42,7 @@ impl RumMetricResponseData {
 
     pub fn attributes(
         mut self,
-        value: crate::datadogV2::model::RumMetricResponseAttributes,
+        value: crate::datadogV2::model::RUMMetricResponseAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
@@ -53,7 +53,7 @@ impl RumMetricResponseData {
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::RumMetricType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::RUMMetricType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -67,20 +67,20 @@ impl RumMetricResponseData {
     }
 }
 
-impl Default for RumMetricResponseData {
+impl Default for RUMMetricResponseData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricResponseData {
+impl<'de> Deserialize<'de> for RUMMetricResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricResponseDataVisitor;
-        impl<'a> Visitor<'a> for RumMetricResponseDataVisitor {
-            type Value = RumMetricResponseData;
+        struct RUMMetricResponseDataVisitor;
+        impl<'a> Visitor<'a> for RUMMetricResponseDataVisitor {
+            type Value = RUMMetricResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -90,10 +90,10 @@ impl<'de> Deserialize<'de> for RumMetricResponseData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumMetricResponseAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMMetricResponseAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumMetricType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMMetricType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -121,7 +121,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumMetricType::UnparsedObject(
+                                    crate::datadogV2::model::RUMMetricType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -138,7 +138,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseData {
                     }
                 }
 
-                let content = RumMetricResponseData {
+                let content = RUMMetricResponseData {
                     attributes,
                     id,
                     type_,
@@ -150,6 +150,6 @@ impl<'de> Deserialize<'de> for RumMetricResponseData {
             }
         }
 
-        deserializer.deserialize_any(RumMetricResponseDataVisitor)
+        deserializer.deserialize_any(RUMMetricResponseDataVisitor)
     }
 }

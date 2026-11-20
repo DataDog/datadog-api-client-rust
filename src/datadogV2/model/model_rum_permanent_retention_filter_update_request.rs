@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumPermanentRetentionFilterUpdateRequest {
+pub struct RUMPermanentRetentionFilterUpdateRequest {
     /// The new permanent RUM retention filter configuration to update.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumPermanentRetentionFilterUpdateData,
+    pub data: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumPermanentRetentionFilterUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumPermanentRetentionFilterUpdateRequest {
+impl RUMPermanentRetentionFilterUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumPermanentRetentionFilterUpdateData,
-    ) -> RumPermanentRetentionFilterUpdateRequest {
-        RumPermanentRetentionFilterUpdateRequest {
+        data: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateData,
+    ) -> RUMPermanentRetentionFilterUpdateRequest {
+        RUMPermanentRetentionFilterUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumPermanentRetentionFilterUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateRequest {
+impl<'de> Deserialize<'de> for RUMPermanentRetentionFilterUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumPermanentRetentionFilterUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for RumPermanentRetentionFilterUpdateRequestVisitor {
-            type Value = RumPermanentRetentionFilterUpdateRequest;
+        struct RUMPermanentRetentionFilterUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for RUMPermanentRetentionFilterUpdateRequestVisitor {
+            type Value = RUMPermanentRetentionFilterUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -59,7 +59,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateRequest {
                 M: MapAccess<'a>,
             {
                 let mut data: Option<
-                    crate::datadogV2::model::RumPermanentRetentionFilterUpdateData,
+                    crate::datadogV2::model::RUMPermanentRetentionFilterUpdateData,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -81,7 +81,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumPermanentRetentionFilterUpdateRequest {
+                let content = RUMPermanentRetentionFilterUpdateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -91,6 +91,6 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateRequest {
             }
         }
 
-        deserializer.deserialize_any(RumPermanentRetentionFilterUpdateRequestVisitor)
+        deserializer.deserialize_any(RUMPermanentRetentionFilterUpdateRequestVisitor)
     }
 }

@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricUpdateData {
+pub struct RUMMetricUpdateData {
     /// The RUM-based metric properties to update. Omitted properties keep their current value.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumMetricUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMMetricUpdateAttributes,
     /// The name of the RUM-based metric.
     /// On creation, it must be 1 to 200 characters long, contain only ASCII letters, digits, underscores, and periods, start with a letter, and not start with `rum.measure` or `rum.investigate`.
     /// It cannot be changed after creation.
@@ -21,7 +21,7 @@ pub struct RumMetricUpdateData {
     pub id: Option<String>,
     /// The type of the resource. The value must be `rum_metrics`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumMetricType,
+    pub type_: crate::datadogV2::model::RUMMetricType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,12 +29,12 @@ pub struct RumMetricUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricUpdateData {
+impl RUMMetricUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumMetricUpdateAttributes,
-        type_: crate::datadogV2::model::RumMetricType,
-    ) -> RumMetricUpdateData {
-        RumMetricUpdateData {
+        attributes: crate::datadogV2::model::RUMMetricUpdateAttributes,
+        type_: crate::datadogV2::model::RUMMetricType,
+    ) -> RUMMetricUpdateData {
+        RUMMetricUpdateData {
             attributes,
             id: None,
             type_,
@@ -57,14 +57,14 @@ impl RumMetricUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricUpdateData {
+impl<'de> Deserialize<'de> for RUMMetricUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumMetricUpdateDataVisitor {
-            type Value = RumMetricUpdateData;
+        struct RUMMetricUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMMetricUpdateDataVisitor {
+            type Value = RUMMetricUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -74,10 +74,10 @@ impl<'de> Deserialize<'de> for RumMetricUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumMetricUpdateAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMMetricUpdateAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumMetricType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMMetricType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for RumMetricUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumMetricType::UnparsedObject(
+                                    crate::datadogV2::model::RUMMetricType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -118,7 +118,7 @@ impl<'de> Deserialize<'de> for RumMetricUpdateData {
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumMetricUpdateData {
+                let content = RUMMetricUpdateData {
                     attributes,
                     id,
                     type_,
@@ -130,6 +130,6 @@ impl<'de> Deserialize<'de> for RumMetricUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumMetricUpdateDataVisitor)
+        deserializer.deserialize_any(RUMMetricUpdateDataVisitor)
     }
 }

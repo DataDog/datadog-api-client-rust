@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumPermanentRetentionFilterID {
+pub enum RUMPermanentRetentionFilterID {
     RUM_APM_FLAT_SAMPLING,
     SYNTHETICS_SESSIONS,
     FORCED_REPLAY_SESSIONS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumPermanentRetentionFilterID {
+impl ToString for RUMPermanentRetentionFilterID {
     fn to_string(&self) -> String {
         match self {
             Self::RUM_APM_FLAT_SAMPLING => String::from("rum_apm_flat_sampling"),
@@ -24,7 +24,7 @@ impl ToString for RumPermanentRetentionFilterID {
     }
 }
 
-impl Serialize for RumPermanentRetentionFilterID {
+impl Serialize for RUMPermanentRetentionFilterID {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -36,7 +36,7 @@ impl Serialize for RumPermanentRetentionFilterID {
     }
 }
 
-impl<'de> Deserialize<'de> for RumPermanentRetentionFilterID {
+impl<'de> Deserialize<'de> for RUMPermanentRetentionFilterID {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

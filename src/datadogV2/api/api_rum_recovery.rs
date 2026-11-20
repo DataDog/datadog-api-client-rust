@@ -59,7 +59,7 @@ impl ListRUMRecoveryBatchRequestsOptionalParams {
 #[serde(untagged)]
 pub enum CreateRUMRecoveryRequestError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -68,7 +68,7 @@ pub enum CreateRUMRecoveryRequestError {
 #[serde(untagged)]
 pub enum GetRUMRecoveryRequestError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -77,7 +77,7 @@ pub enum GetRUMRecoveryRequestError {
 #[serde(untagged)]
 pub enum GetRUMRecoverySessionCountError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -86,7 +86,7 @@ pub enum GetRUMRecoverySessionCountError {
 #[serde(untagged)]
 pub enum ListRUMRecoveryBatchRequestsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -95,7 +95,7 @@ pub enum ListRUMRecoveryBatchRequestsError {
 #[serde(untagged)]
 pub enum SearchRUMArchiveSessionsError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -104,7 +104,7 @@ pub enum SearchRUMArchiveSessionsError {
 #[serde(untagged)]
 pub enum UpdateRUMRecoveryBatchRequestError {
     JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
-    RumManagedArchiveErrorResponse(crate::datadogV2::model::RumManagedArchiveErrorResponse),
+    RUMManagedArchiveErrorResponse(crate::datadogV2::model::RUMManagedArchiveErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -189,9 +189,9 @@ impl RUMRecoveryAPI {
     /// Creation is not idempotent. After an uncertain response, check session search or batch listing before retrying.
     pub async fn create_rum_recovery_request(
         &self,
-        body: crate::datadogV2::model::RumRecoveryCreateRequest,
+        body: crate::datadogV2::model::RUMRecoveryCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRecoveryCreateResponse,
+        crate::datadogV2::model::RUMRecoveryCreateResponse,
         datadog::Error<CreateRUMRecoveryRequestError>,
     > {
         match self.create_rum_recovery_request_with_http_info(body).await {
@@ -213,9 +213,9 @@ impl RUMRecoveryAPI {
     /// Creation is not idempotent. After an uncertain response, check session search or batch listing before retrying.
     pub async fn create_rum_recovery_request_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumRecoveryCreateRequest,
+        body: crate::datadogV2::model::RUMRecoveryCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRecoveryCreateResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRecoveryCreateResponse>,
         datadog::Error<CreateRUMRecoveryRequestError>,
     > {
         let local_configuration = &self.config;
@@ -319,7 +319,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRecoveryCreateResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRecoveryCreateResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -348,7 +348,7 @@ impl RUMRecoveryAPI {
         &self,
         request_id: uuid::Uuid,
     ) -> Result<
-        crate::datadogV2::model::RumRecoveryRequestResponse,
+        crate::datadogV2::model::RUMRecoveryRequestResponse,
         datadog::Error<GetRUMRecoveryRequestError>,
     > {
         match self
@@ -373,7 +373,7 @@ impl RUMRecoveryAPI {
         &self,
         request_id: uuid::Uuid,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRecoveryRequestResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRecoveryRequestResponse>,
         datadog::Error<GetRUMRecoveryRequestError>,
     > {
         let local_configuration = &self.config;
@@ -431,7 +431,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRecoveryRequestResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRecoveryRequestResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -458,9 +458,9 @@ impl RUMRecoveryAPI {
     /// Return the full estimated number of recoverable sessions and the configured maximum per batch. The estimate is not capped at that maximum. This endpoint does not create a recovery request. Narrow the query or time range if the estimate exceeds max_recoverable_sessions. Creation checks a fresh estimate and returns 400 if it exceeds the configured maximum.
     pub async fn get_rum_recovery_session_count(
         &self,
-        body: crate::datadogV2::model::RumRecoveryCountRequest,
+        body: crate::datadogV2::model::RUMRecoveryCountRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRecoveryCountResponse,
+        crate::datadogV2::model::RUMRecoveryCountResponse,
         datadog::Error<GetRUMRecoverySessionCountError>,
     > {
         match self
@@ -483,9 +483,9 @@ impl RUMRecoveryAPI {
     /// Return the full estimated number of recoverable sessions and the configured maximum per batch. The estimate is not capped at that maximum. This endpoint does not create a recovery request. Narrow the query or time range if the estimate exceeds max_recoverable_sessions. Creation checks a fresh estimate and returns 400 if it exceeds the configured maximum.
     pub async fn get_rum_recovery_session_count_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumRecoveryCountRequest,
+        body: crate::datadogV2::model::RUMRecoveryCountRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRecoveryCountResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRecoveryCountResponse>,
         datadog::Error<GetRUMRecoverySessionCountError>,
     > {
         let local_configuration = &self.config;
@@ -589,7 +589,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRecoveryCountResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRecoveryCountResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -617,10 +617,10 @@ impl RUMRecoveryAPI {
     /// A filtered page can be empty or contain fewer than `limit` results and still include `meta.next_cursor`. Continue until the cursor is absent, keeping the filters unchanged between pages.
     pub async fn list_rum_recovery_batch_requests(
         &self,
-        type_: crate::datadogV2::model::RumRecoveryBatchRequestType,
+        type_: crate::datadogV2::model::RUMRecoveryBatchRequestType,
         params: ListRUMRecoveryBatchRequestsOptionalParams,
     ) -> Result<
-        crate::datadogV2::model::RumRecoveryBatchListResponse,
+        crate::datadogV2::model::RUMRecoveryBatchListResponse,
         datadog::Error<ListRUMRecoveryBatchRequestsError>,
     > {
         match self
@@ -644,10 +644,10 @@ impl RUMRecoveryAPI {
     /// A filtered page can be empty or contain fewer than `limit` results and still include `meta.next_cursor`. Continue until the cursor is absent, keeping the filters unchanged between pages.
     pub async fn list_rum_recovery_batch_requests_with_http_info(
         &self,
-        type_: crate::datadogV2::model::RumRecoveryBatchRequestType,
+        type_: crate::datadogV2::model::RUMRecoveryBatchRequestType,
         params: ListRUMRecoveryBatchRequestsOptionalParams,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRecoveryBatchListResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRecoveryBatchListResponse>,
         datadog::Error<ListRUMRecoveryBatchRequestsError>,
     > {
         let local_configuration = &self.config;
@@ -732,7 +732,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRecoveryBatchListResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRecoveryBatchListResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -759,9 +759,9 @@ impl RUMRecoveryAPI {
     /// Search archived RUM sessions. Use `meta.page.next_cursor` to retrieve the next page.
     pub async fn search_rum_archive_sessions(
         &self,
-        body: crate::datadogV2::model::RumArchiveSessionsSearchRequest,
+        body: crate::datadogV2::model::RUMArchiveSessionsSearchRequest,
     ) -> Result<
-        crate::datadogV2::model::RumArchiveSessionsResponse,
+        crate::datadogV2::model::RUMArchiveSessionsResponse,
         datadog::Error<SearchRUMArchiveSessionsError>,
     > {
         match self.search_rum_archive_sessions_with_http_info(body).await {
@@ -781,9 +781,9 @@ impl RUMRecoveryAPI {
     /// Search archived RUM sessions. Use `meta.page.next_cursor` to retrieve the next page.
     pub async fn search_rum_archive_sessions_with_http_info(
         &self,
-        body: crate::datadogV2::model::RumArchiveSessionsSearchRequest,
+        body: crate::datadogV2::model::RUMArchiveSessionsSearchRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumArchiveSessionsResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMArchiveSessionsResponse>,
         datadog::Error<SearchRUMArchiveSessionsError>,
     > {
         let local_configuration = &self.config;
@@ -887,7 +887,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumArchiveSessionsResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMArchiveSessionsResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -915,9 +915,9 @@ impl RUMRecoveryAPI {
     pub async fn update_rum_recovery_batch_request(
         &self,
         request_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumRecoveryCancelRequest,
+        body: crate::datadogV2::model::RUMRecoveryCancelRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRecoveryCancelResponse,
+        crate::datadogV2::model::RUMRecoveryCancelResponse,
         datadog::Error<UpdateRUMRecoveryBatchRequestError>,
     > {
         match self
@@ -941,9 +941,9 @@ impl RUMRecoveryAPI {
     pub async fn update_rum_recovery_batch_request_with_http_info(
         &self,
         request_id: uuid::Uuid,
-        body: crate::datadogV2::model::RumRecoveryCancelRequest,
+        body: crate::datadogV2::model::RUMRecoveryCancelRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRecoveryCancelResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRecoveryCancelResponse>,
         datadog::Error<UpdateRUMRecoveryBatchRequestError>,
     > {
         let local_configuration = &self.config;
@@ -1048,7 +1048,7 @@ impl RUMRecoveryAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRecoveryCancelResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRecoveryCancelResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

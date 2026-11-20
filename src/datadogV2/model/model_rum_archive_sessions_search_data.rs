@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsSearchData {
+pub struct RUMArchiveSessionsSearchData {
     /// Archived-session query. A window wider than configured archive retention is narrowed before searching.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumArchiveSessionsSearchAttributes,
+    pub attributes: crate::datadogV2::model::RUMArchiveSessionsSearchAttributes,
     /// Optional resource identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,11 +27,11 @@ pub struct RumArchiveSessionsSearchData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsSearchData {
+impl RUMArchiveSessionsSearchData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumArchiveSessionsSearchAttributes,
-    ) -> RumArchiveSessionsSearchData {
-        RumArchiveSessionsSearchData {
+        attributes: crate::datadogV2::model::RUMArchiveSessionsSearchAttributes,
+    ) -> RUMArchiveSessionsSearchData {
+        RUMArchiveSessionsSearchData {
             attributes,
             id: None,
             type_: None,
@@ -59,14 +59,14 @@ impl RumArchiveSessionsSearchData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsSearchData {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsSearchData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsSearchDataVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsSearchDataVisitor {
-            type Value = RumArchiveSessionsSearchData;
+        struct RUMArchiveSessionsSearchDataVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsSearchDataVisitor {
+            type Value = RUMArchiveSessionsSearchData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumArchiveSessionsSearchAttributes,
+                    crate::datadogV2::model::RUMArchiveSessionsSearchAttributes,
                 > = None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<String> = None;
@@ -113,7 +113,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchData {
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = RumArchiveSessionsSearchData {
+                let content = RUMArchiveSessionsSearchData {
                     attributes,
                     id,
                     type_,
@@ -125,6 +125,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchData {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsSearchDataVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsSearchDataVisitor)
     }
 }

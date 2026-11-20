@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionQuotaReachedAction {
+pub enum RUMRetentionQuotaReachedAction {
     STOP,
     SLOWDOWN,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionQuotaReachedAction {
+impl ToString for RUMRetentionQuotaReachedAction {
     fn to_string(&self) -> String {
         match self {
             Self::STOP => String::from("stop"),
@@ -22,7 +22,7 @@ impl ToString for RumRetentionQuotaReachedAction {
     }
 }
 
-impl Serialize for RumRetentionQuotaReachedAction {
+impl Serialize for RUMRetentionQuotaReachedAction {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for RumRetentionQuotaReachedAction {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaReachedAction {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaReachedAction {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

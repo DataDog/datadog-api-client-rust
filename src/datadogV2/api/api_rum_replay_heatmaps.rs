@@ -10,7 +10,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListReplayHeatmapSnapshotsOptionalParams is a struct for passing parameters to the method [`RumReplayHeatmapsAPI::list_replay_heatmap_snapshots`]
+/// ListReplayHeatmapSnapshotsOptionalParams is a struct for passing parameters to the method [`RUMReplayHeatmapsAPI::list_replay_heatmap_snapshots`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListReplayHeatmapSnapshotsOptionalParams {
@@ -40,7 +40,7 @@ impl ListReplayHeatmapSnapshotsOptionalParams {
     }
 }
 
-/// CreateReplayHeatmapSnapshotError is a struct for typed errors of method [`RumReplayHeatmapsAPI::create_replay_heatmap_snapshot`]
+/// CreateReplayHeatmapSnapshotError is a struct for typed errors of method [`RUMReplayHeatmapsAPI::create_replay_heatmap_snapshot`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateReplayHeatmapSnapshotError {
@@ -48,7 +48,7 @@ pub enum CreateReplayHeatmapSnapshotError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteReplayHeatmapSnapshotError is a struct for typed errors of method [`RumReplayHeatmapsAPI::delete_replay_heatmap_snapshot`]
+/// DeleteReplayHeatmapSnapshotError is a struct for typed errors of method [`RUMReplayHeatmapsAPI::delete_replay_heatmap_snapshot`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteReplayHeatmapSnapshotError {
@@ -56,7 +56,7 @@ pub enum DeleteReplayHeatmapSnapshotError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListReplayHeatmapSnapshotsError is a struct for typed errors of method [`RumReplayHeatmapsAPI::list_replay_heatmap_snapshots`]
+/// ListReplayHeatmapSnapshotsError is a struct for typed errors of method [`RUMReplayHeatmapsAPI::list_replay_heatmap_snapshots`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListReplayHeatmapSnapshotsError {
@@ -64,7 +64,7 @@ pub enum ListReplayHeatmapSnapshotsError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateReplayHeatmapSnapshotError is a struct for typed errors of method [`RumReplayHeatmapsAPI::update_replay_heatmap_snapshot`]
+/// UpdateReplayHeatmapSnapshotError is a struct for typed errors of method [`RUMReplayHeatmapsAPI::update_replay_heatmap_snapshot`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateReplayHeatmapSnapshotError {
@@ -74,18 +74,18 @@ pub enum UpdateReplayHeatmapSnapshotError {
 
 /// Manage heatmap snapshots for RUM replay sessions. Create, update, delete, and retrieve snapshots to visualize user interactions on specific views.
 #[derive(Debug, Clone)]
-pub struct RumReplayHeatmapsAPI {
+pub struct RUMReplayHeatmapsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumReplayHeatmapsAPI {
+impl Default for RUMReplayHeatmapsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumReplayHeatmapsAPI {
+impl RUMReplayHeatmapsAPI {
     pub fn new() -> Self {
         Self::default()
     }

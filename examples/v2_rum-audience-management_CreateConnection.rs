@@ -1,6 +1,6 @@
 // Create connection returns "Connection created successfully" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_audience_management::RumAudienceManagementAPI;
+use datadog_api_client::datadogV2::api_rum_audience_management::RUMAudienceManagementAPI;
 use datadog_api_client::datadogV2::model::CreateConnectionRequest;
 use datadog_api_client::datadogV2::model::CreateConnectionRequestData;
 use datadog_api_client::datadogV2::model::CreateConnectionRequestDataAttributes;
@@ -38,7 +38,7 @@ async fn main() {
     );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.create_connection", true);
-    let api = RumAudienceManagementAPI::with_config(configuration);
+    let api = RUMAudienceManagementAPI::with_config(configuration);
     let resp = api.create_connection("users".to_string(), body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

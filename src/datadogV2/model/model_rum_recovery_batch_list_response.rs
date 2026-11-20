@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryBatchListResponse {
+pub struct RUMRecoveryBatchListResponse {
     /// Batch requests ordered newest first. A filtered page can be empty while meta.next_cursor is present.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::RumRecoveryBatchListData>,
+    pub data: Vec<crate::datadogV2::model::RUMRecoveryBatchListData>,
     /// Batch-list pagination metadata.
     #[serde(rename = "meta")]
-    pub meta: crate::datadogV2::model::RumRecoveryBatchListMeta,
+    pub meta: crate::datadogV2::model::RUMRecoveryBatchListMeta,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumRecoveryBatchListResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryBatchListResponse {
+impl RUMRecoveryBatchListResponse {
     pub fn new(
-        data: Vec<crate::datadogV2::model::RumRecoveryBatchListData>,
-        meta: crate::datadogV2::model::RumRecoveryBatchListMeta,
-    ) -> RumRecoveryBatchListResponse {
-        RumRecoveryBatchListResponse {
+        data: Vec<crate::datadogV2::model::RUMRecoveryBatchListData>,
+        meta: crate::datadogV2::model::RUMRecoveryBatchListMeta,
+    ) -> RUMRecoveryBatchListResponse {
+        RUMRecoveryBatchListResponse {
             data,
             meta,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumRecoveryBatchListResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchListResponse {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchListResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryBatchListResponseVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryBatchListResponseVisitor {
-            type Value = RumRecoveryBatchListResponse;
+        struct RUMRecoveryBatchListResponseVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryBatchListResponseVisitor {
+            type Value = RUMRecoveryBatchListResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +63,8 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::RumRecoveryBatchListData>> = None;
-                let mut meta: Option<crate::datadogV2::model::RumRecoveryBatchListMeta> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::RUMRecoveryBatchListData>> = None;
+                let mut meta: Option<crate::datadogV2::model::RUMRecoveryBatchListMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListResponse {
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
                 let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
-                let content = RumRecoveryBatchListResponse {
+                let content = RUMRecoveryBatchListResponse {
                     data,
                     meta,
                     additional_properties,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListResponse {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryBatchListResponseVisitor)
+        deserializer.deserialize_any(RUMRecoveryBatchListResponseVisitor)
     }
 }

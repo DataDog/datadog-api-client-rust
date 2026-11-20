@@ -10,19 +10,19 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterData {
+pub struct RUMRetentionFilterData {
     /// The object describing attributes of a RUM retention filter.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RumRetentionFilterAttributes>,
+    pub attributes: Option<crate::datadogV2::model::RUMRetentionFilterAttributes>,
     /// ID of retention filter in UUID.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Metadata about the retention filter.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::RumRetentionFilterMeta>,
+    pub meta: Option<crate::datadogV2::model::RUMRetentionFilterMeta>,
     /// The type of the resource. The value should always be retention_filters.
     #[serde(rename = "type")]
-    pub type_: Option<crate::datadogV2::model::RumRetentionFilterType>,
+    pub type_: Option<crate::datadogV2::model::RUMRetentionFilterType>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,9 +30,9 @@ pub struct RumRetentionFilterData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterData {
-    pub fn new() -> RumRetentionFilterData {
-        RumRetentionFilterData {
+impl RUMRetentionFilterData {
+    pub fn new() -> RUMRetentionFilterData {
+        RUMRetentionFilterData {
             attributes: None,
             id: None,
             meta: None,
@@ -44,7 +44,7 @@ impl RumRetentionFilterData {
 
     pub fn attributes(
         mut self,
-        value: crate::datadogV2::model::RumRetentionFilterAttributes,
+        value: crate::datadogV2::model::RUMRetentionFilterAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
@@ -55,12 +55,12 @@ impl RumRetentionFilterData {
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::RumRetentionFilterMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::RUMRetentionFilterMeta) -> Self {
         self.meta = Some(value);
         self
     }
 
-    pub fn type_(mut self, value: crate::datadogV2::model::RumRetentionFilterType) -> Self {
+    pub fn type_(mut self, value: crate::datadogV2::model::RUMRetentionFilterType) -> Self {
         self.type_ = Some(value);
         self
     }
@@ -74,20 +74,20 @@ impl RumRetentionFilterData {
     }
 }
 
-impl Default for RumRetentionFilterData {
+impl Default for RUMRetentionFilterData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterData {
+impl<'de> Deserialize<'de> for RUMRetentionFilterData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterDataVisitor {
-            type Value = RumRetentionFilterData;
+        struct RUMRetentionFilterDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterDataVisitor {
+            type Value = RUMRetentionFilterData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -97,11 +97,11 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumRetentionFilterAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMRetentionFilterAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut meta: Option<crate::datadogV2::model::RumRetentionFilterMeta> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionFilterType> = None;
+                let mut meta: Option<crate::datadogV2::model::RUMRetentionFilterMeta> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -135,7 +135,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -150,7 +150,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
                     }
                 }
 
-                let content = RumRetentionFilterData {
+                let content = RUMRetentionFilterData {
                     attributes,
                     id,
                     meta,
@@ -163,6 +163,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterDataVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterDataVisitor)
     }
 }

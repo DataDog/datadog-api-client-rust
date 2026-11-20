@@ -2,7 +2,7 @@
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_recovery::ListRUMRecoveryBatchRequestsOptionalParams;
 use datadog_api_client::datadogV2::api_rum_recovery::RUMRecoveryAPI;
-use datadog_api_client::datadogV2::model::RumRecoveryBatchRequestType;
+use datadog_api_client::datadogV2::model::RUMRecoveryBatchRequestType;
 
 #[tokio::main]
 async fn main() {
@@ -10,7 +10,7 @@ async fn main() {
     let api = RUMRecoveryAPI::with_config(configuration);
     let resp = api
         .list_rum_recovery_batch_requests(
-            RumRecoveryBatchRequestType::BATCH,
+            RUMRecoveryBatchRequestType::BATCH,
             ListRUMRecoveryBatchRequestsOptionalParams::default(),
         )
         .await;

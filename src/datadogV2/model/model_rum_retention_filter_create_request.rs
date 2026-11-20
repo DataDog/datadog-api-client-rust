@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterCreateRequest {
+pub struct RUMRetentionFilterCreateRequest {
     /// The new RUM retention filter properties to create.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumRetentionFilterCreateData,
+    pub data: crate::datadogV2::model::RUMRetentionFilterCreateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumRetentionFilterCreateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterCreateRequest {
+impl RUMRetentionFilterCreateRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumRetentionFilterCreateData,
-    ) -> RumRetentionFilterCreateRequest {
-        RumRetentionFilterCreateRequest {
+        data: crate::datadogV2::model::RUMRetentionFilterCreateData,
+    ) -> RUMRetentionFilterCreateRequest {
+        RUMRetentionFilterCreateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumRetentionFilterCreateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterCreateRequest {
+impl<'de> Deserialize<'de> for RUMRetentionFilterCreateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterCreateRequestVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterCreateRequestVisitor {
-            type Value = RumRetentionFilterCreateRequest;
+        struct RUMRetentionFilterCreateRequestVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterCreateRequestVisitor {
+            type Value = RUMRetentionFilterCreateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumRetentionFilterCreateData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMRetentionFilterCreateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumRetentionFilterCreateRequest {
+                let content = RUMRetentionFilterCreateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterCreateRequest {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterCreateRequestVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterCreateRequestVisitor)
     }
 }

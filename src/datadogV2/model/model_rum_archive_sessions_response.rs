@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsResponse {
+pub struct RUMArchiveSessionsResponse {
     /// Archived sessions.
     #[serde(rename = "data")]
-    pub data: Vec<crate::datadogV2::model::RumArchiveSession>,
+    pub data: Vec<crate::datadogV2::model::RUMArchiveSession>,
     /// Search metadata.
     #[serde(rename = "meta")]
-    pub meta: crate::datadogV2::model::RumArchiveSessionsMeta,
+    pub meta: crate::datadogV2::model::RUMArchiveSessionsMeta,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumArchiveSessionsResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsResponse {
+impl RUMArchiveSessionsResponse {
     pub fn new(
-        data: Vec<crate::datadogV2::model::RumArchiveSession>,
-        meta: crate::datadogV2::model::RumArchiveSessionsMeta,
-    ) -> RumArchiveSessionsResponse {
-        RumArchiveSessionsResponse {
+        data: Vec<crate::datadogV2::model::RUMArchiveSession>,
+        meta: crate::datadogV2::model::RUMArchiveSessionsMeta,
+    ) -> RUMArchiveSessionsResponse {
+        RUMArchiveSessionsResponse {
             data,
             meta,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumArchiveSessionsResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsResponse {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsResponseVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsResponseVisitor {
-            type Value = RumArchiveSessionsResponse;
+        struct RUMArchiveSessionsResponseVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsResponseVisitor {
+            type Value = RUMArchiveSessionsResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -63,8 +63,8 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::RumArchiveSession>> = None;
-                let mut meta: Option<crate::datadogV2::model::RumArchiveSessionsMeta> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::RUMArchiveSession>> = None;
+                let mut meta: Option<crate::datadogV2::model::RUMArchiveSessionsMeta> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsResponse {
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
                 let meta = meta.ok_or_else(|| M::Error::missing_field("meta"))?;
 
-                let content = RumArchiveSessionsResponse {
+                let content = RUMArchiveSessionsResponse {
                     data,
                     meta,
                     additional_properties,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsResponse {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsResponseVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsResponseVisitor)
     }
 }

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumSdkConfigDynamicOptionSerializedType {
+pub enum RUMSdkConfigDynamicOptionSerializedType {
     DYNAMIC,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumSdkConfigDynamicOptionSerializedType {
+impl ToString for RUMSdkConfigDynamicOptionSerializedType {
     fn to_string(&self) -> String {
         match self {
             Self::DYNAMIC => String::from("dynamic"),
@@ -20,7 +20,7 @@ impl ToString for RumSdkConfigDynamicOptionSerializedType {
     }
 }
 
-impl Serialize for RumSdkConfigDynamicOptionSerializedType {
+impl Serialize for RUMSdkConfigDynamicOptionSerializedType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumSdkConfigDynamicOptionSerializedType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigDynamicOptionSerializedType {
+impl<'de> Deserialize<'de> for RUMSdkConfigDynamicOptionSerializedType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

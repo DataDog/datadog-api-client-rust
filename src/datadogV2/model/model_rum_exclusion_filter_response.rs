@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterResponse {
+pub struct RUMExclusionFilterResponse {
     /// An exclusion filter.
     #[serde(rename = "data")]
-    pub data: Option<crate::datadogV2::model::RumExclusionFilterData>,
+    pub data: Option<crate::datadogV2::model::RUMExclusionFilterData>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct RumExclusionFilterResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterResponse {
-    pub fn new() -> RumExclusionFilterResponse {
-        RumExclusionFilterResponse {
+impl RUMExclusionFilterResponse {
+    pub fn new() -> RUMExclusionFilterResponse {
+        RUMExclusionFilterResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: crate::datadogV2::model::RumExclusionFilterData) -> Self {
+    pub fn data(mut self, value: crate::datadogV2::model::RUMExclusionFilterData) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl RumExclusionFilterResponse {
     }
 }
 
-impl Default for RumExclusionFilterResponse {
+impl Default for RUMExclusionFilterResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterResponse {
+impl<'de> Deserialize<'de> for RUMExclusionFilterResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterResponseVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterResponseVisitor {
-            type Value = RumExclusionFilterResponse;
+        struct RUMExclusionFilterResponseVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterResponseVisitor {
+            type Value = RUMExclusionFilterResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumExclusionFilterData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMExclusionFilterData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterResponse {
                     }
                 }
 
-                let content = RumExclusionFilterResponse {
+                let content = RUMExclusionFilterResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterResponse {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterResponseVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterResponseVisitor)
     }
 }

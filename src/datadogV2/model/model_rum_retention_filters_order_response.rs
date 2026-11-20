@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFiltersOrderResponse {
+pub struct RUMRetentionFiltersOrderResponse {
     /// A list of RUM retention filter IDs along with type.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::RumRetentionFiltersOrderData>>,
+    pub data: Option<Vec<crate::datadogV2::model::RUMRetentionFiltersOrderData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumRetentionFiltersOrderResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFiltersOrderResponse {
-    pub fn new() -> RumRetentionFiltersOrderResponse {
-        RumRetentionFiltersOrderResponse {
+impl RUMRetentionFiltersOrderResponse {
+    pub fn new() -> RUMRetentionFiltersOrderResponse {
+        RUMRetentionFiltersOrderResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -32,7 +32,7 @@ impl RumRetentionFiltersOrderResponse {
 
     pub fn data(
         mut self,
-        value: Vec<crate::datadogV2::model::RumRetentionFiltersOrderData>,
+        value: Vec<crate::datadogV2::model::RUMRetentionFiltersOrderData>,
     ) -> Self {
         self.data = Some(value);
         self
@@ -47,20 +47,20 @@ impl RumRetentionFiltersOrderResponse {
     }
 }
 
-impl Default for RumRetentionFiltersOrderResponse {
+impl Default for RUMRetentionFiltersOrderResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFiltersOrderResponse {
+impl<'de> Deserialize<'de> for RUMRetentionFiltersOrderResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFiltersOrderResponseVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFiltersOrderResponseVisitor {
-            type Value = RumRetentionFiltersOrderResponse;
+        struct RUMRetentionFiltersOrderResponseVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFiltersOrderResponseVisitor {
+            type Value = RUMRetentionFiltersOrderResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,7 +70,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::RumRetentionFiltersOrderData>> =
+                let mut data: Option<Vec<crate::datadogV2::model::RUMRetentionFiltersOrderData>> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderResponse {
                     }
                 }
 
-                let content = RumRetentionFiltersOrderResponse {
+                let content = RUMRetentionFiltersOrderResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -104,6 +104,6 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersOrderResponse {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFiltersOrderResponseVisitor)
+        deserializer.deserialize_any(RUMRetentionFiltersOrderResponseVisitor)
     }
 }

@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryBatchListData {
+pub struct RUMRecoveryBatchListData {
     /// Batch recovery progress. Status updates can appear here before they appear in request details.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryBatchListAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryBatchListAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRecoveryBatchListDataType,
+    pub type_: crate::datadogV2::model::RUMRecoveryBatchListDataType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRecoveryBatchListData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryBatchListData {
+impl RUMRecoveryBatchListData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryBatchListAttributes,
+        attributes: crate::datadogV2::model::RUMRecoveryBatchListAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRecoveryBatchListDataType,
-    ) -> RumRecoveryBatchListData {
-        RumRecoveryBatchListData {
+        type_: crate::datadogV2::model::RUMRecoveryBatchListDataType,
+    ) -> RUMRecoveryBatchListData {
+        RUMRecoveryBatchListData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRecoveryBatchListData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchListData {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchListData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryBatchListDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryBatchListDataVisitor {
-            type Value = RumRecoveryBatchListData;
+        struct RUMRecoveryBatchListDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryBatchListDataVisitor {
+            type Value = RUMRecoveryBatchListData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRecoveryBatchListAttributes,
+                    crate::datadogV2::model::RUMRecoveryBatchListAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRecoveryBatchListDataType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRecoveryBatchListDataType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRecoveryBatchListDataType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRecoveryBatchListDataType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRecoveryBatchListData {
+                let content = RUMRecoveryBatchListData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryBatchListDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryBatchListDataVisitor)
     }
 }

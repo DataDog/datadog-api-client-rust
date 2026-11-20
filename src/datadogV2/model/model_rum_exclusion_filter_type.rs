@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumExclusionFilterType {
+pub enum RUMExclusionFilterType {
     EXCLUSION_FILTERS,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumExclusionFilterType {
+impl ToString for RUMExclusionFilterType {
     fn to_string(&self) -> String {
         match self {
             Self::EXCLUSION_FILTERS => String::from("exclusion_filters"),
@@ -20,7 +20,7 @@ impl ToString for RumExclusionFilterType {
     }
 }
 
-impl Serialize for RumExclusionFilterType {
+impl Serialize for RUMExclusionFilterType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumExclusionFilterType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterType {
+impl<'de> Deserialize<'de> for RUMExclusionFilterType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

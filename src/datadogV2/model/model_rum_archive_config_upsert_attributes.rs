@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigUpsertAttributes {
+pub struct RUMArchiveConfigUpsertAttributes {
     /// Whether archiving is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -24,9 +24,9 @@ pub struct RumArchiveConfigUpsertAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigUpsertAttributes {
-    pub fn new(enabled: bool) -> RumArchiveConfigUpsertAttributes {
-        RumArchiveConfigUpsertAttributes {
+impl RUMArchiveConfigUpsertAttributes {
+    pub fn new(enabled: bool) -> RUMArchiveConfigUpsertAttributes {
+        RUMArchiveConfigUpsertAttributes {
             enabled,
             retention_days: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,14 +48,14 @@ impl RumArchiveConfigUpsertAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigUpsertAttributes {
+impl<'de> Deserialize<'de> for RUMArchiveConfigUpsertAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigUpsertAttributesVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigUpsertAttributesVisitor {
-            type Value = RumArchiveConfigUpsertAttributes;
+        struct RUMArchiveConfigUpsertAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigUpsertAttributesVisitor {
+            type Value = RUMArchiveConfigUpsertAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertAttributes {
                 }
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
 
-                let content = RumArchiveConfigUpsertAttributes {
+                let content = RUMArchiveConfigUpsertAttributes {
                     enabled,
                     retention_days,
                     additional_properties,
@@ -105,6 +105,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigUpsertAttributesVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigUpsertAttributesVisitor)
     }
 }

@@ -1,6 +1,6 @@
 // Create RUM replay playlist returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
+use datadog_api_client::datadogV2::api_rum_replay_playlists::RUMReplayPlaylistsAPI;
 use datadog_api_client::datadogV2::model::Playlist;
 use datadog_api_client::datadogV2::model::PlaylistData;
 use datadog_api_client::datadogV2::model::PlaylistDataAttributes;
@@ -21,7 +21,7 @@ async fn main() {
         ),
     );
     let configuration = datadog::Configuration::new();
-    let api = RumReplayPlaylistsAPI::with_config(configuration);
+    let api = RUMReplayPlaylistsAPI::with_config(configuration);
     let resp = api.create_rum_replay_playlist(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

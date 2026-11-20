@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCreateResponseAttributes {
+pub struct RUMRecoveryCreateResponseAttributes {
     /// Creation time.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// Batch discovery state. QUEUED indicates that the request is waiting for processing capacity.
     #[serde(rename = "discovery_status")]
-    pub discovery_status: Option<crate::datadogV2::model::RumRecoveryDiscoveryStatus>,
+    pub discovery_status: Option<crate::datadogV2::model::RUMRecoveryDiscoveryStatus>,
     /// Batch estimate stored at creation, when present. New batches use a fresh server estimate; older batches may contain a client-supplied estimate.
     #[serde(rename = "estimated_count")]
     pub estimated_count: Option<i64>,
@@ -28,7 +28,7 @@ pub struct RumRecoveryCreateResponseAttributes {
     pub processed_sessions: i64,
     /// Recovery request state.
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::RumRecoveryRequestStatus,
+    pub status: crate::datadogV2::model::RUMRecoveryRequestStatus,
     /// Total targeted sessions. Omitted while a batch total is unknown.
     #[serde(rename = "total_sessions")]
     pub total_sessions: Option<i64>,
@@ -39,14 +39,14 @@ pub struct RumRecoveryCreateResponseAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCreateResponseAttributes {
+impl RUMRecoveryCreateResponseAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
         failed_sessions: i64,
         processed_sessions: i64,
-        status: crate::datadogV2::model::RumRecoveryRequestStatus,
-    ) -> RumRecoveryCreateResponseAttributes {
-        RumRecoveryCreateResponseAttributes {
+        status: crate::datadogV2::model::RUMRecoveryRequestStatus,
+    ) -> RUMRecoveryCreateResponseAttributes {
+        RUMRecoveryCreateResponseAttributes {
             created_at,
             discovery_status: None,
             estimated_count: None,
@@ -61,7 +61,7 @@ impl RumRecoveryCreateResponseAttributes {
 
     pub fn discovery_status(
         mut self,
-        value: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+        value: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
     ) -> Self {
         self.discovery_status = Some(value);
         self
@@ -86,14 +86,14 @@ impl RumRecoveryCreateResponseAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryCreateResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCreateResponseAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCreateResponseAttributesVisitor {
-            type Value = RumRecoveryCreateResponseAttributes;
+        struct RUMRecoveryCreateResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCreateResponseAttributesVisitor {
+            type Value = RUMRecoveryCreateResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -105,12 +105,12 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut discovery_status: Option<
-                    crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
                 > = None;
                 let mut estimated_count: Option<i64> = None;
                 let mut failed_sessions: Option<i64> = None;
                 let mut processed_sessions: Option<i64> = None;
-                let mut status: Option<crate::datadogV2::model::RumRecoveryRequestStatus> = None;
+                let mut status: Option<crate::datadogV2::model::RUMRecoveryRequestStatus> = None;
                 let mut total_sessions: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -131,7 +131,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_status) = discovery_status {
                                 match _discovery_status {
-                                    crate::datadogV2::model::RumRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
+                                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -157,7 +157,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::RumRecoveryRequestStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -185,7 +185,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
                     .ok_or_else(|| M::Error::missing_field("processed_sessions"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
-                let content = RumRecoveryCreateResponseAttributes {
+                let content = RUMRecoveryCreateResponseAttributes {
                     created_at,
                     discovery_status,
                     estimated_count,
@@ -201,6 +201,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCreateResponseAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryCreateResponseAttributesVisitor)
     }
 }

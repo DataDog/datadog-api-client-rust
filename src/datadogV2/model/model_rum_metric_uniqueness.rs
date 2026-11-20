@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricUniqueness {
+pub struct RUMMetricUniqueness {
     /// When to count updatable events. `match` when the event is first seen, or `end` when the event is complete. Sessions and views are updated over time, and each one is counted once.
     #[serde(rename = "when")]
-    pub when: crate::datadogV2::model::RumMetricUniquenessWhen,
+    pub when: crate::datadogV2::model::RUMMetricUniquenessWhen,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,9 +22,9 @@ pub struct RumMetricUniqueness {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricUniqueness {
-    pub fn new(when: crate::datadogV2::model::RumMetricUniquenessWhen) -> RumMetricUniqueness {
-        RumMetricUniqueness {
+impl RUMMetricUniqueness {
+    pub fn new(when: crate::datadogV2::model::RUMMetricUniquenessWhen) -> RUMMetricUniqueness {
+        RUMMetricUniqueness {
             when,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -40,14 +40,14 @@ impl RumMetricUniqueness {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricUniqueness {
+impl<'de> Deserialize<'de> for RUMMetricUniqueness {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricUniquenessVisitor;
-        impl<'a> Visitor<'a> for RumMetricUniquenessVisitor {
-            type Value = RumMetricUniqueness;
+        struct RUMMetricUniquenessVisitor;
+        impl<'a> Visitor<'a> for RUMMetricUniquenessVisitor {
+            type Value = RUMMetricUniqueness;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -57,7 +57,7 @@ impl<'de> Deserialize<'de> for RumMetricUniqueness {
             where
                 M: MapAccess<'a>,
             {
-                let mut when: Option<crate::datadogV2::model::RumMetricUniquenessWhen> = None;
+                let mut when: Option<crate::datadogV2::model::RUMMetricUniquenessWhen> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -70,7 +70,7 @@ impl<'de> Deserialize<'de> for RumMetricUniqueness {
                             when = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _when) = when {
                                 match _when {
-                                    crate::datadogV2::model::RumMetricUniquenessWhen::UnparsedObject(_when) => {
+                                    crate::datadogV2::model::RUMMetricUniquenessWhen::UnparsedObject(_when) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -86,7 +86,7 @@ impl<'de> Deserialize<'de> for RumMetricUniqueness {
                 }
                 let when = when.ok_or_else(|| M::Error::missing_field("when"))?;
 
-                let content = RumMetricUniqueness {
+                let content = RUMMetricUniqueness {
                     when,
                     additional_properties,
                     _unparsed,
@@ -96,6 +96,6 @@ impl<'de> Deserialize<'de> for RumMetricUniqueness {
             }
         }
 
-        deserializer.deserialize_any(RumMetricUniquenessVisitor)
+        deserializer.deserialize_any(RUMMetricUniquenessVisitor)
     }
 }

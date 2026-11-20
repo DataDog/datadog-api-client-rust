@@ -1,18 +1,18 @@
 // Create or update an archive configuration returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_managed_archives::RUMManagedArchivesAPI;
-use datadog_api_client::datadogV2::model::RumArchiveConfigType;
-use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertAttributes;
-use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertData;
-use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertRequest;
+use datadog_api_client::datadogV2::model::RUMArchiveConfigType;
+use datadog_api_client::datadogV2::model::RUMArchiveConfigUpsertAttributes;
+use datadog_api_client::datadogV2::model::RUMArchiveConfigUpsertData;
+use datadog_api_client::datadogV2::model::RUMArchiveConfigUpsertRequest;
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let body = RumArchiveConfigUpsertRequest::new(RumArchiveConfigUpsertData::new(
-        RumArchiveConfigUpsertAttributes::new(true).retention_days(90),
+    let body = RUMArchiveConfigUpsertRequest::new(RUMArchiveConfigUpsertData::new(
+        RUMArchiveConfigUpsertAttributes::new(true).retention_days(90),
         "a33671aa-24fd-4dcd-ba4b-5bbdbafe7690".to_string(),
-        RumArchiveConfigType::RUM_ARCHIVE_CONFIG,
+        RUMArchiveConfigType::RUM_ARCHIVE_CONFIG,
     ));
     let configuration = datadog::Configuration::new();
     let api = RUMManagedArchivesAPI::with_config(configuration);

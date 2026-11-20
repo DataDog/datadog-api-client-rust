@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigAttributes {
+pub struct RUMArchiveConfigAttributes {
     /// Whether archiving is enabled.
     #[serde(rename = "enabled")]
     pub enabled: bool,
@@ -33,9 +33,9 @@ pub struct RumArchiveConfigAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigAttributes {
-    pub fn new(enabled: bool, org_id: i64) -> RumArchiveConfigAttributes {
-        RumArchiveConfigAttributes {
+impl RUMArchiveConfigAttributes {
+    pub fn new(enabled: bool, org_id: i64) -> RUMArchiveConfigAttributes {
+        RUMArchiveConfigAttributes {
             enabled,
             org_id,
             retention_days: None,
@@ -70,14 +70,14 @@ impl RumArchiveConfigAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigAttributes {
+impl<'de> Deserialize<'de> for RUMArchiveConfigAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigAttributesVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigAttributesVisitor {
-            type Value = RumArchiveConfigAttributes;
+        struct RUMArchiveConfigAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigAttributesVisitor {
+            type Value = RUMArchiveConfigAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -135,7 +135,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigAttributes {
                 let enabled = enabled.ok_or_else(|| M::Error::missing_field("enabled"))?;
                 let org_id = org_id.ok_or_else(|| M::Error::missing_field("org_id"))?;
 
-                let content = RumArchiveConfigAttributes {
+                let content = RUMArchiveConfigAttributes {
                     enabled,
                     org_id,
                     retention_days,
@@ -149,6 +149,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigAttributesVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigAttributesVisitor)
     }
 }

@@ -11,7 +11,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListTeamsOwnershipMappingsOptionalParams is a struct for passing parameters to the method [`RumTeamsOwnershipAPI::list_teams_ownership_mappings`]
+/// ListTeamsOwnershipMappingsOptionalParams is a struct for passing parameters to the method [`RUMTeamsOwnershipAPI::list_teams_ownership_mappings`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTeamsOwnershipMappingsOptionalParams {
@@ -48,7 +48,7 @@ impl ListTeamsOwnershipMappingsOptionalParams {
     }
 }
 
-/// ListTeamsOwnershipRulesOptionalParams is a struct for passing parameters to the method [`RumTeamsOwnershipAPI::list_teams_ownership_rules`]
+/// ListTeamsOwnershipRulesOptionalParams is a struct for passing parameters to the method [`RUMTeamsOwnershipAPI::list_teams_ownership_rules`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListTeamsOwnershipRulesOptionalParams {
@@ -85,7 +85,7 @@ impl ListTeamsOwnershipRulesOptionalParams {
     }
 }
 
-/// CreateTeamsOwnershipMappingError is a struct for typed errors of method [`RumTeamsOwnershipAPI::create_teams_ownership_mapping`]
+/// CreateTeamsOwnershipMappingError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::create_teams_ownership_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTeamsOwnershipMappingError {
@@ -93,7 +93,7 @@ pub enum CreateTeamsOwnershipMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateTeamsOwnershipMappingsBatchError is a struct for typed errors of method [`RumTeamsOwnershipAPI::create_teams_ownership_mappings_batch`]
+/// CreateTeamsOwnershipMappingsBatchError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::create_teams_ownership_mappings_batch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateTeamsOwnershipMappingsBatchError {
@@ -102,7 +102,7 @@ pub enum CreateTeamsOwnershipMappingsBatchError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteTeamsOwnershipMappingError is a struct for typed errors of method [`RumTeamsOwnershipAPI::delete_teams_ownership_mapping`]
+/// DeleteTeamsOwnershipMappingError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::delete_teams_ownership_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteTeamsOwnershipMappingError {
@@ -110,7 +110,7 @@ pub enum DeleteTeamsOwnershipMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetTeamsOwnershipMappingError is a struct for typed errors of method [`RumTeamsOwnershipAPI::get_teams_ownership_mapping`]
+/// GetTeamsOwnershipMappingError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::get_teams_ownership_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetTeamsOwnershipMappingError {
@@ -118,7 +118,7 @@ pub enum GetTeamsOwnershipMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTeamsOwnershipMappingsError is a struct for typed errors of method [`RumTeamsOwnershipAPI::list_teams_ownership_mappings`]
+/// ListTeamsOwnershipMappingsError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::list_teams_ownership_mappings`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTeamsOwnershipMappingsError {
@@ -126,7 +126,7 @@ pub enum ListTeamsOwnershipMappingsError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListTeamsOwnershipRulesError is a struct for typed errors of method [`RumTeamsOwnershipAPI::list_teams_ownership_rules`]
+/// ListTeamsOwnershipRulesError is a struct for typed errors of method [`RUMTeamsOwnershipAPI::list_teams_ownership_rules`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListTeamsOwnershipRulesError {
@@ -137,18 +137,18 @@ pub enum ListTeamsOwnershipRulesError {
 /// Manage teams ownership mappings between RUM views and the teams that own them.
 /// See <<https://docs.datadoghq.com/real_user_monitoring/ownership_of_views/>.>
 #[derive(Debug, Clone)]
-pub struct RumTeamsOwnershipAPI {
+pub struct RUMTeamsOwnershipAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumTeamsOwnershipAPI {
+impl Default for RUMTeamsOwnershipAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumTeamsOwnershipAPI {
+impl RUMTeamsOwnershipAPI {
     pub fn new() -> Self {
         Self::default()
     }

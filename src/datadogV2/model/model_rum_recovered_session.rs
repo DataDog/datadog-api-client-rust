@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveredSession {
+pub struct RUMRecoveredSession {
     /// Application UUID.
     #[serde(rename = "application_id")]
     pub application_id: uuid::Uuid,
@@ -25,7 +25,7 @@ pub struct RumRecoveredSession {
     pub session_id: uuid::Uuid,
     /// Session availability or recovery state. `RECOVERED` indicates that the session is ready to query.
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::RumRecoverySessionStatus,
+    pub status: crate::datadogV2::model::RUMRecoverySessionStatus,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -33,14 +33,14 @@ pub struct RumRecoveredSession {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveredSession {
+impl RUMRecoveredSession {
     pub fn new(
         application_id: uuid::Uuid,
         events_recovered: i64,
         session_id: uuid::Uuid,
-        status: crate::datadogV2::model::RumRecoverySessionStatus,
-    ) -> RumRecoveredSession {
-        RumRecoveredSession {
+        status: crate::datadogV2::model::RUMRecoverySessionStatus,
+    ) -> RUMRecoveredSession {
+        RUMRecoveredSession {
             application_id,
             error_message: None,
             events_recovered,
@@ -65,14 +65,14 @@ impl RumRecoveredSession {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveredSession {
+impl<'de> Deserialize<'de> for RUMRecoveredSession {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveredSessionVisitor;
-        impl<'a> Visitor<'a> for RumRecoveredSessionVisitor {
-            type Value = RumRecoveredSession;
+        struct RUMRecoveredSessionVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveredSessionVisitor {
+            type Value = RUMRecoveredSession;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,7 +86,7 @@ impl<'de> Deserialize<'de> for RumRecoveredSession {
                 let mut error_message: Option<String> = None;
                 let mut events_recovered: Option<i64> = None;
                 let mut session_id: Option<uuid::Uuid> = None;
-                let mut status: Option<crate::datadogV2::model::RumRecoverySessionStatus> = None;
+                let mut status: Option<crate::datadogV2::model::RUMRecoverySessionStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -117,7 +117,7 @@ impl<'de> Deserialize<'de> for RumRecoveredSession {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::RumRecoverySessionStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::RUMRecoverySessionStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -138,7 +138,7 @@ impl<'de> Deserialize<'de> for RumRecoveredSession {
                 let session_id = session_id.ok_or_else(|| M::Error::missing_field("session_id"))?;
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
-                let content = RumRecoveredSession {
+                let content = RUMRecoveredSession {
                     application_id,
                     error_message,
                     events_recovered,
@@ -152,6 +152,6 @@ impl<'de> Deserialize<'de> for RumRecoveredSession {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveredSessionVisitor)
+        deserializer.deserialize_any(RUMRecoveredSessionVisitor)
     }
 }

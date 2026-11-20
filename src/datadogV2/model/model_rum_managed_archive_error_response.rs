@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumManagedArchiveErrorResponse {
+pub struct RUMManagedArchiveErrorResponse {
     /// Errors as plain-text messages or JSON:API error objects containing status, title, and detail.
     #[serde(rename = "errors")]
     pub errors: Vec<serde_json::Value>,
@@ -21,9 +21,9 @@ pub struct RumManagedArchiveErrorResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumManagedArchiveErrorResponse {
-    pub fn new(errors: Vec<serde_json::Value>) -> RumManagedArchiveErrorResponse {
-        RumManagedArchiveErrorResponse {
+impl RUMManagedArchiveErrorResponse {
+    pub fn new(errors: Vec<serde_json::Value>) -> RUMManagedArchiveErrorResponse {
+        RUMManagedArchiveErrorResponse {
             errors,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumManagedArchiveErrorResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumManagedArchiveErrorResponse {
+impl<'de> Deserialize<'de> for RUMManagedArchiveErrorResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumManagedArchiveErrorResponseVisitor;
-        impl<'a> Visitor<'a> for RumManagedArchiveErrorResponseVisitor {
-            type Value = RumManagedArchiveErrorResponse;
+        struct RUMManagedArchiveErrorResponseVisitor;
+        impl<'a> Visitor<'a> for RUMManagedArchiveErrorResponseVisitor {
+            type Value = RUMManagedArchiveErrorResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumManagedArchiveErrorResponse {
                 }
                 let errors = errors.ok_or_else(|| M::Error::missing_field("errors"))?;
 
-                let content = RumManagedArchiveErrorResponse {
+                let content = RUMManagedArchiveErrorResponse {
                     errors,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumManagedArchiveErrorResponse {
             }
         }
 
-        deserializer.deserialize_any(RumManagedArchiveErrorResponseVisitor)
+        deserializer.deserialize_any(RUMManagedArchiveErrorResponseVisitor)
     }
 }

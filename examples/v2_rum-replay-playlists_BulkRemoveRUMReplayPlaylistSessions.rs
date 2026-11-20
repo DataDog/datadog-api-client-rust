@@ -1,6 +1,6 @@
 // Bulk remove RUM replay playlist sessions returns "No Content" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI;
+use datadog_api_client::datadogV2::api_rum_replay_playlists::RUMReplayPlaylistsAPI;
 use datadog_api_client::datadogV2::model::SessionIdArray;
 use datadog_api_client::datadogV2::model::SessionIdData;
 use datadog_api_client::datadogV2::model::ViewershipHistorySessionDataType;
@@ -12,7 +12,7 @@ async fn main() {
     )
     .id("00000000-0000-0000-0000-000000000001".to_string())]);
     let configuration = datadog::Configuration::new();
-    let api = RumReplayPlaylistsAPI::with_config(configuration);
+    let api = RUMReplayPlaylistsAPI::with_config(configuration);
     let resp = api
         .bulk_remove_rum_replay_playlist_sessions(1234567, body)
         .await;

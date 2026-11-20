@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSession {
+pub struct RUMArchiveSession {
     /// Archived session metadata.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumArchiveSessionAttributes,
+    pub attributes: crate::datadogV2::model::RUMArchiveSessionAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumArchiveSessionType,
+    pub type_: crate::datadogV2::model::RUMArchiveSessionType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumArchiveSession {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSession {
+impl RUMArchiveSession {
     pub fn new(
-        attributes: crate::datadogV2::model::RumArchiveSessionAttributes,
+        attributes: crate::datadogV2::model::RUMArchiveSessionAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumArchiveSessionType,
-    ) -> RumArchiveSession {
-        RumArchiveSession {
+        type_: crate::datadogV2::model::RUMArchiveSessionType,
+    ) -> RUMArchiveSession {
+        RUMArchiveSession {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumArchiveSession {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSession {
+impl<'de> Deserialize<'de> for RUMArchiveSession {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionVisitor {
-            type Value = RumArchiveSession;
+        struct RUMArchiveSessionVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionVisitor {
+            type Value = RUMArchiveSession;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,10 +68,10 @@ impl<'de> Deserialize<'de> for RumArchiveSession {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumArchiveSessionAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMArchiveSessionAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumArchiveSessionType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMArchiveSessionType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumArchiveSession {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumArchiveSessionType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMArchiveSessionType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for RumArchiveSession {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumArchiveSession {
+                let content = RUMArchiveSession {
                     attributes,
                     id,
                     type_,
@@ -120,6 +120,6 @@ impl<'de> Deserialize<'de> for RumArchiveSession {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionVisitor)
     }
 }

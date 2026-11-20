@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryRequestAttributes {
+pub struct RUMRecoveryRequestAttributes {
     /// Creation time.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// Batch discovery state. QUEUED indicates that the request is waiting for processing capacity.
     #[serde(rename = "discovery_status")]
-    pub discovery_status: Option<crate::datadogV2::model::RumRecoveryDiscoveryStatus>,
+    pub discovery_status: Option<crate::datadogV2::model::RUMRecoveryDiscoveryStatus>,
     /// Failure details, if present.
     #[serde(rename = "error_message")]
     pub error_message: Option<String>,
@@ -37,10 +37,10 @@ pub struct RumRecoveryRequestAttributes {
     pub query: Option<String>,
     /// Query-based batch recovery.
     #[serde(rename = "request_type")]
-    pub request_type: Option<crate::datadogV2::model::RumRecoveryBatchRequestType>,
+    pub request_type: Option<crate::datadogV2::model::RUMRecoveryBatchRequestType>,
     /// Targeted session progress. Omitted when empty or not applicable.
     #[serde(rename = "sessions")]
-    pub sessions: Option<Vec<crate::datadogV2::model::RumRecoveredSession>>,
+    pub sessions: Option<Vec<crate::datadogV2::model::RUMRecoveredSession>>,
     /// Discovered sessions.
     #[serde(rename = "sessions_discovered")]
     pub sessions_discovered: Option<i64>,
@@ -58,7 +58,7 @@ pub struct RumRecoveryRequestAttributes {
     pub slices_failed: Option<i64>,
     /// Recovery request state.
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::RumRecoveryRequestStatus,
+    pub status: crate::datadogV2::model::RUMRecoveryRequestStatus,
     /// End of the range in Unix milliseconds.
     #[serde(rename = "to")]
     pub to: Option<i64>,
@@ -78,15 +78,15 @@ pub struct RumRecoveryRequestAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryRequestAttributes {
+impl RUMRecoveryRequestAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
         failed_sessions: i64,
         processed_sessions: i64,
-        status: crate::datadogV2::model::RumRecoveryRequestStatus,
+        status: crate::datadogV2::model::RUMRecoveryRequestStatus,
         updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> RumRecoveryRequestAttributes {
-        RumRecoveryRequestAttributes {
+    ) -> RUMRecoveryRequestAttributes {
+        RUMRecoveryRequestAttributes {
             created_at,
             discovery_status: None,
             error_message: None,
@@ -114,7 +114,7 @@ impl RumRecoveryRequestAttributes {
 
     pub fn discovery_status(
         mut self,
-        value: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+        value: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
     ) -> Self {
         self.discovery_status = Some(value);
         self
@@ -142,13 +142,13 @@ impl RumRecoveryRequestAttributes {
 
     pub fn request_type(
         mut self,
-        value: crate::datadogV2::model::RumRecoveryBatchRequestType,
+        value: crate::datadogV2::model::RUMRecoveryBatchRequestType,
     ) -> Self {
         self.request_type = Some(value);
         self
     }
 
-    pub fn sessions(mut self, value: Vec<crate::datadogV2::model::RumRecoveredSession>) -> Self {
+    pub fn sessions(mut self, value: Vec<crate::datadogV2::model::RUMRecoveredSession>) -> Self {
         self.sessions = Some(value);
         self
     }
@@ -202,14 +202,14 @@ impl RumRecoveryRequestAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryRequestAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryRequestAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryRequestAttributesVisitor {
-            type Value = RumRecoveryRequestAttributes;
+        struct RUMRecoveryRequestAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryRequestAttributesVisitor {
+            type Value = RUMRecoveryRequestAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -221,7 +221,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut discovery_status: Option<
-                    crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
                 > = None;
                 let mut error_message: Option<String> = None;
                 let mut estimated_count: Option<i64> = None;
@@ -229,15 +229,15 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
                 let mut from: Option<i64> = None;
                 let mut processed_sessions: Option<i64> = None;
                 let mut query: Option<String> = None;
-                let mut request_type: Option<crate::datadogV2::model::RumRecoveryBatchRequestType> =
+                let mut request_type: Option<crate::datadogV2::model::RUMRecoveryBatchRequestType> =
                     None;
-                let mut sessions: Option<Vec<crate::datadogV2::model::RumRecoveredSession>> = None;
+                let mut sessions: Option<Vec<crate::datadogV2::model::RUMRecoveredSession>> = None;
                 let mut sessions_discovered: Option<i64> = None;
                 let mut sessions_failed: Option<i64> = None;
                 let mut sessions_processed: Option<i64> = None;
                 let mut slices_completed: Option<i64> = None;
                 let mut slices_failed: Option<i64> = None;
-                let mut status: Option<crate::datadogV2::model::RumRecoveryRequestStatus> = None;
+                let mut status: Option<crate::datadogV2::model::RUMRecoveryRequestStatus> = None;
                 let mut to: Option<i64> = None;
                 let mut total_sessions: Option<i64> = None;
                 let mut total_slices: Option<i64> = None;
@@ -261,7 +261,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_status) = discovery_status {
                                 match _discovery_status {
-                                    crate::datadogV2::model::RumRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
+                                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -310,7 +310,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _request_type) = request_type {
                                 match _request_type {
-                                    crate::datadogV2::model::RumRecoveryBatchRequestType::UnparsedObject(_request_type) => {
+                                    crate::datadogV2::model::RUMRecoveryBatchRequestType::UnparsedObject(_request_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -362,7 +362,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::RumRecoveryRequestStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -407,7 +407,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
-                let content = RumRecoveryRequestAttributes {
+                let content = RUMRecoveryRequestAttributes {
                     created_at,
                     discovery_status,
                     error_message,
@@ -436,6 +436,6 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryRequestAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryRequestAttributesVisitor)
     }
 }
