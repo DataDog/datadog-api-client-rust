@@ -11,9 +11,17 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ObservabilityPipelineConfig {
+    /// Anomaly detection settings for the pipeline.
+    /// Only applies to `logs` pipelines. Requires Observability Pipelines Worker 2.25 or later.
+    #[serde(rename = "anomaly_detection")]
+    pub anomaly_detection: Option<crate::datadogV2::model::ObservabilityPipelineAnomalyDetection>,
     /// A list of destination components where processed logs are sent.
     #[serde(rename = "destinations")]
     pub destinations: Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
+    /// Set to `true` to enable end-to-end acknowledgments for the pipeline.
+    /// Requires Observability Pipelines Worker 2.14 or later.
+    #[serde(rename = "end_to_end_acknowledgements")]
+    pub end_to_end_acknowledgements: Option<bool>,
     /// The type of data being ingested. Defaults to `logs` if not specified.
     #[serde(rename = "pipeline_type")]
     pub pipeline_type: Option<crate::datadogV2::model::ObservabilityPipelineConfigPipelineType>,
@@ -51,7 +59,9 @@ impl ObservabilityPipelineConfig {
     ) -> ObservabilityPipelineConfig {
         #[allow(deprecated)]
         ObservabilityPipelineConfig {
+            anomaly_detection: None,
             destinations,
+            end_to_end_acknowledgements: None,
             pipeline_type: None,
             processor_groups: None,
             processors: None,
@@ -60,6 +70,21 @@ impl ObservabilityPipelineConfig {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    #[allow(deprecated)]
+    pub fn anomaly_detection(
+        mut self,
+        value: crate::datadogV2::model::ObservabilityPipelineAnomalyDetection,
+    ) -> Self {
+        self.anomaly_detection = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn end_to_end_acknowledgements(mut self, value: bool) -> Self {
+        self.end_to_end_acknowledgements = Some(value);
+        self
     }
 
     #[allow(deprecated)]
@@ -121,9 +146,13 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
             where
                 M: MapAccess<'a>,
             {
+                let mut anomaly_detection: Option<
+                    crate::datadogV2::model::ObservabilityPipelineAnomalyDetection,
+                > = None;
                 let mut destinations: Option<
                     Vec<crate::datadogV2::model::ObservabilityPipelineConfigDestinationItem>,
                 > = None;
+                let mut end_to_end_acknowledgements: Option<bool> = None;
                 let mut pipeline_type: Option<
                     crate::datadogV2::model::ObservabilityPipelineConfigPipelineType,
                 > = None;
@@ -145,8 +174,22 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "anomaly_detection" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            anomaly_detection =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "destinations" => {
                             destinations =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "end_to_end_acknowledgements" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            end_to_end_acknowledgements =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "pipeline_type" => {
@@ -200,7 +243,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineConfig {
 
                 #[allow(deprecated)]
                 let content = ObservabilityPipelineConfig {
+                    anomaly_detection,
                     destinations,
+                    end_to_end_acknowledgements,
                     pipeline_type,
                     processor_groups,
                     processors,
