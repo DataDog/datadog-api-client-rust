@@ -10,15 +10,15 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// AddRumReplaySessionToPlaylistOptionalParams is a struct for passing parameters to the method [`RumReplayPlaylistsAPI::add_rum_replay_session_to_playlist`]
+/// AddRUMReplaySessionToPlaylistOptionalParams is a struct for passing parameters to the method [`RUMReplayPlaylistsAPI::add_rum_replay_session_to_playlist`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct AddRumReplaySessionToPlaylistOptionalParams {
+pub struct AddRUMReplaySessionToPlaylistOptionalParams {
     /// Data source type. Valid values: 'rum' or 'product_analytics'. Defaults to 'rum'.
     pub data_source: Option<String>,
 }
 
-impl AddRumReplaySessionToPlaylistOptionalParams {
+impl AddRUMReplaySessionToPlaylistOptionalParams {
     /// Data source type. Valid values: 'rum' or 'product_analytics'. Defaults to 'rum'.
     pub fn data_source(mut self, value: String) -> Self {
         self.data_source = Some(value);
@@ -26,17 +26,17 @@ impl AddRumReplaySessionToPlaylistOptionalParams {
     }
 }
 
-/// ListRumReplayPlaylistSessionsOptionalParams is a struct for passing parameters to the method [`RumReplayPlaylistsAPI::list_rum_replay_playlist_sessions`]
+/// ListRUMReplayPlaylistSessionsOptionalParams is a struct for passing parameters to the method [`RUMReplayPlaylistsAPI::list_rum_replay_playlist_sessions`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListRumReplayPlaylistSessionsOptionalParams {
+pub struct ListRUMReplayPlaylistSessionsOptionalParams {
     /// Page number for pagination (0-indexed).
     pub page_number: Option<i64>,
     /// Number of items per page.
     pub page_size: Option<i64>,
 }
 
-impl ListRumReplayPlaylistSessionsOptionalParams {
+impl ListRUMReplayPlaylistSessionsOptionalParams {
     /// Page number for pagination (0-indexed).
     pub fn page_number(mut self, value: i64) -> Self {
         self.page_number = Some(value);
@@ -49,10 +49,10 @@ impl ListRumReplayPlaylistSessionsOptionalParams {
     }
 }
 
-/// ListRumReplayPlaylistsOptionalParams is a struct for passing parameters to the method [`RumReplayPlaylistsAPI::list_rum_replay_playlists`]
+/// ListRUMReplayPlaylistsOptionalParams is a struct for passing parameters to the method [`RUMReplayPlaylistsAPI::list_rum_replay_playlists`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListRumReplayPlaylistsOptionalParams {
+pub struct ListRUMReplayPlaylistsOptionalParams {
     /// Filter playlists by the UUID of the user who created them.
     pub filter_created_by_uuid: Option<String>,
     /// Search query to filter playlists by name.
@@ -63,7 +63,7 @@ pub struct ListRumReplayPlaylistsOptionalParams {
     pub page_size: Option<i64>,
 }
 
-impl ListRumReplayPlaylistsOptionalParams {
+impl ListRUMReplayPlaylistsOptionalParams {
     /// Filter playlists by the UUID of the user who created them.
     pub fn filter_created_by_uuid(mut self, value: String) -> Self {
         self.filter_created_by_uuid = Some(value);
@@ -86,92 +86,92 @@ impl ListRumReplayPlaylistsOptionalParams {
     }
 }
 
-/// AddRumReplaySessionToPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::add_rum_replay_session_to_playlist`]
+/// AddRUMReplaySessionToPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::add_rum_replay_session_to_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum AddRumReplaySessionToPlaylistError {
+pub enum AddRUMReplaySessionToPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// BulkRemoveRumReplayPlaylistSessionsError is a struct for typed errors of method [`RumReplayPlaylistsAPI::bulk_remove_rum_replay_playlist_sessions`]
+/// BulkRemoveRUMReplayPlaylistSessionsError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::bulk_remove_rum_replay_playlist_sessions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BulkRemoveRumReplayPlaylistSessionsError {
+pub enum BulkRemoveRUMReplayPlaylistSessionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// CreateRumReplayPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::create_rum_replay_playlist`]
+/// CreateRUMReplayPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::create_rum_replay_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateRumReplayPlaylistError {
+pub enum CreateRUMReplayPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRumReplayPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::delete_rum_replay_playlist`]
+/// DeleteRUMReplayPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::delete_rum_replay_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteRumReplayPlaylistError {
+pub enum DeleteRUMReplayPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// GetRumReplayPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::get_rum_replay_playlist`]
+/// GetRUMReplayPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::get_rum_replay_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum GetRumReplayPlaylistError {
+pub enum GetRUMReplayPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListRumReplayPlaylistSessionsError is a struct for typed errors of method [`RumReplayPlaylistsAPI::list_rum_replay_playlist_sessions`]
+/// ListRUMReplayPlaylistSessionsError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::list_rum_replay_playlist_sessions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListRumReplayPlaylistSessionsError {
+pub enum ListRUMReplayPlaylistSessionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListRumReplayPlaylistsError is a struct for typed errors of method [`RumReplayPlaylistsAPI::list_rum_replay_playlists`]
+/// ListRUMReplayPlaylistsError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::list_rum_replay_playlists`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListRumReplayPlaylistsError {
+pub enum ListRUMReplayPlaylistsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// RemoveRumReplaySessionFromPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::remove_rum_replay_session_from_playlist`]
+/// RemoveRUMReplaySessionFromPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::remove_rum_replay_session_from_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum RemoveRumReplaySessionFromPlaylistError {
+pub enum RemoveRUMReplaySessionFromPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRumReplayPlaylistError is a struct for typed errors of method [`RumReplayPlaylistsAPI::update_rum_replay_playlist`]
+/// UpdateRUMReplayPlaylistError is a struct for typed errors of method [`RUMReplayPlaylistsAPI::update_rum_replay_playlist`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum UpdateRumReplayPlaylistError {
+pub enum UpdateRUMReplayPlaylistError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
 /// Create and manage playlists of RUM replay sessions. Organize, categorize, and share collections of replay sessions for analysis and collaboration.
 #[derive(Debug, Clone)]
-pub struct RumReplayPlaylistsAPI {
+pub struct RUMReplayPlaylistsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumReplayPlaylistsAPI {
+impl Default for RUMReplayPlaylistsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumReplayPlaylistsAPI {
+impl RUMReplayPlaylistsAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -238,10 +238,10 @@ impl RumReplayPlaylistsAPI {
         ts: i64,
         playlist_id: i64,
         session_id: String,
-        params: AddRumReplaySessionToPlaylistOptionalParams,
+        params: AddRUMReplaySessionToPlaylistOptionalParams,
     ) -> Result<
         crate::datadogV2::model::PlaylistsSession,
-        datadog::Error<AddRumReplaySessionToPlaylistError>,
+        datadog::Error<AddRUMReplaySessionToPlaylistError>,
     > {
         match self
             .add_rum_replay_session_to_playlist_with_http_info(ts, playlist_id, session_id, params)
@@ -266,10 +266,10 @@ impl RumReplayPlaylistsAPI {
         ts: i64,
         playlist_id: i64,
         session_id: String,
-        params: AddRumReplaySessionToPlaylistOptionalParams,
+        params: AddRUMReplaySessionToPlaylistOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PlaylistsSession>,
-        datadog::Error<AddRumReplaySessionToPlaylistError>,
+        datadog::Error<AddRUMReplaySessionToPlaylistError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.add_rum_replay_session_to_playlist";
@@ -348,7 +348,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<AddRumReplaySessionToPlaylistError> =
+            let local_entity: Option<AddRUMReplaySessionToPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -364,7 +364,7 @@ impl RumReplayPlaylistsAPI {
         &self,
         playlist_id: i64,
         body: crate::datadogV2::model::SessionIdArray,
-    ) -> Result<(), datadog::Error<BulkRemoveRumReplayPlaylistSessionsError>> {
+    ) -> Result<(), datadog::Error<BulkRemoveRUMReplayPlaylistSessionsError>> {
         match self
             .bulk_remove_rum_replay_playlist_sessions_with_http_info(playlist_id, body)
             .await
@@ -381,7 +381,7 @@ impl RumReplayPlaylistsAPI {
         body: crate::datadogV2::model::SessionIdArray,
     ) -> Result<
         datadog::ResponseContent<()>,
-        datadog::Error<BulkRemoveRumReplayPlaylistSessionsError>,
+        datadog::Error<BulkRemoveRUMReplayPlaylistSessionsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.bulk_remove_rum_replay_playlist_sessions";
@@ -491,7 +491,7 @@ impl RumReplayPlaylistsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<BulkRemoveRumReplayPlaylistSessionsError> =
+            let local_entity: Option<BulkRemoveRUMReplayPlaylistSessionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -506,7 +506,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn create_rum_replay_playlist(
         &self,
         body: crate::datadogV2::model::Playlist,
-    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<CreateRumReplayPlaylistError>>
+    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<CreateRUMReplayPlaylistError>>
     {
         match self.create_rum_replay_playlist_with_http_info(body).await {
             Ok(response_content) => {
@@ -528,7 +528,7 @@ impl RumReplayPlaylistsAPI {
         body: crate::datadogV2::model::Playlist,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Playlist>,
-        datadog::Error<CreateRumReplayPlaylistError>,
+        datadog::Error<CreateRUMReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_replay_playlist";
@@ -642,7 +642,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumReplayPlaylistError> =
+            let local_entity: Option<CreateRUMReplayPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -657,7 +657,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn delete_rum_replay_playlist(
         &self,
         playlist_id: i64,
-    ) -> Result<(), datadog::Error<DeleteRumReplayPlaylistError>> {
+    ) -> Result<(), datadog::Error<DeleteRUMReplayPlaylistError>> {
         match self
             .delete_rum_replay_playlist_with_http_info(playlist_id)
             .await
@@ -671,7 +671,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn delete_rum_replay_playlist_with_http_info(
         &self,
         playlist_id: i64,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplayPlaylistError>> {
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMReplayPlaylistError>> {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_replay_playlist";
 
@@ -733,7 +733,7 @@ impl RumReplayPlaylistsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumReplayPlaylistError> =
+            let local_entity: Option<DeleteRUMReplayPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -748,7 +748,7 @@ impl RumReplayPlaylistsAPI {
     pub async fn get_rum_replay_playlist(
         &self,
         playlist_id: i64,
-    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<GetRumReplayPlaylistError>> {
+    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<GetRUMReplayPlaylistError>> {
         match self
             .get_rum_replay_playlist_with_http_info(playlist_id)
             .await
@@ -772,7 +772,7 @@ impl RumReplayPlaylistsAPI {
         playlist_id: i64,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Playlist>,
-        datadog::Error<GetRumReplayPlaylistError>,
+        datadog::Error<GetRUMReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_rum_replay_playlist";
@@ -840,7 +840,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<GetRumReplayPlaylistError> =
+            let local_entity: Option<GetRUMReplayPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -855,10 +855,10 @@ impl RumReplayPlaylistsAPI {
     pub async fn list_rum_replay_playlist_sessions(
         &self,
         playlist_id: i64,
-        params: ListRumReplayPlaylistSessionsOptionalParams,
+        params: ListRUMReplayPlaylistSessionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::PlaylistsSessionArray,
-        datadog::Error<ListRumReplayPlaylistSessionsError>,
+        datadog::Error<ListRUMReplayPlaylistSessionsError>,
     > {
         match self
             .list_rum_replay_playlist_sessions_with_http_info(playlist_id, params)
@@ -881,10 +881,10 @@ impl RumReplayPlaylistsAPI {
     pub async fn list_rum_replay_playlist_sessions_with_http_info(
         &self,
         playlist_id: i64,
-        params: ListRumReplayPlaylistSessionsOptionalParams,
+        params: ListRUMReplayPlaylistSessionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PlaylistsSessionArray>,
-        datadog::Error<ListRumReplayPlaylistSessionsError>,
+        datadog::Error<ListRUMReplayPlaylistSessionsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_playlist_sessions";
@@ -967,7 +967,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplayPlaylistSessionsError> =
+            let local_entity: Option<ListRUMReplayPlaylistSessionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -981,8 +981,8 @@ impl RumReplayPlaylistsAPI {
     /// List playlists.
     pub async fn list_rum_replay_playlists(
         &self,
-        params: ListRumReplayPlaylistsOptionalParams,
-    ) -> Result<crate::datadogV2::model::PlaylistArray, datadog::Error<ListRumReplayPlaylistsError>>
+        params: ListRUMReplayPlaylistsOptionalParams,
+    ) -> Result<crate::datadogV2::model::PlaylistArray, datadog::Error<ListRUMReplayPlaylistsError>>
     {
         match self.list_rum_replay_playlists_with_http_info(params).await {
             Ok(response_content) => {
@@ -1001,10 +1001,10 @@ impl RumReplayPlaylistsAPI {
     /// List playlists.
     pub async fn list_rum_replay_playlists_with_http_info(
         &self,
-        params: ListRumReplayPlaylistsOptionalParams,
+        params: ListRUMReplayPlaylistsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::PlaylistArray>,
-        datadog::Error<ListRumReplayPlaylistsError>,
+        datadog::Error<ListRUMReplayPlaylistsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_playlists";
@@ -1094,7 +1094,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplayPlaylistsError> =
+            let local_entity: Option<ListRUMReplayPlaylistsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1110,7 +1110,7 @@ impl RumReplayPlaylistsAPI {
         &self,
         playlist_id: i64,
         session_id: String,
-    ) -> Result<(), datadog::Error<RemoveRumReplaySessionFromPlaylistError>> {
+    ) -> Result<(), datadog::Error<RemoveRUMReplaySessionFromPlaylistError>> {
         match self
             .remove_rum_replay_session_from_playlist_with_http_info(playlist_id, session_id)
             .await
@@ -1125,7 +1125,7 @@ impl RumReplayPlaylistsAPI {
         &self,
         playlist_id: i64,
         session_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRumReplaySessionFromPlaylistError>>
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<RemoveRUMReplaySessionFromPlaylistError>>
     {
         let local_configuration = &self.config;
         let local_operation_id = "v2.remove_rum_replay_session_from_playlist";
@@ -1189,7 +1189,7 @@ impl RumReplayPlaylistsAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<RemoveRumReplaySessionFromPlaylistError> =
+            let local_entity: Option<RemoveRUMReplaySessionFromPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -1205,7 +1205,7 @@ impl RumReplayPlaylistsAPI {
         &self,
         playlist_id: i64,
         body: crate::datadogV2::model::Playlist,
-    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<UpdateRumReplayPlaylistError>>
+    ) -> Result<crate::datadogV2::model::Playlist, datadog::Error<UpdateRUMReplayPlaylistError>>
     {
         match self
             .update_rum_replay_playlist_with_http_info(playlist_id, body)
@@ -1231,7 +1231,7 @@ impl RumReplayPlaylistsAPI {
         body: crate::datadogV2::model::Playlist,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Playlist>,
-        datadog::Error<UpdateRumReplayPlaylistError>,
+        datadog::Error<UpdateRUMReplayPlaylistError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.update_rum_replay_playlist";
@@ -1346,7 +1346,7 @@ impl RumReplayPlaylistsAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<UpdateRumReplayPlaylistError> =
+            let local_entity: Option<UpdateRUMReplayPlaylistError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

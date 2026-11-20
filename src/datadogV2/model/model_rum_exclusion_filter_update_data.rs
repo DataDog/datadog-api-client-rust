@@ -10,18 +10,18 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterUpdateData {
+pub struct RUMExclusionFilterUpdateData {
     /// The attributes of an exclusion filter that can be updated.
     /// For the built-in Error Tracking exclusion filter, only `enabled` can be set;
     /// `name`, `event_type`, and `query` must be omitted.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumExclusionFilterUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMExclusionFilterUpdateAttributes,
     /// The ID of the exclusion filter. Must match the `ef_id` path parameter.
     #[serde(rename = "id")]
     pub id: String,
     /// The resource type. The value must be `exclusion_filters`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumExclusionFilterType,
+    pub type_: crate::datadogV2::model::RUMExclusionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,13 +29,13 @@ pub struct RumExclusionFilterUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterUpdateData {
+impl RUMExclusionFilterUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumExclusionFilterUpdateAttributes,
+        attributes: crate::datadogV2::model::RUMExclusionFilterUpdateAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumExclusionFilterType,
-    ) -> RumExclusionFilterUpdateData {
-        RumExclusionFilterUpdateData {
+        type_: crate::datadogV2::model::RUMExclusionFilterType,
+    ) -> RUMExclusionFilterUpdateData {
+        RUMExclusionFilterUpdateData {
             attributes,
             id,
             type_,
@@ -53,14 +53,14 @@ impl RumExclusionFilterUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterUpdateData {
+impl<'de> Deserialize<'de> for RUMExclusionFilterUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterUpdateDataVisitor {
-            type Value = RumExclusionFilterUpdateData;
+        struct RUMExclusionFilterUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterUpdateDataVisitor {
+            type Value = RUMExclusionFilterUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,10 +71,10 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumExclusionFilterUpdateAttributes,
+                    crate::datadogV2::model::RUMExclusionFilterUpdateAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumExclusionFilterType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMExclusionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -93,7 +93,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumExclusionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMExclusionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumExclusionFilterUpdateData {
+                let content = RUMExclusionFilterUpdateData {
                     attributes,
                     id,
                     type_,
@@ -123,6 +123,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterUpdateDataVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterUpdateDataVisitor)
     }
 }

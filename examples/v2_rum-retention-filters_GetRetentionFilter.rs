@@ -1,11 +1,11 @@
 // Get a RUM retention filter returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI;
+use datadog_api_client::datadogV2::api_rum_retention_filters::RUMRetentionFiltersAPI;
 
 #[tokio::main]
 async fn main() {
     let configuration = datadog::Configuration::new();
-    let api = RumRetentionFiltersAPI::with_config(configuration);
+    let api = RUMRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .get_retention_filter(
             "a33671aa-24fd-4dcd-ba4b-5bbdbafe7690".to_string(),

@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionRecoveryStatus {
+pub struct RUMArchiveSessionRecoveryStatus {
     /// Recovery timestamp, when available.
     #[serde(rename = "recovered_at")]
     pub recovered_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -19,7 +19,7 @@ pub struct RumArchiveSessionRecoveryStatus {
     pub request_id: Option<String>,
     /// Session availability or recovery state. `RECOVERED` indicates that the session is ready to query.
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::RumRecoverySessionStatus,
+    pub status: crate::datadogV2::model::RUMRecoverySessionStatus,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,11 +27,11 @@ pub struct RumArchiveSessionRecoveryStatus {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionRecoveryStatus {
+impl RUMArchiveSessionRecoveryStatus {
     pub fn new(
-        status: crate::datadogV2::model::RumRecoverySessionStatus,
-    ) -> RumArchiveSessionRecoveryStatus {
-        RumArchiveSessionRecoveryStatus {
+        status: crate::datadogV2::model::RUMRecoverySessionStatus,
+    ) -> RUMArchiveSessionRecoveryStatus {
+        RUMArchiveSessionRecoveryStatus {
             recovered_at: None,
             request_id: None,
             status,
@@ -59,14 +59,14 @@ impl RumArchiveSessionRecoveryStatus {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionRecoveryStatus {
+impl<'de> Deserialize<'de> for RUMArchiveSessionRecoveryStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionRecoveryStatusVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionRecoveryStatusVisitor {
-            type Value = RumArchiveSessionRecoveryStatus;
+        struct RUMArchiveSessionRecoveryStatusVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionRecoveryStatusVisitor {
+            type Value = RUMArchiveSessionRecoveryStatus;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -78,7 +78,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionRecoveryStatus {
             {
                 let mut recovered_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut request_id: Option<String> = None;
-                let mut status: Option<crate::datadogV2::model::RumRecoverySessionStatus> = None;
+                let mut status: Option<crate::datadogV2::model::RUMRecoverySessionStatus> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -104,7 +104,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionRecoveryStatus {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::RumRecoverySessionStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::RUMRecoverySessionStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -120,7 +120,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionRecoveryStatus {
                 }
                 let status = status.ok_or_else(|| M::Error::missing_field("status"))?;
 
-                let content = RumArchiveSessionRecoveryStatus {
+                let content = RUMArchiveSessionRecoveryStatus {
                     recovered_at,
                     request_id,
                     status,
@@ -132,6 +132,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionRecoveryStatus {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionRecoveryStatusVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionRecoveryStatusVisitor)
     }
 }

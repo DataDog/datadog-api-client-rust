@@ -1,14 +1,14 @@
 // Estimate recoverable sessions returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_recovery::RUMRecoveryAPI;
-use datadog_api_client::datadogV2::model::RumRecoveryCountAttributes;
-use datadog_api_client::datadogV2::model::RumRecoveryCountRequest;
-use datadog_api_client::datadogV2::model::RumRecoveryCountRequestData;
+use datadog_api_client::datadogV2::model::RUMRecoveryCountAttributes;
+use datadog_api_client::datadogV2::model::RUMRecoveryCountRequest;
+use datadog_api_client::datadogV2::model::RUMRecoveryCountRequestData;
 
 #[tokio::main]
 async fn main() {
-    let body = RumRecoveryCountRequest::new(
-        RumRecoveryCountRequestData::new(RumRecoveryCountAttributes::new(
+    let body = RUMRecoveryCountRequest::new(
+        RUMRecoveryCountRequestData::new(RUMRecoveryCountAttributes::new(
             1789905600000,
             "service:web".to_string(),
             1789992000000,

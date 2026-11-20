@@ -1,6 +1,6 @@
 // Query users returns "Successful response with user data" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_audience_management::RumAudienceManagementAPI;
+use datadog_api_client::datadogV2::api_rum_audience_management::RUMAudienceManagementAPI;
 use datadog_api_client::datadogV2::model::QueryUsersRequest;
 use datadog_api_client::datadogV2::model::QueryUsersRequestData;
 use datadog_api_client::datadogV2::model::QueryUsersRequestDataAttributes;
@@ -42,7 +42,7 @@ async fn main() {
         );
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.query_users", true);
-    let api = RumAudienceManagementAPI::with_config(configuration);
+    let api = RUMAudienceManagementAPI::with_config(configuration);
     let resp = api.query_users(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

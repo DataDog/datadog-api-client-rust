@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryRequestResponse {
+pub struct RUMRecoveryRequestResponse {
     /// JSON:API resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumRecoveryRequestData,
+    pub data: crate::datadogV2::model::RUMRecoveryRequestData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumRecoveryRequestResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryRequestResponse {
+impl RUMRecoveryRequestResponse {
     pub fn new(
-        data: crate::datadogV2::model::RumRecoveryRequestData,
-    ) -> RumRecoveryRequestResponse {
-        RumRecoveryRequestResponse {
+        data: crate::datadogV2::model::RUMRecoveryRequestData,
+    ) -> RUMRecoveryRequestResponse {
+        RUMRecoveryRequestResponse {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumRecoveryRequestResponse {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryRequestResponse {
+impl<'de> Deserialize<'de> for RUMRecoveryRequestResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryRequestResponseVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryRequestResponseVisitor {
-            type Value = RumRecoveryRequestResponse;
+        struct RUMRecoveryRequestResponseVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryRequestResponseVisitor {
+            type Value = RUMRecoveryRequestResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumRecoveryRequestData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMRecoveryRequestData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestResponse {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumRecoveryRequestResponse {
+                let content = RUMRecoveryRequestResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestResponse {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryRequestResponseVisitor)
+        deserializer.deserialize_any(RUMRecoveryRequestResponseVisitor)
     }
 }

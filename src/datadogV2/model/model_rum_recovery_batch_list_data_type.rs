@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRecoveryBatchListDataType {
+pub enum RUMRecoveryBatchListDataType {
     RUM_BATCH_RECOVERY_REQUEST,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRecoveryBatchListDataType {
+impl ToString for RUMRecoveryBatchListDataType {
     fn to_string(&self) -> String {
         match self {
             Self::RUM_BATCH_RECOVERY_REQUEST => String::from("rum_batch_recovery_request"),
@@ -20,7 +20,7 @@ impl ToString for RumRecoveryBatchListDataType {
     }
 }
 
-impl Serialize for RumRecoveryBatchListDataType {
+impl Serialize for RUMRecoveryBatchListDataType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumRecoveryBatchListDataType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchListDataType {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchListDataType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCancelResponseData {
+pub struct RUMRecoveryCancelResponseData {
     /// Batch cancellation acknowledgment.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryCancelResponseAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryCancelResponseAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRecoveryRequestType,
+    pub type_: crate::datadogV2::model::RUMRecoveryRequestType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRecoveryCancelResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCancelResponseData {
+impl RUMRecoveryCancelResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryCancelResponseAttributes,
+        attributes: crate::datadogV2::model::RUMRecoveryCancelResponseAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRecoveryRequestType,
-    ) -> RumRecoveryCancelResponseData {
-        RumRecoveryCancelResponseData {
+        type_: crate::datadogV2::model::RUMRecoveryRequestType,
+    ) -> RUMRecoveryCancelResponseData {
+        RUMRecoveryCancelResponseData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRecoveryCancelResponseData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCancelResponseData {
+impl<'de> Deserialize<'de> for RUMRecoveryCancelResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCancelResponseDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCancelResponseDataVisitor {
-            type Value = RumRecoveryCancelResponseData;
+        struct RUMRecoveryCancelResponseDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCancelResponseDataVisitor {
+            type Value = RUMRecoveryCancelResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRecoveryCancelResponseAttributes,
+                    crate::datadogV2::model::RUMRecoveryCancelResponseAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRecoveryRequestType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRecoveryRequestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRecoveryRequestType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRecoveryCancelResponseData {
+                let content = RUMRecoveryCancelResponseData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCancelResponseDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryCancelResponseDataVisitor)
     }
 }

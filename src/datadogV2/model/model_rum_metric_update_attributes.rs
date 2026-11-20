@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricUpdateAttributes {
+pub struct RUMMetricUpdateAttributes {
     /// The compute rule properties that can be updated. Only valid for metrics whose `aggregation_type` is `distribution`.
     #[serde(rename = "compute")]
-    pub compute: Option<crate::datadogV2::model::RumMetricUpdateCompute>,
+    pub compute: Option<crate::datadogV2::model::RUMMetricUpdateCompute>,
     /// The RUM-based metric filter. Events matching this filter are aggregated in this metric. The `event_type` filter is added automatically.
     #[serde(rename = "filter")]
-    pub filter: Option<crate::datadogV2::model::RumMetricFilter>,
+    pub filter: Option<crate::datadogV2::model::RUMMetricFilter>,
     /// The rules to group the metric by. When provided, replaces all the existing group by rules.
     #[serde(rename = "group_by")]
-    pub group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>>,
+    pub group_by: Option<Vec<crate::datadogV2::model::RUMMetricGroupBy>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,9 +27,9 @@ pub struct RumMetricUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricUpdateAttributes {
-    pub fn new() -> RumMetricUpdateAttributes {
-        RumMetricUpdateAttributes {
+impl RUMMetricUpdateAttributes {
+    pub fn new() -> RUMMetricUpdateAttributes {
+        RUMMetricUpdateAttributes {
             compute: None,
             filter: None,
             group_by: None,
@@ -38,17 +38,17 @@ impl RumMetricUpdateAttributes {
         }
     }
 
-    pub fn compute(mut self, value: crate::datadogV2::model::RumMetricUpdateCompute) -> Self {
+    pub fn compute(mut self, value: crate::datadogV2::model::RUMMetricUpdateCompute) -> Self {
         self.compute = Some(value);
         self
     }
 
-    pub fn filter(mut self, value: crate::datadogV2::model::RumMetricFilter) -> Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::RUMMetricFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::RumMetricGroupBy>) -> Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::RUMMetricGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
@@ -62,20 +62,20 @@ impl RumMetricUpdateAttributes {
     }
 }
 
-impl Default for RumMetricUpdateAttributes {
+impl Default for RUMMetricUpdateAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMMetricUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumMetricUpdateAttributesVisitor {
-            type Value = RumMetricUpdateAttributes;
+        struct RUMMetricUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMMetricUpdateAttributesVisitor {
+            type Value = RUMMetricUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -85,9 +85,9 @@ impl<'de> Deserialize<'de> for RumMetricUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut compute: Option<crate::datadogV2::model::RumMetricUpdateCompute> = None;
-                let mut filter: Option<crate::datadogV2::model::RumMetricFilter> = None;
-                let mut group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>> = None;
+                let mut compute: Option<crate::datadogV2::model::RUMMetricUpdateCompute> = None;
+                let mut filter: Option<crate::datadogV2::model::RUMMetricFilter> = None;
+                let mut group_by: Option<Vec<crate::datadogV2::model::RUMMetricGroupBy>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -122,7 +122,7 @@ impl<'de> Deserialize<'de> for RumMetricUpdateAttributes {
                     }
                 }
 
-                let content = RumMetricUpdateAttributes {
+                let content = RUMMetricUpdateAttributes {
                     compute,
                     filter,
                     group_by,
@@ -134,6 +134,6 @@ impl<'de> Deserialize<'de> for RumMetricUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumMetricUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMMetricUpdateAttributesVisitor)
     }
 }

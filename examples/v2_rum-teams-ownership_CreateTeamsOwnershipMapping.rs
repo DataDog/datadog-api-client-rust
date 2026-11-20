@@ -1,6 +1,6 @@
 // Create a teams ownership mapping returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI;
+use datadog_api_client::datadogV2::api_rum_teams_ownership::RUMTeamsOwnershipAPI;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingCreateData;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingCreateDataAttributes;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingCreateRequest;
@@ -24,7 +24,7 @@ async fn main() {
     ));
     let mut configuration = datadog::Configuration::new();
     configuration.set_unstable_operation_enabled("v2.create_teams_ownership_mapping", true);
-    let api = RumTeamsOwnershipAPI::with_config(configuration);
+    let api = RUMTeamsOwnershipAPI::with_config(configuration);
     let resp = api.create_teams_ownership_mapping(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

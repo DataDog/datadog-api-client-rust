@@ -1,6 +1,6 @@
 // Create replay heatmap snapshot returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI;
+use datadog_api_client::datadogV2::api_rum_replay_heatmaps::RUMReplayHeatmapsAPI;
 use datadog_api_client::datadogV2::model::SnapshotCreateRequest;
 use datadog_api_client::datadogV2::model::SnapshotCreateRequestData;
 use datadog_api_client::datadogV2::model::SnapshotCreateRequestDataAttributes;
@@ -22,7 +22,7 @@ async fn main() {
         ),
     );
     let configuration = datadog::Configuration::new();
-    let api = RumReplayHeatmapsAPI::with_config(configuration);
+    let api = RUMReplayHeatmapsAPI::with_config(configuration);
     let resp = api.create_replay_heatmap_snapshot(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumCrossProductSampling {
+pub struct RUMCrossProductSampling {
     /// Whether the cross-product retention filter for Session Replay is enabled.
     #[serde(rename = "session_replay_enabled")]
     pub session_replay_enabled: Option<bool>,
@@ -31,9 +31,9 @@ pub struct RumCrossProductSampling {
     pub(crate) _unparsed: bool,
 }
 
-impl RumCrossProductSampling {
-    pub fn new() -> RumCrossProductSampling {
-        RumCrossProductSampling {
+impl RUMCrossProductSampling {
+    pub fn new() -> RUMCrossProductSampling {
+        RUMCrossProductSampling {
             session_replay_enabled: None,
             session_replay_sample_rate: None,
             trace_enabled: None,
@@ -72,20 +72,20 @@ impl RumCrossProductSampling {
     }
 }
 
-impl Default for RumCrossProductSampling {
+impl Default for RUMCrossProductSampling {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumCrossProductSampling {
+impl<'de> Deserialize<'de> for RUMCrossProductSampling {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumCrossProductSamplingVisitor;
-        impl<'a> Visitor<'a> for RumCrossProductSamplingVisitor {
-            type Value = RumCrossProductSampling;
+        struct RUMCrossProductSamplingVisitor;
+        impl<'a> Visitor<'a> for RUMCrossProductSamplingVisitor {
+            type Value = RUMCrossProductSampling;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -143,7 +143,7 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
                     }
                 }
 
-                let content = RumCrossProductSampling {
+                let content = RUMCrossProductSampling {
                     session_replay_enabled,
                     session_replay_sample_rate,
                     trace_enabled,
@@ -156,6 +156,6 @@ impl<'de> Deserialize<'de> for RumCrossProductSampling {
             }
         }
 
-        deserializer.deserialize_any(RumCrossProductSamplingVisitor)
+        deserializer.deserialize_any(RUMCrossProductSamplingVisitor)
     }
 }

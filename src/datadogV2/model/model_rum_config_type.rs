@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumConfigType {
+pub enum RUMConfigType {
     RUM_CONFIG,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumConfigType {
+impl ToString for RUMConfigType {
     fn to_string(&self) -> String {
         match self {
             Self::RUM_CONFIG => String::from("rum_config"),
@@ -20,7 +20,7 @@ impl ToString for RumConfigType {
     }
 }
 
-impl Serialize for RumConfigType {
+impl Serialize for RUMConfigType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumConfigType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigType {
+impl<'de> Deserialize<'de> for RUMConfigType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

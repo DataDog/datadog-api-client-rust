@@ -10,23 +10,23 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricCreateAttributes {
+pub struct RUMMetricCreateAttributes {
     /// The compute rule to compute the RUM-based metric. It is set at creation and only `include_percentiles` can be updated afterward.
     #[serde(rename = "compute")]
-    pub compute: crate::datadogV2::model::RumMetricCompute,
+    pub compute: crate::datadogV2::model::RUMMetricCompute,
     /// The type of RUM events the metric is generated from. It is set at creation and cannot be changed.
     #[serde(rename = "event_type")]
-    pub event_type: crate::datadogV2::model::RumMetricEventType,
+    pub event_type: crate::datadogV2::model::RUMMetricEventType,
     /// The RUM-based metric filter. Events matching this filter are aggregated in this metric. The `event_type` filter is added automatically.
     #[serde(rename = "filter")]
-    pub filter: Option<crate::datadogV2::model::RumMetricFilter>,
+    pub filter: Option<crate::datadogV2::model::RUMMetricFilter>,
     /// The rules to group the metric by. Each rule creates a tag on the generated metric. If omitted, the metric is not grouped.
     #[serde(rename = "group_by")]
-    pub group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>>,
+    pub group_by: Option<Vec<crate::datadogV2::model::RUMMetricGroupBy>>,
     /// The rule to count updatable events.
     /// Required when `event_type` is `session` or `view`, and must be omitted for other event types. It cannot be changed after creation.
     #[serde(rename = "uniqueness")]
-    pub uniqueness: Option<crate::datadogV2::model::RumMetricUniqueness>,
+    pub uniqueness: Option<crate::datadogV2::model::RUMMetricUniqueness>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,12 +34,12 @@ pub struct RumMetricCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricCreateAttributes {
+impl RUMMetricCreateAttributes {
     pub fn new(
-        compute: crate::datadogV2::model::RumMetricCompute,
-        event_type: crate::datadogV2::model::RumMetricEventType,
-    ) -> RumMetricCreateAttributes {
-        RumMetricCreateAttributes {
+        compute: crate::datadogV2::model::RUMMetricCompute,
+        event_type: crate::datadogV2::model::RUMMetricEventType,
+    ) -> RUMMetricCreateAttributes {
+        RUMMetricCreateAttributes {
             compute,
             event_type,
             filter: None,
@@ -50,17 +50,17 @@ impl RumMetricCreateAttributes {
         }
     }
 
-    pub fn filter(mut self, value: crate::datadogV2::model::RumMetricFilter) -> Self {
+    pub fn filter(mut self, value: crate::datadogV2::model::RUMMetricFilter) -> Self {
         self.filter = Some(value);
         self
     }
 
-    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::RumMetricGroupBy>) -> Self {
+    pub fn group_by(mut self, value: Vec<crate::datadogV2::model::RUMMetricGroupBy>) -> Self {
         self.group_by = Some(value);
         self
     }
 
-    pub fn uniqueness(mut self, value: crate::datadogV2::model::RumMetricUniqueness) -> Self {
+    pub fn uniqueness(mut self, value: crate::datadogV2::model::RUMMetricUniqueness) -> Self {
         self.uniqueness = Some(value);
         self
     }
@@ -74,14 +74,14 @@ impl RumMetricCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricCreateAttributes {
+impl<'de> Deserialize<'de> for RUMMetricCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumMetricCreateAttributesVisitor {
-            type Value = RumMetricCreateAttributes;
+        struct RUMMetricCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMMetricCreateAttributesVisitor {
+            type Value = RUMMetricCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -91,11 +91,11 @@ impl<'de> Deserialize<'de> for RumMetricCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut compute: Option<crate::datadogV2::model::RumMetricCompute> = None;
-                let mut event_type: Option<crate::datadogV2::model::RumMetricEventType> = None;
-                let mut filter: Option<crate::datadogV2::model::RumMetricFilter> = None;
-                let mut group_by: Option<Vec<crate::datadogV2::model::RumMetricGroupBy>> = None;
-                let mut uniqueness: Option<crate::datadogV2::model::RumMetricUniqueness> = None;
+                let mut compute: Option<crate::datadogV2::model::RUMMetricCompute> = None;
+                let mut event_type: Option<crate::datadogV2::model::RUMMetricEventType> = None;
+                let mut filter: Option<crate::datadogV2::model::RUMMetricFilter> = None;
+                let mut group_by: Option<Vec<crate::datadogV2::model::RUMMetricGroupBy>> = None;
+                let mut uniqueness: Option<crate::datadogV2::model::RUMMetricUniqueness> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for RumMetricCreateAttributes {
                             event_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_type) = event_type {
                                 match _event_type {
-                                    crate::datadogV2::model::RumMetricEventType::UnparsedObject(
+                                    crate::datadogV2::model::RUMMetricEventType::UnparsedObject(
                                         _event_type,
                                     ) => {
                                         _unparsed = true;
@@ -148,7 +148,7 @@ impl<'de> Deserialize<'de> for RumMetricCreateAttributes {
                 let compute = compute.ok_or_else(|| M::Error::missing_field("compute"))?;
                 let event_type = event_type.ok_or_else(|| M::Error::missing_field("event_type"))?;
 
-                let content = RumMetricCreateAttributes {
+                let content = RUMMetricCreateAttributes {
                     compute,
                     event_type,
                     filter,
@@ -162,6 +162,6 @@ impl<'de> Deserialize<'de> for RumMetricCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumMetricCreateAttributesVisitor)
+        deserializer.deserialize_any(RUMMetricCreateAttributesVisitor)
     }
 }

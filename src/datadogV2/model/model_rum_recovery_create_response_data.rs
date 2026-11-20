@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCreateResponseData {
+pub struct RUMRecoveryCreateResponseData {
     /// Accepted recovery request.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryCreateResponseAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryCreateResponseAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRecoveryRequestType,
+    pub type_: crate::datadogV2::model::RUMRecoveryRequestType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRecoveryCreateResponseData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCreateResponseData {
+impl RUMRecoveryCreateResponseData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryCreateResponseAttributes,
+        attributes: crate::datadogV2::model::RUMRecoveryCreateResponseAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRecoveryRequestType,
-    ) -> RumRecoveryCreateResponseData {
-        RumRecoveryCreateResponseData {
+        type_: crate::datadogV2::model::RUMRecoveryRequestType,
+    ) -> RUMRecoveryCreateResponseData {
+        RUMRecoveryCreateResponseData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRecoveryCreateResponseData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCreateResponseData {
+impl<'de> Deserialize<'de> for RUMRecoveryCreateResponseData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCreateResponseDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCreateResponseDataVisitor {
-            type Value = RumRecoveryCreateResponseData;
+        struct RUMRecoveryCreateResponseDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCreateResponseDataVisitor {
+            type Value = RUMRecoveryCreateResponseData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRecoveryCreateResponseAttributes,
+                    crate::datadogV2::model::RUMRecoveryCreateResponseAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRecoveryRequestType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRecoveryRequestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRecoveryRequestType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRecoveryCreateResponseData {
+                let content = RUMRecoveryCreateResponseData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateResponseData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCreateResponseDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryCreateResponseDataVisitor)
     }
 }

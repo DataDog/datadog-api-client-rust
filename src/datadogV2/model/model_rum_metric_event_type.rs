@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumMetricEventType {
+pub enum RUMMetricEventType {
     SESSION,
     VIEW,
     ACTION,
@@ -17,7 +17,7 @@ pub enum RumMetricEventType {
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumMetricEventType {
+impl ToString for RUMMetricEventType {
     fn to_string(&self) -> String {
         match self {
             Self::SESSION => String::from("session"),
@@ -32,7 +32,7 @@ impl ToString for RumMetricEventType {
     }
 }
 
-impl Serialize for RumMetricEventType {
+impl Serialize for RUMMetricEventType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -44,7 +44,7 @@ impl Serialize for RumMetricEventType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricEventType {
+impl<'de> Deserialize<'de> for RUMMetricEventType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

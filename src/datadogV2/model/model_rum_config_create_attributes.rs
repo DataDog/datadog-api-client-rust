@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumConfigCreateAttributes {
+pub struct RUMConfigCreateAttributes {
     /// Whether application tags are enforced for the RUM applications in the organization.
     #[serde(rename = "enforced_application_tags")]
     pub enforced_application_tags: bool,
@@ -21,9 +21,9 @@ pub struct RumConfigCreateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumConfigCreateAttributes {
-    pub fn new(enforced_application_tags: bool) -> RumConfigCreateAttributes {
-        RumConfigCreateAttributes {
+impl RUMConfigCreateAttributes {
+    pub fn new(enforced_application_tags: bool) -> RUMConfigCreateAttributes {
+        RUMConfigCreateAttributes {
             enforced_application_tags,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumConfigCreateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigCreateAttributes {
+impl<'de> Deserialize<'de> for RUMConfigCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumConfigCreateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumConfigCreateAttributesVisitor {
-            type Value = RumConfigCreateAttributes;
+        struct RUMConfigCreateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMConfigCreateAttributesVisitor {
+            type Value = RUMConfigCreateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumConfigCreateAttributes {
                 let enforced_application_tags = enforced_application_tags
                     .ok_or_else(|| M::Error::missing_field("enforced_application_tags"))?;
 
-                let content = RumConfigCreateAttributes {
+                let content = RUMConfigCreateAttributes {
                     enforced_application_tags,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumConfigCreateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumConfigCreateAttributesVisitor)
+        deserializer.deserialize_any(RUMConfigCreateAttributesVisitor)
     }
 }

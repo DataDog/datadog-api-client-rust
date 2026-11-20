@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCountAttributes {
+pub struct RUMRecoveryCountAttributes {
     /// Start of the range in Unix milliseconds. Must be positive and earlier than to.
     #[serde(rename = "from")]
     pub from: i64,
@@ -27,9 +27,9 @@ pub struct RumRecoveryCountAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCountAttributes {
-    pub fn new(from: i64, query: String, to: i64) -> RumRecoveryCountAttributes {
-        RumRecoveryCountAttributes {
+impl RUMRecoveryCountAttributes {
+    pub fn new(from: i64, query: String, to: i64) -> RUMRecoveryCountAttributes {
+        RUMRecoveryCountAttributes {
             from,
             query,
             to,
@@ -47,14 +47,14 @@ impl RumRecoveryCountAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCountAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryCountAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCountAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCountAttributesVisitor {
-            type Value = RumRecoveryCountAttributes;
+        struct RUMRecoveryCountAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCountAttributesVisitor {
+            type Value = RUMRecoveryCountAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -95,7 +95,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountAttributes {
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
-                let content = RumRecoveryCountAttributes {
+                let content = RUMRecoveryCountAttributes {
                     from,
                     query,
                     to,
@@ -107,6 +107,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCountAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCountAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryCountAttributesVisitor)
     }
 }

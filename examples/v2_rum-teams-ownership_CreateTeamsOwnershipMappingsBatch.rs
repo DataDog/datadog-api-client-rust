@@ -1,6 +1,6 @@
 // Bulk create and remove teams ownership mappings returns "OK" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI;
+use datadog_api_client::datadogV2::api_rum_teams_ownership::RUMTeamsOwnershipAPI;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingBatchOperation;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingBatchOperationData;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingBatchOperationDataAttributes;
@@ -24,7 +24,7 @@ async fn main() {
             TeamsOwnershipMappingType::TEAMS_OWNERSHIP_MAPPINGS,
         ))]);
     let configuration = datadog::Configuration::new();
-    let api = RumTeamsOwnershipAPI::with_config(configuration);
+    let api = RUMTeamsOwnershipAPI::with_config(configuration);
     let resp = api.create_teams_ownership_mappings_batch(body).await;
     if let Ok(value) = resp {
         println!("{:#?}", value);

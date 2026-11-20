@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCountRequestData {
+pub struct RUMRecoveryCountRequestData {
     /// Query for a recovery estimate. The range cannot exceed 180 days; from cannot be more than 4 years ago and to cannot be more than 1 hour in the future. Session availability depends on the configured archive retention.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryCountAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryCountAttributes,
     /// Optional resource identifier.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -27,11 +27,11 @@ pub struct RumRecoveryCountRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCountRequestData {
+impl RUMRecoveryCountRequestData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryCountAttributes,
-    ) -> RumRecoveryCountRequestData {
-        RumRecoveryCountRequestData {
+        attributes: crate::datadogV2::model::RUMRecoveryCountAttributes,
+    ) -> RUMRecoveryCountRequestData {
+        RUMRecoveryCountRequestData {
             attributes,
             id: None,
             type_: None,
@@ -59,14 +59,14 @@ impl RumRecoveryCountRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCountRequestData {
+impl<'de> Deserialize<'de> for RUMRecoveryCountRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCountRequestDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCountRequestDataVisitor {
-            type Value = RumRecoveryCountRequestData;
+        struct RUMRecoveryCountRequestDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCountRequestDataVisitor {
+            type Value = RUMRecoveryCountRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumRecoveryCountAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMRecoveryCountAttributes> =
                     None;
                 let mut id: Option<String> = None;
                 let mut type_: Option<String> = None;
@@ -112,7 +112,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequestData {
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = RumRecoveryCountRequestData {
+                let content = RUMRecoveryCountRequestData {
                     attributes,
                     id,
                     type_,
@@ -124,6 +124,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCountRequestData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCountRequestDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryCountRequestDataVisitor)
     }
 }

@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumPermanentRetentionFilterUpdateData {
+pub struct RUMPermanentRetentionFilterUpdateData {
     /// The configuration to update on a permanent RUM retention filter.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumPermanentRetentionFilterUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateAttributes,
     /// The identifier of a permanent RUM retention filter.
     #[serde(rename = "id")]
-    pub id: crate::datadogV2::model::RumPermanentRetentionFilterID,
+    pub id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
     /// The type of the resource. The value should always be `permanent_retention_filters`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumPermanentRetentionFilterType,
+    pub type_: crate::datadogV2::model::RUMPermanentRetentionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumPermanentRetentionFilterUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumPermanentRetentionFilterUpdateData {
+impl RUMPermanentRetentionFilterUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumPermanentRetentionFilterUpdateAttributes,
-        id: crate::datadogV2::model::RumPermanentRetentionFilterID,
-        type_: crate::datadogV2::model::RumPermanentRetentionFilterType,
-    ) -> RumPermanentRetentionFilterUpdateData {
-        RumPermanentRetentionFilterUpdateData {
+        attributes: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateAttributes,
+        id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
+        type_: crate::datadogV2::model::RUMPermanentRetentionFilterType,
+    ) -> RUMPermanentRetentionFilterUpdateData {
+        RUMPermanentRetentionFilterUpdateData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumPermanentRetentionFilterUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
+impl<'de> Deserialize<'de> for RUMPermanentRetentionFilterUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumPermanentRetentionFilterUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumPermanentRetentionFilterUpdateDataVisitor {
-            type Value = RumPermanentRetentionFilterUpdateData;
+        struct RUMPermanentRetentionFilterUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMPermanentRetentionFilterUpdateDataVisitor {
+            type Value = RUMPermanentRetentionFilterUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumPermanentRetentionFilterUpdateAttributes,
+                    crate::datadogV2::model::RUMPermanentRetentionFilterUpdateAttributes,
                 > = None;
-                let mut id: Option<crate::datadogV2::model::RumPermanentRetentionFilterID> = None;
-                let mut type_: Option<crate::datadogV2::model::RumPermanentRetentionFilterType> =
+                let mut id: Option<crate::datadogV2::model::RUMPermanentRetentionFilterID> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMPermanentRetentionFilterType> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _id) = id {
                                 match _id {
-                                    crate::datadogV2::model::RumPermanentRetentionFilterID::UnparsedObject(_id) => {
+                                    crate::datadogV2::model::RUMPermanentRetentionFilterID::UnparsedObject(_id) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -100,7 +100,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumPermanentRetentionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMPermanentRetentionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -118,7 +118,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumPermanentRetentionFilterUpdateData {
+                let content = RUMPermanentRetentionFilterUpdateData {
                     attributes,
                     id,
                     type_,
@@ -130,6 +130,6 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumPermanentRetentionFilterUpdateDataVisitor)
+        deserializer.deserialize_any(RUMPermanentRetentionFilterUpdateDataVisitor)
     }
 }

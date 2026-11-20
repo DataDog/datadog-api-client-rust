@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricFilter {
+pub struct RUMMetricFilter {
     /// The search query, following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>).
     /// Do not include a `@type` filter, it is derived from `event_type`.
     /// It must not contain invisible or control characters such as non-breaking or zero-width spaces.
@@ -24,9 +24,9 @@ pub struct RumMetricFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricFilter {
-    pub fn new(query: String) -> RumMetricFilter {
-        RumMetricFilter {
+impl RUMMetricFilter {
+    pub fn new(query: String) -> RUMMetricFilter {
+        RUMMetricFilter {
             query,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -42,14 +42,14 @@ impl RumMetricFilter {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricFilter {
+impl<'de> Deserialize<'de> for RUMMetricFilter {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricFilterVisitor;
-        impl<'a> Visitor<'a> for RumMetricFilterVisitor {
-            type Value = RumMetricFilter;
+        struct RUMMetricFilterVisitor;
+        impl<'a> Visitor<'a> for RUMMetricFilterVisitor {
+            type Value = RUMMetricFilter;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumMetricFilter {
                 }
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
 
-                let content = RumMetricFilter {
+                let content = RUMMetricFilter {
                     query,
                     additional_properties,
                     _unparsed,
@@ -90,6 +90,6 @@ impl<'de> Deserialize<'de> for RumMetricFilter {
             }
         }
 
-        deserializer.deserialize_any(RumMetricFilterVisitor)
+        deserializer.deserialize_any(RUMMetricFilterVisitor)
     }
 }

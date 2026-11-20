@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterMeta {
+pub struct RUMExclusionFilterMeta {
     /// Unix epoch (in milliseconds) when the exclusion filter was last enabled.
     #[serde(rename = "enabled_at")]
     pub enabled_at: Option<i64>,
@@ -27,9 +27,9 @@ pub struct RumExclusionFilterMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterMeta {
-    pub fn new() -> RumExclusionFilterMeta {
-        RumExclusionFilterMeta {
+impl RUMExclusionFilterMeta {
+    pub fn new() -> RUMExclusionFilterMeta {
+        RUMExclusionFilterMeta {
             enabled_at: None,
             updated_at: None,
             updated_by_handle: None,
@@ -62,20 +62,20 @@ impl RumExclusionFilterMeta {
     }
 }
 
-impl Default for RumExclusionFilterMeta {
+impl Default for RUMExclusionFilterMeta {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterMeta {
+impl<'de> Deserialize<'de> for RUMExclusionFilterMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterMetaVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterMetaVisitor {
-            type Value = RumExclusionFilterMeta;
+        struct RUMExclusionFilterMetaVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterMetaVisitor {
+            type Value = RUMExclusionFilterMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -123,7 +123,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterMeta {
                     }
                 }
 
-                let content = RumExclusionFilterMeta {
+                let content = RUMExclusionFilterMeta {
                     enabled_at,
                     updated_at,
                     updated_by_handle,
@@ -135,6 +135,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterMeta {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterMetaVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterMetaVisitor)
     }
 }

@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsSearchAttributes {
+pub struct RUMArchiveSessionsSearchAttributes {
     /// Opaque next-page cursor. Keep the query, time range, and hide_retained value unchanged.
     #[serde(rename = "cursor")]
     pub cursor: Option<String>,
@@ -36,9 +36,9 @@ pub struct RumArchiveSessionsSearchAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsSearchAttributes {
-    pub fn new(from: i64, query: String, to: i64) -> RumArchiveSessionsSearchAttributes {
-        RumArchiveSessionsSearchAttributes {
+impl RUMArchiveSessionsSearchAttributes {
+    pub fn new(from: i64, query: String, to: i64) -> RUMArchiveSessionsSearchAttributes {
+        RUMArchiveSessionsSearchAttributes {
             cursor: None,
             from,
             hide_retained: None,
@@ -74,14 +74,14 @@ impl RumArchiveSessionsSearchAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsSearchAttributes {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsSearchAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsSearchAttributesVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsSearchAttributesVisitor {
-            type Value = RumArchiveSessionsSearchAttributes;
+        struct RUMArchiveSessionsSearchAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsSearchAttributesVisitor {
+            type Value = RUMArchiveSessionsSearchAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -144,7 +144,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchAttributes {
                 let query = query.ok_or_else(|| M::Error::missing_field("query"))?;
                 let to = to.ok_or_else(|| M::Error::missing_field("to"))?;
 
-                let content = RumArchiveSessionsSearchAttributes {
+                let content = RUMArchiveSessionsSearchAttributes {
                     cursor,
                     from,
                     hide_retained,
@@ -159,6 +159,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsSearchAttributesVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsSearchAttributesVisitor)
     }
 }

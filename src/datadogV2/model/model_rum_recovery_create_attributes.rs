@@ -7,40 +7,40 @@ use serde::{Deserialize, Deserializer, Serialize};
 #[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 #[serde(untagged)]
-pub enum RumRecoveryCreateAttributes {
-    RumRecoverySessionsCreateAttributes(
-        Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>,
+pub enum RUMRecoveryCreateAttributes {
+    RUMRecoverySessionsCreateAttributes(
+        Box<crate::datadogV2::model::RUMRecoverySessionsCreateAttributes>,
     ),
-    RumRecoveryBatchCreateAttributes(
-        Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>,
+    RUMRecoveryBatchCreateAttributes(
+        Box<crate::datadogV2::model::RUMRecoveryBatchCreateAttributes>,
     ),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCreateAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryCreateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let value: serde_json::Value = Deserialize::deserialize(deserializer)?;
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::RumRecoverySessionsCreateAttributes>,
+            Box<crate::datadogV2::model::RUMRecoverySessionsCreateAttributes>,
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(RumRecoveryCreateAttributes::RumRecoverySessionsCreateAttributes(_v));
+                return Ok(RUMRecoveryCreateAttributes::RUMRecoverySessionsCreateAttributes(_v));
             }
         }
         if let Ok(_v) = serde_json::from_value::<
-            Box<crate::datadogV2::model::RumRecoveryBatchCreateAttributes>,
+            Box<crate::datadogV2::model::RUMRecoveryBatchCreateAttributes>,
         >(value.clone())
         {
             if !_v._unparsed {
-                return Ok(RumRecoveryCreateAttributes::RumRecoveryBatchCreateAttributes(_v));
+                return Ok(RUMRecoveryCreateAttributes::RUMRecoveryBatchCreateAttributes(_v));
             }
         }
 
-        return Ok(RumRecoveryCreateAttributes::UnparsedObject(
+        return Ok(RUMRecoveryCreateAttributes::UnparsedObject(
             crate::datadog::UnparsedObject { value },
         ));
     }

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionQuotaScopeType {
+pub enum RUMRetentionQuotaScopeType {
     APPLICATION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionQuotaScopeType {
+impl ToString for RUMRetentionQuotaScopeType {
     fn to_string(&self) -> String {
         match self {
             Self::APPLICATION => String::from("application"),
@@ -20,7 +20,7 @@ impl ToString for RumRetentionQuotaScopeType {
     }
 }
 
-impl Serialize for RumRetentionQuotaScopeType {
+impl Serialize for RUMRetentionQuotaScopeType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumRetentionQuotaScopeType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaScopeType {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaScopeType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

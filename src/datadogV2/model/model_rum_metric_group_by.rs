@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricGroupBy {
+pub struct RUMMetricGroupBy {
     /// The path of the RUM event attribute to group the metric by.
     #[serde(rename = "path")]
     pub path: String,
@@ -25,9 +25,9 @@ pub struct RumMetricGroupBy {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricGroupBy {
-    pub fn new(path: String) -> RumMetricGroupBy {
-        RumMetricGroupBy {
+impl RUMMetricGroupBy {
+    pub fn new(path: String) -> RUMMetricGroupBy {
+        RUMMetricGroupBy {
             path,
             tag_name: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -49,14 +49,14 @@ impl RumMetricGroupBy {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricGroupBy {
+impl<'de> Deserialize<'de> for RUMMetricGroupBy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricGroupByVisitor;
-        impl<'a> Visitor<'a> for RumMetricGroupByVisitor {
-            type Value = RumMetricGroupBy;
+        struct RUMMetricGroupByVisitor;
+        impl<'a> Visitor<'a> for RUMMetricGroupByVisitor {
+            type Value = RUMMetricGroupBy;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for RumMetricGroupBy {
                 }
                 let path = path.ok_or_else(|| M::Error::missing_field("path"))?;
 
-                let content = RumMetricGroupBy {
+                let content = RUMMetricGroupBy {
                     path,
                     tag_name,
                     additional_properties,
@@ -105,6 +105,6 @@ impl<'de> Deserialize<'de> for RumMetricGroupBy {
             }
         }
 
-        deserializer.deserialize_any(RumMetricGroupByVisitor)
+        deserializer.deserialize_any(RUMMetricGroupByVisitor)
     }
 }
