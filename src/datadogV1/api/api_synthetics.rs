@@ -99,47 +99,77 @@ impl ListTestsOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct SearchTestsOptionalParams {
-    /// The search query.
+    /// Search query. Space-separated terms are combined with AND.
+    /// - `status:Alert` or `status:OK`: monitor health.
+    /// - `state:live` or `state:paused`: whether a test runs.
+    /// - `type:api`, `type:browser`, or `type:mobile`: test type.
+    /// - `team:<name>`, `<key>:<value>`, or `tag:<key>:<value>`: tags, for example `team:dashboards env:prod`.
+    /// - `test_criticality:(high OR very_high)`: tests with high or very high criticality.
+    /// - Free text, for example `checkout`: test names.
+    ///
+    /// `status:Alert state:live` matches running tests with alerting monitors. Paused tests can remain alerting.
     pub text: Option<String>,
-    /// If true, include the full configuration for each test in the response.
+    /// If true, include the full configuration, including assertions and multistep API steps.
+    /// If false or omitted, `config` contains only a reduced request summary.
+    /// In TypeScript, multistep steps are in `test.config?.additionalProperties?.steps`.
     pub include_full_config: Option<bool>,
-    /// If true, return only facets instead of full test details.
+    /// If true, return facet counts with an empty `tests` array and `total` set to 0.
     pub facets_only: Option<bool>,
-    /// The offset from which to start returning results.
+    /// Zero-based result offset. Increase by `count` for each page, even if fewer tests are returned.
     pub start: Option<i64>,
-    /// The maximum number of results to return.
+    /// Maximum number of tests per page. Access restrictions can return fewer tests or none,
+    /// even when more tests match.
     pub count: Option<i64>,
-    /// The sort order for the results (e.g., `name,asc` or `name,desc`).
+    /// Sort by `<field>,<direction>`, where direction is `asc` or `desc` (for example, `name,asc`).
+    /// Supported fields include `name`, `status`, `tags`, `triggered`, `created`, `modified`, `priority`,
+    /// `muted_elapsed`, `muted_left`, `creator`, `type`, `domain`, and `triage_score`.
+    /// `test_criticality` is an alias for `triage_score`.
+    /// `triggered,desc` sorts by the most recent monitor trigger time (`last_triggered_ts`).
     pub sort: Option<String>,
 }
 
 impl SearchTestsOptionalParams {
-    /// The search query.
+    /// Search query. Space-separated terms are combined with AND.
+    /// - `status:Alert` or `status:OK`: monitor health.
+    /// - `state:live` or `state:paused`: whether a test runs.
+    /// - `type:api`, `type:browser`, or `type:mobile`: test type.
+    /// - `team:<name>`, `<key>:<value>`, or `tag:<key>:<value>`: tags, for example `team:dashboards env:prod`.
+    /// - `test_criticality:(high OR very_high)`: tests with high or very high criticality.
+    /// - Free text, for example `checkout`: test names.
+    ///
+    /// `status:Alert state:live` matches running tests with alerting monitors. Paused tests can remain alerting.
     pub fn text(mut self, value: String) -> Self {
         self.text = Some(value);
         self
     }
-    /// If true, include the full configuration for each test in the response.
+    /// If true, include the full configuration, including assertions and multistep API steps.
+    /// If false or omitted, `config` contains only a reduced request summary.
+    /// In TypeScript, multistep steps are in `test.config?.additionalProperties?.steps`.
     pub fn include_full_config(mut self, value: bool) -> Self {
         self.include_full_config = Some(value);
         self
     }
-    /// If true, return only facets instead of full test details.
+    /// If true, return facet counts with an empty `tests` array and `total` set to 0.
     pub fn facets_only(mut self, value: bool) -> Self {
         self.facets_only = Some(value);
         self
     }
-    /// The offset from which to start returning results.
+    /// Zero-based result offset. Increase by `count` for each page, even if fewer tests are returned.
     pub fn start(mut self, value: i64) -> Self {
         self.start = Some(value);
         self
     }
-    /// The maximum number of results to return.
+    /// Maximum number of tests per page. Access restrictions can return fewer tests or none,
+    /// even when more tests match.
     pub fn count(mut self, value: i64) -> Self {
         self.count = Some(value);
         self
     }
-    /// The sort order for the results (e.g., `name,asc` or `name,desc`).
+    /// Sort by `<field>,<direction>`, where direction is `asc` or `desc` (for example, `name,asc`).
+    /// Supported fields include `name`, `status`, `tags`, `triggered`, `created`, `modified`, `priority`,
+    /// `muted_elapsed`, `muted_left`, `creator`, `type`, `domain`, and `triage_score`.
+    /// `test_criticality` is an alias for `triage_score`.
+    /// `triggered,desc` sorts by the most recent monitor trigger time (`last_triggered_ts`).
     pub fn sort(mut self, value: String) -> Self {
         self.sort = Some(value);
         self
@@ -1932,8 +1962,8 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Get the detailed configuration associated with
-    /// a Synthetic API test.
+    /// Get the detailed configuration of one Synthetic API test.
+    /// For bulk configuration reads, prefer paginated `SearchTests` requests with `include_full_config=true`.
     pub async fn get_api_test(
         &self,
         public_id: String,
@@ -1952,8 +1982,8 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Get the detailed configuration associated with
-    /// a Synthetic API test.
+    /// Get the detailed configuration of one Synthetic API test.
+    /// For bulk configuration reads, prefer paginated `SearchTests` requests with `include_full_config=true`.
     pub async fn get_api_test_with_http_info(
         &self,
         public_id: String,
@@ -2039,6 +2069,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the last 150 test results summaries for a given Synthetic API test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn get_api_test_latest_results(
         &self,
         public_id: String,
@@ -2065,6 +2097,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the last 150 test results summaries for a given Synthetic API test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn get_api_test_latest_results_with_http_info(
         &self,
         public_id: String,
@@ -2399,6 +2433,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the last 150 test results summaries for a given Synthetic browser test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn get_browser_test_latest_results(
         &self,
         public_id: String,
@@ -2425,6 +2461,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the last 150 test results summaries for a given Synthetic browser test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn get_browser_test_latest_results_with_http_info(
         &self,
         public_id: String,
@@ -3507,7 +3545,8 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Get the list of all Synthetic tests.
+    /// Get the list of all Synthetic tests. To use query filters or get monitor-health metadata, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_tests(
         &self,
         params: ListTestsOptionalParams,
@@ -3563,7 +3602,8 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Get the list of all Synthetic tests.
+    /// Get the list of all Synthetic tests. To use query filters or get monitor-health metadata, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_tests_with_http_info(
         &self,
         params: ListTestsOptionalParams,
@@ -3816,7 +3856,12 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetic tests.
+    /// Search for Synthetic tests that match the `text` query. The response includes monitor health, facet counts,
+    /// and pagination metadata. `total` can report 10,000 even when more tests match.
+    /// Do not treat that value as an exact total. Access restrictions can return fewer tests than `count`, or none.
+    /// Increase `start` by `count` for each page.
+    /// In TypeScript, response-level `total` and `facets`, and test-level `monitor_status`
+    /// (known values: `OK`, `Alert`, `No Data`), are available through `additionalProperties`.
     pub async fn search_tests(
         &self,
         params: SearchTestsOptionalParams,
@@ -3838,7 +3883,12 @@ impl SyntheticsAPI {
         }
     }
 
-    /// Search for Synthetic tests.
+    /// Search for Synthetic tests that match the `text` query. The response includes monitor health, facet counts,
+    /// and pagination metadata. `total` can report 10,000 even when more tests match.
+    /// Do not treat that value as an exact total. Access restrictions can return fewer tests than `count`, or none.
+    /// Increase `start` by `count` for each page.
+    /// In TypeScript, response-level `total` and `facets`, and test-level `monitor_status`
+    /// (known values: `OK`, `Alert`, `No Data`), are available through `additionalProperties`.
     pub async fn search_tests_with_http_info(
         &self,
         params: SearchTestsOptionalParams,

@@ -3667,6 +3667,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the latest result summaries for a given Synthetic browser test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_synthetics_browser_test_latest_results(
         &self,
         public_id: String,
@@ -3693,6 +3695,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the latest result summaries for a given Synthetic browser test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_synthetics_browser_test_latest_results_with_http_info(
         &self,
         public_id: String,
@@ -3937,6 +3941,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the latest result summaries for a given Synthetic test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_synthetics_test_latest_results(
         &self,
         public_id: String,
@@ -3963,6 +3969,8 @@ impl SyntheticsAPI {
     }
 
     /// Get the latest result summaries for a given Synthetic test.
+    /// To filter tests across your organization by monitor status, state, or tags, use
+    /// the Search Synthetic tests with filters endpoint.
     pub async fn list_synthetics_test_latest_results_with_http_info(
         &self,
         public_id: String,
