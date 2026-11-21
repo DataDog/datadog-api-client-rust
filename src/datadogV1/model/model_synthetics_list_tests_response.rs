@@ -6,7 +6,11 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Object containing an array of Synthetic tests configuration.
+/// Synthetic test configurations.
+/// Search responses also include `total` (matches before per-test access filtering) and `facets` (value counts).
+/// `total` can report 10,000 even when more tests match. Do not treat that value as an exact total.
+/// In TypeScript, these are available as `response.additionalProperties?.total` and
+/// `response.additionalProperties?.facets`.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]

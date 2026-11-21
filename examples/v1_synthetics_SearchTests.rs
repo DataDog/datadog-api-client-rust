@@ -1,5 +1,5 @@
-// Search Synthetic tests returns "OK - Returns the list of Synthetic tests
-// matching the search." response
+// Search Synthetic tests with filters returns "OK - Returns the list of Synthetic
+// tests matching the search." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV1::api_synthetics::SearchTestsOptionalParams;
 use datadog_api_client::datadogV1::api_synthetics::SyntheticsAPI;
