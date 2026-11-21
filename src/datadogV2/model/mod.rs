@@ -3480,6 +3480,8 @@ pub mod model_cost_recommendation_data;
 pub use self::model_cost_recommendation_data::CostRecommendationData;
 pub mod model_cost_recommendation_data_attributes;
 pub use self::model_cost_recommendation_data_attributes::CostRecommendationDataAttributes;
+pub mod model_cost_recommendation_extra_field;
+pub use self::model_cost_recommendation_extra_field::CostRecommendationExtraField;
 pub mod model_cost_recommendation_data_attributes_potential_daily_savings;
 pub use self::model_cost_recommendation_data_attributes_potential_daily_savings::CostRecommendationDataAttributesPotentialDailySavings;
 pub mod model_cost_recommendation_data_type;

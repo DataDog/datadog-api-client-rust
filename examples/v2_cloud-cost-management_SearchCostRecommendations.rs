@@ -17,6 +17,7 @@ async fn main() {
         )
         .attributes(
             RecommendationsFilterRequestDataAttributes::new()
+                .extra_fields(vec!["tags.env".to_string()])
                 .scope(RecommendationsFilterRequestScope::CCM)
                 .sort(vec![RecommendationsFilterRequestSortItems::new(
                     "DESC".to_string(),
