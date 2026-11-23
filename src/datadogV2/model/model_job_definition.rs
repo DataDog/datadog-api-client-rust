@@ -26,6 +26,12 @@ pub struct JobDefinition {
     /// Index used to load the data.
     #[serde(rename = "index")]
     pub index: String,
+    /// Whether the job was run by Datadog to reprocess past data.
+    #[serde(rename = "isBackfillJob")]
+    pub is_backfill_job: Option<bool>,
+    /// Whether the job is a shadow deployment run by Datadog.
+    #[serde(rename = "isShadowDeployed")]
+    pub is_shadow_deployed: Option<bool>,
     /// Message for generated results.
     #[serde(rename = "message")]
     pub message: String,
@@ -35,6 +41,9 @@ pub struct JobDefinition {
     /// Job options.
     #[serde(rename = "options")]
     pub options: Option<crate::datadogV2::model::HistoricalJobOptions>,
+    /// Fields projected for each query, copied from the rule the job was created from.
+    #[serde(rename = "projectedPerQuery")]
+    pub projected_per_query: Option<Vec<String>>,
     /// Queries for selecting logs analyzed by the job. Up to 10 queries are allowed.
     #[serde(rename = "queries")]
     pub queries: Vec<crate::datadogV2::model::HistoricalJobQuery>,
@@ -77,9 +86,12 @@ impl JobDefinition {
             from,
             group_signals_by: None,
             index,
+            is_backfill_job: None,
+            is_shadow_deployed: None,
             message,
             name,
             options: None,
+            projected_per_query: None,
             queries,
             reference_tables: None,
             tags: None,
@@ -104,8 +116,23 @@ impl JobDefinition {
         self
     }
 
+    pub fn is_backfill_job(mut self, value: bool) -> Self {
+        self.is_backfill_job = Some(value);
+        self
+    }
+
+    pub fn is_shadow_deployed(mut self, value: bool) -> Self {
+        self.is_shadow_deployed = Some(value);
+        self
+    }
+
     pub fn options(mut self, value: crate::datadogV2::model::HistoricalJobOptions) -> Self {
         self.options = Some(value);
+        self
+    }
+
+    pub fn projected_per_query(mut self, value: Vec<String>) -> Self {
+        self.projected_per_query = Some(value);
         self
     }
 
@@ -169,9 +196,12 @@ impl<'de> Deserialize<'de> for JobDefinition {
                 let mut from: Option<i64> = None;
                 let mut group_signals_by: Option<Vec<String>> = None;
                 let mut index: Option<String> = None;
+                let mut is_backfill_job: Option<bool> = None;
+                let mut is_shadow_deployed: Option<bool> = None;
                 let mut message: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut options: Option<crate::datadogV2::model::HistoricalJobOptions> = None;
+                let mut projected_per_query: Option<Vec<String>> = None;
                 let mut queries: Option<Vec<crate::datadogV2::model::HistoricalJobQuery>> = None;
                 let mut reference_tables: Option<
                     Vec<crate::datadogV2::model::SecurityMonitoringReferenceTable>,
@@ -213,6 +243,20 @@ impl<'de> Deserialize<'de> for JobDefinition {
                         "index" => {
                             index = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "isBackfillJob" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_backfill_job =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "isShadowDeployed" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            is_shadow_deployed =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "message" => {
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -224,6 +268,13 @@ impl<'de> Deserialize<'de> for JobDefinition {
                                 continue;
                             }
                             options = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "projectedPerQuery" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            projected_per_query =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "queries" => {
                             queries = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -278,9 +329,12 @@ impl<'de> Deserialize<'de> for JobDefinition {
                     from,
                     group_signals_by,
                     index,
+                    is_backfill_job,
+                    is_shadow_deployed,
                     message,
                     name,
                     options,
+                    projected_per_query,
                     queries,
                     reference_tables,
                     tags,
