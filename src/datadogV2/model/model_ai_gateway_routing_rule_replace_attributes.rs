@@ -11,6 +11,22 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleReplaceAttributes {
+    /// Optional description of what the routing rule is for. Up to 500 characters.
+    /// Omit it or send null to keep the saved description. Send an empty string to clear it.
+    #[serde(
+        rename = "description",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub description: Option<Option<String>>,
+    /// Optional human-readable name shown in place of the slug. Up to 100 characters on one line.
+    /// Omit it or send null to keep the saved display name. Send an empty string to clear it.
+    #[serde(
+        rename = "display_name",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub display_name: Option<Option<String>>,
     /// Saved route revision. A mismatched value returns 409 without changes.
     #[serde(rename = "expected_updated_at")]
     pub expected_updated_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -29,12 +45,24 @@ pub struct AiGatewayRoutingRuleReplaceAttributes {
 impl AiGatewayRoutingRuleReplaceAttributes {
     pub fn new() -> AiGatewayRoutingRuleReplaceAttributes {
         AiGatewayRoutingRuleReplaceAttributes {
+            description: None,
+            display_name: None,
             expected_updated_at: None,
             removed_target_ids: None,
             tiers: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: Option<String>) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn display_name(mut self, value: Option<String>) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn expected_updated_at(mut self, value: chrono::DateTime<chrono::Utc>) -> Self {
@@ -87,6 +115,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleReplaceAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<Option<String>> = None;
+                let mut display_name: Option<Option<String>> = None;
                 let mut expected_updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut removed_target_ids: Option<Vec<i64>> = None;
                 let mut tiers: Option<
@@ -100,6 +130,14 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleReplaceAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "display_name" => {
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "expected_updated_at" => {
                             if v.is_null() {
                                 continue;
@@ -129,6 +167,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleReplaceAttributes {
                 }
 
                 let content = AiGatewayRoutingRuleReplaceAttributes {
+                    description,
+                    display_name,
                     expected_updated_at,
                     removed_target_ids,
                     tiers,

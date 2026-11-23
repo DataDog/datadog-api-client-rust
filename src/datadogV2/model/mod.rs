@@ -10040,6 +10040,8 @@ pub mod model_ai_gateway_model_pricing_source;
 pub use self::model_ai_gateway_model_pricing_source::AiGatewayModelPricingSource;
 pub mod model_ai_gateway_model_pricing_source_type;
 pub use self::model_ai_gateway_model_pricing_source_type::AiGatewayModelPricingSourceType;
+pub mod model_ai_gateway_model_pricing_tier;
+pub use self::model_ai_gateway_model_pricing_tier::AiGatewayModelPricingTier;
 pub mod model_ai_gateway_model_pricing_status;
 pub use self::model_ai_gateway_model_pricing_status::AiGatewayModelPricingStatus;
 pub mod model_ai_gateway_model_zdr;
