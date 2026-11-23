@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DeploymentGateResponseData {
-    /// Basic information about a deployment gate.
+    /// Basic information about a deployment gate. The environment is `*` for a gate that applies to all environments.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::DeploymentGateResponseDataAttributes,
     /// Unique identifier of the deployment gate.
