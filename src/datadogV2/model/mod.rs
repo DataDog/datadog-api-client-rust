@@ -15984,6 +15984,8 @@ pub mod model_security_monitoring_signal_triage_update_data;
 pub use self::model_security_monitoring_signal_triage_update_data::SecurityMonitoringSignalTriageUpdateData;
 pub mod model_security_monitoring_signal_triage_attributes;
 pub use self::model_security_monitoring_signal_triage_attributes::SecurityMonitoringSignalTriageAttributes;
+pub mod model_security_monitoring_signal_case;
+pub use self::model_security_monitoring_signal_case::SecurityMonitoringSignalCase;
 pub mod model_security_monitoring_signal_metadata_type;
 pub use self::model_security_monitoring_signal_metadata_type::SecurityMonitoringSignalMetadataType;
 pub mod model_signal_entities_response;
