@@ -26,6 +26,12 @@ pub struct SecurityMonitoringSignalTriageAttributes {
     /// Object representing a given user entity.
     #[serde(rename = "assignee")]
     pub assignee: crate::datadogV2::model::SecurityMonitoringTriageUser,
+    /// Cases linked to the security signal.
+    #[serde(rename = "cases")]
+    pub cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringSignalCase>>,
+    /// Whether the signal is linked to at least one case.
+    #[serde(rename = "hasCase")]
+    pub has_case: Option<bool>,
     /// Array of incidents that are associated with this signal.
     #[serde(rename = "incident_ids")]
     pub incident_ids: Vec<i64>,
@@ -57,6 +63,8 @@ impl SecurityMonitoringSignalTriageAttributes {
             archive_comment_user: None,
             archive_reason: None,
             assignee,
+            cases: None,
+            has_case: None,
             incident_ids,
             state,
             state_update_timestamp: None,
@@ -89,6 +97,19 @@ impl SecurityMonitoringSignalTriageAttributes {
         value: crate::datadogV2::model::SecurityMonitoringSignalArchiveReason,
     ) -> Self {
         self.archive_reason = Some(value);
+        self
+    }
+
+    pub fn cases(
+        mut self,
+        value: Vec<crate::datadogV2::model::SecurityMonitoringSignalCase>,
+    ) -> Self {
+        self.cases = Some(value);
+        self
+    }
+
+    pub fn has_case(mut self, value: bool) -> Self {
+        self.has_case = Some(value);
         self
     }
 
@@ -141,6 +162,9 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                 > = None;
                 let mut assignee: Option<crate::datadogV2::model::SecurityMonitoringTriageUser> =
                     None;
+                let mut cases: Option<Vec<crate::datadogV2::model::SecurityMonitoringSignalCase>> =
+                    None;
+                let mut has_case: Option<bool> = None;
                 let mut incident_ids: Option<Vec<i64>> = None;
                 let mut state: Option<crate::datadogV2::model::SecurityMonitoringSignalState> =
                     None;
@@ -195,6 +219,18 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                         "assignee" => {
                             assignee = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "cases" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            cases = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "hasCase" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            has_case = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "incident_ids" => {
                             incident_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -242,6 +278,8 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalTriageAttributes {
                     archive_comment_user,
                     archive_reason,
                     assignee,
+                    cases,
+                    has_case,
                     incident_ids,
                     state,
                     state_update_timestamp,
