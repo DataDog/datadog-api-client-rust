@@ -11,9 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsSavingsScalarResponse {
-    /// Array of scalar columns in the response.
-    #[serde(rename = "columns")]
-    pub columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
+    /// The scalar savings resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsSavingsScalarResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -23,10 +23,10 @@ pub struct CommitmentsSavingsScalarResponse {
 
 impl CommitmentsSavingsScalarResponse {
     pub fn new(
-        columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
+        data: crate::datadogV2::model::CommitmentsSavingsScalarResponseData,
     ) -> CommitmentsSavingsScalarResponse {
         CommitmentsSavingsScalarResponse {
-            columns,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -58,8 +58,9 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsScalarResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut columns: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> =
-                    None;
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsSavingsScalarResponseData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -68,8 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsScalarResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "columns" => {
-                            columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -78,10 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsScalarResponse {
                         }
                     }
                 }
-                let columns = columns.ok_or_else(|| M::Error::missing_field("columns"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsSavingsScalarResponse {
-                    columns,
+                    data,
                     additional_properties,
                     _unparsed,
                 };

@@ -3770,7 +3770,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type (Reserved Instances, Savings Plans, On-Demand, and Spot) for both hours and cost.
+    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type for both hours and cost. AWS and Azure report Reserved Instances, Savings Plans, On-Demand, and Spot. GCP reports Flex Committed Use Discounts and On-Demand.
     pub async fn get_commitments_coverage_timeseries(
         &self,
         provider: crate::datadogV2::model::CommitmentsProvider,
@@ -3801,7 +3801,7 @@ impl CloudCostManagementAPI {
         }
     }
 
-    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type (Reserved Instances, Savings Plans, On-Demand, and Spot) for both hours and cost.
+    /// Get timeseries coverage metrics for cloud commitment programs, broken down by coverage type for both hours and cost. AWS and Azure report Reserved Instances, Savings Plans, On-Demand, and Spot. GCP reports Flex Committed Use Discounts and On-Demand.
     pub async fn get_commitments_coverage_timeseries_with_http_info(
         &self,
         provider: crate::datadogV2::model::CommitmentsProvider,

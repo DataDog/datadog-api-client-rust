@@ -11,9 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsScalarColumnMeta {
-    /// Unit metadata for a numeric metric.
+    /// Unit metadata for a numeric metric. Unset fields are omitted, and the unit is `null` when it is unknown.
+    #[serialize_always]
     #[serde(rename = "unit")]
-    pub unit: crate::datadogV2::model::CommitmentsUnit,
+    pub unit: Option<crate::datadogV2::model::CommitmentsUnit>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,7 +23,9 @@ pub struct CommitmentsScalarColumnMeta {
 }
 
 impl CommitmentsScalarColumnMeta {
-    pub fn new(unit: crate::datadogV2::model::CommitmentsUnit) -> CommitmentsScalarColumnMeta {
+    pub fn new(
+        unit: Option<crate::datadogV2::model::CommitmentsUnit>,
+    ) -> CommitmentsScalarColumnMeta {
         CommitmentsScalarColumnMeta {
             unit,
             additional_properties: std::collections::BTreeMap::new(),
@@ -56,7 +59,7 @@ impl<'de> Deserialize<'de> for CommitmentsScalarColumnMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut unit: Option<crate::datadogV2::model::CommitmentsUnit> = None;
+                let mut unit: Option<Option<crate::datadogV2::model::CommitmentsUnit>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,

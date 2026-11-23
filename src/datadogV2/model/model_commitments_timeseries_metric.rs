@@ -17,9 +17,9 @@ pub struct CommitmentsTimeseriesMetric {
     /// Unix timestamps in seconds for the timeseries data points.
     #[serde(rename = "times")]
     pub times: Vec<i64>,
-    /// Unit metadata for a numeric metric.
-    #[serde(rename = "unit")]
-    pub unit: Option<crate::datadogV2::model::CommitmentsUnit>,
+    /// Unit metadata for a numeric metric. Unset fields are omitted, and the unit is `null` when it is unknown.
+    #[serde(rename = "unit", default, with = "::serde_with::rust::double_option")]
+    pub unit: Option<Option<crate::datadogV2::model::CommitmentsUnit>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,7 +41,7 @@ impl CommitmentsTimeseriesMetric {
         }
     }
 
-    pub fn unit(mut self, value: crate::datadogV2::model::CommitmentsUnit) -> Self {
+    pub fn unit(mut self, value: Option<crate::datadogV2::model::CommitmentsUnit>) -> Self {
         self.unit = Some(value);
         self
     }
@@ -74,7 +74,7 @@ impl<'de> Deserialize<'de> for CommitmentsTimeseriesMetric {
             {
                 let mut series: Option<std::collections::BTreeMap<String, Vec<f64>>> = None;
                 let mut times: Option<Vec<i64>> = None;
-                let mut unit: Option<crate::datadogV2::model::CommitmentsUnit> = None;
+                let mut unit: Option<Option<crate::datadogV2::model::CommitmentsUnit>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,9 +90,6 @@ impl<'de> Deserialize<'de> for CommitmentsTimeseriesMetric {
                             times = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "unit" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {

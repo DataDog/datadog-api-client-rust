@@ -6,29 +6,29 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Unit metadata for a numeric metric.
+/// Unit metadata for a numeric metric. Unset fields are omitted, and the unit is `null` when it is unknown.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsUnit {
     /// The unit family (for example, percentage or money).
     #[serde(rename = "family")]
-    pub family: String,
+    pub family: Option<String>,
     /// The unit identifier.
     #[serde(rename = "id")]
-    pub id: i64,
+    pub id: Option<i64>,
     /// The unit name (for example, percent or dollar).
     #[serde(rename = "name")]
-    pub name: String,
+    pub name: Option<String>,
     /// The plural form of the unit name.
     #[serde(rename = "plural")]
-    pub plural: String,
+    pub plural: Option<String>,
     /// The scale factor for the unit.
     #[serde(rename = "scale_factor")]
-    pub scale_factor: f64,
+    pub scale_factor: Option<f64>,
     /// The abbreviated unit name (for example, % or $).
     #[serde(rename = "short_name")]
-    pub short_name: String,
+    pub short_name: Option<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -37,24 +37,47 @@ pub struct CommitmentsUnit {
 }
 
 impl CommitmentsUnit {
-    pub fn new(
-        family: String,
-        id: i64,
-        name: String,
-        plural: String,
-        scale_factor: f64,
-        short_name: String,
-    ) -> CommitmentsUnit {
+    pub fn new() -> CommitmentsUnit {
         CommitmentsUnit {
-            family,
-            id,
-            name,
-            plural,
-            scale_factor,
-            short_name,
+            family: None,
+            id: None,
+            name: None,
+            plural: None,
+            scale_factor: None,
+            short_name: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn family(mut self, value: String) -> Self {
+        self.family = Some(value);
+        self
+    }
+
+    pub fn id(mut self, value: i64) -> Self {
+        self.id = Some(value);
+        self
+    }
+
+    pub fn name(mut self, value: String) -> Self {
+        self.name = Some(value);
+        self
+    }
+
+    pub fn plural(mut self, value: String) -> Self {
+        self.plural = Some(value);
+        self
+    }
+
+    pub fn scale_factor(mut self, value: f64) -> Self {
+        self.scale_factor = Some(value);
+        self
+    }
+
+    pub fn short_name(mut self, value: String) -> Self {
+        self.short_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -63,6 +86,12 @@ impl CommitmentsUnit {
     ) -> Self {
         self.additional_properties = value;
         self
+    }
+}
+
+impl Default for CommitmentsUnit {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -98,22 +127,40 @@ impl<'de> Deserialize<'de> for CommitmentsUnit {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "family" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             family = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "name" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "plural" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             plural = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "scale_factor" => {
+                            if v.is_null() || v.as_str() == Some("") {
+                                continue;
+                            }
                             scale_factor =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "short_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             short_name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -123,13 +170,6 @@ impl<'de> Deserialize<'de> for CommitmentsUnit {
                         }
                     }
                 }
-                let family = family.ok_or_else(|| M::Error::missing_field("family"))?;
-                let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
-                let plural = plural.ok_or_else(|| M::Error::missing_field("plural"))?;
-                let scale_factor =
-                    scale_factor.ok_or_else(|| M::Error::missing_field("scale_factor"))?;
-                let short_name = short_name.ok_or_else(|| M::Error::missing_field("short_name"))?;
 
                 let content = CommitmentsUnit {
                     family,

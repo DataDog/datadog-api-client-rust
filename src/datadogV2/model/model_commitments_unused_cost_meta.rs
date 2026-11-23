@@ -6,14 +6,16 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Metadata for the on-demand hot-spots scalar response.
+/// Metadata reporting that the cost data lacks the unused costs of some commitments, as with Azure exports
+/// scoped below the billing profile. Utilization is then overstated, and realized savings and effective
+/// savings rate are upper bounds. Omitted when the unused costs are available.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct CommitmentsOnDemandHotspotsScalarMeta {
-    /// Active on-demand filters applied to the response.
-    #[serde(rename = "on_demand_filters")]
-    pub on_demand_filters: String,
+pub struct CommitmentsUnusedCostMeta {
+    /// Whether the cost data lacks the unused costs of some commitments.
+    #[serde(rename = "unused_cost_unavailable")]
+    pub unused_cost_unavailable: Option<bool>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,13 +23,18 @@ pub struct CommitmentsOnDemandHotspotsScalarMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl CommitmentsOnDemandHotspotsScalarMeta {
-    pub fn new(on_demand_filters: String) -> CommitmentsOnDemandHotspotsScalarMeta {
-        CommitmentsOnDemandHotspotsScalarMeta {
-            on_demand_filters,
+impl CommitmentsUnusedCostMeta {
+    pub fn new() -> CommitmentsUnusedCostMeta {
+        CommitmentsUnusedCostMeta {
+            unused_cost_unavailable: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn unused_cost_unavailable(mut self, value: bool) -> Self {
+        self.unused_cost_unavailable = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -39,14 +46,20 @@ impl CommitmentsOnDemandHotspotsScalarMeta {
     }
 }
 
-impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarMeta {
+impl Default for CommitmentsUnusedCostMeta {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<'de> Deserialize<'de> for CommitmentsUnusedCostMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct CommitmentsOnDemandHotspotsScalarMetaVisitor;
-        impl<'a> Visitor<'a> for CommitmentsOnDemandHotspotsScalarMetaVisitor {
-            type Value = CommitmentsOnDemandHotspotsScalarMeta;
+        struct CommitmentsUnusedCostMetaVisitor;
+        impl<'a> Visitor<'a> for CommitmentsUnusedCostMetaVisitor {
+            type Value = CommitmentsUnusedCostMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +69,7 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut on_demand_filters: Option<String> = None;
+                let mut unused_cost_unavailable: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -65,8 +78,11 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarMeta {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "on_demand_filters" => {
-                            on_demand_filters =
+                        "unused_cost_unavailable" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            unused_cost_unavailable =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -76,11 +92,9 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarMeta {
                         }
                     }
                 }
-                let on_demand_filters = on_demand_filters
-                    .ok_or_else(|| M::Error::missing_field("on_demand_filters"))?;
 
-                let content = CommitmentsOnDemandHotspotsScalarMeta {
-                    on_demand_filters,
+                let content = CommitmentsUnusedCostMeta {
+                    unused_cost_unavailable,
                     additional_properties,
                     _unparsed,
                 };
@@ -89,6 +103,6 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarMeta {
             }
         }
 
-        deserializer.deserialize_any(CommitmentsOnDemandHotspotsScalarMetaVisitor)
+        deserializer.deserialize_any(CommitmentsUnusedCostMetaVisitor)
     }
 }

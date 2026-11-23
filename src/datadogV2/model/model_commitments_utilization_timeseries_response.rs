@@ -11,15 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsUtilizationTimeseriesResponse {
-    /// Timeseries data as a map of series names to their corresponding value arrays.
-    #[serde(rename = "series")]
-    pub series: std::collections::BTreeMap<String, Vec<f64>>,
-    /// Unix timestamps in seconds for the timeseries data points.
-    #[serde(rename = "times")]
-    pub times: Vec<i64>,
-    /// Unit metadata for a numeric metric.
-    #[serde(rename = "unit")]
-    pub unit: Option<crate::datadogV2::model::CommitmentsUnit>,
+    /// The timeseries utilization resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,21 +23,13 @@ pub struct CommitmentsUtilizationTimeseriesResponse {
 
 impl CommitmentsUtilizationTimeseriesResponse {
     pub fn new(
-        series: std::collections::BTreeMap<String, Vec<f64>>,
-        times: Vec<i64>,
+        data: crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponseData,
     ) -> CommitmentsUtilizationTimeseriesResponse {
         CommitmentsUtilizationTimeseriesResponse {
-            series,
-            times,
-            unit: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn unit(mut self, value: crate::datadogV2::model::CommitmentsUnit) -> Self {
-        self.unit = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -72,9 +58,9 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationTimeseriesResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut series: Option<std::collections::BTreeMap<String, Vec<f64>>> = None;
-                let mut times: Option<Vec<i64>> = None;
-                let mut unit: Option<crate::datadogV2::model::CommitmentsUnit> = None;
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsUtilizationTimeseriesResponseData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -83,17 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationTimeseriesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "series" => {
-                            series = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "times" => {
-                            times = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "unit" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            unit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -102,13 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationTimeseriesResponse {
                         }
                     }
                 }
-                let series = series.ok_or_else(|| M::Error::missing_field("series"))?;
-                let times = times.ok_or_else(|| M::Error::missing_field("times"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsUtilizationTimeseriesResponse {
-                    series,
-                    times,
-                    unit,
+                    data,
                     additional_properties,
                     _unparsed,
                 };

@@ -11,13 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsUtilizationScalarResponse {
-    /// Array of scalar columns in the response.
-    #[serde(rename = "columns")]
-    pub columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
-    /// Array of per-product utilization breakdown entries.
-    #[serde(rename = "product_breakdown")]
-    pub product_breakdown:
-        Option<Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>>,
+    /// The scalar utilization resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsUtilizationScalarResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,22 +23,13 @@ pub struct CommitmentsUtilizationScalarResponse {
 
 impl CommitmentsUtilizationScalarResponse {
     pub fn new(
-        columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
+        data: crate::datadogV2::model::CommitmentsUtilizationScalarResponseData,
     ) -> CommitmentsUtilizationScalarResponse {
         CommitmentsUtilizationScalarResponse {
-            columns,
-            product_breakdown: None,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn product_breakdown(
-        mut self,
-        value: Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>,
-    ) -> Self {
-        self.product_breakdown = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -71,10 +58,8 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationScalarResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut columns: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> =
-                    None;
-                let mut product_breakdown: Option<
-                    Vec<crate::datadogV2::model::CommitmentsUtilizationScalarProductBreakdownEntry>,
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsUtilizationScalarResponseData,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -84,15 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationScalarResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "columns" => {
-                            columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "product_breakdown" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            product_breakdown =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -101,11 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsUtilizationScalarResponse {
                         }
                     }
                 }
-                let columns = columns.ok_or_else(|| M::Error::missing_field("columns"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsUtilizationScalarResponse {
-                    columns,
-                    product_breakdown,
+                    data,
                     additional_properties,
                     _unparsed,
                 };
