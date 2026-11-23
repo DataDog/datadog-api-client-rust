@@ -23,13 +23,16 @@ pub struct LLMObsExperimentMetric {
     /// Error details for an experiment metric evaluation.
     #[serde(rename = "error")]
     pub error: Option<crate::datadogV2::model::LLMObsExperimentMetricError>,
+    /// Whether a higher numeric score is better. Set to `false` when a lower score is better. If omitted, the comparison uses the boolean value of `metadata.higher_is_better` when present, or the default direction otherwise.
+    #[serde(rename = "higher_is_better")]
+    pub higher_is_better: Option<bool>,
     /// JSON value. Used when `metric_type` is `json`.
     #[serde(rename = "json_value")]
     pub json_value: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Label or name for the metric.
     #[serde(rename = "label")]
     pub label: String,
-    /// Arbitrary metadata associated with the metric.
+    /// Arbitrary metadata associated with the metric. For a numeric score, clients can set `higher_is_better` here when they cannot send the top-level field.
     #[serde(rename = "metadata")]
     pub metadata: Option<std::collections::BTreeMap<String, serde_json::Value>>,
     /// Type of metric recorded for an Agent Observability experiment.
@@ -69,6 +72,7 @@ impl LLMObsExperimentMetric {
             boolean_value: None,
             categorical_value: None,
             error: None,
+            higher_is_better: None,
             json_value: None,
             label,
             metadata: None,
@@ -100,6 +104,11 @@ impl LLMObsExperimentMetric {
 
     pub fn error(mut self, value: crate::datadogV2::model::LLMObsExperimentMetricError) -> Self {
         self.error = Some(value);
+        self
+    }
+
+    pub fn higher_is_better(mut self, value: bool) -> Self {
+        self.higher_is_better = Some(value);
         self
     }
 
@@ -164,6 +173,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                 let mut boolean_value: Option<bool> = None;
                 let mut categorical_value: Option<String> = None;
                 let mut error: Option<crate::datadogV2::model::LLMObsExperimentMetricError> = None;
+                let mut higher_is_better: Option<bool> = None;
                 let mut json_value: Option<std::collections::BTreeMap<String, serde_json::Value>> =
                     None;
                 let mut label: Option<String> = None;
@@ -216,6 +226,13 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                                 continue;
                             }
                             error = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "higher_is_better" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            higher_is_better =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "json_value" => {
                             if v.is_null() {
@@ -289,6 +306,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentMetric {
                     boolean_value,
                     categorical_value,
                     error,
+                    higher_is_better,
                     json_value,
                     label,
                     metadata,
