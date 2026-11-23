@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Basic information about a deployment gate.
+/// Basic information about a deployment gate. The environment is `*` for a gate that applies to all environments.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -20,7 +20,7 @@ pub struct DeploymentGateResponseDataAttributes {
     /// Whether this gate is run in dry-run mode.
     #[serde(rename = "dry_run")]
     pub dry_run: bool,
-    /// The environment of the deployment gate.
+    /// The environment of the deployment gate. `*` means all environments.
     #[serde(rename = "env")]
     pub env: String,
     /// The identifier of the deployment gate.

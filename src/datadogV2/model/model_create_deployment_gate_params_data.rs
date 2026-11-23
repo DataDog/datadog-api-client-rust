@@ -11,7 +11,8 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CreateDeploymentGateParamsData {
-    /// Parameters for creating a deployment gate.
+    /// Parameters for creating a deployment gate. For the same organization, service, and identifier,
+    /// a gate for all environments cannot coexist with gates for specific environments.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::CreateDeploymentGateParamsDataAttributes,
     /// Deployment gate resource type.

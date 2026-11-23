@@ -6,7 +6,8 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Parameters for creating a deployment gate.
+/// Parameters for creating a deployment gate. For the same organization, service, and identifier,
+/// a gate for all environments cannot coexist with gates for specific environments.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +15,7 @@ pub struct CreateDeploymentGateParamsDataAttributes {
     /// Whether this gate is run in dry-run mode.
     #[serde(rename = "dry_run")]
     pub dry_run: Option<bool>,
-    /// The environment of the deployment gate.
+    /// Required environment of the deployment gate. Use `*` to apply the gate to all environments.
     #[serde(rename = "env")]
     pub env: String,
     /// The identifier of the deployment gate.

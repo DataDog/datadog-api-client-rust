@@ -524,7 +524,9 @@ impl DeploymentGatesAPI {
         Self { config, client }
     }
 
-    /// Endpoint to create a deployment gate.
+    /// Create a deployment gate for a specific environment or for all environments using `*`.
+    /// A gate for all environments and a gate for a specific environment cannot coexist for the
+    /// same organization, service, and identifier. A conflicting creation returns 400 Bad Request.
     pub async fn create_deployment_gate(
         &self,
         body: crate::datadogV2::model::CreateDeploymentGateParams,
@@ -546,7 +548,9 @@ impl DeploymentGatesAPI {
         }
     }
 
-    /// Endpoint to create a deployment gate.
+    /// Create a deployment gate for a specific environment or for all environments using `*`.
+    /// A gate for all environments and a gate for a specific environment cannot coexist for the
+    /// same organization, service, and identifier. A conflicting creation returns 400 Bad Request.
     pub async fn create_deployment_gate_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateDeploymentGateParams,
