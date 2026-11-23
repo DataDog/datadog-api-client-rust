@@ -14,6 +14,12 @@ pub struct AiGatewayRoutingRuleAttributes {
     /// Time when the resource was created.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
+    /// Description of the routing rule. Absent when unset.
+    #[serde(rename = "description")]
+    pub description: Option<String>,
+    /// Human-readable name of the routing rule. Absent when unset; show the slug instead.
+    #[serde(rename = "display_name")]
+    pub display_name: Option<String>,
     /// Stable numeric route identifier used by scoped policies and `ai-gateway-route` restriction policies.
     #[serde(rename = "route_id")]
     pub route_id: i64,
@@ -38,12 +44,24 @@ impl AiGatewayRoutingRuleAttributes {
     ) -> AiGatewayRoutingRuleAttributes {
         AiGatewayRoutingRuleAttributes {
             created_at,
+            description: None,
+            display_name: None,
             route_id,
             tiers,
             updated_at,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: String) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn display_name(mut self, value: String) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -73,6 +91,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleAttributes {
                 M: MapAccess<'a>,
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
+                let mut description: Option<String> = None;
+                let mut display_name: Option<String> = None;
                 let mut route_id: Option<i64> = None;
                 let mut tiers: Option<Vec<crate::datadogV2::model::AiGatewayRoutingRuleTier>> =
                     None;
@@ -87,6 +107,20 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleAttributes {
                     match k.as_str() {
                         "created_at" => {
                             created_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "description" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "display_name" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "route_id" => {
                             route_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -111,6 +145,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleAttributes {
 
                 let content = AiGatewayRoutingRuleAttributes {
                     created_at,
+                    description,
+                    display_name,
                     route_id,
                     tiers,
                     updated_at,

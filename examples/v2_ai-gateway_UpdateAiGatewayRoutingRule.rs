@@ -17,6 +17,10 @@ use datadog_api_client::datadogV2::model::AiGatewayRoutingRuleType;
 async fn main() {
     let body = AiGatewayRoutingRuleReplaceRequest::new(AiGatewayRoutingRuleReplaceData::new(
         AiGatewayRoutingRuleReplaceAttributes::new()
+            .description(Some(
+                "Routes coding traffic to the fastest available model.".to_string(),
+            ))
+            .display_name(Some("Coding fallback".to_string()))
             .expected_updated_at(
                 DateTime::parse_from_rfc3339("2026-08-24T12:00:00+00:00")
                     .expect("Failed to parse datetime")

@@ -40,6 +40,10 @@ async fn main() {
             ))
             .ordering(Some(AiGatewayNullableRoutingRuleTierOrdering::CONFIGURED))],
         )
+        .description(Some(
+            "Routes coding traffic to the fastest available model.".to_string(),
+        ))
+        .display_name(Some("Coding fallback".to_string()))
         .initial_bindings(vec![AiGatewayProviderInitialBinding::new(
             vec!["org:11111111-1111-1111-1111-111111111111".to_string()],
             AiGatewayProviderInitialBindingRelation::VIEWER,

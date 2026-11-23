@@ -11,6 +11,22 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayRoutingRuleCreateAttributes {
+    /// Optional description of what the routing rule is for. Up to 500 characters. Line breaks are allowed.
+    /// Leading and trailing spaces are trimmed, and a blank value is the same as none.
+    #[serde(
+        rename = "description",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub description: Option<Option<String>>,
+    /// Optional human-readable name shown in place of the slug. Up to 100 characters on one line. Need not be unique.
+    /// Leading and trailing spaces are trimmed, and a blank value is the same as none.
+    #[serde(
+        rename = "display_name",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub display_name: Option<Option<String>>,
     /// Reserved for initial View and Edit permissions. Supplying this attribute returns HTTP 400 and doesn't
     /// create the route. Create the route, then set its permissions through the restriction policy API.
     #[serde(rename = "initial_bindings")]
@@ -33,12 +49,24 @@ impl AiGatewayRoutingRuleCreateAttributes {
         tiers: Vec<crate::datadogV2::model::AiGatewayRoutingRuleTierRequest>,
     ) -> AiGatewayRoutingRuleCreateAttributes {
         AiGatewayRoutingRuleCreateAttributes {
+            description: None,
+            display_name: None,
             initial_bindings: None,
             slug,
             tiers,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn description(mut self, value: Option<String>) -> Self {
+        self.description = Some(value);
+        self
+    }
+
+    pub fn display_name(mut self, value: Option<String>) -> Self {
+        self.display_name = Some(value);
+        self
     }
 
     pub fn initial_bindings(
@@ -75,6 +103,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut description: Option<Option<String>> = None;
+                let mut display_name: Option<Option<String>> = None;
                 let mut initial_bindings: Option<
                     Vec<crate::datadogV2::model::AiGatewayProviderInitialBinding>,
                 > = None;
@@ -90,6 +120,14 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "description" => {
+                            description =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "display_name" => {
+                            display_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "initial_bindings" => {
                             if v.is_null() {
                                 continue;
@@ -114,6 +152,8 @@ impl<'de> Deserialize<'de> for AiGatewayRoutingRuleCreateAttributes {
                 let tiers = tiers.ok_or_else(|| M::Error::missing_field("tiers"))?;
 
                 let content = AiGatewayRoutingRuleCreateAttributes {
+                    description,
+                    display_name,
                     initial_bindings,
                     slug,
                     tiers,

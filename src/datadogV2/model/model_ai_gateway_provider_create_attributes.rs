@@ -33,7 +33,7 @@ pub struct AiGatewayProviderCreateAttributes {
     pub integration_config: Option<crate::datadogV2::model::AiGatewayProviderIntegrationConfig>,
     /// Known provider implementation.
     #[serde(rename = "known_provider")]
-    pub known_provider: Option<crate::datadogV2::model::AiGatewayKnownProvider>,
+    pub known_provider: crate::datadogV2::model::AiGatewayKnownProvider,
     /// Manually managed models to add alongside models discovered from the provider integration.
     #[serde(rename = "models")]
     pub models: Option<Vec<crate::datadogV2::model::AiGatewayModelInput>>,
@@ -56,14 +56,18 @@ pub struct AiGatewayProviderCreateAttributes {
 }
 
 impl AiGatewayProviderCreateAttributes {
-    pub fn new(name: String, slug: String) -> AiGatewayProviderCreateAttributes {
+    pub fn new(
+        known_provider: crate::datadogV2::model::AiGatewayKnownProvider,
+        name: String,
+        slug: String,
+    ) -> AiGatewayProviderCreateAttributes {
         AiGatewayProviderCreateAttributes {
             cost_multiplier: None,
             credential_source: None,
             initial_bindings: None,
             integration_account_id: None,
             integration_config: None,
-            known_provider: None,
+            known_provider,
             models: None,
             name,
             slug,
@@ -104,14 +108,6 @@ impl AiGatewayProviderCreateAttributes {
         value: crate::datadogV2::model::AiGatewayProviderIntegrationConfig,
     ) -> Self {
         self.integration_config = Some(value);
-        self
-    }
-
-    pub fn known_provider(
-        mut self,
-        value: crate::datadogV2::model::AiGatewayKnownProvider,
-    ) -> Self {
-        self.known_provider = Some(value);
         self
     }
 
@@ -220,9 +216,6 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "known_provider" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             known_provider =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _known_provider) = known_provider {
@@ -260,6 +253,8 @@ impl<'de> Deserialize<'de> for AiGatewayProviderCreateAttributes {
                         }
                     }
                 }
+                let known_provider =
+                    known_provider.ok_or_else(|| M::Error::missing_field("known_provider"))?;
                 let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let slug = slug.ok_or_else(|| M::Error::missing_field("slug"))?;
 

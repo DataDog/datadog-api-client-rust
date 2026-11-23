@@ -20,6 +20,10 @@ pub struct AiGatewayModelPricingConfig {
     /// Source information for a model's pricing.
     #[serde(rename = "source")]
     pub source: crate::datadogV2::model::AiGatewayModelPricingSource,
+    /// Custom prices that replace the base rates for the requests they select. Only valid for custom pricing.
+    /// At most 16 tiers, and no two may share the same `service_tier` and `context_min_tokens`.
+    #[serde(rename = "tiers")]
+    pub tiers: Option<Vec<crate::datadogV2::model::AiGatewayModelPricingTier>>,
     /// Pricing configuration version. The only supported version is `1`.
     #[serde(rename = "version")]
     pub version: i64,
@@ -39,6 +43,7 @@ impl AiGatewayModelPricingConfig {
             overrides: None,
             rates: None,
             source,
+            tiers: None,
             version,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -52,6 +57,11 @@ impl AiGatewayModelPricingConfig {
 
     pub fn rates(mut self, value: crate::datadogV2::model::AiGatewayModelPricingRates) -> Self {
         self.rates = Some(value);
+        self
+    }
+
+    pub fn tiers(mut self, value: Vec<crate::datadogV2::model::AiGatewayModelPricingTier>) -> Self {
+        self.tiers = Some(value);
         self
     }
 
@@ -85,6 +95,8 @@ impl<'de> Deserialize<'de> for AiGatewayModelPricingConfig {
                     None;
                 let mut rates: Option<crate::datadogV2::model::AiGatewayModelPricingRates> = None;
                 let mut source: Option<crate::datadogV2::model::AiGatewayModelPricingSource> = None;
+                let mut tiers: Option<Vec<crate::datadogV2::model::AiGatewayModelPricingTier>> =
+                    None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -109,6 +121,12 @@ impl<'de> Deserialize<'de> for AiGatewayModelPricingConfig {
                         "source" => {
                             source = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "tiers" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            tiers = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             version = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -126,6 +144,7 @@ impl<'de> Deserialize<'de> for AiGatewayModelPricingConfig {
                     overrides,
                     rates,
                     source,
+                    tiers,
                     version,
                     additional_properties,
                     _unparsed,

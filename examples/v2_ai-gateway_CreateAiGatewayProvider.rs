@@ -19,7 +19,11 @@ async fn main() {
     let body =
         AiGatewayProviderCreateRequest::new(
             AiGatewayProviderCreateData::new(
-                AiGatewayProviderCreateAttributes::new("production-us".to_string(), "prod-us".to_string())
+                AiGatewayProviderCreateAttributes::new(
+                    AiGatewayKnownProvider::OPENAI,
+                    "production-us".to_string(),
+                    "prod-us".to_string(),
+                )
                     .cost_multiplier(1.0 as f64)
                     .credential_source(AiGatewayProviderCreateCredentialSource::INTEGRATION_ACCOUNT)
                     .initial_bindings(
@@ -44,7 +48,6 @@ async fn main() {
                                 vec![AiGatewayCustomProviderSupportedOperation::OPENAI_CHAT_COMPLETIONS],
                             ),
                     )
-                    .known_provider(AiGatewayKnownProvider::OPENAI)
                     .models(
                         vec![
                             AiGatewayModelInput::new(
