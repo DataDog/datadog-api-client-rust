@@ -11,12 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsCoverageTimeseriesResponse {
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "cost")]
-    pub cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "hours")]
-    pub hours: crate::datadogV2::model::CommitmentsTimeseriesMetric,
+    /// The timeseries coverage resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsCoverageTimeseriesResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -26,12 +23,10 @@ pub struct CommitmentsCoverageTimeseriesResponse {
 
 impl CommitmentsCoverageTimeseriesResponse {
     pub fn new(
-        cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-        hours: crate::datadogV2::model::CommitmentsTimeseriesMetric,
+        data: crate::datadogV2::model::CommitmentsCoverageTimeseriesResponseData,
     ) -> CommitmentsCoverageTimeseriesResponse {
         CommitmentsCoverageTimeseriesResponse {
-            cost,
-            hours,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -63,8 +58,9 @@ impl<'de> Deserialize<'de> for CommitmentsCoverageTimeseriesResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut cost: Option<crate::datadogV2::model::CommitmentsTimeseriesMetric> = None;
-                let mut hours: Option<crate::datadogV2::model::CommitmentsTimeseriesMetric> = None;
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsCoverageTimeseriesResponseData,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -73,11 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsCoverageTimeseriesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "cost" => {
-                            cost = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "hours" => {
-                            hours = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -86,12 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsCoverageTimeseriesResponse {
                         }
                     }
                 }
-                let cost = cost.ok_or_else(|| M::Error::missing_field("cost"))?;
-                let hours = hours.ok_or_else(|| M::Error::missing_field("hours"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsCoverageTimeseriesResponse {
-                    cost,
-                    hours,
+                    data,
                     additional_properties,
                     _unparsed,
                 };

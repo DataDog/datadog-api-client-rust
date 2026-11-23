@@ -11,18 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsSavingsTimeseriesResponse {
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "actual_cost")]
-    pub actual_cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "effective_savings_rate")]
-    pub effective_savings_rate: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "on_demand_equivalent_cost")]
-    pub on_demand_equivalent_cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-    /// A timeseries metric containing timestamps, series values, and optional unit metadata.
-    #[serde(rename = "realized_savings")]
-    pub realized_savings: crate::datadogV2::model::CommitmentsTimeseriesMetric,
+    /// The timeseries savings resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsSavingsTimeseriesResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -32,16 +23,10 @@ pub struct CommitmentsSavingsTimeseriesResponse {
 
 impl CommitmentsSavingsTimeseriesResponse {
     pub fn new(
-        actual_cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-        effective_savings_rate: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-        on_demand_equivalent_cost: crate::datadogV2::model::CommitmentsTimeseriesMetric,
-        realized_savings: crate::datadogV2::model::CommitmentsTimeseriesMetric,
+        data: crate::datadogV2::model::CommitmentsSavingsTimeseriesResponseData,
     ) -> CommitmentsSavingsTimeseriesResponse {
         CommitmentsSavingsTimeseriesResponse {
-            actual_cost,
-            effective_savings_rate,
-            on_demand_equivalent_cost,
-            realized_savings,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -73,16 +58,8 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsTimeseriesResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut actual_cost: Option<crate::datadogV2::model::CommitmentsTimeseriesMetric> =
-                    None;
-                let mut effective_savings_rate: Option<
-                    crate::datadogV2::model::CommitmentsTimeseriesMetric,
-                > = None;
-                let mut on_demand_equivalent_cost: Option<
-                    crate::datadogV2::model::CommitmentsTimeseriesMetric,
-                > = None;
-                let mut realized_savings: Option<
-                    crate::datadogV2::model::CommitmentsTimeseriesMetric,
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsSavingsTimeseriesResponseData,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -92,21 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsTimeseriesResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "actual_cost" => {
-                            actual_cost =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "effective_savings_rate" => {
-                            effective_savings_rate =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "on_demand_equivalent_cost" => {
-                            on_demand_equivalent_cost =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "realized_savings" => {
-                            realized_savings =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -115,20 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsSavingsTimeseriesResponse {
                         }
                     }
                 }
-                let actual_cost =
-                    actual_cost.ok_or_else(|| M::Error::missing_field("actual_cost"))?;
-                let effective_savings_rate = effective_savings_rate
-                    .ok_or_else(|| M::Error::missing_field("effective_savings_rate"))?;
-                let on_demand_equivalent_cost = on_demand_equivalent_cost
-                    .ok_or_else(|| M::Error::missing_field("on_demand_equivalent_cost"))?;
-                let realized_savings =
-                    realized_savings.ok_or_else(|| M::Error::missing_field("realized_savings"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsSavingsTimeseriesResponse {
-                    actual_cost,
-                    effective_savings_rate,
-                    on_demand_equivalent_cost,
-                    realized_savings,
+                    data,
                     additional_properties,
                     _unparsed,
                 };

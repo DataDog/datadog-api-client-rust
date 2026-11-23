@@ -11,9 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsListMeta {
-    /// Unit metadata for a numeric metric.
-    #[serde(rename = "committed_spend_unit")]
-    pub committed_spend_unit: Option<crate::datadogV2::model::CommitmentsUnit>,
+    /// Unit metadata for a numeric metric. Unset fields are omitted, and the unit is `null` when it is unknown.
+    #[serde(
+        rename = "committed_spend_unit",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub committed_spend_unit: Option<Option<crate::datadogV2::model::CommitmentsUnit>>,
     /// Whether Azure cost data lacks the unused cost of some commitments, for example when an export is
     /// scoped below the billing profile. When `true`, utilization is overstated.
     #[serde(rename = "unused_cost_unavailable")]
@@ -35,7 +39,10 @@ impl CommitmentsListMeta {
         }
     }
 
-    pub fn committed_spend_unit(mut self, value: crate::datadogV2::model::CommitmentsUnit) -> Self {
+    pub fn committed_spend_unit(
+        mut self,
+        value: Option<crate::datadogV2::model::CommitmentsUnit>,
+    ) -> Self {
         self.committed_spend_unit = Some(value);
         self
     }
@@ -77,8 +84,9 @@ impl<'de> Deserialize<'de> for CommitmentsListMeta {
             where
                 M: MapAccess<'a>,
             {
-                let mut committed_spend_unit: Option<crate::datadogV2::model::CommitmentsUnit> =
-                    None;
+                let mut committed_spend_unit: Option<
+                    Option<crate::datadogV2::model::CommitmentsUnit>,
+                > = None;
                 let mut unused_cost_unavailable: Option<bool> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -89,9 +97,6 @@ impl<'de> Deserialize<'de> for CommitmentsListMeta {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "committed_spend_unit" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             committed_spend_unit =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }

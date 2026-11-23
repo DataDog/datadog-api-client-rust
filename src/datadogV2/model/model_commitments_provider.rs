@@ -9,6 +9,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 pub enum CommitmentsProvider {
     AWS,
     AZURE,
+    GCP,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -17,6 +18,7 @@ impl ToString for CommitmentsProvider {
         match self {
             Self::AWS => String::from("aws"),
             Self::AZURE => String::from("azure"),
+            Self::GCP => String::from("gcp"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -43,6 +45,7 @@ impl<'de> Deserialize<'de> for CommitmentsProvider {
         Ok(match s.as_str() {
             "aws" => Self::AWS,
             "azure" => Self::AZURE,
+            "gcp" => Self::GCP,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),

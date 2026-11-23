@@ -11,15 +11,9 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CommitmentsOnDemandHotspotsScalarResponse {
-    /// Array of scalar columns in the response.
-    #[serde(rename = "columns")]
-    pub columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
-    /// Metadata for the on-demand hot-spots scalar response.
-    #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarMeta>,
-    /// Array of scalar columns in the response.
-    #[serde(rename = "total")]
-    pub total: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
+    /// The scalar on-demand hot-spots resource.
+    #[serde(rename = "data")]
+    pub data: crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponseData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,24 +23,13 @@ pub struct CommitmentsOnDemandHotspotsScalarResponse {
 
 impl CommitmentsOnDemandHotspotsScalarResponse {
     pub fn new(
-        columns: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
-        total: Vec<crate::datadogV2::model::CommitmentsScalarColumn>,
+        data: crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponseData,
     ) -> CommitmentsOnDemandHotspotsScalarResponse {
         CommitmentsOnDemandHotspotsScalarResponse {
-            columns,
-            meta: None,
-            total,
+            data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn meta(
-        mut self,
-        value: crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarMeta,
-    ) -> Self {
-        self.meta = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -75,12 +58,9 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut columns: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> =
-                    None;
-                let mut meta: Option<
-                    crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarMeta,
+                let mut data: Option<
+                    crate::datadogV2::model::CommitmentsOnDemandHotspotsScalarResponseData,
                 > = None;
-                let mut total: Option<Vec<crate::datadogV2::model::CommitmentsScalarColumn>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,17 +69,8 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarResponse {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
-                        "columns" => {
-                            columns = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "meta" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            meta = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "total" => {
-                            total = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "data" => {
+                            data = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
@@ -108,13 +79,10 @@ impl<'de> Deserialize<'de> for CommitmentsOnDemandHotspotsScalarResponse {
                         }
                     }
                 }
-                let columns = columns.ok_or_else(|| M::Error::missing_field("columns"))?;
-                let total = total.ok_or_else(|| M::Error::missing_field("total"))?;
+                let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
                 let content = CommitmentsOnDemandHotspotsScalarResponse {
-                    columns,
-                    meta,
-                    total,
+                    data,
                     additional_properties,
                     _unparsed,
                 };
