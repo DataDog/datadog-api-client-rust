@@ -14,6 +14,9 @@ pub struct CostRecommendationDataAttributes {
     /// Datadog resource key identifying the recommended resource.
     #[serde(rename = "dd_resource_key")]
     pub dd_resource_key: Option<String>,
+    /// Selected recommendation fields. Omitted when no requested fields match.
+    #[serde(rename = "extra_fields")]
+    pub extra_fields: Option<Vec<crate::datadogV2::model::CostRecommendationExtraField>>,
     /// Estimated daily savings if the recommendation is applied.
     #[serde(rename = "potential_daily_savings")]
     pub potential_daily_savings:
@@ -45,6 +48,7 @@ impl CostRecommendationDataAttributes {
     pub fn new() -> CostRecommendationDataAttributes {
         CostRecommendationDataAttributes {
             dd_resource_key: None,
+            extra_fields: None,
             potential_daily_savings: None,
             recommendation_type: None,
             recommender_id: None,
@@ -58,6 +62,14 @@ impl CostRecommendationDataAttributes {
 
     pub fn dd_resource_key(mut self, value: String) -> Self {
         self.dd_resource_key = Some(value);
+        self
+    }
+
+    pub fn extra_fields(
+        mut self,
+        value: Vec<crate::datadogV2::model::CostRecommendationExtraField>,
+    ) -> Self {
+        self.extra_fields = Some(value);
         self
     }
 
@@ -127,6 +139,9 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
                 M: MapAccess<'a>,
             {
                 let mut dd_resource_key: Option<String> = None;
+                let mut extra_fields: Option<
+                    Vec<crate::datadogV2::model::CostRecommendationExtraField>,
+                > = None;
                 let mut potential_daily_savings: Option<
                     crate::datadogV2::model::CostRecommendationDataAttributesPotentialDailySavings,
                 > = None;
@@ -148,6 +163,13 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
                                 continue;
                             }
                             dd_resource_key =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "extra_fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extra_fields =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "potential_daily_savings" => {
@@ -201,6 +223,7 @@ impl<'de> Deserialize<'de> for CostRecommendationDataAttributes {
 
                 let content = CostRecommendationDataAttributes {
                     dd_resource_key,
+                    extra_fields,
                     potential_daily_savings,
                     recommendation_type,
                     recommender_id,

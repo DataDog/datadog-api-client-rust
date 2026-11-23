@@ -11,6 +11,12 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RecommendationsFilterRequestDataAttributes {
+    /// Additional fields to return from the recommendation event's custom attributes, selected
+    /// by dotted paths such as `tags.env` or wildcard patterns such as `*target*`.
+    /// Arrays are traversed without indexes. Matched objects and arrays are returned whole.
+    /// A maximum of 256 selectors can be requested. Selectors that match nothing return no field.
+    #[serde(rename = "extra_fields")]
+    pub extra_fields: Option<Vec<String>>,
     /// Filter expression applied to the recommendations. When supplied, this attribute overrides
     /// `data.id`, including when empty. When omitted, `data.id` is used. If the resulting filter
     /// is empty, it defaults to `*`. Scope, view, and pagination still apply.
@@ -37,6 +43,7 @@ pub struct RecommendationsFilterRequestDataAttributes {
 impl RecommendationsFilterRequestDataAttributes {
     pub fn new() -> RecommendationsFilterRequestDataAttributes {
         RecommendationsFilterRequestDataAttributes {
+            extra_fields: None,
             filter: None,
             scope: None,
             sort: None,
@@ -44,6 +51,11 @@ impl RecommendationsFilterRequestDataAttributes {
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn extra_fields(mut self, value: Vec<String>) -> Self {
+        self.extra_fields = Some(value);
+        self
     }
 
     pub fn filter(mut self, value: String) -> Self {
@@ -104,6 +116,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
             where
                 M: MapAccess<'a>,
             {
+                let mut extra_fields: Option<Vec<String>> = None;
                 let mut filter: Option<String> = None;
                 let mut scope: Option<crate::datadogV2::model::RecommendationsFilterRequestScope> =
                     None;
@@ -119,6 +132,13 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
 
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
+                        "extra_fields" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            extra_fields =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "filter" => {
                             if v.is_null() {
                                 continue;
@@ -160,6 +180,7 @@ impl<'de> Deserialize<'de> for RecommendationsFilterRequestDataAttributes {
                 }
 
                 let content = RecommendationsFilterRequestDataAttributes {
+                    extra_fields,
                     filter,
                     scope,
                     sort,
