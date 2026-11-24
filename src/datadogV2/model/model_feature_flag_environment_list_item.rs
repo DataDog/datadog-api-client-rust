@@ -59,6 +59,17 @@ pub struct FeatureFlagEnvironmentListItem {
     /// The status of a feature flag in an environment.
     #[serde(rename = "status")]
     pub status: crate::datadogV2::model::FeatureFlagStatus,
+    /// The environment's associated Custom OIDC provider ID, or `null` when no provider is associated.
+    #[serde(
+        rename = "subject_authorization_oidc_provider_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub subject_authorization_oidc_provider_id: Option<Option<uuid::Uuid>>,
+    /// Whether assignment requests for this environment require subject authorization. Allowed values are `disabled` and `enabled`. Enabling requires a provider ID formatted as a nonzero UUID. If omitted on create, defaults to `disabled`. If omitted on update, the stored state is preserved. `null` is not accepted. This setting applies only to the current Datadog site and is not copied to other sites. Before you enable it, configure an eligible Custom OIDC provider in the same organization and site, and verify that the provider's keys are published. Assignment requests fail when the required verification configuration is unavailable.
+    #[serde(rename = "subject_authorization_state")]
+    pub subject_authorization_state:
+        Option<crate::datadogV2::model::EnvironmentSubjectAuthorizationState>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -84,6 +95,8 @@ impl FeatureFlagEnvironmentListItem {
             pending_suggestion_id: None,
             require_feature_flag_approval: None,
             status,
+            subject_authorization_oidc_provider_id: None,
+            subject_authorization_state: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -139,6 +152,19 @@ impl FeatureFlagEnvironmentListItem {
         self
     }
 
+    pub fn subject_authorization_oidc_provider_id(mut self, value: Option<uuid::Uuid>) -> Self {
+        self.subject_authorization_oidc_provider_id = Some(value);
+        self
+    }
+
+    pub fn subject_authorization_state(
+        mut self,
+        value: crate::datadogV2::model::EnvironmentSubjectAuthorizationState,
+    ) -> Self {
+        self.subject_authorization_state = Some(value);
+        self
+    }
+
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
@@ -177,6 +203,10 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                 let mut pending_suggestion_id: Option<Option<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
                 let mut status: Option<crate::datadogV2::model::FeatureFlagStatus> = None;
+                let mut subject_authorization_oidc_provider_id: Option<Option<uuid::Uuid>> = None;
+                let mut subject_authorization_state: Option<
+                    crate::datadogV2::model::EnvironmentSubjectAuthorizationState,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -263,6 +293,27 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                                 }
                             }
                         }
+                        "subject_authorization_oidc_provider_id" => {
+                            subject_authorization_oidc_provider_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "subject_authorization_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            subject_authorization_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _subject_authorization_state) =
+                                subject_authorization_state
+                            {
+                                match _subject_authorization_state {
+                                    crate::datadogV2::model::EnvironmentSubjectAuthorizationState::UnparsedObject(_subject_authorization_state) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -287,6 +338,8 @@ impl<'de> Deserialize<'de> for FeatureFlagEnvironmentListItem {
                     pending_suggestion_id,
                     require_feature_flag_approval,
                     status,
+                    subject_authorization_oidc_provider_id,
+                    subject_authorization_state,
                     additional_properties,
                     _unparsed,
                 };
