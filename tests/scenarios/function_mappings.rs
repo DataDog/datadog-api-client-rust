@@ -2925,6 +2925,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_agent_health_issues,
     );
     world.function_mappings.insert(
+        "v2.ListAgentHealthIssuesWithPagination".into(),
+        test_v2_list_agent_health_issues_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.GetAgentHealthIssue".into(),
         test_v2_get_agent_health_issue,
     );
@@ -20656,6 +20660,12 @@ fn test_v2_list_agent_health_issues(
     let count_by = _parameters
         .get("count_by")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let filter_severity = _parameters
         .get("filter[severity]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
@@ -20673,6 +20683,8 @@ fn test_v2_list_agent_health_issues(
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params = datadogV2::api_agent_health::ListAgentHealthIssuesOptionalParams::default();
     params.count_by = count_by;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
     params.filter_severity = filter_severity;
     params.filter_category = filter_category;
     params.filter_issue_type = filter_issue_type;
@@ -20694,6 +20706,75 @@ fn test_v2_list_agent_health_issues(
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+fn test_v2_list_agent_health_issues_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_agent_health
+        .as_ref()
+        .expect("api instance not found");
+    let count_by = _parameters
+        .get("count_by")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_severity = _parameters
+        .get("filter[severity]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_category = _parameters
+        .get("filter[category]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_issue_type = _parameters
+        .get("filter[issue_type]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_kind = _parameters
+        .get("filter[resource_kind]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let filter_resource_id = _parameters
+        .get("filter[resource_id]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_agent_health::ListAgentHealthIssuesOptionalParams::default();
+    params.count_by = count_by;
+    params.page_limit = page_limit;
+    params.page_offset = page_offset;
+    params.filter_severity = filter_severity;
+    params.filter_category = filter_category;
+    params.filter_issue_type = filter_issue_type;
+    params.filter_resource_kind = filter_resource_kind;
+    params.filter_resource_id = filter_resource_id;
+    let response = api.list_agent_health_issues_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_get_agent_health_issue(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {

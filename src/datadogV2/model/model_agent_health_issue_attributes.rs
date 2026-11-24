@@ -35,16 +35,16 @@ pub struct AgentHealthIssueAttributes {
     /// The identifier of the affected resource, interpreted according to `resource_kind`: hostname for `host`, DaemonSet UID for `deployment` (node Agent), cluster UUID for `cluster`, hostname of the host running the Cluster Agent for `cluster_agent`, or OpenTelemetry collector ID for `otel`.
     #[serde(rename = "resource_id")]
     pub resource_id: String,
-    /// The kind of affected resource. Known values are `host`, `deployment`, `cluster`, `cluster_agent`, and `otel`.
+    /// The kind of affected resource. The meaning of `resource_id` depends on this: hostname for `host`, DaemonSet UID for `deployment` (node Agent), cluster UUID for `cluster`, hostname of the host running the Cluster Agent for `cluster_agent`, or OpenTelemetry collector ID for `otel`.
     #[serde(rename = "resource_kind")]
-    pub resource_kind: String,
+    pub resource_kind: crate::datadogV2::model::AgentHealthIssueResourceKind,
     /// The type of the affected resource. Omitted when empty.
     #[serde(rename = "resource_type")]
     pub resource_type: Option<String>,
-    /// The severity of the issue. Known values are `low`, `medium`, `high`, and `unknown`.
+    /// The severity of the issue.
     #[serde(rename = "severity")]
-    pub severity: String,
-    /// The state of the issue. Only issues with state `open` are returned.
+    pub severity: crate::datadogV2::model::AgentHealthIssueSeverity,
+    /// The state of the issue, such as `open`.
     #[serde(rename = "state")]
     pub state: String,
     /// Tags associated with the issue. Omitted when empty.
@@ -68,8 +68,8 @@ impl AgentHealthIssueAttributes {
         issue_name: String,
         issue_type: String,
         resource_id: String,
-        resource_kind: String,
-        severity: String,
+        resource_kind: crate::datadogV2::model::AgentHealthIssueResourceKind,
+        severity: crate::datadogV2::model::AgentHealthIssueSeverity,
         state: String,
     ) -> AgentHealthIssueAttributes {
         AgentHealthIssueAttributes {
@@ -172,9 +172,11 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                 let mut issue_type: Option<String> = None;
                 let mut remediation: Option<crate::datadogV2::model::AgentHealthRemediation> = None;
                 let mut resource_id: Option<String> = None;
-                let mut resource_kind: Option<String> = None;
+                let mut resource_kind: Option<
+                    crate::datadogV2::model::AgentHealthIssueResourceKind,
+                > = None;
                 let mut resource_type: Option<String> = None;
-                let mut severity: Option<String> = None;
+                let mut severity: Option<crate::datadogV2::model::AgentHealthIssueSeverity> = None;
                 let mut state: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut title: Option<String> = None;
@@ -233,6 +235,14 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                         "resource_kind" => {
                             resource_kind =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _resource_kind) = resource_kind {
+                                match _resource_kind {
+                                    crate::datadogV2::model::AgentHealthIssueResourceKind::UnparsedObject(_resource_kind) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "resource_type" => {
                             if v.is_null() {
@@ -243,6 +253,14 @@ impl<'de> Deserialize<'de> for AgentHealthIssueAttributes {
                         }
                         "severity" => {
                             severity = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _severity) = severity {
+                                match _severity {
+                                    crate::datadogV2::model::AgentHealthIssueSeverity::UnparsedObject(_severity) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
                         }
                         "state" => {
                             state = Some(serde_json::from_value(v).map_err(M::Error::custom)?);

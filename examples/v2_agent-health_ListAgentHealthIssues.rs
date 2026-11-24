@@ -5,8 +5,7 @@ use datadog_api_client::datadogV2::api_agent_health::ListAgentHealthIssuesOption
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.list_agent_health_issues", true);
+    let configuration = datadog::Configuration::new();
     let api = AgentHealthAPI::with_config(configuration);
     let resp = api
         .list_agent_health_issues(ListAgentHealthIssuesOptionalParams::default())

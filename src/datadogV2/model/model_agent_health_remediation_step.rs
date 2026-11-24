@@ -13,10 +13,10 @@ use std::fmt::{self, Formatter};
 pub struct AgentHealthRemediationStep {
     /// The order in which to perform the step.
     #[serde(rename = "order")]
-    pub order: Option<i64>,
+    pub order: i32,
     /// The instructions for the step.
     #[serde(rename = "text")]
-    pub text: Option<String>,
+    pub text: String,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,23 +25,13 @@ pub struct AgentHealthRemediationStep {
 }
 
 impl AgentHealthRemediationStep {
-    pub fn new() -> AgentHealthRemediationStep {
+    pub fn new(order: i32, text: String) -> AgentHealthRemediationStep {
         AgentHealthRemediationStep {
-            order: None,
-            text: None,
+            order,
+            text,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn order(mut self, value: i64) -> Self {
-        self.order = Some(value);
-        self
-    }
-
-    pub fn text(mut self, value: String) -> Self {
-        self.text = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -50,12 +40,6 @@ impl AgentHealthRemediationStep {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for AgentHealthRemediationStep {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -76,7 +60,7 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationStep {
             where
                 M: MapAccess<'a>,
             {
-                let mut order: Option<i64> = None;
+                let mut order: Option<i32> = None;
                 let mut text: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -87,15 +71,9 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationStep {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "order" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             order = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "text" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             text = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -105,6 +83,8 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationStep {
                         }
                     }
                 }
+                let order = order.ok_or_else(|| M::Error::missing_field("order"))?;
+                let text = text.ok_or_else(|| M::Error::missing_field("text"))?;
 
                 let content = AgentHealthRemediationStep {
                     order,

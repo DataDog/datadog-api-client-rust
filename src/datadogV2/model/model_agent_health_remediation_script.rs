@@ -25,7 +25,7 @@ pub struct AgentHealthRemediationScript {
     pub language_version: Option<String>,
     /// Whether the script requires root privileges.
     #[serde(rename = "requires_root")]
-    pub requires_root: Option<bool>,
+    pub requires_root: bool,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -34,13 +34,13 @@ pub struct AgentHealthRemediationScript {
 }
 
 impl AgentHealthRemediationScript {
-    pub fn new() -> AgentHealthRemediationScript {
+    pub fn new(requires_root: bool) -> AgentHealthRemediationScript {
         AgentHealthRemediationScript {
             content: None,
             filename: None,
             language: None,
             language_version: None,
-            requires_root: None,
+            requires_root,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -66,23 +66,12 @@ impl AgentHealthRemediationScript {
         self
     }
 
-    pub fn requires_root(mut self, value: bool) -> Self {
-        self.requires_root = Some(value);
-        self
-    }
-
     pub fn additional_properties(
         mut self,
         value: std::collections::BTreeMap<String, serde_json::Value>,
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for AgentHealthRemediationScript {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -142,9 +131,6 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationScript {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "requires_root" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             requires_root =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -155,6 +141,8 @@ impl<'de> Deserialize<'de> for AgentHealthRemediationScript {
                         }
                     }
                 }
+                let requires_root =
+                    requires_root.ok_or_else(|| M::Error::missing_field("requires_root"))?;
 
                 let content = AgentHealthRemediationScript {
                     content,
