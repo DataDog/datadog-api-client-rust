@@ -340,6 +340,15 @@ pub enum CreateTeamNotificationRuleError {
     UnknownValue(serde_json::Value),
 }
 
+/// DeleteExternalTeamPermissionSettingDefaultError is a struct for typed errors of method [`TeamsAPI::delete_external_team_permission_setting_default`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DeleteExternalTeamPermissionSettingDefaultError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// DeleteTeamError is a struct for typed errors of method [`TeamsAPI::delete_team`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -460,6 +469,24 @@ pub enum GetUserMembershipsError {
     UnknownValue(serde_json::Value),
 }
 
+/// ListExternalTeamPermissionSettingDefaultsError is a struct for typed errors of method [`TeamsAPI::list_external_team_permission_setting_defaults`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListExternalTeamPermissionSettingDefaultsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// ListExternalTeamPermissionSettingDefaultsBySourceError is a struct for typed errors of method [`TeamsAPI::list_external_team_permission_setting_defaults_by_source`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ListExternalTeamPermissionSettingDefaultsBySourceError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
 /// ListMemberTeamsError is a struct for typed errors of method [`TeamsAPI::list_member_teams`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -521,6 +548,15 @@ pub enum RemoveTeamHierarchyLinkError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SyncTeamsError {
+    APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+/// UpdateExternalTeamPermissionSettingDefaultError is a struct for typed errors of method [`TeamsAPI::update_external_team_permission_setting_default`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum UpdateExternalTeamPermissionSettingDefaultError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -1720,6 +1756,107 @@ impl TeamsAPI {
             };
         } else {
             let local_entity: Option<CreateTeamNotificationRuleError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Delete the organization-level permission default for a specific (source, action) pair, reverting that action to
+    /// its built-in default for all synced teams. The operation is idempotent. Deleting an absent default returns 204. On
+    /// success, triggers a sync of all existing synced teams so they re-derive their permissions without the override.
+    pub async fn delete_external_team_permission_setting_default(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+        action: String,
+    ) -> Result<(), datadog::Error<DeleteExternalTeamPermissionSettingDefaultError>> {
+        match self
+            .delete_external_team_permission_setting_default_with_http_info(source, action)
+            .await
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Delete the organization-level permission default for a specific (source, action) pair, reverting that action to
+    /// its built-in default for all synced teams. The operation is idempotent. Deleting an absent default returns 204. On
+    /// success, triggers a sync of all existing synced teams so they re-derive their permissions without the override.
+    pub async fn delete_external_team_permission_setting_default_with_http_info(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+        action: String,
+    ) -> Result<
+        datadog::ResponseContent<()>,
+        datadog::Error<DeleteExternalTeamPermissionSettingDefaultError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.delete_external_team_permission_setting_default";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/settings/external-permissions/{source}/{action}",
+            local_configuration.get_operation_host(local_operation_id),
+            source = datadog::urlencode(source.to_string()),
+            action = datadog::urlencode(action)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::DELETE, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("*/*"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            Ok(datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: None,
+            })
+        } else {
+            let local_entity: Option<DeleteExternalTeamPermissionSettingDefaultError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -3372,6 +3509,241 @@ impl TeamsAPI {
         }
     }
 
+    /// List the organization-level permission defaults for externally synced teams. Each default maps a
+    /// (source, action) pair to the Datadog permission required to perform that action on teams managed by that
+    /// source. For example, a default can set which permission level can add or remove subteams on SCIM-managed
+    /// teams. Returns configured defaults for all sources.
+    pub async fn list_external_team_permission_setting_defaults(
+        &self,
+    ) -> Result<
+        crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+        datadog::Error<ListExternalTeamPermissionSettingDefaultsError>,
+    > {
+        match self
+            .list_external_team_permission_setting_defaults_with_http_info()
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the organization-level permission defaults for externally synced teams. Each default maps a
+    /// (source, action) pair to the Datadog permission required to perform that action on teams managed by that
+    /// source. For example, a default can set which permission level can add or remove subteams on SCIM-managed
+    /// teams. Returns configured defaults for all sources.
+    pub async fn list_external_team_permission_setting_defaults_with_http_info(
+        &self,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+        >,
+        datadog::Error<ListExternalTeamPermissionSettingDefaultsError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_external_team_permission_setting_defaults";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/settings/external-permissions",
+            local_configuration.get_operation_host(local_operation_id)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListExternalTeamPermissionSettingDefaultsError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// List the organization-level permission defaults for a specific external team integration source. Each default
+    /// maps a permission action to the Datadog permission required to perform it on teams synced from that source.
+    pub async fn list_external_team_permission_setting_defaults_by_source(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+    ) -> Result<
+        crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+        datadog::Error<ListExternalTeamPermissionSettingDefaultsBySourceError>,
+    > {
+        match self
+            .list_external_team_permission_setting_defaults_by_source_with_http_info(source)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// List the organization-level permission defaults for a specific external team integration source. Each default
+    /// maps a permission action to the Datadog permission required to perform it on teams synced from that source.
+    pub async fn list_external_team_permission_setting_defaults_by_source_with_http_info(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+        >,
+        datadog::Error<ListExternalTeamPermissionSettingDefaultsBySourceError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.list_external_team_permission_setting_defaults_by_source";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/settings/external-permissions/{source}",
+            local_configuration.get_operation_host(local_operation_id),
+            source = datadog::urlencode(source.to_string())
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::GET, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsListResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<ListExternalTeamPermissionSettingDefaultsBySourceError> =
+                serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
     /// Get all member teams.
     ///
     /// **Note**: This API is deprecated. For team hierarchy relationships (parent-child
@@ -4677,6 +5049,181 @@ impl TeamsAPI {
             })
         } else {
             let local_entity: Option<SyncTeamsError> = serde_json::from_str(&local_content).ok();
+            let local_error = datadog::ResponseContent {
+                status: local_status,
+                content: local_content,
+                entity: local_entity,
+            };
+            Err(datadog::Error::ResponseError(local_error))
+        }
+    }
+
+    /// Create or update the organization-level permission default for a specific (source, action) pair. This controls
+    /// which Datadog permission is required to perform that action on teams synced from that source. For example, a
+    /// default can require `user_access_manage` to add or remove SCIM-managed subteams. On success, triggers a sync
+    /// of all existing synced teams so they re-derive the updated permission. Returns 400 if the (source, action,
+    /// value) combination is not supported.
+    pub async fn update_external_team_permission_setting_default(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+        action: String,
+        body: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultUpdateRequest,
+    ) -> Result<
+        crate::datadogV2::model::ExternalTeamPermissionSettingDefaultResponse,
+        datadog::Error<UpdateExternalTeamPermissionSettingDefaultError>,
+    > {
+        match self
+            .update_external_team_permission_setting_default_with_http_info(source, action, body)
+            .await
+        {
+            Ok(response_content) => {
+                if let Some(e) = response_content.entity {
+                    Ok(e)
+                } else {
+                    Err(datadog::Error::Serde(serde::de::Error::custom(
+                        "response content was None",
+                    )))
+                }
+            }
+            Err(err) => Err(err),
+        }
+    }
+
+    /// Create or update the organization-level permission default for a specific (source, action) pair. This controls
+    /// which Datadog permission is required to perform that action on teams synced from that source. For example, a
+    /// default can require `user_access_manage` to add or remove SCIM-managed subteams. On success, triggers a sync
+    /// of all existing synced teams so they re-derive the updated permission. Returns 400 if the (source, action,
+    /// value) combination is not supported.
+    pub async fn update_external_team_permission_setting_default_with_http_info(
+        &self,
+        source: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultsSource,
+        action: String,
+        body: crate::datadogV2::model::ExternalTeamPermissionSettingDefaultUpdateRequest,
+    ) -> Result<
+        datadog::ResponseContent<
+            crate::datadogV2::model::ExternalTeamPermissionSettingDefaultResponse,
+        >,
+        datadog::Error<UpdateExternalTeamPermissionSettingDefaultError>,
+    > {
+        let local_configuration = &self.config;
+        let local_operation_id = "v2.update_external_team_permission_setting_default";
+
+        let local_client = &self.client;
+
+        let local_uri_str = format!(
+            "{}/api/v2/team/settings/external-permissions/{source}/{action}",
+            local_configuration.get_operation_host(local_operation_id),
+            source = datadog::urlencode(source.to_string()),
+            action = datadog::urlencode(action)
+        );
+        let mut local_req_builder =
+            local_client.request(reqwest::Method::PUT, local_uri_str.as_str());
+
+        // build headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        // build user agent
+        match HeaderValue::from_str(local_configuration.user_agent.as_str()) {
+            Ok(user_agent) => headers.insert(reqwest::header::USER_AGENT, user_agent),
+            Err(e) => {
+                log::warn!("Failed to parse user agent header: {e}, falling back to default");
+                headers.insert(
+                    reqwest::header::USER_AGENT,
+                    HeaderValue::from_static(datadog::DEFAULT_USER_AGENT.as_str()),
+                )
+            }
+        };
+
+        // build auth
+        if let Some(local_key) = local_configuration.auth_keys.get("apiKeyAuth") {
+            headers.insert(
+                "DD-API-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-API-KEY header"),
+            );
+        };
+        if let Some(local_key) = local_configuration.auth_keys.get("appKeyAuth") {
+            headers.insert(
+                "DD-APPLICATION-KEY",
+                HeaderValue::from_str(local_key.key.as_str())
+                    .expect("failed to parse DD-APPLICATION-KEY header"),
+            );
+        };
+
+        // build body parameters
+        let output = Vec::new();
+        let mut ser = serde_json::Serializer::with_formatter(output, datadog::DDFormatter);
+        if body.serialize(&mut ser).is_ok() {
+            if let Some(content_encoding) = headers.get("Content-Encoding") {
+                match content_encoding.to_str().unwrap_or_default() {
+                    "gzip" => {
+                        let mut enc = GzEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    "deflate" => {
+                        let mut enc = ZlibEncoder::new(Vec::new(), Compression::default());
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    #[cfg(feature = "zstd")]
+                    "zstd1" => {
+                        let mut enc = zstd::stream::Encoder::new(Vec::new(), 0).unwrap();
+                        let _ = enc.write_all(ser.into_inner().as_slice());
+                        match enc.finish() {
+                            Ok(buf) => {
+                                local_req_builder = local_req_builder.body(buf);
+                            }
+                            Err(e) => return Err(datadog::Error::Io(e)),
+                        }
+                    }
+                    _ => {
+                        local_req_builder = local_req_builder.body(ser.into_inner());
+                    }
+                }
+            } else {
+                local_req_builder = local_req_builder.body(ser.into_inner());
+            }
+        }
+
+        local_req_builder = local_req_builder.headers(headers);
+        let local_req = local_req_builder.build()?;
+        log::debug!("request content: {:?}", local_req.body());
+        let local_resp = local_client.execute(local_req).await?;
+
+        let local_status = local_resp.status();
+        let local_content = local_resp.text().await?;
+        log::debug!("response content: {}", local_content);
+
+        if !local_status.is_client_error() && !local_status.is_server_error() {
+            match serde_json::from_str::<
+                crate::datadogV2::model::ExternalTeamPermissionSettingDefaultResponse,
+            >(&local_content)
+            {
+                Ok(e) => {
+                    return Ok(datadog::ResponseContent {
+                        status: local_status,
+                        content: local_content,
+                        entity: Some(e),
+                    })
+                }
+                Err(e) => return Err(datadog::Error::Serde(e)),
+            };
+        } else {
+            let local_entity: Option<UpdateExternalTeamPermissionSettingDefaultError> =
+                serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
                 content: local_content,
