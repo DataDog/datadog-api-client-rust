@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Aggregate counts for the matching Agent Health issues. Present only when `count_by=issue_type` is requested.
+/// Pagination metadata for the matching Agent Health issues. Always present. Includes per-issue-type counts only when `count_by=issue_type` is requested.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AgentHealthIssuesResponseMeta {
-    /// Counts for the matching Agent Health issues.
+    /// Pagination details and counts for the matching Agent Health issues.
     #[serde(rename = "page")]
     pub page: crate::datadogV2::model::AgentHealthIssuesResponsePage,
     #[serde(flatten)]

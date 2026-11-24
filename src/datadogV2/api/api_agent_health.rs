@@ -2,7 +2,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
-use log::warn;
+use async_stream::try_stream;
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
@@ -26,8 +27,12 @@ impl ListAgentHealthHostIssuesOptionalParams {
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct ListAgentHealthIssuesOptionalParams {
-    /// Set to `issue_type` to include `meta.page` with `total_count` and per-issue-type counts. If you don't set this parameter, the response omits `meta`. Only `issue_type` is supported.
+    /// Set to `issue_type` to also include `counts_by_issue_type` in `meta.page` with per-issue-type counts. Pagination metadata is always included. Only `issue_type` is supported.
     pub count_by: Option<crate::datadogV2::model::AgentHealthIssuesCountBy>,
+    /// The maximum number of issues to return. Defaults to 100, with a minimum of 1 and a maximum of 1000.
+    pub page_limit: Option<i64>,
+    /// The number of issues to skip before returning results. Defaults to 0, with a minimum of 0.
+    pub page_offset: Option<i64>,
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
     /// of at most 256 characters each. Values are combined with OR within this filter and AND across filters.
     /// Blank entries are ignored; an all-blank filter is treated as absent.
@@ -51,9 +56,19 @@ pub struct ListAgentHealthIssuesOptionalParams {
 }
 
 impl ListAgentHealthIssuesOptionalParams {
-    /// Set to `issue_type` to include `meta.page` with `total_count` and per-issue-type counts. If you don't set this parameter, the response omits `meta`. Only `issue_type` is supported.
+    /// Set to `issue_type` to also include `counts_by_issue_type` in `meta.page` with per-issue-type counts. Pagination metadata is always included. Only `issue_type` is supported.
     pub fn count_by(mut self, value: crate::datadogV2::model::AgentHealthIssuesCountBy) -> Self {
         self.count_by = Some(value);
+        self
+    }
+    /// The maximum number of issues to return. Defaults to 100, with a minimum of 1 and a maximum of 1000.
+    pub fn page_limit(mut self, value: i64) -> Self {
+        self.page_limit = Some(value);
+        self
+    }
+    /// The number of issues to skip before returning results. Defaults to 0, with a minimum of 0.
+    pub fn page_offset(mut self, value: i64) -> Self {
+        self.page_offset = Some(value);
         self
     }
     /// Filter by a comma-separated list of exact `severity` values, up to 50 values
@@ -194,12 +209,11 @@ impl AgentHealthAPI {
     }
 
     /// Get an Agent Health issue and its available remediation in your organization.
-    /// Only open issues are returned. The `remediation` attribute is omitted when
-    /// the issue has no remediation.
+    /// The `remediation` attribute is omitted when the issue has no remediation.
     ///
-    /// Returns `404` if the issue does not exist, is not open, belongs to another
-    /// organization, or you do not have access to its data. This response does not
-    /// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
+    /// Returns `404` if the issue does not exist, belongs to another organization, or
+    /// you do not have access to its data. This response does not reveal whether the
+    /// issue exists. Returns `403` if you lack the `hosts_read` permission.
     pub async fn get_agent_health_issue(
         &self,
         issue_id: String,
@@ -222,12 +236,11 @@ impl AgentHealthAPI {
     }
 
     /// Get an Agent Health issue and its available remediation in your organization.
-    /// Only open issues are returned. The `remediation` attribute is omitted when
-    /// the issue has no remediation.
+    /// The `remediation` attribute is omitted when the issue has no remediation.
     ///
-    /// Returns `404` if the issue does not exist, is not open, belongs to another
-    /// organization, or you do not have access to its data. This response does not
-    /// reveal whether the issue exists. Returns `403` if you lack the `hosts_read` permission.
+    /// Returns `404` if the issue does not exist, belongs to another organization, or
+    /// you do not have access to its data. This response does not reveal whether the
+    /// issue exists. Returns `403` if you lack the `hosts_read` permission.
     pub async fn get_agent_health_issue_with_http_info(
         &self,
         issue_id: String,
@@ -237,14 +250,6 @@ impl AgentHealthAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_agent_health_issue";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_agent_health_issue' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -445,9 +450,9 @@ impl AgentHealthAPI {
     /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
     /// missing timestamps last, then issue ID ascending.
     ///
-    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
-    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
-    /// `meta` is omitted when `count_by` is not requested.
+    /// The response always includes `meta.page` with the applied `limit`, `offset`, and
+    /// `total_count` (the number of open issues matching the filters). Set `count_by=issue_type`
+    /// to also include `counts_by_issue_type` with per-issue-type counts.
     ///
     /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
     /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
@@ -473,6 +478,42 @@ impl AgentHealthAPI {
         }
     }
 
+    pub fn list_agent_health_issues_with_pagination(
+        &self,
+        mut params: ListAgentHealthIssuesOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::AgentHealthIssueData,
+            datadog::Error<ListAgentHealthIssuesError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 100;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_agent_health_issues(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// List open Agent Health issues across your organization. Returns `403` if you
     /// lack the `hosts_read` permission.
     ///
@@ -481,9 +522,9 @@ impl AgentHealthAPI {
     /// (`high`, `medium`, `low`, then other values), then `first_seen_at` descending with
     /// missing timestamps last, then issue ID ascending.
     ///
-    /// Set `count_by=issue_type` to include `meta.page`, where `total_count` is the number of
-    /// open issues matching the filters and `counts_by_issue_type` holds the per-type counts.
-    /// `meta` is omitted when `count_by` is not requested.
+    /// The response always includes `meta.page` with the applied `limit`, `offset`, and
+    /// `total_count` (the number of open issues matching the filters). Set `count_by=issue_type`
+    /// to also include `counts_by_issue_type` with per-issue-type counts.
     ///
     /// Each filter accepts up to 50 comma-separated exact values of at most 256 characters
     /// each, combined with OR within a filter and AND across filters. Blank entries are ignored; an all-blank filter
@@ -497,17 +538,11 @@ impl AgentHealthAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_agent_health_issues";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_agent_health_issues' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let count_by = params.count_by;
+        let page_limit = params.page_limit;
+        let page_offset = params.page_offset;
         let filter_severity = params.filter_severity;
         let filter_category = params.filter_category;
         let filter_issue_type = params.filter_issue_type;
@@ -526,6 +561,14 @@ impl AgentHealthAPI {
         if let Some(ref local_query_param) = count_by {
             local_req_builder =
                 local_req_builder.query(&[("count_by", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_limit {
+            local_req_builder =
+                local_req_builder.query(&[("page[limit]", &local_query_param.to_string())]);
+        };
+        if let Some(ref local_query_param) = page_offset {
+            local_req_builder =
+                local_req_builder.query(&[("page[offset]", &local_query_param.to_string())]);
         };
         if let Some(ref local_query_param) = filter_severity {
             local_req_builder =

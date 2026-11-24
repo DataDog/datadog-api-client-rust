@@ -6,14 +6,20 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Counts for the matching Agent Health issues.
+/// Pagination details and counts for the matching Agent Health issues.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AgentHealthIssuesResponsePage {
     /// The number of open issues matching the filters in each issue-type group.
     #[serde(rename = "counts_by_issue_type")]
-    pub counts_by_issue_type: std::collections::BTreeMap<String, i64>,
+    pub counts_by_issue_type: Option<std::collections::BTreeMap<String, i64>>,
+    /// The maximum number of issues returned, echoing the requested `page[limit]`.
+    #[serde(rename = "limit")]
+    pub limit: i64,
+    /// The number of issues skipped, echoing the requested `page[offset]`.
+    #[serde(rename = "offset")]
+    pub offset: i64,
     /// The total number of open issues matching the filters.
     #[serde(rename = "total_count")]
     pub total_count: i64,
@@ -25,16 +31,20 @@ pub struct AgentHealthIssuesResponsePage {
 }
 
 impl AgentHealthIssuesResponsePage {
-    pub fn new(
-        counts_by_issue_type: std::collections::BTreeMap<String, i64>,
-        total_count: i64,
-    ) -> AgentHealthIssuesResponsePage {
+    pub fn new(limit: i64, offset: i64, total_count: i64) -> AgentHealthIssuesResponsePage {
         AgentHealthIssuesResponsePage {
-            counts_by_issue_type,
+            counts_by_issue_type: None,
+            limit,
+            offset,
             total_count,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn counts_by_issue_type(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
+        self.counts_by_issue_type = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -65,6 +75,8 @@ impl<'de> Deserialize<'de> for AgentHealthIssuesResponsePage {
             {
                 let mut counts_by_issue_type: Option<std::collections::BTreeMap<String, i64>> =
                     None;
+                let mut limit: Option<i64> = None;
+                let mut offset: Option<i64> = None;
                 let mut total_count: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -75,8 +87,17 @@ impl<'de> Deserialize<'de> for AgentHealthIssuesResponsePage {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "counts_by_issue_type" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             counts_by_issue_type =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "limit" => {
+                            limit = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "offset" => {
+                            offset = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "total_count" => {
                             total_count =
@@ -89,13 +110,15 @@ impl<'de> Deserialize<'de> for AgentHealthIssuesResponsePage {
                         }
                     }
                 }
-                let counts_by_issue_type = counts_by_issue_type
-                    .ok_or_else(|| M::Error::missing_field("counts_by_issue_type"))?;
+                let limit = limit.ok_or_else(|| M::Error::missing_field("limit"))?;
+                let offset = offset.ok_or_else(|| M::Error::missing_field("offset"))?;
                 let total_count =
                     total_count.ok_or_else(|| M::Error::missing_field("total_count"))?;
 
                 let content = AgentHealthIssuesResponsePage {
                     counts_by_issue_type,
+                    limit,
+                    offset,
                     total_count,
                     additional_properties,
                     _unparsed,
