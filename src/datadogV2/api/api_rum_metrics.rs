@@ -14,6 +14,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateRumMetricError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
@@ -23,6 +24,7 @@ pub enum CreateRumMetricError {
 #[serde(untagged)]
 pub enum DeleteRumMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -31,6 +33,7 @@ pub enum DeleteRumMetricError {
 #[serde(untagged)]
 pub enum GetRumMetricError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
@@ -46,6 +49,7 @@ pub enum ListRumMetricsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateRumMetricError {
+    JSONAPIErrorResponse(crate::datadogV2::model::JSONAPIErrorResponse),
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
