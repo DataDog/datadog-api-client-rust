@@ -32,6 +32,9 @@ pub struct HistoricalJobQuery {
     /// IDs of reference datasets used by this query.
     #[serde(rename = "datasetIds")]
     pub dataset_ids: Option<Vec<String>>,
+    /// Version of each dataset used by the job, keyed by dataset ID. Pinned when the job is created.
+    #[serde(rename = "datasetVersions")]
+    pub dataset_versions: Option<std::collections::BTreeMap<String, i64>>,
     /// Field for which the cardinality is measured. Sent as an array.
     #[serde(rename = "distinctFields")]
     pub distinct_fields: Option<Vec<String>>,
@@ -47,6 +50,11 @@ pub struct HistoricalJobQuery {
     /// Indexes used to load the data for this query. Mutually exclusive with `index`.
     #[serde(rename = "indexes")]
     pub indexes: Option<Vec<String>>,
+    /// (Deprecated) The target field to aggregate over when using the sum or max
+    /// aggregations. Use the `metrics` field instead.
+    #[deprecated]
+    #[serde(rename = "metric")]
+    pub metric: Option<String>,
     /// Group of target fields to aggregate over when using the sum, max, geo data, or new value aggregations. The sum, max, and geo data aggregations only accept one value in this list, whereas the new value aggregation accepts up to five values.
     #[serde(rename = "metrics")]
     pub metrics: Option<Vec<String>>,
@@ -68,6 +76,7 @@ pub struct HistoricalJobQuery {
 
 impl HistoricalJobQuery {
     pub fn new() -> HistoricalJobQuery {
+        #[allow(deprecated)]
         HistoricalJobQuery {
             additional_filters: None,
             aggregation: None,
@@ -76,11 +85,13 @@ impl HistoricalJobQuery {
             custom_query_extension: None,
             data_source: None,
             dataset_ids: None,
+            dataset_versions: None,
             distinct_fields: None,
             group_by_fields: None,
             has_optional_group_by_fields: None,
             index: None,
             indexes: None,
+            metric: None,
             metrics: None,
             name: None,
             query: None,
@@ -90,11 +101,13 @@ impl HistoricalJobQuery {
         }
     }
 
+    #[allow(deprecated)]
     pub fn additional_filters(mut self, value: String) -> Self {
         self.additional_filters = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn aggregation(
         mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleQueryAggregation,
@@ -103,21 +116,25 @@ impl HistoricalJobQuery {
         self
     }
 
+    #[allow(deprecated)]
     pub fn correlated_by_fields(mut self, value: Vec<String>) -> Self {
         self.correlated_by_fields = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn correlated_query_index(mut self, value: i64) -> Self {
         self.correlated_query_index = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn custom_query_extension(mut self, value: String) -> Self {
         self.custom_query_extension = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn data_source(
         mut self,
         value: crate::datadogV2::model::SecurityMonitoringStandardDataSource,
@@ -126,51 +143,73 @@ impl HistoricalJobQuery {
         self
     }
 
+    #[allow(deprecated)]
     pub fn dataset_ids(mut self, value: Vec<String>) -> Self {
         self.dataset_ids = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn dataset_versions(mut self, value: std::collections::BTreeMap<String, i64>) -> Self {
+        self.dataset_versions = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn distinct_fields(mut self, value: Vec<String>) -> Self {
         self.distinct_fields = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn group_by_fields(mut self, value: Vec<String>) -> Self {
         self.group_by_fields = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn has_optional_group_by_fields(mut self, value: bool) -> Self {
         self.has_optional_group_by_fields = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn index(mut self, value: String) -> Self {
         self.index = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn indexes(mut self, value: Vec<String>) -> Self {
         self.indexes = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn metric(mut self, value: String) -> Self {
+        self.metric = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn metrics(mut self, value: Vec<String>) -> Self {
         self.metrics = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn name(mut self, value: String) -> Self {
         self.name = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn query(mut self, value: String) -> Self {
         self.query = Some(value);
         self
     }
 
+    #[allow(deprecated)]
     pub fn query_language(mut self, value: String) -> Self {
         self.query_language = Some(value);
         self
@@ -219,11 +258,13 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                     crate::datadogV2::model::SecurityMonitoringStandardDataSource,
                 > = None;
                 let mut dataset_ids: Option<Vec<String>> = None;
+                let mut dataset_versions: Option<std::collections::BTreeMap<String, i64>> = None;
                 let mut distinct_fields: Option<Vec<String>> = None;
                 let mut group_by_fields: Option<Vec<String>> = None;
                 let mut has_optional_group_by_fields: Option<bool> = None;
                 let mut index: Option<String> = None;
                 let mut indexes: Option<Vec<String>> = None;
+                let mut metric: Option<String> = None;
                 let mut metrics: Option<Vec<String>> = None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -301,6 +342,13 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                             dataset_ids =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "datasetVersions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            dataset_versions =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "distinctFields" => {
                             if v.is_null() {
                                 continue;
@@ -333,6 +381,12 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                                 continue;
                             }
                             indexes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "metric" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            metric = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "metrics" => {
                             if v.is_null() {
@@ -367,6 +421,7 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = HistoricalJobQuery {
                     additional_filters,
                     aggregation,
@@ -375,11 +430,13 @@ impl<'de> Deserialize<'de> for HistoricalJobQuery {
                     custom_query_extension,
                     data_source,
                     dataset_ids,
+                    dataset_versions,
                     distinct_fields,
                     group_by_fields,
                     has_optional_group_by_fields,
                     index,
                     indexes,
+                    metric,
                     metrics,
                     name,
                     query,

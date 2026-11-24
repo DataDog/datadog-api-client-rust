@@ -15,6 +15,16 @@ pub struct HistoricalJobOptions {
     #[serde(rename = "anomalyDetectionOptions")]
     pub anomaly_detection_options:
         Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions>,
+    /// Options for cloud_configuration rules.
+    /// Fields `resourceType` and `regoRule` are mandatory when managing custom `cloud_configuration` rules.
+    #[serde(rename = "complianceRuleOptions")]
+    pub compliance_rule_options:
+        Option<crate::datadogV2::model::CloudConfigurationComplianceRuleOptions>,
+    /// If true, signals in non-production environments have a lower severity than what is defined by the rule case, which can reduce signal noise.
+    /// The severity is decreased by one level: `CRITICAL` in production becomes `HIGH` in non-production, `HIGH` becomes `MEDIUM` and so on. `INFO` remains `INFO`.
+    /// The decrement is applied when the environment tag of the signal starts with `staging`, `test` or `dev`.
+    #[serde(rename = "decreaseCriticalityBasedOnEnv")]
+    pub decrease_criticality_based_on_env: Option<bool>,
     /// The detection method.
     #[serde(rename = "detectionMethod")]
     pub detection_method: Option<crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod>,
@@ -22,6 +32,10 @@ pub struct HistoricalJobOptions {
     /// and evaluates in real time. For third party detection method, this field is not used.
     #[serde(rename = "evaluationWindow")]
     pub evaluation_window: Option<crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow>,
+    /// Hardcoded evaluator type.
+    #[serde(rename = "hardcodedEvaluatorType")]
+    pub hardcoded_evaluator_type:
+        Option<crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType>,
     /// Options on impossible travel detection method.
     #[serde(rename = "impossibleTravelOptions")]
     pub impossible_travel_options:
@@ -57,8 +71,11 @@ impl HistoricalJobOptions {
     pub fn new() -> HistoricalJobOptions {
         HistoricalJobOptions {
             anomaly_detection_options: None,
+            compliance_rule_options: None,
+            decrease_criticality_based_on_env: None,
             detection_method: None,
             evaluation_window: None,
+            hardcoded_evaluator_type: None,
             impossible_travel_options: None,
             keep_alive: None,
             max_signal_duration: None,
@@ -78,6 +95,19 @@ impl HistoricalJobOptions {
         self
     }
 
+    pub fn compliance_rule_options(
+        mut self,
+        value: crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
+    ) -> Self {
+        self.compliance_rule_options = Some(value);
+        self
+    }
+
+    pub fn decrease_criticality_based_on_env(mut self, value: bool) -> Self {
+        self.decrease_criticality_based_on_env = Some(value);
+        self
+    }
+
     pub fn detection_method(
         mut self,
         value: crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod,
@@ -91,6 +121,14 @@ impl HistoricalJobOptions {
         value: crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow,
     ) -> Self {
         self.evaluation_window = Some(value);
+        self
+    }
+
+    pub fn hardcoded_evaluator_type(
+        mut self,
+        value: crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType,
+    ) -> Self {
+        self.hardcoded_evaluator_type = Some(value);
         self
     }
 
@@ -177,11 +215,18 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
                 let mut anomaly_detection_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptions,
                 > = None;
+                let mut compliance_rule_options: Option<
+                    crate::datadogV2::model::CloudConfigurationComplianceRuleOptions,
+                > = None;
+                let mut decrease_criticality_based_on_env: Option<bool> = None;
                 let mut detection_method: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleDetectionMethod,
                 > = None;
                 let mut evaluation_window: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow,
+                > = None;
+                let mut hardcoded_evaluator_type: Option<
+                    crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType,
                 > = None;
                 let mut impossible_travel_options: Option<
                     crate::datadogV2::model::SecurityMonitoringRuleImpossibleTravelOptions,
@@ -216,6 +261,20 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
                             anomaly_detection_options =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "complianceRuleOptions" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compliance_rule_options =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "decreaseCriticalityBasedOnEnv" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            decrease_criticality_based_on_env =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "detectionMethod" => {
                             if v.is_null() {
                                 continue;
@@ -240,6 +299,21 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
                             if let Some(ref _evaluation_window) = evaluation_window {
                                 match _evaluation_window {
                                     crate::datadogV2::model::SecurityMonitoringRuleEvaluationWindow::UnparsedObject(_evaluation_window) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
+                        "hardcodedEvaluatorType" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            hardcoded_evaluator_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _hardcoded_evaluator_type) = hardcoded_evaluator_type {
+                                match _hardcoded_evaluator_type {
+                                    crate::datadogV2::model::SecurityMonitoringRuleHardcodedEvaluatorType::UnparsedObject(_hardcoded_evaluator_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -313,8 +387,11 @@ impl<'de> Deserialize<'de> for HistoricalJobOptions {
 
                 let content = HistoricalJobOptions {
                     anomaly_detection_options,
+                    compliance_rule_options,
+                    decrease_criticality_based_on_env,
                     detection_method,
                     evaluation_window,
+                    hardcoded_evaluator_type,
                     impossible_travel_options,
                     keep_alive,
                     max_signal_duration,
