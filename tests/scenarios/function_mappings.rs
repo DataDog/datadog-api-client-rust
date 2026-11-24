@@ -3495,6 +3495,18 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_update_ai_gateway_provider,
     );
     world.function_mappings.insert(
+        "v2.DeleteAIGatewayModelPricingByCanonical".into(),
+        test_v2_delete_ai_gateway_model_pricing_by_canonical,
+    );
+    world.function_mappings.insert(
+        "v2.GetAIGatewayModelPricingByCanonical".into(),
+        test_v2_get_ai_gateway_model_pricing_by_canonical,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateAIGatewayModelPricingByCanonical".into(),
+        test_v2_update_ai_gateway_model_pricing_by_canonical,
+    );
+    world.function_mappings.insert(
         "v2.ListAiGatewayModels".into(),
         test_v2_list_ai_gateway_models,
     );
@@ -25500,6 +25512,107 @@ fn test_v2_update_ai_gateway_provider(
     let id = serde_json::from_value(_parameters.get("id").unwrap().clone()).unwrap();
     let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
     let response = match block_on(api.update_ai_gateway_provider_with_http_info(id, body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_delete_ai_gateway_model_pricing_by_canonical(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.delete_ai_gateway_model_pricing_by_canonical_with_http_info(provider_id, canonical),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_ai_gateway_model_pricing_by_canonical(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.get_ai_gateway_model_pricing_by_canonical_with_http_info(provider_id, canonical),
+    ) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_ai_gateway_model_pricing_by_canonical(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_ai_gateway
+        .as_ref()
+        .expect("api instance not found");
+    let provider_id =
+        serde_json::from_value(_parameters.get("provider_id").unwrap().clone()).unwrap();
+    let canonical = serde_json::from_value(_parameters.get("canonical").unwrap().clone()).unwrap();
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(
+        api.update_ai_gateway_model_pricing_by_canonical_with_http_info(
+            provider_id,
+            canonical,
+            body,
+        ),
+    ) {
         Ok(response) => response,
         Err(error) => {
             return match error {

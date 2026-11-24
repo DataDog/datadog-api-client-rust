@@ -275,6 +275,10 @@ impl Default for Configuration {
             ("v2.delete_ai_gateway_model".to_owned(), false),
             ("v2.delete_ai_gateway_model_group".to_owned(), false),
             ("v2.delete_ai_gateway_model_pricing".to_owned(), false),
+            (
+                "v2.delete_ai_gateway_model_pricing_by_canonical".to_owned(),
+                false,
+            ),
             ("v2.delete_ai_gateway_policy".to_owned(), false),
             ("v2.delete_ai_gateway_provider".to_owned(), false),
             ("v2.delete_ai_gateway_rate_limit".to_owned(), false),
@@ -292,6 +296,10 @@ impl Default for Configuration {
             ("v2.get_ai_gateway_governance".to_owned(), false),
             ("v2.get_ai_gateway_model_group".to_owned(), false),
             ("v2.get_ai_gateway_model_pricing".to_owned(), false),
+            (
+                "v2.get_ai_gateway_model_pricing_by_canonical".to_owned(),
+                false,
+            ),
             ("v2.get_ai_gateway_policy".to_owned(), false),
             ("v2.get_ai_gateway_provider".to_owned(), false),
             ("v2.get_ai_gateway_rate_limit".to_owned(), false),
@@ -337,6 +345,10 @@ impl Default for Configuration {
             ("v2.update_ai_gateway_model".to_owned(), false),
             ("v2.update_ai_gateway_model_group".to_owned(), false),
             ("v2.update_ai_gateway_model_pricing".to_owned(), false),
+            (
+                "v2.update_ai_gateway_model_pricing_by_canonical".to_owned(),
+                false,
+            ),
             ("v2.update_ai_gateway_provider".to_owned(), false),
             ("v2.update_ai_gateway_rate_limit".to_owned(), false),
             ("v2.update_ai_gateway_routing_rule".to_owned(), false),
