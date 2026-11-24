@@ -10,6 +10,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 pub enum MetricsAndMetricTagConfigurations {
     Metric(Box<crate::datadogV2::model::Metric>),
     MetricTagConfiguration(Box<crate::datadogV2::model::MetricTagConfiguration>),
+    GeneratedMetric(Box<crate::datadogV2::model::GeneratedMetric>),
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -33,6 +34,13 @@ impl<'de> Deserialize<'de> for MetricsAndMetricTagConfigurations {
                 return Ok(MetricsAndMetricTagConfigurations::MetricTagConfiguration(
                     _v,
                 ));
+            }
+        }
+        if let Ok(_v) =
+            serde_json::from_value::<Box<crate::datadogV2::model::GeneratedMetric>>(value.clone())
+        {
+            if !_v._unparsed {
+                return Ok(MetricsAndMetricTagConfigurations::GeneratedMetric(_v));
             }
         }
 
