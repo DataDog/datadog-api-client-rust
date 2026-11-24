@@ -478,6 +478,7 @@ impl Default for Configuration {
                 "v2.export_security_monitoring_terraform_resource".to_owned(),
                 false,
             ),
+            ("v2.get_aws_identity_center_aws_accounts".to_owned(), false),
             ("v2.get_content_packs_states".to_owned(), false),
             ("v2.get_entity_context".to_owned(), false),
             ("v2.get_entity_context_recently_updated".to_owned(), false),

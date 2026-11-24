@@ -10,6 +10,7 @@ pub enum SecurityMonitoringIntegrationType {
     GOOGLE_WORKSPACE,
     OKTA,
     ENTRA_ID,
+    AWS_IDENTITY_CENTER,
     CROWDSTRIKE,
     SENTINELONE,
     UnparsedObject(crate::datadog::UnparsedObject),
@@ -21,6 +22,7 @@ impl ToString for SecurityMonitoringIntegrationType {
             Self::GOOGLE_WORKSPACE => String::from("GOOGLE_WORKSPACE"),
             Self::OKTA => String::from("OKTA"),
             Self::ENTRA_ID => String::from("ENTRA_ID"),
+            Self::AWS_IDENTITY_CENTER => String::from("AWS_IDENTITY_CENTER"),
             Self::CROWDSTRIKE => String::from("CROWDSTRIKE"),
             Self::SENTINELONE => String::from("SENTINELONE"),
             Self::UnparsedObject(v) => v.value.to_string(),
@@ -50,6 +52,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringIntegrationType {
             "GOOGLE_WORKSPACE" => Self::GOOGLE_WORKSPACE,
             "OKTA" => Self::OKTA,
             "ENTRA_ID" => Self::ENTRA_ID,
+            "AWS_IDENTITY_CENTER" => Self::AWS_IDENTITY_CENTER,
             "CROWDSTRIKE" => Self::CROWDSTRIKE,
             "SENTINELONE" => Self::SENTINELONE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
