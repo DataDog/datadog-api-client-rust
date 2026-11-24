@@ -8737,6 +8737,26 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.GetSecurityAgentInvestigation".into(),
         test_v2_get_security_agent_investigation,
     );
+    world.function_mappings.insert(
+        "v2.GetSecurityAgentOutreachPolicy".into(),
+        test_v2_get_security_agent_outreach_policy,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateSecurityAgentOutreachMode".into(),
+        test_v2_update_security_agent_outreach_mode,
+    );
+    world.function_mappings.insert(
+        "v2.AddSecurityAgentOutreachPolicyDomain".into(),
+        test_v2_add_security_agent_outreach_policy_domain,
+    );
+    world.function_mappings.insert(
+        "v2.RemoveSecurityAgentOutreachPolicyDomain".into(),
+        test_v2_remove_security_agent_outreach_policy_domain,
+    );
+    world.function_mappings.insert(
+        "v2.UpdateSecurityAgentOutreachPolicyRules".into(),
+        test_v2_update_security_agent_outreach_policy_rules,
+    );
     world
         .function_mappings
         .insert("v2.ListScanningGroups".into(), test_v2_list_scanning_groups);
@@ -70935,6 +70955,148 @@ fn test_v2_get_security_agent_investigation(
             };
         }
     };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_get_security_agent_outreach_policy(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let response = match block_on(api.get_security_agent_outreach_policy_with_http_info()) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_security_agent_outreach_mode(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response = match block_on(api.update_security_agent_outreach_mode_with_http_info(body)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_add_security_agent_outreach_policy_domain(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.add_security_agent_outreach_policy_domain_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_remove_security_agent_outreach_policy_domain(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let domain = serde_json::from_value(_parameters.get("domain").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.remove_security_agent_outreach_policy_domain_with_http_info(domain)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
+}
+
+fn test_v2_update_security_agent_outreach_policy_rules(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_bits_security_analyst
+        .as_ref()
+        .expect("api instance not found");
+    let body = serde_json::from_value(_parameters.get("body").unwrap().clone()).unwrap();
+    let response =
+        match block_on(api.update_security_agent_outreach_policy_rules_with_http_info(body)) {
+            Ok(response) => response,
+            Err(error) => {
+                return match error {
+                    Error::ResponseError(e) => {
+                        world.response.code = e.status.as_u16();
+                        if let Some(entity) = e.entity {
+                            world.response.object = serde_json::to_value(entity).unwrap();
+                        }
+                    }
+                    _ => panic!("error parsing response: {error}"),
+                };
+            }
+        };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
