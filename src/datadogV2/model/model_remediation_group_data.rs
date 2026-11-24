@@ -11,8 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RemediationGroupData {
-    /// Attributes of a remediation group. Each group includes one kind object, `package_update` or `image_update`,
-    /// depending on its grouping definition.
+    /// Attributes of a remediation group. Each group includes one kind object, depending on its grouping definition.
     #[serde(rename = "attributes")]
     pub attributes: crate::datadogV2::model::RemediationGroupAttributes,
     /// Remediation key of the group: the grouping definition ID, a colon, and the group's dimensions
