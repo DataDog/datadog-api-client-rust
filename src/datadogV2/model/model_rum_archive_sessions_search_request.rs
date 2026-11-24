@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsSearchRequest {
+pub struct RUMArchiveSessionsSearchRequest {
     /// JSON:API resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumArchiveSessionsSearchData,
+    pub data: crate::datadogV2::model::RUMArchiveSessionsSearchData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumArchiveSessionsSearchRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsSearchRequest {
+impl RUMArchiveSessionsSearchRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumArchiveSessionsSearchData,
-    ) -> RumArchiveSessionsSearchRequest {
-        RumArchiveSessionsSearchRequest {
+        data: crate::datadogV2::model::RUMArchiveSessionsSearchData,
+    ) -> RUMArchiveSessionsSearchRequest {
+        RUMArchiveSessionsSearchRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumArchiveSessionsSearchRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsSearchRequest {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsSearchRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsSearchRequestVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsSearchRequestVisitor {
-            type Value = RumArchiveSessionsSearchRequest;
+        struct RUMArchiveSessionsSearchRequestVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsSearchRequestVisitor {
+            type Value = RUMArchiveSessionsSearchRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumArchiveSessionsSearchData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMArchiveSessionsSearchData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumArchiveSessionsSearchRequest {
+                let content = RUMArchiveSessionsSearchRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsSearchRequest {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsSearchRequestVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsSearchRequestVisitor)
     }
 }

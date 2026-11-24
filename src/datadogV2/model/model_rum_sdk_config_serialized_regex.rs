@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigSerializedRegex {
+pub struct RUMSdkConfigSerializedRegex {
     /// The type identifier for a serialized regex. Always `regex`.
     #[serde(rename = "rc_serialized_type")]
-    pub rc_serialized_type: crate::datadogV2::model::RumSdkConfigSerializedRegexType,
+    pub rc_serialized_type: crate::datadogV2::model::RUMSdkConfigSerializedRegexType,
     /// The regex pattern used for extraction.
     #[serde(rename = "value")]
     pub value: String,
@@ -24,12 +24,12 @@ pub struct RumSdkConfigSerializedRegex {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigSerializedRegex {
+impl RUMSdkConfigSerializedRegex {
     pub fn new(
-        rc_serialized_type: crate::datadogV2::model::RumSdkConfigSerializedRegexType,
+        rc_serialized_type: crate::datadogV2::model::RUMSdkConfigSerializedRegexType,
         value: String,
-    ) -> RumSdkConfigSerializedRegex {
-        RumSdkConfigSerializedRegex {
+    ) -> RUMSdkConfigSerializedRegex {
+        RUMSdkConfigSerializedRegex {
             rc_serialized_type,
             value,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumSdkConfigSerializedRegex {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigSerializedRegex {
+impl<'de> Deserialize<'de> for RUMSdkConfigSerializedRegex {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigSerializedRegexVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigSerializedRegexVisitor {
-            type Value = RumSdkConfigSerializedRegex;
+        struct RUMSdkConfigSerializedRegexVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigSerializedRegexVisitor {
+            type Value = RUMSdkConfigSerializedRegex;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigSerializedRegex {
                 M: MapAccess<'a>,
             {
                 let mut rc_serialized_type: Option<
-                    crate::datadogV2::model::RumSdkConfigSerializedRegexType,
+                    crate::datadogV2::model::RUMSdkConfigSerializedRegexType,
                 > = None;
                 let mut value: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigSerializedRegex {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rc_serialized_type) = rc_serialized_type {
                                 match _rc_serialized_type {
-                                    crate::datadogV2::model::RumSdkConfigSerializedRegexType::UnparsedObject(_rc_serialized_type) => {
+                                    crate::datadogV2::model::RUMSdkConfigSerializedRegexType::UnparsedObject(_rc_serialized_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -101,7 +101,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigSerializedRegex {
                     .ok_or_else(|| M::Error::missing_field("rc_serialized_type"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = RumSdkConfigSerializedRegex {
+                let content = RUMSdkConfigSerializedRegex {
                     rc_serialized_type,
                     value,
                     additional_properties,
@@ -112,6 +112,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigSerializedRegex {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigSerializedRegexVisitor)
+        deserializer.deserialize_any(RUMSdkConfigSerializedRegexVisitor)
     }
 }

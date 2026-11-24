@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumSdkConfigMatchOptionSerializedType {
+pub enum RUMSdkConfigMatchOptionSerializedType {
     STRING,
     REGEX,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumSdkConfigMatchOptionSerializedType {
+impl ToString for RUMSdkConfigMatchOptionSerializedType {
     fn to_string(&self) -> String {
         match self {
             Self::STRING => String::from("string"),
@@ -22,7 +22,7 @@ impl ToString for RumSdkConfigMatchOptionSerializedType {
     }
 }
 
-impl Serialize for RumSdkConfigMatchOptionSerializedType {
+impl Serialize for RUMSdkConfigMatchOptionSerializedType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for RumSdkConfigMatchOptionSerializedType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigMatchOptionSerializedType {
+impl<'de> Deserialize<'de> for RUMSdkConfigMatchOptionSerializedType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

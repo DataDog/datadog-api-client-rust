@@ -1,11 +1,11 @@
 // Delete a RUM exclusion filter returns "No Content" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI;
+use datadog_api_client::datadogV2::api_rum_retention_filters::RUMRetentionFiltersAPI;
 
 #[tokio::main]
 async fn main() {
     let configuration = datadog::Configuration::new();
-    let api = RumRetentionFiltersAPI::with_config(configuration);
+    let api = RUMRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .delete_exclusion_filter("app_id".to_string(), "ef_id".to_string())
         .await;

@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RUMOperationJourneyRum {
+pub struct RUMOperationJourneyRUM {
     /// The ordered list of steps composing the RUM journey.
     /// `null` when the operation has no steps. On create and update, `null` and an empty list are equivalent.
     #[serialize_always]
@@ -23,11 +23,11 @@ pub struct RUMOperationJourneyRum {
     pub(crate) _unparsed: bool,
 }
 
-impl RUMOperationJourneyRum {
+impl RUMOperationJourneyRUM {
     pub fn new(
         rum_steps: Option<Vec<crate::datadogV2::model::RUMOperationJourneyStep>>,
-    ) -> RUMOperationJourneyRum {
-        RUMOperationJourneyRum {
+    ) -> RUMOperationJourneyRUM {
+        RUMOperationJourneyRUM {
             rum_steps,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -43,14 +43,14 @@ impl RUMOperationJourneyRum {
     }
 }
 
-impl<'de> Deserialize<'de> for RUMOperationJourneyRum {
+impl<'de> Deserialize<'de> for RUMOperationJourneyRUM {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RUMOperationJourneyRumVisitor;
-        impl<'a> Visitor<'a> for RUMOperationJourneyRumVisitor {
-            type Value = RUMOperationJourneyRum;
+        struct RUMOperationJourneyRUMVisitor;
+        impl<'a> Visitor<'a> for RUMOperationJourneyRUMVisitor {
+            type Value = RUMOperationJourneyRUM;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -83,7 +83,7 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyRum {
                 }
                 let rum_steps = rum_steps.ok_or_else(|| M::Error::missing_field("rum_steps"))?;
 
-                let content = RUMOperationJourneyRum {
+                let content = RUMOperationJourneyRUM {
                     rum_steps,
                     additional_properties,
                     _unparsed,
@@ -93,6 +93,6 @@ impl<'de> Deserialize<'de> for RUMOperationJourneyRum {
             }
         }
 
-        deserializer.deserialize_any(RUMOperationJourneyRumVisitor)
+        deserializer.deserialize_any(RUMOperationJourneyRUMVisitor)
     }
 }

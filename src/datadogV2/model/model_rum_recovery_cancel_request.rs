@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCancelRequest {
+pub struct RUMRecoveryCancelRequest {
     /// JSON:API resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumRecoveryCancelData,
+    pub data: crate::datadogV2::model::RUMRecoveryCancelData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumRecoveryCancelRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCancelRequest {
-    pub fn new(data: crate::datadogV2::model::RumRecoveryCancelData) -> RumRecoveryCancelRequest {
-        RumRecoveryCancelRequest {
+impl RUMRecoveryCancelRequest {
+    pub fn new(data: crate::datadogV2::model::RUMRecoveryCancelData) -> RUMRecoveryCancelRequest {
+        RUMRecoveryCancelRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumRecoveryCancelRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCancelRequest {
+impl<'de> Deserialize<'de> for RUMRecoveryCancelRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCancelRequestVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCancelRequestVisitor {
-            type Value = RumRecoveryCancelRequest;
+        struct RUMRecoveryCancelRequestVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCancelRequestVisitor {
+            type Value = RUMRecoveryCancelRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumRecoveryCancelData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMRecoveryCancelData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumRecoveryCancelRequest {
+                let content = RUMRecoveryCancelRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelRequest {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCancelRequestVisitor)
+        deserializer.deserialize_any(RUMRecoveryCancelRequestVisitor)
     }
 }

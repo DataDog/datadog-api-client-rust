@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionQuotaConfigData {
+pub struct RUMRetentionQuotaConfigData {
     /// The RUM retention quota configuration properties.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRetentionQuotaConfigAttributes,
+    pub attributes: crate::datadogV2::model::RUMRetentionQuotaConfigAttributes,
     /// The identifier of the scope the retention quota configuration applies to.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource, always `rum_quota_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRetentionQuotaConfigType,
+    pub type_: crate::datadogV2::model::RUMRetentionQuotaConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRetentionQuotaConfigData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionQuotaConfigData {
+impl RUMRetentionQuotaConfigData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRetentionQuotaConfigAttributes,
+        attributes: crate::datadogV2::model::RUMRetentionQuotaConfigAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRetentionQuotaConfigType,
-    ) -> RumRetentionQuotaConfigData {
-        RumRetentionQuotaConfigData {
+        type_: crate::datadogV2::model::RUMRetentionQuotaConfigType,
+    ) -> RUMRetentionQuotaConfigData {
+        RUMRetentionQuotaConfigData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRetentionQuotaConfigData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaConfigData {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaConfigData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionQuotaConfigDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionQuotaConfigDataVisitor {
-            type Value = RumRetentionQuotaConfigData;
+        struct RUMRetentionQuotaConfigDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionQuotaConfigDataVisitor {
+            type Value = RUMRetentionQuotaConfigData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRetentionQuotaConfigAttributes,
+                    crate::datadogV2::model::RUMRetentionQuotaConfigAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionQuotaConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionQuotaConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionQuotaConfigType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionQuotaConfigType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRetentionQuotaConfigData {
+                let content = RUMRetentionQuotaConfigData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionQuotaConfigDataVisitor)
+        deserializer.deserialize_any(RUMRetentionQuotaConfigDataVisitor)
     }
 }

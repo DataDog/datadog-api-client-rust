@@ -1,25 +1,25 @@
 // Create a RUM exclusion filter returns "Created" response
 use datadog_api_client::datadog;
-use datadog_api_client::datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI;
-use datadog_api_client::datadogV2::model::RumExclusionFilterCreateAttributes;
-use datadog_api_client::datadogV2::model::RumExclusionFilterCreateData;
-use datadog_api_client::datadogV2::model::RumExclusionFilterCreateRequest;
-use datadog_api_client::datadogV2::model::RumExclusionFilterEventType;
-use datadog_api_client::datadogV2::model::RumExclusionFilterType;
+use datadog_api_client::datadogV2::api_rum_retention_filters::RUMRetentionFiltersAPI;
+use datadog_api_client::datadogV2::model::RUMExclusionFilterCreateAttributes;
+use datadog_api_client::datadogV2::model::RUMExclusionFilterCreateData;
+use datadog_api_client::datadogV2::model::RUMExclusionFilterCreateRequest;
+use datadog_api_client::datadogV2::model::RUMExclusionFilterEventType;
+use datadog_api_client::datadogV2::model::RUMExclusionFilterType;
 
 #[tokio::main]
 async fn main() {
-    let body = RumExclusionFilterCreateRequest::new(RumExclusionFilterCreateData::new(
-        RumExclusionFilterCreateAttributes::new(
+    let body = RUMExclusionFilterCreateRequest::new(RUMExclusionFilterCreateData::new(
+        RUMExclusionFilterCreateAttributes::new(
             "Exclude noisy browser extension errors".to_string(),
         )
         .enabled(true)
-        .event_type(RumExclusionFilterEventType::ERROR)
+        .event_type(RUMExclusionFilterEventType::ERROR)
         .query("@error.message:*extension*".to_string()),
-        RumExclusionFilterType::EXCLUSION_FILTERS,
+        RUMExclusionFilterType::EXCLUSION_FILTERS,
     ));
     let configuration = datadog::Configuration::new();
-    let api = RumRetentionFiltersAPI::with_config(configuration);
+    let api = RUMRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .create_exclusion_filter("app_id".to_string(), body)
         .await;

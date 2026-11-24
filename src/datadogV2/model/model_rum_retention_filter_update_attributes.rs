@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterUpdateAttributes {
+pub struct RUMRetentionFilterUpdateAttributes {
     /// The configuration for cross-product retention filters. All fields are optional for partial updates.
     #[serde(rename = "cross_product_sampling")]
-    pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSamplingUpdate>,
+    pub cross_product_sampling: Option<crate::datadogV2::model::RUMCrossProductSamplingUpdate>,
     /// Whether the retention filter is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The type of RUM events to filter on.
     #[serde(rename = "event_type")]
-    pub event_type: Option<crate::datadogV2::model::RumRetentionFilterEventType>,
+    pub event_type: Option<crate::datadogV2::model::RUMRetentionFilterEventType>,
     /// The name of a RUM retention filter.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -36,9 +36,9 @@ pub struct RumRetentionFilterUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterUpdateAttributes {
-    pub fn new() -> RumRetentionFilterUpdateAttributes {
-        RumRetentionFilterUpdateAttributes {
+impl RUMRetentionFilterUpdateAttributes {
+    pub fn new() -> RUMRetentionFilterUpdateAttributes {
+        RUMRetentionFilterUpdateAttributes {
             cross_product_sampling: None,
             enabled: None,
             event_type: None,
@@ -52,7 +52,7 @@ impl RumRetentionFilterUpdateAttributes {
 
     pub fn cross_product_sampling(
         mut self,
-        value: crate::datadogV2::model::RumCrossProductSamplingUpdate,
+        value: crate::datadogV2::model::RUMCrossProductSamplingUpdate,
     ) -> Self {
         self.cross_product_sampling = Some(value);
         self
@@ -65,7 +65,7 @@ impl RumRetentionFilterUpdateAttributes {
 
     pub fn event_type(
         mut self,
-        value: crate::datadogV2::model::RumRetentionFilterEventType,
+        value: crate::datadogV2::model::RUMRetentionFilterEventType,
     ) -> Self {
         self.event_type = Some(value);
         self
@@ -95,20 +95,20 @@ impl RumRetentionFilterUpdateAttributes {
     }
 }
 
-impl Default for RumRetentionFilterUpdateAttributes {
+impl Default for RUMRetentionFilterUpdateAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMRetentionFilterUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterUpdateAttributesVisitor {
-            type Value = RumRetentionFilterUpdateAttributes;
+        struct RUMRetentionFilterUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterUpdateAttributesVisitor {
+            type Value = RUMRetentionFilterUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -119,10 +119,10 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cross_product_sampling: Option<
-                    crate::datadogV2::model::RumCrossProductSamplingUpdate,
+                    crate::datadogV2::model::RUMCrossProductSamplingUpdate,
                 > = None;
                 let mut enabled: Option<bool> = None;
-                let mut event_type: Option<crate::datadogV2::model::RumRetentionFilterEventType> =
+                let mut event_type: Option<crate::datadogV2::model::RUMRetentionFilterEventType> =
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -155,7 +155,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
                             event_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_type) = event_type {
                                 match _event_type {
-                                    crate::datadogV2::model::RumRetentionFilterEventType::UnparsedObject(_event_type) => {
+                                    crate::datadogV2::model::RUMRetentionFilterEventType::UnparsedObject(_event_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -189,7 +189,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
                     }
                 }
 
-                let content = RumRetentionFilterUpdateAttributes {
+                let content = RUMRetentionFilterUpdateAttributes {
                     cross_product_sampling,
                     enabled,
                     event_type,
@@ -204,6 +204,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterUpdateAttributesVisitor)
     }
 }

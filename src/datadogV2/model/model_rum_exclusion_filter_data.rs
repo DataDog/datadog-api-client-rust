@@ -10,19 +10,19 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterData {
+pub struct RUMExclusionFilterData {
     /// The attributes of an exclusion filter.
     #[serde(rename = "attributes")]
-    pub attributes: Option<crate::datadogV2::model::RumExclusionFilterAttributes>,
+    pub attributes: Option<crate::datadogV2::model::RUMExclusionFilterAttributes>,
     /// The ID of the exclusion filter.
     #[serde(rename = "id")]
     pub id: String,
     /// Metadata about the exclusion filter.
     #[serde(rename = "meta")]
-    pub meta: Option<crate::datadogV2::model::RumExclusionFilterMeta>,
+    pub meta: Option<crate::datadogV2::model::RUMExclusionFilterMeta>,
     /// The resource type. The value must be `exclusion_filters`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumExclusionFilterType,
+    pub type_: crate::datadogV2::model::RUMExclusionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -30,12 +30,12 @@ pub struct RumExclusionFilterData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterData {
+impl RUMExclusionFilterData {
     pub fn new(
         id: String,
-        type_: crate::datadogV2::model::RumExclusionFilterType,
-    ) -> RumExclusionFilterData {
-        RumExclusionFilterData {
+        type_: crate::datadogV2::model::RUMExclusionFilterType,
+    ) -> RUMExclusionFilterData {
+        RUMExclusionFilterData {
             attributes: None,
             id,
             meta: None,
@@ -47,13 +47,13 @@ impl RumExclusionFilterData {
 
     pub fn attributes(
         mut self,
-        value: crate::datadogV2::model::RumExclusionFilterAttributes,
+        value: crate::datadogV2::model::RUMExclusionFilterAttributes,
     ) -> Self {
         self.attributes = Some(value);
         self
     }
 
-    pub fn meta(mut self, value: crate::datadogV2::model::RumExclusionFilterMeta) -> Self {
+    pub fn meta(mut self, value: crate::datadogV2::model::RUMExclusionFilterMeta) -> Self {
         self.meta = Some(value);
         self
     }
@@ -67,14 +67,14 @@ impl RumExclusionFilterData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterData {
+impl<'de> Deserialize<'de> for RUMExclusionFilterData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterDataVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterDataVisitor {
-            type Value = RumExclusionFilterData;
+        struct RUMExclusionFilterDataVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterDataVisitor {
+            type Value = RUMExclusionFilterData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -84,11 +84,11 @@ impl<'de> Deserialize<'de> for RumExclusionFilterData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumExclusionFilterAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMExclusionFilterAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut meta: Option<crate::datadogV2::model::RumExclusionFilterMeta> = None;
-                let mut type_: Option<crate::datadogV2::model::RumExclusionFilterType> = None;
+                let mut meta: Option<crate::datadogV2::model::RUMExclusionFilterMeta> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMExclusionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -116,7 +116,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumExclusionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMExclusionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -133,7 +133,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumExclusionFilterData {
+                let content = RUMExclusionFilterData {
                     attributes,
                     id,
                     meta,
@@ -146,6 +146,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterData {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterDataVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterDataVisitor)
     }
 }

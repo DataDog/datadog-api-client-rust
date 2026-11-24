@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigUpsertRequest {
+pub struct RUMArchiveConfigUpsertRequest {
     /// JSON:API resource.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumArchiveConfigUpsertData,
+    pub data: crate::datadogV2::model::RUMArchiveConfigUpsertData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumArchiveConfigUpsertRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigUpsertRequest {
+impl RUMArchiveConfigUpsertRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumArchiveConfigUpsertData,
-    ) -> RumArchiveConfigUpsertRequest {
-        RumArchiveConfigUpsertRequest {
+        data: crate::datadogV2::model::RUMArchiveConfigUpsertData,
+    ) -> RUMArchiveConfigUpsertRequest {
+        RUMArchiveConfigUpsertRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumArchiveConfigUpsertRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigUpsertRequest {
+impl<'de> Deserialize<'de> for RUMArchiveConfigUpsertRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigUpsertRequestVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigUpsertRequestVisitor {
-            type Value = RumArchiveConfigUpsertRequest;
+        struct RUMArchiveConfigUpsertRequestVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigUpsertRequestVisitor {
+            type Value = RUMArchiveConfigUpsertRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumArchiveConfigUpsertData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMArchiveConfigUpsertData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumArchiveConfigUpsertRequest {
+                let content = RUMArchiveConfigUpsertRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertRequest {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigUpsertRequestVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigUpsertRequestVisitor)
     }
 }

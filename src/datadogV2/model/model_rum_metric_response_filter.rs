@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricResponseFilter {
+pub struct RUMMetricResponseFilter {
     /// The search query, following the [RUM search syntax](<https://docs.datadoghq.com/real_user_monitoring/explorer/search_syntax/>). It does not include the event type filter.
     #[serde(rename = "query")]
     pub query: Option<String>,
@@ -21,9 +21,9 @@ pub struct RumMetricResponseFilter {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricResponseFilter {
-    pub fn new() -> RumMetricResponseFilter {
-        RumMetricResponseFilter {
+impl RUMMetricResponseFilter {
+    pub fn new() -> RUMMetricResponseFilter {
+        RUMMetricResponseFilter {
             query: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -44,20 +44,20 @@ impl RumMetricResponseFilter {
     }
 }
 
-impl Default for RumMetricResponseFilter {
+impl Default for RUMMetricResponseFilter {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricResponseFilter {
+impl<'de> Deserialize<'de> for RUMMetricResponseFilter {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricResponseFilterVisitor;
-        impl<'a> Visitor<'a> for RumMetricResponseFilterVisitor {
-            type Value = RumMetricResponseFilter;
+        struct RUMMetricResponseFilterVisitor;
+        impl<'a> Visitor<'a> for RUMMetricResponseFilterVisitor {
+            type Value = RUMMetricResponseFilter;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseFilter {
                     }
                 }
 
-                let content = RumMetricResponseFilter {
+                let content = RUMMetricResponseFilter {
                     query,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumMetricResponseFilter {
             }
         }
 
-        deserializer.deserialize_any(RumMetricResponseFilterVisitor)
+        deserializer.deserialize_any(RUMMetricResponseFilterVisitor)
     }
 }

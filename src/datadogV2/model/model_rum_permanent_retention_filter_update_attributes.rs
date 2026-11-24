@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumPermanentRetentionFilterUpdateAttributes {
+pub struct RUMPermanentRetentionFilterUpdateAttributes {
     /// The configuration for cross-product retention filters. All fields are optional for partial updates.
     #[serde(rename = "cross_product_sampling")]
-    pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSamplingUpdate>,
+    pub cross_product_sampling: Option<crate::datadogV2::model::RUMCrossProductSamplingUpdate>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumPermanentRetentionFilterUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumPermanentRetentionFilterUpdateAttributes {
-    pub fn new() -> RumPermanentRetentionFilterUpdateAttributes {
-        RumPermanentRetentionFilterUpdateAttributes {
+impl RUMPermanentRetentionFilterUpdateAttributes {
+    pub fn new() -> RUMPermanentRetentionFilterUpdateAttributes {
+        RUMPermanentRetentionFilterUpdateAttributes {
             cross_product_sampling: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -32,7 +32,7 @@ impl RumPermanentRetentionFilterUpdateAttributes {
 
     pub fn cross_product_sampling(
         mut self,
-        value: crate::datadogV2::model::RumCrossProductSamplingUpdate,
+        value: crate::datadogV2::model::RUMCrossProductSamplingUpdate,
     ) -> Self {
         self.cross_product_sampling = Some(value);
         self
@@ -47,20 +47,20 @@ impl RumPermanentRetentionFilterUpdateAttributes {
     }
 }
 
-impl Default for RumPermanentRetentionFilterUpdateAttributes {
+impl Default for RUMPermanentRetentionFilterUpdateAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMPermanentRetentionFilterUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumPermanentRetentionFilterUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumPermanentRetentionFilterUpdateAttributesVisitor {
-            type Value = RumPermanentRetentionFilterUpdateAttributes;
+        struct RUMPermanentRetentionFilterUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMPermanentRetentionFilterUpdateAttributesVisitor {
+            type Value = RUMPermanentRetentionFilterUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cross_product_sampling: Option<
-                    crate::datadogV2::model::RumCrossProductSamplingUpdate,
+                    crate::datadogV2::model::RUMCrossProductSamplingUpdate,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -96,7 +96,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateAttributes {
                     }
                 }
 
-                let content = RumPermanentRetentionFilterUpdateAttributes {
+                let content = RUMPermanentRetentionFilterUpdateAttributes {
                     cross_product_sampling,
                     additional_properties,
                     _unparsed,
@@ -106,6 +106,6 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumPermanentRetentionFilterUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMPermanentRetentionFilterUpdateAttributesVisitor)
     }
 }

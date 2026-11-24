@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCancelResponseAttributes {
+pub struct RUMRecoveryCancelResponseAttributes {
     /// Cancellation time.
     #[serde(rename = "cancelled_at")]
     pub cancelled_at: chrono::DateTime<chrono::Utc>,
@@ -19,7 +19,7 @@ pub struct RumRecoveryCancelResponseAttributes {
     pub cancelled_by: String,
     /// Batch discovery state. QUEUED indicates that the request is waiting for processing capacity.
     #[serde(rename = "discovery_status")]
-    pub discovery_status: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+    pub discovery_status: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRecoveryCancelResponseAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCancelResponseAttributes {
+impl RUMRecoveryCancelResponseAttributes {
     pub fn new(
         cancelled_at: chrono::DateTime<chrono::Utc>,
         cancelled_by: String,
-        discovery_status: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
-    ) -> RumRecoveryCancelResponseAttributes {
-        RumRecoveryCancelResponseAttributes {
+        discovery_status: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
+    ) -> RUMRecoveryCancelResponseAttributes {
+        RUMRecoveryCancelResponseAttributes {
             cancelled_at,
             cancelled_by,
             discovery_status,
@@ -51,14 +51,14 @@ impl RumRecoveryCancelResponseAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCancelResponseAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryCancelResponseAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCancelResponseAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCancelResponseAttributesVisitor {
-            type Value = RumRecoveryCancelResponseAttributes;
+        struct RUMRecoveryCancelResponseAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCancelResponseAttributesVisitor {
+            type Value = RUMRecoveryCancelResponseAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -71,7 +71,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseAttributes {
                 let mut cancelled_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut cancelled_by: Option<String> = None;
                 let mut discovery_status: Option<
-                    crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -94,7 +94,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_status) = discovery_status {
                                 match _discovery_status {
-                                    crate::datadogV2::model::RumRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
+                                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -115,7 +115,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseAttributes {
                 let discovery_status =
                     discovery_status.ok_or_else(|| M::Error::missing_field("discovery_status"))?;
 
-                let content = RumRecoveryCancelResponseAttributes {
+                let content = RUMRecoveryCancelResponseAttributes {
                     cancelled_at,
                     cancelled_by,
                     discovery_status,
@@ -127,6 +127,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCancelResponseAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCancelResponseAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryCancelResponseAttributesVisitor)
     }
 }

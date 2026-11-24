@@ -1,24 +1,24 @@
 // Create a recovery request returns "Accepted" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_recovery::RUMRecoveryAPI;
-use datadog_api_client::datadogV2::model::RumRecoveryCreateAttributes;
-use datadog_api_client::datadogV2::model::RumRecoveryCreateData;
-use datadog_api_client::datadogV2::model::RumRecoveryCreateRequest;
-use datadog_api_client::datadogV2::model::RumRecoverySessionInput;
-use datadog_api_client::datadogV2::model::RumRecoverySessionsCreateAttributes;
-use datadog_api_client::datadogV2::model::RumRecoverySessionsRequestType;
+use datadog_api_client::datadogV2::model::RUMRecoveryCreateAttributes;
+use datadog_api_client::datadogV2::model::RUMRecoveryCreateData;
+use datadog_api_client::datadogV2::model::RUMRecoveryCreateRequest;
+use datadog_api_client::datadogV2::model::RUMRecoverySessionInput;
+use datadog_api_client::datadogV2::model::RUMRecoverySessionsCreateAttributes;
+use datadog_api_client::datadogV2::model::RUMRecoverySessionsRequestType;
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let body = RumRecoveryCreateRequest::new(
-        RumRecoveryCreateData::new(
-            RumRecoveryCreateAttributes::RumRecoverySessionsCreateAttributes(Box::new(
-                RumRecoverySessionsCreateAttributes::new(vec![RumRecoverySessionInput::new(
+    let body = RUMRecoveryCreateRequest::new(
+        RUMRecoveryCreateData::new(
+            RUMRecoveryCreateAttributes::RUMRecoverySessionsCreateAttributes(Box::new(
+                RUMRecoverySessionsCreateAttributes::new(vec![RUMRecoverySessionInput::new(
                     Uuid::parse_str("a33671aa-24fd-4dcd-ba4b-5bbdbafe7690").expect("invalid UUID"),
                     Uuid::parse_str("00000000-0000-4000-8000-000000000001").expect("invalid UUID"),
                 )])
-                .request_type(RumRecoverySessionsRequestType::SESSIONS),
+                .request_type(RUMRecoverySessionsRequestType::SESSIONS),
             )),
         )
         .type_("rum_recovery_request".to_string()),

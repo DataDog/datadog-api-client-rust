@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryCreateData {
+pub struct RUMRecoveryCreateData {
     /// Targeted recovery (the default) or query-based batch recovery.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryCreateAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryCreateAttributes,
     /// JSON:API resource type.
     #[serde(rename = "type")]
     pub type_: Option<String>,
@@ -24,11 +24,11 @@ pub struct RumRecoveryCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryCreateData {
+impl RUMRecoveryCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryCreateAttributes,
-    ) -> RumRecoveryCreateData {
-        RumRecoveryCreateData {
+        attributes: crate::datadogV2::model::RUMRecoveryCreateAttributes,
+    ) -> RUMRecoveryCreateData {
+        RUMRecoveryCreateData {
             attributes,
             type_: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -50,14 +50,14 @@ impl RumRecoveryCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCreateData {
+impl<'de> Deserialize<'de> for RUMRecoveryCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryCreateDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryCreateDataVisitor {
-            type Value = RumRecoveryCreateData;
+        struct RUMRecoveryCreateDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryCreateDataVisitor {
+            type Value = RUMRecoveryCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumRecoveryCreateAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMRecoveryCreateAttributes> =
                     None;
                 let mut type_: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateData {
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _attributes) = attributes {
                                 match _attributes {
-                                    crate::datadogV2::model::RumRecoveryCreateAttributes::UnparsedObject(_attributes) => {
+                                    crate::datadogV2::model::RUMRecoveryCreateAttributes::UnparsedObject(_attributes) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -104,7 +104,7 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateData {
                 }
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
 
-                let content = RumRecoveryCreateData {
+                let content = RUMRecoveryCreateData {
                     attributes,
                     type_,
                     additional_properties,
@@ -115,6 +115,6 @@ impl<'de> Deserialize<'de> for RumRecoveryCreateData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryCreateDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryCreateDataVisitor)
     }
 }

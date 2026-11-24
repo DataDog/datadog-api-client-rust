@@ -12,13 +12,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterUpdateAttributes {
+pub struct RUMExclusionFilterUpdateAttributes {
     /// Whether the exclusion filter is active.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The type of RUM events to filter on.
     #[serde(rename = "event_type")]
-    pub event_type: Option<crate::datadogV2::model::RumExclusionFilterEventType>,
+    pub event_type: Option<crate::datadogV2::model::RUMExclusionFilterEventType>,
     /// The name of the exclusion filter.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -33,9 +33,9 @@ pub struct RumExclusionFilterUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterUpdateAttributes {
-    pub fn new() -> RumExclusionFilterUpdateAttributes {
-        RumExclusionFilterUpdateAttributes {
+impl RUMExclusionFilterUpdateAttributes {
+    pub fn new() -> RUMExclusionFilterUpdateAttributes {
+        RUMExclusionFilterUpdateAttributes {
             enabled: None,
             event_type: None,
             name: None,
@@ -52,7 +52,7 @@ impl RumExclusionFilterUpdateAttributes {
 
     pub fn event_type(
         mut self,
-        value: crate::datadogV2::model::RumExclusionFilterEventType,
+        value: crate::datadogV2::model::RUMExclusionFilterEventType,
     ) -> Self {
         self.event_type = Some(value);
         self
@@ -77,20 +77,20 @@ impl RumExclusionFilterUpdateAttributes {
     }
 }
 
-impl Default for RumExclusionFilterUpdateAttributes {
+impl Default for RUMExclusionFilterUpdateAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMExclusionFilterUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterUpdateAttributesVisitor {
-            type Value = RumExclusionFilterUpdateAttributes;
+        struct RUMExclusionFilterUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterUpdateAttributesVisitor {
+            type Value = RUMExclusionFilterUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -101,7 +101,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateAttributes {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut event_type: Option<crate::datadogV2::model::RumExclusionFilterEventType> =
+                let mut event_type: Option<crate::datadogV2::model::RUMExclusionFilterEventType> =
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -126,7 +126,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateAttributes {
                             event_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_type) = event_type {
                                 match _event_type {
-                                    crate::datadogV2::model::RumExclusionFilterEventType::UnparsedObject(_event_type) => {
+                                    crate::datadogV2::model::RUMExclusionFilterEventType::UnparsedObject(_event_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -153,7 +153,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateAttributes {
                     }
                 }
 
-                let content = RumExclusionFilterUpdateAttributes {
+                let content = RUMExclusionFilterUpdateAttributes {
                     enabled,
                     event_type,
                     name,
@@ -166,6 +166,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterUpdateAttributesVisitor)
     }
 }

@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigDynamicOption {
+pub struct RUMSdkConfigDynamicOption {
     /// The element attribute to read. Used when `strategy` is `dom`.
     #[serde(rename = "attribute")]
     pub attribute: Option<String>,
     /// A serialized regex used as an extractor in dynamic options.
     #[serde(rename = "extractor")]
-    pub extractor: Option<crate::datadogV2::model::RumSdkConfigSerializedRegex>,
+    pub extractor: Option<crate::datadogV2::model::RUMSdkConfigSerializedRegex>,
     /// The `localStorage` key to read. Required when `strategy` is `localStorage`.
     #[serde(rename = "key")]
     pub key: Option<String>,
@@ -28,13 +28,13 @@ pub struct RumSdkConfigDynamicOption {
     pub path: Option<String>,
     /// The type identifier for a dynamic option. Always `dynamic`.
     #[serde(rename = "rc_serialized_type")]
-    pub rc_serialized_type: crate::datadogV2::model::RumSdkConfigDynamicOptionSerializedType,
+    pub rc_serialized_type: crate::datadogV2::model::RUMSdkConfigDynamicOptionSerializedType,
     /// The CSS selector to read from the page. Required when `strategy` is `dom`.
     #[serde(rename = "selector")]
     pub selector: Option<String>,
     /// The strategy used to extract the dynamic value.
     #[serde(rename = "strategy")]
-    pub strategy: crate::datadogV2::model::RumSdkConfigDynamicOptionStrategy,
+    pub strategy: crate::datadogV2::model::RUMSdkConfigDynamicOptionStrategy,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -42,12 +42,12 @@ pub struct RumSdkConfigDynamicOption {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigDynamicOption {
+impl RUMSdkConfigDynamicOption {
     pub fn new(
-        rc_serialized_type: crate::datadogV2::model::RumSdkConfigDynamicOptionSerializedType,
-        strategy: crate::datadogV2::model::RumSdkConfigDynamicOptionStrategy,
-    ) -> RumSdkConfigDynamicOption {
-        RumSdkConfigDynamicOption {
+        rc_serialized_type: crate::datadogV2::model::RUMSdkConfigDynamicOptionSerializedType,
+        strategy: crate::datadogV2::model::RUMSdkConfigDynamicOptionStrategy,
+    ) -> RUMSdkConfigDynamicOption {
+        RUMSdkConfigDynamicOption {
             attribute: None,
             extractor: None,
             key: None,
@@ -68,7 +68,7 @@ impl RumSdkConfigDynamicOption {
 
     pub fn extractor(
         mut self,
-        value: crate::datadogV2::model::RumSdkConfigSerializedRegex,
+        value: crate::datadogV2::model::RUMSdkConfigSerializedRegex,
     ) -> Self {
         self.extractor = Some(value);
         self
@@ -103,14 +103,14 @@ impl RumSdkConfigDynamicOption {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
+impl<'de> Deserialize<'de> for RUMSdkConfigDynamicOption {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigDynamicOptionVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigDynamicOptionVisitor {
-            type Value = RumSdkConfigDynamicOption;
+        struct RUMSdkConfigDynamicOptionVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigDynamicOptionVisitor {
+            type Value = RUMSdkConfigDynamicOption;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -121,17 +121,17 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
                 M: MapAccess<'a>,
             {
                 let mut attribute: Option<String> = None;
-                let mut extractor: Option<crate::datadogV2::model::RumSdkConfigSerializedRegex> =
+                let mut extractor: Option<crate::datadogV2::model::RUMSdkConfigSerializedRegex> =
                     None;
                 let mut key: Option<String> = None;
                 let mut name: Option<String> = None;
                 let mut path: Option<String> = None;
                 let mut rc_serialized_type: Option<
-                    crate::datadogV2::model::RumSdkConfigDynamicOptionSerializedType,
+                    crate::datadogV2::model::RUMSdkConfigDynamicOptionSerializedType,
                 > = None;
                 let mut selector: Option<String> = None;
                 let mut strategy: Option<
-                    crate::datadogV2::model::RumSdkConfigDynamicOptionStrategy,
+                    crate::datadogV2::model::RUMSdkConfigDynamicOptionStrategy,
                 > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -176,7 +176,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rc_serialized_type) = rc_serialized_type {
                                 match _rc_serialized_type {
-                                    crate::datadogV2::model::RumSdkConfigDynamicOptionSerializedType::UnparsedObject(_rc_serialized_type) => {
+                                    crate::datadogV2::model::RUMSdkConfigDynamicOptionSerializedType::UnparsedObject(_rc_serialized_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -193,7 +193,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
                             strategy = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _strategy) = strategy {
                                 match _strategy {
-                                    crate::datadogV2::model::RumSdkConfigDynamicOptionStrategy::UnparsedObject(_strategy) => {
+                                    crate::datadogV2::model::RUMSdkConfigDynamicOptionStrategy::UnparsedObject(_strategy) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -211,7 +211,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
                     .ok_or_else(|| M::Error::missing_field("rc_serialized_type"))?;
                 let strategy = strategy.ok_or_else(|| M::Error::missing_field("strategy"))?;
 
-                let content = RumSdkConfigDynamicOption {
+                let content = RUMSdkConfigDynamicOption {
                     attribute,
                     extractor,
                     key,
@@ -228,6 +228,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigDynamicOption {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigDynamicOptionVisitor)
+        deserializer.deserialize_any(RUMSdkConfigDynamicOptionVisitor)
     }
 }

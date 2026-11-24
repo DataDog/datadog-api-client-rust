@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricCreateData {
+pub struct RUMMetricCreateData {
     /// The object describing the Datadog RUM-based metric to create.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumMetricCreateAttributes,
+    pub attributes: crate::datadogV2::model::RUMMetricCreateAttributes,
     /// The name of the RUM-based metric.
     /// On creation, it must be 1 to 200 characters long, contain only ASCII letters, digits, underscores, and periods, start with a letter, and not start with `rum.measure` or `rum.investigate`.
     /// It cannot be changed after creation.
@@ -21,7 +21,7 @@ pub struct RumMetricCreateData {
     pub id: String,
     /// The type of the resource. The value must be `rum_metrics`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumMetricType,
+    pub type_: crate::datadogV2::model::RUMMetricType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -29,13 +29,13 @@ pub struct RumMetricCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricCreateData {
+impl RUMMetricCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumMetricCreateAttributes,
+        attributes: crate::datadogV2::model::RUMMetricCreateAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumMetricType,
-    ) -> RumMetricCreateData {
-        RumMetricCreateData {
+        type_: crate::datadogV2::model::RUMMetricType,
+    ) -> RUMMetricCreateData {
+        RUMMetricCreateData {
             attributes,
             id,
             type_,
@@ -53,14 +53,14 @@ impl RumMetricCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricCreateData {
+impl<'de> Deserialize<'de> for RUMMetricCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricCreateDataVisitor;
-        impl<'a> Visitor<'a> for RumMetricCreateDataVisitor {
-            type Value = RumMetricCreateData;
+        struct RUMMetricCreateDataVisitor;
+        impl<'a> Visitor<'a> for RUMMetricCreateDataVisitor {
+            type Value = RUMMetricCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,10 +70,10 @@ impl<'de> Deserialize<'de> for RumMetricCreateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumMetricCreateAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMMetricCreateAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumMetricType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMMetricType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for RumMetricCreateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumMetricType::UnparsedObject(
+                                    crate::datadogV2::model::RUMMetricType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -112,7 +112,7 @@ impl<'de> Deserialize<'de> for RumMetricCreateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumMetricCreateData {
+                let content = RUMMetricCreateData {
                     attributes,
                     id,
                     type_,
@@ -124,6 +124,6 @@ impl<'de> Deserialize<'de> for RumMetricCreateData {
             }
         }
 
-        deserializer.deserialize_any(RumMetricCreateDataVisitor)
+        deserializer.deserialize_any(RUMMetricCreateDataVisitor)
     }
 }

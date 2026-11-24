@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigPage {
+pub struct RUMArchiveConfigPage {
     /// Total configurations for the organization.
     #[serde(rename = "total_filtered_count")]
     pub total_filtered_count: i64,
@@ -21,9 +21,9 @@ pub struct RumArchiveConfigPage {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigPage {
-    pub fn new(total_filtered_count: i64) -> RumArchiveConfigPage {
-        RumArchiveConfigPage {
+impl RUMArchiveConfigPage {
+    pub fn new(total_filtered_count: i64) -> RUMArchiveConfigPage {
+        RUMArchiveConfigPage {
             total_filtered_count,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumArchiveConfigPage {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigPage {
+impl<'de> Deserialize<'de> for RUMArchiveConfigPage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigPageVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigPageVisitor {
-            type Value = RumArchiveConfigPage;
+        struct RUMArchiveConfigPageVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigPageVisitor {
+            type Value = RUMArchiveConfigPage;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigPage {
                 let total_filtered_count = total_filtered_count
                     .ok_or_else(|| M::Error::missing_field("total_filtered_count"))?;
 
-                let content = RumArchiveConfigPage {
+                let content = RUMArchiveConfigPage {
                     total_filtered_count,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigPage {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigPageVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigPageVisitor)
     }
 }

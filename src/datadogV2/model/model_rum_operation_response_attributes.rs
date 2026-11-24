@@ -54,7 +54,7 @@ pub struct RUMOperationResponseAttributes {
     pub feature_ids: Option<Option<Vec<String>>>,
     /// The definition of a RUM operation's journey, used to detect it from RUM events.
     #[serde(rename = "journey_rum")]
-    pub journey_rum: crate::datadogV2::model::RUMOperationJourneyRum,
+    pub journey_rum: crate::datadogV2::model::RUMOperationJourneyRUM,
     /// The unique name of the RUM operation. Must not contain spaces.
     #[serde(rename = "name")]
     pub name: String,
@@ -88,7 +88,7 @@ pub struct RUMOperationResponseAttributes {
 
 impl RUMOperationResponseAttributes {
     pub fn new(
-        journey_rum: crate::datadogV2::model::RUMOperationJourneyRum,
+        journey_rum: crate::datadogV2::model::RUMOperationJourneyRUM,
         name: String,
         tags: Option<Vec<String>>,
     ) -> RUMOperationResponseAttributes {
@@ -195,7 +195,7 @@ impl<'de> Deserialize<'de> for RUMOperationResponseAttributes {
                 let mut description: Option<Option<String>> = None;
                 let mut display_name: Option<String> = None;
                 let mut feature_ids: Option<Option<Vec<String>>> = None;
-                let mut journey_rum: Option<crate::datadogV2::model::RUMOperationJourneyRum> = None;
+                let mut journey_rum: Option<crate::datadogV2::model::RUMOperationJourneyRUM> = None;
                 let mut name: Option<String> = None;
                 let mut org_id: Option<i64> = None;
                 let mut tags: Option<Option<Vec<String>>> = None;

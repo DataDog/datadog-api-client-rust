@@ -10,17 +10,17 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionQuotaConfigUpdateData {
+pub struct RUMRetentionQuotaConfigUpdateData {
     /// The RUM retention quota configuration properties to create or update.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRetentionQuotaConfigUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMRetentionQuotaConfigUpdateAttributes,
     /// The identifier of the scope the retention quota configuration applies to.
     /// Must match `scope_id` in the path.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource, always `rum_quota_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRetentionQuotaConfigType,
+    pub type_: crate::datadogV2::model::RUMRetentionQuotaConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -28,13 +28,13 @@ pub struct RumRetentionQuotaConfigUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionQuotaConfigUpdateData {
+impl RUMRetentionQuotaConfigUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRetentionQuotaConfigUpdateAttributes,
+        attributes: crate::datadogV2::model::RUMRetentionQuotaConfigUpdateAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRetentionQuotaConfigType,
-    ) -> RumRetentionQuotaConfigUpdateData {
-        RumRetentionQuotaConfigUpdateData {
+        type_: crate::datadogV2::model::RUMRetentionQuotaConfigType,
+    ) -> RUMRetentionQuotaConfigUpdateData {
+        RUMRetentionQuotaConfigUpdateData {
             attributes,
             id,
             type_,
@@ -52,14 +52,14 @@ impl RumRetentionQuotaConfigUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateData {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaConfigUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionQuotaConfigUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionQuotaConfigUpdateDataVisitor {
-            type Value = RumRetentionQuotaConfigUpdateData;
+        struct RUMRetentionQuotaConfigUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionQuotaConfigUpdateDataVisitor {
+            type Value = RUMRetentionQuotaConfigUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -70,10 +70,10 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRetentionQuotaConfigUpdateAttributes,
+                    crate::datadogV2::model::RUMRetentionQuotaConfigUpdateAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionQuotaConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionQuotaConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionQuotaConfigType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionQuotaConfigType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -110,7 +110,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRetentionQuotaConfigUpdateData {
+                let content = RUMRetentionQuotaConfigUpdateData {
                     attributes,
                     id,
                     type_,
@@ -122,6 +122,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionQuotaConfigUpdateDataVisitor)
+        deserializer.deserialize_any(RUMRetentionQuotaConfigUpdateDataVisitor)
     }
 }

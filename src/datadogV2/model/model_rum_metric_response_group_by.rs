@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricResponseGroupBy {
+pub struct RUMMetricResponseGroupBy {
     /// The path of the RUM event attribute the metric is grouped by.
     #[serde(rename = "path")]
     pub path: Option<String>,
@@ -24,9 +24,9 @@ pub struct RumMetricResponseGroupBy {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricResponseGroupBy {
-    pub fn new() -> RumMetricResponseGroupBy {
-        RumMetricResponseGroupBy {
+impl RUMMetricResponseGroupBy {
+    pub fn new() -> RUMMetricResponseGroupBy {
+        RUMMetricResponseGroupBy {
             path: None,
             tag_name: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -53,20 +53,20 @@ impl RumMetricResponseGroupBy {
     }
 }
 
-impl Default for RumMetricResponseGroupBy {
+impl Default for RUMMetricResponseGroupBy {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricResponseGroupBy {
+impl<'de> Deserialize<'de> for RUMMetricResponseGroupBy {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricResponseGroupByVisitor;
-        impl<'a> Visitor<'a> for RumMetricResponseGroupByVisitor {
-            type Value = RumMetricResponseGroupBy;
+        struct RUMMetricResponseGroupByVisitor;
+        impl<'a> Visitor<'a> for RUMMetricResponseGroupByVisitor {
+            type Value = RUMMetricResponseGroupBy;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -106,7 +106,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseGroupBy {
                     }
                 }
 
-                let content = RumMetricResponseGroupBy {
+                let content = RUMMetricResponseGroupBy {
                     path,
                     tag_name,
                     additional_properties,
@@ -117,6 +117,6 @@ impl<'de> Deserialize<'de> for RumMetricResponseGroupBy {
             }
         }
 
-        deserializer.deserialize_any(RumMetricResponseGroupByVisitor)
+        deserializer.deserialize_any(RUMMetricResponseGroupByVisitor)
     }
 }

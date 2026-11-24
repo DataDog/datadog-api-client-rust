@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryBatchListAttributes {
+pub struct RUMRecoveryBatchListAttributes {
     /// Creation time.
     #[serde(rename = "created_at")]
     pub created_at: chrono::DateTime<chrono::Utc>,
     /// Batch discovery state. QUEUED indicates that the request is waiting for processing capacity.
     #[serde(rename = "discovery_status")]
-    pub discovery_status: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+    pub discovery_status: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
     /// Batch estimate stored at creation, when present. New batches use a fresh server estimate; older batches may contain a client-supplied estimate.
     #[serde(rename = "estimated_count")]
     pub estimated_count: Option<i64>,
@@ -43,7 +43,7 @@ pub struct RumRecoveryBatchListAttributes {
     pub slices_failed: i64,
     /// Recovery request state.
     #[serde(rename = "status")]
-    pub status: crate::datadogV2::model::RumRecoveryRequestStatus,
+    pub status: crate::datadogV2::model::RUMRecoveryRequestStatus,
     /// End of the range in Unix milliseconds.
     #[serde(rename = "to")]
     pub to: i64,
@@ -60,10 +60,10 @@ pub struct RumRecoveryBatchListAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryBatchListAttributes {
+impl RUMRecoveryBatchListAttributes {
     pub fn new(
         created_at: chrono::DateTime<chrono::Utc>,
-        discovery_status: crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+        discovery_status: crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
         from: i64,
         query: String,
         sessions_discovered: i64,
@@ -71,12 +71,12 @@ impl RumRecoveryBatchListAttributes {
         sessions_processed: i64,
         slices_completed: i64,
         slices_failed: i64,
-        status: crate::datadogV2::model::RumRecoveryRequestStatus,
+        status: crate::datadogV2::model::RUMRecoveryRequestStatus,
         to: i64,
         total_slices: i64,
         updated_at: chrono::DateTime<chrono::Utc>,
-    ) -> RumRecoveryBatchListAttributes {
-        RumRecoveryBatchListAttributes {
+    ) -> RUMRecoveryBatchListAttributes {
+        RUMRecoveryBatchListAttributes {
             created_at,
             discovery_status,
             estimated_count: None,
@@ -110,14 +110,14 @@ impl RumRecoveryBatchListAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
+impl<'de> Deserialize<'de> for RUMRecoveryBatchListAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryBatchListAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryBatchListAttributesVisitor {
-            type Value = RumRecoveryBatchListAttributes;
+        struct RUMRecoveryBatchListAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryBatchListAttributesVisitor {
+            type Value = RUMRecoveryBatchListAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -129,7 +129,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
             {
                 let mut created_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut discovery_status: Option<
-                    crate::datadogV2::model::RumRecoveryDiscoveryStatus,
+                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus,
                 > = None;
                 let mut estimated_count: Option<i64> = None;
                 let mut from: Option<i64> = None;
@@ -139,7 +139,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
                 let mut sessions_processed: Option<i64> = None;
                 let mut slices_completed: Option<i64> = None;
                 let mut slices_failed: Option<i64> = None;
-                let mut status: Option<crate::datadogV2::model::RumRecoveryRequestStatus> = None;
+                let mut status: Option<crate::datadogV2::model::RUMRecoveryRequestStatus> = None;
                 let mut to: Option<i64> = None;
                 let mut total_slices: Option<i64> = None;
                 let mut updated_at: Option<chrono::DateTime<chrono::Utc>> = None;
@@ -159,7 +159,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _discovery_status) = discovery_status {
                                 match _discovery_status {
-                                    crate::datadogV2::model::RumRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
+                                    crate::datadogV2::model::RUMRecoveryDiscoveryStatus::UnparsedObject(_discovery_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -203,7 +203,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
                             status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _status) = status {
                                 match _status {
-                                    crate::datadogV2::model::RumRecoveryRequestStatus::UnparsedObject(_status) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestStatus::UnparsedObject(_status) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -248,7 +248,7 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
                     total_slices.ok_or_else(|| M::Error::missing_field("total_slices"))?;
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
 
-                let content = RumRecoveryBatchListAttributes {
+                let content = RUMRecoveryBatchListAttributes {
                     created_at,
                     discovery_status,
                     estimated_count,
@@ -271,6 +271,6 @@ impl<'de> Deserialize<'de> for RumRecoveryBatchListAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryBatchListAttributesVisitor)
+        deserializer.deserialize_any(RUMRecoveryBatchListAttributesVisitor)
     }
 }

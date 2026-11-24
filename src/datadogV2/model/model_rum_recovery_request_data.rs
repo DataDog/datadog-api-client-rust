@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRecoveryRequestData {
+pub struct RUMRecoveryRequestData {
     /// Recovery progress. Batch-only attributes are omitted for targeted requests; request_type is also omitted for targeted requests.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRecoveryRequestAttributes,
+    pub attributes: crate::datadogV2::model::RUMRecoveryRequestAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRecoveryRequestType,
+    pub type_: crate::datadogV2::model::RUMRecoveryRequestType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRecoveryRequestData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRecoveryRequestData {
+impl RUMRecoveryRequestData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRecoveryRequestAttributes,
+        attributes: crate::datadogV2::model::RUMRecoveryRequestAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRecoveryRequestType,
-    ) -> RumRecoveryRequestData {
-        RumRecoveryRequestData {
+        type_: crate::datadogV2::model::RUMRecoveryRequestType,
+    ) -> RUMRecoveryRequestData {
+        RUMRecoveryRequestData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRecoveryRequestData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryRequestData {
+impl<'de> Deserialize<'de> for RUMRecoveryRequestData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRecoveryRequestDataVisitor;
-        impl<'a> Visitor<'a> for RumRecoveryRequestDataVisitor {
-            type Value = RumRecoveryRequestData;
+        struct RUMRecoveryRequestDataVisitor;
+        impl<'a> Visitor<'a> for RUMRecoveryRequestDataVisitor {
+            type Value = RUMRecoveryRequestData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,10 +68,10 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumRecoveryRequestAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMRecoveryRequestAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRecoveryRequestType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRecoveryRequestType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRecoveryRequestType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRecoveryRequestType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRecoveryRequestData {
+                let content = RUMRecoveryRequestData {
                     attributes,
                     id,
                     type_,
@@ -120,6 +120,6 @@ impl<'de> Deserialize<'de> for RumRecoveryRequestData {
             }
         }
 
-        deserializer.deserialize_any(RumRecoveryRequestDataVisitor)
+        deserializer.deserialize_any(RUMRecoveryRequestDataVisitor)
     }
 }

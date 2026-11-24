@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigUpdateAttributes {
+pub struct RUMSdkConfigUpdateAttributes {
     /// The RUM SDK settings to apply when updating a configuration.
     #[serde(rename = "rum")]
-    pub rum: crate::datadogV2::model::RumSdkConfigRumUpdateAttributes,
+    pub rum: crate::datadogV2::model::RUMSdkConfigRUMUpdateAttributes,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumSdkConfigUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigUpdateAttributes {
+impl RUMSdkConfigUpdateAttributes {
     pub fn new(
-        rum: crate::datadogV2::model::RumSdkConfigRumUpdateAttributes,
-    ) -> RumSdkConfigUpdateAttributes {
-        RumSdkConfigUpdateAttributes {
+        rum: crate::datadogV2::model::RUMSdkConfigRUMUpdateAttributes,
+    ) -> RUMSdkConfigUpdateAttributes {
+        RUMSdkConfigUpdateAttributes {
             rum,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumSdkConfigUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMSdkConfigUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigUpdateAttributesVisitor {
-            type Value = RumSdkConfigUpdateAttributes;
+        struct RUMSdkConfigUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigUpdateAttributesVisitor {
+            type Value = RUMSdkConfigUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut rum: Option<crate::datadogV2::model::RumSdkConfigRumUpdateAttributes> =
+                let mut rum: Option<crate::datadogV2::model::RUMSdkConfigRUMUpdateAttributes> =
                     None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateAttributes {
                 }
                 let rum = rum.ok_or_else(|| M::Error::missing_field("rum"))?;
 
-                let content = RumSdkConfigUpdateAttributes {
+                let content = RUMSdkConfigUpdateAttributes {
                     rum,
                     additional_properties,
                     _unparsed,
@@ -90,6 +90,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMSdkConfigUpdateAttributesVisitor)
     }
 }

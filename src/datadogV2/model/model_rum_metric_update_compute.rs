@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricUpdateCompute {
+pub struct RUMMetricUpdateCompute {
     /// Toggle to include or exclude percentile aggregations (p50, p75, p90, p95, p99) for distribution metrics.
     /// Required when `aggregation_type` is `distribution`, and must be omitted otherwise.
     #[serde(rename = "include_percentiles")]
@@ -22,9 +22,9 @@ pub struct RumMetricUpdateCompute {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricUpdateCompute {
-    pub fn new() -> RumMetricUpdateCompute {
-        RumMetricUpdateCompute {
+impl RUMMetricUpdateCompute {
+    pub fn new() -> RUMMetricUpdateCompute {
+        RUMMetricUpdateCompute {
             include_percentiles: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -45,20 +45,20 @@ impl RumMetricUpdateCompute {
     }
 }
 
-impl Default for RumMetricUpdateCompute {
+impl Default for RUMMetricUpdateCompute {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricUpdateCompute {
+impl<'de> Deserialize<'de> for RUMMetricUpdateCompute {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricUpdateComputeVisitor;
-        impl<'a> Visitor<'a> for RumMetricUpdateComputeVisitor {
-            type Value = RumMetricUpdateCompute;
+        struct RUMMetricUpdateComputeVisitor;
+        impl<'a> Visitor<'a> for RUMMetricUpdateComputeVisitor {
+            type Value = RUMMetricUpdateCompute;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -92,7 +92,7 @@ impl<'de> Deserialize<'de> for RumMetricUpdateCompute {
                     }
                 }
 
-                let content = RumMetricUpdateCompute {
+                let content = RUMMetricUpdateCompute {
                     include_percentiles,
                     additional_properties,
                     _unparsed,
@@ -102,6 +102,6 @@ impl<'de> Deserialize<'de> for RumMetricUpdateCompute {
             }
         }
 
-        deserializer.deserialize_any(RumMetricUpdateComputeVisitor)
+        deserializer.deserialize_any(RUMMetricUpdateComputeVisitor)
     }
 }

@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRetentionQuotaWindowType {
+pub enum RUMRetentionQuotaWindowType {
     DAILY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRetentionQuotaWindowType {
+impl ToString for RUMRetentionQuotaWindowType {
     fn to_string(&self) -> String {
         match self {
             Self::DAILY => String::from("daily"),
@@ -20,7 +20,7 @@ impl ToString for RumRetentionQuotaWindowType {
     }
 }
 
-impl Serialize for RumRetentionQuotaWindowType {
+impl Serialize for RUMRetentionQuotaWindowType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumRetentionQuotaWindowType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaWindowType {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaWindowType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

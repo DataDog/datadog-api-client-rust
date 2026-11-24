@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfigUpsertData {
+pub struct RUMArchiveConfigUpsertData {
     /// Archive configuration to save. When enabled is true, retention_days is required and must be 30, 90, or 180. When disabled, retention_days can be omitted.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumArchiveConfigUpsertAttributes,
+    pub attributes: crate::datadogV2::model::RUMArchiveConfigUpsertAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumArchiveConfigType,
+    pub type_: crate::datadogV2::model::RUMArchiveConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumArchiveConfigUpsertData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfigUpsertData {
+impl RUMArchiveConfigUpsertData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumArchiveConfigUpsertAttributes,
+        attributes: crate::datadogV2::model::RUMArchiveConfigUpsertAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumArchiveConfigType,
-    ) -> RumArchiveConfigUpsertData {
-        RumArchiveConfigUpsertData {
+        type_: crate::datadogV2::model::RUMArchiveConfigType,
+    ) -> RUMArchiveConfigUpsertData {
+        RUMArchiveConfigUpsertData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumArchiveConfigUpsertData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfigUpsertData {
+impl<'de> Deserialize<'de> for RUMArchiveConfigUpsertData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigUpsertDataVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigUpsertDataVisitor {
-            type Value = RumArchiveConfigUpsertData;
+        struct RUMArchiveConfigUpsertDataVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigUpsertDataVisitor {
+            type Value = RUMArchiveConfigUpsertData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumArchiveConfigUpsertAttributes,
+                    crate::datadogV2::model::RUMArchiveConfigUpsertAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumArchiveConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMArchiveConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumArchiveConfigType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMArchiveConfigType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumArchiveConfigUpsertData {
+                let content = RUMArchiveConfigUpsertData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfigUpsertData {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigUpsertDataVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigUpsertDataVisitor)
     }
 }

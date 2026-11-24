@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterAttributes {
+pub struct RUMRetentionFilterAttributes {
     /// The configuration for cross-product retention filters.
     #[serde(rename = "cross_product_sampling")]
-    pub cross_product_sampling: Option<crate::datadogV2::model::RumCrossProductSampling>,
+    pub cross_product_sampling: Option<crate::datadogV2::model::RUMCrossProductSampling>,
     /// Whether the retention filter is enabled.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The type of RUM events to filter on.
     #[serde(rename = "event_type")]
-    pub event_type: Option<crate::datadogV2::model::RumRetentionFilterEventType>,
+    pub event_type: Option<crate::datadogV2::model::RUMRetentionFilterEventType>,
     /// The name of a RUM retention filter.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -31,7 +31,7 @@ pub struct RumRetentionFilterAttributes {
     pub sample_rate: Option<f64>,
     /// The product whose events the retention filter applies to.
     #[serde(rename = "track")]
-    pub track: Option<crate::datadogV2::model::RumRetentionFilterTrack>,
+    pub track: Option<crate::datadogV2::model::RUMRetentionFilterTrack>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -39,9 +39,9 @@ pub struct RumRetentionFilterAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterAttributes {
-    pub fn new() -> RumRetentionFilterAttributes {
-        RumRetentionFilterAttributes {
+impl RUMRetentionFilterAttributes {
+    pub fn new() -> RUMRetentionFilterAttributes {
+        RUMRetentionFilterAttributes {
             cross_product_sampling: None,
             enabled: None,
             event_type: None,
@@ -56,7 +56,7 @@ impl RumRetentionFilterAttributes {
 
     pub fn cross_product_sampling(
         mut self,
-        value: crate::datadogV2::model::RumCrossProductSampling,
+        value: crate::datadogV2::model::RUMCrossProductSampling,
     ) -> Self {
         self.cross_product_sampling = Some(value);
         self
@@ -69,7 +69,7 @@ impl RumRetentionFilterAttributes {
 
     pub fn event_type(
         mut self,
-        value: crate::datadogV2::model::RumRetentionFilterEventType,
+        value: crate::datadogV2::model::RUMRetentionFilterEventType,
     ) -> Self {
         self.event_type = Some(value);
         self
@@ -90,7 +90,7 @@ impl RumRetentionFilterAttributes {
         self
     }
 
-    pub fn track(mut self, value: crate::datadogV2::model::RumRetentionFilterTrack) -> Self {
+    pub fn track(mut self, value: crate::datadogV2::model::RUMRetentionFilterTrack) -> Self {
         self.track = Some(value);
         self
     }
@@ -104,20 +104,20 @@ impl RumRetentionFilterAttributes {
     }
 }
 
-impl Default for RumRetentionFilterAttributes {
+impl Default for RUMRetentionFilterAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
+impl<'de> Deserialize<'de> for RUMRetentionFilterAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterAttributesVisitor {
-            type Value = RumRetentionFilterAttributes;
+        struct RUMRetentionFilterAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterAttributesVisitor {
+            type Value = RUMRetentionFilterAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -128,15 +128,15 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                 M: MapAccess<'a>,
             {
                 let mut cross_product_sampling: Option<
-                    crate::datadogV2::model::RumCrossProductSampling,
+                    crate::datadogV2::model::RUMCrossProductSampling,
                 > = None;
                 let mut enabled: Option<bool> = None;
-                let mut event_type: Option<crate::datadogV2::model::RumRetentionFilterEventType> =
+                let mut event_type: Option<crate::datadogV2::model::RUMRetentionFilterEventType> =
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
                 let mut sample_rate: Option<f64> = None;
-                let mut track: Option<crate::datadogV2::model::RumRetentionFilterTrack> = None;
+                let mut track: Option<crate::datadogV2::model::RUMRetentionFilterTrack> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -165,7 +165,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                             event_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_type) = event_type {
                                 match _event_type {
-                                    crate::datadogV2::model::RumRetentionFilterEventType::UnparsedObject(_event_type) => {
+                                    crate::datadogV2::model::RUMRetentionFilterEventType::UnparsedObject(_event_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -198,7 +198,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                             track = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _track) = track {
                                 match _track {
-                                    crate::datadogV2::model::RumRetentionFilterTrack::UnparsedObject(_track) => {
+                                    crate::datadogV2::model::RUMRetentionFilterTrack::UnparsedObject(_track) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -213,7 +213,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
                     }
                 }
 
-                let content = RumRetentionFilterAttributes {
+                let content = RUMRetentionFilterAttributes {
                     cross_product_sampling,
                     enabled,
                     event_type,
@@ -229,6 +229,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterAttributesVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterAttributesVisitor)
     }
 }

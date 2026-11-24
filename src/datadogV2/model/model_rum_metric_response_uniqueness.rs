@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumMetricResponseUniqueness {
+pub struct RUMMetricResponseUniqueness {
     /// When to count updatable events. `match` when the event is first seen, or `end` when the event is complete. Sessions and views are updated over time, and each one is counted once.
     #[serde(rename = "when")]
-    pub when: Option<crate::datadogV2::model::RumMetricUniquenessWhen>,
+    pub when: Option<crate::datadogV2::model::RUMMetricUniquenessWhen>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct RumMetricResponseUniqueness {
     pub(crate) _unparsed: bool,
 }
 
-impl RumMetricResponseUniqueness {
-    pub fn new() -> RumMetricResponseUniqueness {
-        RumMetricResponseUniqueness {
+impl RUMMetricResponseUniqueness {
+    pub fn new() -> RUMMetricResponseUniqueness {
+        RUMMetricResponseUniqueness {
             when: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn when(mut self, value: crate::datadogV2::model::RumMetricUniquenessWhen) -> Self {
+    pub fn when(mut self, value: crate::datadogV2::model::RUMMetricUniquenessWhen) -> Self {
         self.when = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl RumMetricResponseUniqueness {
     }
 }
 
-impl Default for RumMetricResponseUniqueness {
+impl Default for RUMMetricResponseUniqueness {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricResponseUniqueness {
+impl<'de> Deserialize<'de> for RUMMetricResponseUniqueness {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumMetricResponseUniquenessVisitor;
-        impl<'a> Visitor<'a> for RumMetricResponseUniquenessVisitor {
-            type Value = RumMetricResponseUniqueness;
+        struct RUMMetricResponseUniquenessVisitor;
+        impl<'a> Visitor<'a> for RUMMetricResponseUniquenessVisitor {
+            type Value = RUMMetricResponseUniqueness;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseUniqueness {
             where
                 M: MapAccess<'a>,
             {
-                let mut when: Option<crate::datadogV2::model::RumMetricUniquenessWhen> = None;
+                let mut when: Option<crate::datadogV2::model::RUMMetricUniquenessWhen> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -83,7 +83,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseUniqueness {
                             when = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _when) = when {
                                 match _when {
-                                    crate::datadogV2::model::RumMetricUniquenessWhen::UnparsedObject(_when) => {
+                                    crate::datadogV2::model::RUMMetricUniquenessWhen::UnparsedObject(_when) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -98,7 +98,7 @@ impl<'de> Deserialize<'de> for RumMetricResponseUniqueness {
                     }
                 }
 
-                let content = RumMetricResponseUniqueness {
+                let content = RUMMetricResponseUniqueness {
                     when,
                     additional_properties,
                     _unparsed,
@@ -108,6 +108,6 @@ impl<'de> Deserialize<'de> for RumMetricResponseUniqueness {
             }
         }
 
-        deserializer.deserialize_any(RumMetricResponseUniquenessVisitor)
+        deserializer.deserialize_any(RUMMetricResponseUniquenessVisitor)
     }
 }
