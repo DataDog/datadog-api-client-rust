@@ -26,6 +26,17 @@ pub struct UpdateEnvironmentAttributes {
     /// Indicates whether feature flag changes require approval in this environment. If omitted, resets to false. Include the existing value to preserve it.
     #[serde(rename = "require_feature_flag_approval")]
     pub require_feature_flag_approval: Option<bool>,
+    /// The ID of a Custom OIDC provider, formatted as a nonzero UUID. If omitted, the stored association is preserved. Set to `null` to clear the association, which is allowed only when the resulting `subject_authorization_state` is `disabled`. A new non-null ID must be registered in the current organization and site, even when subject authorization is disabled. An unregistered ID returns `400 Bad Request`, and an unavailable registry returns `503 Service Unavailable`. Omitted, cleared, and unchanged IDs skip this check, including when you enable a retained provider. An ID that matches the stored ID in a different format, such as different letter case, is treated as unchanged. Saving does not verify provider eligibility or key publication.
+    #[serde(
+        rename = "subject_authorization_oidc_provider_id",
+        default,
+        with = "::serde_with::rust::double_option"
+    )]
+    pub subject_authorization_oidc_provider_id: Option<Option<uuid::Uuid>>,
+    /// Whether assignment requests for this environment require subject authorization. Allowed values are `disabled` and `enabled`. Enabling requires a provider ID formatted as a nonzero UUID. If omitted on create, defaults to `disabled`. If omitted on update, the stored state is preserved. `null` is not accepted. This setting applies only to the current Datadog site and is not copied to other sites. Before you enable it, configure an eligible Custom OIDC provider in the same organization and site, and verify that the provider's keys are published. Assignment requests fail when the required verification configuration is unavailable.
+    #[serde(rename = "subject_authorization_state")]
+    pub subject_authorization_state:
+        Option<crate::datadogV2::model::EnvironmentSubjectAuthorizationState>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -41,6 +52,8 @@ impl UpdateEnvironmentAttributes {
             observe_full_evaluation_data: None,
             queries: None,
             require_feature_flag_approval: None,
+            subject_authorization_oidc_provider_id: None,
+            subject_authorization_state: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
@@ -68,6 +81,19 @@ impl UpdateEnvironmentAttributes {
 
     pub fn require_feature_flag_approval(mut self, value: bool) -> Self {
         self.require_feature_flag_approval = Some(value);
+        self
+    }
+
+    pub fn subject_authorization_oidc_provider_id(mut self, value: Option<uuid::Uuid>) -> Self {
+        self.subject_authorization_oidc_provider_id = Some(value);
+        self
+    }
+
+    pub fn subject_authorization_state(
+        mut self,
+        value: crate::datadogV2::model::EnvironmentSubjectAuthorizationState,
+    ) -> Self {
+        self.subject_authorization_state = Some(value);
         self
     }
 
@@ -108,6 +134,10 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
                 let mut observe_full_evaluation_data: Option<bool> = None;
                 let mut queries: Option<Vec<String>> = None;
                 let mut require_feature_flag_approval: Option<bool> = None;
+                let mut subject_authorization_oidc_provider_id: Option<Option<uuid::Uuid>> = None;
+                let mut subject_authorization_state: Option<
+                    crate::datadogV2::model::EnvironmentSubjectAuthorizationState,
+                > = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -149,6 +179,27 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
                             require_feature_flag_approval =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "subject_authorization_oidc_provider_id" => {
+                            subject_authorization_oidc_provider_id =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "subject_authorization_state" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            subject_authorization_state =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _subject_authorization_state) =
+                                subject_authorization_state
+                            {
+                                match _subject_authorization_state {
+                                    crate::datadogV2::model::EnvironmentSubjectAuthorizationState::UnparsedObject(_subject_authorization_state) => {
+                                        _unparsed = true;
+                                    },
+                                    _ => {}
+                                }
+                            }
+                        }
                         &_ => {
                             if let Ok(value) = serde_json::from_value(v.clone()) {
                                 additional_properties.insert(k, value);
@@ -163,6 +214,8 @@ impl<'de> Deserialize<'de> for UpdateEnvironmentAttributes {
                     observe_full_evaluation_data,
                     queries,
                     require_feature_flag_approval,
+                    subject_authorization_oidc_provider_id,
+                    subject_authorization_state,
                     additional_properties,
                     _unparsed,
                 };

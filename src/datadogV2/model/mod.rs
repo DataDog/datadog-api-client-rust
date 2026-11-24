@@ -5550,6 +5550,8 @@ pub mod model_feature_flag_environment_list_item;
 pub use self::model_feature_flag_environment_list_item::FeatureFlagEnvironmentListItem;
 pub mod model_feature_flag_status;
 pub use self::model_feature_flag_status::FeatureFlagStatus;
+pub mod model_environment_subject_authorization_state;
+pub use self::model_environment_subject_authorization_state::EnvironmentSubjectAuthorizationState;
 pub mod model_feature_flag_staleness_details;
 pub use self::model_feature_flag_staleness_details::FeatureFlagStalenessDetails;
 pub mod model_feature_flag_staleness_code_reference;
