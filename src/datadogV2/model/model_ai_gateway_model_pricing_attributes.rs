@@ -11,10 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AiGatewayModelPricingAttributes {
-    /// True when models.dev pricing is authoritative for this organization and provider.
+    /// True when automatic pricing is authoritative for this organization and provider.
     #[serde(rename = "authoritative")]
     pub authoritative: Option<bool>,
-    /// The published models.dev price. Present only when it is the effective price.
+    /// The automatically synced published price. Present only when it is the effective price.
     #[serde(rename = "automatic_pricing")]
     pub automatic_pricing: Option<crate::datadogV2::model::AiGatewayModelAutomaticPricing>,
     /// True when a `BLOCK` budget covering this model rejects its requests before they reach the provider.

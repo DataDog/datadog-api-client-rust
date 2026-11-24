@@ -17,9 +17,6 @@ pub struct AiGatewayModelAutomaticPricingSource {
     /// Model identifier in the source.
     #[serde(rename = "model_id")]
     pub model_id: String,
-    /// Pricing source name.
-    #[serde(rename = "name")]
-    pub name: String,
     /// Provider identifier in the source.
     #[serde(rename = "provider_id")]
     pub provider_id: String,
@@ -37,14 +34,12 @@ impl AiGatewayModelAutomaticPricingSource {
     pub fn new(
         match_method: String,
         model_id: String,
-        name: String,
         provider_id: String,
         revision: String,
     ) -> AiGatewayModelAutomaticPricingSource {
         AiGatewayModelAutomaticPricingSource {
             match_method,
             model_id,
-            name,
             provider_id,
             revision,
             additional_properties: std::collections::BTreeMap::new(),
@@ -80,7 +75,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelAutomaticPricingSource {
             {
                 let mut match_method: Option<String> = None;
                 let mut model_id: Option<String> = None;
-                let mut name: Option<String> = None;
                 let mut provider_id: Option<String> = None;
                 let mut revision: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -97,9 +91,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelAutomaticPricingSource {
                         }
                         "model_id" => {
                             model_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "provider_id" => {
                             provider_id =
@@ -118,7 +109,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelAutomaticPricingSource {
                 let match_method =
                     match_method.ok_or_else(|| M::Error::missing_field("match_method"))?;
                 let model_id = model_id.ok_or_else(|| M::Error::missing_field("model_id"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let provider_id =
                     provider_id.ok_or_else(|| M::Error::missing_field("provider_id"))?;
                 let revision = revision.ok_or_else(|| M::Error::missing_field("revision"))?;
@@ -126,7 +116,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelAutomaticPricingSource {
                 let content = AiGatewayModelAutomaticPricingSource {
                     match_method,
                     model_id,
-                    name,
                     provider_id,
                     revision,
                     additional_properties,
