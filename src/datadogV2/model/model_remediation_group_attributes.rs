@@ -6,8 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Attributes of a remediation group. Each group includes one kind object, `package_update` or `image_update`,
-/// depending on its grouping definition.
+/// Attributes of a remediation group. Each group includes one kind object, depending on its grouping definition.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -16,14 +15,13 @@ pub struct RemediationGroupAttributes {
     /// don't match `filter[query]`.
     #[serde(rename = "findings")]
     pub findings: crate::datadogV2::model::RemediationGroupFindings,
-    /// Grouping definition that formed the group: `sca.package_update` or `cloudvm.image_update`.
+    /// Grouping definition that formed the group, such as `sca.package_update`.
     #[serde(rename = "grouping_definition_id")]
     pub grouping_definition_id: String,
-    /// An image or package to upgrade, for a group of host and container vulnerabilities (`cloudvm.image_update`).
-    /// The group gathers the open vulnerabilities of running production images that have a fix available, and groups
-    /// them by `grouping_location`, `remediation_kind`, and `action`.
-    #[serde(rename = "image_update")]
-    pub image_update: Option<crate::datadogV2::model::RemediationGroupImageUpdate>,
+    /// Who should fix the group: the code owners of the group's findings, from their `@git.codeowners` attribute,
+    /// and their Datadog teams, from their `team` tag. A group with no owners has empty `items` and a `total` of 0.
+    #[serde(rename = "owners")]
+    pub owners: crate::datadogV2::model::RemediationGroupOwners,
     /// A package to update in a repository, for a group of library vulnerabilities (`sca.package_update`). The group
     /// gathers the open vulnerabilities of direct dependencies that have a recommended fix, and groups them by
     /// `@git.repository_id`, `@vulnerability.stack.ecosystem`, and `@remediation.recommended.name`.
@@ -43,25 +41,18 @@ impl RemediationGroupAttributes {
     pub fn new(
         findings: crate::datadogV2::model::RemediationGroupFindings,
         grouping_definition_id: String,
+        owners: crate::datadogV2::model::RemediationGroupOwners,
         title: String,
     ) -> RemediationGroupAttributes {
         RemediationGroupAttributes {
             findings,
             grouping_definition_id,
-            image_update: None,
+            owners,
             package_update: None,
             title,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn image_update(
-        mut self,
-        value: crate::datadogV2::model::RemediationGroupImageUpdate,
-    ) -> Self {
-        self.image_update = Some(value);
-        self
     }
 
     pub fn package_update(
@@ -100,8 +91,7 @@ impl<'de> Deserialize<'de> for RemediationGroupAttributes {
             {
                 let mut findings: Option<crate::datadogV2::model::RemediationGroupFindings> = None;
                 let mut grouping_definition_id: Option<String> = None;
-                let mut image_update: Option<crate::datadogV2::model::RemediationGroupImageUpdate> =
-                    None;
+                let mut owners: Option<crate::datadogV2::model::RemediationGroupOwners> = None;
                 let mut package_update: Option<
                     crate::datadogV2::model::RemediationGroupPackageUpdate,
                 > = None;
@@ -121,12 +111,8 @@ impl<'de> Deserialize<'de> for RemediationGroupAttributes {
                             grouping_definition_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
-                        "image_update" => {
-                            if v.is_null() {
-                                continue;
-                            }
-                            image_update =
-                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        "owners" => {
+                            owners = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "package_update" => {
                             if v.is_null() {
@@ -148,12 +134,13 @@ impl<'de> Deserialize<'de> for RemediationGroupAttributes {
                 let findings = findings.ok_or_else(|| M::Error::missing_field("findings"))?;
                 let grouping_definition_id = grouping_definition_id
                     .ok_or_else(|| M::Error::missing_field("grouping_definition_id"))?;
+                let owners = owners.ok_or_else(|| M::Error::missing_field("owners"))?;
                 let title = title.ok_or_else(|| M::Error::missing_field("title"))?;
 
                 let content = RemediationGroupAttributes {
                     findings,
                     grouping_definition_id,
-                    image_update,
+                    owners,
                     package_update,
                     title,
                     additional_properties,

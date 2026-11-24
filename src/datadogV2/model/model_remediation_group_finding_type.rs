@@ -8,7 +8,6 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum RemediationGroupFindingType {
     LIBRARY_VULNERABILITY,
-    HOST_AND_CONTAINER_VULNERABILITY,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -16,9 +15,6 @@ impl ToString for RemediationGroupFindingType {
     fn to_string(&self) -> String {
         match self {
             Self::LIBRARY_VULNERABILITY => String::from("library_vulnerability"),
-            Self::HOST_AND_CONTAINER_VULNERABILITY => {
-                String::from("host_and_container_vulnerability")
-            }
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -44,7 +40,6 @@ impl<'de> Deserialize<'de> for RemediationGroupFindingType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "library_vulnerability" => Self::LIBRARY_VULNERABILITY,
-            "host_and_container_vulnerability" => Self::HOST_AND_CONTAINER_VULNERABILITY,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
