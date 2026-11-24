@@ -273,6 +273,7 @@ impl Default for Configuration {
                 false,
             ),
             ("v2.delete_ai_gateway_model".to_owned(), false),
+            ("v2.delete_ai_gateway_model_by_canonical".to_owned(), false),
             ("v2.delete_ai_gateway_model_group".to_owned(), false),
             ("v2.delete_ai_gateway_model_pricing".to_owned(), false),
             (
@@ -343,6 +344,7 @@ impl Default for Configuration {
             ),
             ("v2.update_ai_gateway_governance".to_owned(), false),
             ("v2.update_ai_gateway_model".to_owned(), false),
+            ("v2.update_ai_gateway_model_by_canonical".to_owned(), false),
             ("v2.update_ai_gateway_model_group".to_owned(), false),
             ("v2.update_ai_gateway_model_pricing".to_owned(), false),
             (
