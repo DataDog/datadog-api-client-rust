@@ -14,7 +14,7 @@ pub struct OpenAICodexIntegrationAccountBearerTokenAuthUpdate {
     /// The authentication method type.
     #[serde(rename = "auth_type")]
     pub auth_type: crate::datadogV2::model::OpenAICodexIntegrationAccountBearerTokenAuthType,
-    /// Secret token used to authenticate with OpenAI Codex.
+    /// Workspace-scoped OpenAI Admin key with the `codex.enterprise.analytics.read` scope. To collect turn metrics, also grant `chatgpt.enterprise.compliance_logs_platform.workspace_analytics.read` to the same key.
     #[serde(rename = "token")]
     pub token: Option<String>,
     #[serde(skip)]
