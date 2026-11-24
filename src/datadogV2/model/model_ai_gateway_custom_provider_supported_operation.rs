@@ -10,6 +10,7 @@ pub enum AiGatewayCustomProviderSupportedOperation {
     OPENAI_CHAT_COMPLETIONS,
     OPENAI_RESPONSES,
     ANTHROPIC_MESSAGES,
+    SYSTEM_ONE,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -19,6 +20,7 @@ impl ToString for AiGatewayCustomProviderSupportedOperation {
             Self::OPENAI_CHAT_COMPLETIONS => String::from("OPENAI_CHAT_COMPLETIONS"),
             Self::OPENAI_RESPONSES => String::from("OPENAI_RESPONSES"),
             Self::ANTHROPIC_MESSAGES => String::from("ANTHROPIC_MESSAGES"),
+            Self::SYSTEM_ONE => String::from("SYSTEM_ONE"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -46,6 +48,7 @@ impl<'de> Deserialize<'de> for AiGatewayCustomProviderSupportedOperation {
             "OPENAI_CHAT_COMPLETIONS" => Self::OPENAI_CHAT_COMPLETIONS,
             "OPENAI_RESPONSES" => Self::OPENAI_RESPONSES,
             "ANTHROPIC_MESSAGES" => Self::ANTHROPIC_MESSAGES,
+            "SYSTEM_ONE" => Self::SYSTEM_ONE,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
