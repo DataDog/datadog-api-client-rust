@@ -1016,6 +1016,23 @@ impl Default for Configuration {
                 false,
             ),
             (
+                "v2.create_git_hub_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
+                "v2.delete_git_hub_costs_integration_account".to_owned(),
+                false,
+            ),
+            ("v2.get_git_hub_costs_integration_account".to_owned(), false),
+            (
+                "v2.list_git_hub_costs_integration_accounts".to_owned(),
+                false,
+            ),
+            (
+                "v2.update_git_hub_costs_integration_account".to_owned(),
+                false,
+            ),
+            (
                 "v2.create_nebius_cloud_integration_account".to_owned(),
                 false,
             ),
