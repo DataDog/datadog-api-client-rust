@@ -21,7 +21,8 @@ pub struct EventsListRequest {
     /// Pagination settings.
     #[serde(rename = "page")]
     pub page: Option<crate::datadogV2::model::EventsRequestPage>,
-    /// The sort parameters when querying events.
+    /// The sort order of events. `-timestamp` (the default) returns the newest events first, and `timestamp` returns
+    /// the oldest first. The client libraries reject any other value.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV2::model::EventsSort>,
     #[serde(flatten)]

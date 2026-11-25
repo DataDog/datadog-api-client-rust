@@ -11,13 +11,14 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct EventsQueryFilter {
-    /// The minimum time for the requested events. Supports date math and regular timestamps in milliseconds.
+    /// The minimum time for the requested events. Supports date math, ISO 8601, and timestamps in milliseconds.
+    /// Set an earlier time than the default to search beyond the last 15 minutes.
     #[serde(rename = "from")]
     pub from: Option<String>,
-    /// The search query following the event search syntax.
+    /// The search query following the event search syntax. Attributes take `@` (`@evt.category:alert`); tags and reserved fields don't (`service:web`).
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The maximum time for the requested events. Supports date math and regular timestamps in milliseconds.
+    /// The maximum time for the requested events. Supports date math, ISO 8601, and timestamps in milliseconds.
     #[serde(rename = "to")]
     pub to: Option<String>,
     #[serde(flatten)]
