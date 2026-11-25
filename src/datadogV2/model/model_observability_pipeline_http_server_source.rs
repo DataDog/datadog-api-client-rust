@@ -31,9 +31,9 @@ pub struct ObservabilityPipelineHttpServerSource {
     /// Name of the environment variable or secret that holds the password (used when `auth_strategy` is `plain`).
     #[serde(rename = "password_key")]
     pub password_key: Option<String>,
-    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients.
+    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients, or mutual TLS when `verify_certificate` is `true`. Mutual TLS also enables an optional allowlist of client certificate identities.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity>,
     /// The source type. The value should always be `http_server`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
@@ -93,7 +93,7 @@ impl ObservabilityPipelineHttpServerSource {
 
     pub fn tls(
         mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTls,
+        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
     ) -> Self {
         self.tls = Some(value);
         self
@@ -147,8 +147,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineHttpServerSource {
                     None;
                 let mut id: Option<String> = None;
                 let mut password_key: Option<String> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls> =
-                    None;
+                let mut tls: Option<
+                    crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
+                > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineHttpServerSourceType,
                 > = None;

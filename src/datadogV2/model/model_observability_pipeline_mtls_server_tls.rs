@@ -14,7 +14,7 @@ pub struct ObservabilityPipelineMtlsServerTls {
     /// Path to the Certificate Authority (CA) file used to validate connecting clients' TLS certificates.
     #[serde(rename = "ca_file")]
     pub ca_file: Option<String>,
-    /// Path to the TLS server certificate file used to used to identify the pipeline component to connecting clients.
+    /// Path to the TLS server certificate file used to identify the pipeline component to connecting clients.
     #[serde(rename = "crt_file")]
     pub crt_file: String,
     /// Path to the private key file associated with the TLS server certificate.

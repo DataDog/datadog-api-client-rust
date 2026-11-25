@@ -22,9 +22,9 @@ pub struct ObservabilityPipelineOpentelemetrySource {
     /// The unique identifier for this component. Used in other parts of the pipeline to reference this component (for example, as the `input` to downstream components).
     #[serde(rename = "id")]
     pub id: String,
-    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients.
+    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients, or mutual TLS when `verify_certificate` is `true`. Mutual TLS also enables an optional allowlist of client certificate identities.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity>,
     /// The source type. The value should always be `opentelemetry`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
@@ -63,7 +63,7 @@ impl ObservabilityPipelineOpentelemetrySource {
 
     pub fn tls(
         mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTls,
+        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
     ) -> Self {
         self.tls = Some(value);
         self
@@ -98,8 +98,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineOpentelemetrySource {
                 let mut grpc_address_key: Option<String> = None;
                 let mut http_address_key: Option<String> = None;
                 let mut id: Option<String> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls> =
-                    None;
+                let mut tls: Option<
+                    crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
+                > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineOpentelemetrySourceType,
                 > = None;
