@@ -9,8 +9,7 @@ async fn main() {
 
     // there is a valid "deployment_rule" in the system
     let deployment_rule_data_id = std::env::var("DEPLOYMENT_RULE_DATA_ID").unwrap();
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.delete_deployment_rule", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api
         .delete_deployment_rule(

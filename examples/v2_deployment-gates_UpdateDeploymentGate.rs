@@ -15,8 +15,7 @@ async fn main() {
         "12345678-1234-1234-1234-123456789012".to_string(),
         DeploymentGateDataType::DEPLOYMENT_GATE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.update_deployment_gate", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api
         .update_deployment_gate(deployment_gate_data_id.clone(), body)

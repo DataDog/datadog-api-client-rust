@@ -5,8 +5,7 @@ use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.get_deployment_gates_evaluation_result", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api
         .get_deployment_gates_evaluation_result(

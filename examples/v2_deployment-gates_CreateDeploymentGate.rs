@@ -17,8 +17,7 @@ async fn main() {
         .identifier("my-gate-1".to_string()),
         DeploymentGateDataType::DEPLOYMENT_GATE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.create_deployment_gate", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api.create_deployment_gate(body).await;
     if let Ok(value) = resp {
