@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigUpdateData {
+pub struct RUMSdkConfigUpdateData {
     /// Attributes of the RUM SDK configuration to update.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumSdkConfigUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMSdkConfigUpdateAttributes,
     /// The ID of the RUM SDK configuration to update.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource. The value should always be `rum_sdk_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumSdkConfigType,
+    pub type_: crate::datadogV2::model::RUMSdkConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumSdkConfigUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigUpdateData {
+impl RUMSdkConfigUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumSdkConfigUpdateAttributes,
+        attributes: crate::datadogV2::model::RUMSdkConfigUpdateAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumSdkConfigType,
-    ) -> RumSdkConfigUpdateData {
-        RumSdkConfigUpdateData {
+        type_: crate::datadogV2::model::RUMSdkConfigType,
+    ) -> RUMSdkConfigUpdateData {
+        RUMSdkConfigUpdateData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumSdkConfigUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigUpdateData {
+impl<'de> Deserialize<'de> for RUMSdkConfigUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigUpdateDataVisitor {
-            type Value = RumSdkConfigUpdateData;
+        struct RUMSdkConfigUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigUpdateDataVisitor {
+            type Value = RUMSdkConfigUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,10 +68,10 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumSdkConfigUpdateAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMSdkConfigUpdateAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumSdkConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMSdkConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumSdkConfigType::UnparsedObject(
+                                    crate::datadogV2::model::RUMSdkConfigType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -110,7 +110,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumSdkConfigUpdateData {
+                let content = RUMSdkConfigUpdateData {
                     attributes,
                     id,
                     type_,
@@ -122,6 +122,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigUpdateDataVisitor)
+        deserializer.deserialize_any(RUMSdkConfigUpdateDataVisitor)
     }
 }

@@ -5,7 +5,7 @@ use crate::datadog;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 
-/// GetSegmentsOptionalParams is a struct for passing parameters to the method [`RumReplaySessionsAPI::get_segments`]
+/// GetSegmentsOptionalParams is a struct for passing parameters to the method [`RUMReplaySessionsAPI::get_segments`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
 pub struct GetSegmentsOptionalParams {
@@ -44,7 +44,7 @@ impl GetSegmentsOptionalParams {
     }
 }
 
-/// GetSegmentsError is a struct for typed errors of method [`RumReplaySessionsAPI::get_segments`]
+/// GetSegmentsError is a struct for typed errors of method [`RUMReplaySessionsAPI::get_segments`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSegmentsError {
@@ -55,18 +55,18 @@ pub enum GetSegmentsError {
 /// Retrieve segments for RUM replay sessions.
 /// Access session replay data stored in event platform or blob storage.
 #[derive(Debug, Clone)]
-pub struct RumReplaySessionsAPI {
+pub struct RUMReplaySessionsAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumReplaySessionsAPI {
+impl Default for RUMReplaySessionsAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumReplaySessionsAPI {
+impl RUMReplaySessionsAPI {
     pub fn new() -> Self {
         Self::default()
     }

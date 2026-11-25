@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveSessionsPage {
+pub struct RUMArchiveSessionsPage {
     /// Opaque continuation cursor. Omitted when no further page is available.
     #[serde(rename = "next_cursor")]
     pub next_cursor: Option<String>,
@@ -24,9 +24,9 @@ pub struct RumArchiveSessionsPage {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveSessionsPage {
-    pub fn new(total_count: i64) -> RumArchiveSessionsPage {
-        RumArchiveSessionsPage {
+impl RUMArchiveSessionsPage {
+    pub fn new(total_count: i64) -> RUMArchiveSessionsPage {
+        RUMArchiveSessionsPage {
             next_cursor: None,
             total_count,
             additional_properties: std::collections::BTreeMap::new(),
@@ -48,14 +48,14 @@ impl RumArchiveSessionsPage {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveSessionsPage {
+impl<'de> Deserialize<'de> for RUMArchiveSessionsPage {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveSessionsPageVisitor;
-        impl<'a> Visitor<'a> for RumArchiveSessionsPageVisitor {
-            type Value = RumArchiveSessionsPage;
+        struct RUMArchiveSessionsPageVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveSessionsPageVisitor {
+            type Value = RUMArchiveSessionsPage;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -96,7 +96,7 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsPage {
                 let total_count =
                     total_count.ok_or_else(|| M::Error::missing_field("total_count"))?;
 
-                let content = RumArchiveSessionsPage {
+                let content = RUMArchiveSessionsPage {
                     next_cursor,
                     total_count,
                     additional_properties,
@@ -107,6 +107,6 @@ impl<'de> Deserialize<'de> for RumArchiveSessionsPage {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveSessionsPageVisitor)
+        deserializer.deserialize_any(RUMArchiveSessionsPageVisitor)
     }
 }

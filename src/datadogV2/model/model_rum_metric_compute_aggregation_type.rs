@@ -6,13 +6,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumMetricComputeAggregationType {
+pub enum RUMMetricComputeAggregationType {
     COUNT,
     DISTRIBUTION,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumMetricComputeAggregationType {
+impl ToString for RUMMetricComputeAggregationType {
     fn to_string(&self) -> String {
         match self {
             Self::COUNT => String::from("count"),
@@ -22,7 +22,7 @@ impl ToString for RumMetricComputeAggregationType {
     }
 }
 
-impl Serialize for RumMetricComputeAggregationType {
+impl Serialize for RUMMetricComputeAggregationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -34,7 +34,7 @@ impl Serialize for RumMetricComputeAggregationType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumMetricComputeAggregationType {
+impl<'de> Deserialize<'de> for RUMMetricComputeAggregationType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

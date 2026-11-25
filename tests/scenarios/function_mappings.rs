@@ -163,29 +163,29 @@ pub struct ApiInstances {
     pub v2_api_powerpack: Option<datadogV2::api_powerpack::PowerpackAPI>,
     pub v2_api_processes: Option<datadogV2::api_processes::ProcessesAPI>,
     pub v2_api_product_analytics: Option<datadogV2::api_product_analytics::ProductAnalyticsAPI>,
-    pub v2_api_rum_audience_management: Option<datadogV2::api_rum_audience_management::RumAudienceManagementAPI>,
+    pub v2_api_rum_audience_management: Option<datadogV2::api_rum_audience_management::RUMAudienceManagementAPI>,
     pub v2_api_product_catalog: Option<datadogV2::api_product_catalog::ProductCatalogAPI>,
     pub v2_api_apm_trace: Option<datadogV2::api_apm_trace::APMTraceAPI>,
     pub v2_api_reference_tables: Option<datadogV2::api_reference_tables::ReferenceTablesAPI>,
     pub v2_api_application_security: Option<datadogV2::api_application_security::ApplicationSecurityAPI>,
     pub v2_api_csm_threats: Option<datadogV2::api_csm_threats::CSMThreatsAPI>,
     pub v2_api_rum_remote_config: Option<datadogV2::api_rum_remote_config::RUMRemoteConfigAPI>,
-    pub v2_api_rum_replay_heatmaps: Option<datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI>,
+    pub v2_api_rum_replay_heatmaps: Option<datadogV2::api_rum_replay_heatmaps::RUMReplayHeatmapsAPI>,
     pub v2_api_report_schedules: Option<datadogV2::api_report_schedules::ReportSchedulesAPI>,
     pub v2_api_restriction_policies: Option<datadogV2::api_restriction_policies::RestrictionPoliciesAPI>,
     pub v2_api_rum: Option<datadogV2::api_rum::RUMAPI>,
-    pub v2_api_rum_retention_filters: Option<datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI>,
+    pub v2_api_rum_retention_filters: Option<datadogV2::api_rum_retention_filters::RUMRetentionFiltersAPI>,
     pub v2_api_rum_config: Option<datadogV2::api_rum_config::RUMConfigAPI>,
     pub v2_api_rum_managed_archives: Option<datadogV2::api_rum_managed_archives::RUMManagedArchivesAPI>,
-    pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RumMetricsAPI>,
+    pub v2_api_rum_metrics: Option<datadogV2::api_rum_metrics::RUMMetricsAPI>,
     pub v2_api_rum_retention_quotas: Option<datadogV2::api_rum_retention_quotas::RUMRetentionQuotasAPI>,
-    pub v2_api_rum_teams_ownership: Option<datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI>,
+    pub v2_api_rum_teams_ownership: Option<datadogV2::api_rum_teams_ownership::RUMTeamsOwnershipAPI>,
     pub v2_api_rum_operations: Option<datadogV2::api_rum_operations::RUMOperationsAPI>,
     pub v2_api_rum_insights: Option<datadogV2::api_rum_insights::RUMInsightsAPI>,
     pub v2_api_rum_recovery: Option<datadogV2::api_rum_recovery::RUMRecoveryAPI>,
-    pub v2_api_rum_replay_playlists: Option<datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI>,
-    pub v2_api_rum_replay_sessions: Option<datadogV2::api_rum_replay_sessions::RumReplaySessionsAPI>,
-    pub v2_api_rum_replay_viewership: Option<datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI>,
+    pub v2_api_rum_replay_playlists: Option<datadogV2::api_rum_replay_playlists::RUMReplayPlaylistsAPI>,
+    pub v2_api_rum_replay_sessions: Option<datadogV2::api_rum_replay_sessions::RUMReplaySessionsAPI>,
+    pub v2_api_rum_replay_viewership: Option<datadogV2::api_rum_replay_viewership::RUMReplayViewershipAPI>,
     pub v2_api_scorecards: Option<datadogV2::api_scorecards::ScorecardsAPI>,
     pub v2_api_seats: Option<datadogV2::api_seats::SeatsAPI>,
     pub v2_api_entity_risk_scores: Option<datadogV2::api_entity_risk_scores::EntityRiskScoresAPI>,
@@ -1313,8 +1313,8 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RumAudienceManagement" => {
-            world.api_instances.v2_api_rum_audience_management = Some(datadogV2::api_rum_audience_management::RumAudienceManagementAPI::with_client_and_config(
+        "RUMAudienceManagement" => {
+            world.api_instances.v2_api_rum_audience_management = Some(datadogV2::api_rum_audience_management::RUMAudienceManagementAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -1367,9 +1367,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RumReplayHeatmaps" => {
+        "RUMReplayHeatmaps" => {
             world.api_instances.v2_api_rum_replay_heatmaps = Some(
-                datadogV2::api_rum_replay_heatmaps::RumReplayHeatmapsAPI::with_client_and_config(
+                datadogV2::api_rum_replay_heatmaps::RUMReplayHeatmapsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1398,8 +1398,8 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                     world.http_client.as_ref().unwrap().clone(),
                 ));
         }
-        "RumRetentionFilters" => {
-            world.api_instances.v2_api_rum_retention_filters = Some(datadogV2::api_rum_retention_filters::RumRetentionFiltersAPI::with_client_and_config(
+        "RUMRetentionFilters" => {
+            world.api_instances.v2_api_rum_retention_filters = Some(datadogV2::api_rum_retention_filters::RUMRetentionFiltersAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -1420,9 +1420,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RumMetrics" => {
+        "RUMMetrics" => {
             world.api_instances.v2_api_rum_metrics = Some(
-                datadogV2::api_rum_metrics::RumMetricsAPI::with_client_and_config(
+                datadogV2::api_rum_metrics::RUMMetricsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1436,9 +1436,9 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RumTeamsOwnership" => {
+        "RUMTeamsOwnership" => {
             world.api_instances.v2_api_rum_teams_ownership = Some(
-                datadogV2::api_rum_teams_ownership::RumTeamsOwnershipAPI::with_client_and_config(
+                datadogV2::api_rum_teams_ownership::RUMTeamsOwnershipAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
@@ -1468,24 +1468,24 @@ pub fn initialize_api_instance(world: &mut DatadogWorld, api: String) {
                 ),
             );
         }
-        "RumReplayPlaylists" => {
+        "RUMReplayPlaylists" => {
             world.api_instances.v2_api_rum_replay_playlists = Some(
-                datadogV2::api_rum_replay_playlists::RumReplayPlaylistsAPI::with_client_and_config(
+                datadogV2::api_rum_replay_playlists::RUMReplayPlaylistsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
         }
-        "RumReplaySessions" => {
+        "RUMReplaySessions" => {
             world.api_instances.v2_api_rum_replay_sessions = Some(
-                datadogV2::api_rum_replay_sessions::RumReplaySessionsAPI::with_client_and_config(
+                datadogV2::api_rum_replay_sessions::RUMReplaySessionsAPI::with_client_and_config(
                     world.config.clone(),
                     world.http_client.as_ref().unwrap().clone(),
                 ),
             );
         }
-        "RumReplayViewership" => {
-            world.api_instances.v2_api_rum_replay_viewership = Some(datadogV2::api_rum_replay_viewership::RumReplayViewershipAPI::with_client_and_config(
+        "RUMReplayViewership" => {
+            world.api_instances.v2_api_rum_replay_viewership = Some(datadogV2::api_rum_replay_viewership::RUMReplayViewershipAPI::with_client_and_config(
                 world.config.clone(),
                 world.http_client.as_ref().unwrap().clone()
             ));
@@ -8328,9 +8328,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v2.GetRumSdkConfig".into(), test_v2_get_rum_sdk_config);
+        .insert("v2.GetRUMSdkConfig".into(), test_v2_get_rum_sdk_config);
     world.function_mappings.insert(
-        "v2.UpdateRumSdkConfig".into(),
+        "v2.UpdateRUMSdkConfig".into(),
         test_v2_update_rum_sdk_config,
     );
     world.function_mappings.insert(
@@ -8502,13 +8502,13 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v2.GetRumConfig".into(), test_v2_get_rum_config);
+        .insert("v2.GetRUMConfig".into(), test_v2_get_rum_config);
     world
         .function_mappings
-        .insert("v2.UpdateRumConfig".into(), test_v2_update_rum_config);
+        .insert("v2.UpdateRUMConfig".into(), test_v2_update_rum_config);
     world
         .function_mappings
-        .insert("v2.CreateRumConfig".into(), test_v2_create_rum_config);
+        .insert("v2.CreateRUMConfig".into(), test_v2_create_rum_config);
     world.function_mappings.insert(
         "v2.ListRUMArchiveConfigs".into(),
         test_v2_list_rum_archive_configs,
@@ -8527,28 +8527,28 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
     );
     world
         .function_mappings
-        .insert("v2.ListRumMetrics".into(), test_v2_list_rum_metrics);
+        .insert("v2.ListRUMMetrics".into(), test_v2_list_rum_metrics);
     world
         .function_mappings
-        .insert("v2.CreateRumMetric".into(), test_v2_create_rum_metric);
+        .insert("v2.CreateRUMMetric".into(), test_v2_create_rum_metric);
     world
         .function_mappings
-        .insert("v2.DeleteRumMetric".into(), test_v2_delete_rum_metric);
+        .insert("v2.DeleteRUMMetric".into(), test_v2_delete_rum_metric);
     world
         .function_mappings
-        .insert("v2.GetRumMetric".into(), test_v2_get_rum_metric);
+        .insert("v2.GetRUMMetric".into(), test_v2_get_rum_metric);
     world
         .function_mappings
-        .insert("v2.UpdateRumMetric".into(), test_v2_update_rum_metric);
+        .insert("v2.UpdateRUMMetric".into(), test_v2_update_rum_metric);
     world.function_mappings.insert(
-        "v2.DeleteRumQuotaConfig".into(),
+        "v2.DeleteRUMQuotaConfig".into(),
         test_v2_delete_rum_quota_config,
     );
     world
         .function_mappings
-        .insert("v2.GetRumQuotaConfig".into(), test_v2_get_rum_quota_config);
+        .insert("v2.GetRUMQuotaConfig".into(), test_v2_get_rum_quota_config);
     world.function_mappings.insert(
-        "v2.UpsertRumQuotaConfig".into(),
+        "v2.UpsertRUMQuotaConfig".into(),
         test_v2_upsert_rum_quota_config,
     );
     world.function_mappings.insert(
@@ -8643,58 +8643,58 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_search_rum_archive_sessions,
     );
     world.function_mappings.insert(
-        "v2.ListRumReplayPlaylists".into(),
+        "v2.ListRUMReplayPlaylists".into(),
         test_v2_list_rum_replay_playlists,
     );
     world.function_mappings.insert(
-        "v2.CreateRumReplayPlaylist".into(),
+        "v2.CreateRUMReplayPlaylist".into(),
         test_v2_create_rum_replay_playlist,
     );
     world.function_mappings.insert(
-        "v2.DeleteRumReplayPlaylist".into(),
+        "v2.DeleteRUMReplayPlaylist".into(),
         test_v2_delete_rum_replay_playlist,
     );
     world.function_mappings.insert(
-        "v2.GetRumReplayPlaylist".into(),
+        "v2.GetRUMReplayPlaylist".into(),
         test_v2_get_rum_replay_playlist,
     );
     world.function_mappings.insert(
-        "v2.UpdateRumReplayPlaylist".into(),
+        "v2.UpdateRUMReplayPlaylist".into(),
         test_v2_update_rum_replay_playlist,
     );
     world.function_mappings.insert(
-        "v2.BulkRemoveRumReplayPlaylistSessions".into(),
+        "v2.BulkRemoveRUMReplayPlaylistSessions".into(),
         test_v2_bulk_remove_rum_replay_playlist_sessions,
     );
     world.function_mappings.insert(
-        "v2.ListRumReplayPlaylistSessions".into(),
+        "v2.ListRUMReplayPlaylistSessions".into(),
         test_v2_list_rum_replay_playlist_sessions,
     );
     world.function_mappings.insert(
-        "v2.RemoveRumReplaySessionFromPlaylist".into(),
+        "v2.RemoveRUMReplaySessionFromPlaylist".into(),
         test_v2_remove_rum_replay_session_from_playlist,
     );
     world.function_mappings.insert(
-        "v2.AddRumReplaySessionToPlaylist".into(),
+        "v2.AddRUMReplaySessionToPlaylist".into(),
         test_v2_add_rum_replay_session_to_playlist,
     );
     world
         .function_mappings
         .insert("v2.GetSegments".into(), test_v2_get_segments);
     world.function_mappings.insert(
-        "v2.ListRumReplaySessionWatchers".into(),
+        "v2.ListRUMReplaySessionWatchers".into(),
         test_v2_list_rum_replay_session_watchers,
     );
     world.function_mappings.insert(
-        "v2.DeleteRumReplaySessionWatch".into(),
+        "v2.DeleteRUMReplaySessionWatch".into(),
         test_v2_delete_rum_replay_session_watch,
     );
     world.function_mappings.insert(
-        "v2.CreateRumReplaySessionWatch".into(),
+        "v2.CreateRUMReplaySessionWatch".into(),
         test_v2_create_rum_replay_session_watch,
     );
     world.function_mappings.insert(
-        "v2.ListRumReplayViewershipHistorySessions".into(),
+        "v2.ListRUMReplayViewershipHistorySessions".into(),
         test_v2_list_rum_replay_viewership_history_sessions,
     );
     world.function_mappings.insert(
@@ -69857,7 +69857,7 @@ fn test_v2_list_rum_replay_playlists(
         .get("page[size]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_rum_replay_playlists::ListRumReplayPlaylistsOptionalParams::default();
+        datadogV2::api_rum_replay_playlists::ListRUMReplayPlaylistsOptionalParams::default();
     params.filter_created_by_uuid = filter_created_by_uuid;
     params.filter_query = filter_query;
     params.page_number = page_number;
@@ -70044,7 +70044,7 @@ fn test_v2_list_rum_replay_playlist_sessions(
         .get("page[size]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_rum_replay_playlists::ListRumReplayPlaylistSessionsOptionalParams::default();
+        datadogV2::api_rum_replay_playlists::ListRUMReplayPlaylistSessionsOptionalParams::default();
     params.page_number = page_number;
     params.page_size = page_size;
     let response =
@@ -70117,7 +70117,7 @@ fn test_v2_add_rum_replay_session_to_playlist(
         .get("data_source")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_rum_replay_playlists::AddRumReplaySessionToPlaylistOptionalParams::default();
+        datadogV2::api_rum_replay_playlists::AddRUMReplaySessionToPlaylistOptionalParams::default();
     params.data_source = data_source;
     let response = match block_on(api.add_rum_replay_session_to_playlist_with_http_info(
         ts,
@@ -70204,7 +70204,7 @@ fn test_v2_list_rum_replay_session_watchers(
         .get("page[number]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
     let mut params =
-        datadogV2::api_rum_replay_viewership::ListRumReplaySessionWatchersOptionalParams::default();
+        datadogV2::api_rum_replay_viewership::ListRUMReplaySessionWatchersOptionalParams::default();
     params.page_size = page_size;
     params.page_number = page_number;
     let response =
@@ -70316,7 +70316,7 @@ fn test_v2_list_rum_replay_viewership_history_sessions(
     let filter_application_id = _parameters
         .get("filter[application_id]")
         .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
-    let mut params = datadogV2::api_rum_replay_viewership::ListRumReplayViewershipHistorySessionsOptionalParams::default();
+    let mut params = datadogV2::api_rum_replay_viewership::ListRUMReplayViewershipHistorySessionsOptionalParams::default();
     params.filter_watched_at_start = filter_watched_at_start;
     params.page_number = page_number;
     params.filter_created_by = filter_created_by;

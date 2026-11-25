@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumSdkConfigTracingUrlPropagatorType {
+pub enum RUMSdkConfigTracingUrlPropagatorType {
     DATADOG,
     B3,
     B3MULTI,
@@ -14,7 +14,7 @@ pub enum RumSdkConfigTracingUrlPropagatorType {
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumSdkConfigTracingUrlPropagatorType {
+impl ToString for RUMSdkConfigTracingUrlPropagatorType {
     fn to_string(&self) -> String {
         match self {
             Self::DATADOG => String::from("datadog"),
@@ -26,7 +26,7 @@ impl ToString for RumSdkConfigTracingUrlPropagatorType {
     }
 }
 
-impl Serialize for RumSdkConfigTracingUrlPropagatorType {
+impl Serialize for RUMSdkConfigTracingUrlPropagatorType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -38,7 +38,7 @@ impl Serialize for RumSdkConfigTracingUrlPropagatorType {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigTracingUrlPropagatorType {
+impl<'de> Deserialize<'de> for RUMSdkConfigTracingUrlPropagatorType {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigMatchOption {
+pub struct RUMSdkConfigMatchOption {
     /// The type of match pattern, either a literal string or a regex.
     #[serde(rename = "rc_serialized_type")]
-    pub rc_serialized_type: crate::datadogV2::model::RumSdkConfigMatchOptionSerializedType,
+    pub rc_serialized_type: crate::datadogV2::model::RUMSdkConfigMatchOptionSerializedType,
     /// The value to match against.
     #[serde(rename = "value")]
     pub value: String,
@@ -24,12 +24,12 @@ pub struct RumSdkConfigMatchOption {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigMatchOption {
+impl RUMSdkConfigMatchOption {
     pub fn new(
-        rc_serialized_type: crate::datadogV2::model::RumSdkConfigMatchOptionSerializedType,
+        rc_serialized_type: crate::datadogV2::model::RUMSdkConfigMatchOptionSerializedType,
         value: String,
-    ) -> RumSdkConfigMatchOption {
-        RumSdkConfigMatchOption {
+    ) -> RUMSdkConfigMatchOption {
+        RUMSdkConfigMatchOption {
             rc_serialized_type,
             value,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumSdkConfigMatchOption {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigMatchOption {
+impl<'de> Deserialize<'de> for RUMSdkConfigMatchOption {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigMatchOptionVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigMatchOptionVisitor {
-            type Value = RumSdkConfigMatchOption;
+        struct RUMSdkConfigMatchOptionVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigMatchOptionVisitor {
+            type Value = RUMSdkConfigMatchOption;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,7 +64,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigMatchOption {
                 M: MapAccess<'a>,
             {
                 let mut rc_serialized_type: Option<
-                    crate::datadogV2::model::RumSdkConfigMatchOptionSerializedType,
+                    crate::datadogV2::model::RUMSdkConfigMatchOptionSerializedType,
                 > = None;
                 let mut value: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -80,7 +80,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigMatchOption {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _rc_serialized_type) = rc_serialized_type {
                                 match _rc_serialized_type {
-                                    crate::datadogV2::model::RumSdkConfigMatchOptionSerializedType::UnparsedObject(_rc_serialized_type) => {
+                                    crate::datadogV2::model::RUMSdkConfigMatchOptionSerializedType::UnparsedObject(_rc_serialized_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -101,7 +101,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigMatchOption {
                     .ok_or_else(|| M::Error::missing_field("rc_serialized_type"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
 
-                let content = RumSdkConfigMatchOption {
+                let content = RUMSdkConfigMatchOption {
                     rc_serialized_type,
                     value,
                     additional_properties,
@@ -112,6 +112,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigMatchOption {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigMatchOptionVisitor)
+        deserializer.deserialize_any(RUMSdkConfigMatchOptionVisitor)
     }
 }

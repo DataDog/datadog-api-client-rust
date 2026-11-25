@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumPermanentRetentionFilterEditability {
+pub struct RUMPermanentRetentionFilterEditability {
     /// Whether the APM trace cross-product configuration of the filter can be updated.
     #[serde(rename = "trace_editable")]
     pub trace_editable: Option<bool>,
@@ -21,9 +21,9 @@ pub struct RumPermanentRetentionFilterEditability {
     pub(crate) _unparsed: bool,
 }
 
-impl RumPermanentRetentionFilterEditability {
-    pub fn new() -> RumPermanentRetentionFilterEditability {
-        RumPermanentRetentionFilterEditability {
+impl RUMPermanentRetentionFilterEditability {
+    pub fn new() -> RUMPermanentRetentionFilterEditability {
+        RUMPermanentRetentionFilterEditability {
             trace_editable: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -44,20 +44,20 @@ impl RumPermanentRetentionFilterEditability {
     }
 }
 
-impl Default for RumPermanentRetentionFilterEditability {
+impl Default for RUMPermanentRetentionFilterEditability {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumPermanentRetentionFilterEditability {
+impl<'de> Deserialize<'de> for RUMPermanentRetentionFilterEditability {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumPermanentRetentionFilterEditabilityVisitor;
-        impl<'a> Visitor<'a> for RumPermanentRetentionFilterEditabilityVisitor {
-            type Value = RumPermanentRetentionFilterEditability;
+        struct RUMPermanentRetentionFilterEditabilityVisitor;
+        impl<'a> Visitor<'a> for RUMPermanentRetentionFilterEditabilityVisitor {
+            type Value = RUMPermanentRetentionFilterEditability;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterEditability {
                     }
                 }
 
-                let content = RumPermanentRetentionFilterEditability {
+                let content = RUMPermanentRetentionFilterEditability {
                     trace_editable,
                     additional_properties,
                     _unparsed,
@@ -101,6 +101,6 @@ impl<'de> Deserialize<'de> for RumPermanentRetentionFilterEditability {
             }
         }
 
-        deserializer.deserialize_any(RumPermanentRetentionFilterEditabilityVisitor)
+        deserializer.deserialize_any(RUMPermanentRetentionFilterEditabilityVisitor)
     }
 }

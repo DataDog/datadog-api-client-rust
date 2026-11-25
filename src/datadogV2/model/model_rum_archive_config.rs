@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumArchiveConfig {
+pub struct RUMArchiveConfig {
     /// Archive configuration.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumArchiveConfigAttributes,
+    pub attributes: crate::datadogV2::model::RUMArchiveConfigAttributes,
     /// Resource identifier.
     #[serde(rename = "id")]
     pub id: String,
     /// JSON:API resource type.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumArchiveConfigType,
+    pub type_: crate::datadogV2::model::RUMArchiveConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumArchiveConfig {
     pub(crate) _unparsed: bool,
 }
 
-impl RumArchiveConfig {
+impl RUMArchiveConfig {
     pub fn new(
-        attributes: crate::datadogV2::model::RumArchiveConfigAttributes,
+        attributes: crate::datadogV2::model::RUMArchiveConfigAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumArchiveConfigType,
-    ) -> RumArchiveConfig {
-        RumArchiveConfig {
+        type_: crate::datadogV2::model::RUMArchiveConfigType,
+    ) -> RUMArchiveConfig {
+        RUMArchiveConfig {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumArchiveConfig {
     }
 }
 
-impl<'de> Deserialize<'de> for RumArchiveConfig {
+impl<'de> Deserialize<'de> for RUMArchiveConfig {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumArchiveConfigVisitor;
-        impl<'a> Visitor<'a> for RumArchiveConfigVisitor {
-            type Value = RumArchiveConfig;
+        struct RUMArchiveConfigVisitor;
+        impl<'a> Visitor<'a> for RUMArchiveConfigVisitor {
+            type Value = RUMArchiveConfig;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,10 +68,10 @@ impl<'de> Deserialize<'de> for RumArchiveConfig {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumArchiveConfigAttributes> =
+                let mut attributes: Option<crate::datadogV2::model::RUMArchiveConfigAttributes> =
                     None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumArchiveConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMArchiveConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfig {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumArchiveConfigType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMArchiveConfigType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for RumArchiveConfig {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumArchiveConfig {
+                let content = RUMArchiveConfig {
                     attributes,
                     id,
                     type_,
@@ -120,6 +120,6 @@ impl<'de> Deserialize<'de> for RumArchiveConfig {
             }
         }
 
-        deserializer.deserialize_any(RumArchiveConfigVisitor)
+        deserializer.deserialize_any(RUMArchiveConfigVisitor)
     }
 }

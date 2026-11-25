@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumConfigData {
+pub struct RUMConfigData {
     /// Attributes of the RUM configuration.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumConfigAttributes,
+    pub attributes: crate::datadogV2::model::RUMConfigAttributes,
     /// The organization ID associated with the RUM configuration.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource. The value should always be `rum_config`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumConfigType,
+    pub type_: crate::datadogV2::model::RUMConfigType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumConfigData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumConfigData {
+impl RUMConfigData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumConfigAttributes,
+        attributes: crate::datadogV2::model::RUMConfigAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumConfigType,
-    ) -> RumConfigData {
-        RumConfigData {
+        type_: crate::datadogV2::model::RUMConfigType,
+    ) -> RUMConfigData {
+        RUMConfigData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumConfigData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigData {
+impl<'de> Deserialize<'de> for RUMConfigData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumConfigDataVisitor;
-        impl<'a> Visitor<'a> for RumConfigDataVisitor {
-            type Value = RumConfigData;
+        struct RUMConfigDataVisitor;
+        impl<'a> Visitor<'a> for RUMConfigDataVisitor {
+            type Value = RUMConfigData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,9 +68,9 @@ impl<'de> Deserialize<'de> for RumConfigData {
             where
                 M: MapAccess<'a>,
             {
-                let mut attributes: Option<crate::datadogV2::model::RumConfigAttributes> = None;
+                let mut attributes: Option<crate::datadogV2::model::RUMConfigAttributes> = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumConfigType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMConfigType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumConfigData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumConfigType::UnparsedObject(
+                                    crate::datadogV2::model::RUMConfigType::UnparsedObject(
                                         _type_,
                                     ) => {
                                         _unparsed = true;
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumConfigData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumConfigData {
+                let content = RUMConfigData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumConfigData {
             }
         }
 
-        deserializer.deserialize_any(RumConfigDataVisitor)
+        deserializer.deserialize_any(RUMConfigDataVisitor)
     }
 }

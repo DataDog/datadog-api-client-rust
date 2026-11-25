@@ -1,17 +1,17 @@
 // Cancel a batch recovery request returns "OK" response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_recovery::RUMRecoveryAPI;
-use datadog_api_client::datadogV2::model::RumRecoveryCancelAttributes;
-use datadog_api_client::datadogV2::model::RumRecoveryCancelData;
-use datadog_api_client::datadogV2::model::RumRecoveryCancelRequest;
-use datadog_api_client::datadogV2::model::RumRecoveryCancelStatus;
+use datadog_api_client::datadogV2::model::RUMRecoveryCancelAttributes;
+use datadog_api_client::datadogV2::model::RUMRecoveryCancelData;
+use datadog_api_client::datadogV2::model::RUMRecoveryCancelRequest;
+use datadog_api_client::datadogV2::model::RUMRecoveryCancelStatus;
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let body = RumRecoveryCancelRequest::new(
-        RumRecoveryCancelData::new(RumRecoveryCancelAttributes::new(
-            RumRecoveryCancelStatus::CANCELLED,
+    let body = RUMRecoveryCancelRequest::new(
+        RUMRecoveryCancelData::new(RUMRecoveryCancelAttributes::new(
+            RUMRecoveryCancelStatus::CANCELLED,
         ))
         .id("11111111-1111-4111-8111-111111111111".to_string())
         .type_("rum_recovery_request".to_string()),

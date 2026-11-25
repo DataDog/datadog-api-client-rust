@@ -10,17 +10,17 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// ListRumReplaySessionWatchersOptionalParams is a struct for passing parameters to the method [`RumReplayViewershipAPI::list_rum_replay_session_watchers`]
+/// ListRUMReplaySessionWatchersOptionalParams is a struct for passing parameters to the method [`RUMReplayViewershipAPI::list_rum_replay_session_watchers`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListRumReplaySessionWatchersOptionalParams {
+pub struct ListRUMReplaySessionWatchersOptionalParams {
     /// Number of items per page.
     pub page_size: Option<i64>,
     /// Page number for pagination (0-indexed).
     pub page_number: Option<i64>,
 }
 
-impl ListRumReplaySessionWatchersOptionalParams {
+impl ListRUMReplaySessionWatchersOptionalParams {
     /// Number of items per page.
     pub fn page_size(mut self, value: i64) -> Self {
         self.page_size = Some(value);
@@ -33,10 +33,10 @@ impl ListRumReplaySessionWatchersOptionalParams {
     }
 }
 
-/// ListRumReplayViewershipHistorySessionsOptionalParams is a struct for passing parameters to the method [`RumReplayViewershipAPI::list_rum_replay_viewership_history_sessions`]
+/// ListRUMReplayViewershipHistorySessionsOptionalParams is a struct for passing parameters to the method [`RUMReplayViewershipAPI::list_rum_replay_viewership_history_sessions`]
 #[non_exhaustive]
 #[derive(Clone, Default, Debug)]
-pub struct ListRumReplayViewershipHistorySessionsOptionalParams {
+pub struct ListRUMReplayViewershipHistorySessionsOptionalParams {
     /// Start timestamp in milliseconds for watched_at filter.
     pub filter_watched_at_start: Option<i64>,
     /// Page number for pagination (0-indexed).
@@ -53,7 +53,7 @@ pub struct ListRumReplayViewershipHistorySessionsOptionalParams {
     pub filter_application_id: Option<String>,
 }
 
-impl ListRumReplayViewershipHistorySessionsOptionalParams {
+impl ListRUMReplayViewershipHistorySessionsOptionalParams {
     /// Start timestamp in milliseconds for watched_at filter.
     pub fn filter_watched_at_start(mut self, value: i64) -> Self {
         self.filter_watched_at_start = Some(value);
@@ -91,52 +91,52 @@ impl ListRumReplayViewershipHistorySessionsOptionalParams {
     }
 }
 
-/// CreateRumReplaySessionWatchError is a struct for typed errors of method [`RumReplayViewershipAPI::create_rum_replay_session_watch`]
+/// CreateRUMReplaySessionWatchError is a struct for typed errors of method [`RUMReplayViewershipAPI::create_rum_replay_session_watch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum CreateRumReplaySessionWatchError {
+pub enum CreateRUMReplaySessionWatchError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRumReplaySessionWatchError is a struct for typed errors of method [`RumReplayViewershipAPI::delete_rum_replay_session_watch`]
+/// DeleteRUMReplaySessionWatchError is a struct for typed errors of method [`RUMReplayViewershipAPI::delete_rum_replay_session_watch`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum DeleteRumReplaySessionWatchError {
+pub enum DeleteRUMReplaySessionWatchError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListRumReplaySessionWatchersError is a struct for typed errors of method [`RumReplayViewershipAPI::list_rum_replay_session_watchers`]
+/// ListRUMReplaySessionWatchersError is a struct for typed errors of method [`RUMReplayViewershipAPI::list_rum_replay_session_watchers`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListRumReplaySessionWatchersError {
+pub enum ListRUMReplaySessionWatchersError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
-/// ListRumReplayViewershipHistorySessionsError is a struct for typed errors of method [`RumReplayViewershipAPI::list_rum_replay_viewership_history_sessions`]
+/// ListRUMReplayViewershipHistorySessionsError is a struct for typed errors of method [`RUMReplayViewershipAPI::list_rum_replay_viewership_history_sessions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum ListRumReplayViewershipHistorySessionsError {
+pub enum ListRUMReplayViewershipHistorySessionsError {
     APIErrorResponse(crate::datadogV2::model::APIErrorResponse),
     UnknownValue(serde_json::Value),
 }
 
 /// Track and manage RUM replay session viewership. Monitor who watches replay sessions and maintain watch history for audit and analytics purposes.
 #[derive(Debug, Clone)]
-pub struct RumReplayViewershipAPI {
+pub struct RUMReplayViewershipAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumReplayViewershipAPI {
+impl Default for RUMReplayViewershipAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumReplayViewershipAPI {
+impl RUMReplayViewershipAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -202,7 +202,7 @@ impl RumReplayViewershipAPI {
         &self,
         session_id: String,
         body: crate::datadogV2::model::Watch,
-    ) -> Result<crate::datadogV2::model::Watch, datadog::Error<CreateRumReplaySessionWatchError>>
+    ) -> Result<crate::datadogV2::model::Watch, datadog::Error<CreateRUMReplaySessionWatchError>>
     {
         match self
             .create_rum_replay_session_watch_with_http_info(session_id, body)
@@ -228,7 +228,7 @@ impl RumReplayViewershipAPI {
         body: crate::datadogV2::model::Watch,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::Watch>,
-        datadog::Error<CreateRumReplaySessionWatchError>,
+        datadog::Error<CreateRUMReplaySessionWatchError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_rum_replay_session_watch";
@@ -343,7 +343,7 @@ impl RumReplayViewershipAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<CreateRumReplaySessionWatchError> =
+            let local_entity: Option<CreateRUMReplaySessionWatchError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -358,7 +358,7 @@ impl RumReplayViewershipAPI {
     pub async fn delete_rum_replay_session_watch(
         &self,
         session_id: String,
-    ) -> Result<(), datadog::Error<DeleteRumReplaySessionWatchError>> {
+    ) -> Result<(), datadog::Error<DeleteRUMReplaySessionWatchError>> {
         match self
             .delete_rum_replay_session_watch_with_http_info(session_id)
             .await
@@ -372,7 +372,7 @@ impl RumReplayViewershipAPI {
     pub async fn delete_rum_replay_session_watch_with_http_info(
         &self,
         session_id: String,
-    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRumReplaySessionWatchError>>
+    ) -> Result<datadog::ResponseContent<()>, datadog::Error<DeleteRUMReplaySessionWatchError>>
     {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_rum_replay_session_watch";
@@ -435,7 +435,7 @@ impl RumReplayViewershipAPI {
                 entity: None,
             })
         } else {
-            let local_entity: Option<DeleteRumReplaySessionWatchError> =
+            let local_entity: Option<DeleteRUMReplaySessionWatchError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -450,10 +450,10 @@ impl RumReplayViewershipAPI {
     pub async fn list_rum_replay_session_watchers(
         &self,
         session_id: String,
-        params: ListRumReplaySessionWatchersOptionalParams,
+        params: ListRUMReplaySessionWatchersOptionalParams,
     ) -> Result<
         crate::datadogV2::model::WatcherArray,
-        datadog::Error<ListRumReplaySessionWatchersError>,
+        datadog::Error<ListRUMReplaySessionWatchersError>,
     > {
         match self
             .list_rum_replay_session_watchers_with_http_info(session_id, params)
@@ -476,10 +476,10 @@ impl RumReplayViewershipAPI {
     pub async fn list_rum_replay_session_watchers_with_http_info(
         &self,
         session_id: String,
-        params: ListRumReplaySessionWatchersOptionalParams,
+        params: ListRUMReplaySessionWatchersOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::WatcherArray>,
-        datadog::Error<ListRumReplaySessionWatchersError>,
+        datadog::Error<ListRUMReplaySessionWatchersError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_session_watchers";
@@ -560,7 +560,7 @@ impl RumReplayViewershipAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplaySessionWatchersError> =
+            let local_entity: Option<ListRUMReplaySessionWatchersError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,
@@ -574,10 +574,10 @@ impl RumReplayViewershipAPI {
     /// List watched sessions.
     pub async fn list_rum_replay_viewership_history_sessions(
         &self,
-        params: ListRumReplayViewershipHistorySessionsOptionalParams,
+        params: ListRUMReplayViewershipHistorySessionsOptionalParams,
     ) -> Result<
         crate::datadogV2::model::ViewershipHistorySessionArray,
-        datadog::Error<ListRumReplayViewershipHistorySessionsError>,
+        datadog::Error<ListRUMReplayViewershipHistorySessionsError>,
     > {
         match self
             .list_rum_replay_viewership_history_sessions_with_http_info(params)
@@ -599,10 +599,10 @@ impl RumReplayViewershipAPI {
     /// List watched sessions.
     pub async fn list_rum_replay_viewership_history_sessions_with_http_info(
         &self,
-        params: ListRumReplayViewershipHistorySessionsOptionalParams,
+        params: ListRUMReplayViewershipHistorySessionsOptionalParams,
     ) -> Result<
         datadog::ResponseContent<crate::datadogV2::model::ViewershipHistorySessionArray>,
-        datadog::Error<ListRumReplayViewershipHistorySessionsError>,
+        datadog::Error<ListRUMReplayViewershipHistorySessionsError>,
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_rum_replay_viewership_history_sessions";
@@ -709,7 +709,7 @@ impl RumReplayViewershipAPI {
                 Err(e) => return Err(datadog::Error::Serde(e)),
             };
         } else {
-            let local_entity: Option<ListRumReplayViewershipHistorySessionsError> =
+            let local_entity: Option<ListRUMReplayViewershipHistorySessionsError> =
                 serde_json::from_str(&local_content).ok();
             let local_error = datadog::ResponseContent {
                 status: local_status,

@@ -11,7 +11,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateConnectionError is a struct for typed errors of method [`RumAudienceManagementAPI::create_connection`]
+/// CreateConnectionError is a struct for typed errors of method [`RUMAudienceManagementAPI::create_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateConnectionError {
@@ -19,7 +19,7 @@ pub enum CreateConnectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteConnectionError is a struct for typed errors of method [`RumAudienceManagementAPI::delete_connection`]
+/// DeleteConnectionError is a struct for typed errors of method [`RUMAudienceManagementAPI::delete_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteConnectionError {
@@ -27,7 +27,7 @@ pub enum DeleteConnectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteUserProfileError is a struct for typed errors of method [`RumAudienceManagementAPI::delete_user_profile`]
+/// DeleteUserProfileError is a struct for typed errors of method [`RUMAudienceManagementAPI::delete_user_profile`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteUserProfileError {
@@ -36,7 +36,7 @@ pub enum DeleteUserProfileError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetAccountFacetInfoError is a struct for typed errors of method [`RumAudienceManagementAPI::get_account_facet_info`]
+/// GetAccountFacetInfoError is a struct for typed errors of method [`RUMAudienceManagementAPI::get_account_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAccountFacetInfoError {
@@ -44,7 +44,7 @@ pub enum GetAccountFacetInfoError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetMappingError is a struct for typed errors of method [`RumAudienceManagementAPI::get_mapping`]
+/// GetMappingError is a struct for typed errors of method [`RUMAudienceManagementAPI::get_mapping`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMappingError {
@@ -52,7 +52,7 @@ pub enum GetMappingError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetUserFacetInfoError is a struct for typed errors of method [`RumAudienceManagementAPI::get_user_facet_info`]
+/// GetUserFacetInfoError is a struct for typed errors of method [`RUMAudienceManagementAPI::get_user_facet_info`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserFacetInfoError {
@@ -60,7 +60,7 @@ pub enum GetUserFacetInfoError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListConnectionsError is a struct for typed errors of method [`RumAudienceManagementAPI::list_connections`]
+/// ListConnectionsError is a struct for typed errors of method [`RUMAudienceManagementAPI::list_connections`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListConnectionsError {
@@ -68,7 +68,7 @@ pub enum ListConnectionsError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryAccountsError is a struct for typed errors of method [`RumAudienceManagementAPI::query_accounts`]
+/// QueryAccountsError is a struct for typed errors of method [`RUMAudienceManagementAPI::query_accounts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryAccountsError {
@@ -76,7 +76,7 @@ pub enum QueryAccountsError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryEventFilteredUsersError is a struct for typed errors of method [`RumAudienceManagementAPI::query_event_filtered_users`]
+/// QueryEventFilteredUsersError is a struct for typed errors of method [`RUMAudienceManagementAPI::query_event_filtered_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryEventFilteredUsersError {
@@ -84,7 +84,7 @@ pub enum QueryEventFilteredUsersError {
     UnknownValue(serde_json::Value),
 }
 
-/// QueryUsersError is a struct for typed errors of method [`RumAudienceManagementAPI::query_users`]
+/// QueryUsersError is a struct for typed errors of method [`RUMAudienceManagementAPI::query_users`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum QueryUsersError {
@@ -92,7 +92,7 @@ pub enum QueryUsersError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateConnectionError is a struct for typed errors of method [`RumAudienceManagementAPI::update_connection`]
+/// UpdateConnectionError is a struct for typed errors of method [`RUMAudienceManagementAPI::update_connection`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateConnectionError {
@@ -100,20 +100,20 @@ pub enum UpdateConnectionError {
     UnknownValue(serde_json::Value),
 }
 
-/// Auto-generated tag Rum Audience Management
+/// Auto-generated tag RUM Audience Management
 #[derive(Debug, Clone)]
-pub struct RumAudienceManagementAPI {
+pub struct RUMAudienceManagementAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumAudienceManagementAPI {
+impl Default for RUMAudienceManagementAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumAudienceManagementAPI {
+impl RUMAudienceManagementAPI {
     pub fn new() -> Self {
         Self::default()
     }

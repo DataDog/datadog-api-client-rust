@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterUpdateRequest {
+pub struct RUMExclusionFilterUpdateRequest {
     /// The exclusion filter properties to update.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumExclusionFilterUpdateData,
+    pub data: crate::datadogV2::model::RUMExclusionFilterUpdateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,11 +21,11 @@ pub struct RumExclusionFilterUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterUpdateRequest {
+impl RUMExclusionFilterUpdateRequest {
     pub fn new(
-        data: crate::datadogV2::model::RumExclusionFilterUpdateData,
-    ) -> RumExclusionFilterUpdateRequest {
-        RumExclusionFilterUpdateRequest {
+        data: crate::datadogV2::model::RUMExclusionFilterUpdateData,
+    ) -> RUMExclusionFilterUpdateRequest {
+        RUMExclusionFilterUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -41,14 +41,14 @@ impl RumExclusionFilterUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterUpdateRequest {
+impl<'de> Deserialize<'de> for RUMExclusionFilterUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterUpdateRequestVisitor {
-            type Value = RumExclusionFilterUpdateRequest;
+        struct RUMExclusionFilterUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterUpdateRequestVisitor {
+            type Value = RUMExclusionFilterUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -58,7 +58,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumExclusionFilterUpdateData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMExclusionFilterUpdateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -79,7 +79,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumExclusionFilterUpdateRequest {
+                let content = RUMExclusionFilterUpdateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -89,6 +89,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterUpdateRequest {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterUpdateRequestVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterUpdateRequestVisitor)
     }
 }

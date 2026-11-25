@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumConfigUpdateRequest {
+pub struct RUMConfigUpdateRequest {
     /// Object describing the RUM configuration to update.
     #[serde(rename = "data")]
-    pub data: crate::datadogV2::model::RumConfigUpdateData,
+    pub data: crate::datadogV2::model::RUMConfigUpdateData,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,9 +21,9 @@ pub struct RumConfigUpdateRequest {
     pub(crate) _unparsed: bool,
 }
 
-impl RumConfigUpdateRequest {
-    pub fn new(data: crate::datadogV2::model::RumConfigUpdateData) -> RumConfigUpdateRequest {
-        RumConfigUpdateRequest {
+impl RUMConfigUpdateRequest {
+    pub fn new(data: crate::datadogV2::model::RUMConfigUpdateData) -> RUMConfigUpdateRequest {
+        RUMConfigUpdateRequest {
             data,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -39,14 +39,14 @@ impl RumConfigUpdateRequest {
     }
 }
 
-impl<'de> Deserialize<'de> for RumConfigUpdateRequest {
+impl<'de> Deserialize<'de> for RUMConfigUpdateRequest {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumConfigUpdateRequestVisitor;
-        impl<'a> Visitor<'a> for RumConfigUpdateRequestVisitor {
-            type Value = RumConfigUpdateRequest;
+        struct RUMConfigUpdateRequestVisitor;
+        impl<'a> Visitor<'a> for RUMConfigUpdateRequestVisitor {
+            type Value = RUMConfigUpdateRequest;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -56,7 +56,7 @@ impl<'de> Deserialize<'de> for RumConfigUpdateRequest {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<crate::datadogV2::model::RumConfigUpdateData> = None;
+                let mut data: Option<crate::datadogV2::model::RUMConfigUpdateData> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -77,7 +77,7 @@ impl<'de> Deserialize<'de> for RumConfigUpdateRequest {
                 }
                 let data = data.ok_or_else(|| M::Error::missing_field("data"))?;
 
-                let content = RumConfigUpdateRequest {
+                let content = RUMConfigUpdateRequest {
                     data,
                     additional_properties,
                     _unparsed,
@@ -87,6 +87,6 @@ impl<'de> Deserialize<'de> for RumConfigUpdateRequest {
             }
         }
 
-        deserializer.deserialize_any(RumConfigUpdateRequestVisitor)
+        deserializer.deserialize_any(RUMConfigUpdateRequestVisitor)
     }
 }

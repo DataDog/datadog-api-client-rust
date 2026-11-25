@@ -10,10 +10,10 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFiltersResponse {
+pub struct RUMRetentionFiltersResponse {
     /// A list of RUM retention filters.
     #[serde(rename = "data")]
-    pub data: Option<Vec<crate::datadogV2::model::RumRetentionFilterData>>,
+    pub data: Option<Vec<crate::datadogV2::model::RUMRetentionFilterData>>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -21,16 +21,16 @@ pub struct RumRetentionFiltersResponse {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFiltersResponse {
-    pub fn new() -> RumRetentionFiltersResponse {
-        RumRetentionFiltersResponse {
+impl RUMRetentionFiltersResponse {
+    pub fn new() -> RUMRetentionFiltersResponse {
+        RUMRetentionFiltersResponse {
             data: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
-    pub fn data(mut self, value: Vec<crate::datadogV2::model::RumRetentionFilterData>) -> Self {
+    pub fn data(mut self, value: Vec<crate::datadogV2::model::RUMRetentionFilterData>) -> Self {
         self.data = Some(value);
         self
     }
@@ -44,20 +44,20 @@ impl RumRetentionFiltersResponse {
     }
 }
 
-impl Default for RumRetentionFiltersResponse {
+impl Default for RUMRetentionFiltersResponse {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFiltersResponse {
+impl<'de> Deserialize<'de> for RUMRetentionFiltersResponse {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFiltersResponseVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFiltersResponseVisitor {
-            type Value = RumRetentionFiltersResponse;
+        struct RUMRetentionFiltersResponseVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFiltersResponseVisitor {
+            type Value = RUMRetentionFiltersResponse;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -67,7 +67,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersResponse {
             where
                 M: MapAccess<'a>,
             {
-                let mut data: Option<Vec<crate::datadogV2::model::RumRetentionFilterData>> = None;
+                let mut data: Option<Vec<crate::datadogV2::model::RUMRetentionFilterData>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -90,7 +90,7 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersResponse {
                     }
                 }
 
-                let content = RumRetentionFiltersResponse {
+                let content = RUMRetentionFiltersResponse {
                     data,
                     additional_properties,
                     _unparsed,
@@ -100,6 +100,6 @@ impl<'de> Deserialize<'de> for RumRetentionFiltersResponse {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFiltersResponseVisitor)
+        deserializer.deserialize_any(RUMRetentionFiltersResponseVisitor)
     }
 }

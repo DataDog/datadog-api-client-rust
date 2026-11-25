@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumCrossProductSamplingUpdate {
+pub struct RUMCrossProductSamplingUpdate {
     /// Whether the cross-product retention filter for APM traces is enabled.
     #[serde(rename = "trace_enabled")]
     pub trace_enabled: Option<bool>,
@@ -24,9 +24,9 @@ pub struct RumCrossProductSamplingUpdate {
     pub(crate) _unparsed: bool,
 }
 
-impl RumCrossProductSamplingUpdate {
-    pub fn new() -> RumCrossProductSamplingUpdate {
-        RumCrossProductSamplingUpdate {
+impl RUMCrossProductSamplingUpdate {
+    pub fn new() -> RUMCrossProductSamplingUpdate {
+        RUMCrossProductSamplingUpdate {
             trace_enabled: None,
             trace_sample_rate: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -53,20 +53,20 @@ impl RumCrossProductSamplingUpdate {
     }
 }
 
-impl Default for RumCrossProductSamplingUpdate {
+impl Default for RUMCrossProductSamplingUpdate {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumCrossProductSamplingUpdate {
+impl<'de> Deserialize<'de> for RUMCrossProductSamplingUpdate {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumCrossProductSamplingUpdateVisitor;
-        impl<'a> Visitor<'a> for RumCrossProductSamplingUpdateVisitor {
-            type Value = RumCrossProductSamplingUpdate;
+        struct RUMCrossProductSamplingUpdateVisitor;
+        impl<'a> Visitor<'a> for RUMCrossProductSamplingUpdateVisitor {
+            type Value = RUMCrossProductSamplingUpdate;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -108,7 +108,7 @@ impl<'de> Deserialize<'de> for RumCrossProductSamplingUpdate {
                     }
                 }
 
-                let content = RumCrossProductSamplingUpdate {
+                let content = RUMCrossProductSamplingUpdate {
                     trace_enabled,
                     trace_sample_rate,
                     additional_properties,
@@ -119,6 +119,6 @@ impl<'de> Deserialize<'de> for RumCrossProductSamplingUpdate {
             }
         }
 
-        deserializer.deserialize_any(RumCrossProductSamplingUpdateVisitor)
+        deserializer.deserialize_any(RUMCrossProductSamplingUpdateVisitor)
     }
 }

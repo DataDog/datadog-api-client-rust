@@ -1,15 +1,15 @@
 // Search archived sessions returns canonical data and first-page metadata
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_recovery::RUMRecoveryAPI;
-use datadog_api_client::datadogV2::model::RumArchiveSessionsSearchAttributes;
-use datadog_api_client::datadogV2::model::RumArchiveSessionsSearchData;
-use datadog_api_client::datadogV2::model::RumArchiveSessionsSearchRequest;
+use datadog_api_client::datadogV2::model::RUMArchiveSessionsSearchAttributes;
+use datadog_api_client::datadogV2::model::RUMArchiveSessionsSearchData;
+use datadog_api_client::datadogV2::model::RUMArchiveSessionsSearchRequest;
 
 #[tokio::main]
 async fn main() {
-    let body = RumArchiveSessionsSearchRequest::new(
-        RumArchiveSessionsSearchData::new(
-            RumArchiveSessionsSearchAttributes::new(
+    let body = RUMArchiveSessionsSearchRequest::new(
+        RUMArchiveSessionsSearchData::new(
+            RUMArchiveSessionsSearchAttributes::new(
                 1636024271000,
                 "service:rum18600-fixture".to_string(),
                 1636629071000,

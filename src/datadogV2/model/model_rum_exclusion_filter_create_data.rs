@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterCreateData {
+pub struct RUMExclusionFilterCreateData {
     /// The attributes of an exclusion filter to create.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumExclusionFilterCreateAttributes,
+    pub attributes: crate::datadogV2::model::RUMExclusionFilterCreateAttributes,
     /// The resource type. The value must be `exclusion_filters`.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumExclusionFilterType,
+    pub type_: crate::datadogV2::model::RUMExclusionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -24,12 +24,12 @@ pub struct RumExclusionFilterCreateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterCreateData {
+impl RUMExclusionFilterCreateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumExclusionFilterCreateAttributes,
-        type_: crate::datadogV2::model::RumExclusionFilterType,
-    ) -> RumExclusionFilterCreateData {
-        RumExclusionFilterCreateData {
+        attributes: crate::datadogV2::model::RUMExclusionFilterCreateAttributes,
+        type_: crate::datadogV2::model::RUMExclusionFilterType,
+    ) -> RUMExclusionFilterCreateData {
+        RUMExclusionFilterCreateData {
             attributes,
             type_,
             additional_properties: std::collections::BTreeMap::new(),
@@ -46,14 +46,14 @@ impl RumExclusionFilterCreateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterCreateData {
+impl<'de> Deserialize<'de> for RUMExclusionFilterCreateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterCreateDataVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterCreateDataVisitor {
-            type Value = RumExclusionFilterCreateData;
+        struct RUMExclusionFilterCreateDataVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterCreateDataVisitor {
+            type Value = RUMExclusionFilterCreateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -64,9 +64,9 @@ impl<'de> Deserialize<'de> for RumExclusionFilterCreateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumExclusionFilterCreateAttributes,
+                    crate::datadogV2::model::RUMExclusionFilterCreateAttributes,
                 > = None;
-                let mut type_: Option<crate::datadogV2::model::RumExclusionFilterType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMExclusionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterCreateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumExclusionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMExclusionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterCreateData {
                 let attributes = attributes.ok_or_else(|| M::Error::missing_field("attributes"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumExclusionFilterCreateData {
+                let content = RUMExclusionFilterCreateData {
                     attributes,
                     type_,
                     additional_properties,
@@ -110,6 +110,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterCreateData {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterCreateDataVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterCreateDataVisitor)
     }
 }

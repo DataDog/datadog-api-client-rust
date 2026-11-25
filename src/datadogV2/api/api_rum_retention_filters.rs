@@ -10,7 +10,7 @@ use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
 
-/// CreateExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::create_exclusion_filter`]
+/// CreateExclusionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::create_exclusion_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateExclusionFilterError {
@@ -18,7 +18,7 @@ pub enum CreateExclusionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// CreateRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::create_retention_filter`]
+/// CreateRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::create_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateRetentionFilterError {
@@ -26,7 +26,7 @@ pub enum CreateRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::delete_exclusion_filter`]
+/// DeleteExclusionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::delete_exclusion_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteExclusionFilterError {
@@ -34,7 +34,7 @@ pub enum DeleteExclusionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// DeleteRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::delete_retention_filter`]
+/// DeleteRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::delete_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteRetentionFilterError {
@@ -42,7 +42,7 @@ pub enum DeleteRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::get_exclusion_filter`]
+/// GetExclusionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::get_exclusion_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetExclusionFilterError {
@@ -50,7 +50,7 @@ pub enum GetExclusionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetPermanentRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::get_permanent_retention_filter`]
+/// GetPermanentRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::get_permanent_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetPermanentRetentionFilterError {
@@ -58,7 +58,7 @@ pub enum GetPermanentRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// GetRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::get_retention_filter`]
+/// GetRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::get_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetRetentionFilterError {
@@ -66,7 +66,7 @@ pub enum GetRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListExclusionFiltersError is a struct for typed errors of method [`RumRetentionFiltersAPI::list_exclusion_filters`]
+/// ListExclusionFiltersError is a struct for typed errors of method [`RUMRetentionFiltersAPI::list_exclusion_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListExclusionFiltersError {
@@ -74,7 +74,7 @@ pub enum ListExclusionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListPermanentRetentionFiltersError is a struct for typed errors of method [`RumRetentionFiltersAPI::list_permanent_retention_filters`]
+/// ListPermanentRetentionFiltersError is a struct for typed errors of method [`RUMRetentionFiltersAPI::list_permanent_retention_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListPermanentRetentionFiltersError {
@@ -82,7 +82,7 @@ pub enum ListPermanentRetentionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// ListRetentionFiltersError is a struct for typed errors of method [`RumRetentionFiltersAPI::list_retention_filters`]
+/// ListRetentionFiltersError is a struct for typed errors of method [`RUMRetentionFiltersAPI::list_retention_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListRetentionFiltersError {
@@ -90,7 +90,7 @@ pub enum ListRetentionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// OrderRetentionFiltersError is a struct for typed errors of method [`RumRetentionFiltersAPI::order_retention_filters`]
+/// OrderRetentionFiltersError is a struct for typed errors of method [`RUMRetentionFiltersAPI::order_retention_filters`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum OrderRetentionFiltersError {
@@ -98,7 +98,7 @@ pub enum OrderRetentionFiltersError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateExclusionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::update_exclusion_filter`]
+/// UpdateExclusionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::update_exclusion_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateExclusionFilterError {
@@ -106,7 +106,7 @@ pub enum UpdateExclusionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdatePermanentRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::update_permanent_retention_filter`]
+/// UpdatePermanentRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::update_permanent_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdatePermanentRetentionFilterError {
@@ -114,7 +114,7 @@ pub enum UpdatePermanentRetentionFilterError {
     UnknownValue(serde_json::Value),
 }
 
-/// UpdateRetentionFilterError is a struct for typed errors of method [`RumRetentionFiltersAPI::update_retention_filter`]
+/// UpdateRetentionFilterError is a struct for typed errors of method [`RUMRetentionFiltersAPI::update_retention_filter`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateRetentionFilterError {
@@ -124,18 +124,18 @@ pub enum UpdateRetentionFilterError {
 
 /// Manage retention filters through [Manage Applications](<https://app.datadoghq.com/rum/list>) of RUM for your organization.
 #[derive(Debug, Clone)]
-pub struct RumRetentionFiltersAPI {
+pub struct RUMRetentionFiltersAPI {
     config: datadog::Configuration,
     client: reqwest_middleware::ClientWithMiddleware,
 }
 
-impl Default for RumRetentionFiltersAPI {
+impl Default for RUMRetentionFiltersAPI {
     fn default() -> Self {
         Self::with_config(datadog::Configuration::default())
     }
 }
 
-impl RumRetentionFiltersAPI {
+impl RUMRetentionFiltersAPI {
     pub fn new() -> Self {
         Self::default()
     }
@@ -201,9 +201,9 @@ impl RumRetentionFiltersAPI {
     pub async fn create_exclusion_filter(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumExclusionFilterCreateRequest,
+        body: crate::datadogV2::model::RUMExclusionFilterCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumExclusionFilterResponse,
+        crate::datadogV2::model::RUMExclusionFilterResponse,
         datadog::Error<CreateExclusionFilterError>,
     > {
         match self
@@ -228,9 +228,9 @@ impl RumRetentionFiltersAPI {
     pub async fn create_exclusion_filter_with_http_info(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumExclusionFilterCreateRequest,
+        body: crate::datadogV2::model::RUMExclusionFilterCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMExclusionFilterResponse>,
         datadog::Error<CreateExclusionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -335,7 +335,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMExclusionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -364,9 +364,9 @@ impl RumRetentionFiltersAPI {
     pub async fn create_retention_filter(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumRetentionFilterCreateRequest,
+        body: crate::datadogV2::model::RUMRetentionFilterCreateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRetentionFilterResponse,
+        crate::datadogV2::model::RUMRetentionFilterResponse,
         datadog::Error<CreateRetentionFilterError>,
     > {
         match self
@@ -391,9 +391,9 @@ impl RumRetentionFiltersAPI {
     pub async fn create_retention_filter_with_http_info(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumRetentionFilterCreateRequest,
+        body: crate::datadogV2::model::RUMRetentionFilterCreateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRetentionFilterResponse>,
         datadog::Error<CreateRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -498,7 +498,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRetentionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -720,7 +720,7 @@ impl RumRetentionFiltersAPI {
         app_id: String,
         ef_id: String,
     ) -> Result<
-        crate::datadogV2::model::RumExclusionFilterResponse,
+        crate::datadogV2::model::RUMExclusionFilterResponse,
         datadog::Error<GetExclusionFilterError>,
     > {
         match self
@@ -746,7 +746,7 @@ impl RumRetentionFiltersAPI {
         app_id: String,
         ef_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMExclusionFilterResponse>,
         datadog::Error<GetExclusionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -805,7 +805,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMExclusionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -833,9 +833,9 @@ impl RumRetentionFiltersAPI {
     pub async fn get_permanent_retention_filter(
         &self,
         app_id: String,
-        permanent_rf_id: crate::datadogV2::model::RumPermanentRetentionFilterID,
+        permanent_rf_id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
     ) -> Result<
-        crate::datadogV2::model::RumPermanentRetentionFilterResponse,
+        crate::datadogV2::model::RUMPermanentRetentionFilterResponse,
         datadog::Error<GetPermanentRetentionFilterError>,
     > {
         match self
@@ -859,9 +859,9 @@ impl RumRetentionFiltersAPI {
     pub async fn get_permanent_retention_filter_with_http_info(
         &self,
         app_id: String,
-        permanent_rf_id: crate::datadogV2::model::RumPermanentRetentionFilterID,
+        permanent_rf_id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumPermanentRetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMPermanentRetentionFilterResponse>,
         datadog::Error<GetPermanentRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -920,7 +920,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumPermanentRetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMPermanentRetentionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -950,7 +950,7 @@ impl RumRetentionFiltersAPI {
         app_id: String,
         rf_id: String,
     ) -> Result<
-        crate::datadogV2::model::RumRetentionFilterResponse,
+        crate::datadogV2::model::RUMRetentionFilterResponse,
         datadog::Error<GetRetentionFilterError>,
     > {
         match self
@@ -976,7 +976,7 @@ impl RumRetentionFiltersAPI {
         app_id: String,
         rf_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRetentionFilterResponse>,
         datadog::Error<GetRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -1035,7 +1035,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRetentionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1065,7 +1065,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        crate::datadogV2::model::RumExclusionFiltersResponse,
+        crate::datadogV2::model::RUMExclusionFiltersResponse,
         datadog::Error<ListExclusionFiltersError>,
     > {
         match self.list_exclusion_filters_with_http_info(app_id).await {
@@ -1088,7 +1088,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFiltersResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMExclusionFiltersResponse>,
         datadog::Error<ListExclusionFiltersError>,
     > {
         let local_configuration = &self.config;
@@ -1146,7 +1146,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFiltersResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMExclusionFiltersResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1177,7 +1177,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        crate::datadogV2::model::RumPermanentRetentionFiltersResponse,
+        crate::datadogV2::model::RUMPermanentRetentionFiltersResponse,
         datadog::Error<ListPermanentRetentionFiltersError>,
     > {
         match self
@@ -1204,7 +1204,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumPermanentRetentionFiltersResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMPermanentRetentionFiltersResponse>,
         datadog::Error<ListPermanentRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
@@ -1263,7 +1263,7 @@ impl RumRetentionFiltersAPI {
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
             match serde_json::from_str::<
-                crate::datadogV2::model::RumPermanentRetentionFiltersResponse,
+                crate::datadogV2::model::RUMPermanentRetentionFiltersResponse,
             >(&local_content)
             {
                 Ok(e) => {
@@ -1292,7 +1292,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        crate::datadogV2::model::RumRetentionFiltersResponse,
+        crate::datadogV2::model::RUMRetentionFiltersResponse,
         datadog::Error<ListRetentionFiltersError>,
     > {
         match self.list_retention_filters_with_http_info(app_id).await {
@@ -1314,7 +1314,7 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionFiltersResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRetentionFiltersResponse>,
         datadog::Error<ListRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
@@ -1372,7 +1372,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionFiltersResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRetentionFiltersResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1401,9 +1401,9 @@ impl RumRetentionFiltersAPI {
     pub async fn order_retention_filters(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumRetentionFiltersOrderRequest,
+        body: crate::datadogV2::model::RUMRetentionFiltersOrderRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRetentionFiltersOrderResponse,
+        crate::datadogV2::model::RUMRetentionFiltersOrderResponse,
         datadog::Error<OrderRetentionFiltersError>,
     > {
         match self
@@ -1428,9 +1428,9 @@ impl RumRetentionFiltersAPI {
     pub async fn order_retention_filters_with_http_info(
         &self,
         app_id: String,
-        body: crate::datadogV2::model::RumRetentionFiltersOrderRequest,
+        body: crate::datadogV2::model::RUMRetentionFiltersOrderRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionFiltersOrderResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRetentionFiltersOrderResponse>,
         datadog::Error<OrderRetentionFiltersError>,
     > {
         let local_configuration = &self.config;
@@ -1535,7 +1535,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionFiltersOrderResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRetentionFiltersOrderResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1567,9 +1567,9 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
         ef_id: String,
-        body: crate::datadogV2::model::RumExclusionFilterUpdateRequest,
+        body: crate::datadogV2::model::RUMExclusionFilterUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumExclusionFilterResponse,
+        crate::datadogV2::model::RUMExclusionFilterResponse,
         datadog::Error<UpdateExclusionFilterError>,
     > {
         match self
@@ -1597,9 +1597,9 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
         ef_id: String,
-        body: crate::datadogV2::model::RumExclusionFilterUpdateRequest,
+        body: crate::datadogV2::model::RUMExclusionFilterUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumExclusionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMExclusionFilterResponse>,
         datadog::Error<UpdateExclusionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -1705,7 +1705,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumExclusionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMExclusionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1735,10 +1735,10 @@ impl RumRetentionFiltersAPI {
     pub async fn update_permanent_retention_filter(
         &self,
         app_id: String,
-        permanent_rf_id: crate::datadogV2::model::RumPermanentRetentionFilterID,
-        body: crate::datadogV2::model::RumPermanentRetentionFilterUpdateRequest,
+        permanent_rf_id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
+        body: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumPermanentRetentionFilterResponse,
+        crate::datadogV2::model::RUMPermanentRetentionFilterResponse,
         datadog::Error<UpdatePermanentRetentionFilterError>,
     > {
         match self
@@ -1764,10 +1764,10 @@ impl RumRetentionFiltersAPI {
     pub async fn update_permanent_retention_filter_with_http_info(
         &self,
         app_id: String,
-        permanent_rf_id: crate::datadogV2::model::RumPermanentRetentionFilterID,
-        body: crate::datadogV2::model::RumPermanentRetentionFilterUpdateRequest,
+        permanent_rf_id: crate::datadogV2::model::RUMPermanentRetentionFilterID,
+        body: crate::datadogV2::model::RUMPermanentRetentionFilterUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumPermanentRetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMPermanentRetentionFilterResponse>,
         datadog::Error<UpdatePermanentRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -1873,7 +1873,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumPermanentRetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMPermanentRetentionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {
@@ -1903,9 +1903,9 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
         rf_id: String,
-        body: crate::datadogV2::model::RumRetentionFilterUpdateRequest,
+        body: crate::datadogV2::model::RUMRetentionFilterUpdateRequest,
     ) -> Result<
-        crate::datadogV2::model::RumRetentionFilterResponse,
+        crate::datadogV2::model::RUMRetentionFilterResponse,
         datadog::Error<UpdateRetentionFilterError>,
     > {
         match self
@@ -1931,9 +1931,9 @@ impl RumRetentionFiltersAPI {
         &self,
         app_id: String,
         rf_id: String,
-        body: crate::datadogV2::model::RumRetentionFilterUpdateRequest,
+        body: crate::datadogV2::model::RUMRetentionFilterUpdateRequest,
     ) -> Result<
-        datadog::ResponseContent<crate::datadogV2::model::RumRetentionFilterResponse>,
+        datadog::ResponseContent<crate::datadogV2::model::RUMRetentionFilterResponse>,
         datadog::Error<UpdateRetentionFilterError>,
     > {
         let local_configuration = &self.config;
@@ -2039,7 +2039,7 @@ impl RumRetentionFiltersAPI {
         log::debug!("response content: {}", local_content);
 
         if !local_status.is_client_error() && !local_status.is_server_error() {
-            match serde_json::from_str::<crate::datadogV2::model::RumRetentionFilterResponse>(
+            match serde_json::from_str::<crate::datadogV2::model::RUMRetentionFilterResponse>(
                 &local_content,
             ) {
                 Ok(e) => {

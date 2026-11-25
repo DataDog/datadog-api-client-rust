@@ -17,7 +17,7 @@ pub struct PlaylistData {
     /// Unique identifier of the playlist.
     #[serde(rename = "id")]
     pub id: Option<String>,
-    /// Rum replay playlist resource type.
+    /// RUM replay playlist resource type.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::PlaylistDataType,
     #[serde(flatten)]

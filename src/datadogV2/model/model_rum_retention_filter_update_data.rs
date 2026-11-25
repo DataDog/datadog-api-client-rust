@@ -10,16 +10,16 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionFilterUpdateData {
+pub struct RUMRetentionFilterUpdateData {
     /// The object describing attributes of a RUM retention filter to update.
     #[serde(rename = "attributes")]
-    pub attributes: crate::datadogV2::model::RumRetentionFilterUpdateAttributes,
+    pub attributes: crate::datadogV2::model::RUMRetentionFilterUpdateAttributes,
     /// ID of retention filter in UUID.
     #[serde(rename = "id")]
     pub id: String,
     /// The type of the resource. The value should always be retention_filters.
     #[serde(rename = "type")]
-    pub type_: crate::datadogV2::model::RumRetentionFilterType,
+    pub type_: crate::datadogV2::model::RUMRetentionFilterType,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -27,13 +27,13 @@ pub struct RumRetentionFilterUpdateData {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionFilterUpdateData {
+impl RUMRetentionFilterUpdateData {
     pub fn new(
-        attributes: crate::datadogV2::model::RumRetentionFilterUpdateAttributes,
+        attributes: crate::datadogV2::model::RUMRetentionFilterUpdateAttributes,
         id: String,
-        type_: crate::datadogV2::model::RumRetentionFilterType,
-    ) -> RumRetentionFilterUpdateData {
-        RumRetentionFilterUpdateData {
+        type_: crate::datadogV2::model::RUMRetentionFilterType,
+    ) -> RUMRetentionFilterUpdateData {
+        RUMRetentionFilterUpdateData {
             attributes,
             id,
             type_,
@@ -51,14 +51,14 @@ impl RumRetentionFilterUpdateData {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionFilterUpdateData {
+impl<'de> Deserialize<'de> for RUMRetentionFilterUpdateData {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionFilterUpdateDataVisitor;
-        impl<'a> Visitor<'a> for RumRetentionFilterUpdateDataVisitor {
-            type Value = RumRetentionFilterUpdateData;
+        struct RUMRetentionFilterUpdateDataVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionFilterUpdateDataVisitor {
+            type Value = RUMRetentionFilterUpdateData;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -69,10 +69,10 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateData {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<
-                    crate::datadogV2::model::RumRetentionFilterUpdateAttributes,
+                    crate::datadogV2::model::RUMRetentionFilterUpdateAttributes,
                 > = None;
                 let mut id: Option<String> = None;
-                let mut type_: Option<crate::datadogV2::model::RumRetentionFilterType> = None;
+                let mut type_: Option<crate::datadogV2::model::RUMRetentionFilterType> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -91,7 +91,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateData {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _type_) = type_ {
                                 match _type_ {
-                                    crate::datadogV2::model::RumRetentionFilterType::UnparsedObject(_type_) => {
+                                    crate::datadogV2::model::RUMRetentionFilterType::UnparsedObject(_type_) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -109,7 +109,7 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateData {
                 let id = id.ok_or_else(|| M::Error::missing_field("id"))?;
                 let type_ = type_.ok_or_else(|| M::Error::missing_field("type_"))?;
 
-                let content = RumRetentionFilterUpdateData {
+                let content = RUMRetentionFilterUpdateData {
                     attributes,
                     id,
                     type_,
@@ -121,6 +121,6 @@ impl<'de> Deserialize<'de> for RumRetentionFilterUpdateData {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionFilterUpdateDataVisitor)
+        deserializer.deserialize_any(RUMRetentionFilterUpdateDataVisitor)
     }
 }

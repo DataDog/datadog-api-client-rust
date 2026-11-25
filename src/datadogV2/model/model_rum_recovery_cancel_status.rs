@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[non_exhaustive]
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum RumRecoveryCancelStatus {
+pub enum RUMRecoveryCancelStatus {
     CANCELLED,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
-impl ToString for RumRecoveryCancelStatus {
+impl ToString for RUMRecoveryCancelStatus {
     fn to_string(&self) -> String {
         match self {
             Self::CANCELLED => String::from("cancelled"),
@@ -20,7 +20,7 @@ impl ToString for RumRecoveryCancelStatus {
     }
 }
 
-impl Serialize for RumRecoveryCancelStatus {
+impl Serialize for RUMRecoveryCancelStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,7 +32,7 @@ impl Serialize for RumRecoveryCancelStatus {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRecoveryCancelStatus {
+impl<'de> Deserialize<'de> for RUMRecoveryCancelStatus {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

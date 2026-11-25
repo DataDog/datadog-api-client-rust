@@ -10,7 +10,7 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumSdkConfigMeta {
+pub struct RUMSdkConfigMeta {
     /// The timestamp of the last update to this configuration.
     #[serde(rename = "updated_at")]
     pub updated_at: chrono::DateTime<chrono::Utc>,
@@ -24,9 +24,9 @@ pub struct RumSdkConfigMeta {
     pub(crate) _unparsed: bool,
 }
 
-impl RumSdkConfigMeta {
-    pub fn new(updated_at: chrono::DateTime<chrono::Utc>, updated_by: String) -> RumSdkConfigMeta {
-        RumSdkConfigMeta {
+impl RUMSdkConfigMeta {
+    pub fn new(updated_at: chrono::DateTime<chrono::Utc>, updated_by: String) -> RUMSdkConfigMeta {
+        RUMSdkConfigMeta {
             updated_at,
             updated_by,
             additional_properties: std::collections::BTreeMap::new(),
@@ -43,14 +43,14 @@ impl RumSdkConfigMeta {
     }
 }
 
-impl<'de> Deserialize<'de> for RumSdkConfigMeta {
+impl<'de> Deserialize<'de> for RUMSdkConfigMeta {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumSdkConfigMetaVisitor;
-        impl<'a> Visitor<'a> for RumSdkConfigMetaVisitor {
-            type Value = RumSdkConfigMeta;
+        struct RUMSdkConfigMetaVisitor;
+        impl<'a> Visitor<'a> for RUMSdkConfigMetaVisitor {
+            type Value = RUMSdkConfigMeta;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -86,7 +86,7 @@ impl<'de> Deserialize<'de> for RumSdkConfigMeta {
                 let updated_at = updated_at.ok_or_else(|| M::Error::missing_field("updated_at"))?;
                 let updated_by = updated_by.ok_or_else(|| M::Error::missing_field("updated_by"))?;
 
-                let content = RumSdkConfigMeta {
+                let content = RUMSdkConfigMeta {
                     updated_at,
                     updated_by,
                     additional_properties,
@@ -97,6 +97,6 @@ impl<'de> Deserialize<'de> for RumSdkConfigMeta {
             }
         }
 
-        deserializer.deserialize_any(RumSdkConfigMetaVisitor)
+        deserializer.deserialize_any(RUMSdkConfigMetaVisitor)
     }
 }

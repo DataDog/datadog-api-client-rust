@@ -10,13 +10,13 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumExclusionFilterAttributes {
+pub struct RUMExclusionFilterAttributes {
     /// Whether the exclusion filter is active.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The type of RUM events to filter on.
     #[serde(rename = "event_type")]
-    pub event_type: Option<crate::datadogV2::model::RumExclusionFilterEventType>,
+    pub event_type: Option<crate::datadogV2::model::RUMExclusionFilterEventType>,
     /// The name of the exclusion filter.
     #[serde(rename = "name")]
     pub name: Option<String>,
@@ -31,9 +31,9 @@ pub struct RumExclusionFilterAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumExclusionFilterAttributes {
-    pub fn new() -> RumExclusionFilterAttributes {
-        RumExclusionFilterAttributes {
+impl RUMExclusionFilterAttributes {
+    pub fn new() -> RUMExclusionFilterAttributes {
+        RUMExclusionFilterAttributes {
             enabled: None,
             event_type: None,
             name: None,
@@ -50,7 +50,7 @@ impl RumExclusionFilterAttributes {
 
     pub fn event_type(
         mut self,
-        value: crate::datadogV2::model::RumExclusionFilterEventType,
+        value: crate::datadogV2::model::RUMExclusionFilterEventType,
     ) -> Self {
         self.event_type = Some(value);
         self
@@ -75,20 +75,20 @@ impl RumExclusionFilterAttributes {
     }
 }
 
-impl Default for RumExclusionFilterAttributes {
+impl Default for RUMExclusionFilterAttributes {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<'de> Deserialize<'de> for RumExclusionFilterAttributes {
+impl<'de> Deserialize<'de> for RUMExclusionFilterAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumExclusionFilterAttributesVisitor;
-        impl<'a> Visitor<'a> for RumExclusionFilterAttributesVisitor {
-            type Value = RumExclusionFilterAttributes;
+        struct RUMExclusionFilterAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMExclusionFilterAttributesVisitor {
+            type Value = RUMExclusionFilterAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -99,7 +99,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterAttributes {
                 M: MapAccess<'a>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut event_type: Option<crate::datadogV2::model::RumExclusionFilterEventType> =
+                let mut event_type: Option<crate::datadogV2::model::RUMExclusionFilterEventType> =
                     None;
                 let mut name: Option<String> = None;
                 let mut query: Option<String> = None;
@@ -124,7 +124,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterAttributes {
                             event_type = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _event_type) = event_type {
                                 match _event_type {
-                                    crate::datadogV2::model::RumExclusionFilterEventType::UnparsedObject(_event_type) => {
+                                    crate::datadogV2::model::RUMExclusionFilterEventType::UnparsedObject(_event_type) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -151,7 +151,7 @@ impl<'de> Deserialize<'de> for RumExclusionFilterAttributes {
                     }
                 }
 
-                let content = RumExclusionFilterAttributes {
+                let content = RUMExclusionFilterAttributes {
                     enabled,
                     event_type,
                     name,
@@ -164,6 +164,6 @@ impl<'de> Deserialize<'de> for RumExclusionFilterAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumExclusionFilterAttributesVisitor)
+        deserializer.deserialize_any(RUMExclusionFilterAttributesVisitor)
     }
 }

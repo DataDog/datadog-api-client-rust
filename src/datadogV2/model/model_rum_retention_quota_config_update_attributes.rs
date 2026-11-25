@@ -10,14 +10,14 @@ use std::fmt::{self, Formatter};
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct RumRetentionQuotaConfigUpdateAttributes {
+pub struct RUMRetentionQuotaConfigUpdateAttributes {
     /// The configuration used when `mode` is `custom`.
     #[serde(rename = "custom")]
-    pub custom: Option<crate::datadogV2::model::RumRetentionQuotaCustomConfig>,
+    pub custom: Option<crate::datadogV2::model::RUMRetentionQuotaCustomConfig>,
     /// The retention quota mode. `custom` enforces a fixed session limit.
     /// `custom` is the only supported mode.
     #[serde(rename = "mode")]
-    pub mode: crate::datadogV2::model::RumRetentionQuotaMode,
+    pub mode: crate::datadogV2::model::RUMRetentionQuotaMode,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -25,11 +25,11 @@ pub struct RumRetentionQuotaConfigUpdateAttributes {
     pub(crate) _unparsed: bool,
 }
 
-impl RumRetentionQuotaConfigUpdateAttributes {
+impl RUMRetentionQuotaConfigUpdateAttributes {
     pub fn new(
-        mode: crate::datadogV2::model::RumRetentionQuotaMode,
-    ) -> RumRetentionQuotaConfigUpdateAttributes {
-        RumRetentionQuotaConfigUpdateAttributes {
+        mode: crate::datadogV2::model::RUMRetentionQuotaMode,
+    ) -> RUMRetentionQuotaConfigUpdateAttributes {
+        RUMRetentionQuotaConfigUpdateAttributes {
             custom: None,
             mode,
             additional_properties: std::collections::BTreeMap::new(),
@@ -37,7 +37,7 @@ impl RumRetentionQuotaConfigUpdateAttributes {
         }
     }
 
-    pub fn custom(mut self, value: crate::datadogV2::model::RumRetentionQuotaCustomConfig) -> Self {
+    pub fn custom(mut self, value: crate::datadogV2::model::RUMRetentionQuotaCustomConfig) -> Self {
         self.custom = Some(value);
         self
     }
@@ -51,14 +51,14 @@ impl RumRetentionQuotaConfigUpdateAttributes {
     }
 }
 
-impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateAttributes {
+impl<'de> Deserialize<'de> for RUMRetentionQuotaConfigUpdateAttributes {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        struct RumRetentionQuotaConfigUpdateAttributesVisitor;
-        impl<'a> Visitor<'a> for RumRetentionQuotaConfigUpdateAttributesVisitor {
-            type Value = RumRetentionQuotaConfigUpdateAttributes;
+        struct RUMRetentionQuotaConfigUpdateAttributesVisitor;
+        impl<'a> Visitor<'a> for RUMRetentionQuotaConfigUpdateAttributesVisitor {
+            type Value = RUMRetentionQuotaConfigUpdateAttributes;
 
             fn expecting(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 f.write_str("a mapping")
@@ -68,9 +68,9 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateAttributes {
             where
                 M: MapAccess<'a>,
             {
-                let mut custom: Option<crate::datadogV2::model::RumRetentionQuotaCustomConfig> =
+                let mut custom: Option<crate::datadogV2::model::RUMRetentionQuotaCustomConfig> =
                     None;
-                let mut mode: Option<crate::datadogV2::model::RumRetentionQuotaMode> = None;
+                let mut mode: Option<crate::datadogV2::model::RUMRetentionQuotaMode> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -89,7 +89,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateAttributes {
                             mode = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                             if let Some(ref _mode) = mode {
                                 match _mode {
-                                    crate::datadogV2::model::RumRetentionQuotaMode::UnparsedObject(_mode) => {
+                                    crate::datadogV2::model::RUMRetentionQuotaMode::UnparsedObject(_mode) => {
                                         _unparsed = true;
                                     },
                                     _ => {}
@@ -105,7 +105,7 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateAttributes {
                 }
                 let mode = mode.ok_or_else(|| M::Error::missing_field("mode"))?;
 
-                let content = RumRetentionQuotaConfigUpdateAttributes {
+                let content = RUMRetentionQuotaConfigUpdateAttributes {
                     custom,
                     mode,
                     additional_properties,
@@ -116,6 +116,6 @@ impl<'de> Deserialize<'de> for RumRetentionQuotaConfigUpdateAttributes {
             }
         }
 
-        deserializer.deserialize_any(RumRetentionQuotaConfigUpdateAttributesVisitor)
+        deserializer.deserialize_any(RUMRetentionQuotaConfigUpdateAttributesVisitor)
     }
 }
