@@ -23,9 +23,9 @@ pub struct ObservabilityPipelineSplunkHecSource {
     /// This allows downstream components to forward the token to other Splunk HEC destinations.
     #[serde(rename = "store_hec_token")]
     pub store_hec_token: Option<bool>,
-    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients.
+    /// Configuration for enabling TLS encryption between the pipeline component and external connecting clients, or mutual TLS when `verify_certificate` is `true`. Mutual TLS also enables an optional allowlist of client certificate identities.
     #[serde(rename = "tls")]
-    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls>,
+    pub tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity>,
     /// The source type. Always `splunk_hec`.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceType,
@@ -70,7 +70,7 @@ impl ObservabilityPipelineSplunkHecSource {
 
     pub fn tls(
         mut self,
-        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTls,
+        value: crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
     ) -> Self {
         self.tls = Some(value);
         self
@@ -113,8 +113,9 @@ impl<'de> Deserialize<'de> for ObservabilityPipelineSplunkHecSource {
                 let mut address_key: Option<String> = None;
                 let mut id: Option<String> = None;
                 let mut store_hec_token: Option<bool> = None;
-                let mut tls: Option<crate::datadogV2::model::ObservabilityPipelineMtlsServerTls> =
-                    None;
+                let mut tls: Option<
+                    crate::datadogV2::model::ObservabilityPipelineMtlsServerTlsWithClientIdentity,
+                > = None;
                 let mut type_: Option<
                     crate::datadogV2::model::ObservabilityPipelineSplunkHecSourceType,
                 > = None;
