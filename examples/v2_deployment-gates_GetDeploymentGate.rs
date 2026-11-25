@@ -6,8 +6,7 @@ use datadog_api_client::datadogV2::api_deployment_gates::DeploymentGatesAPI;
 async fn main() {
     // there is a valid "deployment_gate" in the system
     let deployment_gate_data_id = std::env::var("DEPLOYMENT_GATE_DATA_ID").unwrap();
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.get_deployment_gate", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api
         .get_deployment_gate(deployment_gate_data_id.clone())

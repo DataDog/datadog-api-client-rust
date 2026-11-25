@@ -25,8 +25,7 @@ async fn main() {
         ),
         DeploymentRuleDataType::DEPLOYMENT_RULE,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.update_deployment_rule", true);
+    let configuration = datadog::Configuration::new();
     let api = DeploymentGatesAPI::with_config(configuration);
     let resp = api
         .update_deployment_rule(
