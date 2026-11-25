@@ -17,7 +17,9 @@ pub struct FleetDeploymentOperation {
     /// - `delete`: Removes the specified configuration file from the target hosts.
     #[serde(rename = "file_op")]
     pub file_op: crate::datadogV2::model::FleetDeploymentFileOp,
-    /// Absolute path to the target configuration file on the host.
+    /// Path to the target configuration file, relative to the Agent's configuration directory.
+    /// For example, `/datadog.yaml` or `/conf.d/postgres.d/conf.yaml`. Absolute host paths,
+    /// such as `/etc/datadog-agent/datadog.yaml`, are rejected.
     #[serde(rename = "file_path")]
     pub file_path: String,
     /// Patch data in JSON format to apply to the configuration file.
