@@ -10106,6 +10106,20 @@ impl SecurityMonitoringAPI {
     }
 
     /// Create a new notification rule for security signals and return the created rule.
+    /// Set `selectors.trigger_source` to `security_signals`. The signal routes only return rules with that trigger
+    /// source, so a rule with `security_findings` is read through `GetVulnerabilityNotificationRules` instead.
+    /// To notify on security findings, use `CreateVulnerabilityNotificationRule`.
+    /// `selectors.rule_types` accepts the signal rule types `application_security`, `log_detection`,
+    /// `workload_security`, and `signal_correlation`.
+    /// Give at least one; finding rule types are rejected.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// `time_aggregation` is only available for finding-based rules: omit it or set it to `0`.
+    /// Trial organizations can't use email address targets: the request returns 400.
+    /// Rule names must be unique in the organization (case-insensitive); a duplicate name returns 409.
+    /// An organization can have at most 1,000 signal-based rules; past that, the request returns 429.
     pub async fn create_signal_notification_rule(
         &self,
         body: crate::datadogV2::model::CreateNotificationRuleParameters,
@@ -10131,6 +10145,20 @@ impl SecurityMonitoringAPI {
     }
 
     /// Create a new notification rule for security signals and return the created rule.
+    /// Set `selectors.trigger_source` to `security_signals`. The signal routes only return rules with that trigger
+    /// source, so a rule with `security_findings` is read through `GetVulnerabilityNotificationRules` instead.
+    /// To notify on security findings, use `CreateVulnerabilityNotificationRule`.
+    /// `selectors.rule_types` accepts the signal rule types `application_security`, `log_detection`,
+    /// `workload_security`, and `signal_correlation`.
+    /// Give at least one; finding rule types are rejected.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// `time_aggregation` is only available for finding-based rules: omit it or set it to `0`.
+    /// Trial organizations can't use email address targets: the request returns 400.
+    /// Rule names must be unique in the organization (case-insensitive); a duplicate name returns 409.
+    /// An organization can have at most 1,000 signal-based rules; past that, the request returns 429.
     pub async fn create_signal_notification_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateNotificationRuleParameters,
@@ -10588,7 +10616,25 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new notification rule for security vulnerabilities and return the created rule.
+    /// Create a new notification rule for security findings and return the created rule.
+    /// Set `selectors.trigger_source` to `security_findings`. The finding routes only return rules with that
+    /// trigger source, so a rule with `security_signals` is read through `GetSignalNotificationRules` instead.
+    /// To notify on security signals, use `CreateSignalNotificationRule`.
+    /// `selectors.rule_types` accepts the finding rule types `application_code_vulnerability`,
+    /// `application_library_vulnerability`, `attack_path`, `container_image_vulnerability`, `identity_risk`,
+    /// `misconfiguration`, `api_security`, `host_vulnerability`, `iac_misconfiguration`, `sast_vulnerability`,
+    /// `secret_vulnerability`, `workload_activity`, `sensitive_data`, and `serverless_function_code_vulnerability`.
+    /// Give at least one; signal rule types are rejected.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters, and can't filter on attributes in the `@workflow` or `@_dd`
+    /// namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// `time_aggregation` is a rolling window in seconds, from `1800` (30 minutes) to `2592000` (30 days); omit it
+    /// or set it to `0` for no aggregation.
+    /// Trial organizations can't use email address targets: the request returns 400.
+    /// Rule names must be unique in the organization (case-insensitive); a duplicate name returns 409.
+    /// An organization can have at most 1,000 finding-based rules; past that, the request returns 429.
     pub async fn create_vulnerability_notification_rule(
         &self,
         body: crate::datadogV2::model::CreateNotificationRuleParameters,
@@ -10613,7 +10659,25 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Create a new notification rule for security vulnerabilities and return the created rule.
+    /// Create a new notification rule for security findings and return the created rule.
+    /// Set `selectors.trigger_source` to `security_findings`. The finding routes only return rules with that
+    /// trigger source, so a rule with `security_signals` is read through `GetSignalNotificationRules` instead.
+    /// To notify on security signals, use `CreateSignalNotificationRule`.
+    /// `selectors.rule_types` accepts the finding rule types `application_code_vulnerability`,
+    /// `application_library_vulnerability`, `attack_path`, `container_image_vulnerability`, `identity_risk`,
+    /// `misconfiguration`, `api_security`, `host_vulnerability`, `iac_misconfiguration`, `sast_vulnerability`,
+    /// `secret_vulnerability`, `workload_activity`, `sensitive_data`, and `serverless_function_code_vulnerability`.
+    /// Give at least one; signal rule types are rejected.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters, and can't filter on attributes in the `@workflow` or `@_dd`
+    /// namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// `time_aggregation` is a rolling window in seconds, from `1800` (30 minutes) to `2592000` (30 days); omit it
+    /// or set it to `0` for no aggregation.
+    /// Trial organizations can't use email address targets: the request returns 400.
+    /// Rule names must be unique in the organization (case-insensitive); a duplicate name returns 409.
+    /// An organization can have at most 1,000 finding-based rules; past that, the request returns 429.
     pub async fn create_vulnerability_notification_rule_with_http_info(
         &self,
         body: crate::datadogV2::model::CreateNotificationRuleParameters,
@@ -12708,6 +12772,10 @@ impl SecurityMonitoringAPI {
     }
 
     /// Delete a notification rule for security signals.
+    /// Get the rule `id` from `GetSignalNotificationRules`.
+    /// This route doesn't check the rule's `trigger_source`, so make sure the `id` belongs to a signal rule.
+    /// To stop notifications without deleting the rule, set `enabled` to `false` with
+    /// `PatchSignalNotificationRule` instead.
     pub async fn delete_signal_notification_rule(
         &self,
         id: String,
@@ -12722,6 +12790,10 @@ impl SecurityMonitoringAPI {
     }
 
     /// Delete a notification rule for security signals.
+    /// Get the rule `id` from `GetSignalNotificationRules`.
+    /// This route doesn't check the rule's `trigger_source`, so make sure the `id` belongs to a signal rule.
+    /// To stop notifications without deleting the rule, set `enabled` to `false` with
+    /// `PatchSignalNotificationRule` instead.
     pub async fn delete_signal_notification_rule_with_http_info(
         &self,
         id: String,
@@ -12799,7 +12871,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete a notification rule for security vulnerabilities.
+    /// Delete a notification rule for security findings.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`.
+    /// This route doesn't check the rule's `trigger_source`, so make sure the `id` belongs to a finding rule.
+    /// To stop notifications without deleting the rule, set `enabled` to `false` with
+    /// `PatchVulnerabilityNotificationRule` instead.
     pub async fn delete_vulnerability_notification_rule(
         &self,
         id: String,
@@ -12813,7 +12889,11 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Delete a notification rule for security vulnerabilities.
+    /// Delete a notification rule for security findings.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`.
+    /// This route doesn't check the rule's `trigger_source`, so make sure the `id` belongs to a finding rule.
+    /// To stop notifications without deleting the rule, set `enabled` to `false` with
+    /// `PatchVulnerabilityNotificationRule` instead.
     pub async fn delete_vulnerability_notification_rule_with_http_info(
         &self,
         id: String,
@@ -18451,6 +18531,9 @@ impl SecurityMonitoringAPI {
     }
 
     /// Get the details of a notification rule for security signals.
+    /// Get the rule `id` from `GetSignalNotificationRules`.
+    /// Returns 404 when the rule's `trigger_source` is `security_findings`; read that rule with
+    /// `GetVulnerabilityNotificationRule` instead.
     pub async fn get_signal_notification_rule(
         &self,
         id: String,
@@ -18473,6 +18556,9 @@ impl SecurityMonitoringAPI {
     }
 
     /// Get the details of a notification rule for security signals.
+    /// Get the rule `id` from `GetSignalNotificationRules`.
+    /// Returns 404 when the rule's `trigger_source` is `security_findings`; read that rule with
+    /// `GetVulnerabilityNotificationRule` instead.
     pub async fn get_signal_notification_rule_with_http_info(
         &self,
         id: String,
@@ -18560,6 +18646,13 @@ impl SecurityMonitoringAPI {
     }
 
     /// Returns the list of notification rules for security signals.
+    /// A signal-based notification rule sends a notification to its `targets` when a security signal matches its
+    /// selectors (rule types, severities, and query), so you don't have to set up notifications on each detection rule.
+    /// Use the signal routes for rules whose `trigger_source` is `security_signals`. For rules on security findings,
+    /// such as vulnerabilities and misconfigurations (`trigger_source` `security_findings`), use
+    /// `GetVulnerabilityNotificationRules`.
+    /// This route only returns rules whose `trigger_source` is `security_signals`. The response isn't paginated: it
+    /// contains every such rule in the organization, and the route takes no paging parameters.
     pub async fn get_signal_notification_rules(
         &self,
     ) -> Result<
@@ -18581,6 +18674,13 @@ impl SecurityMonitoringAPI {
     }
 
     /// Returns the list of notification rules for security signals.
+    /// A signal-based notification rule sends a notification to its `targets` when a security signal matches its
+    /// selectors (rule types, severities, and query), so you don't have to set up notifications on each detection rule.
+    /// Use the signal routes for rules whose `trigger_source` is `security_signals`. For rules on security findings,
+    /// such as vulnerabilities and misconfigurations (`trigger_source` `security_findings`), use
+    /// `GetVulnerabilityNotificationRules`.
+    /// This route only returns rules whose `trigger_source` is `security_signals`. The response isn't paginated: it
+    /// contains every such rule in the organization, and the route takes no paging parameters.
     pub async fn get_signal_notification_rules_with_http_info(
         &self,
     ) -> Result<
@@ -19816,7 +19916,10 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the details of a notification rule for security vulnerabilities.
+    /// Get the details of a notification rule for security findings.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`.
+    /// Returns 404 when the rule's `trigger_source` is `security_signals`; read that rule with
+    /// `GetSignalNotificationRule` instead.
     pub async fn get_vulnerability_notification_rule(
         &self,
         id: String,
@@ -19841,7 +19944,10 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Get the details of a notification rule for security vulnerabilities.
+    /// Get the details of a notification rule for security findings.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`.
+    /// Returns 404 when the rule's `trigger_source` is `security_signals`; read that rule with
+    /// `GetSignalNotificationRule` instead.
     pub async fn get_vulnerability_notification_rule_with_http_info(
         &self,
         id: String,
@@ -19928,7 +20034,15 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Returns the list of notification rules for security vulnerabilities.
+    /// Returns the list of notification rules for security findings.
+    /// A finding-based notification rule sends a notification to its `targets` when a security finding, such as a
+    /// vulnerability or a misconfiguration, matches its selectors (rule types, severities, and query). It can group
+    /// notifications over a `time_aggregation` window.
+    /// Use the finding routes (under `/api/v2/security/vulnerabilities/`) for rules whose `trigger_source` is
+    /// `security_findings`. For rules on security
+    /// signals (`trigger_source` `security_signals`), use `GetSignalNotificationRules`.
+    /// This route only returns rules whose `trigger_source` is `security_findings`. The response isn't paginated: it
+    /// contains every such rule in the organization, and the route takes no paging parameters.
     pub async fn get_vulnerability_notification_rules(
         &self,
     ) -> Result<
@@ -19952,7 +20066,15 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Returns the list of notification rules for security vulnerabilities.
+    /// Returns the list of notification rules for security findings.
+    /// A finding-based notification rule sends a notification to its `targets` when a security finding, such as a
+    /// vulnerability or a misconfiguration, matches its selectors (rule types, severities, and query). It can group
+    /// notifications over a `time_aggregation` window.
+    /// Use the finding routes (under `/api/v2/security/vulnerabilities/`) for rules whose `trigger_source` is
+    /// `security_findings`. For rules on security
+    /// signals (`trigger_source` `security_signals`), use `GetSignalNotificationRules`.
+    /// This route only returns rules whose `trigger_source` is `security_findings`. The response isn't paginated: it
+    /// contains every such rule in the organization, and the route takes no paging parameters.
     pub async fn get_vulnerability_notification_rules_with_http_info(
         &self,
     ) -> Result<
@@ -25210,7 +25332,28 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Partially update the notification rule. All fields are optional; if a field is not provided, it is not updated.
+    /// Partially update the notification rule. All fields except `version` are optional; if a field is not provided,
+    /// it is not updated. Give at least one field to change.
+    /// Get the rule `id` from `GetSignalNotificationRules`, then read the rule with `GetSignalNotificationRule`
+    /// and send its current `version`. The `version` is incremented each time the rule is modified.
+    /// A `version` that isn't the current one returns 409: fetch the rule again and retry.
+    /// A missing or `0` `version` is rejected.
+    /// If you send `selectors`, it must include `trigger_source`, and every entry in `selectors.rule_types` must
+    /// match that trigger source (give at least one). For `security_findings`, the rule types are
+    /// `application_code_vulnerability`, `application_library_vulnerability`, `attack_path`,
+    /// `container_image_vulnerability`, `identity_risk`, `misconfiguration`, `api_security`, `host_vulnerability`,
+    /// `iac_misconfiguration`, `sast_vulnerability`, `secret_vulnerability`, `workload_activity`, `sensitive_data`,
+    /// and `serverless_function_code_vulnerability`.
+    /// For `security_signals`, they are `application_security`, `log_detection`, `workload_security`, and
+    /// `signal_correlation`.
+    /// Changing `trigger_source` moves the rule to the other family's routes, and the change counts toward that
+    /// family's limit of 1,000 rules.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters. Finding-based rules can't filter on attributes in the
+    /// `@workflow` or `@_dd` namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// Trial organizations can't use email address targets: the request returns 400.
     pub async fn patch_signal_notification_rule(
         &self,
         id: String,
@@ -25236,7 +25379,28 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Partially update the notification rule. All fields are optional; if a field is not provided, it is not updated.
+    /// Partially update the notification rule. All fields except `version` are optional; if a field is not provided,
+    /// it is not updated. Give at least one field to change.
+    /// Get the rule `id` from `GetSignalNotificationRules`, then read the rule with `GetSignalNotificationRule`
+    /// and send its current `version`. The `version` is incremented each time the rule is modified.
+    /// A `version` that isn't the current one returns 409: fetch the rule again and retry.
+    /// A missing or `0` `version` is rejected.
+    /// If you send `selectors`, it must include `trigger_source`, and every entry in `selectors.rule_types` must
+    /// match that trigger source (give at least one). For `security_findings`, the rule types are
+    /// `application_code_vulnerability`, `application_library_vulnerability`, `attack_path`,
+    /// `container_image_vulnerability`, `identity_risk`, `misconfiguration`, `api_security`, `host_vulnerability`,
+    /// `iac_misconfiguration`, `sast_vulnerability`, `secret_vulnerability`, `workload_activity`, `sensitive_data`,
+    /// and `serverless_function_code_vulnerability`.
+    /// For `security_signals`, they are `application_security`, `log_detection`, `workload_security`, and
+    /// `signal_correlation`.
+    /// Changing `trigger_source` moves the rule to the other family's routes, and the change counts toward that
+    /// family's limit of 1,000 rules.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters. Finding-based rules can't filter on attributes in the
+    /// `@workflow` or `@_dd` namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// Trial organizations can't use email address targets: the request returns 400.
     pub async fn patch_signal_notification_rule_with_http_info(
         &self,
         id: String,
@@ -25371,7 +25535,28 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Partially update the notification rule. All fields are optional; if a field is not provided, it is not updated.
+    /// Partially update the notification rule. All fields except `version` are optional; if a field is not provided,
+    /// it is not updated. Give at least one field to change.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`, then read the rule with
+    /// `GetVulnerabilityNotificationRule` and send its current `version`. The `version` is incremented each time
+    /// the rule is modified. A `version` that isn't the current one returns 409: fetch the rule again and retry.
+    /// A missing or `0` `version` is rejected.
+    /// If you send `selectors`, it must include `trigger_source`, and every entry in `selectors.rule_types` must
+    /// match that trigger source (give at least one). For `security_findings`, the rule types are
+    /// `application_code_vulnerability`, `application_library_vulnerability`, `attack_path`,
+    /// `container_image_vulnerability`, `identity_risk`, `misconfiguration`, `api_security`, `host_vulnerability`,
+    /// `iac_misconfiguration`, `sast_vulnerability`, `secret_vulnerability`, `workload_activity`, `sensitive_data`,
+    /// and `serverless_function_code_vulnerability`.
+    /// For `security_signals`, they are `application_security`, `log_detection`, `workload_security`, and
+    /// `signal_correlation`.
+    /// Changing `trigger_source` moves the rule to the other family's routes, and the change counts toward that
+    /// family's limit of 1,000 rules.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters. Finding-based rules can't filter on attributes in the
+    /// `@workflow` or `@_dd` namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// Trial organizations can't use email address targets: the request returns 400.
     pub async fn patch_vulnerability_notification_rule(
         &self,
         id: String,
@@ -25397,7 +25582,28 @@ impl SecurityMonitoringAPI {
         }
     }
 
-    /// Partially update the notification rule. All fields are optional; if a field is not provided, it is not updated.
+    /// Partially update the notification rule. All fields except `version` are optional; if a field is not provided,
+    /// it is not updated. Give at least one field to change.
+    /// Get the rule `id` from `GetVulnerabilityNotificationRules`, then read the rule with
+    /// `GetVulnerabilityNotificationRule` and send its current `version`. The `version` is incremented each time
+    /// the rule is modified. A `version` that isn't the current one returns 409: fetch the rule again and retry.
+    /// A missing or `0` `version` is rejected.
+    /// If you send `selectors`, it must include `trigger_source`, and every entry in `selectors.rule_types` must
+    /// match that trigger source (give at least one). For `security_findings`, the rule types are
+    /// `application_code_vulnerability`, `application_library_vulnerability`, `attack_path`,
+    /// `container_image_vulnerability`, `identity_risk`, `misconfiguration`, `api_security`, `host_vulnerability`,
+    /// `iac_misconfiguration`, `sast_vulnerability`, `secret_vulnerability`, `workload_activity`, `sensitive_data`,
+    /// and `serverless_function_code_vulnerability`.
+    /// For `security_signals`, they are `application_security`, `log_detection`, `workload_security`, and
+    /// `signal_correlation`.
+    /// Changing `trigger_source` moves the rule to the other family's routes, and the change counts toward that
+    /// family's limit of 1,000 rules.
+    /// `selectors.severities` accepts `critical`, `high`, `medium`, `low`, and `info`; `unknown` is rejected.
+    /// `selectors.query` is at most 6,000 characters. Finding-based rules can't filter on attributes in the
+    /// `@workflow` or `@_dd` namespaces, on `@status`, or on `@compliance.evaluation`.
+    /// Each entry in `targets` is a handle that starts with `@`, such as an email address
+    /// (`@john.doe@email.com`) or an integration handle (`@slack-<VALUES>`); see `targets`.
+    /// Trial organizations can't use email address targets: the request returns 400.
     pub async fn patch_vulnerability_notification_rule_with_http_info(
         &self,
         id: String,
