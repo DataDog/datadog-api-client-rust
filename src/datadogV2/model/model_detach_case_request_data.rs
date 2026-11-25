@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DetachCaseRequestData {
-    /// Unique identifier of the detachment request.
+    /// Optional identifier of the detachment request. The API doesn't use it to select a case: it detaches each security finding in `relationships.findings` from the case it's attached to.
     #[serde(rename = "id")]
     pub id: Option<String>,
     /// Relationships detaching security findings from their case.

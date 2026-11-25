@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AttachCaseRequestData {
-    /// Unique identifier of the case.
+    /// Unique identifier of the case. This field is required but not used: the API attaches security findings to the case in the `case_id` path parameter.
     #[serde(rename = "id")]
     pub id: String,
     /// Relationships of the case to attach security findings to.
