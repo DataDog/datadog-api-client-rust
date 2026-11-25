@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -1021,6 +1023,42 @@ impl RUMOperationsAPI {
         }
     }
 
+    pub fn list_rum_operation_strong_links_with_pagination(
+        &self,
+        mut params: ListRUMOperationStrongLinksOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::RUMOperationStrongLinkResponseData,
+            datadog::Error<ListRUMOperationStrongLinksError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_rum_operation_strong_links(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
+        }
+    }
+
     /// List links between RUM operations and journeys. A link confirms that a journey
     /// belongs to an operation. Provide `operation_id`, `feature_id` (journey ID), or both to filter results;
     /// at least one is required.
@@ -1152,6 +1190,42 @@ impl RUMOperationsAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_rum_operations_with_pagination(
+        &self,
+        mut params: ListRUMOperationsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::RUMOperationResponseData,
+            datadog::Error<ListRUMOperationsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i64 = 50;
+            if params.page_limit.is_none() {
+                params.page_limit = Some(page_size);
+            } else {
+                page_size = params.page_limit.unwrap().clone();
+            }
+            loop {
+                let resp = self.list_rum_operations(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                if params.page_offset.is_none() {
+                    params.page_offset = Some(page_size.clone());
+                } else {
+                    params.page_offset = Some(params.page_offset.unwrap() + page_size.clone());
+                }
+            }
         }
     }
 

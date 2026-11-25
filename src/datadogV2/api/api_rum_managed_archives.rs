@@ -2,10 +2,12 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/).
 // Copyright 2019-Present Datadog, Inc.
 use crate::datadog;
+use async_stream::try_stream;
 use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
+use futures_core::stream::Stream;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -361,6 +363,41 @@ impl RUMManagedArchivesAPI {
                 }
             }
             Err(err) => Err(err),
+        }
+    }
+
+    pub fn list_rum_archive_configs_with_pagination(
+        &self,
+        mut params: ListRUMArchiveConfigsOptionalParams,
+    ) -> impl Stream<
+        Item = Result<
+            crate::datadogV2::model::RumArchiveConfig,
+            datadog::Error<ListRUMArchiveConfigsError>,
+        >,
+    > + '_ {
+        try_stream! {
+            let mut page_size: i32 = 20;
+            if params.page_size.is_none() {
+                params.page_size = Some(page_size);
+            } else {
+                page_size = params.page_size.unwrap().clone();
+            }
+            if params.page_number.is_none() {
+                params.page_number = Some(0);
+            }
+            loop {
+                let resp = self.list_rum_archive_configs(params.clone()).await?;
+
+                let r = resp.data;
+                let count = r.len();
+                for team in r {
+                    yield team;
+                }
+                if count < page_size as usize {
+                    break;
+                }
+                params.page_number = Some(params.page_number.unwrap() + 1);
+            }
         }
     }
 
