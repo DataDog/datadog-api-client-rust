@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DueDateRuleAction {
-    /// A list of severity-to-due-date mappings. Each severity may appear at most once.
+    /// A list of severity-to-due-date mappings. Each severity may appear at most once. The rule only matches findings whose severity is listed here.
     #[serde(rename = "due_days_per_severity")]
     pub due_days_per_severity: Vec<crate::datadogV2::model::DueDatePerSeverityItem>,
     /// The reference point from which the due date is calculated. When `fix_available` is selected but not applicable to the finding type, `first_seen` is used instead.

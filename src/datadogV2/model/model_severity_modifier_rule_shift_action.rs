@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// Shifts matched findings up or down by one severity rank.
+/// Shifts matched findings up or down by one severity rank. Shifting down stops at the lowest severity available for the finding type, for example `low` for `iac_misconfiguration`, `runtime_code_vulnerability`, `secret`, and `static_code_vulnerability` findings. A rule that wouldn't change a finding's severity doesn't match it, so Datadog checks the next rule.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -14,7 +14,7 @@ pub struct SeverityModifierRuleShiftAction {
     /// An optional free-form explanation for the severity change.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// The direction in which to shift the severity of matched findings by one rank.
+    /// The direction in which to shift the severity of matched findings by one rank. Shifting down stops at the lowest severity available for the finding type.
     #[serde(rename = "severity_delta")]
     pub severity_delta: crate::datadogV2::model::SeverityModifierSeverityDelta,
     /// The type of a severity modifier rule action that shifts the severity by one rank.

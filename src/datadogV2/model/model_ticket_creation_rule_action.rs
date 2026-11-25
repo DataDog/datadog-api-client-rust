@@ -24,10 +24,10 @@ pub struct TicketCreationRuleAction {
     /// The maximum number of tickets the rule may create per day. If exceeded, one final ticket will be created, explaining the limit was hit and link back to the responsible rule.
     #[serde(rename = "max_tickets_per_day")]
     pub max_tickets_per_day: i64,
-    /// The UUID of the case management project.
+    /// The UUID of the Datadog Work Management (formerly Case Management) project.
     #[serde(rename = "project_id")]
     pub project_id: uuid::Uuid,
-    /// The ticketing system to create tickets in.
+    /// The ticketing system to create tickets in. `case_management` is Datadog Work Management, formerly called Case Management.
     #[serde(rename = "target")]
     pub target: crate::datadogV2::model::TicketCreationTarget,
     #[serde(flatten)]
