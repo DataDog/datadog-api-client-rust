@@ -14,7 +14,7 @@ pub struct MuteRuleAttributesCreate {
     /// The action to take when the mute rule matches a finding.
     #[serde(rename = "action")]
     pub action: crate::datadogV2::model::MuteRuleAction,
-    /// Whether the mute rule is enabled.
+    /// Whether the mute rule is enabled. If it is omitted, the API saves it as `false` and the rule doesn't apply.
     #[serde(rename = "enabled")]
     pub enabled: Option<bool>,
     /// The name of the mute rule.

@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MuteRuleAction {
-    /// The Unix timestamp in milliseconds at which the mute expires. If omitted, the mute does not expire.
+    /// The Unix timestamp in milliseconds at which the mute expires. It must be in the future. If the timestamp is omitted, the mute does not expire.
     #[serde(rename = "expire_at")]
     pub expire_at: Option<i64>,
     /// The reason for muting a security finding.
