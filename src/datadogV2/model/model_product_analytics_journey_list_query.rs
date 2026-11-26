@@ -19,6 +19,7 @@ pub struct ProductAnalyticsJourneyListQuery {
     #[serde(rename = "conversion_type")]
     pub conversion_type: Option<crate::datadogV2::model::ProductAnalyticsJourneyConversionType>,
     /// Attribute columns to return for each row, in addition to the identity join key and `timestamp`.
+    /// For example, `@usr.id` returns the user of each session.
     #[serde(rename = "entity_columns")]
     pub entity_columns: Option<Vec<String>>,
     /// Additional search query applied to the returned rows.

@@ -14,7 +14,8 @@ pub struct ProductAnalyticsRetentionIndexTarget {
     /// The discriminator identifying a target selected by index.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::ProductAnalyticsRetentionIndexTargetType,
-    /// Zero-based index of the targeted cohort or return period.
+    /// Zero-based index of the targeted cohort or return period. It must be lower than the number of cohorts
+    /// in the query window, which is the number of cohort intervals that start between `from` and `to`.
     #[serde(rename = "value")]
     pub value: i64,
     #[serde(flatten)]

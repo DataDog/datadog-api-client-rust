@@ -6,7 +6,10 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The shape of the Sankey diagram, expressed as the facets to flow between and how many steps to show.
+/// The shape of the Sankey diagram: the step it is anchored on and how many steps to show.
+/// Set exactly one of `source` or `target` to a step, and send the other one as an empty string.
+/// Sending both returns `Invalid Sankey Mode`. Sending both empty starts the diagram from any view.
+/// Each column of the diagram lists view names.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -19,10 +22,14 @@ pub struct ProductAnalyticsSankeyDefinition {
     /// Omit it, or send `0`, to use the default of `5`.
     #[serde(rename = "number_of_steps")]
     pub number_of_steps: Option<i64>,
-    /// Facet forming the first column of the diagram.
+    /// The step the diagram starts from. The diagram shows where sessions go after it.
+    /// It is a value, not a facet name: use a view name such as `/logs`, or a query matching one view
+    /// such as `@type:view @view.name:"/logs"`. Do not send `@view.name`.
+    /// Send an empty string when `target` is set.
     #[serde(rename = "source")]
     pub source: String,
-    /// Facet forming the last column of the diagram.
+    /// The step the diagram ends at. The diagram shows the paths sessions take to reach it.
+    /// It takes the same values as `source`. Send an empty string when `source` is set.
     #[serde(rename = "target")]
     pub target: String,
     #[serde(flatten)]

@@ -11,7 +11,10 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ProductAnalyticsSankeyRequestAttributes {
-    /// The shape of the Sankey diagram, expressed as the facets to flow between and how many steps to show.
+    /// The shape of the Sankey diagram: the step it is anchored on and how many steps to show.
+    /// Set exactly one of `source` or `target` to a step, and send the other one as an empty string.
+    /// Sending both returns `Invalid Sankey Mode`. Sending both empty starts the diagram from any view.
+    /// Each column of the diagram lists view names.
     #[serde(rename = "definition")]
     pub definition: crate::datadogV2::model::ProductAnalyticsSankeyDefinition,
     /// Selects the sessions a Sankey diagram is built from.
