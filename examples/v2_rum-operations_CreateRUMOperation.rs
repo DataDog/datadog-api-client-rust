@@ -3,46 +3,28 @@ use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_rum_operations::RUMOperationsAPI;
 use datadog_api_client::datadogV2::model::RUMOperationCreateRequest;
 use datadog_api_client::datadogV2::model::RUMOperationCreateRequestData;
-use datadog_api_client::datadogV2::model::RUMOperationJourneyCompositeRule;
-use datadog_api_client::datadogV2::model::RUMOperationJourneyCompositeRuleKind;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyNode;
-use datadog_api_client::datadogV2::model::RUMOperationJourneyPredicate;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyRum;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyStep;
 use datadog_api_client::datadogV2::model::RUMOperationJourneyStepType;
 use datadog_api_client::datadogV2::model::RUMOperationRequestAttributes;
 use datadog_api_client::datadogV2::model::RUMOperationType;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let body = RUMOperationCreateRequest::new(RUMOperationCreateRequestData::new(
         RUMOperationRequestAttributes::new(
-            RUMOperationJourneyRum::new(Some(vec![RUMOperationJourneyStep::new(
-                RUMOperationJourneyStepType::START,
-            )
-            .composite(
-                RUMOperationJourneyCompositeRule::new(
-                    RUMOperationJourneyCompositeRuleKind::ALL_OF,
-                    vec![RUMOperationJourneyPredicate::new(
-                        "@type:action @action.type:click".to_string(),
-                    )],
-                )
-                .max_window_ms(30000),
-            )
-            .nodes(vec![RUMOperationJourneyNode::new(
-                "@type:action @action.type:click".to_string(),
-            )])])),
-            "checkout_completed".to_string(),
-            vec!["team:checkout".to_string()],
+            RUMOperationJourneyRum::new(Some(vec![
+                RUMOperationJourneyStep::new(RUMOperationJourneyStepType::START).nodes(vec![
+                    RUMOperationJourneyNode::new("@type:action @action.type:click".to_string()),
+                ]),
+                RUMOperationJourneyStep::new(RUMOperationJourneyStepType::STOP)
+                    .nodes(vec![RUMOperationJourneyNode::new("@type:view".to_string())]),
+            ])),
+            "bdd_examplerumoperation".to_string(),
+            vec!["team:rum-backend".to_string()],
         )
-        .application_id(
-            Uuid::parse_str("abc12345-1234-5678-abcd-ef1234567890").expect("invalid UUID"),
-        )
-        .category(None)
-        .description(None)
-        .display_name("Checkout completed".to_string())
-        .feature_ids(vec![]),
+        .display_name("BDD operation".to_string()),
         RUMOperationType::OPERATIONS,
     ));
     let configuration = datadog::Configuration::new();
