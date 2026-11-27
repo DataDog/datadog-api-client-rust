@@ -8514,6 +8514,10 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         test_v2_list_rum_archive_configs,
     );
     world.function_mappings.insert(
+        "v2.ListRUMArchiveConfigsWithPagination".into(),
+        test_v2_list_rum_archive_configs_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.DeleteRUMArchiveConfig".into(),
         test_v2_delete_rum_archive_config,
     );
@@ -8586,8 +8590,16 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         .function_mappings
         .insert("v2.ListRUMOperations".into(), test_v2_list_rum_operations);
     world.function_mappings.insert(
+        "v2.ListRUMOperationsWithPagination".into(),
+        test_v2_list_rum_operations_with_pagination,
+    );
+    world.function_mappings.insert(
         "v2.ListRUMOperationStrongLinks".into(),
         test_v2_list_rum_operation_strong_links,
+    );
+    world.function_mappings.insert(
+        "v2.ListRUMOperationStrongLinksWithPagination".into(),
+        test_v2_list_rum_operation_strong_links_with_pagination,
     );
     world.function_mappings.insert(
         "v2.CreateRUMOperationStrongLink".into(),
@@ -68763,6 +68775,52 @@ fn test_v2_list_rum_archive_configs(
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
+fn test_v2_list_rum_archive_configs_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_managed_archives
+        .as_ref()
+        .expect("api instance not found");
+    let page_number = _parameters
+        .get("page[number]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_size = _parameters
+        .get("page[size]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_managed_archives::ListRUMArchiveConfigsOptionalParams::default();
+    params.page_number = page_number;
+    params.page_size = page_size;
+    let response = api.list_rum_archive_configs_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
 
 fn test_v2_delete_rum_archive_config(
     world: &mut DatadogWorld,
@@ -69362,6 +69420,71 @@ fn test_v2_list_rum_operations(world: &mut DatadogWorld, _parameters: &HashMap<S
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
 }
+fn test_v2_list_rum_operations_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_operations
+        .as_ref()
+        .expect("api instance not found");
+    let query = _parameters
+        .get("query")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let creator = _parameters
+        .get("creator")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let team = _parameters
+        .get("team")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let feature_id = _parameters
+        .get("feature_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let application_id = _parameters
+        .get("application_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params = datadogV2::api_rum_operations::ListRUMOperationsOptionalParams::default();
+    params.query = query;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    params.creator = creator;
+    params.team = team;
+    params.feature_id = feature_id;
+    params.application_id = application_id;
+    let response = api.list_rum_operations_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
+}
 
 fn test_v2_list_rum_operation_strong_links(
     world: &mut DatadogWorld,
@@ -69406,6 +69529,60 @@ fn test_v2_list_rum_operation_strong_links(
     };
     world.response.object = serde_json::to_value(response.entity).unwrap();
     world.response.code = response.status.as_u16();
+}
+fn test_v2_list_rum_operation_strong_links_with_pagination(
+    world: &mut DatadogWorld,
+    _parameters: &HashMap<String, Value>,
+) {
+    let api = world
+        .api_instances
+        .v2_api_rum_operations
+        .as_ref()
+        .expect("api instance not found");
+    let operation_id = _parameters
+        .get("operation_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let feature_id = _parameters
+        .get("feature_id")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_offset = _parameters
+        .get("page[offset]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let page_limit = _parameters
+        .get("page[limit]")
+        .and_then(|param| Some(serde_json::from_value(param.clone()).unwrap()));
+    let mut params =
+        datadogV2::api_rum_operations::ListRUMOperationStrongLinksOptionalParams::default();
+    params.operation_id = operation_id;
+    params.feature_id = feature_id;
+    params.page_offset = page_offset;
+    params.page_limit = page_limit;
+    let response = api.list_rum_operation_strong_links_with_pagination(params);
+    let mut result = Vec::new();
+
+    block_on(async {
+        pin_mut!(response);
+
+        while let Some(resp) = response.next().await {
+            match resp {
+                Ok(response) => {
+                    result.push(response);
+                }
+                Err(error) => {
+                    return match error {
+                        Error::ResponseError(e) => {
+                            if let Some(entity) = e.entity {
+                                world.response.object = serde_json::to_value(entity).unwrap();
+                            }
+                        }
+                        _ => panic!("error parsing response: {}", error),
+                    };
+                }
+            }
+        }
+    });
+    world.response.object = serde_json::to_value(result).unwrap();
+    world.response.code = 200;
 }
 
 fn test_v2_create_rum_operation_strong_link(
