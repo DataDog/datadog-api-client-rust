@@ -13,6 +13,8 @@ use datadog_api_client::datadogV2::model::RumRetentionQuotaWindowType;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "rum_application" in the system
+    let rum_application_data_id = std::env::var("RUM_APPLICATION_DATA_ID").unwrap();
     let body = RumRetentionQuotaConfigUpdateRequest::new(RumRetentionQuotaConfigUpdateData::new(
         RumRetentionQuotaConfigUpdateAttributes::new(RumRetentionQuotaMode::CUSTOM).custom(
             RumRetentionQuotaCustomConfig::new(
@@ -23,7 +25,7 @@ async fn main() {
                 RumRetentionQuotaWindowType::DAILY,
             ),
         ),
-        "cd73a516-a481-4af5-8352-9b577465c77b".to_string(),
+        rum_application_data_id.clone(),
         RumRetentionQuotaConfigType::RUM_QUOTA_CONFIG,
     ));
     let configuration = datadog::Configuration::new();
@@ -31,7 +33,7 @@ async fn main() {
     let resp = api
         .upsert_rum_quota_config(
             RumRetentionQuotaScopeType::APPLICATION,
-            "cd73a516-a481-4af5-8352-9b577465c77b".to_string(),
+            rum_application_data_id.clone(),
             body,
         )
         .await;

@@ -5,22 +5,20 @@ use datadog_api_client::datadogV2::model::RumArchiveConfigType;
 use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertAttributes;
 use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertData;
 use datadog_api_client::datadogV2::model::RumArchiveConfigUpsertRequest;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "rum_application" in the system
+    let rum_application_data_id = std::env::var("RUM_APPLICATION_DATA_ID").unwrap();
     let body = RumArchiveConfigUpsertRequest::new(RumArchiveConfigUpsertData::new(
         RumArchiveConfigUpsertAttributes::new(true).retention_days(90),
-        "a33671aa-24fd-4dcd-ba4b-5bbdbafe7690".to_string(),
+        rum_application_data_id.clone(),
         RumArchiveConfigType::RUM_ARCHIVE_CONFIG,
     ));
     let configuration = datadog::Configuration::new();
     let api = RUMManagedArchivesAPI::with_config(configuration);
     let resp = api
-        .update_rum_archive_config(
-            Uuid::parse_str("a33671aa-24fd-4dcd-ba4b-5bbdbafe7690").expect("invalid UUID"),
-            body,
-        )
+        .update_rum_archive_config(rum_application_data_id.clone(), body)
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
