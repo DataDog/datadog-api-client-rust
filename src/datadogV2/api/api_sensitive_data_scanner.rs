@@ -826,7 +826,7 @@ impl SensitiveDataScannerAPI {
         }
     }
 
-    /// Get an Agent Observability scanning group, with its rules included.
+    /// Get an Agent Observability or AI Guard scanning group, with its rules included.
     /// Scanning groups of logs, RUM, events, and APM are reported as not found.
     pub async fn get_scanning_group(
         &self,
@@ -849,7 +849,7 @@ impl SensitiveDataScannerAPI {
         }
     }
 
-    /// Get an Agent Observability scanning group, with its rules included.
+    /// Get an Agent Observability or AI Guard scanning group, with its rules included.
     /// Scanning groups of logs, RUM, events, and APM are reported as not found.
     pub async fn get_scanning_group_with_http_info(
         &self,
@@ -1154,8 +1154,8 @@ impl SensitiveDataScannerAPI {
         }
     }
 
-    /// List the Agent Observability scanning groups, with their rules included.
-    /// The list always includes the default Agent Observability scanning group.
+    /// List the scanning groups of a target, such as Agent Observability or AI Guard, with their rules included.
+    /// The list always includes the default scanning group of the target.
     /// Scanning groups of logs, RUM, events, and APM are listed by the List Scanning Groups endpoint.
     pub async fn list_target_scanning_groups(
         &self,
@@ -1181,8 +1181,8 @@ impl SensitiveDataScannerAPI {
         }
     }
 
-    /// List the Agent Observability scanning groups, with their rules included.
-    /// The list always includes the default Agent Observability scanning group.
+    /// List the scanning groups of a target, such as Agent Observability or AI Guard, with their rules included.
+    /// The list always includes the default scanning group of the target.
     /// Scanning groups of logs, RUM, events, and APM are listed by the List Scanning Groups endpoint.
     pub async fn list_target_scanning_groups_with_http_info(
         &self,

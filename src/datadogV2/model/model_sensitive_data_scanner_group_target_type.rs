@@ -8,6 +8,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum SensitiveDataScannerGroupTargetType {
     LLM_OBSERVABILITY,
+    AI_GUARD,
     UnparsedObject(crate::datadog::UnparsedObject),
 }
 
@@ -15,6 +16,7 @@ impl ToString for SensitiveDataScannerGroupTargetType {
     fn to_string(&self) -> String {
         match self {
             Self::LLM_OBSERVABILITY => String::from("llm_observability"),
+            Self::AI_GUARD => String::from("ai_guard"),
             Self::UnparsedObject(v) => v.value.to_string(),
         }
     }
@@ -40,6 +42,7 @@ impl<'de> Deserialize<'de> for SensitiveDataScannerGroupTargetType {
         let s: String = String::deserialize(deserializer)?;
         Ok(match s.as_str() {
             "llm_observability" => Self::LLM_OBSERVABILITY,
+            "ai_guard" => Self::AI_GUARD,
             _ => Self::UnparsedObject(crate::datadog::UnparsedObject {
                 value: serde_json::Value::String(s.into()),
             }),
