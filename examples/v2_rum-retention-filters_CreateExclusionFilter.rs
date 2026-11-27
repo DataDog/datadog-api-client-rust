@@ -10,18 +10,16 @@ use datadog_api_client::datadogV2::model::RumExclusionFilterType;
 #[tokio::main]
 async fn main() {
     let body = RumExclusionFilterCreateRequest::new(RumExclusionFilterCreateData::new(
-        RumExclusionFilterCreateAttributes::new(
-            "Exclude noisy browser extension errors".to_string(),
-        )
-        .enabled(true)
-        .event_type(RumExclusionFilterEventType::ERROR)
-        .query("@error.message:*extension*".to_string()),
+        RumExclusionFilterCreateAttributes::new("Example-Rum-Retention-Filter".to_string())
+            .enabled(true)
+            .event_type(RumExclusionFilterEventType::ERROR)
+            .query("@error.message:*extension*".to_string()),
         RumExclusionFilterType::EXCLUSION_FILTERS,
     ));
     let configuration = datadog::Configuration::new();
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api
-        .create_exclusion_filter("app_id".to_string(), body)
+        .create_exclusion_filter("a33671aa-24fd-4dcd-ba4b-5bbdbafe7690".to_string(), body)
         .await;
     if let Ok(value) = resp {
         println!("{:#?}", value);
