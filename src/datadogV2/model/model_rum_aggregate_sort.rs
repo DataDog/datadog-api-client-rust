@@ -20,7 +20,7 @@ pub struct RUMAggregateSort {
     /// The order to use, ascending or descending.
     #[serde(rename = "order")]
     pub order: Option<crate::datadogV2::model::RUMSortOrder>,
-    /// The type of sorting algorithm. `alphabetical` sorts buckets by the facet value. `measure` sorts them by a computed aggregation.
+    /// The type of sorting algorithm. `alphabetical` sorts buckets by the facet value. `measure` sorts them by a computed aggregation, and is required when the sort sets `aggregation` or `metric`.
     #[serde(rename = "type")]
     pub type_: Option<crate::datadogV2::model::RUMAggregateSortType>,
     #[serde(flatten)]

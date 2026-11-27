@@ -12,7 +12,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct RUMAggregateRequest {
-    /// The list of metrics or timeseries to compute for the retrieved buckets.
+    /// The list of metrics or timeseries to compute for the retrieved buckets. All rules must have the same `type`; mixing `total` and `timeseries` rules is rejected.
     #[serde(rename = "compute")]
     pub compute: Option<Vec<crate::datadogV2::model::RUMCompute>>,
     /// The search and filter query settings.
