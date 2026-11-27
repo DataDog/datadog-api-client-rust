@@ -10,6 +10,8 @@ use datadog_api_client::datadogV2::model::RumPermanentRetentionFilterUpdateReque
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "rum_application" in the system
+    let rum_application_data_id = std::env::var("RUM_APPLICATION_DATA_ID").unwrap();
     let body =
         RumPermanentRetentionFilterUpdateRequest::new(RumPermanentRetentionFilterUpdateData::new(
             RumPermanentRetentionFilterUpdateAttributes::new().cross_product_sampling(
@@ -24,7 +26,7 @@ async fn main() {
     let api = RumRetentionFiltersAPI::with_config(configuration);
     let resp = api
         .update_permanent_retention_filter(
-            "app_id".to_string(),
+            rum_application_data_id.clone(),
             RumPermanentRetentionFilterID::SYNTHETICS_SESSIONS,
             body,
         )
