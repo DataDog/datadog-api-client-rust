@@ -14,7 +14,8 @@ pub struct ProductAnalyticsRetentionCompute {
     /// The aggregation function applied to the metric, such as `count` or `avg`.
     #[serde(rename = "aggregation")]
     pub aggregation: String,
-    /// The retention metric to compute, either an absolute count or a rate.
+    /// The retention metric to compute. Use `__dd.retention` for the number of retained entities,
+    /// or `__dd.retention_rate` for the share of the cohort that was retained. No other value is accepted.
     #[serde(rename = "metric")]
     pub metric: crate::datadogV2::model::ProductAnalyticsRetentionComputeMetric,
     #[serde(flatten)]

@@ -26,23 +26,22 @@ async fn main() {
                                 )
                                 .time_frame(
                                     QueryEventFilteredUsersRequestDataAttributesEventQueryTimeFrame::new()
-                                        .end(1761309676)
-                                        .start(1760100076),
+                                        .end(1761309676000)
+                                        .start(1760100076000),
                                 ),
                         )
                         .include_row_count(true)
                         .limit(25)
-                        .query("user_org_id:5001 AND first_country_code:US AND first_browser_name:Chrome".to_string())
+                        .query("first_country_code:US AND first_browser_name:Chrome".to_string())
                         .select_columns(
                             vec![
                                 "user_id".to_string(),
                                 "user_email".to_string(),
+                                "user_name".to_string(),
+                                "first_seen".to_string(),
+                                "last_seen".to_string(),
                                 "first_country_code".to_string(),
-                                "first_browser_name".to_string(),
-                                "events_count".to_string(),
-                                "session_count".to_string(),
-                                "error_count".to_string(),
-                                "avg_loading_time".to_string()
+                                "first_browser_name".to_string()
                             ],
                         ),
                 )

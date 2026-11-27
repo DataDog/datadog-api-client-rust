@@ -14,7 +14,7 @@ pub struct QueryEventFilteredUsersRequestDataAttributesEventQuery {
     /// The event platform query expression for filtering users by their event activity.
     #[serde(rename = "query")]
     pub query: Option<String>,
-    /// The time window defining the start and end of the event query period as Unix timestamps.
+    /// The time window of the event query, as Unix timestamps in milliseconds.
     #[serde(rename = "time_frame")]
     pub time_frame: Option<
         crate::datadogV2::model::QueryEventFilteredUsersRequestDataAttributesEventQueryTimeFrame,

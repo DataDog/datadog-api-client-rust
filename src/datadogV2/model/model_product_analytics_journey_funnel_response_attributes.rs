@@ -20,9 +20,10 @@ pub struct ProductAnalyticsJourneyFunnelResponseAttributes {
     /// The funnel steps, in the order given by the search expression.
     #[serde(rename = "funnel_steps")]
     pub funnel_steps: Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStep>,
-    /// Number of entities that entered the funnel.
+    /// Number of entities that entered the funnel. The service does not return it today; use the `value`
+    /// of the first entry in `funnel_steps` instead.
     #[serde(rename = "initial_count")]
-    pub initial_count: i64,
+    pub initial_count: Option<i64>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -35,16 +36,20 @@ impl ProductAnalyticsJourneyFunnelResponseAttributes {
         end_to_end_conversion_rate: f64,
         end_to_end_elapsed_time: crate::datadogV2::model::ProductAnalyticsElapsedTime,
         funnel_steps: Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStep>,
-        initial_count: i64,
     ) -> ProductAnalyticsJourneyFunnelResponseAttributes {
         ProductAnalyticsJourneyFunnelResponseAttributes {
             end_to_end_conversion_rate,
             end_to_end_elapsed_time,
             funnel_steps,
-            initial_count,
+            initial_count: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn initial_count(mut self, value: i64) -> Self {
+        self.initial_count = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -102,6 +107,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelResponseAttributes {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "initial_count" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             initial_count =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
@@ -118,8 +126,6 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelResponseAttributes {
                     .ok_or_else(|| M::Error::missing_field("end_to_end_elapsed_time"))?;
                 let funnel_steps =
                     funnel_steps.ok_or_else(|| M::Error::missing_field("funnel_steps"))?;
-                let initial_count =
-                    initial_count.ok_or_else(|| M::Error::missing_field("initial_count"))?;
 
                 let content = ProductAnalyticsJourneyFunnelResponseAttributes {
                     end_to_end_conversion_rate,

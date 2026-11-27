@@ -20,8 +20,8 @@ async fn main() {
     let body = ProductAnalyticsSankeyRequest::new(ProductAnalyticsSankeyRequestData::new(
         ProductAnalyticsSankeyRequestAttributes::new(
             ProductAnalyticsSankeyDefinition::new(
-                "@view.name".to_string(),
-                "@view.name".to_string(),
+                r#"@type:view @view.name:"/logs""#.to_string(),
+                "".to_string(),
             )
             .entries_per_step(10)
             .number_of_steps(3),

@@ -14,13 +14,13 @@ pub struct ProductAnalyticsJourneyFunnelStep {
     /// Elapsed time statistics (min/max/avg in milliseconds).
     #[serde(rename = "elapsed_time_to_next_step")]
     pub elapsed_time_to_next_step: crate::datadogV2::model::ProductAnalyticsElapsedTime,
-    /// Breakdown of this step by the requested group-by facets.
+    /// Breakdown of this step by the requested group-by facets. Omitted when the query has no group-by.
     #[serde(rename = "groups")]
-    pub groups: Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStepGroup>,
+    pub groups: Option<Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStepGroup>>,
     /// Label of the step, derived from the node alias.
     #[serde(rename = "label")]
     pub label: String,
-    /// Unit of the elapsed time values.
+    /// The entity counted in `value`, such as `session` or `user`, set by the join key.
     #[serde(rename = "unit")]
     pub unit: String,
     /// Value of the computed metric at this step.
@@ -36,20 +36,27 @@ pub struct ProductAnalyticsJourneyFunnelStep {
 impl ProductAnalyticsJourneyFunnelStep {
     pub fn new(
         elapsed_time_to_next_step: crate::datadogV2::model::ProductAnalyticsElapsedTime,
-        groups: Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStepGroup>,
         label: String,
         unit: String,
         value: f64,
     ) -> ProductAnalyticsJourneyFunnelStep {
         ProductAnalyticsJourneyFunnelStep {
             elapsed_time_to_next_step,
-            groups,
+            groups: None,
             label,
             unit,
             value,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn groups(
+        mut self,
+        value: Vec<crate::datadogV2::model::ProductAnalyticsJourneyFunnelStepGroup>,
+    ) -> Self {
+        self.groups = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -100,6 +107,9 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelStep {
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "groups" => {
+                            if v.is_null() {
+                                continue;
+                            }
                             groups = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "label" => {
@@ -120,7 +130,6 @@ impl<'de> Deserialize<'de> for ProductAnalyticsJourneyFunnelStep {
                 }
                 let elapsed_time_to_next_step = elapsed_time_to_next_step
                     .ok_or_else(|| M::Error::missing_field("elapsed_time_to_next_step"))?;
-                let groups = groups.ok_or_else(|| M::Error::missing_field("groups"))?;
                 let label = label.ok_or_else(|| M::Error::missing_field("label"))?;
                 let unit = unit.ok_or_else(|| M::Error::missing_field("unit"))?;
                 let value = value.ok_or_else(|| M::Error::missing_field("value"))?;
