@@ -14,13 +14,13 @@ pub struct CreatePageRequestDataAttributes {
     /// A short summary of the issue or context.
     #[serde(rename = "description")]
     pub description: Option<String>,
-    /// Tags to help categorize or filter the page.
+    /// Tags to help categorize or filter the Page.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
     /// Information about the target to notify (such as a team or user).
     #[serde(rename = "target")]
     pub target: crate::datadogV2::model::CreatePageRequestDataAttributesTarget,
-    /// The title of the page.
+    /// The title of the Page.
     #[serde(rename = "title")]
     pub title: String,
     /// On-Call Page urgency level.

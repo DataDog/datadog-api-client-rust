@@ -1,4 +1,4 @@
-// Escalate On-Call Page returns "Accepted." response
+// Escalate On-Call Page returns "No Content." response
 use datadog_api_client::datadog;
 use datadog_api_client::datadogV2::api_on_call_paging::OnCallPagingAPI;
 use uuid::Uuid;
