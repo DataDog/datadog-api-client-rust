@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SensitiveDataScannerGroupTarget {
-    /// Type of target whose scanning groups are served by the target-scoped group routes. `llm_observability` is Agent Observability.
+    /// Type of target whose scanning groups are served by the target-scoped group routes. `llm_observability` is Agent Observability, `ai_guard` is AI Guard.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SensitiveDataScannerGroupTargetType,
     #[serde(flatten)]
