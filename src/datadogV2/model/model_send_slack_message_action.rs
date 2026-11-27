@@ -14,6 +14,10 @@ pub struct SendSlackMessageAction {
     /// The channel ID.
     #[serde(rename = "channel")]
     pub channel: String,
+    /// Options that customize the content of the Slack message sent for a Page.
+    #[serde(rename = "customizable_content")]
+    pub customizable_content:
+        Option<crate::datadogV2::model::SendSlackMessageActionCustomizableContent>,
     /// Indicates that the action is a send Slack message action.
     #[serde(rename = "type")]
     pub type_: crate::datadogV2::model::SendSlackMessageActionType,
@@ -35,11 +39,20 @@ impl SendSlackMessageAction {
     ) -> SendSlackMessageAction {
         SendSlackMessageAction {
             channel,
+            customizable_content: None,
             type_,
             workspace,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
+    }
+
+    pub fn customizable_content(
+        mut self,
+        value: crate::datadogV2::model::SendSlackMessageActionCustomizableContent,
+    ) -> Self {
+        self.customizable_content = Some(value);
+        self
     }
 
     pub fn additional_properties(
@@ -69,6 +82,9 @@ impl<'de> Deserialize<'de> for SendSlackMessageAction {
                 M: MapAccess<'a>,
             {
                 let mut channel: Option<String> = None;
+                let mut customizable_content: Option<
+                    crate::datadogV2::model::SendSlackMessageActionCustomizableContent,
+                > = None;
                 let mut type_: Option<crate::datadogV2::model::SendSlackMessageActionType> = None;
                 let mut workspace: Option<String> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -81,6 +97,13 @@ impl<'de> Deserialize<'de> for SendSlackMessageAction {
                     match k.as_str() {
                         "channel" => {
                             channel = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "customizable_content" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            customizable_content =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "type" => {
                             type_ = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
@@ -109,6 +132,7 @@ impl<'de> Deserialize<'de> for SendSlackMessageAction {
 
                 let content = SendSlackMessageAction {
                     channel,
+                    customizable_content,
                     type_,
                     workspace,
                     additional_properties,
