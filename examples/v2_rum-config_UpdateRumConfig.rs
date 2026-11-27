@@ -9,7 +9,7 @@ use datadog_api_client::datadogV2::model::RumConfigUpdateRequest;
 #[tokio::main]
 async fn main() {
     let body = RumConfigUpdateRequest::new(RumConfigUpdateData::new(
-        RumConfigUpdateAttributes::new(true),
+        RumConfigUpdateAttributes::new(false),
         RumConfigType::RUM_CONFIG,
     ));
     let mut configuration = datadog::Configuration::new();

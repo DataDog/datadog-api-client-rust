@@ -9,13 +9,16 @@ use datadog_api_client::datadogV2::model::RUMOperationStrongLinkType;
 
 #[tokio::main]
 async fn main() {
+    // there is a valid "rum_operation" in the system
+    let rum_operation_data_id = std::env::var("RUM_OPERATION_DATA_ID").unwrap();
     let body =
         RUMOperationStrongLinkCreateRequest::new(RUMOperationStrongLinkCreateRequestData::new(
-            RUMOperationStrongLinkCreateRequestAttributes::new("journey-123".to_string())
-                .description(None)
-                .operation_id("abc12345-1234-5678-abcd-ef1234567890".to_string())
-                .status(RUMOperationStrongLinkStatus::CONFIRMED)
-                .tags(vec![]),
+            RUMOperationStrongLinkCreateRequestAttributes::new(
+                "bdd-examplerumoperation".to_string(),
+            )
+            .operation_id(rum_operation_data_id.clone())
+            .status(RUMOperationStrongLinkStatus::DRAFT)
+            .tags(vec!["team:rum-backend".to_string()]),
             RUMOperationStrongLinkType::STRONG_LINKS,
         ));
     let configuration = datadog::Configuration::new();
