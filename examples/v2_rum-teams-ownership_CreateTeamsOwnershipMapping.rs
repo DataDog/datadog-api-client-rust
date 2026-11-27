@@ -6,20 +6,16 @@ use datadog_api_client::datadogV2::model::TeamsOwnershipMappingCreateDataAttribu
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingCreateRequest;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMappingType;
 use datadog_api_client::datadogV2::model::TeamsOwnershipMatchType;
-use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
     let body = TeamsOwnershipMappingCreateRequest::new(TeamsOwnershipMappingCreateData::new(
         TeamsOwnershipMappingCreateDataAttributes::new(
             "team-rum".to_string(),
-            "/checkout".to_string(),
-        )
-        .application_id(
-            Uuid::parse_str("11111111-2222-3333-4444-555555555555").expect("invalid UUID"),
+            "/checkout-examplerumteamsownership".to_string(),
         )
         .match_type(TeamsOwnershipMatchType::EXACT)
-        .service("web-checkout".to_string()),
+        .service("web-checkout-examplerumteamsownership".to_string()),
         TeamsOwnershipMappingType::TEAMS_OWNERSHIP_MAPPINGS,
     ));
     let configuration = datadog::Configuration::new();
