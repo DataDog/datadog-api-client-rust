@@ -8,7 +8,6 @@ use flate2::{
     Compression,
 };
 use futures_core::stream::Stream;
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -1343,14 +1342,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_sourcemaps' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let symbol_type = params.symbol_type;
@@ -1853,14 +1844,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_service_repository_info";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_service_repository_info' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -2078,14 +2061,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_sourcemaps' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let debug_id = params.debug_id;
@@ -2563,14 +2538,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_sourcemaps' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let search_by = params.search_by;
@@ -2836,14 +2803,6 @@ impl RUMAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.restore_sourcemaps";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.restore_sourcemaps' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let symbol_type = params.symbol_type;

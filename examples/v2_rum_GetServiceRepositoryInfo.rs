@@ -15,8 +15,7 @@ async fn main() {
         ),
         ServiceRepositoryInfoDataType::SERVICE_REPOSITORY_INFO,
     ));
-    let mut configuration = datadog::Configuration::new();
-    configuration.set_unstable_operation_enabled("v2.get_service_repository_info", true);
+    let configuration = datadog::Configuration::new();
     let api = RUMAPI::with_config(configuration);
     let resp = api.get_service_repository_info(body).await;
     if let Ok(value) = resp {
