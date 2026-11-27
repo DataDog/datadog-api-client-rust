@@ -6,7 +6,6 @@ use flate2::{
     write::{GzEncoder, ZlibEncoder},
     Compression,
 };
-use log::warn;
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde::{Deserialize, Serialize};
 use std::io::Write;
@@ -246,14 +245,6 @@ impl RumTeamsOwnershipAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_teams_ownership_mapping";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_teams_ownership_mapping' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -420,15 +411,6 @@ impl RumTeamsOwnershipAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.create_teams_ownership_mappings_batch";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.create_teams_ownership_mappings_batch' is not enabled"
-                    .to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -571,14 +553,6 @@ impl RumTeamsOwnershipAPI {
     {
         let local_configuration = &self.config;
         let local_operation_id = "v2.delete_teams_ownership_mapping";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.delete_teams_ownership_mapping' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -681,14 +655,6 @@ impl RumTeamsOwnershipAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.get_teams_ownership_mapping";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.get_teams_ownership_mapping' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         let local_client = &self.client;
 
@@ -801,14 +767,6 @@ impl RumTeamsOwnershipAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_teams_ownership_mappings";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_teams_ownership_mappings' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let filter_view_name = params.filter_view_name;
@@ -952,14 +910,6 @@ impl RumTeamsOwnershipAPI {
     > {
         let local_configuration = &self.config;
         let local_operation_id = "v2.list_teams_ownership_rules";
-        if local_configuration.is_unstable_operation_enabled(local_operation_id) {
-            warn!("Using unstable operation {local_operation_id}");
-        } else {
-            let local_error = datadog::UnstableOperationDisabledError {
-                msg: "Operation 'v2.list_teams_ownership_rules' is not enabled".to_string(),
-            };
-            return Err(datadog::Error::UnstableOperationDisabledError(local_error));
-        }
 
         // unbox and build optional parameters
         let filter_view_name = params.filter_view_name;
