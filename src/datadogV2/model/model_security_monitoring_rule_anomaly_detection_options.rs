@@ -26,6 +26,9 @@ pub struct SecurityMonitoringRuleAnomalyDetectionOptions {
     /// When set to true, Datadog uses previous values that fall within the defined learning window to construct the baseline, enabling the system to establish an accurate baseline more rapidly rather than relying solely on gradual learning over time.
     #[serde(rename = "instantaneousBaseline")]
     pub instantaneous_baseline: Option<bool>,
+    /// Maximum time in minutes to build the instantaneous baseline. Only used when `instantaneousBaseline` is true.
+    #[serde(rename = "instantaneousBaselineTimeoutMinutes")]
+    pub instantaneous_baseline_timeout_minutes: Option<i32>,
     /// Learning duration in hours. Anomaly detection waits for at least this amount of historical data before it starts evaluating.
     #[serde(rename = "learningDuration")]
     pub learning_duration: Option<
@@ -47,6 +50,7 @@ impl SecurityMonitoringRuleAnomalyDetectionOptions {
             bucket_duration: None,
             detection_tolerance: None,
             instantaneous_baseline: None,
+            instantaneous_baseline_timeout_minutes: None,
             learning_duration: None,
             learning_period_baseline: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -72,6 +76,11 @@ impl SecurityMonitoringRuleAnomalyDetectionOptions {
 
     pub fn instantaneous_baseline(mut self, value: bool) -> Self {
         self.instantaneous_baseline = Some(value);
+        self
+    }
+
+    pub fn instantaneous_baseline_timeout_minutes(mut self, value: i32) -> Self {
+        self.instantaneous_baseline_timeout_minutes = Some(value);
         self
     }
 
@@ -123,6 +132,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                 let mut bucket_duration: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsBucketDuration> = None;
                 let mut detection_tolerance: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsDetectionTolerance> = None;
                 let mut instantaneous_baseline: Option<bool> = None;
+                let mut instantaneous_baseline_timeout_minutes: Option<i32> = None;
                 let mut learning_duration: Option<crate::datadogV2::model::SecurityMonitoringRuleAnomalyDetectionOptionsLearningDuration> = None;
                 let mut learning_period_baseline: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -170,6 +180,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                             instantaneous_baseline =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "instantaneousBaselineTimeoutMinutes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            instantaneous_baseline_timeout_minutes =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "learningDuration" => {
                             if v.is_null() {
                                 continue;
@@ -204,6 +221,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringRuleAnomalyDetectionOptions {
                     bucket_duration,
                     detection_tolerance,
                     instantaneous_baseline,
+                    instantaneous_baseline_timeout_minutes,
                     learning_duration,
                     learning_period_baseline,
                     additional_properties,

@@ -16,6 +16,10 @@ pub struct CloudConfigurationComplianceRuleOptions {
     /// Must be set to true if `regoRule.resourceTypes` contains more than one item. Defaults to false.
     #[serde(rename = "complexRule")]
     pub complex_rule: Option<bool>,
+    /// Compliance framework requirements the rule maps to.
+    #[serde(rename = "complianceFrameworks")]
+    pub compliance_frameworks:
+        Option<Vec<crate::datadogV2::model::CloudConfigurationComplianceFramework>>,
     /// Rule details.
     #[serde(rename = "regoRule")]
     pub rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule>,
@@ -33,6 +37,7 @@ impl CloudConfigurationComplianceRuleOptions {
     pub fn new() -> CloudConfigurationComplianceRuleOptions {
         CloudConfigurationComplianceRuleOptions {
             complex_rule: None,
+            compliance_frameworks: None,
             rego_rule: None,
             resource_type: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -42,6 +47,14 @@ impl CloudConfigurationComplianceRuleOptions {
 
     pub fn complex_rule(mut self, value: bool) -> Self {
         self.complex_rule = Some(value);
+        self
+    }
+
+    pub fn compliance_frameworks(
+        mut self,
+        value: Vec<crate::datadogV2::model::CloudConfigurationComplianceFramework>,
+    ) -> Self {
+        self.compliance_frameworks = Some(value);
         self
     }
 
@@ -88,6 +101,9 @@ impl<'de> Deserialize<'de> for CloudConfigurationComplianceRuleOptions {
                 M: MapAccess<'a>,
             {
                 let mut complex_rule: Option<bool> = None;
+                let mut compliance_frameworks: Option<
+                    Vec<crate::datadogV2::model::CloudConfigurationComplianceFramework>,
+                > = None;
                 let mut rego_rule: Option<crate::datadogV2::model::CloudConfigurationRegoRule> =
                     None;
                 let mut resource_type: Option<String> = None;
@@ -104,6 +120,13 @@ impl<'de> Deserialize<'de> for CloudConfigurationComplianceRuleOptions {
                                 continue;
                             }
                             complex_rule =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "complianceFrameworks" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            compliance_frameworks =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "regoRule" => {
@@ -129,6 +152,7 @@ impl<'de> Deserialize<'de> for CloudConfigurationComplianceRuleOptions {
 
                 let content = CloudConfigurationComplianceRuleOptions {
                     complex_rule,
+                    compliance_frameworks,
                     rego_rule,
                     resource_type,
                     additional_properties,
