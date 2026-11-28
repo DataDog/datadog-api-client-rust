@@ -14,9 +14,20 @@ pub struct EventResponseAttributes {
     /// Object description of attributes from your event.
     #[serde(rename = "attributes")]
     pub attributes: Option<crate::datadogV2::model::EventAttributes>,
+    /// The host associated with the event.
+    #[serde(rename = "host")]
+    pub host: Option<String>,
     /// The message of the event.
     #[serde(rename = "message")]
     pub message: Option<String>,
+    /// The service associated with the event.
+    #[serde(rename = "service")]
+    pub service: Option<String>,
+    /// The event status. Legacy events can use `failure`, `error`, `warning`,
+    /// `info`, `success`, `user_update`, `recommendation`, or `snapshot`.
+    /// Alert events can use `error`, `warn`, or `ok`.
+    #[serde(rename = "status")]
+    pub status: Option<crate::datadogV2::model::EventStatusType>,
     /// An array of tags associated with the event.
     #[serde(rename = "tags")]
     pub tags: Option<Vec<String>>,
@@ -34,7 +45,10 @@ impl EventResponseAttributes {
     pub fn new() -> EventResponseAttributes {
         EventResponseAttributes {
             attributes: None,
+            host: None,
             message: None,
+            service: None,
+            status: None,
             tags: None,
             timestamp: None,
             additional_properties: std::collections::BTreeMap::new(),
@@ -47,8 +61,23 @@ impl EventResponseAttributes {
         self
     }
 
+    pub fn host(mut self, value: String) -> Self {
+        self.host = Some(value);
+        self
+    }
+
     pub fn message(mut self, value: String) -> Self {
         self.message = Some(value);
+        self
+    }
+
+    pub fn service(mut self, value: String) -> Self {
+        self.service = Some(value);
+        self
+    }
+
+    pub fn status(mut self, value: crate::datadogV2::model::EventStatusType) -> Self {
+        self.status = Some(value);
         self
     }
 
@@ -95,7 +124,10 @@ impl<'de> Deserialize<'de> for EventResponseAttributes {
                 M: MapAccess<'a>,
             {
                 let mut attributes: Option<crate::datadogV2::model::EventAttributes> = None;
+                let mut host: Option<String> = None;
                 let mut message: Option<String> = None;
+                let mut service: Option<String> = None;
+                let mut status: Option<crate::datadogV2::model::EventStatusType> = None;
                 let mut tags: Option<Vec<String>> = None;
                 let mut timestamp: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
@@ -112,11 +144,39 @@ impl<'de> Deserialize<'de> for EventResponseAttributes {
                             }
                             attributes = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "host" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            host = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "message" => {
                             if v.is_null() {
                                 continue;
                             }
                             message = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "service" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            service = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "status" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            status = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                            if let Some(ref _status) = status {
+                                match _status {
+                                    crate::datadogV2::model::EventStatusType::UnparsedObject(
+                                        _status,
+                                    ) => {
+                                        _unparsed = true;
+                                    }
+                                    _ => {}
+                                }
+                            }
                         }
                         "tags" => {
                             if v.is_null() {
@@ -140,7 +200,10 @@ impl<'de> Deserialize<'de> for EventResponseAttributes {
 
                 let content = EventResponseAttributes {
                     attributes,
+                    host,
                     message,
+                    service,
+                    status,
                     tags,
                     timestamp,
                     additional_properties,
