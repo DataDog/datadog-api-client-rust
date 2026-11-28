@@ -31,6 +31,9 @@ pub struct LLMObsExperimentEvalMetricEvent {
     /// Source type of the evaluation.
     #[serde(rename = "eval_source_type")]
     pub eval_source_type: Option<String>,
+    /// Whether a higher numeric score is better. Omitted when no direction was specified.
+    #[serde(rename = "higher_is_better")]
+    pub higher_is_better: Option<bool>,
     /// Unique identifier of the evaluation metric event.
     #[serde(rename = "id")]
     pub id: Option<String>,
@@ -97,6 +100,7 @@ impl LLMObsExperimentEvalMetricEvent {
             boolean_value: None,
             categorical_value: None,
             eval_source_type: None,
+            higher_is_better: None,
             id: None,
             json_value: None,
             label: None,
@@ -131,6 +135,11 @@ impl LLMObsExperimentEvalMetricEvent {
 
     pub fn eval_source_type(mut self, value: String) -> Self {
         self.eval_source_type = Some(value);
+        self
+    }
+
+    pub fn higher_is_better(mut self, value: bool) -> Self {
+        self.higher_is_better = Some(value);
         self
     }
 
@@ -236,6 +245,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                 let mut boolean_value: Option<Option<bool>> = None;
                 let mut categorical_value: Option<Option<String>> = None;
                 let mut eval_source_type: Option<String> = None;
+                let mut higher_is_better: Option<bool> = None;
                 let mut id: Option<String> = None;
                 let mut json_value: Option<
                     Option<std::collections::BTreeMap<String, serde_json::Value>>,
@@ -287,6 +297,13 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                                 continue;
                             }
                             eval_source_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "higher_is_better" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            higher_is_better =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "id" => {
@@ -377,6 +394,7 @@ impl<'de> Deserialize<'de> for LLMObsExperimentEvalMetricEvent {
                     boolean_value,
                     categorical_value,
                     eval_source_type,
+                    higher_is_better,
                     id,
                     json_value,
                     label,

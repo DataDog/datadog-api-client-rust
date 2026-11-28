@@ -17,6 +17,9 @@ pub struct LLMObsSpanEvaluationMetric {
     /// Type of the evaluation metric (e.g., score, categorical, boolean).
     #[serde(rename = "eval_metric_type")]
     pub eval_metric_type: Option<String>,
+    /// Whether a higher numeric score is better. Omitted when no direction was specified.
+    #[serde(rename = "higher_is_better")]
+    pub higher_is_better: Option<bool>,
     /// Human-readable reasoning for the evaluation result.
     #[serde(rename = "reasoning")]
     pub reasoning: Option<String>,
@@ -41,6 +44,7 @@ impl LLMObsSpanEvaluationMetric {
         LLMObsSpanEvaluationMetric {
             assessment: None,
             eval_metric_type: None,
+            higher_is_better: None,
             reasoning: None,
             status: None,
             tags: None,
@@ -57,6 +61,11 @@ impl LLMObsSpanEvaluationMetric {
 
     pub fn eval_metric_type(mut self, value: String) -> Self {
         self.eval_metric_type = Some(value);
+        self
+    }
+
+    pub fn higher_is_better(mut self, value: bool) -> Self {
+        self.higher_is_better = Some(value);
         self
     }
 
@@ -114,6 +123,7 @@ impl<'de> Deserialize<'de> for LLMObsSpanEvaluationMetric {
             {
                 let mut assessment: Option<String> = None;
                 let mut eval_metric_type: Option<String> = None;
+                let mut higher_is_better: Option<bool> = None;
                 let mut reasoning: Option<String> = None;
                 let mut status: Option<String> = None;
                 let mut tags: Option<Vec<String>> = None;
@@ -137,6 +147,13 @@ impl<'de> Deserialize<'de> for LLMObsSpanEvaluationMetric {
                                 continue;
                             }
                             eval_metric_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "higher_is_better" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            higher_is_better =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "reasoning" => {
@@ -174,6 +191,7 @@ impl<'de> Deserialize<'de> for LLMObsSpanEvaluationMetric {
                 let content = LLMObsSpanEvaluationMetric {
                     assessment,
                     eval_metric_type,
+                    higher_is_better,
                     reasoning,
                     status,
                     tags,
