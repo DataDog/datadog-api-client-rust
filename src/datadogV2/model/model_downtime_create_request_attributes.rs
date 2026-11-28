@@ -39,6 +39,12 @@ pub struct DowntimeCreateRequestAttributes {
     /// Actions that will trigger a monitor notification if the downtime is in the `notify_end_types` state.
     #[serde(rename = "notify_end_types")]
     pub notify_end_types: Option<Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>>,
+    /// The user the downtime runs as. The downtime only silences monitors this user can mute. On update, omitting
+    /// `run_as` resets it to the user making the update.
+    ///
+    /// **Note**: This feature is currently in Preview and may not be available for all organizations.
+    #[serde(rename = "run_as")]
+    pub run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>>,
     /// Schedule for the downtime.
     #[serde(rename = "schedule")]
     pub schedule: Option<crate::datadogV2::model::DowntimeScheduleCreateRequest>,
@@ -64,6 +70,7 @@ impl DowntimeCreateRequestAttributes {
             mute_first_recovery_notification: None,
             notify_end_states: None,
             notify_end_types: None,
+            run_as: None,
             schedule: None,
             scope,
             additional_properties: std::collections::BTreeMap::new(),
@@ -99,6 +106,11 @@ impl DowntimeCreateRequestAttributes {
         value: Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
     ) -> Self {
         self.notify_end_types = Some(value);
+        self
+    }
+
+    pub fn run_as(mut self, value: Vec<crate::datadogV2::model::DowntimeRunAsItem>) -> Self {
+        self.run_as = Some(value);
         self
     }
 
@@ -148,6 +160,7 @@ impl<'de> Deserialize<'de> for DowntimeCreateRequestAttributes {
                 let mut notify_end_types: Option<
                     Vec<crate::datadogV2::model::DowntimeNotifyEndStateActions>,
                 > = None;
+                let mut run_as: Option<Vec<crate::datadogV2::model::DowntimeRunAsItem>> = None;
                 let mut schedule: Option<crate::datadogV2::model::DowntimeScheduleCreateRequest> =
                     None;
                 let mut scope: Option<String> = None;
@@ -199,6 +212,12 @@ impl<'de> Deserialize<'de> for DowntimeCreateRequestAttributes {
                             notify_end_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "run_as" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            run_as = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "schedule" => {
                             if v.is_null() {
                                 continue;
@@ -234,6 +253,7 @@ impl<'de> Deserialize<'de> for DowntimeCreateRequestAttributes {
                     mute_first_recovery_notification,
                     notify_end_states,
                     notify_end_types,
+                    run_as,
                     schedule,
                     scope,
                     additional_properties,

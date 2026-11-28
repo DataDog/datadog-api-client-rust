@@ -6,14 +6,14 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// A set of principals allowed to act on behalf of the downtime.
+/// A set of principals the downtime runs as.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct DowntimeRunAsItem {
-    /// List of principals allowed to act on behalf of the downtime.
+    /// The principal the downtime runs as. Only one user is supported.
     #[serde(rename = "principals")]
-    pub principals: Option<Vec<crate::datadogV2::model::DowntimeRunAsPrincipal>>,
+    pub principals: Vec<String>,
     #[serde(flatten)]
     pub additional_properties: std::collections::BTreeMap<String, serde_json::Value>,
     #[serde(skip)]
@@ -22,20 +22,12 @@ pub struct DowntimeRunAsItem {
 }
 
 impl DowntimeRunAsItem {
-    pub fn new() -> DowntimeRunAsItem {
+    pub fn new(principals: Vec<String>) -> DowntimeRunAsItem {
         DowntimeRunAsItem {
-            principals: None,
+            principals,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
-    }
-
-    pub fn principals(
-        mut self,
-        value: Vec<crate::datadogV2::model::DowntimeRunAsPrincipal>,
-    ) -> Self {
-        self.principals = Some(value);
-        self
     }
 
     pub fn additional_properties(
@@ -44,12 +36,6 @@ impl DowntimeRunAsItem {
     ) -> Self {
         self.additional_properties = value;
         self
-    }
-}
-
-impl Default for DowntimeRunAsItem {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
@@ -70,8 +56,7 @@ impl<'de> Deserialize<'de> for DowntimeRunAsItem {
             where
                 M: MapAccess<'a>,
             {
-                let mut principals: Option<Vec<crate::datadogV2::model::DowntimeRunAsPrincipal>> =
-                    None;
+                let mut principals: Option<Vec<String>> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
                     serde_json::Value,
@@ -81,9 +66,6 @@ impl<'de> Deserialize<'de> for DowntimeRunAsItem {
                 while let Some((k, v)) = map.next_entry::<String, serde_json::Value>()? {
                     match k.as_str() {
                         "principals" => {
-                            if v.is_null() {
-                                continue;
-                            }
                             principals = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         &_ => {
@@ -93,6 +75,7 @@ impl<'de> Deserialize<'de> for DowntimeRunAsItem {
                         }
                     }
                 }
+                let principals = principals.ok_or_else(|| M::Error::missing_field("principals"))?;
 
                 let content = DowntimeRunAsItem {
                     principals,

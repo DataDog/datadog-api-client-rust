@@ -19,8 +19,7 @@ pub struct GetDowntimeOptionalParams {
     /// Comma-separated list of resource paths for related resources to include in the response. Supported resource
     /// paths are `created_by` and `monitor`.
     pub include: Option<String>,
-    /// If `true`, include the `run_as` attribute in the response, which lists the principals allowed to
-    /// act on behalf of the downtime.
+    /// If `true`, include the `run_as` attribute in the response, which lists the user the downtime runs as.
     ///
     /// **Note**: This feature is currently in Preview and may not be available for all organizations.
     pub with_run_as: Option<bool>,
@@ -33,8 +32,7 @@ impl GetDowntimeOptionalParams {
         self.include = Some(value);
         self
     }
-    /// If `true`, include the `run_as` attribute in the response, which lists the principals allowed to
-    /// act on behalf of the downtime.
+    /// If `true`, include the `run_as` attribute in the response, which lists the user the downtime runs as.
     ///
     /// **Note**: This feature is currently in Preview and may not be available for all organizations.
     pub fn with_run_as(mut self, value: bool) -> Self {
