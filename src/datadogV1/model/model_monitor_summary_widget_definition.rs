@@ -36,6 +36,9 @@ pub struct MonitorSummaryWidgetDefinition {
     /// Whether to show the priorities column.
     #[serde(rename = "show_priority")]
     pub show_priority: Option<bool>,
+    /// Whether to count and list each monitor's subgroups instead of its notification groups. Only changes monitors that use `notify_by`, and only for the `groups` and `combined` summary types.
+    #[serde(rename = "show_sub_groups")]
+    pub show_sub_groups: Option<bool>,
     /// Widget sorting methods.
     #[serde(rename = "sort")]
     pub sort: Option<crate::datadogV1::model::WidgetMonitorSummarySort>,
@@ -80,6 +83,7 @@ impl MonitorSummaryWidgetDefinition {
             query,
             show_last_triggered: None,
             show_priority: None,
+            show_sub_groups: None,
             sort: None,
             start: None,
             summary_type: None,
@@ -137,6 +141,12 @@ impl MonitorSummaryWidgetDefinition {
     #[allow(deprecated)]
     pub fn show_priority(mut self, value: bool) -> Self {
         self.show_priority = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
+    pub fn show_sub_groups(mut self, value: bool) -> Self {
+        self.show_sub_groups = Some(value);
         self
     }
 
@@ -213,6 +223,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                 let mut query: Option<String> = None;
                 let mut show_last_triggered: Option<bool> = None;
                 let mut show_priority: Option<bool> = None;
+                let mut show_sub_groups: Option<bool> = None;
                 let mut sort: Option<crate::datadogV1::model::WidgetMonitorSummarySort> = None;
                 let mut start: Option<i64> = None;
                 let mut summary_type: Option<crate::datadogV1::model::WidgetSummaryType> = None;
@@ -294,6 +305,13 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                                 continue;
                             }
                             show_priority =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "show_sub_groups" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            show_sub_groups =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "sort" => {
@@ -393,6 +411,7 @@ impl<'de> Deserialize<'de> for MonitorSummaryWidgetDefinition {
                     query,
                     show_last_triggered,
                     show_priority,
+                    show_sub_groups,
                     sort,
                     start,
                     summary_type,
