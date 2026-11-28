@@ -29,6 +29,9 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// Custom/Overridden name of the rule (used in case of Default rule update).
     #[serde(rename = "customName")]
     pub custom_name: Option<String>,
+    /// Default Tags for default rules (included in tags)
+    #[serde(rename = "defaultTags")]
+    pub default_tags: Option<Vec<String>>,
     /// When the rule will be deprecated, timestamp in milliseconds.
     #[serde(rename = "deprecationDate")]
     pub deprecation_date: Option<i64>,
@@ -71,6 +74,9 @@ pub struct SecurityMonitoringSignalRuleResponse {
     /// User ID of the user who updated the rule.
     #[serde(rename = "updateAuthorId")]
     pub update_author_id: Option<i64>,
+    /// The date the rule was last updated, in milliseconds.
+    #[serde(rename = "updatedAt")]
+    pub updated_at: Option<i64>,
     /// The version of the rule.
     #[serde(rename = "version")]
     pub version: Option<i64>,
@@ -90,6 +96,7 @@ impl SecurityMonitoringSignalRuleResponse {
             creation_author_id: None,
             custom_message: None,
             custom_name: None,
+            default_tags: None,
             deprecation_date: None,
             filters: None,
             has_extended_title: None,
@@ -104,6 +111,7 @@ impl SecurityMonitoringSignalRuleResponse {
             tags: None,
             type_: None,
             update_author_id: None,
+            updated_at: None,
             version: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
@@ -140,6 +148,11 @@ impl SecurityMonitoringSignalRuleResponse {
 
     pub fn custom_name(mut self, value: String) -> Self {
         self.custom_name = Some(value);
+        self
+    }
+
+    pub fn default_tags(mut self, value: Vec<String>) -> Self {
+        self.default_tags = Some(value);
         self
     }
 
@@ -225,6 +238,11 @@ impl SecurityMonitoringSignalRuleResponse {
         self
     }
 
+    pub fn updated_at(mut self, value: i64) -> Self {
+        self.updated_at = Some(value);
+        self
+    }
+
     pub fn version(mut self, value: i64) -> Self {
         self.version = Some(value);
         self
@@ -269,6 +287,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                 let mut creation_author_id: Option<i64> = None;
                 let mut custom_message: Option<String> = None;
                 let mut custom_name: Option<String> = None;
+                let mut default_tags: Option<Vec<String>> = None;
                 let mut deprecation_date: Option<i64> = None;
                 let mut filters: Option<Vec<crate::datadogV2::model::SecurityMonitoringFilter>> =
                     None;
@@ -288,6 +307,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                 let mut type_: Option<crate::datadogV2::model::SecurityMonitoringSignalRuleType> =
                     None;
                 let mut update_author_id: Option<i64> = None;
+                let mut updated_at: Option<i64> = None;
                 let mut version: Option<i64> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -335,6 +355,13 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                                 continue;
                             }
                             custom_name =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "defaultTags" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            default_tags =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "deprecationDate" => {
@@ -432,6 +459,12 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                             update_author_id =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
+                        "updatedAt" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            updated_at = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
                         "version" => {
                             if v.is_null() {
                                 continue;
@@ -453,6 +486,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                     creation_author_id,
                     custom_message,
                     custom_name,
+                    default_tags,
                     deprecation_date,
                     filters,
                     has_extended_title,
@@ -467,6 +501,7 @@ impl<'de> Deserialize<'de> for SecurityMonitoringSignalRuleResponse {
                     tags,
                     type_,
                     update_author_id,
+                    updated_at,
                     version,
                     additional_properties,
                     _unparsed,
