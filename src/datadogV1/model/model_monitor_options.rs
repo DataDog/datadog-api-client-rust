@@ -192,7 +192,7 @@ pub struct MonitorOptions {
         with = "::serde_with::rust::double_option"
     )]
     pub timeout_h: Option<Option<i64>>,
-    /// List of requests that can be used in the monitor query. **This feature is currently in beta.**
+    /// List of requests that can be used in the monitor query.
     #[serde(rename = "variables")]
     pub variables: Option<Vec<crate::datadogV1::model::MonitorFormulaAndFunctionQueryDefinition>>,
     #[serde(flatten)]
