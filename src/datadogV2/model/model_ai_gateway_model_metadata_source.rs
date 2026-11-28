@@ -17,9 +17,6 @@ pub struct AiGatewayModelMetadataSource {
     /// Model identifier in the metadata source provider catalog.
     #[serde(rename = "model_id")]
     pub model_id: String,
-    /// Metadata source name.
-    #[serde(rename = "name")]
-    pub name: String,
     /// Last successful observation of this valid source record. Retained invalid entries keep their previous timestamp.
     #[serde(rename = "observed_at")]
     pub observed_at: Option<chrono::DateTime<chrono::Utc>>,
@@ -40,13 +37,11 @@ impl AiGatewayModelMetadataSource {
     pub fn new(
         matched_by: crate::datadogV2::model::AiGatewayModelMetadataSourceMatchedBy,
         model_id: String,
-        name: String,
         provider: String,
     ) -> AiGatewayModelMetadataSource {
         AiGatewayModelMetadataSource {
             matched_by,
             model_id,
-            name,
             observed_at: None,
             provider,
             revision: None,
@@ -95,7 +90,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelMetadataSource {
                     crate::datadogV2::model::AiGatewayModelMetadataSourceMatchedBy,
                 > = None;
                 let mut model_id: Option<String> = None;
-                let mut name: Option<String> = None;
                 let mut observed_at: Option<chrono::DateTime<chrono::Utc>> = None;
                 let mut provider: Option<String> = None;
                 let mut revision: Option<String> = None;
@@ -120,9 +114,6 @@ impl<'de> Deserialize<'de> for AiGatewayModelMetadataSource {
                         }
                         "model_id" => {
                             model_id = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
-                        }
-                        "name" => {
-                            name = Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "observed_at" => {
                             if v.is_null() {
@@ -149,13 +140,11 @@ impl<'de> Deserialize<'de> for AiGatewayModelMetadataSource {
                 }
                 let matched_by = matched_by.ok_or_else(|| M::Error::missing_field("matched_by"))?;
                 let model_id = model_id.ok_or_else(|| M::Error::missing_field("model_id"))?;
-                let name = name.ok_or_else(|| M::Error::missing_field("name"))?;
                 let provider = provider.ok_or_else(|| M::Error::missing_field("provider"))?;
 
                 let content = AiGatewayModelMetadataSource {
                     matched_by,
                     model_id,
-                    name,
                     observed_at,
                     provider,
                     revision,
