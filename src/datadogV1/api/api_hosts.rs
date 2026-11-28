@@ -34,20 +34,25 @@ pub struct ListHostsOptionalParams {
     /// A host must match every term. Prefix a term with `!` to exclude matching hosts.
     ///
     /// Term types:
-    /// - `<text>`: Partial, case-insensitive match against host name, alias, AWS ID and name, tags, apps, and
-    ///   agent metadata. Text of fewer than 3 characters only matches a field whose value is exactly that text.
+    /// - `<text>`: Partial, case-insensitive match against hostname, alias, AWS ID, AWS name, tags, apps, and
+    ///   Agent metadata. Text of fewer than 3 characters only matches only a field whose value is exactly that text.
     /// - `tag:<key>:<value>`: Exact match on a tag, for example `tag:env:prod`.
     /// - `field:apps:<app>`: Exact match on an app name, for example `field:apps:nginx`.
     /// - `field:metadata_agent_version:<value>`, `field:metadata_machine:<value>`,
     ///   `field:metadata_platform:<value>`, `field:metadata_processor:<value>`: Exact match on that metadata field.
     /// - `exists:tag:<key>` or `exists:field:<field>`: Match hosts that have the tag key or a non-empty value
     ///   for the field, for example `exists:tag:env` or `exists:field:metadata_platform`.
-    /// - `exact:<value>`: Whole-value, case-sensitive match.
+    /// - `exact:<value>`: Whole-value, case-sensitive match. The entire value of at least one of these fields
+    ///   must equal `<value>`: host name (`host_name`, `name`), `aliases`, `aws_id`, `aws_name`, `apps`, `tags`,
+    ///   and the agent metadata fields (`agent_version`, `machine`, `platform`, `processor`). Use it instead of
+    ///   plain text when you need a full name rather than a partial match, for example `exact:web-01` matches
+    ///   `web-01` but not `web-010` or `web-01-canary`. If `<value>` contains a colon, such as
+    ///   `exact:env:prod`, it is matched against tags only.
     ///
     /// Boolean operators (`AND`, `OR`, `NOT`) and `*` wildcards are not supported.
     pub filter: Option<String>,
     /// Sort hosts by this field. Options include `name`, `aws_id`, `aws_name`, `up`, `apps`, `cpu`,
-    /// `iowait`, and `load`. Unrecognized values default to `cpu`..
+    /// `iowait`, and `load`. Unrecognized values default to `cpu`.
     pub sort_field: Option<String>,
     /// Direction of sort. Options include `asc` and `desc`.
     pub sort_dir: Option<String>,
@@ -68,15 +73,20 @@ impl ListHostsOptionalParams {
     /// A host must match every term. Prefix a term with `!` to exclude matching hosts.
     ///
     /// Term types:
-    /// - `<text>`: Partial, case-insensitive match against host name, alias, AWS ID and name, tags, apps, and
-    ///   agent metadata. Text of fewer than 3 characters only matches a field whose value is exactly that text.
+    /// - `<text>`: Partial, case-insensitive match against hostname, alias, AWS ID, AWS name, tags, apps, and
+    ///   Agent metadata. Text of fewer than 3 characters only matches only a field whose value is exactly that text.
     /// - `tag:<key>:<value>`: Exact match on a tag, for example `tag:env:prod`.
     /// - `field:apps:<app>`: Exact match on an app name, for example `field:apps:nginx`.
     /// - `field:metadata_agent_version:<value>`, `field:metadata_machine:<value>`,
     ///   `field:metadata_platform:<value>`, `field:metadata_processor:<value>`: Exact match on that metadata field.
     /// - `exists:tag:<key>` or `exists:field:<field>`: Match hosts that have the tag key or a non-empty value
     ///   for the field, for example `exists:tag:env` or `exists:field:metadata_platform`.
-    /// - `exact:<value>`: Whole-value, case-sensitive match.
+    /// - `exact:<value>`: Whole-value, case-sensitive match. The entire value of at least one of these fields
+    ///   must equal `<value>`: host name (`host_name`, `name`), `aliases`, `aws_id`, `aws_name`, `apps`, `tags`,
+    ///   and the agent metadata fields (`agent_version`, `machine`, `platform`, `processor`). Use it instead of
+    ///   plain text when you need a full name rather than a partial match, for example `exact:web-01` matches
+    ///   `web-01` but not `web-010` or `web-01-canary`. If `<value>` contains a colon, such as
+    ///   `exact:env:prod`, it is matched against tags only.
     ///
     /// Boolean operators (`AND`, `OR`, `NOT`) and `*` wildcards are not supported.
     pub fn filter(mut self, value: String) -> Self {
@@ -84,7 +94,7 @@ impl ListHostsOptionalParams {
         self
     }
     /// Sort hosts by this field. Options include `name`, `aws_id`, `aws_name`, `up`, `apps`, `cpu`,
-    /// `iowait`, and `load`. Unrecognized values default to `cpu`..
+    /// `iowait`, and `load`. Unrecognized values default to `cpu`.
     pub fn sort_field(mut self, value: String) -> Self {
         self.sort_field = Some(value);
         self
