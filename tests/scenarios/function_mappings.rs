@@ -7403,6 +7403,9 @@ pub fn collect_function_calls(world: &mut DatadogWorld) {
         "v2.ListTagIndexingRuleExemptionsWithPagination".into(),
         test_v2_list_tag_indexing_rule_exemptions_with_pagination,
     );
+    world
+        .function_mappings
+        .insert("v2.ListMetricMetadata".into(), test_v2_list_metric_metadata);
     world.function_mappings.insert(
         "v2.ListTagIndexingRules".into(),
         test_v2_list_tag_indexing_rules,
@@ -59016,6 +59019,32 @@ fn test_v2_list_tag_indexing_rule_exemptions_with_pagination(
     });
     world.response.object = serde_json::to_value(result).unwrap();
     world.response.code = 200;
+}
+
+fn test_v2_list_metric_metadata(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
+    let api = world
+        .api_instances
+        .v2_api_metrics
+        .as_ref()
+        .expect("api instance not found");
+    let filter_metric_name =
+        serde_json::from_value(_parameters.get("filter[metric_name]").unwrap().clone()).unwrap();
+    let response = match block_on(api.list_metric_metadata_with_http_info(filter_metric_name)) {
+        Ok(response) => response,
+        Err(error) => {
+            return match error {
+                Error::ResponseError(e) => {
+                    world.response.code = e.status.as_u16();
+                    if let Some(entity) = e.entity {
+                        world.response.object = serde_json::to_value(entity).unwrap();
+                    }
+                }
+                _ => panic!("error parsing response: {error}"),
+            };
+        }
+    };
+    world.response.object = serde_json::to_value(response.entity).unwrap();
+    world.response.code = response.status.as_u16();
 }
 
 fn test_v2_list_tag_indexing_rules(world: &mut DatadogWorld, _parameters: &HashMap<String, Value>) {
