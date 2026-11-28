@@ -11,7 +11,7 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct MetricsAndMetricTagConfigurationsResponse {
-    /// Array of metrics and metric tag configurations.
+    /// Array of metrics, metric tag configurations, and generated metrics.
     #[serde(rename = "data")]
     pub data: Option<Vec<crate::datadogV2::model::MetricsAndMetricTagConfigurations>>,
     /// Array of metric volume resources included when requested with `include=metric_volumes`.
