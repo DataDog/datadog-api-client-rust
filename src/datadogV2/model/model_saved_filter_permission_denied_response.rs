@@ -6,12 +6,12 @@ use serde::{Deserialize, Deserializer, Serialize};
 use serde_with::skip_serializing_none;
 use std::fmt::{self, Formatter};
 
-/// The caller lacks edit permission on one or more feature flags that reference this saved filter.
+/// The caller lacks edit permission on one or more feature flags that reference this saved filter, or on one or more of their environments.
 #[non_exhaustive]
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SavedFilterPermissionDeniedResponse {
-    /// The caller lacks edit permission on one or more feature flags that reference this saved filter.
+    /// The caller lacks edit permission on one or more feature flags that reference this saved filter, or on one or more of their environments.
     #[serde(rename = "data")]
     pub data: crate::datadogV2::model::SavedFilterPermissionDeniedData,
     #[serde(skip)]

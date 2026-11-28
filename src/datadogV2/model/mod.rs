@@ -5696,6 +5696,8 @@ pub mod model_saved_filter_permission_denied_data;
 pub use self::model_saved_filter_permission_denied_data::SavedFilterPermissionDeniedData;
 pub mod model_saved_filter_permission_denied_attributes;
 pub use self::model_saved_filter_permission_denied_attributes::SavedFilterPermissionDeniedAttributes;
+pub mod model_saved_filter_environment_reference;
+pub use self::model_saved_filter_environment_reference::SavedFilterEnvironmentReference;
 pub mod model_saved_filter_flag_reference;
 pub use self::model_saved_filter_flag_reference::SavedFilterFlagReference;
 pub mod model_saved_filter_permission_denied_type;
