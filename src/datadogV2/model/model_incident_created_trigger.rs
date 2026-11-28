@@ -11,9 +11,13 @@ use std::fmt::{self, Formatter};
 #[skip_serializing_none]
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct IncidentCreatedTrigger {
-    /// The type of incident that triggers the workflow.
+    /// Deprecated. Use `incidentTypes` instead. The type of incident that triggers the workflow.
+    #[deprecated]
     #[serde(rename = "incidentType")]
     pub incident_type: Option<String>,
+    /// The types of incident that trigger the workflow.
+    #[serde(rename = "incidentTypes")]
+    pub incident_types: Option<Vec<crate::datadogV2::model::IncidentTriggerIncidentType>>,
     /// Conditions that determine which incidents trigger the workflow.
     #[serde(rename = "tagCondition")]
     pub tag_condition: Option<crate::datadogV2::model::IncidentCondition>,
@@ -26,19 +30,32 @@ pub struct IncidentCreatedTrigger {
 
 impl IncidentCreatedTrigger {
     pub fn new() -> IncidentCreatedTrigger {
+        #[allow(deprecated)]
         IncidentCreatedTrigger {
             incident_type: None,
+            incident_types: None,
             tag_condition: None,
             additional_properties: std::collections::BTreeMap::new(),
             _unparsed: false,
         }
     }
 
+    #[allow(deprecated)]
     pub fn incident_type(mut self, value: String) -> Self {
         self.incident_type = Some(value);
         self
     }
 
+    #[allow(deprecated)]
+    pub fn incident_types(
+        mut self,
+        value: Vec<crate::datadogV2::model::IncidentTriggerIncidentType>,
+    ) -> Self {
+        self.incident_types = Some(value);
+        self
+    }
+
+    #[allow(deprecated)]
     pub fn tag_condition(mut self, value: crate::datadogV2::model::IncidentCondition) -> Self {
         self.tag_condition = Some(value);
         self
@@ -77,6 +94,9 @@ impl<'de> Deserialize<'de> for IncidentCreatedTrigger {
                 M: MapAccess<'a>,
             {
                 let mut incident_type: Option<String> = None;
+                let mut incident_types: Option<
+                    Vec<crate::datadogV2::model::IncidentTriggerIncidentType>,
+                > = None;
                 let mut tag_condition: Option<crate::datadogV2::model::IncidentCondition> = None;
                 let mut additional_properties: std::collections::BTreeMap<
                     String,
@@ -91,6 +111,13 @@ impl<'de> Deserialize<'de> for IncidentCreatedTrigger {
                                 continue;
                             }
                             incident_type =
+                                Some(serde_json::from_value(v).map_err(M::Error::custom)?);
+                        }
+                        "incidentTypes" => {
+                            if v.is_null() {
+                                continue;
+                            }
+                            incident_types =
                                 Some(serde_json::from_value(v).map_err(M::Error::custom)?);
                         }
                         "tagCondition" => {
@@ -108,8 +135,10 @@ impl<'de> Deserialize<'de> for IncidentCreatedTrigger {
                     }
                 }
 
+                #[allow(deprecated)]
                 let content = IncidentCreatedTrigger {
                     incident_type,
+                    incident_types,
                     tag_condition,
                     additional_properties,
                     _unparsed,
